@@ -1,0 +1,1 @@
+<?php cargarview2('usuarios/alumno', $rutas); ?>

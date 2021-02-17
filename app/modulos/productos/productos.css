@@ -1,0 +1,33 @@
+/**
+ *  Desarrollador: ifixitmor
+ *  Fecha de creación: 20/10/2020 21:52
+ *  Desarrollado por: Softmor
+ *  Software de Morelos SA.DE.CV 
+ *  Sitio web: https://softmor.com
+ *  Facebook:  https://www.facebook.com/softmor/
+ *  Instagram: http://instagram.com/softmormx
+ *  Twitter: https://twitter.com/softmormx
+ */
+
+#videoScanCode,
+#barCavas,
+#canvaScanCode {
+  height: 400px;
+}
+#canvaScanCode{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#barcode{
+    position: relative;
+    width: 100vh;
+    height: 100%;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    /* top: 100px; */
+}
+#barCavas{
+    display: none;
+}
