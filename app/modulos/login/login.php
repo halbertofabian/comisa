@@ -66,7 +66,20 @@
             <p>© 2021 - Comisa. Creado with <i class="mdi mdi-heart text-white"></i> by Softmor</p>
         </div>
 
+
     </div>
+    <div class="row">
+        <div class="container">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header text-center">
+                        Descarga la App para <a href="http://app.appsgeyser.com/13240714/COMISA" target="_blank" >Android <i class="fa fa-android" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- end wrapper-page -->
 
     <!-- jQuery  -->
