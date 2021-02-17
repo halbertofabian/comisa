@@ -73,7 +73,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header text-center">
-                        Descarga la App para <a href="http://comisa.softmor.com/SOFTMOR_COMISA_APK.apk" >Android <i class="fa fa-android" aria-hidden="true"></i></a>
+                        Descarga la App para <a href="http://comisa.softmor.com/comisa.apk" >Android <i class="fa fa-android" aria-hidden="true"></i></a>
                     </div>
                 </div>
             </div>
