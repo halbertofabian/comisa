@@ -1,5 +1,9 @@
 <?php ob_start();
+$lifetime=1209600;
 @session_start();
+setcookie(session_name(),session_id(),time()+$lifetime);
+
+
 include_once 'config.php';
 
 require_once 'app/modulos/app/app.controlador.php';
