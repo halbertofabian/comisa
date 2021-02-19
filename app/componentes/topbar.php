@@ -5,8 +5,9 @@
         <a href="<?php HTTP_HOST ?>" class="logo">
             <!-- <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/logo.png" alt="" height="20" class="logo-large"> -->
             <!-- <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/logo-sm.png" alt="" height="22" class="logo-sm"> -->
-            <H5 class="logo-large" style="color: #FFF; margin-top: 10px;">COMISA</H5>
-            <H5 class="logo-sm" style="color: #FFF; margin-top: 10px;">C</H5>
+            <H5 class="logo-large" style="color: #FFF; margin-top: 10px;"><?php echo TITULO_APP ?></H5>
+            <!-- <H5 class="logo-sm" style="color: #FFF; margin-top: 10px;"><?php echo TITULO_APP ?></H5> -->
+             <img src="<?php echo LOGO_BN ?>" alt="" height="50" class="logo-sm">  
         </a>
     </div>
 

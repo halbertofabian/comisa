@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App Icons -->
-    <link rel="shortcut icon" href="<?php echo HTTP_HOST . 'app/' ?>assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo ICON_APP?>">
 
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="<?php echo HTTP_HOST . 'app/' ?>plugins/morris/morris.css">

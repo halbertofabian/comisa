@@ -22,7 +22,7 @@
                         <h4 class="font-18 mt-3 m-b-5">¡BIENVENIDO!</h4>
                         <p class="text-muted">Inicia sesión para acceder al sistema.</p>
                     </div>
-                    <a href="" class="logo-admin"><img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/sistema/comisa_logo.jpg" height="110" alt="logo"></a>
+                    <a href="" class="logo-admin"><img src="<?php echo LOGO_C  ?>" height="110" alt="<?php echo LOGO_C  ?>"></a>
                 </div>
 
                 <div class="p-3">

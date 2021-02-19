@@ -8,7 +8,7 @@
                 <div class="col-md-8">
                     <h4 class="page-title mb-0">PANEL DE CONTROL</h4>
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="#">COMISA</a></li>
+                        <li class="breadcrumb-item"><a href="#"><?php echo TITULO_APP ?></a></li>
                         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                     </ol>
                 </div>
