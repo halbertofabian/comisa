@@ -60,7 +60,8 @@ $(".tablas").DataTable({
     }
 
 });
-// $('.select2').select2();
+
+ $('.select2').select2();
 
 $('#pds_descripcion_corta').summernote({
     placeholder: 'Descripción corta del producto',

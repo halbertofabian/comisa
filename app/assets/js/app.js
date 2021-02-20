@@ -44,6 +44,7 @@
     },
 
     MainApp.prototype.initEnlarge = function () {
+        // $('body').addClass('enlarged');
         if ($(window).width() < 1025) {
             $('body').addClass('enlarged');
         } else {

@@ -29,11 +29,13 @@
     <!-- Responsive datatable examples -->
     <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
-    <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.css" rel="stylesheet" />
+    <!-- <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.css" rel="stylesheet" /> -->
 
-    <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/select2/css/select2.min.css" rel="stylesheet" />
+    
     <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/summernote/summernote-bs4.css" rel="stylesheet" />
 
+
+    <link href="<?php echo HTTP_HOST . 'app/'  ?>plugins/select2-c/css/select2.min.css" rel="stylesheet" />
 
 
 
@@ -43,6 +45,9 @@
 
     <!-- jQuery  -->
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/jquery.min.js"></script>
+    
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/select2-c/js/select2.js"></script>
+
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/modernizr.min.js"></script>
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/metisMenu.min.js"></script>
@@ -68,9 +73,9 @@
 
     <script src="<?php echo HTTP_HOST . 'app/' ?>plugins/summernote/summernote-bs4.min.js"></script>
 
-    <script src="<?php echo HTTP_HOST . 'app/' ?>plugins/select2/js/select2.min.js"></script>
     <script src="<?php echo HTTP_HOST . 'app/' ?>plugins/jquery-number/jquery.number.js"></script>
 
+    
 
 </head>
 
@@ -178,6 +183,7 @@
 
     <!-- scripts -->
     <?php cargarComponente('scripts') ?>
+
 
     <!-- end scripts -->
 
