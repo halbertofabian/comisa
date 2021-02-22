@@ -34,14 +34,14 @@ class POSControlador
             $vts_id_venta['vts_id_venta'] =  strlen($vts_id_venta['vts_id_venta']) == 1 ? "000" . $vts_id_venta['vts_id_venta'] : $vts_id_venta['vts_id_venta'];
             $vts_id_venta['vts_id_venta'] =  strlen($vts_id_venta['vts_id_venta']) == 2 ? "00" . $vts_id_venta['vts_id_venta'] : $vts_id_venta['vts_id_venta'];
             $vts_id_venta['vts_id_venta'] =  strlen($vts_id_venta['vts_id_venta']) == 3 ? "0" . $vts_id_venta['vts_id_venta'] : $vts_id_venta['vts_id_venta'];
- 
+
 
 
             $_POST['vts_usuario_responsable'] = $_SESSION['session_usr']['usr_nombre'];
             $_POST['vts_estado_pagado'] = "PENDIENTE-CAJA";
             $_POST['vts_fecha_venta'] = FECHA;
-            $_POST['vts_id_modulo'] = "MOD:GYM:" . CLIENTE_ID . ':PRODUCTOS';
-            $_POST['vts_id_sucursal'] = SUCURSAL_ID;
+            $_POST['vts_id_modulo'] = "MOD:GENERAL-VENTA:" . CLIENTE_ID . ':PRODUCTOS';
+            $_POST['vts_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
             $_POST['vts_id_suscriptor'] = CLIENTE_ID;
             $_POST['vts_id_venta'] = $vts_id_venta['vts_id_venta'];
 
@@ -114,8 +114,8 @@ class POSControlador
 
             if ($isExitDeatalle != false) {
                 $dpds_cantidad = $isExitDeatalle['dpds_cantidad'] + 1;
-                
-                
+
+
 
                 $datos =  array(
                     'status' => true,
@@ -159,7 +159,7 @@ class POSControlador
                     'dpds_ganancia' => ($precio * $dpds_cantidad) - ($producto['pds_precio_compra'] * $dpds_cantidad),
                     'dpds_total' => $precio * $dpds_cantidad,
                     'dpds_estado_detalle' => 'COMPLETADO',
-                    'dpds_id_sucursal' => SUCURSAL_ID,
+                    'dpds_id_sucursal' => $_SESSION['session_suc']['scl_id'],
                     'dpds_id_suscriptor' => CLIENTE_ID,
                     'dpds_id_producto' => $producto['pds_id_producto'],
 

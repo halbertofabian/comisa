@@ -74,18 +74,24 @@ class CajasModelo
         }
     }
 
-    public static function mdlMostrarCajas()
+    public static function mdlMostrarCajas($scl_id = "")
     {
         try {
             //code...
-
-
-            $sql = "SELECT * FROM tbl_caja_cja WHERE cja_id_sucursal = ? ";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
-            $pps->execute();
-            return $pps->fetchAll();
+            if ($scl_id == "") {
+                $sql = "SELECT * FROM tbl_caja_cja";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->execute();
+                return $pps->fetchAll();
+            } elseif ($scl_id != "") {
+                $sql = "SELECT * FROM tbl_caja_cja WHERE cja_id_sucursal = ? ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
+                $pps->execute();
+                return $pps->fetchAll();
+            }
         } catch (PDOException $th) {
             //throw $th;
         } finally {

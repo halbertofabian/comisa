@@ -1,7 +1,7 @@
 listarCategorias();
 
 $("#formAddCategoria").on("submit", function (e) {
-    alert("Hola")
+    
     e.preventDefault()
 
     var datos = new FormData(this)

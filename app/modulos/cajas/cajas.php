@@ -51,16 +51,22 @@
                                 foreach ($cajas as $key => $cja) :
                                 ?>
                                     <div class="col-md-6">
-                                        <P> <strong class="text-primary"> <?php echo $cja['cja_nombre'] ?></strong> </P>
-                                        <span><?php echo $cja['cja_usuario_registro'] ?></span> <br>
-                                        <span><?php echo $cja['cja_fecha_registro'] ?></span>
-                                        <br>
-                                        <hr>
-                                        <?php if ($cja['cja_uso'] == 0) : ?>
-                                            <strong class="text-danger">Cerrada</strong>
-                                        <?php else : ?>
-                                            <a href="<?php echo HTTP_HOST.'cortes/view-r/'.$cja['cja_copn_id'] ?>" class="btn btn-success">Abierta</a>
-                                        <?php endif; ?>
+                                        <div class="card">
+
+                                            <div class="card-body">
+                                                <P> <strong class="text-primary"> <?php echo $cja['cja_nombre'] ?></strong> </P>
+                                                <span><?php echo 'Creada por: ' . $cja['cja_usuario_registro'] ?></span> <br>
+                                                <span><?php echo 'Fecha registro: ' . $cja['cja_fecha_registro'] ?></span>
+                                                <br>
+                                                <hr>
+                                                <?php if ($cja['cja_uso'] == 0) : ?>
+                                                    <strong class="text-danger">Cerrada</strong>
+                                                <?php else : ?>
+                                                    <a href="<?php echo HTTP_HOST . 'cortes/view-r/' . $cja['cja_copn_id'] ?>" class="btn btn-success">Abierta</a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 <?php endforeach; ?>
 

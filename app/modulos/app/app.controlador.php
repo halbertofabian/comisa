@@ -213,25 +213,46 @@ class AppControlador
             //     ]
             // ),
 
-            // '5' => array(
-            //     [
-            //         'label' => 'POS',
-            //         'icon' => '<i class="link-icon fa fa-barcode"></i>',
-            //         'href' => '#pos',
-            //         'modulos' =>
-            //         array(
-            //             [
-            //                 'icon' => '',
-            //                 'label' => 'Abir caja',
-            //                 'href' => 'pos'
-            //             ],
-            //             // Aqui más item de menu
-            //         ),
-            //     ]
-            // ),
-
-
+            '4' => array(
+                [
+                    'label' => 'Gastos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#gastos',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '',
+                            'label' => 'Nuevo gasto',
+                            'href' => 'gastos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Listar gastos',
+                            'href' => 'listar-gastos'
+                        ],
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
             '5' => array(
+                [
+                    'label' => 'Ingresos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#gastos',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '',
+                            'label' => 'Nuevo ingreso',
+                            'href' => 'ingresos'
+                        ],
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+
+
+            '6' => array(
                 [
                     'label' => 'Almacenes',
                     'icon' => '<i class="link-icon fa fa-amazon"></i>',
@@ -260,7 +281,7 @@ class AppControlador
                 ]
             ),
 
-            '6' => array(
+            '7' => array(
                 [
                     'label' => 'Configuración',
                     'icon' => '<i class="link-icon fa fa-cog"></i>',
@@ -283,7 +304,7 @@ class AppControlador
                     ),
                 ]
             ),
-            '7' => array(
+            '8' => array(
                 [
                     'label' => 'Softmor',
                     'icon' => '<i class="link-icon fa fa-github"></i>',
