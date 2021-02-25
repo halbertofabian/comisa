@@ -29,7 +29,7 @@
     <!-- Responsive datatable examples -->
     <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.css" rel="stylesheet" /> -->
+    <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.css" rel="stylesheet" />
 
     
     <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/summernote/summernote-bs4.css" rel="stylesheet" />
@@ -47,6 +47,8 @@
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/jquery.min.js"></script>
     
     <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/select2-c/js/select2.js"></script>
+
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.js"></script>
 
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/modernizr.min.js"></script>
