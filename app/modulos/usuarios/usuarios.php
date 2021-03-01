@@ -59,9 +59,14 @@
                                 <select name="usr_rol" id="usr_rol" class="form-control">
 
                                     <option value="<?php echo $usr['usr_rol'] ?>"><?php echo $usr['usr_rol'] ?></option>
-                        </option>
-                                    <?php 
-                                    
+                                    </option>
+                                    <?php
+                                    $perfiles = AppControlador::obtenerPerfiles();
+                                    foreach ($perfiles as $key => $pfl) : ?>
+                                        <option value="<?php echo $pfl ?>"><?php echo $pfl ?></option>
+                                    <?php endforeach; ?>
+                                    <?php
+
                                     // Auxiliar administrativo
                                     // cobradores
                                     // vendedores
@@ -131,7 +136,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="usr_nombre">Nombre</label>
-                                <input type="text" name="usr_nombre" id="usr_nombre" class="form-control" placeholder="Escribe el nombre de usuario" required>
+                                <input type="text" name="usr_nombre" id="usr_nombre" class="form-control" placeholder="Escribe el nombre de usuario" autofocus required>
                             </div>
                         </div>
                         <div class="col-md-3 col-12">
@@ -143,20 +148,24 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="usr_correo">Correo electrónico</label>
-                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" required>
+                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" >
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="usr_clave" class="placeholder"><b>Contraseña</b></label>
-                                <input id="usr_clave" name="usr_clave" type="password" class="form-control" required>
+                                <input id="usr_clave" name="usr_clave" type="password" value="1234" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="usr_rol">Perfil</label>
                                 <select name="usr_rol" id="usr_rol" class="form-control">
-                                    <option value="Administrador">Administrador</option>
+                                    <?php
+                                    $perfiles = AppControlador::obtenerPerfiles();
+                                    foreach ($perfiles as $key => $pfl) : ?>
+                                        <option value="<?php echo $pfl ?>"><?php echo $pfl ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -175,7 +184,7 @@
                     </div>
                     <?php
                     $guardarUsuario = new UsuariosControlador();
-                    $guardarUsuario->ctrAgregarUsuarios2();
+                    $guardarUsuario->ctrAgregarUsuarios2("usuarios/new");
                     ?>
                 </form>
             </div>
@@ -188,7 +197,7 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mb-1">
                         <!-- <a href="" class="btn btn-success"><i class="fa fa-upload"></i> Importar</a> -->
                         <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") : ?>
                             <a href="<?php echo HTTP_HOST . 'usuarios/new' ?>" class="btn btn-primary float-right"> <i class="fa fa-plus"></i> Nuevo usuario</a>

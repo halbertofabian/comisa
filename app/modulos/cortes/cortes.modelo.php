@@ -270,7 +270,7 @@ class CortesModelo
 
 
 
-    
+
     public static function mdlConsultarMontoFichasPEByCorte($vfch_id_corte)
     {
         try {
@@ -452,7 +452,7 @@ class CortesModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_gastos_tgts WHERE tgts_mp = 'EFECTIVO' AND tgts_id_corte = ?";
+            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON tgts.tgts_categoria=gts.gts_id WHERE tgts_mp = 'EFECTIVO' AND tgts_id_corte = ?";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);

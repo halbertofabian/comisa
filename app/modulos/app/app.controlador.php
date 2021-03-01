@@ -33,7 +33,8 @@ class AppControlador
             'contratos',
             'almacenes',
             'compras',
-            'traspasos'
+            'traspasos',
+            'flujo-caja'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -46,6 +47,15 @@ class AppControlador
         );
     }
 
+    public static function obtenerPerfiles()
+    {
+        return array(
+            'Administrador',
+            'Supervisor',
+            'Vendedor',
+            'Cobrador'
+        );
+    }
 
 
 
@@ -299,6 +309,11 @@ class AppControlador
                             'label' => 'Sucursales',
                             'href' => 'sucursales'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Usuarios',
+                            'href' => 'usuarios'
+                        ],
 
                         // Aqui más item de menu
                     ),
@@ -306,15 +321,25 @@ class AppControlador
             ),
             '8' => array(
                 [
-                    'label' => 'Softmor',
-                    'icon' => '<i class="link-icon fa fa-github"></i>',
+                    'label' => 'Cortes',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
                     'href' => '#softMarket',
                     'modulos' =>
                     array(
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Servicios',
-                            'href' => 'softmor/servicios'
+                            'label' => 'Crear nueva caja',
+                            'href' => 'cajas'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Flujo de caja',
+                            'href' => 'flujo-caja'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar cortes',
+                            'href' => 'cortes'
                         ],
 
                         // Aqui más item de menu

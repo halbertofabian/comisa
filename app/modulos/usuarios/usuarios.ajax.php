@@ -57,12 +57,19 @@ class UsuariosAjax
         echo json_encode($respuesta, true);
     }
 
-    public function ajaxListarAlumnos(){
+    public function ajaxListarAlumnos()
+    {
         $respuesta = UsuariosModelo::mdlMostrarAlumnosBySuc();
         echo json_encode($respuesta, true);
     }
 
     public function ajaxListarUsuariosById()
+    {
+        $respuesta = UsuariosModelo::mdlMostrarUsuarios($this->usr_id, $this->usr_rol, $this->usr_searh);
+        echo json_encode($respuesta, true);
+    }
+
+    public function ajaxListarUsuarioByID()
     {
         $respuesta = UsuariosModelo::mdlMostrarUsuarios($this->usr_id, $this->usr_rol, $this->usr_searh);
         echo json_encode($respuesta, true);
@@ -97,7 +104,7 @@ if (isset($_POST['btnActivarUsuario'])) {
 //     $listarUsuarios->ajaxListarUsuarios();
 // }
 if (isset($_POST['btnListarAlumnos'])) {
-    $listarUsuarios = new UsuariosAjax();  
+    $listarUsuarios = new UsuariosAjax();
     $listarUsuarios->ajaxListarAlumnos();
 }
 
@@ -111,4 +118,10 @@ if (isset($_POST['btnBuscarAlumno'])) {
 if (isset($_POST['btnGuardarUsuario'])) {
     $agregarUsuario = new UsuariosAjax();
     $agregarUsuario->ajaxAgreagarUsuarios();
+}
+
+if (isset($_POST['btnBuscarUsuarios'])) {
+    $buscarUsuario = new UsuariosAjax();
+    $buscarUsuario->usr_id = $_POST['usr_id'];
+    $buscarUsuario->ajaxListarUsuarioByID();
 }

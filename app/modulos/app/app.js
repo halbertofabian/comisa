@@ -63,6 +63,31 @@ $(".tablas").DataTable({
 
  $('.select2').select2();
 
+
+ $('.area_corto').summernote({
+    placeholder: 'Descripción corta del producto',
+    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+    tabsize: 2,
+    height: 150,
+    toolbar: [
+        // [groupName, [list of button]]
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+        ['view', ['fullscreen', 'codeview', 'help']],
+    ]
+});
+$('.area_larga').summernote({
+    placeholder: 'Descripción larga del producto',
+    fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+    tabsize: 2,
+    height: 150,
+});
+
+
 $('#pds_descripcion_corta').summernote({
     placeholder: 'Descripción corta del producto',
     fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],

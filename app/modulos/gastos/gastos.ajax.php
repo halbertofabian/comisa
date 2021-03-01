@@ -7,6 +7,12 @@ require_once DOCUMENT_ROOT . 'app/modulos/gastos/gastos.controlador.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.controlador.php';
+
+
+require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.controlador.php';
+
+
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class GastosAjax
 {
@@ -14,8 +20,10 @@ class GastosAjax
     public $gts_presupuesto;
     public $tgts_id;
     public $gts_id;
+    public $tgts_id_corte;
+    public $usr_id;
 
-    
+
 
     public function ajaxCrearCategoria()
     {
@@ -51,6 +59,22 @@ class GastosAjax
         $eliminarCategoria = GastosControlador::ctrEliminarCategoria($this->gts_id);
         echo json_encode($eliminarCategoria);
     }
+
+    public function ajaxConsultarGastosByCaja()
+    {
+        if ($_SESSION['session_usr']['usr_id'] == $this->usr_id) {
+            $res = GastosModelo::mdlConsultarGastoByCaja2($this->tgts_id_corte);
+        } else {
+            $res = GastosModelo::mdlConsultarGastoByCaja($this->tgts_id_corte);
+        }
+        echo json_encode($res, true);
+    }
+
+    public function ajaxAgregarGasto()
+    {
+        $res = GastosControlador::ctrCrearGasto();
+        echo json_encode($res, true);
+    }
 }
 
 
@@ -81,4 +105,18 @@ if (isset($_POST['btnEliminarCategoria'])) {
     $eliminarGastos = new GastosAjax();
     $eliminarGastos->gts_id = $_POST['gts_id'];
     $eliminarGastos->ajaxEliminarCategoria();
+}
+
+if (isset($_POST['btnConsultarGastosByCaja'])) {
+    $consutar = new GastosAjax();
+    $consutar->tgts_id_corte = $_POST['tgts_id_corte'];
+    $consutar->usr_id = $_POST['usr_id'];
+    $consutar->ajaxConsultarGastosByCaja();
+}
+
+
+
+if (isset($_POST['btnGuardarGasto'])) {
+    $btnGuardarGasto = new GastosAjax();
+    $btnGuardarGasto->ajaxAgregarGasto();
 }

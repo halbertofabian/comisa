@@ -73,12 +73,45 @@ class CajasControlador
         }
     }
 
+    public  function ctrAbrirCaja2()
+    {
+        if (isset($_POST['btnAbrirCaja'])) {
+
+
+            $_POST['copn_fecha_abrio'] = FECHA;
+            $_POST['copn_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
+            $_POST['copn_ingreso_inicio'] = str_replace(",", "", $_POST['copn_ingreso_inicio']);
+
+            $abrirCaja = CajasModelo::mdlAbrirCaja($_POST);
+
+            if ($abrirCaja) {
+
+                $ultimaCajaAbierta = CajasModelo::mdlConsultarUltimaCajaAbierta(
+                    array(
+                        'copn_usuario_abrio' => $_POST['copn_usuario_abrio'],
+                        'copn_id_caja' => $_POST['copn_id_caja'],
+                        'copn_id_sucursal' => $_SESSION['session_suc']['scl_id']
+                    )
+                );
+
+                $asignarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['copn_usuario_abrio'], $ultimaCajaAbierta['copn_id']);
+
+                if ($asignarCajaUsuario) {
+                    CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id']);
+                    //$_SESSION['session_usr']['usr_caja'] =  $ultimaCajaAbierta['copn_id'];
+                    AppControlador::msj('success', 'CAJA ABIERTA', '', HTTP_HOST . 'flujo-caja');
+                } else {
+                }
+            }
+        }
+    }
+
     public static function ctrCerrarCaja()
     {
 
         if (isset($_POST['btnCerrarCaja'])) {
 
-            $crt_id = $_SESSION['session_usr']['usr_caja'];
+            $crt_id = $_POST['usr_caja'];
             $montos = array(
                 'monto_fichas_e' => CortesModelo::mdlConsultarMontoFichasPEByCorte($crt_id),
                 'monto_fichas_b' => CortesModelo::mdlConsultarMontoFichasPBByCorte($crt_id),
@@ -116,7 +149,7 @@ class CajasControlador
             $ActaulizarCajaCierre = CajasModelo::mdlCerrarCaja($_POST);
 
             if ($ActaulizarCajaCierre) {
-                $cerrarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_SESSION['session_usr']['usr_id'], 0);
+                $cerrarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['usr_id'], 0);
                 if ($cerrarCajaUsuario) {
                     $cerrarCaja = CajasModelo::mdlActualizarDisponibilidadCaja(0, $_POST['cja_id_caja'], 0);
                     if ($cerrarCaja) {
@@ -125,7 +158,7 @@ class CajasControlador
                         return array(
                             'mensaje' => 'Corte realizado',
                             'status' => true,
-                            'pagina' => HTTP_HOST . 'cortes/view-t/' . $crt_id
+                            'pagina' => HTTP_HOST . 'cortes/view-r/' . $crt_id
                         );
                     } else {
                         return array(

@@ -12,19 +12,34 @@
  */
 class IngresosControlador
 {
-    public function ctrAgregarIngresos()
+    public static function ctrAgregarIngresos()
     {
         if (isset($_POST['btnAgregarIngreso'])) {
 
-            if ($_SESSION['session_usr']['usr_caja'] == 0) {
-                AppControlador::msj('warning', '¡Ups!', 'Necesitas abrir caja para cobrar', HTTP_HOST . 'abrir-caja');
-                return;
+            $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+            if ($igs_id_corte2['usr_caja'] == 0) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
+                );
             }
+
+            $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_POST['igs_usuario_responsable']);
+            if ($igs_id_corte['usr_caja'] == 0) {
+
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
+                );
+            }
+            $_POST['igs_id_corte'] = $igs_id_corte['usr_caja'];
+
+            $_POST['igs_id_corte_2'] = $igs_id_corte2['usr_caja'];
 
 
             $_POST['igs_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
             $_POST['igs_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
-            $_POST['igs_id_corte'] = CortesControlador::crtConsultarUltimoCorte();
+            // $_POST['igs_id_corte'] = CortesControlador::crtConsultarUltimoCorte();
 
             $_POST['igs_monto'] = str_replace(",", "", $_POST['igs_monto']);
             $_POST['igs_fecha_registro'] = FECHA;
@@ -32,9 +47,15 @@ class IngresosControlador
             $crearIngreso = IngresosModelo::mdlAgregarIngresos($_POST);
 
             if ($crearIngreso) {
-                AppControlador::msj('success', 'Muy bien', 'Ingreso registrado con exito', HTTP_HOST . 'ingresos');
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Ingreso registrado con exito'
+                );
             } else {
-                AppControlador::msj('error', 'Error', 'Ingreso no registrado, intenta de nuevo');
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Ingreso no registrado, intenta de nuevo'
+                );
             }
         }
     }

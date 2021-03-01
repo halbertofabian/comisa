@@ -29,4 +29,8 @@ class CortesControlador
     {
         return $_SESSION['session_usr']['usr_caja'];
     }
+
+   public static function ctrConsultarUltimoCorteByUsuario($usr_id){
+       return UsuariosModelo::mdlMostrarUsuarios($usr_id);
+   }
 }

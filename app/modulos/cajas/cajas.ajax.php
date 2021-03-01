@@ -23,14 +23,28 @@ require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class CajasAjax
 {
+    public $usr_caja;
     public function ajaxCerrarCaja()
     {
         $res = CajasControlador::ctrCerrarCaja();
-        echo json_encode($res,true);
+        echo json_encode($res, true);
     }
+    public function ajaxMostrarCajasById()
+    {
+        $res = CajasModelo::mdlMostrarCajasById($this->usr_caja);
+        echo json_encode($res, true);
+    }
+    
 }
 
 if (isset($_POST['btnCerrarCaja'])) {
     $cerrarCaja = new CajasAjax();
     $cerrarCaja->ajaxCerrarCaja();
+}
+
+if (isset($_POST['btnBuscarCajaCorte'])) {
+    $consultarCaja = new CajasAjax();
+    $consultarCaja -> usr_caja = $_POST['usr_caja'];
+    $consultarCaja -> ajaxMostrarCajasById();
+
 }

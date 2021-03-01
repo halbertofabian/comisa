@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="cja_nombre">Nombre de la caja </label>
-                        <input type="text" name="cja_nombre" id="cja_nombre" class="form-control" placeholder="">
+                        <input type="text" name="cja_nombre" id="cja_nombre" class="form-control" placeholder="" required autofocus>
                     </div>
 
                     <input type="hidden" value="<?php echo $_SESSION['session_suc']['scl_id'] ?>" name="cja_id_sucursal">

@@ -26,26 +26,48 @@ class GastosControlador
         }
     }
 
-    public function ctrCrearGasto()
+    public static  function ctrCrearGasto()
     {
         if (isset($_POST['btnGuardarGasto'])) {
-            if ($_SESSION['session_usr']['usr_caja'] == 0) {
-                AppControlador::msj('warning', '¡Ups!', 'Necesitas abrir caja para cobrar', HTTP_HOST . 'abrir-caja');
-                return;
+
+            $tgts_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+            if ($tgts_id_corte2['usr_caja'] == 0) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
+                );
             }
+            $tgts_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_POST['tgts_usuario_responsable']);
+            if ($tgts_id_corte['usr_caja'] == 0) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
+                );
+            }
+            $_POST['tgts_id_corte'] = $tgts_id_corte['usr_caja'];
+            $_POST['tgts_id_corte2'] = $tgts_id_corte2['usr_caja'];
 
             $_POST['tgts_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
             $_POST['tgts_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
-            $_POST['tgts_id_corte'] = CortesControlador::crtConsultarUltimoCorte();
+
+
+
+
             $_POST['tgts_cantidad'] = str_replace(",", "", $_POST['tgts_cantidad']);
             $_POST['tgts_fecha_gasto'] = FECHA;
 
             $crearGasto = GastosModelo::mdlCrearGasto($_POST);
 
             if ($crearGasto) {
-                AppControlador::msj('success', 'Muy bien', 'Gastos guardado', './listar-gastos');
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Gasto registrado con exito'
+                );
             } else {
-                AppControlador::msj('error', 'Ocurrio un error', 'No se pudo guardar el gasto, intente de nuevo', '');
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Gasto no registrado, intenta de nuevo'
+                );
             }
         }
     }

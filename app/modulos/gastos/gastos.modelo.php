@@ -50,18 +50,21 @@ class GastosModelo
     {
 
         try {
-            $sql = "INSERT INTO tbl_gastos_tgts (tgts_categoria,tgts_concepto,tgts_fecha_gasto,tgts_cantidad,tgts_mp,tgts_nota,tgts_usuario_registro,tgts_id_sucursal,tgts_id_corte) VALUES(?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_gastos_tgts (tgts_ruta,tgts_usuario_responsable,tgts_categoria,tgts_concepto,tgts_fecha_gasto,tgts_cantidad,tgts_mp,tgts_nota,tgts_usuario_registro,tgts_id_sucursal,tgts_id_corte,tgts_id_corte2) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $gasto['tgts_categoria']);
-            $pps->bindValue(2, $gasto['tgts_concepto']);
-            $pps->bindValue(3, $gasto['tgts_fecha_gasto']);
-            $pps->bindValue(4, $gasto['tgts_cantidad']);
-            $pps->bindValue(5, $gasto['tgts_mp']);
-            $pps->bindValue(6, $gasto['tgts_nota']);
-            $pps->bindValue(7, $gasto['tgts_usuario_registro']);
-            $pps->bindValue(8, $gasto['tgts_id_sucursal']);
-            $pps->bindValue(9, $gasto['tgts_id_corte']);
+            $pps->bindValue(1, $gasto['tgts_ruta']);
+            $pps->bindValue(2, $gasto['tgts_usuario_responsable']);
+            $pps->bindValue(3, $gasto['tgts_categoria']);
+            $pps->bindValue(4, $gasto['tgts_concepto']);
+            $pps->bindValue(5, $gasto['tgts_fecha_gasto']);
+            $pps->bindValue(6, $gasto['tgts_cantidad']);
+            $pps->bindValue(7, $gasto['tgts_mp']);
+            $pps->bindValue(8, $gasto['tgts_nota']);
+            $pps->bindValue(9, $gasto['tgts_usuario_registro']);
+            $pps->bindValue(10, $gasto['tgts_id_sucursal']);
+            $pps->bindValue(11, $gasto['tgts_id_corte']);
+            $pps->bindValue(12, $gasto['tgts_id_corte2']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -92,7 +95,7 @@ class GastosModelo
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
-                
+
                 $pps->execute();
                 return $pps->fetchAll();
             } elseif ($tgts_id != "") {
@@ -202,6 +205,47 @@ class GastosModelo
         } finally {
             $pps = null;
             $con = null;
+        }
+    }
+
+
+    public static function mdlConsultarGastoByCaja($tgts_id_corte)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria  WHERE tgts_id_corte = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+
+    public static function mdlConsultarGastoByCaja2($tgts_id_corte2)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria  WHERE tgts_id_corte2 = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
         }
     }
 }

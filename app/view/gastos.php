@@ -1,10 +1,32 @@
 <script>
     var pagina = ""
 </script>
-<?php cargarComponente('breadcrumb', '', 'Nueva gastos'); ?>
+<?php cargarComponente('breadcrumb', '', 'Nueva gastos');
+$usuarios = UsuariosModelo::mdlMostrarAlumnosBySuc();
+?>
 <div class="container">
     <form method="post">
         <div class="row">
+            <div class="form-group col-md-4 col-12">
+                <label for="tgts_usuario_responsable">Empreado, Cobrador o Vendedor </label>
+                <select class="form-control" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
+                    <?php
+                    foreach ($usuarios as $key => $usr) : ?>
+                        <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 col-12">
+                <label for="tgts_ruta">Ruta</label>
+                <select class="form-control" name="tgts_ruta" id="tgts_ruta">
+                    <?php
+                    for ($i = 1; $i <= 14; $i++) :
+                    ?>
+                        <option value="<?php echo 'Ruta ' . $i ?>"><?php echo 'Ruta ' . $i ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
             <div class="form-group col-md-4 col-12">
                 <label for="tgts_categoria">Categoría</label>
                 <select name="tgts_categoria" id="tgts_categoria" class="form-control select2">
@@ -37,9 +59,9 @@
             </div>
             <div class="form-group col-12 col-md-8">
                 <label for="tgts_nota">Nota</label>
-                <textarea class="form-control" name="tgts_nota" id="tgts_nota" cols="30" rows="5"></textarea>
+                <textarea class="form-control area_larga" name="tgts_nota" id="tgts_nota" cols="30" rows="5"></textarea>
             </div>
-            <div class="form-group col-md-4 col-12">
+            <div class="form-group col-12">
                 <button type="submit" class="btn btn-primary float-right" name="btnGuardarGasto">Guardar gasto</button>
             </div>
         </div>

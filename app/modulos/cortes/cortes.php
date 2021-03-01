@@ -44,38 +44,14 @@
         $gastos_banco = CortesModelo::mdlConsultarTodoGastosPBByCorte($corte['copn_id']);
 
         // preArray($vfch_banco);
+        $totalEfectivoIngresos = 0;
+        $totalEfectivoGastos = 0;
+
+        $totalBancoIngresos = 0;
+        $totalBancoGastos = 0;
 
         ?>
-        <div class="alert alert-dark" role="alert">
-            <strong>FICHAS DE PAGO EFECTIVO</strong>
-        </div>
-        <table class="table table-striped  ">
-            <thead class="">
-                <tr>
-                    <th># Ficha</th>
-                    <!-- <th>Referenica</th> -->
-                    <th>Sub monto</th>
-                    <th>Monto total</th>
-                    <th>Cupón</th>
-                    <th>Fecha registro</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($vfch_efectivo as $key => $vfe) : ?>
-                    <tr>
 
-                        <td><?php echo $vfe['vfch_id'] ?></td>
-                        <!-- <td><?php echo $vfe['vfch_referencia'] ?></td> -->
-                        <td><?php echo number_format($vfe['vfch_sub_monto'], 2) ?></td>
-                        <td><?php echo number_format($vfe['vfch_monto'], 2)  ?></td>
-                        <td><?php echo $vfe['vfch_descuento'] ?></td>
-                        <td><?php echo $vfe['vfch_fecha_registro'] ?></td>
-                    </tr>
-                <?php endforeach; ?>
-
-
-            </tbody>
-        </table>
 
         <div class="alert alert-dark" role="alert">
             <strong>INGRESOS EFECTIVO</strong>
@@ -90,7 +66,9 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($ingreso_efectivo as $key => $ins) : ?>
+                <?php foreach ($ingreso_efectivo as $key => $ins) :
+                    $totalEfectivoIngresos +=  $ins['igs_monto'];
+                ?>
                     <tr>
 
                         <td><?php echo $ins['igs_id'] ?></td>
@@ -99,6 +77,10 @@
                         <td><?php echo $ins['igs_fecha_registro'] ?></td>
                     </tr>
                 <?php endforeach; ?>
+                <tr>
+                    <td colspan="2" class="text-center">ENTRADA:</td>
+                    <td colspan="2" class="text-danger"><strong><?php echo number_format($totalEfectivoIngresos, 2); ?></strong></td>
+                </tr>
 
 
             </tbody>
@@ -117,16 +99,21 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($gastos_efectivo as $key => $gst) : ?>
+                <?php foreach ($gastos_efectivo as $key => $gst) :
+                    $totalEfectivoGastos +=  $gst['tgts_cantidad'];
+                ?>
                     <tr>
 
                         <td><?php echo $gst['tgts_id'] ?></td>
-                        <td><?php echo $gst['tgts_concepto'] ?></td>
+                        <td><?php echo $gst['tgts_concepto'] . ' ' . $gst['gts_nombre'] ?></td>
                         <td><?php echo $gst['tgts_cantidad'] ?></td>
                         <td><?php echo $gst['tgts_fecha_gasto'] ?></td>
                     </tr>
                 <?php endforeach; ?>
-
+                <tr>
+                    <td colspan="2" class="text-center">SALIDA:</td>
+                    <td colspan="2" class="text-danger"><strong><?php echo number_format($totalEfectivoGastos, 2); ?></strong></td>
+                </tr>
 
             </tbody>
         </table>
@@ -141,7 +128,7 @@
             <thead>
                 <tr>
                     <td>
-                        Cantidad de inicio:
+                        CANTIDAD DE INICIO DE CAJA:
                     </td>
                     <td>
                         <strong><?php echo number_format($corte['copn_ingreso_inicio'], 2) ?></strong>
@@ -149,23 +136,23 @@
                 </tr>
                 <tr>
                     <td>
-                        Cantidad reportada:
+                        CANTIDAD REPORTADA:
                     </td>
                     <td>
-                        <strong><?php echo number_format($corte['copn_ingreso_efectivo'], 2) ?></strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Cantidad real:
-                    </td>
-                    <td>
-                        <strong><?php echo number_format($corte['copn_efectivo_real'], 2) ?></strong>
+                        <strong class=""><?php echo number_format($corte['copn_ingreso_efectivo'], 2) ?></strong>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Resultado:
+                        CANTIDAD A ENTREGAR:
+                    </td>
+                    <td>
+                        <strong class="text-danger" ><?php echo number_format($corte['copn_ingreso_inicio'] + $totalEfectivoIngresos - $totalEfectivoGastos, 2) ?></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        RESULTADO:
                     </td>
                     <td>
                         <?php
@@ -181,38 +168,7 @@
 
         </table>
 
-        <div class="alert alert-dark" role="alert">
-            <strong>FICHAS DE PAGO BANCO</strong>
-        </div>
-        <table class="table table-striped  ">
-            <thead class="">
-                <tr>
-                    <th># Ficha</th>
-                    <th>Método de pago</th>
-                    <th>Referenica</th>
-                    <th>Sub monto</th>
-                    <th>Monto total</th>
-                    <th>Cupón</th>
-                    <th>Fecha registro</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($vfch_banco as $key => $vfb) : ?>
-                    <tr>
 
-                        <td><?php echo $vfb['vfch_id'] ?></td>
-                        <td><?php echo $vfb['vfch_mp'] ?></td>
-                        <td><?php echo $vfb['vfch_referencia'] ?></td>
-                        <td><?php echo number_format($vfb['vfch_sub_monto'], 2) ?></td>
-                        <td><?php echo number_format($vfb['vfch_monto'], 2)  ?></td>
-                        <td><?php echo $vfb['vfch_descuento'] ?></td>
-                        <td><?php echo $vfb['vfch_fecha_registro'] ?></td>
-                    </tr>
-                <?php endforeach; ?>
-
-
-            </tbody>
-        </table>
         <div class="alert alert-dark" role="alert">
             <strong>INGRESOS BANCO</strong>
         </div>
@@ -227,7 +183,9 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($ingreso_banco as $key => $ins) : ?>
+                <?php foreach ($ingreso_banco as $key => $ins) :
+                    $totalBancoIngresos +=  $ins['igs_monto'];
+                ?>
                     <tr>
 
                         <td><?php echo $ins['igs_id'] ?></td>
@@ -237,7 +195,10 @@
                         <td><?php echo $ins['igs_fecha_registro'] ?></td>
                     </tr>
                 <?php endforeach; ?>
-
+                <tr>
+                    <td colspan="2" class="text-center">ENTRADA:</td>
+                    <td colspan="2" class="text-danger"><strong><?php echo number_format($totalBancoIngresos, 2); ?></strong></td>
+                </tr>
 
             </tbody>
         </table>
@@ -256,7 +217,9 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($gastos_banco as $key => $gst) : ?>
+                <?php foreach ($gastos_banco as $key => $gst) : 
+                    $totalBancoGastos +=  $gst['tgts_cantidad'];
+                    ?>
                     <tr>
 
                         <td><?php echo $gst['tgts_id'] ?></td>
@@ -266,7 +229,10 @@
                         <td><?php echo $gst['tgts_fecha_gasto'] ?></td>
                     </tr>
                 <?php endforeach; ?>
-
+                <tr>
+                    <td colspan="2" class="text-center">SALIDA:</td>
+                    <td colspan="2" class="text-danger"><strong><?php echo number_format($totalBancoGastos, 2); ?></strong></td>
+                </tr>
 
             </tbody>
         </table>
@@ -280,23 +246,23 @@
 
                 <tr>
                     <td>
-                        Cantidad reportada:
+                        CANTIDAD REPORTADA:
                     </td>
                     <td>
-                        <strong><?php echo number_format($corte['copn_ingreso_banco'], 2) ?></strong>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Cantidad real:
-                    </td>
-                    <td>
-                        <strong><?php echo number_format($corte['copn_banco_real'], 2) ?></strong>
+                        <strong class=""><?php echo number_format($corte['copn_ingreso_banco'], 2) ?></strong>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        Resultado:
+                        CANTIDAD A ENTREGAR:
+                    </td>
+                    <td>
+                        <strong class="text-danger" ><?php echo number_format($corte['copn_banco_real'], 2) ?></strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        RESULTADO:
                     </td>
                     <td>
                         <?php
@@ -368,9 +334,9 @@
                                     <a href="<?php echo HTTP_HOST . 'cortes/view-r/' . $cts['copn_id'] ?>" class="btn btn-secondary mt-1"><i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                         </i>
                                     </a>
-                                    <a href="<?php echo HTTP_HOST . 'cortes/view-t/' . $cts['copn_id'] ?>" class="btn btn-secondary mt-1"><i class="fa fa-file-text" aria-hidden="true"></i>
+                                    <!-- <a href="<?php echo HTTP_HOST . 'cortes/view-t/' . $cts['copn_id'] ?>" class="btn btn-secondary mt-1"><i class="fa fa-file-text" aria-hidden="true"></i>
                                         </i>
-                                    </a>
+                                    </a> -->
 
 
                                 </td>

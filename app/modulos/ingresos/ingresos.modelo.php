@@ -18,7 +18,7 @@ class IngresosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_ingresos_igs (igs_concepto,igs_monto,igs_fecha_registro,igs_usuario_registro,igs_mp,igs_id_sucursal,igs_id_corte) VALUES(?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_ingresos_igs (igs_concepto,igs_monto,igs_fecha_registro,igs_usuario_registro,igs_mp,igs_id_sucursal,igs_id_corte,igs_ruta,igs_usuario_responsable,igs_id_corte_2) VALUES(?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $igs['igs_concepto']);
@@ -28,6 +28,9 @@ class IngresosModelo
             $pps->bindValue(5, $igs['igs_mp']);
             $pps->bindValue(6, $igs['igs_id_sucursal']);
             $pps->bindValue(7, $igs['igs_id_corte']);
+            $pps->bindValue(8, $igs['igs_ruta']);
+            $pps->bindValue(9, $igs['igs_usuario_responsable']);
+            $pps->bindValue(10, $igs['igs_id_corte_2']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -99,6 +102,46 @@ class IngresosModelo
         } finally {
             $pps = null;
             $con = null;
+        }
+    }
+
+    public static function mdlConsultarIngresoByCaja($igs_id_corte)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_ingresos_igs  WHERE igs_id_corte = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+
+    public static function mdlConsultarIngresoByCaja2($igs_id_corte_2)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_ingresos_igs  WHERE igs_id_corte_2 = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte_2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
         }
     }
 }

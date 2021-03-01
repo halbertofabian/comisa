@@ -10,3 +10,4 @@
 <script src="<?php echo HTTP_HOST . 'app/modulos/gastos/gastos.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/compras/compras.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/ingresos/ingresos.js' ?>"></script>
+<script src="<?php echo HTTP_HOST . 'app/modulos/cortes/cortes.js' ?>"></script>

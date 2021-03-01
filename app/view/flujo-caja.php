@@ -1,0 +1,475 @@
+<script>
+    var pagina = ""
+</script>
+
+<div class="row">
+    <div class="col-12">
+        <?php cargarComponente('breadcrumb', '', 'Flujo de caja por usuario'); ?>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="flujo_usr">Nombre del usuario</label>
+            <select name="flujo_usr" id="flujo_usr" class="form-control select2">
+                <option value="">Seleccione un usuario</option>
+                <?php
+
+                $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+
+                foreach ($usuarios as $key => $usr) :
+
+                ?>
+
+                    <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
+
+                <?php endforeach; ?>
+            </select>
+
+        </div>
+    </div>
+    <div class="col-md-4  d-none">
+        <button class="btn btn-success mt-4">Abrir caja para este usuario</button>
+    </div>
+    <div class="col-md-4 btn-close-cash d-none">
+        <button class="btn btn-danger mt-4">Cerrar caja para este usuario</button>
+    </div>
+
+</div>
+<div class="row content-flujo d-none">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="text-success" style="font-size:18px">FLUJO DE INGRESOS (+)</h5>
+                <div><button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdlIngresos"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Usuario registro</th>
+                                    <th>Fecha</th>
+                                    <th class="text-danger"> <strong>Monto</strong> </th>
+                                    <th>MP</th>
+                                    <th>Concepto</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyIngresos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="text-danger" style="font-size:18px">FLUJO DE GASTOS (-)</h5>
+                <div><button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdlGastos"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Usuario registro</th>
+                                    <th>Fecha</th>
+                                    <th class="text-danger"> <strong>Monto</strong> </th>
+                                    <th>MP</th>
+                                    <th>Concepto</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyGastos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+
+        <div class="card">
+
+            <div class="card-body">
+                <div class="card-title">FLUJO EFECTIVO</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Entrada:</th>
+                            <th><strong id="igs_efectivo"></strong></th>
+                            <input type="hidden" name="" id="igs_efectivo_input">
+                        </tr>
+                        <tr>
+                            <th>Salida:</th>
+                            <th><strong id="tgts_efectivo"></strong></th>
+                            <input type="hidden" name="" id="tgts_efectivo_input">
+
+                        </tr>
+                        <tr>
+                            <th>Entregar: </th>
+                            <th><strong id="total_efectivo"></strong></th>
+                            <input type="hidden" name="" id="total_efectivo_input">
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="card">
+
+            <div class="card-body">
+                <div class="card-title">FLUJO BANCO</div>
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>Entrada:</th>
+                            <th><strong id="igs_banco"></strong></th>
+                            <input type="hidden" name="" id="igs_banco_input">
+
+                        </tr>
+                        <tr>
+                            <th>Salida:</th>
+                            <th><strong id="tgts_banco"></strong></th>
+                            <input type="hidden" name="" id="tgts_banco_input">
+
+                        </tr>
+                        <tr>
+                            <th>Entregar: </th>
+                            <th><strong id="total_banco"></strong></th>
+                            <input type="hidden" name="" id="total_banco_input">
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4">
+
+        <div class="card">
+
+            <div class="card-body">
+                <div class="card-title">FLUJO TOTAL</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Entrada:</th>
+                            <th><strong id="total_ing"></strong></th>
+                        </tr>
+                        <tr>
+                            <th>Salida:</th>
+                            <th><strong id="total_gts"></strong></th>
+                        </tr>
+                        <tr>
+                            <th>Entregar: </th>
+                            <th><strong id="total"></strong></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="div content-abrir-caja d-none">
+    <form method="post">
+        <?php 
+         $cajas = CajasModelo::mdlMostrarCajasDisponibles($_SESSION['session_suc']['scl_id']);
+
+        // if (sizeof($cajas) == 0) {
+        //     AppControlador::msj('warning', 'No hay cajas disponibles', 'Necesitan crear una caja o cerrar una ya existente', HTTP_HOST);
+        // }
+        ?>
+        <div class="row ">
+            <div class="col-md-4 col-12">
+                <div class="form-group">
+                    <label for="">Abrir caja para:</label>
+                    <input type="text" name="copn_usuario" id="copn_usuario" class="form-control" readonly placeholder="" aria-describedby="helpId">
+                    <input type="hidden" name="copn_usuario_abrio" id="copn_usuario_abrio">
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+
+                <label for="copn_id_caja">Cajas disponibles para <strong class="text-primary"><?php echo $_SESSION['session_suc']['scl_nombre'] ?> </strong> </label>
+                <select name="copn_id_caja" id="copn_id_caja" class="form-control">
+                    <option value="">Selecione una caja</option>
+                    <?php
+
+
+                    foreach ($cajas as $key => $cjs) :
+
+                    ?>
+                        <option value="<?php echo $cjs['cja_id_caja'] ?>"><?php echo $cjs['cja_nombre'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label for="copn_ingreso_inicio">Monto inicial:</label>
+                    <input type="text" name="copn_ingreso_inicio" id="copn_ingreso_inicio" class="form-control inputN">
+                </div>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary float-right" name="btnAbrirCaja">Abrir caja</button>
+            </div>
+
+        </div>
+
+        <?php
+        $abrirCaja = new CajasControlador();
+        $abrirCaja->ctrAbrirCaja2();
+        ?>
+    </form>
+</div>
+
+<div class="row content-cerrar-caja d-none">
+
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body">
+
+                <form id="formCerrarCaja" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-success">Caja abierta</h4>
+
+                                    <input type="hidden" id="cja_id_caja_input" name="cja_id_caja">
+                                    <input type="hidden" id="usr_caja_input" name="usr_caja">
+                                    <input type="hidden" id="usr_id_input" name="usr_id">
+                                    <input type="hidden" id="copn_id_input" name="copn_id">
+                                    <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
+                                    <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
+                                    <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>
+                                    <p class="card-text">Sucursal <strong id="cja_sucursal"> </strong> </p>
+                                    <p class="card-text">Fecha de apertura <strong id="cja_fecha_apertura"></strong> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">EFECTIVO</h4>
+                                    <div class="form-group">
+                                        <label for="copn_ingreso_efectivo">Introduce la cantidad en efectivo</label>
+                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" class="form-control inputN" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">BANCO</h4>
+                                    <div class="form-group">
+                                        <label for="copn_ingreso_banco">Introduce la cantidad en banco</label>
+                                        <input type="text" name="copn_ingreso_banco" id="copn_ingreso_banco" class="form-control inputN" placeholder="Transaferencias / Depositos / Pagos con Tarjeta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Modal Ingresos-->
+<div class="modal fade" id="mdlIngresos" tabindex="-1" role="dialog" aria-labelledby="mdlIngresosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdlIngresosLabel">Ingresos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="formIngreso">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="igs_usuario">Registrar ingreso para:</label>
+                                <input type="text" name="igs_usuario" id="igs_usuario" class="form-control" readonly>
+                                <input type="hidden" name="igs_usuario_responsable" id="igs_usuario_responsable">
+                            </div>
+                        </div>
+                        <input type="hidden" name="igs_ruta" id="igs_ruta">
+
+
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="igs_monto">Ingreso</label>
+                                <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="igs_concepto">Concepto:</label>
+                                <input type="text" name="igs_concepto" id="igs_concepto" class="form-control" placeholder="" required>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4 col-6">
+                            <label for="igs_mp">Método de pago</label>
+                            <select name="igs_mp" id="igs_mp" class="form-control">
+                                <option value="EFECTIVO">EFECTIVO</option>
+                                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                <option value="DEPOSITO">DEPOSITO</option>
+                                <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
+                            </select>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                    <button type="submit" class="btn btn-primary" name="btnAgregarIngreso">Registrar ingreso</button>
+                </div>
+                <?php
+                // $crearIngreso = new IngresosControlador();
+                // $crearIngreso->ctrAgregarIngresos();
+
+                ?>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Gastos-->
+<div class="modal fade" id="mdlGastos" tabindex="-1" role="dialog" aria-labelledby="mdlGastosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdlGastosLabel">Gastos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="formGasto">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-4 col-12">
+                            <label for="tgts_usuario_responsable">Registrar gasto para: </label>
+
+                            <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
+                            <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
+                        </div>
+                        <input type="hidden" name="tgts_ruta" id="tgts_ruta">
+
+
+                        <div class="form-group col-md-4 col-12">
+                            <label for="tgts_categoria">Categoría</label>
+                            <select name="tgts_categoria" id="tgts_categoria" class="form-control select2">
+                                <option value="">Elija una categoría</option>
+                            </select>
+                            <button type="button" class="btn btn-link float-right" data-toggle="modal" data-target="#mdlCategoria">
+                                Agregar nueva categoría
+                            </button>
+                        </div>
+                        <div class="form-group col-12 col-md-8">
+                            <label for="tgts_concepto">Concepto</label>
+                            <input type="text" name="tgts_concepto" id="tgts_concepto" class="form-control" placeholder="Escriba el concepto de este gasto">
+                        </div>
+                        <!-- <div class="form-group col-md-4 col-12">
+                <label for="tgts_fecha_gasto">Fecha de gasto</label>
+                <input type="date" name="tgts_fecha_gasto" id="tgts_fecha_gasto" class="form-control theDate">
+            </div> -->
+                        <div class="form-group col-md-4 col-12">
+                            <label for="tgts_cantidad">Cantidad</label>
+                            <input type="text" name="tgts_cantidad" id="tgts_cantidad" class="form-control inputN" placeholder="0.00">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="tgts_mp">Método de pago</label>
+                            <select name="tgts_mp" id="tgts_mp" class="form-control">
+                                <option value="EFECTIVO">EFECTIVO</option>
+                                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                <option value="DEPOSITO">DEPOSITO</option>
+                                <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="tgts_nota">
+                        <!-- <div class="form-group col-12 col-md-8 d-none">
+                            <label for="tgts_nota">Nota</label>
+                            <textarea class="form-control area_larga" name="tgts_nota" id="tgts_nota" cols="30" rows="5"></textarea>
+                        </div> -->
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                    <button type="submit" class="btn btn-primary" name="btnGuardarGasto">Registrar gasto</button>
+                </div>
+                <?php
+                // $crearGasto = new GastosControlador();
+                // $crearGasto->ctrCrearGasto();
+                ?>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="mdlCategoria" tabindex="-1" aria-labelledby="mdlCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdlCategoriaLabel">Nueva categoría</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="formAddCategoria">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="gts_nombre">Nombre de la categoría</label>
+                        <input type="text" name="gts_nombre" id="gts_nombre" class="form-control" placeholder="Introduzca el nombre de la categoría ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gts_presupuesto">Presupuesto mensual</label>
+                        <input type="text" name="gts_presupuesto" id="gts_presupuesto" class="form-control inputN" value="0.00">
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+                    <button type="submit" class="btn btn-primary">Agregar categoria</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

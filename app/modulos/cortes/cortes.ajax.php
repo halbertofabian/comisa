@@ -11,8 +11,6 @@
  *  Instagram: http://instagram.com/softmormx
  *  Twitter: https://twitter.com/softmormx
  */
-
-session_start();
 include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.modelo.php';
@@ -20,5 +18,5 @@ require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class CortesAjax
 {
+    
 }
-
