@@ -300,7 +300,7 @@
 
 
 <!-- Modal Ingresos-->
-<div class="modal fade" id="mdlIngresos" tabindex="-1" role="dialog" aria-labelledby="mdlIngresosLabel" aria-hidden="true">
+<div class="modal fade" role="dialog" id="mdlIngresos" >
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -364,7 +364,7 @@
 </div>
 
 <!-- Modal Gastos-->
-<div class="modal fade" id="mdlGastos" tabindex="-1" role="dialog" aria-labelledby="mdlGastosLabel" aria-hidden="true">
+<div class="modal fade" role="dialog" id="mdlGastos">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -437,7 +437,7 @@
 </div>
 
 
-<div class="modal fade" id="mdlCategoria" tabindex="-1" aria-labelledby="mdlCategoriaLabel" aria-hidden="true">
+<div class="modal fade" role="dialog" id="mdlCategoria">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
