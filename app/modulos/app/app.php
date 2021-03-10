@@ -11,7 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- App Icons -->
-    <link rel="shortcut icon" href="<?php echo ICON_APP?>">
+    <link rel="shortcut icon" href="<?php echo ICON_APP ?>">
 
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="<?php echo HTTP_HOST . 'app/' ?>plugins/morris/morris.css">
@@ -31,7 +31,7 @@
 
     <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.css" rel="stylesheet" />
 
-    
+
     <link href="<?php echo HTTP_HOST . 'app/' ?>plugins/summernote/summernote-bs4.css" rel="stylesheet" />
 
 
@@ -45,12 +45,19 @@
 
     <!-- jQuery  -->
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/jquery.min.js"></script>
-    
+
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+
+    <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/bootstrap.min.js"></script>
+    <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/bootstrap.min.js"></script>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script> -->
+
     <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/select2-c/js/select2.js"></script>
 
     <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.js"></script>
 
-    <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/modernizr.min.js"></script>
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/metisMenu.min.js"></script>
     <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/jquery.slimscroll.js"></script>
@@ -77,7 +84,7 @@
 
     <script src="<?php echo HTTP_HOST . 'app/' ?>plugins/jquery-number/jquery.number.js"></script>
 
-    
+
 
 </head>
 
@@ -94,9 +101,10 @@
     <?php if (isset($_SESSION['session']) && $_SESSION['session']) : ?>
 
 
-<?php
-  
-    ?>        <!-- Begin page -->
+        <?php
+
+        ?>
+        <!-- Begin page -->
         <div id="wrapper">
 
 
