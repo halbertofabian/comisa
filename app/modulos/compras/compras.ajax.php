@@ -12,7 +12,7 @@
  *  Twitter: https://twitter.com/softmormx
  */
 
-session_start();
+
 include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/compras/compras.modelo.php';
@@ -20,5 +20,63 @@ require_once DOCUMENT_ROOT . 'app/modulos/compras/compras.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class ComprasAjax
 {
+    public $pvs_nombre;
+    public $cps_folio;
+
+    public function ajaxCrearProveedor()
+    {
+        $proveedor = array('pvs_nombre' => $this->pvs_nombre);
+
+        $res = ComprasControlador::ctrCrearProveedor($proveedor);
+
+        echo json_encode($res);
+    }
+
+
+    public function ajaxLiquidarCompra()
+    {
+
+        $res = ComprasControlador::ctrLiquidarCompra($this->cps_folio);
+
+        echo json_encode($res);
+    }
+    public function ajaxlistarCompras()
+    {
+        $res = ComprasModelo::mdlConsultarGastosPorFecha($_POST);
+        echo json_encode($res, true);
+    }
+
+    public function ajaxEliminarCompra()
+    {
+        $eliminarCompra = ComprasControlador::ctrEliminaCompra($this->cps_folio);
+        echo json_encode($eliminarCompra);
+    }
+}
+
+
+if (isset($_POST['btnCrearProveedor'])) {
+    $crearVendedor = new ComprasAjax();
+    $crearVendedor->pvs_nombre = $_POST['pvs_nombre'];
+    $crearVendedor->ajaxCrearProveedor();
+}
+
+
+
+if (isset($_POST['btnLiquidarCompra'])) {
+    $liquidarCompra = new ComprasAjax();
+    $liquidarCompra->cps_folio = $_POST['cps_folio'];
+    $liquidarCompra->ajaxLiquidarCompra();
+}
+
+
+if (isset($_POST['listarCompras'])) {
+    $listarCompras = new ComprasAjax();
+    $listarCompras->ajaxlistarCompras();
+}
+
+if (isset($_POST['btnEliminarCompra'])) {
+    $eliminarCompra = new ComprasAjax();
+    $eliminarCompra->cps_folio = $_POST['cps_folio'];
+    $eliminarCompra->ajaxEliminarCompra();
 }
 

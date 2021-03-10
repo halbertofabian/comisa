@@ -40,7 +40,61 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="text-success" style="font-size:18px">FLUJO DE INGRESOS (+)</h5>
-                <div><button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdlIngresos"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                <div class="row">
+                    <div class="col-12">
+                        <form method="post" id="formIngreso">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="igs_usuario">Registrar ingreso para:</label>
+                                        <input type="text" name="igs_usuario" id="igs_usuario" class="form-control" readonly>
+                                        <input type="hidden" name="igs_usuario_responsable" id="igs_usuario_responsable">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="igs_ruta" id="igs_ruta">
+
+
+                                <div class="col-md-6 col-6">
+                                    <div class="form-group">
+                                        <label for="igs_monto">Ingreso</label>
+                                        <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="igs_concepto">Concepto:</label>
+                                        <input type="text" name="igs_concepto" id="igs_concepto" class="form-control" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 col-6">
+                                    <label for="igs_mp">Método de pago</label>
+                                    <select name="igs_mp" id="igs_mp" class="form-control">
+                                        <option value="EFECTIVO">EFECTIVO</option>
+                                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                        <option value="DEPOSITO">DEPOSITO</option>
+                                        <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
+                                    </select>
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
+                                <button type="submit" class="btn btn-primary" name="btnAgregarIngreso">Registrar ingreso</button>
+                            </div>
+                            <?php
+                            // $crearIngreso = new IngresosControlador();
+                            // $crearIngreso->ctrAgregarIngresos();
+
+                            ?>
+                        </form>
+                    </div>
+
+                </div>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -70,7 +124,57 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="text-danger" style="font-size:18px">FLUJO DE GASTOS (-)</h5>
-                <div><button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdlGastos"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+                <div class="row">
+                    <form method="post" id="formGasto">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-md-6 col-12">
+                                    <label for="tgts_usuario_responsable">Registrar gasto para: </label>
+
+                                    <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
+                                    <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
+                                </div>
+                                <input type="hidden" name="tgts_ruta" id="tgts_ruta">
+
+
+                                <div class="form-group col-md-6 col-12">
+                                    <label for="tgts_categoria">Categoría</label>
+                                    <select name="tgts_categoria" id="tgts_categoria" class="form-control select2">
+                                        <option value="">Elija una categoría</option>
+                                    </select>
+                                    <button type="button" class="btn btn-link float-right" data-toggle="modal" data-target="#mdlCategoria">
+                                        Agregar nueva categoría
+                                    </button>
+                                </div>
+                                <div class="form-group col-12 col-md-12">
+                                    <label for="tgts_concepto">Concepto</label>
+                                    <input type="text" name="tgts_concepto" id="tgts_concepto" class="form-control" placeholder="Escriba el concepto de este gasto">
+                                </div>
+                                <div class="form-group col-md-4 col-12">
+                                    <label for="tgts_cantidad">Cantidad</label>
+                                    <input type="text" name="tgts_cantidad" id="tgts_cantidad" class="form-control inputN" placeholder="0.00">
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label for="tgts_mp">Método de pago</label>
+                                    <select name="tgts_mp" id="tgts_mp" class="form-control">
+                                        <option value="EFECTIVO">EFECTIVO</option>
+                                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                        <option value="DEPOSITO">DEPOSITO</option>
+                                        <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="tgts_nota">
+                                
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
+                            <button type="submit" class="btn btn-primary" name="btnGuardarGasto">Registrar gasto</button>
+                        </div>
+
+                    </form>
+                </div>
 
             </div>
             <div class="card-body">
@@ -189,8 +293,8 @@
 
 <div class="div content-abrir-caja d-none">
     <form method="post">
-        <?php 
-         $cajas = CajasModelo::mdlMostrarCajasDisponibles($_SESSION['session_suc']['scl_id']);
+        <?php
+        $cajas = CajasModelo::mdlMostrarCajasDisponibles($_SESSION['session_suc']['scl_id']);
         ?>
         <div class="row ">
             <div class="col-md-4 col-12">
@@ -300,7 +404,7 @@
 
 
 <!-- Modal Ingresos-->
-<div class="modal fade" role="dialog" id="mdlIngresos" >
+<div class="modal fade" role="dialog" id="mdlIngresos">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -398,10 +502,6 @@
                             <label for="tgts_concepto">Concepto</label>
                             <input type="text" name="tgts_concepto" id="tgts_concepto" class="form-control" placeholder="Escriba el concepto de este gasto">
                         </div>
-                        <!-- <div class="form-group col-md-4 col-12">
-                <label for="tgts_fecha_gasto">Fecha de gasto</label>
-                <input type="date" name="tgts_fecha_gasto" id="tgts_fecha_gasto" class="form-control theDate">
-            </div> -->
                         <div class="form-group col-md-4 col-12">
                             <label for="tgts_cantidad">Cantidad</label>
                             <input type="text" name="tgts_cantidad" id="tgts_cantidad" class="form-control inputN" placeholder="0.00">
@@ -427,10 +527,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
                     <button type="submit" class="btn btn-primary" name="btnGuardarGasto">Registrar gasto</button>
                 </div>
-                <?php
-                // $crearGasto = new GastosControlador();
-                // $crearGasto->ctrCrearGasto();
-                ?>
+
             </form>
         </div>
     </div>
