@@ -8,20 +8,10 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="flujo_usr">Nombre del usuario</label>
-            <select name="flujo_usr" id="flujo_usr" class="form-control select2">
-                <option value="">Seleccione un usuario</option>
-                <?php
+            <label for="flujo_usr">Usuario responsable</label>
+            <select name="flujo_usr" id="flujo_usr" disabled class="form-control select2">
 
-                $usuarios = UsuariosModelo::mdlMostrarUsuarios();
-
-                foreach ($usuarios as $key => $usr) :
-
-                ?>
-
-                    <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
-
-                <?php endforeach; ?>
+                <option value="<?php echo $_SESSION['session_usr']['usr_id'] ?>"><?php echo $_SESSION['session_usr']['usr_nombre'] ?></option>
             </select>
 
         </div>
@@ -34,6 +24,8 @@
     </div>
 
 </div>
+
+
 <div class="row content-flujo d-none">
 
     <div class="col-md-6">
@@ -96,6 +88,9 @@
             </div>
         </div>
     </div>
+
+
+
     <div class="col-md-4">
 
         <div class="card">
@@ -185,12 +180,129 @@
         </div>
 
     </div>
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h4 class="card-title">Tabulador</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+
+
+                                    <th>Denominación:</th>
+                                    <th>Cantidad:</th>
+                                    <th>Total:</th>
+
+
+                                </tr>
+                                <tr>
+                                    <th>
+                                        1000
+                                    </th>
+                                    <th>
+                                        <input type="number" class="form-control inpt_tab " id="den_1000" name>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control inputN" id="res_1000" name>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        500
+                                    </th>
+                                    <th>
+                                        <input type="number" class="form-control inpt_tab " id="den_500" name>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control inputN" id="res_500" name>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        200
+                                    </th>
+                                    <th>
+                                        <input type="number" class="form-control inpt_tab " id="den_200" name>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control inputN" id="res_200" name>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        100
+                                    </th>
+                                    <th>
+                                        <input type="number" class="form-control inpt_tab " id="den_100" name>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control inputN" id="res_100" name>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        50
+                                    </th>
+                                    <th>
+                                        <input type="number" class="form-control inpt_tab " id="den_50" name>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control inputN" id="res_50" name>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        20
+                                    </th>
+                                    <th>
+                                        <input type="number" class="form-control inpt_tab " id="den_20" name>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control inputN" id="res_20" name>
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+                                        Monedas
+                                    </th>
+                                    <th>
+                                        <input type="number" class="form-control inpt_tab " id="den_20" name>
+                                    </th>
+                                    <th>
+                                        <input type="text" class="form-control inputN" id="res_20" name>
+                                    </th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td scope="row"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="div content-abrir-caja d-none">
     <form method="post">
-        <?php 
-         $cajas = CajasModelo::mdlMostrarCajasDisponibles($_SESSION['session_suc']['scl_id']);
+        <?php
+        $cajas = CajasModelo::mdlMostrarCajasDisponibles($_SESSION['session_suc']['scl_id']);
         ?>
         <div class="row ">
             <div class="col-md-4 col-12">

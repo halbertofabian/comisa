@@ -34,7 +34,9 @@ class AppControlador
             'almacenes',
             'compras',
             'traspasos',
-            'flujo-caja'
+            'flujo-caja',
+            'cuentas',
+            'mi-flujo-caja'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -321,7 +323,7 @@ class AppControlador
             ),
             '8' => array(
                 [
-                    'label' => 'Cortes',
+                    'label' => 'Caja',
                     'icon' => '<i class="link-icon fa fa-dollar"></i>',
                     'href' => '#softMarket',
                     'modulos' =>
@@ -330,6 +332,12 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Crear nueva caja',
                             'href' => 'cajas'
+                        ],
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Mi flujo de caja',
+                            'href' => 'mi-flujo-caja'
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
@@ -340,6 +348,34 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Listar cortes',
                             'href' => 'cortes'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+
+            '9' => array(
+                [
+                    'label' => 'Cuentas',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Crear nueva cuenta',
+                            'href' => 'cuentas/new'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar cuentas',
+                            'href' => 'cuentas'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Movimientos de cuenta',
+                            'href' => 'cuentas/movimientos'
                         ],
 
                         // Aqui más item de menu

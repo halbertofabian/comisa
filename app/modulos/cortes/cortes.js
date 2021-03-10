@@ -11,14 +11,15 @@
  */
 
 
-
-$("#flujo_usr").on("change", function () {
-
+$(document).ready(function () {
     var flujo_usr = $("#flujo_usr").val();
     buscarFlujoCaja(flujo_usr)
+})
 
 
-
+$("#flujo_usr").on("change", function () {
+    var flujo_usr = $("#flujo_usr").val();
+    buscarFlujoCaja(flujo_usr)
 })
 
 
@@ -379,3 +380,6 @@ function limpiarCampos() {
     $("#tgts_cantidad").val("")
     $("#tgts_mp").val("EFECTIVO")
 }
+
+
+$("#inpt_tab")
