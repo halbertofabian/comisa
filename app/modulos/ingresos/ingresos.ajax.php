@@ -19,6 +19,9 @@ require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.controlador.php';
 
+require_once DOCUMENT_ROOT . 'app/modulos/cuentas/cuentas.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cuentas/cuentas.controlador.php';
+
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';

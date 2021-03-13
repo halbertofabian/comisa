@@ -50,33 +50,76 @@
                                         <label for="igs_usuario">Registrar ingreso para:</label>
                                         <input type="text" name="igs_usuario" id="igs_usuario" class="form-control" readonly>
                                         <input type="hidden" name="igs_usuario_responsable" id="igs_usuario_responsable">
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="igs_tipo">TIPO DE INGRESO</label>
+                                        <select class="form-control" name="igs_tipo" id="igs_tipo">
+                                            <option>COBRANZA</option>
+                                            <option>S/E</option>
+                                            <option>CONTADO</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <input type="hidden" name="igs_ruta" id="igs_ruta">
 
 
-                                <div class="col-md-6 col-6">
+                                <div class="col-md-4 col-12">
                                     <div class="form-group">
-                                        <label for="igs_monto">Ingreso</label>
-                                        <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder="">
+                                        <label for="igs_monto">Cantidad</label>
+                                        <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" required placeholder="0.00">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="igs_concepto">Concepto:</label>
-                                        <input type="text" name="igs_concepto" id="igs_concepto" class="form-control" placeholder="" required>
+                                        <input type="text" name="igs_concepto" id="igs_concepto" class="form-control" placeholder="" >
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6 col-6">
                                     <label for="igs_mp">Método de pago</label>
                                     <select name="igs_mp" id="igs_mp" class="form-control">
                                         <option value="EFECTIVO">EFECTIVO</option>
-                                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
                                         <option value="DEPOSITO">DEPOSITO</option>
+                                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
                                         <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
                                     </select>
                                 </div>
+                                <div class="col-md-6"></div>
+
+                                <div class="col-md-12 content-cuenta d-none" id="content-cuenta">
+                                    <div class="row">
+
+                                        <div class="col-6 col-md-6">
+                                            <div class="form-group">
+                                                <label for="igs_cuenta">Cuenta</label>
+                                                <select class="form-control" name="igs_cuenta" id="igs_cuenta">
+
+                                                    <option value="">Seleccione una cuenta</option>
+                                                    <?php
+                                                    $cuentas = CuentasModelo::mdlMostrarCuentas();
+                                                    foreach ($cuentas as $key => $cbco) : ?>
+
+                                                        <option value="<?php echo $cbco['cbco_id'] ?>"><?php echo $cbco['cbco_nombre'] ?></option>
+
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="igs_referencia">Referencia</label>
+                                                <input type="text" name="igs_referencia" id="igs_referencia" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
 
 
 
@@ -146,13 +189,13 @@
                                         Agregar nueva categoría
                                     </button>
                                 </div>
-                                <div class="form-group col-12 col-md-12">
-                                    <label for="tgts_concepto">Concepto</label>
-                                    <input type="text" name="tgts_concepto" id="tgts_concepto" class="form-control" placeholder="Escriba el concepto de este gasto">
-                                </div>
                                 <div class="form-group col-md-4 col-12">
                                     <label for="tgts_cantidad">Cantidad</label>
                                     <input type="text" name="tgts_cantidad" id="tgts_cantidad" class="form-control inputN" placeholder="0.00">
+                                </div>
+                                <div class="form-group col-12 col-md-8">
+                                    <label for="tgts_concepto">Concepto</label>
+                                    <input type="text" name="tgts_concepto" id="tgts_concepto" class="form-control" placeholder="Escriba el concepto de este gasto">
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="tgts_mp">Método de pago</label>
@@ -164,7 +207,7 @@
                                     </select>
                                 </div>
                                 <input type="hidden" name="tgts_nota">
-                                
+
 
                             </div>
                         </div>
@@ -219,7 +262,7 @@
                             <input type="hidden" name="" id="tgts_efectivo_input">
 
                         </tr>
-                        <tr>
+                        <tr style="background-color:blue; color:#fff; font-size: 20px;">
                             <th>Entregar: </th>
                             <th><strong id="total_efectivo"></strong></th>
                             <input type="hidden" name="" id="total_efectivo_input">
@@ -308,7 +351,7 @@
             <div class="col-12 col-md-4">
 
                 <label for="copn_id_caja">Cajas disponibles para <strong class="text-primary"><?php echo $_SESSION['session_suc']['scl_nombre'] ?> </strong> </label>
-                <select name="copn_id_caja" id="copn_id_caja" class="form-control">
+                <select name="copn_id_caja" id="copn_id_caja" class="form-control select2">
                     <option value="">Selecione una caja</option>
                     <?php
 
@@ -324,7 +367,7 @@
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="copn_ingreso_inicio">Monto inicial:</label>
-                    <input type="text" name="copn_ingreso_inicio" id="copn_ingreso_inicio" class="form-control inputN">
+                    <input type="text" readonly name="copn_ingreso_inicio" value="<?php echo $cjs['cja_saldo'] ?>" id="copn_ingreso_inicio" class="form-control inputN">
                 </div>
             </div>
             <div class="col-12">
@@ -366,18 +409,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">RETIRO DE CAJA</h4>
+                                    <div class="form-group">
+                                        <label for="copn_saldo">Introduce la cantidad de retiro</label>
+                                        <input type="text" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">EFECTIVO</h4>
                                     <div class="form-group">
                                         <label for="copn_ingreso_efectivo">Introduce la cantidad en efectivo</label>
-                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" class="form-control inputN" placeholder="">
+                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" class="form-control inputN">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">BANCO</h4>
@@ -388,6 +442,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-12">
                             <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja</button>
                         </div>

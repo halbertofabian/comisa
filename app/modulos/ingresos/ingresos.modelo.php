@@ -18,7 +18,7 @@ class IngresosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_ingresos_igs (igs_concepto,igs_monto,igs_fecha_registro,igs_usuario_registro,igs_mp,igs_id_sucursal,igs_id_corte,igs_ruta,igs_usuario_responsable,igs_id_corte_2) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_ingresos_igs (igs_concepto,igs_monto,igs_fecha_registro,igs_usuario_registro,igs_mp,igs_id_sucursal,igs_id_corte,igs_ruta,igs_usuario_responsable,igs_id_corte_2,igs_referencia,igs_tipo,igs_cuenta) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $igs['igs_concepto']);
@@ -31,6 +31,9 @@ class IngresosModelo
             $pps->bindValue(8, $igs['igs_ruta']);
             $pps->bindValue(9, $igs['igs_usuario_responsable']);
             $pps->bindValue(10, $igs['igs_id_corte_2']);
+            $pps->bindValue(11, $igs['igs_referencia']);
+            $pps->bindValue(12, $igs['igs_tipo']);
+            $pps->bindValue(13, $igs['igs_cuenta']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

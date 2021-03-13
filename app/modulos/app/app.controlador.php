@@ -36,7 +36,8 @@ class AppControlador
             'traspasos',
             'flujo-caja',
             'cuentas',
-            'mi-flujo-caja'
+            'mi-flujo-caja',
+            'fichas'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -334,11 +335,7 @@ class AppControlador
                             'href' => 'cajas'
                         ],
 
-                        [
-                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Mi flujo de caja',
-                            'href' => 'mi-flujo-caja'
-                        ],
+
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Flujo de caja',
@@ -376,6 +373,24 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Movimientos de cuenta',
                             'href' => 'cuentas/movimientos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+
+            '10' => array(
+                [
+                    'label' => 'Fichas de cobro',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Ficha de cobro',
+                            'href' => 'fichas/cobrador/'
                         ],
 
                         // Aqui más item de menu

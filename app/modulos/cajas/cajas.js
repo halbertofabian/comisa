@@ -18,57 +18,94 @@ $("#formCerrarCaja").on("submit", function (e) {
     var copn_ingreso_efectivo = Number($("#copn_ingreso_efectivo").val())
     var copn_ingreso_banco = Number($("#copn_ingreso_banco").val())
 
+    var total_efectivo_input = Number($("#copn_ingreso_efectivo").val())
+    var total_efectivo_retiro = Number($("#copn_saldo").val())
+
+    var copn_saldo = total_efectivo_input - total_efectivo_retiro;
+
+
+
     swal({
         title: "¿Estás seguro de cerrar caja ahora?",
-        text: "  EFECTIVO: " + copn_ingreso_efectivo + "\n BANCO: " + copn_ingreso_banco,
+        text: "  EFECTIVO: " + copn_ingreso_efectivo + "\n BANCO: " + copn_ingreso_banco + "\n RETIRO DE CAJA: " + total_efectivo_retiro + "\n SALDO EN CAJA: " + copn_saldo,
         icon: "warning",
-        buttons: ["No, cancelar", "Si, cerrar caja "],
+        buttons: ["No, cancelar", "Si, confirmar "],
         dangerMode: false,
-        closeOnClickOutside: false,
+        closeOnClickOutside: true,
     })
         .then((willDelete) => {
             if (willDelete) {
 
-                var datos = new FormData(this);
-
-                datos.append("btnCerrarCaja", true);
-
-                $.ajax({
-                    type: "POST",
-                    url: urlApp + 'app/modulos/cajas/cajas.ajax.php',
-                    data: datos,
-                    dataType: "json",
-                    processData: false,
-                    contentType: false,
-                    beforeSend: function () {
-
+                swal("Guardar como...", {
+                    content: {
+                        element: "input",
+                        attributes: {
+                            type: "text",
+                            value: "CAJA " + today + " T. ",
+                        },
                     },
-                    success: function (res) {
+                })
+                    .then((copn_registro) => {
+                        if (copn_registro == "") {
 
-                        if (res.status) {
-                            swal({
-                                title: "Muy bien",
-                                text: res.mensaje,
-                                icon: "success",
-                                buttons: [false, "Continuar"],
-                                dangerMode: true,
-                                closeOnClickOutside: false,
-
-                            })
-                                .then((willDelete) => {
-                                    if (willDelete) {
-                                        location.href = res.pagina
-                                    } else {
-                                        location.href = res.pagina
-                                    }
-                                });
+                            toastr.error('Error', 'Guarda el corte con otro nombre...')
 
                         } else {
-                            toastr.error(res.mensaje, 'Error')
-                        }
 
-                    }
-                })
+                            var datos = new FormData(this);
+
+                            datos.append("btnCerrarCaja", true);
+                            datos.append("copn_saldo",copn_saldo)
+                            datos.append("copn_registro",copn_registro)
+                            datos.append("copn_tipo_caja",'CAJA_COBRANZA_G')
+
+
+
+                            
+
+                            $.ajax({
+                                type: "POST",
+                                url: urlApp + 'app/modulos/cajas/cajas.ajax.php',
+                                data: datos,
+                                dataType: "json",
+                                processData: false,
+                                contentType: false,
+                                beforeSend: function () {
+
+                                },
+                                success: function (res) {
+
+                                    if (res.status) {
+                                        swal({
+                                            title: "Muy bien",
+                                            text: res.mensaje,
+                                            icon: "success",
+                                            buttons: [false, "Continuar"],
+                                            dangerMode: true,
+                                            closeOnClickOutside: false,
+
+                                        })
+                                            .then((willDelete) => {
+                                                if (willDelete) {
+                                                    location.href = res.pagina
+                                                } else {
+                                                    location.href = res.pagina
+                                                }
+                                            });
+
+                                    } else {
+                                        toastr.error(res.mensaje, 'Error')
+                                    }
+
+                                }
+                            })
+
+                        }
+                    });
+
+
+
+
 
             }
         })

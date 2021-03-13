@@ -32,6 +32,34 @@ class IngresosControlador
                     'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
                 );
             }
+
+
+            if ($_POST['igs_mp'] != 'EFECTIVO') {
+
+                // Validar que no vengan vacios los campos 
+
+                if ($_POST['igs_referencia'] == "") {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'El método de pago es vía ' . $_POST['igs_mp'] . ', complete el campo de referencía'
+                    );
+                }
+
+                if ($_POST['igs_cuenta'] == "") {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'El método de pago es vía ' . $_POST['igs_mp'] . ', seleccione una cuenta destino'
+                    );
+                }
+                // validar que no se repita la referencia
+
+
+
+            } else {
+                $_POST['igs_referencia'] = "";
+                $_POST['igs_cuenta'] = "";
+            }
+
             $_POST['igs_id_corte'] = $igs_id_corte['usr_caja'];
 
             $_POST['igs_id_corte_2'] = $igs_id_corte2['usr_caja'];
@@ -47,10 +75,22 @@ class IngresosControlador
             $crearIngreso = IngresosModelo::mdlAgregarIngresos($_POST);
 
             if ($crearIngreso) {
-                return array(
-                    'status' => true,
-                    'mensaje' => 'Ingreso registrado con exito'
-                );
+                $bandera = true;
+                if ($_POST['igs_mp'] != 'EFECTIVO') {
+                    $bandera = CuentasModelo::mdlActualizarSaldoCuenta($_POST['igs_cuenta'], $_POST['igs_monto']);
+                }
+
+                if ($bandera) {
+                    return array(
+                        'status' => true,
+                        'mensaje' => 'Ingreso registrado con exito'
+                    );
+                } else {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Ingreso no registrado, intenta de nuevo'
+                    );
+                }
             } else {
                 return array(
                     'status' => false,

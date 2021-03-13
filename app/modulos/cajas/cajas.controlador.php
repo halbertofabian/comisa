@@ -64,7 +64,7 @@ class CajasControlador
                 $asignarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_SESSION['session_usr']['usr_id'], $ultimaCajaAbierta['copn_id']);
 
                 if ($asignarCajaUsuario) {
-                    CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id']);
+                    CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'],'');
                     $_SESSION['session_usr']['usr_caja'] =  $ultimaCajaAbierta['copn_id'];
                     AppControlador::msj('success', 'CAJA ABIERTA', '', HTTP_HOST);
                 } else {
@@ -96,10 +96,40 @@ class CajasControlador
 
                 $asignarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['copn_usuario_abrio'], $ultimaCajaAbierta['copn_id']);
 
+
+
                 if ($asignarCajaUsuario) {
-                    CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id']);
-                    //$_SESSION['session_usr']['usr_caja'] =  $ultimaCajaAbierta['copn_id'];
-                    AppControlador::msj('success', 'CAJA ABIERTA', '', HTTP_HOST . 'flujo-caja');
+
+                    // Registrar ingreso en caja del saldo 
+
+                    
+                    $ingresoCaja = IngresosModelo::mdlAgregarIngresos(array(
+                        'igs_concepto' => 'INICIO DE CAJA',
+                        'igs_monto' => $_POST['copn_ingreso_inicio'],
+                        'igs_fecha_registro' => FECHA,
+                        'igs_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
+                        'igs_mp' => 'EFECTIVO',
+                        'igs_id_sucursal' => $_SESSION['session_suc']['scl_id'],
+                        'igs_id_corte' => $ultimaCajaAbierta['copn_id'],
+                        'igs_ruta' => '',
+                        'igs_usuario_responsable' => $_POST['copn_usuario_abrio'],
+                        'igs_id_corte_2' => $ultimaCajaAbierta['copn_id'],
+                        'igs_referencia' => '',
+                        'igs_tipo' => '',
+                        'igs_cuenta' => ''
+
+
+                    ));
+
+                    if ($ingresoCaja) {
+                        CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'],$_POST['copn_ingreso_inicio']);
+
+
+                        //$_SESSION['session_usr']['usr_caja'] =  $ultimaCajaAbierta['copn_id'];
+                        AppControlador::msj('success', 'CAJA ABIERTA', '', HTTP_HOST . 'flujo-caja');
+                    } else {
+                        AppControlador::msj('error', 'Error no identificado', '', HTTP_HOST . 'flujo-caja');
+                    }
                 } else {
                 }
             }
@@ -112,22 +142,36 @@ class CajasControlador
         if (isset($_POST['btnCerrarCaja'])) {
 
             $crt_id = $_POST['usr_caja'];
-            $montos = array(
-                'monto_fichas_e' => CortesModelo::mdlConsultarMontoFichasPEByCorte($crt_id),
-                'monto_fichas_b' => CortesModelo::mdlConsultarMontoFichasPBByCorte($crt_id),
-                'monto_ingresos_e' => CortesModelo::mdlConsultarMontoIngresosPEByCorte($crt_id),
-                'monto_ingresos_b' => CortesModelo::mdlConsultarMontoIngresosPBByCorte($crt_id),
-                'monto_gastos_e' => CortesModelo::mdlConsultarMontoGastosPEByCorte($crt_id),
-                'monto_gastos_b' => CortesModelo::mdlConsultarMontoGastosPBByCorte($crt_id),
-            );
+
+            if ($_POST['usr_caja'] == $_SESSION['session_usr']['usr_caja']) {
+                $montos = array(
+
+                    'monto_ingresos_e' => CortesModelo::mdlConsultarMontoIngresosPEByCorte2($crt_id),
+                    'monto_ingresos_b' => CortesModelo::mdlConsultarMontoIngresosPBByCorte2($crt_id),
+                    'monto_gastos_e' => CortesModelo::mdlConsultarMontoGastosPEByCorte2($crt_id),
+                    'monto_gastos_b' => CortesModelo::mdlConsultarMontoGastosPBByCorte2($crt_id),
+                );
+            } else {
+
+                $montos = array(
+
+                    'monto_ingresos_e' => CortesModelo::mdlConsultarMontoIngresosPEByCorte($crt_id),
+                    'monto_ingresos_b' => CortesModelo::mdlConsultarMontoIngresosPBByCorte($crt_id),
+                    'monto_gastos_e' => CortesModelo::mdlConsultarMontoGastosPEByCorte($crt_id),
+                    'monto_gastos_b' => CortesModelo::mdlConsultarMontoGastosPBByCorte($crt_id),
+                );
+            }
 
 
 
-            $monto_e = $montos['monto_fichas_e']['monto_total'] + $montos['monto_ingresos_e']['monto_total'];
+
+
+
+            $monto_e =  $montos['monto_ingresos_e']['monto_total'];
 
             $monto_g_e = $montos['monto_gastos_e']['monto_total'];
 
-            $monto_b = $montos['monto_fichas_b']['monto_total'] + $montos['monto_ingresos_b']['monto_total'];
+            $monto_b =  $montos['monto_ingresos_b']['monto_total'];
 
             $monto_g_b = $montos['monto_gastos_b']['monto_total'];
 
@@ -151,9 +195,13 @@ class CajasControlador
             if ($ActaulizarCajaCierre) {
                 $cerrarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['usr_id'], 0);
                 if ($cerrarCajaUsuario) {
-                    $cerrarCaja = CajasModelo::mdlActualizarDisponibilidadCaja(0, $_POST['cja_id_caja'], 0);
+                    $cerrarCaja = CajasModelo::mdlActualizarDisponibilidadCaja(0, $_POST['cja_id_caja'], 0, $_POST['copn_saldo']);
                     if ($cerrarCaja) {
-                        $_SESSION['session_usr']['usr_caja'] =  0;
+
+
+                        if ($_POST['usr_caja'] == $_SESSION['session_usr']['usr_caja']) {
+                            $_SESSION['session_usr']['usr_caja'] =  0;
+                        }
 
                         return array(
                             'mensaje' => 'Corte realizado',

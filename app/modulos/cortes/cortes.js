@@ -11,10 +11,56 @@
  */
 
 
-$(document).ready(function () {
-    var flujo_usr = $("#flujo_usr").val();
-    buscarFlujoCaja(flujo_usr)
+// $(document).ready(function () {
+//     var flujo_usr = $("#flujo_usr").val();
+//     buscarFlujoCaja(flujo_usr)
+// })
+
+$("#igs_mp").on("change", function () {
+
+    var igs_mp = $(this).val()
+
+    
+
+    if (igs_mp != 'EFECTIVO') {
+        $("#content-cuenta").removeClass("d-none");
+        $("#igs_referencia").val("");
+        $("#igs_cuenta").val("");      
+    }else{
+        $("#content-cuenta").addClass("d-none");
+        $("#igs_referencia").val("");
+        $("#igs_cuenta").val("");
+    }
+
 })
+
+
+
+$("#copn_id_caja").on("change", function () {
+    var cja_id_caja = $(this).val();
+    var datos = new FormData()
+
+    datos.append("cja_id_caja", cja_id_caja)
+    datos.append("btnBuscarCajaSaldo", true)
+
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/cajas/cajas.ajax.php',
+        data: datos,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+
+        },
+        success: function (res) {
+
+            $("#copn_ingreso_inicio").val(res.cja_saldo);
+
+        }
+    })
+})
+
 
 
 $("#flujo_usr").on("change", function () {
@@ -65,7 +111,7 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
                         <td>${igs.igs_fecha_registro}</td>
                         <td>${igs.igs_monto}</td>
                         <td>${igs.igs_mp}</td>
-                        <td>${igs.igs_concepto}</td>
+                        <td>${igs.igs_concepto}  ${igs.igs_tipo}</td>
                         
                     
                     </tr>
@@ -85,9 +131,13 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
             $("#total_efectivo_input").val(totalEfectivo)
             $("#total_efectivo").html(totalEfectivo)
 
+            $("#copn_ingreso_efectivo").val(totalEfectivo)
+
             var totalBanco = $("#igs_banco_input").val() - $("#tgts_banco_input").val()
             $("#total_banco_input").val(totalBanco)
             $("#total_banco").html(totalBanco)
+            $("#copn_ingreso_banco").val(totalBanco)
+
 
             $("#total_ing").html(Number($("#igs_efectivo_input").val()) + Number($("#igs_banco_input").val()))
 
@@ -162,11 +212,15 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
             var totalEfectivo = $("#igs_efectivo_input").val() - $("#tgts_efectivo_input").val()
             $("#total_efectivo_input").val(totalEfectivo)
             $("#total_efectivo").html(totalEfectivo)
+            $("#copn_ingreso_efectivo").val(totalEfectivo)
+
 
 
             var totalBanco = $("#igs_banco_input").val() - $("#tgts_banco_input").val()
             $("#total_banco_input").val(totalBanco)
             $("#total_banco").html(totalBanco)
+            $("#copn_ingreso_banco").val(totalBanco)
+
 
             $("#total_gts").html(totalEfectivo + totalBanco)
 
@@ -339,6 +393,12 @@ $("#formGasto").on("submit", function (e) {
 
     e.preventDefault();
 
+    var tgts_cantidad = Number($("#tgts_cantidad").val())
+
+    if (tgts_cantidad == 0) {
+        toastr.error("Asegurate de introducir cantidades mayor a 0", "Error")
+        return;
+    }
 
     var datos = new FormData(this)
     datos.append("btnGuardarGasto", true)
@@ -379,6 +439,9 @@ function limpiarCampos() {
     $("#tgts_concepto").val("")
     $("#tgts_cantidad").val("")
     $("#tgts_mp").val("EFECTIVO")
+    $("#content-cuenta").addClass("d-none");
+    $("#igs_referencia").val("");
+    $("#igs_cuenta").val("");
 }
 
 

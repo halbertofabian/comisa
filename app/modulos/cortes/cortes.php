@@ -37,11 +37,20 @@
         $vfch_efectivo = CortesModelo::mdlConsultarTodoFichasPEByCorte($corte['copn_id']);
         $vfch_banco = CortesModelo::mdlConsultarTodoFichasPBByCorte($corte['copn_id']);
 
-        $ingreso_efectivo = CortesModelo::mdlConsultarTodoIngresosPEByCorte($corte['copn_id']);
-        $ingreso_banco = CortesModelo::mdlConsultarTodoIngresosPBByCorte($corte['copn_id']);
+        // $ingreso_efectivo = CortesModelo::mdlConsultarTodoIngresosPEByCorte($corte['copn_id']);
+        // $ingreso_banco = CortesModelo::mdlConsultarTodoIngresosPBByCorte($corte['copn_id']);
 
-        $gastos_efectivo = CortesModelo::mdlConsultarTodoGastosPEByCorte($corte['copn_id']);
-        $gastos_banco = CortesModelo::mdlConsultarTodoGastosPBByCorte($corte['copn_id']);
+        // $gastos_efectivo = CortesModelo::mdlConsultarTodoGastosPEByCorte($corte['copn_id']);
+        // $gastos_banco = CortesModelo::mdlConsultarTodoGastosPBByCorte($corte['copn_id']);
+
+
+        $ingreso_efectivo = CortesModelo::mdlConsultarTodoIngresosPEByCorte2($corte['copn_id']);
+
+        
+        $ingreso_banco = CortesModelo::mdlConsultarTodoIngresosPBByCorte2($corte['copn_id']);
+
+        $gastos_efectivo = CortesModelo::mdlConsultarTodoGastosPEByCorte2($corte['copn_id']);
+        $gastos_banco = CortesModelo::mdlConsultarTodoGastosPBByCorte2($corte['copn_id']);
 
         // preArray($vfch_banco);
         $totalEfectivoIngresos = 0;
@@ -60,6 +69,7 @@
             <thead class="">
                 <tr>
                     <th>#</th>
+                    <th>Usuario</th>
                     <th>Concepto</th>
                     <th>Monto</th>
                     <th>Fecha de registro</th>
@@ -72,6 +82,7 @@
                     <tr>
 
                         <td><?php echo $ins['igs_id'] ?></td>
+                        <td><?php echo $ins['usr_nombre'] ?></td>
                         <td><?php echo $ins['igs_concepto'] ?></td>
                         <td><?php echo $ins['igs_monto'] ?></td>
                         <td><?php echo $ins['igs_fecha_registro'] ?></td>
@@ -93,6 +104,7 @@
             <thead class="">
                 <tr>
                     <th>#</th>
+                    <th>Usuario</th>
                     <th>Concepto</th>
                     <th>Monto</th>
                     <th>Fecha de registro</th>
@@ -105,6 +117,7 @@
                     <tr>
 
                         <td><?php echo $gst['tgts_id'] ?></td>
+                        <td><?php echo $gst['usr_nombre'] ?></td>
                         <td><?php echo $gst['tgts_concepto'] . ' ' . $gst['gts_nombre'] ?></td>
                         <td><?php echo $gst['tgts_cantidad'] ?></td>
                         <td><?php echo $gst['tgts_fecha_gasto'] ?></td>

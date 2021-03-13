@@ -1,5 +1,10 @@
 <script>
     var pagina = ""
+
+    $(document).ready(function() {
+        var flujo_usr = $("#flujo_usr").val();
+        buscarFlujoCaja(flujo_usr)
+    })
 </script>
 
 <div class="row">

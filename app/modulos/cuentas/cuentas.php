@@ -39,8 +39,9 @@
 
                             <td><?php echo $cbco['cbco_id'] ?></td>
                             <td><?php echo $cbco['cbco_nombre'] ?></td>
-                            <td><?php echo number_format($cbco['cbco_saldo'], 2) ?></td>
-                            <td></td>
+                            <td><?php echo number_format($cbco['cbco_monto_inicial'], 2) ?></td>
+                            <td><?php echo number_format($cbco['cbco_monto_inicial'] + $cbco['cbco_saldo'], 2) ?></td>
+                            
                             <td></td>
                         </tr>
 
