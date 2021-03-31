@@ -98,7 +98,7 @@
             <li class="list-inline-item dropdown notification-list">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/users/avatar-6.jpg" alt="user" class="rounded-circle">
-                    <span class="d-none d-md-inline-block ml-1">Donald T. <i class="mdi mdi-chevron-down"></i> </span>
+                    <span class="d-none d-md-inline-block ml-1"><?php echo $_SESSION['session_usr']['usr_nombre'] ?><i class="mdi mdi-chevron-down"></i> </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
                     <a class="dropdown-item" href="#"><i class="dripicons-user text-muted"></i> Profile</a>

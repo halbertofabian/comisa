@@ -49,6 +49,16 @@ class AppControlador
             'mi-perfil'
         );
     }
+    public static function ObtenerListaBlancaGefeCobranza()
+    {
+        return array(
+            'flujo-caja',
+            'mi-caja',
+            'flujo-caja',
+            'cajas',
+            'salir'
+        );
+    }
 
     public static function obtenerPerfiles()
     {
@@ -56,7 +66,9 @@ class AppControlador
             'Administrador',
             'Supervisor',
             'Vendedor',
-            'Cobrador'
+            'Cobrador',
+            'Jefe de cobranza',
+            'Jefe de ventas'
         );
     }
 
@@ -398,7 +410,57 @@ class AppControlador
                 ]
             ),
 
+            '11' => array(
+                [
+                    'label' => 'Nuevo menu',
+                    'icon' => '<i class="link-icon fa fa-user"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Ficha de cobro',
+                            'href' => 'fichas/cobrador/'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+
             // Aqui más  menus
+        );
+    }
+
+    public static function obtnerMenuGefeCobranza()
+    {
+        return array(
+            '1' => array(
+                [
+                    'label' => 'Cobranza',
+                    'icon' => '<i class="fas fa-funnel-dollar "></i>',  
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '',
+                            'label' => 'Mi caja',
+                            'href' => 'mi-caja'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Flujo de caja',
+                            'href' => 'flujo-caja'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Registrar nueva caja',
+                            'href' => 'cajas'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
         );
     }
 }

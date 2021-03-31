@@ -1,7 +1,7 @@
 <?php ob_start();
-$lifetime=1209600;
-@session_start();
-setcookie(session_name(),session_id(),time()+$lifetime);
+// $lifetime=1209600;
+// @session_start();
+// setcookie(session_name(),session_id(),time()+$lifetime);
 
 
 include_once 'config.php';

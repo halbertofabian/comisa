@@ -20,13 +20,13 @@ $("#igs_mp").on("change", function () {
 
     var igs_mp = $(this).val()
 
-    
+
 
     if (igs_mp != 'EFECTIVO') {
         $("#content-cuenta").removeClass("d-none");
         $("#igs_referencia").val("");
-        $("#igs_cuenta").val("");      
-    }else{
+        $("#igs_cuenta").val("");
+    } else {
         $("#content-cuenta").addClass("d-none");
         $("#igs_referencia").val("");
         $("#igs_cuenta").val("");
@@ -132,6 +132,8 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
             $("#total_efectivo").html(totalEfectivo)
 
             $("#copn_ingreso_efectivo").val(totalEfectivo)
+            $("#copn_saldo").val(totalEfectivo)
+
 
             var totalBanco = $("#igs_banco_input").val() - $("#tgts_banco_input").val()
             $("#total_banco_input").val(totalBanco)
@@ -213,7 +215,7 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
             $("#total_efectivo_input").val(totalEfectivo)
             $("#total_efectivo").html(totalEfectivo)
             $("#copn_ingreso_efectivo").val(totalEfectivo)
-
+            $("#copn_saldo").val(totalEfectivo)
 
 
             var totalBanco = $("#igs_banco_input").val() - $("#tgts_banco_input").val()
@@ -261,6 +263,7 @@ function buscarCajaCorte(usr_caja) {
 
 
             $("#cja_responsable").html(res.usr_nombre);
+            $("#usr_responsable").html(res.usr_nombre);
             $("#cja_nombre").html(res.cja_nombre);
             $("#cja_sucursal").html(res.scl_nombre);
             $("#cja_fecha_apertura").html(res.copn_fecha_abrio);
@@ -333,13 +336,6 @@ function buscarFlujoCaja(flujo_usr) {
                 buscarCajaCorte(res.usr_caja);
 
 
-
-
-
-
-
-
-
             } else {
                 $(".btn-open-cash").addClass('d-none');
                 $(".content-flujo").addClass('d-none');
@@ -358,33 +354,56 @@ $("#formIngreso").on("submit", function (e) {
 
     e.preventDefault();
 
+    if ($("#igs_monto").val() <= 0) {
+        toastr.warning('La cantidad no puede ser menor igual a 0', 'Intente con una cantidad valida')
+        return;
+    }
 
-    var datos = new FormData(this)
-    datos.append("btnAgregarIngreso", true)
-    $.ajax({
-        type: "POST",
-        url: urlApp + 'app/modulos/ingresos/ingresos.ajax.php',
-        data: datos,
-        dataType: "json",
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
+    swal({
+        title: "¿Estás seguro (a) de realizar este ingreso ?",
+        text: "  \n TIPO: " + $('select[name="igs_tipo"] option:selected').text() + "\n CANTIDAD: " + $("#igs_monto").val() + "\n METODO DE PAGO: " + $("#igs_mp").val(),
+        icon: "warning",
+        buttons: ["No, cancelar", "Si, confirmar "],
+        dangerMode: false,
+        closeOnClickOutside: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
 
-        },
-        success: function (res) {
+                var datos = new FormData(this)
+                datos.append("btnAgregarIngreso", true)
+                $.ajax({
+                    type: "POST",
+                    url: urlApp + 'app/modulos/ingresos/ingresos.ajax.php',
+                    data: datos,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        startLoadButton();
+                    },
+                    success: function (res) {
 
-            if (res.status) {
-                toastr.success(res.mensaje, '¡Muy bien!');
+                        if (res.status) {
 
-                var flujo_usr = $("#flujo_usr").val();
-                buscarFlujoCaja(flujo_usr)
-                limpiarCampos()
-            } else {
-                toastr.error(res.mensaje, '¡Error!');
+                            stopLoadButton('Registrar ingreso');
+
+                            toastr.success(res.mensaje, '¡Muy bien!');
+
+                            var flujo_usr = $("#flujo_usr").val();
+                            buscarFlujoCaja(flujo_usr)
+                            limpiarCampos()
+                        } else {
+                            stopLoadButton('Intentar de nuevo');
+                            toastr.error(res.mensaje, '¡Error!');
+
+                        }
+                    }
+                })
 
             }
-        }
-    })
+        })
+
 
 
 })
@@ -394,39 +413,64 @@ $("#formGasto").on("submit", function (e) {
     e.preventDefault();
 
     var tgts_cantidad = Number($("#tgts_cantidad").val())
+    var tgts_categoria = $("#tgts_categoria").val()
 
-    if (tgts_cantidad == 0) {
-        toastr.error("Asegurate de introducir cantidades mayor a 0", "Error")
+    if (tgts_cantidad <= 0) {
+        toastr.warning("Asegurate de introducir cantidades mayor a 0", "Error")
         return;
     }
 
-    var datos = new FormData(this)
-    datos.append("btnGuardarGasto", true)
-    $.ajax({
-        type: "POST",
-        url: urlApp + 'app/modulos/gastos/gastos.ajax.php',
-        data: datos,
-        dataType: "json",
-        processData: false,
-        contentType: false,
-        beforeSend: function () {
+    if (tgts_categoria == "") {
+        toastr.warning("Por favor, elije una categoría", "Error")
+        return;
+    }
 
-        },
-        success: function (res) {
+    swal({
+        title: "¿Estás seguro (a) de realizar este gasto ?",
+        text: "  \n CONCEPTO: " + $('select[name="tgts_categoria"] option:selected').text() + "\n CANTIDAD: " + $("#tgts_cantidad").val() + "\n METODO DE PAGO: " + $("#tgts_mp").val(),
+        icon: "warning",
+        buttons: ["No, cancelar", "Si, confirmar "],
+        dangerMode: false,
+        closeOnClickOutside: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
 
-            if (res.status) {
-                toastr.success(res.mensaje, '¡Muy bien!');
+                var datos = new FormData(this)
+                datos.append("btnGuardarGasto", true)
+                $.ajax({
+                    type: "POST",
+                    url: urlApp + 'app/modulos/gastos/gastos.ajax.php',
+                    data: datos,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function () {
+                        startLoadButton();
+                    },
+                    success: function (res) {
 
-                var flujo_usr = $("#flujo_usr").val();
-                buscarFlujoCaja(flujo_usr)
-                limpiarCampos()
+                        if (res.status) {
+                            stopLoadButton('Registrar gasto');
+                            toastr.success(res.mensaje, '¡Muy bien!');
 
-            } else {
-                toastr.error(res.mensaje, '¡Error!');
+                            var flujo_usr = $("#flujo_usr").val();
+                            buscarFlujoCaja(flujo_usr)
+                            limpiarCampos()
+
+                        } else {
+                            stopLoadButton('Intentar de nuevo');
+
+                            toastr.error(res.mensaje, '¡Error!');
+
+                        }
+                    }
+                })
 
             }
-        }
-    })
+        })
+
+
 
 
 })

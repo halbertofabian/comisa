@@ -21,6 +21,8 @@ $("#formCerrarCaja").on("submit", function (e) {
     var total_efectivo_input = Number($("#copn_ingreso_efectivo").val())
     var total_efectivo_retiro = Number($("#copn_saldo").val())
 
+    var usurio = $("#cja_responsable").html();
+
     var copn_saldo = total_efectivo_input - total_efectivo_retiro;
 
 
@@ -41,7 +43,7 @@ $("#formCerrarCaja").on("submit", function (e) {
                         element: "input",
                         attributes: {
                             type: "text",
-                            value: "CAJA " + today + " T. ",
+                            value: "CAJA " + today + " U - " + usurio,
                         },
                     },
                 })
@@ -55,13 +57,13 @@ $("#formCerrarCaja").on("submit", function (e) {
                             var datos = new FormData(this);
 
                             datos.append("btnCerrarCaja", true);
-                            datos.append("copn_saldo",copn_saldo)
-                            datos.append("copn_registro",copn_registro)
-                            datos.append("copn_tipo_caja",'CAJA_COBRANZA_G')
+                            datos.append("copn_saldo", copn_saldo)
+                            datos.append("copn_registro", copn_registro)
+                            datos.append("copn_tipo_caja", 'CAJA_COBRANZA_G')
 
 
 
-                            
+
 
                             $.ajax({
                                 type: "POST",

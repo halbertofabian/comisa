@@ -134,7 +134,11 @@
 
                         if (isset($_GET['ruta'])) {
                             //Traer la lista blanca de paginas adminitas
-                            $listaBlanca = AppControlador::obtenerListaBlanca();
+                            if ($_SESSION['session_usr']['usr_rol'] == 'Administrador') {
+                                $listaBlanca = AppControlador::obtenerListaBlanca();
+                            } elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') {
+                                $listaBlanca = AppControlador::ObtenerListaBlancaGefeCobranza();
+                            }
 
                             //Guardad en la variable la ruta que venga de GET
 

@@ -12,7 +12,12 @@
                     </a>
                 </li>
                 <?php
-                $menu = AppControlador::obtnerMenuAdmin();
+                if ($_SESSION['session_usr']['usr_rol'] == "Administrador") {
+                    $menu = AppControlador::obtnerMenuAdmin();
+                } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de cobranza") {
+                    $menu = AppControlador::obtnerMenuGefeCobranza();
+                }
+
                 //preArray($menu);
                 foreach ($menu as $key => $mu) :
                 ?>
@@ -27,7 +32,7 @@
                         </a>
                         <?php foreach ($mu[0]['modulos'] as $key => $li) : ?>
                             <ul class="submenu">
-                                <li><a href="<?php echo HTTP_HOST . $li['href'] ?>"><?php echo $li['icon']. $li['label'] ?></a></li>
+                                <li><a href="<?php echo HTTP_HOST . $li['href'] ?>"><?php echo $li['icon'] . $li['label'] ?></a></li>
                             </ul>
                         <?php endforeach; ?>
                     </li>

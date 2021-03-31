@@ -1,4 +1,7 @@
 <?php
+$lifetime=1209600;
+@session_start();
+setcookie(session_name(),session_id(),time()+$lifetime);
 // XXX FECHA  XXX
 date_default_timezone_set('America/Mexico_city');
 $fecha = date('Y-m-d h:i:s');
@@ -10,6 +13,8 @@ M*mRyGK5^Hiw
 
  */
 //M*mRyGK5^Hiw
+$fileDir = "comisa/";
+$fileType = ".jpg";
 
 $folder = explode("/", $_SERVER['REQUEST_URI']);
 
@@ -28,19 +33,21 @@ define('DB_PASSWORD', '');
 
 
 // Titulo de la aplicación
-define('TITULO_APP', 'COMISA SYSTEM');
+define('TITULO_APP', 'COMISA');
 
 define('VERSION_APP', '1.0.0');
 
 
 // Logo blanco y negro
-define('LOGO_BN',  HTTP_HOST . '');
+define('LOGO_BN',  HTTP_HOST . 'app/assets/images/sistema/'.$fileDir.'logo_n'.$fileType);
+
+
 
 // Logo de color
-define('LOGO_C', HTTP_HOST . '');
+define('LOGO_C', HTTP_HOST . 'app/assets/images/sistema/'.$fileDir.'logo'.$fileType);
 
 // Icono de aplicación 
-define('ICON_APP', HTTP_HOST . '');
+define('ICON_APP', HTTP_HOST . 'app/assets/images/sistema/'.$fileDir.'icono'.$fileType);
 
 define('DESAROLLADOR', 'Softmor Studios');
 

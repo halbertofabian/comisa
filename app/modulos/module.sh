@@ -59,7 +59,7 @@ echo "
  *  Twitter: https://twitter.com/softmormx
  */
 
-session_start();
+
 include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/${file}/${file}.modelo.php';

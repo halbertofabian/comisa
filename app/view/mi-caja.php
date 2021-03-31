@@ -1,27 +1,33 @@
 <script>
     var pagina = ""
+
+    $(document).ready(function() {
+        var flujo_usr = $("#flujo_usr").val();
+        buscarFlujoCaja(flujo_usr)
+    })
 </script>
 
 <div class="row">
     <div class="col-12">
-        <?php cargarComponente('breadcrumb', '', 'Flujo de caja por usuario'); ?>
+        <?php cargarComponente('breadcrumb', '', 'Mi caja'); ?>
     </div>
     <div class="col-md-4">
         <div class="form-group">
             <label for="flujo_usr">Nombre del usuario</label>
-            <select name="flujo_usr" id="flujo_usr" class="form-control select2">
-                <option value="">Seleccione un usuario</option>
+            <select name="flujo_usr" disabled id="flujo_usr" class="form-control select2">
+                <option selected value="<?php echo $_SESSION['session_usr']['usr_id'] ?>"><?php echo $_SESSION['session_usr']['usr_nombre'] ?></option>
                 <?php
 
-                $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+                // $usuarios = UsuariosModelo::mdlMostrarUsuarios();
 
-                foreach ($usuarios as $key => $usr) :
+                // foreach ($usuarios as $key => $usr) :
 
                 ?>
 
-                    <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
 
-                <?php endforeach; ?>
+
+                <?php //endforeach; 
+                ?>
             </select>
 
         </div>
@@ -58,7 +64,7 @@
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
                                         <select class="form-control" name="igs_tipo" id="igs_tipo">
                                             <option>COBRANZA</option>
-
+                                            
                                             <!-- <option>S/E</option>
                                             <option>CONTADO</option> -->
                                             <option>OTROS</option>
@@ -84,10 +90,10 @@
                                 <div class="form-group col-md-6 col-6">
                                     <label for="igs_mp">Método de pago</label>
                                     <select name="igs_mp" id="igs_mp" class="form-control">
-                                        <option>EFECTIVO</option>
-                                        <option>DEPOSITO</option>
-                                        <option>TRANSFERENCIA</option>
-                                        <option>TARJETA DE CREDITO / DEBITO </option>
+                                        <option value="EFECTIVO">EFECTIVO</option>
+                                        <option value="DEPOSITO">DEPOSITO</option>
+                                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                        <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
                                     </select>
                                 </div>
                                 <div class="col-md-6"></div>
@@ -129,7 +135,7 @@
 
                             <div class="modal-footer">
                                 <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
-                                <button type="submit" class="btn btn-primary btn-load" name="btnAgregarIngreso">Registrar ingreso</button>
+                                <button type="submit" class="btn btn-primary" name="btnAgregarIngreso">Registrar ingreso</button>
                             </div>
                             <?php
                             // $crearIngreso = new IngresosControlador();
@@ -201,11 +207,11 @@
                                 </div>
                                 <div class="form-group col-md-8">
                                     <label for="tgts_mp">Método de pago</label>
-                                    <select readonly name="tgts_mp" id="tgts_mp" class="form-control">
-                                        <option selected>EFECTIVO</option>
-                                        <option>TRANSFERENCIA</option>
-                                        <option>DEPOSITO</option>
-                                        <option>TARJETA DE CREDITO / DEBITO </option>
+                                    <select name="tgts_mp" id="tgts_mp" class="form-control">
+                                        <option value="EFECTIVO">EFECTIVO</option>
+                                        <option value="TRANSFERENCIA">TRANSFERENCIA</option>
+                                        <option value="DEPOSITO">DEPOSITO</option>
+                                        <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
                                     </select>
                                 </div>
                                 <input type="hidden" name="tgts_nota">
@@ -337,9 +343,7 @@
 
     </div>
 
-    <!-- PRESTAMOS -->
-
-    <!-- <div class="col-md-6">
+    <div class="col-md-6">
 
         <div class="card">
             <div class="card-body">
@@ -366,7 +370,7 @@
 
             </div>
         </div>
-    </div> -->
+    </div>
 </div>
 
 <div class="div content-abrir-caja d-none">
@@ -479,7 +483,7 @@
                         </div>
 
                         <div class="col-12">
-                            <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja para <span id="usr_responsable"></span> </button>
+                            <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja</button>
                         </div>
                     </div>
                 </form>
