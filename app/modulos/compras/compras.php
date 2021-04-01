@@ -2,33 +2,41 @@
 cargarComponente('breadcrumb', '', 'Nueva compra');
 ?>
 <div class="container">
-
-    <div class="row">
-
-        <div class="form-group col-md-4 col-12">
-            <label for="cps_almacen">Almacen</label>
-            <select name="cps_almacen" id="cps_almacen" class="form-control select2" >
-                <option value="">Elija el almacen</option>
-            </select>
-        </div>
-
-        <div class="form-group col-md-4 col-12">
-            <label for="cps_proveedor">Nombre del proveedor</label>
-            <select name="cps_proveedor" id="cps_proveedor" class="form-control select2">
-                <option value="">Elija el proveedor</option>
-            </select>
-            <button type="button" class="btn btn-link float-right" data-toggle="modal" data-target="#mdlProveedor">
-                Agregar nuevo proveedor
-            </button>
-        </div>
-        <div class="form-group col-md-4 col-12">
-            <label for="cps_folio">Folio</label>
-            <input type="text" name="cps_folio" id="cps_folio" class="form-control" >
-        </div>
+    <form method="post" enctype="multipart/form-data" id="formImportarProductosExcel">
+        <div class="row">
 
 
-        <div class="form-group col-md-6 col-12">
-            <form method="post" enctype="multipart/form-data" id="formImportarProductosExcel">
+            <div class="form-group col-md-4 col-12">
+                <label for="cps_almacen">Almacen</label>
+                <select class="form-control select2" name="cps_ams_id" id="cps_ams_id" required>
+                    <option value="">Elija el almacen</option>
+                    <?php
+                    $almacenes = AlmacenesModelo::mdlMostrarAlmacenes($_SESSION['session_suc']['scl_id']);
+                    foreach ($almacenes as $key => $ams) :
+                    ?>
+                        <option value="<?php echo $ams['ams_id'] ?>"><?php echo $ams['ams_nombre'] ?></option>
+
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 col-12">
+                <label for="cps_proveedor">Nombre del proveedor</label>
+                <select name="cps_proveedor" id="cps_proveedor" class="form-control select2">
+                    <option value="">Elija el proveedor</option>
+                </select>
+                <button type="button" class="btn btn-link float-right" data-toggle="modal" data-target="#mdlProveedor">
+                    Agregar nuevo proveedor
+                </button>
+            </div>
+            <div class="form-group col-md-4 col-12">
+                <label for="cps_folio">Folio</label>
+                <input type="text" name="cps_folio" id="cps_folio" class="form-control" required>
+            </div>
+
+
+            <div class="form-group col-md-6 col-12">
+
                 <label for="cps_excel">Documento adjunto</label>
                 <input type="file" class="form-control-file" name="cps_excel" id="cps_excel">
 
@@ -36,13 +44,15 @@ cargarComponente('breadcrumb', '', 'Nueva compra');
                     <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                     Importar productos
                 </button>
-            </form>
-        </div>
-        <div class="form-group col-md-6 col-12">
-                <label for="cps_fecha">Fecha de compra</label>
-                <input type="date" class="form-control-file theDate" name="cps_fecha" id="cps_fecha" >
-        </div>
 
+            </div>
+            <div class="form-group col-md-6 col-12">
+                <label for="cps_fecha">Fecha de compra</label>
+                <input type="date" class="form-control-file theDate" name="cps_fecha" id="cps_fecha">
+            </div>
+        </div>
+    </form>
+    <div class="row">
         <div class="form-group col-12">
             <table class="table">
                 <thead>
@@ -90,6 +100,29 @@ cargarComponente('breadcrumb', '', 'Nueva compra');
             </table>
         </div>
 
+        <div class="alert alert-dark col-12" role="alert">
+            <strong>Tipo de pago </strong>
+        </div>
+
+        <div class="form-group col-md-4 col-12">
+            <label for="cps_tipop">Tipo de pago</label>
+            <select name="cps_tipop" id="cps_tipop" class="form-control select2">
+                <option value="">Elija tipo de pago</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-4 col-12">
+            <label for="cps_mtdpago">Metodo de pago</label>
+            <select name="cps_mtdpago" id="cps_mtdpago" class="form-control select2">
+                <option value="">Elija el metodo de pago</option>
+            </select>
+
+        </div>
+        <div class="form-group col-md-4 col-12">
+            <label for="cps_monto">Monto</label>
+            <input type="text" name="cps_monto" id="cps_monto" class="form-control">
+        </div>
+
         <div class="form-group col-12">
             <button type="submit" class="btn btn-primary float-right " name="btnGuardarCompra">Guardar Compra</button>
         </div>
@@ -129,4 +162,3 @@ cargarComponente('breadcrumb', '', 'Nueva compra');
         </div>
     </div>
 </div>
-

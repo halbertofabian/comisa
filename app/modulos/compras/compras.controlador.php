@@ -175,8 +175,9 @@ class ComprasControlador
             $countUpdate = 0;
             //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
             $sumaCompra = 0;
-            $sumaArticulos=0;
+            $sumaArticulos = 0;
             $datosMostrar = array();
+            $almacen = $_POST['id_almacen'];
             for ($i = 2; $i <= $numRows; $i++) {
 
 
@@ -190,7 +191,7 @@ class ComprasControlador
 
 
                 $codigo = str_replace("/", "", $codigo);
-                $codigo =  $codigo . '/' . $_SESSION['session_suc']['scl_id'] . '/2';
+                $codigo =  $codigo . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $almacen;
 
 
                 $data = array(
@@ -205,7 +206,7 @@ class ComprasControlador
 
                 if (ComprasModelo::mdlActualizarProductosExcel($data)) {
                     $sumaCompra += $ptotal;
-                    $sumaArticulos+=$cantidad;
+                    $sumaArticulos += $cantidad;
                     array_push($datosMostrar, $data);
                     $countUpdate += 1;
                 }
@@ -221,7 +222,7 @@ class ComprasControlador
                 'update' => $countUpdate,
                 'data' => $datosMostrar,
                 'sumaCompra' => $sumaCompra,
-                'sumaArticulos'=>$sumaArticulos,
+                'sumaArticulos' => $sumaArticulos,
             );
         } catch (Exception $th) {
             $th->getMessage();

@@ -30,7 +30,7 @@ class ProductosControlador
 
 
             $_POST['pds_sku'] = str_replace("/", "", $_POST['pds_sku']);
-            $_POST['pds_sku'] = $_POST['pds_sku'] . '/' . $_SESSION['session_suc']['scl_id'].'/'.$_POST['pds_ams_id'];
+            $_POST['pds_sku'] = $_POST['pds_sku'] . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $_POST['pds_ams_id'];
 
 
             // Validaciones 
@@ -117,17 +117,21 @@ class ProductosControlador
             for ($i = 2; $i <= $numRows; $i++) {
 
 
+
                 $pds_id_producto = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
-                $pds_nombre = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $pds_sku = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $pds_nombre = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
                 $pds_descripcion_corta = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
-                $pds_precio_publico = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
-                $pds_precio_compra = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
-                $pds_stok = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
-                $pds_categoria = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
-                $pds_sku = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+                $pds_categoria = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+                $pds_stok = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
+                $pds_precio_compra = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
+                $pds_precio_publico = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
+                $pds_stok_min = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+
+
 
                 $pds_sku = str_replace("/", "", $pds_sku);
-                $pds_sku = $pds_sku . '/' . $_SESSION['session_suc']['scl_id'].'/'.$_POST['pds_ams_id'];
+                $pds_sku = $pds_sku . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $_POST['pds_ams_id'];
 
 
 
@@ -156,7 +160,7 @@ class ProductosControlador
                     'pds_usuario_modifico' => "",
                     'pds_imagenes' => "",
                     'pds_stok_max' => 0,
-                    'pds_stok_min' => 0,
+                    'pds_stok_min' => $pds_stok_min,
                     'pds_precio_mayoreo' => 0.00,
                     'pds_precio_promocion' => 0.00,
                     'pds_fecha_inicio_promocion' => "0000-00-00 00:00:00",
