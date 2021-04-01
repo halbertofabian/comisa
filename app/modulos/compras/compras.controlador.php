@@ -177,14 +177,14 @@ class ComprasControlador
             $sumaCompra = 0;
             $sumaArticulos = 0;
             $datosMostrar = array();
-            $almacen = $_POST['id_almacen'];
+            $almacen = $_POST['cps_almacen'];
             for ($i = 2; $i <= $numRows; $i++) {
 
 
-                $nombre = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
-                $codigo = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
-                $cantidad = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
-                $pu = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+                
+                $codigo = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $cantidad = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $pu = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
 
                 $ptotal = $pu * $cantidad;
 
@@ -194,22 +194,40 @@ class ComprasControlador
                 $codigo =  $codigo . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $almacen;
 
 
-                $data = array(
-                    "pds_nombre" => $nombre,
-                    "pds_sku" => $codigo,
-                    "pds_stok" => $cantidad,
-                    "pds_pu" => $pu,
-                    "total" => $ptotal
-
-                );
 
 
-                if (ComprasModelo::mdlActualizarProductosExcel($data)) {
-                    $sumaCompra += $ptotal;
-                    $sumaArticulos += $cantidad;
-                    array_push($datosMostrar, $data);
-                    $countUpdate += 1;
+                $isExitSku = ComprasModelo::mdlMostrarProductosAlamacenExistentes($codigo);
+
+                preArray($isExitSku);
+
+                return;
+
+                if ($isExitSku) {
+                    $data = array(
+                        "pds_nombre" => $isExitSku['pds_nombre'],
+                        "pds_sku" => $codigo,
+                        "pds_stok" => $cantidad,
+                        "pds_pu" => $pu,
+                        "total" => $ptotal
+
+                    );
+                    $actualizar = ComprasModelo::mdlActualizarProductosExcel($data);
+
+                    preArray($actualizar);
+                    return;
+
+
+                    if ($actualizar) {
+                        $sumaCompra += $ptotal;
+                        $sumaArticulos += $cantidad;
+                        array_push($datosMostrar, $data);
+                        $countUpdate += 1;
+                    }
                 }
+
+
+
+
 
                 //var_dump($data);
 

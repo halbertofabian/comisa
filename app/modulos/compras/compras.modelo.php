@@ -258,29 +258,37 @@ class ComprasModelo
         }
     }
 
-    public static function mdlActualizarProductosExcel($productoNew)
+    public static function mdlActualizarProductosExcel($pds_stok)
     {
         try {
-            $sqlSelect = "SELECT pds_id_producto ,pds_stok FROM  tbl_productos_pds WHERE pds_sku = ?";
-            $pps1 = Conexion::conectar()->prepare($sqlSelect);
-            $pps1->bindValue(1, $productoNew['pds_sku']);
-            $pps1->execute();
-            $r = $pps1->fetch();
-            $idproducto = $r["pds_id_producto"];
-            $cantidadActual = $r["pds_stok"];
-            $nuevaCantidad = $productoNew['pds_stok'];
-            $cantidadActulizada = $cantidadActual + $nuevaCantidad;
 
-
-            $sql = "UPDATE  tbl_productos_pds SET pds_stok = ? WHERE pds_id_producto = ?";
+            $sql = "UPDATE  tbl_productos_pds SET pds_stok = pds_stok + ? WHERE pds_id_producto = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $cantidadActulizada);
-            $pps->bindValue(2, $idproducto);
+            $pps->bindValue(1, $pds_stok);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarProductosAlamacenExistentes($pds_sku)
+    {
+        try {
+            //code...
+            $sql = "SELECT pds_nombre,pds_id_producto ,pds_stok FROM  tbl_productos_pds WHERE pds_sku = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindParam(1, $pds_sku);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
         } finally {
             $pps = null;
             $con = null;
