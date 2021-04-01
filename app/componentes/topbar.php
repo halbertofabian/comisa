@@ -25,15 +25,15 @@
         <ul class="navbar-right d-flex list-inline float-right mb-0">
             <li class="list-inline-item dropdown notification-list flags-dropdown d-none d-sm-inline-block">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/flags/us_flag.jpg" alt="" class="flag-img">
-                    United States <i class="mdi mdi-chevron-down"></i>
+                    <!-- <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/flags/us_flag.jpg" alt="" class="flag-img"> -->
+                     <?php echo $_SESSION['session_suc']['scl_nombre'] ?><!-- <i class="mdi mdi-chevron-down"></i> -->
                 </a>
-                <div class="dropdown-menu dropdown-menu-animated">
+                <!-- <div class="dropdown-menu dropdown-menu-animated">
                     <a href="#" class="dropdown-item"><img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/flags/french_flag.jpg" alt="" class="flag-img"> French</a>
                     <a href="#" class="dropdown-item"><img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/flags/germany_flag.jpg" alt="" class="flag-img"> Germany</a>
                     <a href="#" class="dropdown-item"><img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/flags/italy_flag.jpg" alt="" class="flag-img"> Italy</a>
                     <a href="#" class="dropdown-item"><img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/flags/spain_flag.jpg" alt="" class="flag-img"> Spain</a>
-                </div>
+                </div> -->
             </li>
 
             <li class="list-inline-item dropdown notification-list">
