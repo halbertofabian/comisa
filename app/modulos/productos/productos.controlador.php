@@ -129,6 +129,9 @@ class ProductosControlador
                 $pds_stok_min = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
 
 
+                if ($pds_stok < 0 || $pds_stok == "" || $pds_stok == NULL) {
+                    $pds_stok = 0;
+                }
 
                 $pds_sku = str_replace("/", "", $pds_sku);
                 $pds_sku = $pds_sku . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $_POST['pds_ams_id'];

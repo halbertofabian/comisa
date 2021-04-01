@@ -7,7 +7,7 @@ cargarComponente('breadcrumb', '', 'Nueva compra');
 
 
             <div class="form-group col-md-4 col-12">
-                <label for="cps_almacen">Almacen</label>
+                <label for="cps_ams_id">Almacen</label>
                 <select class="form-control select2" name="cps_ams_id" id="cps_ams_id" required>
                     <option value="">Elija el almacen</option>
                     <?php

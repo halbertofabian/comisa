@@ -177,11 +177,11 @@ class ComprasControlador
             $sumaCompra = 0;
             $sumaArticulos = 0;
             $datosMostrar = array();
-            $almacen = $_POST['cps_almacen'];
+            $almacen = $_POST['cps_ams_id'];
             for ($i = 2; $i <= $numRows; $i++) {
 
 
-                
+
                 $codigo = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
                 $cantidad = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
                 $pu = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
@@ -196,11 +196,10 @@ class ComprasControlador
 
 
 
+
                 $isExitSku = ComprasModelo::mdlMostrarProductosAlamacenExistentes($codigo);
 
-                preArray($isExitSku);
 
-                return;
 
                 if ($isExitSku) {
                     $data = array(
@@ -213,9 +212,7 @@ class ComprasControlador
                     );
                     $actualizar = ComprasModelo::mdlActualizarProductosExcel($data);
 
-                    preArray($actualizar);
-                    return;
-
+                    
 
                     if ($actualizar) {
                         $sumaCompra += $ptotal;

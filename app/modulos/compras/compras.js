@@ -223,12 +223,12 @@ $("#formImportarProductosExcel").on("submit", function (e) {
                 var datos = new FormData()
 
                 var files = $("#cps_excel")[0].files[0];
-                var cps_almacen = $("#cps_ams_id");
+                var cps_ams_id = $("#cps_ams_id").val();
 
 
                 datos.append("btnImportarProductosExcel", true);
                 datos.append("archivoExcel", files);
-                datos.append("cps_almacen", cps_almacen);
+                datos.append("cps_ams_id", cps_ams_id);
 
 
                 $.ajax({

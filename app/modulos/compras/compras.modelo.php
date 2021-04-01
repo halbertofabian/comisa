@@ -258,16 +258,17 @@ class ComprasModelo
         }
     }
 
-    public static function mdlActualizarProductosExcel($pds_stok)
+    public static function mdlActualizarProductosExcel($pds)
     {
         try {
 
-            $sql = "UPDATE  tbl_productos_pds SET pds_stok = pds_stok + ? WHERE pds_id_producto = ?";
+            $sql = "UPDATE  tbl_productos_pds SET pds_stok = pds_stok + ? WHERE pds_sku = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $pds_stok);
+            $pps->bindValue(1, $pds['pds_stok']);
+            $pps->bindValue(2, $pds['pds_sku']);
             $pps->execute();
-            return $pps->rowCount() > 0;
+            return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -283,7 +284,7 @@ class ComprasModelo
             $sql = "SELECT pds_nombre,pds_id_producto ,pds_stok FROM  tbl_productos_pds WHERE pds_sku = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindParam(1, $pds_sku);
+            $pps->bindValue(1, $pds_sku);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
