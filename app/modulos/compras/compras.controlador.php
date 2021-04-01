@@ -157,4 +157,80 @@ class ComprasControlador
             );
         }
     }
+
+    public static function ctrImportarProductosExcel()
+    {
+        try {
+            //$nombreArchivo = $_SERVER['DOCUMENT_ROOT'] . '/dupont/exportxlsx/tbl_productos_dupont.xls';
+            $nombreArchivo = $_FILES['archivoExcel']['tmp_name'];
+            //var_dump($nombreArchivo);
+            // Cargar hoja de calculo
+            $leerExcel = PHPExcel_IOFactory::createReaderForFile($nombreArchivo);
+            $objPHPExcel = $leerExcel->load($nombreArchivo);
+            //var_dump($objPHPExcel);
+            $objPHPExcel->setActiveSheetIndex(0);
+
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $countInsert = 0;
+            $countUpdate = 0;
+            //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
+            $sumaCompra = 0;
+            $sumaArticulos=0;
+            $datosMostrar = array();
+            for ($i = 2; $i <= $numRows; $i++) {
+
+
+                $nombre = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $codigo = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $cantidad = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $pu = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+
+                $ptotal = $pu * $cantidad;
+
+
+
+                $codigo = str_replace("/", "", $codigo);
+                $codigo =  $codigo . '/' . $_SESSION['session_suc']['scl_id'] . '/2';
+
+
+                $data = array(
+                    "pds_nombre" => $nombre,
+                    "pds_sku" => $codigo,
+                    "pds_stok" => $cantidad,
+                    "pds_pu" => $pu,
+                    "total" => $ptotal
+
+                );
+
+
+                if (ComprasModelo::mdlActualizarProductosExcel($data)) {
+                    $sumaCompra += $ptotal;
+                    $sumaArticulos+=$cantidad;
+                    array_push($datosMostrar, $data);
+                    $countUpdate += 1;
+                }
+
+                //var_dump($data);
+
+            }
+
+            return array(
+                'status' => true,
+                'mensaje' => "Carga de productos con éxito",
+                'insert' =>  $countInsert,
+                'update' => $countUpdate,
+                'data' => $datosMostrar,
+                'sumaCompra' => $sumaCompra,
+                'sumaArticulos'=>$sumaArticulos,
+            );
+        } catch (Exception $th) {
+            $th->getMessage();
+            return array(
+                'status' => false,
+                'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
+                'insert' =>  "",
+                'update' => ""
+            );
+        }
+    }
 }

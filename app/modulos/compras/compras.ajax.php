@@ -18,6 +18,8 @@ include_once '../../../config.php';
 require_once DOCUMENT_ROOT . 'app/modulos/compras/compras.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/compras/compras.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
 class ComprasAjax
 {
     public $pvs_nombre;
@@ -51,6 +53,12 @@ class ComprasAjax
         $eliminarCompra = ComprasControlador::ctrEliminaCompra($this->cps_folio);
         echo json_encode($eliminarCompra);
     }
+
+    public function ajaxImportarProductos()
+    {
+        $respuesta = ComprasControlador::ctrImportarProductosExcel();
+        echo json_encode($respuesta, true);
+    }
 }
 
 
@@ -79,4 +87,7 @@ if (isset($_POST['btnEliminarCompra'])) {
     $eliminarCompra->cps_folio = $_POST['cps_folio'];
     $eliminarCompra->ajaxEliminarCompra();
 }
-
+if (isset($_POST['btnImportarProductosExcel'])) {
+    $impotarProductos = new ComprasAjax();
+    $impotarProductos->ajaxImportarProductos();
+}
