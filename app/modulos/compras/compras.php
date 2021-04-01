@@ -5,14 +5,14 @@ cargarComponente('breadcrumb', '', 'Nueva compra');
 
     <div class="row">
 
-        <div class="form-group col-md-6 col-12">
+        <div class="form-group col-md-4 col-12">
             <label for="cps_almacen">Almacen</label>
             <select name="cps_almacen" id="cps_almacen" class="form-control select2" >
                 <option value="">Elija el almacen</option>
             </select>
         </div>
 
-        <div class="form-group col-md-6 col-12">
+        <div class="form-group col-md-4 col-12">
             <label for="cps_proveedor">Nombre del proveedor</label>
             <select name="cps_proveedor" id="cps_proveedor" class="form-control select2">
                 <option value="">Elija el proveedor</option>
@@ -21,6 +21,10 @@ cargarComponente('breadcrumb', '', 'Nueva compra');
                 Agregar nuevo proveedor
             </button>
         </div>
+        <div class="form-group col-md-4 col-12">
+            <label for="cps_folio">Folio</label>
+            <input type="text" name="cps_folio" id="cps_folio" class="form-control" >
+        </div>
 
 
         <div class="form-group col-md-6 col-12">
@@ -28,11 +32,15 @@ cargarComponente('breadcrumb', '', 'Nueva compra');
                 <label for="cps_excel">Documento adjunto</label>
                 <input type="file" class="form-control-file" name="cps_excel" id="cps_excel">
 
-                <button type="submit" class="btn btn-success mt-1 float-right btnImportarProductosExcel">
+                <button type="submit" class="btn btn-success mt-3 btnImportarProductosExcel">
                     <i class="fa fa-file-excel-o" aria-hidden="true"></i>
                     Importar productos
                 </button>
             </form>
+        </div>
+        <div class="form-group col-md-6 col-12">
+                <label for="cps_fecha">Fecha de compra</label>
+                <input type="date" class="form-control-file theDate" name="cps_fecha" id="cps_fecha" >
         </div>
 
         <div class="form-group col-12">
