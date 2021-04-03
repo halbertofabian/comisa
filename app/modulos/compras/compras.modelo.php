@@ -329,4 +329,22 @@ class ComprasModelo
             $con = null;
         }
     }
+
+    public static function mdlAllCompras()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_compras_cps";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
