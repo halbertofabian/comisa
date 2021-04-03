@@ -200,7 +200,7 @@ $(".tablaCompras tbody").on("click", "button.btnEliminarCompra", function () {
 })
 
 //cargar excel
-$("#formImportarProductosExcel").on("submit", function (e) {
+$(".btnImportarProductosExcel").on("click", function (e) {
     e.preventDefault()
 
     var excel = $("#cps_excel").val()
@@ -301,6 +301,13 @@ $("#formImportarProductosExcel").on("submit", function (e) {
                                             `;
                                         $("#tbodygeneral").html(tbodycmpgeneral);
 
+                                        $("#cps_num_articulos").val(respuesta.sumaArticulos);
+                                        $("#cps_total").val(respuesta.sumaCompra);
+                                        $("#cps_gran_total").val(respuesta.sumaCompra);
+
+
+
+
                                         // window.location.href = "./compras"
                                     } else {
                                         //  window.location.href = "./compras"
@@ -344,4 +351,36 @@ $("#abs_costoEnvio").on("keyup", function () {
     var grantotal = Number(smcmp) + Number(cte);
 
     $("#span_gt").text(grantotal);
-});
+    $("#cps_gran_total").val(grantotal);
+});0.
+
+$("#form_compra").on("submit", function (e) {
+    e.preventDefault()
+
+    var datos = new FormData(this);
+    datos.append("btnGuardarCompra", true);
+    //alert($(this).serialize());
+    // return
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/compras/compras.ajax.php',
+        data: datos,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+
+        },
+        success: function (res) {0
+
+            if (res.status) {
+                toastr.success(res.mensaje, 'Correcto')
+
+            } else {
+                toastr.error(res.mensaje, 'Error')
+
+            }
+
+        }
+    });
+})

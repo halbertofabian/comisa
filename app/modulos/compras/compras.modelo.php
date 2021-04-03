@@ -295,4 +295,38 @@ class ComprasModelo
             $con = null;
         }
     }
+
+
+    public static function mdlCrearCompraP($cps)
+    {
+
+        try {
+            $sql = "INSERT INTO tbl_compras_cps (cps_id, cps_id_almacen, cps_id_proveedor, 
+            cps_folio, cps_productos, cps_fecha_compra, cps_num_articulos, cps_total, 
+            cps_costo_envio, cps_gran_total, cps_tipo_pago, cps_metodo_pago, cps_monto) 
+            VALUES (NULL,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cps['cps_ams_id']);
+            $pps->bindValue(2, $cps['cps_proveedor']);
+            $pps->bindValue(3, $cps['cps_folio']);
+            $pps->bindValue(4, "");
+            $pps->bindValue(5, $cps['cps_fecha']);
+            $pps->bindValue(6,  $cps['cps_num_articulos']);
+            $pps->bindValue(7,  $cps['cps_total']);
+            $pps->bindValue(8, $cps['abs_costoEnvio']);
+            $pps->bindValue(9,  $cps['cps_gran_total']);
+            $pps->bindValue(10, $cps['cps_tipop']);
+            $pps->bindValue(11, $cps['cps_mtdpago']);
+            $pps->bindValue(12, $cps['cps_monto']);
+
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (\PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

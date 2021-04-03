@@ -221,13 +221,7 @@ class ComprasControlador
                         $countUpdate += 1;
                     }
                 }
-
-
-
-
-
                 //var_dump($data);
-
             }
 
             return array(
@@ -246,6 +240,23 @@ class ComprasControlador
                 'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
                 'insert' =>  "",
                 'update' => ""
+            );
+        }
+    }
+
+    public static function ctrGuardarCompraP()
+    {
+        $crearCompraP = ComprasModelo::mdlCrearCompraP($_POST);
+
+        if ($crearCompraP) {
+            return array(
+                'status' => true,
+                'mensaje' => 'Registro creado con éxito'
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Ocurrio un error, es probable que ya exista este registro'
             );
         }
     }
