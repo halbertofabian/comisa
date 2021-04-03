@@ -49,6 +49,9 @@ require_once 'app/modulos/compras/compras.modelo.php';
 require_once 'app/modulos/cuentas/cuentas.modelo.php';
 require_once 'app/modulos/fichas/fichas.modelo.php';
 
+require_once 'app/modulos/proveedores/proveedores.controlador.php';
+require_once 'app/modulos/proveedores/proveedores.modelo.php';
+
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/Exception.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/PHPMailer.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/SMTP.php';
