@@ -412,6 +412,28 @@ class AppControlador
 
             '11' => array(
                 [
+                    'label' => 'Compras',
+                    'icon' => '<i class="link-icon fa fa-user"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Lista de compras',
+                            'href' => 'compras'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Nueva compra',
+                            'href' => 'compras/new'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '12' => array(
+                [
                     'label' => 'Nuevo menu',
                     'icon' => '<i class="link-icon fa fa-user"></i>',
                     'href' => '#softMarket',
