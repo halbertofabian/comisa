@@ -24,16 +24,16 @@
                     ?>
                         <tr>
                             <th scope="row"><?php echo $pcps['cps_id'] ?></th>
-                            
+
                             <td><?php echo $pcps['cps_folio'] ?></td>
                             <td><?php echo $pcps['cps_id_almacen'] ?></td>
                             <td><?php echo $pcps['cps_id_proveedor'] ?></td>
                             <td><?php echo $pcps['cps_fecha_compra'] ?></td>
-                            <td><?php echo $pcps['cps_costo_envio'] ?></td>
-                            <td><?php echo $pcps['cps_gran_total'] ?></td>
+                            <td><?php echo number_format($pcps['cps_costo_envio'], 2) ?></td>
+                            <td><?php echo number_format($pcps['cps_gran_total'], 2) ?></td>
                             <td><?php echo $pcps['cps_tipo_pago'] ?></td>
                             <td><?php echo $pcps['cps_metodo_pago'] ?></td>
-                            <td><?php echo $pcps['cps_monto'] ?></td>
+                            <td><?php echo number_format($pcps['cps_monto'], 2) ?></td>
                             <th></th>
                         </tr>
 

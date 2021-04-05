@@ -186,12 +186,15 @@ class ComprasControlador
                 $cantidad = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
                 $pu = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
 
+
+
                 $ptotal = $pu * $cantidad;
 
 
 
                 $codigo = str_replace("/", "", $codigo);
                 $codigo =  $codigo . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $almacen;
+
 
 
 
@@ -210,16 +213,21 @@ class ComprasControlador
                         "total" => $ptotal
 
                     );
-                    $actualizar = ComprasModelo::mdlActualizarProductosExcel($data);
 
-                    
+                    $sumaCompra += $ptotal;
+                    $sumaArticulos += $cantidad;
+                    array_push($datosMostrar, $data);
 
-                    if ($actualizar) {
-                        $sumaCompra += $ptotal;
-                        $sumaArticulos += $cantidad;
-                        array_push($datosMostrar, $data);
-                        $countUpdate += 1;
-                    }
+                    // $actualizar = ComprasModelo::mdlActualizarProductosExcel($data);
+
+
+
+                    // if ($actualizar) {
+                    //     $sumaCompra += $ptotal;
+                    //     $sumaArticulos += $cantidad;
+                    //     array_push($datosMostrar, $data);
+                    //     $countUpdate += 1;
+                    // }
                 }
                 //var_dump($data);
             }
@@ -246,12 +254,28 @@ class ComprasControlador
 
     public static function ctrGuardarCompraP()
     {
+
+
+
+        $compra = json_decode($_POST['cps_productos'], true);
+        $countUpdate = 0;
+        foreach ($compra as $key => $cps) {
+            $actualizar = ComprasModelo::mdlActualizarProductosExcel($cps);
+            if ($actualizar) {
+                $countUpdate += 1;
+            }
+        }
+
+
+        $_POST['abs_costoEnvio'] = str_replace(",", "", $_POST['abs_costoEnvio']);
+        $_POST['cps_monto'] = str_replace(",", "", $_POST['cps_monto']);
         $crearCompraP = ComprasModelo::mdlCrearCompraP($_POST);
 
         if ($crearCompraP) {
             return array(
                 'status' => true,
-                'mensaje' => 'Registro creado con éxito'
+                'mensaje' => 'Registro creado con éxito. Se alteraron ' . $countUpdate . ' productos.',
+                'pagina' => HTTP_HOST . 'compras'
             );
         } else {
             return array(

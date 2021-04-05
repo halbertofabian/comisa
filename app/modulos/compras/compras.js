@@ -209,9 +209,15 @@ $(".btnImportarProductosExcel").on("click", function (e) {
         return swal("Error", "Seleccione un archivo excel", "error");
     }
 
+    var cps_ams_id = $("#cps_ams_id").val();
+
+    if (cps_ams_id == "") {
+        toastr.warning('Necesitas seleccionar un almacen', 'Advertencia')
+        return;
+    }
 
     swal({
-        title: "¿Estas seguro de querer importar la lista de productos?",
+        title: "¿Estas seguro de querer importar la lista de compras?",
         text: "Asegurate de tener el archivo con los requerimientos solicitados",
         icon: "info",
         buttons: ["Calcelar", "Si, importar lista"],
@@ -223,7 +229,7 @@ $(".btnImportarProductosExcel").on("click", function (e) {
                 var datos = new FormData()
 
                 var files = $("#cps_excel")[0].files[0];
-                var cps_ams_id = $("#cps_ams_id").val();
+
 
 
                 datos.append("btnImportarProductosExcel", true);
@@ -261,8 +267,8 @@ $(".btnImportarProductosExcel").on("click", function (e) {
                         if (respuesta.status) {
 
                             swal({
-                                title: respuesta.mensaje,
-                                text: "Se registraron " + respuesta.insert + " productos \n Se actualizaron " + respuesta.update + " productos ",
+                                title: "!Muy bien¡",
+                                text: respuesta.mensaje,
                                 icon: "success",
                                 buttons: [false, "Ver lista"],
                                 dangerMode: true,
@@ -273,13 +279,16 @@ $(".btnImportarProductosExcel").on("click", function (e) {
                                         var compras = respuesta.data;
                                         var tbodyCompra = "";
                                         var tbodycmpgeneral = "";
+                                        $("#cps_productos").val(JSON.stringify(compras))
                                         compras.forEach(cmp => {
+                                            var sku = cmp.pds_sku;
+                                            sku = sku.split("/");
                                             tbodyCompra +=
                                                 `
                                             <tr>
                                                 <td></td>
                                                 <td>${cmp.pds_nombre}</td>
-                                                <td>${cmp.pds_sku}</td>
+                                                <td>${sku[0]}</td>
                                                 <td>${cmp.pds_stok}</td>
                                                 <td>${cmp.pds_pu}</td>
                                                 <td>${cmp.total}</td>
@@ -352,7 +361,7 @@ $("#abs_costoEnvio").on("keyup", function () {
 
     $("#span_gt").text(grantotal);
     $("#cps_gran_total").val(grantotal);
-});0.
+}); 0.
 
 $("#form_compra").on("submit", function (e) {
     e.preventDefault()
@@ -369,15 +378,24 @@ $("#form_compra").on("submit", function (e) {
         processData: false,
         contentType: false,
         beforeSend: function () {
-
+            startLoadButton()
         },
-        success: function (res) {0
+        success: function (res) {
+            0
 
             if (res.status) {
                 toastr.success(res.mensaje, 'Correcto')
 
+                stopLoadButton('Rediriendo a compras....')
+                $("#btnGuardarCompra").attr("disabled", true)
+
+                setTimeout(function () {
+                    location.href = res.pagina
+                }, 3000);
+
             } else {
                 toastr.error(res.mensaje, 'Error')
+                stopLoadButton('Intentar de nuevo....')
 
             }
 

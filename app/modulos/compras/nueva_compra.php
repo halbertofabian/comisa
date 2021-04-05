@@ -78,6 +78,7 @@
             <input type="hidden" name="cps_num_articulos" id="cps_num_articulos">
             <input type="hidden" name="cps_total" id="cps_total">
             <input type="hidden" name="cps_gran_total" id="cps_gran_total">
+            <input type="hidden" name="cps_productos" id="cps_productos">
 
             <div class="alert alert-dark col-12" role="alert">
                 <strong>TOTAL $ </strong><strong id="totaldecompra"></strong>
@@ -118,31 +119,30 @@
 
             <div class="form-group col-md-4 col-12">
                 <label for="cps_tipop">Tipo de pago</label>
-                <select name="cps_tipop" id="cps_tipop" class="form-control select2">
+                <select name="cps_tipop" id="cps_tipop" class="form-control select2" required>
                     <option value="">Elija tipo de pago</option>
-                    <option value="contado">CONTADO</option>
-                    <option value="credito">CREDITO</option>
+                    <option>CONTADO</option>
+                    <option>CREDITO</option>
                 </select>
             </div>
 
             <div class="form-group col-md-4 col-12">
                 <label for="cps_mtdpago">Metodo de pago</label>
                 <select name="cps_mtdpago" id="cps_mtdpago" class="form-control select2">
-                    <option value="">Elija el metodo de pago</option>
-                    <option value="efectivo">EFECTIVO</option>
-                    <option value="deposito">DEPOSITO</option>
-                    <option value="transferencia">TRANSFERENCIA</option>
-                    <option value="tarjeta">TARJETA DE CREDITO/DEBITO</option>
+                    <option>EFECTIVO</option>
+                    <option>DEPOSITO</option>
+                    <option>TRANSFERENCIA</option>
+                    <option value="TARJETA">TARJETA DE CREDITO/DEBITO</option>
                 </select>
 
             </div>
             <div class="form-group col-md-4 col-12">
                 <label for="cps_monto">Monto</label>
-                <input type="text" name="cps_monto" id="cps_monto" class="form-control">
+                <input type="text" name="cps_monto" id="cps_monto" class="form-control inputN">
             </div>
 
             <div class="form-group col-12">
-                <button type="submit" class="btn btn-primary float-right " name="btnGuardarCompra" id="btnGuardarCompra">Guardar Compra</button>
+                <button type="submit" class="btn btn-primary float-right btn-load " name="btnGuardarCompra" id="btnGuardarCompra">Guardar Compra</button>
             </div>
         </div>
     </form>

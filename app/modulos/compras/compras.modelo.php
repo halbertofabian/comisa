@@ -310,7 +310,7 @@ class ComprasModelo
             $pps->bindValue(1, $cps['cps_ams_id']);
             $pps->bindValue(2, $cps['cps_proveedor']);
             $pps->bindValue(3, $cps['cps_folio']);
-            $pps->bindValue(4, "");
+            $pps->bindValue(4, $cps['cps_productos']);
             $pps->bindValue(5, $cps['cps_fecha']);
             $pps->bindValue(6,  $cps['cps_num_articulos']);
             $pps->bindValue(7,  $cps['cps_total']);
@@ -338,7 +338,7 @@ class ComprasModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
-            
+
             return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
