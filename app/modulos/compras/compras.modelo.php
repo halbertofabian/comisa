@@ -334,7 +334,9 @@ class ComprasModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_compras_cps";
+            $sql = "SELECT cps.*,pvs.pvs_nombre,ams.ams_nombre FROM tbl_compras_cps cps 
+            JOIN tbl_proveedores_pvs pvs ON cps.cps_id_proveedor= pvs.pvs_id
+            JOIN tbl_almacenes_ams ams ON cps.cps_id_almacen=ams.ams_id";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
