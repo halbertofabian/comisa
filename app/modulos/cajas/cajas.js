@@ -59,7 +59,6 @@ $("#formCerrarCaja").on("submit", function (e) {
                             datos.append("btnCerrarCaja", true);
                             datos.append("copn_saldo", copn_saldo)
                             datos.append("copn_registro", copn_registro)
-                            datos.append("copn_tipo_caja", 'CAJA_COBRANZA_G')
 
 
 

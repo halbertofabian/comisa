@@ -30,7 +30,7 @@ function stopLoadButton(label) {
 $(".tablas").DataTable({
 
 
-    "ordering": true,
+    "ordering": false,
 
     "language": {
 

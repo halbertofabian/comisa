@@ -437,6 +437,7 @@
                                     <input type="hidden" id="usr_id_input" name="usr_id">
                                     <input type="hidden" id="copn_id_input" name="copn_id">
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
+                                    <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
                                     <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
                                     <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>
                                     <p class="card-text">Sucursal <strong id="cja_sucursal"> </strong> </p>

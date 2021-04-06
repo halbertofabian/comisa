@@ -257,8 +257,8 @@ class CajasModelo
             $pps->bindValue(9, $copn['copn_tipo_caja']);
             $pps->bindValue(10, $copn['copn_id']);
 
-            
-            
+
+
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -277,12 +277,41 @@ class CajasModelo
             $sql = "SELECT * FROM tbl_caja_cja WHERE cja_id_caja = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps ->bindValue(1,$cja_id_caja);
+            $pps->bindValue(1, $cja_id_caja);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
             return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+
+    // Reportes 
+    public static function mdlMostrarCajasCobranzaById($copn_id = "")
+    {
+        try {
+            //code...
+            if ($copn_id != "") {
+
+                $sql = "SELECT copn.*,usr.*,cja.*,scl.* FROM tbl_caja_open_copn copn  JOIN  tbl_usuarios_usr usr ON usr.usr_id = copn.copn_usuario_abrio JOIN tbl_caja_cja cja ON cja.cja_id_caja = copn.copn_id_caja JOIN tbl_sucursal_scl scl ON scl.scl_id = copn.copn_id_sucursal   WHERE copn.copn_id = ? AND copn.copn_tipo_caja = 'CAJA_COBRANZA_G' ORDER BY copn.copn_id  DESC  ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $copn_id);
+                $pps->execute();
+                return $pps->fetch();
+            } elseif ($copn_id == "") {
+                $sql = "SELECT copn.*,usr.*,cja.*,scl.* FROM tbl_caja_open_copn copn  JOIN  tbl_usuarios_usr usr ON usr.usr_id = copn.copn_usuario_abrio JOIN tbl_caja_cja cja ON cja.cja_id_caja = copn.copn_id_caja JOIN tbl_sucursal_scl scl ON scl.scl_id = copn.copn_id_sucursal   WHERE  copn.copn_tipo_caja = 'CAJA_COBRANZA_G'   ORDER BY copn.copn_id  DESC ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->execute();
+                return $pps->fetchAll();
+            }
+        } catch (PDOException $th) {
+            //throw $th;
         } finally {
             $pps = null;
             $con = null;

@@ -9,7 +9,9 @@
 
 <div class="row">
     <div class="col-12">
-        <?php cargarComponente('breadcrumb', '', 'Mi caja'); ?>
+        <div class="alert alert-secondary mt-5" role="alert">
+            <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+        </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
@@ -45,7 +47,10 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5 class="text-success" style="font-size:18px">FLUJO DE INGRESOS (+)</h5>
+
+                <div class="alert alert-success" role="alert">
+                    <h5 class="text-dark" style="font-size:18px">FLUJO DE INGRESOS (+)</h5>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <form method="post" id="formIngreso">
@@ -64,7 +69,7 @@
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
                                         <select class="form-control" name="igs_tipo" id="igs_tipo">
                                             <option>COBRANZA</option>
-                                            
+
                                             <!-- <option>S/E</option>
                                             <option>CONTADO</option> -->
                                             <option>OTROS</option>
@@ -174,7 +179,10 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-                <h5 class="text-danger" style="font-size:18px">FLUJO DE GASTOS (-)</h5>
+
+                <div class="alert alert-primary" role="alert">
+                    <h5 class="text-dark" style="font-size:18px">FLUJO DE GASTOS (-)</h5>
+                </div>
                 <div class="row">
                     <form method="post" id="formGasto">
                         <div class="modal-body">
@@ -258,7 +266,13 @@
         <div class="card">
 
             <div class="card-body">
-                <div class="card-title">FLUJO EFECTIVO</div>
+
+                <div class="card-title">
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>FLUJO EFECTIVO</strong>
+                    </div>
+
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -289,7 +303,11 @@
         <div class="card">
 
             <div class="card-body">
-                <div class="card-title">FLUJO BANCO</div>
+                <div class="card-title">
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>FLUJO BANCO</strong>
+                    </div>
+                </div>
                 <table class="table ">
                     <thead>
                         <tr>
@@ -321,7 +339,11 @@
         <div class="card">
 
             <div class="card-body">
-                <div class="card-title">FLUJO TOTAL</div>
+                <div class="card-title">
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>FLUJO TOTAL</strong>
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -347,7 +369,11 @@
 
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Prestamos</h4>
+                <h4 class="card-title">
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>PRESTAMOS</strong>
+                    </div>
+                </h4>
                 <div class="form-group">
                     <label for="pms_usuario">Empleado</label>
                     <select class="form-control select2" name="pms_usuario" id="pms_usuario">
@@ -426,6 +452,11 @@
 
     <div class="col-12">
         <div class="card">
+            <div class="card-header">
+                <div class="alert alert-secondary" role="alert">
+                    <strong>CIERRE DE CAJA</strong>
+                </div>
+            </div>
 
             <div class="card-body">
 
@@ -440,6 +471,9 @@
                                     <input type="hidden" id="usr_caja_input" name="usr_caja">
                                     <input type="hidden" id="usr_id_input" name="usr_id">
                                     <input type="hidden" id="copn_id_input" name="copn_id">
+                                    <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
+
+
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
                                     <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
                                     <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>

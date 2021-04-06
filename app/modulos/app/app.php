@@ -195,6 +195,17 @@
     <?php endif; ?>
 
 
+    <script>
+        var objetoG = "";
+
+        var objetoL1 = ['cantidad', 'sku', 'nombre'];
+        var objetoL2 = ['cantidad', 'sku', 'nombre'];
+        var objetoL3 = ['cantidad', 'sku', 'nombre'];
+
+        var o = objetoG.push(objetoL1,objetoL2,objetoL3)
+
+        alert(o)
+    </script>
     <!-- scripts -->
     <?php cargarComponente('scripts') ?>
 
