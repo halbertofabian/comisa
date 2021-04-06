@@ -38,10 +38,10 @@
                         <tr>
 
                             <td><?php echo $cbco['cbco_id'] ?></td>
-                            <td><?php echo $cbco['cbco_nombre'] ?></td>
+                            <td><a href="<?php echo HTTP_HOST . "cuentas/reporte/" . $cbco['cbco_id'] ?>"><?php echo $cbco['cbco_nombre'] ?></a> </td>
                             <td><?php echo number_format($cbco['cbco_monto_inicial'], 2) ?></td>
                             <td><?php echo number_format($cbco['cbco_monto_inicial'] + $cbco['cbco_saldo'], 2) ?></td>
-                            
+
                             <td></td>
                         </tr>
 
@@ -190,6 +190,48 @@
         </div>
     </div>
 
+<?php elseif (isset($rutas[0]) && $rutas[1] == "reporte") :
+    cargarComponente('breadcrumb', '', 'Movimientos de cuenta');
+
+
+    $infMovimientoscta = CuentasModelo::mdlMostrarCuentasId($rutas[2]);
+    $infocta = CuentasModelo::mdlMostrarNombreCTA($rutas[2]);
+    //preArray($infocta);
+?>
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-12">
+                <h4>ESTADO DE CUENTA <?php echo $infocta['cbco_nombre'] ?></h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>$</th>
+                            <th>Metodo de pago</th>
+                            <th>Referencia</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+
+                    </thead>
+                    <tbody>
+                        <?php
+
+                        foreach ($infMovimientoscta as $key => $inf) :
+                        ?>
+                            <tr>
+                                <th scope="row"><?php echo $inf['igs_id'] ?></th>
+                                <td><?php echo number_format($inf['igs_monto'], 2)  ?></td>
+                                <th><?php echo $inf['igs_mp'] ?></th>
+                                <td><?php echo $inf['igs_referencia'] ?></td>
+                                <td><?php echo $inf['igs_usuario_registro'] ?></td>
+                                <td><?php echo $inf['igs_fecha_registro'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
 <?php else : ?>

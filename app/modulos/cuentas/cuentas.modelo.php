@@ -106,6 +106,42 @@ class CuentasModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarCuentasId($id_cuenta)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_ingresos_igs WHERE igs_cuenta=$id_cuenta";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps -> execute();
+            return $pps ->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarNombreCTA($id_cuenta)
+    {
+        try {
+            //code...
+            $sql = "SELECT cbco_nombre FROM tbl_cuentas_banco_cbco WHERE cbco_id=$id_cuenta";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps -> execute();
+            return $pps ->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
 
 
