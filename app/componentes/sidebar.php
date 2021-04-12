@@ -6,11 +6,19 @@
             <!-- Left Menu Start -->
             <ul class="metismenu" id="side-menu">
                 <li class="menu-title">MODULOS</li>
-                <li>
-                    <a href="<?php echo HTTP_HOST ?>" class="waves-effect">
-                        <i class="fa fa-home"></i> <span> HOME </span>
-                    </a>
-                </li>
+                <?php if ($_SESSION['session_usr']['usr_rol'] == "Jefe de cobranza") : ?>
+                    <li>
+                        <a href="<?php echo HTTP_HOST.'mi-caja'?>" class="waves-effect">
+                            <i class="fa fa-home"></i> <span> MI CAJA </span>
+                        </a>
+                    </li>
+                <?php else : ?>
+                    <li>
+                        <a href="<?php echo HTTP_HOST ?>" class="waves-effect">
+                            <i class="fa fa-home"></i> <span> HOME </span>
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <?php
                 if ($_SESSION['session_usr']['usr_rol'] == "Administrador") {
                     $menu = AppControlador::obtnerMenuAdmin();

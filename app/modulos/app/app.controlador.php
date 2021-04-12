@@ -56,6 +56,7 @@ class AppControlador
             'mi-caja',
             'flujo-caja',
             'cajas',
+            'reportes-caja',
             'salir'
         );
     }
@@ -460,15 +461,11 @@ class AppControlador
             '1' => array(
                 [
                     'label' => 'Cobranza',
-                    'icon' => '<i class="fas fa-funnel-dollar "></i>',  
+                    'icon' => '<i class="fas fa-funnel-dollar "></i>',
                     'href' => '#home',
                     'modulos' =>
                     array(
-                        [
-                            'icon' => '',
-                            'label' => 'Mi caja',
-                            'href' => 'mi-caja'
-                        ],
+
                         [
                             'icon' => '',
                             'label' => 'Flujo de caja',
