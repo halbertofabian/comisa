@@ -361,7 +361,7 @@ $("#abs_costoEnvio").on("keyup", function () {
 
     $("#span_gt").text(grantotal);
     $("#cps_gran_total").val(grantotal);
-}); 0.
+}); 
 
 $("#form_compra").on("submit", function (e) {
     e.preventDefault()

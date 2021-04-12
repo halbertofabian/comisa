@@ -33,7 +33,7 @@ $("#tps_ams_id_origen").on("change", function () {
 
         },
         success: function (respuesta) {
-            console.log(respuesta)
+            // console.log(respuesta)
 
 
             var tblDatos = ""
@@ -41,15 +41,15 @@ $("#tps_ams_id_origen").on("change", function () {
                 var pds_sku = pds.pds_sku;
                 var pds_sku = pds_sku.split("/");
 
-                tblDatos += 
+                tblDatos +=
                     `
                         <tr>
-
-                            <td>${pds.pds_nombre}<br>${pds_sku[0]}</td>
-                            <td>${pds.pds_stok}</td>
-                            <td><input type="number" class="form-control" value="1" /></td>
+                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br>${pds_sku[0]}</td>
+                            <td  style="display:none;" id="CatProduct${pds_sku[0]}">${pds.pds_categoria}</td>
+                            <td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>
+                            <td><input type="number" id="cpasar${pds_sku[0]}" class="form-control" value="1" /></td>
                             <td>
-                                <button class="btn btn-primary">
+                                <button id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">
                                     <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                 </button>
                             </td>
@@ -68,3 +68,150 @@ $("#tps_ams_id_origen").on("change", function () {
     })
 
 })
+
+var myArray = [];
+
+$(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
+    idp = $(this).val();
+
+    pname = $("#pname" + idp).text();
+    pdisponible = $("#pdisponible" + idp).text();
+    cpasar = $("#cpasar" + idp).val();
+    CatProduct = $("#CatProduct" + idp).text();
+
+    var tbodytraspaso = "";
+
+
+    if (Number(pdisponible) >= Number(cpasar) && Number(cpasar) > 0) {
+        $(this).attr("disabled", true);
+        $(this).removeClass("btn-primary");
+        $(this).addClass("btn-secondary");
+
+        var productoArray = { id: idp, nombre: pname, categoria: CatProduct, cantidad: cpasar };
+        //console.log(productoArray)
+
+        tbodytraspaso +=
+            `
+                        <tr id="filaPcambiado${idp}">
+
+                            <td id="">${pname}</td>
+                           
+                            <td>${cpasar}</td>
+                            <td>
+                                <button class="btn btn-danger btnDeleteCambio" value="${idp}" >
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+                    `;
+        $posicion = myArray.findIndex(produc => produc.id === idp);
+        if ($posicion == -1) {
+            myArray.push(productoArray);
+            console.log(myArray);
+            $("#tbodoytraspaso").append(tbodytraspaso);
+            $("#tps_lista_productos").val(JSON.stringify(myArray));
+        } else {
+            console.log("sumar");
+            var val1 = myArray[$posicion].cantidad;
+            var nuevoVal = Number(val1) + Number(cpasar);
+            myArray[$posicion].cantidad = nuevoVal;
+            $("#tps_lista_productos").val(JSON.stringify(myArray));
+        }
+    }
+    else {
+        alert("no")
+    }
+
+});
+
+$(".tblAmsDestino tbody ").on("click", ".btnDeleteCambio", function () {
+    var id = $(this).val();
+    $("#btn" + id).removeClass("btn-secondary");
+    $("#btn" + id).addClass("btn-primary");
+    $("#btn" + id).attr("disabled", false);
+
+    var pos = myArray.findIndex(produc => produc.id === id)
+    console.log(pos);
+    myArray.splice(pos, 1);
+    console.log(myArray);
+    $(this).closest('tr').remove();
+    //alert(id);
+
+});
+
+
+$("#form_traspaso_product").on("submit", function (e) {
+    e.preventDefault();
+    var datos = new FormData(this);
+    datos.append("btnTraspasar", true);
+
+    $.ajax({
+        url: urlApp + 'app/modulos/traspasos/traspasos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+
+        }
+    })
+})
+
+$("#buscadorP").on("keyup", function () {
+    var teclasoltada = $(this).val();
+    var tps_ams_id_origen = $("#tps_ams_id_origen").val();
+    var datos = new FormData();
+    datos.append("inputTexto", true);
+    datos.append("teclasoltada", teclasoltada);
+    datos.append("tps_ams_id_origen", tps_ams_id_origen);
+
+
+    $.ajax({
+        url: urlApp + 'app/modulos/traspasos/traspasos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+            var tblDatos = ""
+            respuesta.forEach(pds => {
+                var pds_sku = pds.pds_sku;
+                var pds_sku = pds_sku.split("/");
+
+                tblDatos +=
+                    `
+                        <tr>
+                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br>${pds_sku[0]}</td>
+                            <td  style="display:none;" id="CatProduct${pds_sku[0]}">${pds.pds_categoria}</td>
+                            <td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>
+                            <td><input type="number" id="cpasar${pds_sku[0]}" class="form-control" value="1" /></td>
+                            <td>
+                                <button id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">
+                                    <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                </button>
+                            </td>
+
+                        </tr>
+                    `;
+
+            });
+
+            $("#tblAmsOrigen").html(tblDatos)
+
+        }
+    })
+
+
+
+});

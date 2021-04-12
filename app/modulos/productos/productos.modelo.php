@@ -146,4 +146,59 @@ class ProductosModelo
             $con = null;
         }
     }
+    public static function mdlMostrarProductosAlamacenFiltrado($text, $ams_id)
+    {
+        try {
+            $sql = "SELECT * FROM tbl_productos_pds WHERE (pds_sku LIKE '%" . $text . "%' OR 
+            pds_descripcion_corta LIKE '%" . $text . "%' OR pds_categoria LIKE '%" . $text . "%') AND pds_ams_id =$ams_id ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_id);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (\Throwable $th) {
+            return false;
+        } finally {
+
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarStokOrigen($cantidad, $id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_productos_pds SET pds_stok= pds_stok - ? WHERE pds_id_producto=?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cantidad);
+            $pps->bindValue(2, $id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarStokDestino($cantidad, $id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_productos_pds SET pds_stok= pds_stok + ? WHERE pds_id_producto=?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cantidad);
+            $pps->bindValue(2, $id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
