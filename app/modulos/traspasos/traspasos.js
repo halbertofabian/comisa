@@ -49,9 +49,10 @@ $("#tps_ams_id_origen").on("change", function () {
                             <td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>
                             <td><input type="number" id="cpasar${pds_sku[0]}" class="form-control" value="1" /></td>
                             <td>
-                                <button id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">
+                                <button type="button" id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">
                                     <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                 </button>
+
                             </td>
 
                         </tr>
@@ -72,20 +73,20 @@ $("#tps_ams_id_origen").on("change", function () {
 var myArray = [];
 
 $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
-    idp = $(this).val();
+    var idp = $(this).val();
 
-    pname = $("#pname" + idp).text();
-    pdisponible = $("#pdisponible" + idp).text();
-    cpasar = $("#cpasar" + idp).val();
-    CatProduct = $("#CatProduct" + idp).text();
+    var pname = $("#pname" + idp).text();
+    var pdisponible = $("#pdisponible" + idp).text();
+    var cpasar = $("#cpasar" + idp).val();
+    var CatProduct = $("#CatProduct" + idp).text();
 
     var tbodytraspaso = "";
 
 
     if (Number(pdisponible) >= Number(cpasar) && Number(cpasar) > 0) {
-        $(this).attr("disabled", true);
-        $(this).removeClass("btn-primary");
-        $(this).addClass("btn-secondary");
+        // $(this).attr("disabled", true);
+        // $(this).removeClass("btn-primary");
+        // $(this).addClass("btn-secondary");
 
         var productoArray = { id: idp, nombre: pname, categoria: CatProduct, cantidad: cpasar };
         //console.log(productoArray)
@@ -96,46 +97,54 @@ $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
                             <td id="">${pname}</td>
                            
-                            <td>${cpasar}</td>
+                            <td id="addcant${idp}">${cpasar}</td>
                             <td>
-                                <button class="btn btn-danger btnDeleteCambio" value="${idp}" >
+                                <button type="button" class="btn btn-danger btnDeleteCambio" value="${idp}" >
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                 </button>
                             </td>
 
                         </tr>
                     `;
-        $posicion = myArray.findIndex(produc => produc.id === idp);
-        if ($posicion == -1) {
+        posicion = myArray.findIndex(produc => produc.id === idp);
+        if (posicion == -1) {
             myArray.push(productoArray);
-            console.log(myArray);
+            //console.log(myArray);
             $("#tbodoytraspaso").append(tbodytraspaso);
             $("#tps_lista_productos").val(JSON.stringify(myArray));
         } else {
-            console.log("sumar");
-            var val1 = myArray[$posicion].cantidad;
+            //console.log("sumar");
+            var val1 = myArray[posicion].cantidad;
             var nuevoVal = Number(val1) + Number(cpasar);
-            myArray[$posicion].cantidad = nuevoVal;
-            $("#tps_lista_productos").val(JSON.stringify(myArray));
+            if (pdisponible >= nuevoVal) {
+                myArray[posicion].cantidad = nuevoVal;
+                $("#tps_lista_productos").val(JSON.stringify(myArray));
+                var CPA = $("#addcant" + idp).text();
+                $("#addcant" + idp).text(Number(CPA) + Number(cpasar));
+            } else {
+                toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")
+            }
+
+
         }
     }
     else {
-        alert("no")
+        toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")
     }
 
 });
 
 $(".tblAmsDestino tbody ").on("click", ".btnDeleteCambio", function () {
     var id = $(this).val();
-    $("#btn" + id).removeClass("btn-secondary");
-    $("#btn" + id).addClass("btn-primary");
-    $("#btn" + id).attr("disabled", false);
-
+    //$("#btn" + id).removeClass("btn-secondary");
+    //$("#btn" + id).addClass("btn-primary");
+    // $("#btn" + id).attr("disabled", false);
     var pos = myArray.findIndex(produc => produc.id === id)
-    console.log(pos);
+    //console.log(pos);
     myArray.splice(pos, 1);
-    console.log(myArray);
+    //console.log(myArray);
     $(this).closest('tr').remove();
+    $("#tps_lista_productos").val(JSON.stringify(myArray));
     //alert(id);
 
 });
@@ -145,7 +154,6 @@ $("#form_traspaso_product").on("submit", function (e) {
     e.preventDefault();
     var datos = new FormData(this);
     datos.append("btnTraspasar", true);
-
     $.ajax({
         url: urlApp + 'app/modulos/traspasos/traspasos.ajax.php',
         method: "POST",

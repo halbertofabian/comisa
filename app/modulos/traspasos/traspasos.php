@@ -32,7 +32,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="">DE:</label>
-                    <select class="form-control" name="tps_ams_id_origen" id="tps_ams_id_origen">
+                    <select class="form-control select2" name="tps_ams_id_origen" id="tps_ams_id_origen">
                         <option value="">Seleccione un almacén origén</option>
                         <?php
 
@@ -48,7 +48,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
             <div class="col-md-4 col-12">
                 <div class="form-group">
                     <label for="">A: </label>
-                    <select class="form-control" name="tps_ams_id_destino" id="tps_ams_id_destino">
+                    <select class="form-control select2" name="tps_ams_id_destino" id="tps_ams_id_destino">
                         <option value="">Seleccione un almacén destinio</option>
                         <?php
 
@@ -64,7 +64,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
             <div class="col-md-4 col-12">
                 <div class="form-group">
                     <label for="">Usuario recibe: </label>
-                    <select class="form-control" name="tps_user_id_receptor" id="tps_user_id_receptor">
+                    <select class="form-control select2" name="tps_user_id_receptor" id="tps_user_id_receptor">
                         <option value="">Seleccione un usuario</option>
                         <?php
 
@@ -83,7 +83,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
 
             <div class="col-md-6">
 
-                <div class="card" style="overflow-y:scroll; height: 700px;">
+                <div class="card" style="overflow:scroll; height: 600px;">
                     <div class="card-header">
                         Almacén origen
                     </div>
@@ -93,7 +93,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                             <input style="text-transform: uppercase;" type="text" name="buscadorP" id="buscadorP" class="form-control" placeholder="Escanea el código del producto o dígite el nombre ">
                         </div>
                         <div class="table">
-                            <table class="table tblAms">
+                            <table class="table tblAms table-light  table-bordered table-striped dt-responsive">
                                 <thead>
                                     <tr>
                                         <th>PRODUCTO</th>
