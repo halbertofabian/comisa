@@ -156,3 +156,47 @@ $("#igs_abono_deuda").on("keyup", function () {
 
 
 })
+
+
+$("#formCalculoComisiones").on("submit", function (e) {
+
+    e.preventDefault();
+
+
+    var datos = new FormData(this);
+    datos.append("btnCalcularComisiones", true)
+
+    swal({
+        title: "¿Seguro de querer agregar esta comisión?",
+        text: "PAGO: " + $("#igs_pago").val() + " \n DEUDA: " + $("#igs_deuda_ext").val() + " \n ABONO: " + $("#igs_abono_deuda").val() + " \n NUEVA DEUDA: " + Number($("#igs_nueva_deuda").val()),
+        icon: "warning",
+        buttons: ["No, cancelar", "Si, continuar"],
+        dangerMode: false,
+        closeOnClickOutside: false,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+
+                    url: urlApp + 'app/modulos/comisiones/comisiones.ajax.php',
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    beforeSend: function () {
+
+                        startLoadButton()
+
+                    },
+                    success: function (respuesta) {
+                    }
+                })
+            }
+        })
+
+
+
+
+})

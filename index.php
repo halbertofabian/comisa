@@ -27,6 +27,8 @@ require_once 'app/modulos/almacenes/almacenes.controlador.php';
 require_once 'app/modulos/compras/compras.controlador.php';
 require_once 'app/modulos/cuentas/cuentas.controlador.php';
 require_once 'app/modulos/fichas/fichas.controlador.php';
+require_once 'app/modulos/proveedores/proveedores.controlador.php';
+require_once 'app/modulos/comisiones/comisiones.controlador.php';
 
 require_once 'app/modulos/login/login.modelo.php';
 require_once 'app/modulos/usuarios/usuarios.modelo.php';
@@ -48,8 +50,7 @@ require_once 'app/modulos/almacenes/almacenes.modelo.php';
 require_once 'app/modulos/compras/compras.modelo.php';
 require_once 'app/modulos/cuentas/cuentas.modelo.php';
 require_once 'app/modulos/fichas/fichas.modelo.php';
-
-require_once 'app/modulos/proveedores/proveedores.controlador.php';
+require_once 'app/modulos/comisiones/comisiones.modelo.php';
 require_once 'app/modulos/proveedores/proveedores.modelo.php';
 
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/Exception.php';

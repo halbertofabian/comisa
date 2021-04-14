@@ -35,8 +35,8 @@ cargarComponente('breadcrumb', '', 'REPORTES DE COBRANZA <strong class="text-dar
                     <tr>
                         <td><?php echo $cbz['copn_id'] ?></td>
                         <td><?php echo $cbz['usr_nombre'] ?></td>
-                        <td><?php echo $cbz['copn_fecha_abrio'] ?></td>
-                        <td><?php echo $cbz['copn_fecha_cierre'] ?></td>
+                        <td><?php echo fechaCastellano($cbz['copn_fecha_abrio']) ?></td>
+                        <td><?php echo fechaCastellano($cbz['copn_fecha_cierre']) ?></td>
                         <td><?php echo number_format($cbz['copn_ingreso_efectivo'], 2) ?></td>
                         <td><?php echo number_format($cbz['copn_ingreso_banco'], 2) ?></td>
                         <td><?php echo $cbz['cja_nombre'] ?></td>

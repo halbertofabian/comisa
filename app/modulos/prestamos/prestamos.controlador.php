@@ -48,7 +48,7 @@ class PrestamosControlador
 
 
 
-                $_POST['tgts_cantidad'] =  $_POST['pms_cantidad'];
+                $_POST['tgts_cantidad'] =   str_replace(",", "", $_POST['pms_cantidad']);
                 $_POST['tgts_fecha_gasto'] = FECHA;
 
 
@@ -67,7 +67,7 @@ class PrestamosControlador
                 $crearGasto = GastosModelo::mdlCrearGasto($_POST);
 
                 if ($crearGasto) {
-                    $usr_prestamo = UsuariosModelo::mdlAcomularDeudaExterna($_POST['pms_usuario'], $_POST['pms_cantidad']);
+                    $usr_prestamo = UsuariosModelo::mdlAcomularDeudaExterna($_POST['pms_usuario'], $_POST['tgts_cantidad']);
                     if ($usr_prestamo) {
                         return array(
                             'status' => true,
