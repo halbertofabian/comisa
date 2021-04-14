@@ -15,20 +15,22 @@ class ComisionesControlador
     public static function ctrCalcularComisiones()
     {
         if (isset($_POST['btnCalcularComisiones'])) {
-            
+
 
             $tgts_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
             if ($tgts_id_corte2['usr_caja'] == 0) {
                 return array(
                     'status' => false,
-                    'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
+                    'mensaje' => 'Necesitas abrir caja para guardar comisiomes, intente de nuevo',
+                    'pagina' => HTTP_HOST . 'mi-caja'
                 );
             }
             $tgts_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
             if ($tgts_id_corte['usr_caja'] == 0) {
                 return array(
                     'status' => false,
-                    'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
+                    'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera',
+                    'pagina' => HTTP_HOST . 'mi-caja'
                 );
             }
             $_POST['tgts_id_corte'] = $tgts_id_corte['usr_caja'];
@@ -58,18 +60,18 @@ class ComisionesControlador
             $crearGasto = GastosModelo::mdlCrearGasto($_POST);
             if ($crearGasto) {
                 if ($_POST['igs_abono_deuda'] > 0) {
-                     UsuariosModelo::mdlDisminuirDeudaExterna($_POST['id_igs_usuario_responsable'], $_POST['igs_abono_deuda']);
+                    UsuariosModelo::mdlDisminuirDeudaExterna($_POST['id_igs_usuario_responsable'], $_POST['igs_abono_deuda']);
                 }
                 return array(
                     'status' => true,
                     'mensaje' => 'Movimiento registrado con éxito',
                     'pagina' => HTTP_HOST
                 );
-
-            }else{
+            } else {
                 return array(
                     'status' => false,
-                    'mensaje' => 'No se pudo registrar este movimientos, intenta de nuevo.'
+                    'mensaje' => 'No se pudo registrar este movimientos, intenta de nuevo.',
+                    'pagina' => HTTP_HOST . 'comosiones'
                 );
             }
         }
