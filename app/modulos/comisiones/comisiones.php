@@ -209,7 +209,7 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
 
          <div class="form-group mb-5">
            
-         <button  class="btn btn-primary float-right btn-load" id="btnCalcularComisiones"  name="btnCalcularComisiones">GUARDAR</button>
+         <button  class="btn btn-primary float-right btn-load" id=" "  name="btnCalcularComisiones">GUARDAR</button>
          </div>                   
 
          <!-- <?php 

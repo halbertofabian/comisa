@@ -199,7 +199,7 @@ $("#formCalculoComisiones").on("submit", function (e) {
                     },
                     success: function (res) {
 
-                        if (res) {
+                        if (res.status) {
                             toastr.success(res.mensaje, "¡Muy bien!")
                             stopLoadButton('Rediriendo a mi caja....')
                             $("#btnCalcularComisiones").attr("disabled", true)
