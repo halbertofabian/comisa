@@ -1,8 +1,8 @@
 
 <?php
 /**
- *  Desarrollador: ifixitmor
- *  Fecha de creación: 09/03/2021 08:35
+ *  Desarrollador: 
+ *  Fecha de creación: 13/04/2021 11:42
  *  Desarrollado por: Softmor
  *  Software de Morelos SA.DE.CV 
  *  Sitio web: https://softmor.com
@@ -12,29 +12,60 @@
  */
 require_once DOCUMENT_ROOT . "app/modulos/conexion/conexion.php";
 
-class CuentasModelo
+class ComisionesModelo
 {
-    public static function mdlAgregarCuentas($cbco)
+    public static function mdlAgregarComisiones()
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_cuentas_banco_cbco (cbco_nombre,cbco_saldo) VALUES(?,?)";
+            $sql = "";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $cbco['cbco_nombre']);
-            $pps->bindValue(2, $cbco['cbco_saldo']);
 
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
-            return false;
         } finally {
             $pps = null;
             $con = null;
         }
     }
-    public static function mdlActualizarCuentas()
+    public static function mdlActualizarComisiones()
+    {
+        try {
+            //code...
+            $sql = "";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarComisiones()
+    {
+        try {
+            //code...
+            $sql = "";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlEliminarComisiones()
     {
         try {
             //code...
@@ -52,69 +83,20 @@ class CuentasModelo
         }
     }
 
-
-    public static function mdlActualizarSaldoCuenta($cbco_id, $cbco_ingreso)
+    public static function mdlMostrarInfoCobranzaComisiones($iduser, $fechai, $fechaf)
     {
+
         try {
             //code...
-            $sql = "UPDATE tbl_cuentas_banco_cbco SET cbco_saldo = cbco_saldo + ?  WHERE cbco_id = ?";
+            $sql = "SELECT igs.*, usr.usr_nombre FROM tbl_ingresos_igs igs 
+            JOIN tbl_usuarios_usr usr ON igs.igs_usuario_responsable = usr.usr_id 
+            WHERE (igs.igs_fecha_registro BETWEEN ? AND ?) AND 
+            (igs.igs_tipo='COBRANZA' AND igs.igs_usuario_responsable=?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $cbco_ingreso);
-            $pps->bindValue(2, $cbco_id);
-            $pps->execute();
-            return $pps->rowCount() > 0;
-        } catch (PDOException $th) {
-            //throw $th;
-            return false;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
-    }
-    public static function mdlMostrarCuentas()
-    {
-        try {
-            //code...
-            $sql = "SELECT * FROM tbl_cuentas_banco_cbco";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-
-            $pps->execute();
-            return $pps->fetchAll();
-        } catch (PDOException $th) {
-            //throw $th;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
-    }
-    public static function mdlEliminarCuentas()
-    {
-        try {
-            //code...
-            $sql = "";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-
-            $pps->execute();
-            return $pps->rowCount() > 0;
-        } catch (PDOException $th) {
-            //throw $th;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
-    }
-
-    public static function mdlMostrarCuentasId($id_cuenta)
-    {
-        try {
-            //code...
-            $sql = "SELECT * FROM tbl_ingresos_igs WHERE igs_cuenta = ?";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->bindValue(1, $id_cuenta);
+            $pps->bindValue(1, $fechai);
+            $pps->bindValue(2, $fechaf);
+            $pps->bindValue(3, $iduser);
             $pps->execute();
             return $pps->fetchAll();
         } catch (PDOException $th) {
@@ -125,16 +107,21 @@ class CuentasModelo
         }
     }
 
-    public static function mdlMostrarNombreCTA($id_cuenta)
+    public static function mdlMostrarGastos($iduser, $fechai, $fechaf)
     {
+
         try {
             //code...
-            $sql = "SELECT cbco_nombre FROM tbl_cuentas_banco_cbco WHERE cbco_id=$id_cuenta";
+            $sql = "SELECT * FROM tbl_gastos_tgts 
+            WHERE (tgts_fecha_gasto BETWEEN ? AND ?) AND 
+            (tgts_categoria='11' AND tgts_usuario_responsable=?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
+            $pps->bindValue(1, $fechai);
+            $pps->bindValue(2, $fechaf);
+            $pps->bindValue(3, $iduser);
             $pps->execute();
-            return $pps->fetch();
+            return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
         } finally {

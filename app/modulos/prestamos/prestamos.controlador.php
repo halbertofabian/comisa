@@ -57,22 +57,32 @@ class PrestamosControlador
                 $_POST['tgts_categoria'] = 16;
 
                 $empleado = UsuariosModelo::mdlMostrarUsuarios($_POST['pms_usuario']);
+
                 $_POST['tgts_concepto'] = " al empleado <strong>" . $empleado['usr_nombre'] . '</strong>';
 
                 $_POST['tgts_mp'] = "EFECTIVO";
                 $_POST['tgts_nota'] = "";
+                $_POST['tgts_tipo'] = "PRESTAMO";
 
                 $crearGasto = GastosModelo::mdlCrearGasto($_POST);
 
                 if ($crearGasto) {
-                    return array(
-                        'status' => true,
-                        'mensaje' => 'Se guardo correctamente el prestamo'
-                    );
+                    $usr_prestamo = UsuariosModelo::mdlAcomularDeudaExterna($_POST['pms_usuario'], $_POST['pms_cantidad']);
+                    if ($usr_prestamo) {
+                        return array(
+                            'status' => true,
+                            'mensaje' => 'Se guardo correctamente el prestamo'
+                        );
+                    } else {
+                        return array(
+                            'status' => false,
+                            'mensaje' => 'No se registro el gasto como prestamo, pero si se registro el prestamo, nota: Tienes que realizar el gasto de manera manual'
+                        );
+                    }
                 } else {
                     return array(
                         'status' => false,
-                        'mensaje' => 'No se registro el gasto como prstamo, pero si se registro el prestamo, nota: Tienes que realizar el gasto de manera manual'
+                        'mensaje' => 'No se registro el gasto como prestamo, pero si se registro el prestamo, nota: Tienes que realizar el gasto de manera manual'
                     );
                 }
             } else {

@@ -50,7 +50,7 @@ class GastosModelo
     {
 
         try {
-            $sql = "INSERT INTO tbl_gastos_tgts (tgts_ruta,tgts_usuario_responsable,tgts_categoria,tgts_concepto,tgts_fecha_gasto,tgts_cantidad,tgts_mp,tgts_nota,tgts_usuario_registro,tgts_id_sucursal,tgts_id_corte,tgts_id_corte2) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_gastos_tgts (tgts_ruta,tgts_usuario_responsable,tgts_categoria,tgts_concepto,tgts_fecha_gasto,tgts_cantidad,tgts_mp,tgts_nota,tgts_usuario_registro,tgts_id_sucursal,tgts_id_corte,tgts_id_corte2,tgts_tipo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $gasto['tgts_ruta']);
@@ -65,6 +65,7 @@ class GastosModelo
             $pps->bindValue(10, $gasto['tgts_id_sucursal']);
             $pps->bindValue(11, $gasto['tgts_id_corte']);
             $pps->bindValue(12, $gasto['tgts_id_corte2']);
+            $pps->bindValue(13, $gasto['tgts_tipo']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

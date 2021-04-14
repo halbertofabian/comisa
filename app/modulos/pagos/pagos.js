@@ -85,6 +85,7 @@ function buscarAlumnoMatricula(usr_matricula = "") {
 
 
                 }
+                toa
 
             } else {
                 $("#tbodyDataPagosAlumnos").html('');

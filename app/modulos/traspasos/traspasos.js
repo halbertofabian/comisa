@@ -73,6 +73,9 @@ $("#tps_ams_id_origen").on("change", function () {
 var myArray = [];
 
 $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
+    
+    var audio = document.getElementById("audio");
+
     var idp = $(this).val();
 
     var pname = $("#pname" + idp).text();
@@ -127,6 +130,7 @@ $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
 
         }
+        audio.play();
     }
     else {
         toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")

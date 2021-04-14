@@ -317,4 +317,173 @@ class CajasModelo
             $con = null;
         }
     }
+
+    public static function mdlConsultarIngresosCajaEfectivo($igs_id_corte_2, $igs_tipo = 'COBRANZA')
+    {
+        try {
+
+            $sql = "SELECT igs.igs_id,igs.igs_concepto,igs.igs_monto,igs.igs_fecha_registro,igs.igs_usuario_registro,igs.igs_mp,igs.igs_tipo,usr.usr_nombre  FROM tbl_ingresos_igs igs JOIN tbl_usuarios_usr usr ON usr.usr_id = igs.igs_usuario_responsable WHERE igs_id_corte_2 = ?  AND igs.igs_mp = 'EFECTIVO' AND igs.igs_concepto != 'INICIO DE CAJA' AND igs_tipo = ?  ORDER BY igs_fecha_registro ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte_2);
+            $pps->bindValue(2, $igs_tipo);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarReIngresosCajaCobranzaEfectivo($igs_id_corte_2, $igs_tipo = 'REINGRESOS_COBRANZA')
+    {
+        try {
+
+            $sql = "SELECT igs.igs_id,igs.igs_concepto,igs.igs_monto,igs.igs_fecha_registro,igs.igs_usuario_registro,igs.igs_mp,igs.igs_tipo,usr.usr_nombre  FROM tbl_ingresos_igs igs JOIN tbl_usuarios_usr usr ON usr.usr_id = igs.igs_usuario_responsable WHERE igs_id_corte_2 = ?  AND igs.igs_mp = 'EFECTIVO' AND igs.igs_concepto != 'INICIO DE CAJA' AND igs_tipo = ? ORDER BY igs_fecha_registro ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte_2);
+            $pps->bindValue(2, $igs_tipo);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarPrestamoCPCajaCobranzaEfectivo($igs_id_corte_2)
+    {
+        try {
+
+            $sql = "SELECT SUM(igs_monto) AS CP_SAMUEL FROM `tbl_ingresos_igs` WHERE igs_tipo = 'PRESTO_CP_SAMUEL_COBRANZA' AND igs_id_corte_2 = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte_2);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarIngresosCajaCobranzaBanco($igs_id_corte_2)
+    {
+        try {
+
+            $sql = "SELECT igs.igs_id,igs.igs_concepto,igs.igs_monto,igs.igs_fecha_registro,igs.igs_usuario_registro,igs.igs_mp,igs.igs_referencia,igs.igs_cuenta,usr.usr_nombre  FROM tbl_ingresos_igs igs JOIN tbl_usuarios_usr usr ON usr.usr_id = igs.igs_usuario_responsable WHERE igs_id_corte_2 = ?  AND igs.igs_mp != 'EFECTIVO' AND igs.igs_concepto != 'INICIO DE CAJA' ORDER BY igs_fecha_registro ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte_2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarCuentas($cbco_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_cuentas_banco_cbco  WHERE cbco_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cbco_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarGastosCajaEfectivo($tgts_id_corte2)
+    {
+        try {
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'COBRANZA' ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarGastosVentasCajaEfectivo($tgts_id_corte2)
+    {
+        try {
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'VENTAS' ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarGastosVariosCajaEfectivo($tgts_id_corte2)
+    {
+        try {
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'VARIOS-COBRANZA' ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarGastosPrestamosCajaEfectivo($tgts_id_corte2)
+    {
+        try {
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'PRESTAMO' ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

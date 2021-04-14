@@ -436,7 +436,7 @@ class AppControlador
             ),
             '12' => array(
                 [
-                    'label' => 'Comisiones',
+                    'label' => 'Comisiones y sueldos',
                     'icon' => '<i class="link-icon fa fa-dollar"></i>',
                     'href' => '#softMarket',
                     'modulos' =>

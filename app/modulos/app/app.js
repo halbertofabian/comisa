@@ -1,5 +1,6 @@
 var urlApp = $(".urlApp").attr("urlApp")
 
+
 // alert(session);
 
 var date = new Date();

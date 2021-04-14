@@ -69,10 +69,13 @@
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
                                         <select class="form-control" name="igs_tipo" id="igs_tipo">
                                             <option>COBRANZA</option>
-
-                                            <!-- <option>S/E</option>
-                                            <option>CONTADO</option> -->
-                                            <option>OTROS</option>
+                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
+                                            <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                            <option value="ABONOS_COBRANZA">ABONOS</option>
+                                            <option value="OTROS_COBRANZA">OTROS</option>
+                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
+                                            <option value="S/E_VENTAS">S/E</option>
+                                            <option value="CONTADO_VENTAS">CONTADO</option>
                                         </select>
                                     </div>
                                 </div>
@@ -192,6 +195,7 @@
 
                                     <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
+                                    <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VARIOS-COBRANZA">
                                 </div>
                                 <input type="hidden" name="tgts_ruta" id="tgts_ruta">
 

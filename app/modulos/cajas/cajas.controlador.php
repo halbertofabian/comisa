@@ -64,7 +64,7 @@ class CajasControlador
                 $asignarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_SESSION['session_usr']['usr_id'], $ultimaCajaAbierta['copn_id']);
 
                 if ($asignarCajaUsuario) {
-                    CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'],'');
+                    CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'], '');
                     $_SESSION['session_usr']['usr_caja'] =  $ultimaCajaAbierta['copn_id'];
                     AppControlador::msj('success', 'CAJA ABIERTA', '', HTTP_HOST);
                 } else {
@@ -102,7 +102,7 @@ class CajasControlador
 
                     // Registrar ingreso en caja del saldo 
 
-                    
+
                     $ingresoCaja = IngresosModelo::mdlAgregarIngresos(array(
                         'igs_concepto' => 'INICIO DE CAJA',
                         'igs_monto' => $_POST['copn_ingreso_inicio'],
@@ -122,7 +122,7 @@ class CajasControlador
                     ));
 
                     if ($ingresoCaja) {
-                        CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'],$_POST['copn_ingreso_inicio']);
+                        CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'], $_POST['copn_ingreso_inicio']);
 
 
                         //$_SESSION['session_usr']['usr_caja'] =  $ultimaCajaAbierta['copn_id'];
@@ -192,6 +192,12 @@ class CajasControlador
 
             $ActaulizarCajaCierre = CajasModelo::mdlCerrarCaja($_POST);
 
+            if ($_POST['copn_tipo_caja'] == "CAJA_COBRADOR") {
+                $redireccionamiento = HTTP_HOST . 'flujo-caja';
+            } elseif ($_POST['copn_tipo_caja'] == "CAJA_COBRANZA_G") {
+                $redireccionamiento = HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $crt_id;
+            }
+
             if ($ActaulizarCajaCierre) {
                 $cerrarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['usr_id'], 0);
                 if ($cerrarCajaUsuario) {
@@ -206,7 +212,7 @@ class CajasControlador
                         return array(
                             'mensaje' => 'Corte realizado',
                             'status' => true,
-                            'pagina' => HTTP_HOST . 'cortes/view-r/' . $crt_id
+                            'pagina' => $redireccionamiento
                         );
                     } else {
                         return array(

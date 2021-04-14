@@ -42,7 +42,7 @@ cargarComponente('breadcrumb', '', 'REPORTES DE COBRANZA <strong class="text-dar
                         <td><?php echo $cbz['cja_nombre'] ?></td>
                         <td><?php echo number_format($cbz['copn_saldo'], 2) ?></td>
                         <td><?php echo $cbz['copn_registro'] ?></td>
-                        <td> <button type="button" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> </td>
+                        <td> <a  target="_blank" href="<?php echo HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $cbz['copn_id']  ?>" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a> </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

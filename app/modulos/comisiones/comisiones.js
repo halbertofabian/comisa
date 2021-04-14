@@ -1,0 +1,132 @@
+
+/**
+ *  Desarrollador: 
+ *  Fecha de creación: 13/04/2021 11:42
+ *  Desarrollado por: Softmor
+ *  Software de Morelos SA.DE.CV 
+ *  Sitio web: https://softmor.com
+ *  Facebook:  https://www.facebook.com/softmor/
+ *  Instagram: http://instagram.com/softmormx
+ *  Twitter: https://twitter.com/softmormx
+ */
+
+$("#btnRepComision").on("click", function () {
+
+    var id_igs_usuario_responsable = $("#id_igs_usuario_responsable").val()
+    var date_inicio = $("#igs_fecha_inicio").val();
+    var date_fin = $("#igs_fecha_fin").val();
+
+    var datos = new FormData();
+    datos.append("id_usr", id_igs_usuario_responsable);
+    datos.append("date_inicio", date_inicio);
+    datos.append("date_fin", date_fin);
+    datos.append("btnRepComision", true);
+
+
+    $.ajax({
+
+        url: urlApp + 'app/modulos/comisiones/comisiones.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+
+        },
+        success: function (respuesta) {
+            if (respuesta != "") {
+                var tblDatos = ""
+                var tblDebe = ""
+                var sumacobro = 0
+                var sumadescuento = 0
+                var cobros = respuesta.cobro
+                var gastos = respuesta.debe
+
+                cobros.forEach(inf => {
+                    tblDatos +=
+                        `
+                        <tr>
+                        <td></td>
+                
+                        <td>${inf.igs_fecha_registro}</td>
+                        <td>${inf.igs_usuario_registro}</td>
+                        <td>${inf.igs_mp}</td>
+                        <td>${inf.igs_referencia}</td>
+                        <td>${inf.igs_monto}</td>
+                        <td>${inf.igs_concepto}</td>
+                        <td>${inf.igs_tipo}</td>
+                        <td>${inf.usr_nombre}</td>
+                        </tr>
+                    `;
+                    sumacobro = sumacobro + Number(inf.igs_monto);
+                });
+                $("#tblComisiones").html(tblDatos);
+                $("#igs_cobro").val(sumacobro);
+                porcentaje = $("#igs_Porcentajecomision").val();
+                $("#igs_comision").val((sumacobro * Number(porcentaje)) / 100);
+
+                gastos.forEach(infdebe => {
+                    tblDebe +=
+                        `<tr>
+                        <td></td>
+                        <td>${infdebe.tgts_fecha_gasto}</td>
+                        <td>${infdebe.tgts_cantidad}</td>
+                        </tr>
+                    `;
+                    sumadescuento = sumadescuento + Number(infdebe.tgts_cantidad);
+
+                });
+                $("#tblDebe").html(tblDebe);
+                $("#igs_descuento").val(sumadescuento);
+                $("#igs_Apagar").val((sumacobro * .10) - sumadescuento);
+
+                var igs_Apgar = $("#igs_Apagar").val()
+                var igs_abono_deuda = $("#igs_abono_deuda").val()
+
+                var igs_pago = igs_Apgar - igs_abono_deuda;
+                $("#igs_pago").val(igs_pago);
+
+                $("#igs_deuda_ext").val(respuesta.deuda_ext.usr_deuda_ext);
+
+
+            } else {
+                alert("sin datos para mostrar");
+            }
+            // console.log(respuesta)
+
+        }
+    })
+
+})
+
+$("#igs_Porcentajecomision").on("keyup", function () {
+    porcentaje = $(this).val();
+    sumacobro = $("#igs_cobro").val();
+    gastosDescuento = $("#igs_descuento").val();
+    comision = (Number(sumacobro) * Number(porcentaje)) / 100;
+    $("#igs_comision").val(comision);
+
+    $("#igs_Apagar").val(comision - Number(gastosDescuento));
+
+
+})
+
+$("#igs_abono_deuda").on("keyup", function () {
+
+    var igs_Apgar = $("#igs_Apagar").val()
+    var igs_abono_deuda = $("#igs_abono_deuda").val()
+
+    var igs_pago = igs_Apgar - igs_abono_deuda;
+    $("#igs_pago").val(igs_pago);
+
+    var igs_nueva_deuda = $("#igs_nueva_deuda").val();
+    var igs_deuda_ext = $("#igs_deuda_ext").val();
+
+    igs_nueva_deuda = igs_deuda_ext - igs_abono_deuda;
+    $("#igs_nueva_deuda").val(igs_nueva_deuda);
+
+
+})

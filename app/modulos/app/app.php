@@ -128,6 +128,9 @@
                 <!-- Start content -->
                 <div class="content">
                     <div class="container-fluid">
+                        <audio id="audio" controls style="display: none">
+                            <source type="audio/wav" src="<?php echo HTTP_HOST . 'app/assets' ?>/audio/scanner-beep-checkout.mp3">
+                        </audio>
 
                         <?php
 
@@ -202,7 +205,7 @@
         var objetoL2 = ['cantidad', 'sku', 'nombre'];
         var objetoL3 = ['cantidad', 'sku', 'nombre'];
 
-        var o = objetoG.push(objetoL1,objetoL2,objetoL3)
+        var o = objetoG.push(objetoL1, objetoL2, objetoL3)
 
         alert(o)
     </script>

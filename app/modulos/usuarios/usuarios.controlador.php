@@ -110,6 +110,7 @@ class UsuariosControlador
             $_POST['usr_clave'] = password_hash($_POST['usr_clave'], PASSWORD_DEFAULT);
             $_POST['usr_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
             $_POST['usr_fecha_registro'] = FECHA;
+            $_POST['usr_sueldo'] = str_replace(",", "", $_POST['usr_sueldo']);
 
             $agregarUsuario = UsuariosModelo::mdlAgregarUsuarios2($_POST);
 
@@ -250,6 +251,8 @@ class UsuariosControlador
 
 
             $_POST['usr_firma'] = $ruta;
+            $_POST['usr_sueldo'] = str_replace(",", "", $_POST['usr_sueldo']);
+            
             if ($_POST['usr_clave'] == "") {
                 $_POST['usr_clave'] = $_POST['usr_clave_hidden'];
             } else {

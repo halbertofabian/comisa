@@ -58,10 +58,14 @@
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
                                         <select class="form-control" name="igs_tipo" id="igs_tipo">
                                             <option>COBRANZA</option>
-
-                                            <!-- <option>S/E</option>
-                                            <option>CONTADO</option> -->
-                                            <option>OTROS</option>
+                                            <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                            <option value="ABONOS_COBRANZA">ABONOS</option>
+                                            <option value="OTROS_COBRANZA">OTROS</option>
+                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
+                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
+                                            <option value="S/E_VENTAS">S/E</option>
+                                            <option value="CONTADO_VENTAS">CONTADO</option>
+                                            <option value="OTROS_COBRANZA">OTROS</option>
                                         </select>
                                     </div>
                                 </div>
@@ -178,9 +182,11 @@
 
                                     <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
-                                </div>
-                                <input type="hidden" name="tgts_ruta" id="tgts_ruta">
 
+                                    <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                </div>
+
+                                <input type="hidden" name="tgts_ruta" id="tgts_ruta">
 
                                 <div class="form-group col-md-6 col-12">
                                     <label for="tgts_categoria">Categoría</label>
@@ -438,6 +444,7 @@
                                     <input type="hidden" id="copn_id_input" name="copn_id">
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
                                     <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+
                                     <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
                                     <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>
                                     <p class="card-text">Sucursal <strong id="cja_sucursal"> </strong> </p>

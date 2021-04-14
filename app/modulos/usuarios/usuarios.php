@@ -42,7 +42,7 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="usr_correo">Correo electrónico</label>
-                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" value="<?php echo $usr['usr_correo'] ?>" required>
+                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" value="<?php echo $usr['usr_correo'] ?>" >
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
@@ -76,6 +76,12 @@
                                     // administrador 
                                     ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="usr_sueldo">Sueldo</label>
+                                <input type="text" name="usr_sueldo" id="usr_sueldo" class="form-control inputN" placeholder="Sueldo del empleado" value="<?php echo $usr['usr_sueldo']  ?>" >
                             </div>
                         </div>
                         <?php if ($usr['usr_firma'] != "") : ?>
@@ -148,7 +154,7 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="usr_correo">Correo electrónico</label>
-                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" >
+                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico">
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
@@ -167,6 +173,12 @@
                                         <option value="<?php echo $pfl ?>"><?php echo $pfl ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="usr_sueldo">Sueldo</label>
+                                <input type="text" name="usr_sueldo" id="usr_sueldo" class="form-control inputN" placeholder="Sueldo del empleado">
                             </div>
                         </div>
                         <div class="col-md-4 col-12">

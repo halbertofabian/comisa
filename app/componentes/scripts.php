@@ -12,3 +12,4 @@
 <script src="<?php echo HTTP_HOST . 'app/modulos/cortes/cortes.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/fichas/fichas.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/prestamos/prestamos.js' ?>"></script>
+<script src="<?php echo HTTP_HOST . 'app/modulos/comisiones/comisiones.js' ?>"></script>
