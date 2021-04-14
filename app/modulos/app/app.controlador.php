@@ -39,7 +39,8 @@ class AppControlador
             'mi-flujo-caja',
             'fichas',
             'mi-caja',
-            'comisiones'
+            'comisiones',
+            'sueldos'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -453,6 +454,11 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Reporte de comision',
                             'href' => 'comisiones/reporte'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Sueldos',
+                            'href' => 'sueldos'
                         ],
 
                         // Aqui más item de menu
