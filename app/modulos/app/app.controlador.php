@@ -58,6 +58,7 @@ class AppControlador
             'flujo-caja',
             'cajas',
             'reportes-caja',
+            'comisiones',
             'salir'
         );
     }
@@ -495,6 +496,23 @@ class AppControlador
                             'href' => 'cajas'
                         ],
                         //Aqui más item de menu
+                    ),
+                ]
+            ),
+            '2' => array(
+                [
+                    'label' => 'Comisiones y sueldos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Comisiones',
+                            'href' => 'comisiones'
+                        ],
+
+                        // Aqui más item de menu
                     ),
                 ]
             ),

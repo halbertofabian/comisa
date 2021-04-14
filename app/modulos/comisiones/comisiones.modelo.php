@@ -91,7 +91,7 @@ class ComisionesModelo
             $sql = "SELECT igs.*, usr.usr_nombre FROM tbl_ingresos_igs igs 
             JOIN tbl_usuarios_usr usr ON igs.igs_usuario_responsable = usr.usr_id 
             WHERE (igs.igs_fecha_registro BETWEEN ? AND ?) AND 
-            (igs.igs_tipo='COBRANZA' AND igs.igs_usuario_responsable=?)";
+            ((igs.igs_tipo='COBRANZA' OR igs.igs_tipo = 'CONTADO_VENTAS' OR igs.igs_tipo = 'S/E_VENTAS') AND igs.igs_usuario_responsable=?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $fechai);

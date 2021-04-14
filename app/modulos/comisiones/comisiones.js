@@ -34,18 +34,41 @@ $("#btnRepComision").on("click", function () {
         dataType: "json",
         beforeSend: function () {
 
+            startLoadButton()
 
         },
         success: function (respuesta) {
+            stopLoadButton('Buscar')
             if (respuesta != "") {
                 var tblDatos = ""
                 var tblDebe = ""
                 var sumacobro = 0
                 var sumadescuento = 0
+                var comision = 0;
                 var cobros = respuesta.cobro
                 var gastos = respuesta.debe
 
+                var com_cobranza = $("#com_cobranza").val()
+                var com_contado = $("#com_contado").val()
+                var com_se = $("#com_se").val()
+
                 cobros.forEach(inf => {
+                    var com = 0;
+                    if (inf.igs_tipo == 'COBRANZA') {
+
+
+                        com = inf.igs_monto * com_cobranza / 100;
+
+                    } else if (inf.igs_tipo == 'CONTADO_VENTAS') {
+                        com = inf.igs_monto * com_contado / 100;
+
+
+                    } else if (inf.igs_tipo == 'S/E_VENTAS') {
+                        com = inf.igs_monto * com_se / 100;
+
+
+                    }
+                    comision += com;
                     tblDatos +=
                         `
                         <tr>
@@ -56,6 +79,7 @@ $("#btnRepComision").on("click", function () {
                         <td>${inf.igs_mp}</td>
                         <td>${inf.igs_referencia}</td>
                         <td>${inf.igs_monto}</td>
+                        <td>${com}</td>
                         <td>${inf.igs_concepto}</td>
                         <td>${inf.igs_tipo}</td>
                         <td>${inf.usr_nombre}</td>
@@ -65,8 +89,8 @@ $("#btnRepComision").on("click", function () {
                 });
                 $("#tblComisiones").html(tblDatos);
                 $("#igs_cobro").val(sumacobro);
-                porcentaje = $("#igs_Porcentajecomision").val();
-                $("#igs_comision").val((sumacobro * Number(porcentaje)) / 100);
+                // porcentaje = $("#igs_Porcentajecomision").val();
+                $("#igs_comision").val(comision);
 
                 gastos.forEach(infdebe => {
                     tblDebe +=
@@ -81,7 +105,9 @@ $("#btnRepComision").on("click", function () {
                 });
                 $("#tblDebe").html(tblDebe);
                 $("#igs_descuento").val(sumadescuento);
-                $("#igs_Apagar").val((sumacobro * .10) - sumadescuento);
+
+
+                $("#igs_Apagar").val(comision - sumadescuento);
 
                 var igs_Apgar = $("#igs_Apagar").val()
                 var igs_abono_deuda = $("#igs_abono_deuda").val()
@@ -102,17 +128,17 @@ $("#btnRepComision").on("click", function () {
 
 })
 
-$("#igs_Porcentajecomision").on("keyup", function () {
-    porcentaje = $(this).val();
-    sumacobro = $("#igs_cobro").val();
-    gastosDescuento = $("#igs_descuento").val();
-    comision = (Number(sumacobro) * Number(porcentaje)) / 100;
-    $("#igs_comision").val(comision);
+// $("#igs_Porcentajecomision").on("keyup", function () {
+//     porcentaje = $(this).val();
+//     sumacobro = $("#igs_cobro").val();
+//     gastosDescuento = $("#igs_descuento").val();
+//     comision = (Number(sumacobro) * Number(porcentaje)) / 100;
+//     $("#igs_comision").val(comision);
 
-    $("#igs_Apagar").val(comision - Number(gastosDescuento));
+//     $("#igs_Apagar").val(comision - Number(gastosDescuento));
 
 
-})
+// })
 
 $("#igs_abono_deuda").on("keyup", function () {
 

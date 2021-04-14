@@ -1,5 +1,5 @@
 <?php
-cargarComponente('breadcrumb', '', 'Reporte de comisiones');
+cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
 
 ?>
 <div class="container">
@@ -56,6 +56,7 @@ cargarComponente('breadcrumb', '', 'Reporte de comisiones');
                     <th>Metodo de pago</th>
                     <th>Referencia</th>
                     <th>Monto</th>
+                    <th>Comisión</th>
                     <th>Concepto</th>
                     <th>Tipo</th>
                     <th>Nombre_Responsable</th>
@@ -111,18 +112,44 @@ cargarComponente('breadcrumb', '', 'Reporte de comisiones');
     <hr>
 
     <div class="row">
-        <div class="col-12 col-md-4">
-            <div class="form-group">
-                <label for="igs_comision">Comision </label>
-                <input type="text" name="igs_comision" id="igs_comision" class="form-control inputN" placeholder="" readonly>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="igs_comision">Comision </label>
+                        <input type="text" name="igs_comision" id="igs_comision" class="form-control inputN" placeholder="" readonly>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="alert alert-primary" role="alert">
+                    <strong>PARAMETROS</strong>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="com_cobranza">COBRANZA % </label>
+                        <input type="text" name="com_cobranza" id="com_cobranza" class="form-control " placeholder="" value="10">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="com_se">S/E % </label>
+                        <input type="text" name="com_se" id="com_se" class="form-control " placeholder="" value="5">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="com_contado">CONTADO % </label>
+                        <input type="text" name="com_contado" id="com_contado" class="form-control " placeholder="" value="10">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-12 col-md-2">
-            <div class="form-group">
-                <label for="igs_Porcentajecomision">%</label>
-                <input type="text" name="igs_Porcentajecomision" id="igs_Porcentajecomision" class="form-control inputN" placeholder="" value="10">
-            </div>
-        </div>
+
+
     </div>
     <div class="row">
         <div class="col-12 col-md-4">
