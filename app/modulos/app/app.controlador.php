@@ -38,6 +38,7 @@ class AppControlador
             'cuentas',
             'mi-flujo-caja',
             'fichas',
+            'mi-caja',
             'comisiones'
         );
     }
@@ -348,6 +349,12 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Crear nueva caja',
                             'href' => 'cajas'
+                        ],
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Mi caja',
+                            'href' => 'mi-caja'
                         ],
 
 

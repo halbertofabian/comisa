@@ -208,7 +208,8 @@ $("#formCalculoComisiones").on("submit", function (e) {
                                 location.href = res.pagina
                             }, 1000);
                         } else {
-                            toastr.error(); (res.mensaje, "¡Error!")
+                            stopLoadButton("Intentar de nuevo")
+                            toastr.error(res.mensaje, "¡Error!")
                         }
                     }
                 })
