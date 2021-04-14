@@ -37,7 +37,8 @@ class AppControlador
             'flujo-caja',
             'cuentas',
             'mi-flujo-caja',
-            'fichas'
+            'fichas',
+            'comisiones'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -434,6 +435,23 @@ class AppControlador
                 ]
             ),
             '12' => array(
+                [
+                    'label' => 'Comisiones',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Reporte de comision',
+                            'href' => 'comisiones/reporte'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '13' => array(
                 [
                     'label' => 'Nuevo menu',
                     'icon' => '<i class="link-icon fa fa-user"></i>',
