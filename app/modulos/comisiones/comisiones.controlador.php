@@ -15,7 +15,7 @@ class ComisionesControlador
     public static function ctrCalcularComisiones()
     {
         if (isset($_POST['btnCalcularComisiones'])) {
-            preArray($_POST);
+            
 
             $tgts_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
             if ($tgts_id_corte2['usr_caja'] == 0) {

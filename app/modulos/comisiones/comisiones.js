@@ -22,6 +22,20 @@ $("#btnRepComision").on("click", function () {
     datos.append("date_fin", date_fin);
     datos.append("btnRepComision", true);
 
+    if (id_igs_usuario_responsable == "") {
+        toastr.warning("Por favor, seleccione un usuario", "ADVERTENCIA")
+        return;
+    }
+
+    if (date_inicio == "") {
+        toastr.warning("Por favor, completa el campo de fecha inicio", "ADVERTENCIA")
+        return;
+    }
+    if (date_fin == "") {
+        toastr.warning("Por favor, completa el campo de fecha fin", "ADVERTENCIA")
+        return;
+    }
+
 
     $.ajax({
 
@@ -55,18 +69,11 @@ $("#btnRepComision").on("click", function () {
                 cobros.forEach(inf => {
                     var com = 0;
                     if (inf.igs_tipo == 'COBRANZA') {
-
-
                         com = inf.igs_monto * com_cobranza / 100;
-
                     } else if (inf.igs_tipo == 'CONTADO_VENTAS') {
                         com = inf.igs_monto * com_contado / 100;
-
-
                     } else if (inf.igs_tipo == 'S/E_VENTAS') {
                         com = inf.igs_monto * com_se / 100;
-
-
                     }
                     comision += com;
                     tblDatos +=
@@ -190,7 +197,19 @@ $("#formCalculoComisiones").on("submit", function (e) {
                         startLoadButton()
 
                     },
-                    success: function (respuesta) {
+                    success: function (res) {
+
+                        if (res) {
+                            toastr.success(res.mensaje, "¡Muy bien!")
+                            stopLoadButton('Rediriendo a mi caja....')
+                            $("#btnCalcularComisiones").attr("disabled", true)
+
+                            setTimeout(function () {
+                                location.href = res.pagina
+                            }, 1000);
+                        } else {
+                            toastr.error(); (res.mensaje, "¡Error!")
+                        }
                     }
                 })
             }
