@@ -2,7 +2,8 @@
 $lifetime=1209600;
 @session_start();
 setcookie(session_name(),session_id(),time()+$lifetime);
-// XXX FECHA  XXX
+
+
 date_default_timezone_set('America/Mexico_city');
 $fecha = date('Y-m-d h:i:s');
 define('FECHA', $fecha);
@@ -101,6 +102,8 @@ function startLoadButton()
             Por favor espere...`)
     </script>';
 }
+
+
 
 function stopLoadButton($label)
 {
@@ -213,4 +216,21 @@ function verifica_rango($date_inicio, $date_fin, $date_nueva)
     if (($date_nueva >= $date_inicio) && ($date_nueva <= $date_fin))
         return true;
     return false;
+}
+function fechaCastellano($fecha)
+{
+    $hora = substr($fecha, 10, 10);
+    $fecha = substr($fecha, 0, 10);
+    
+    $numeroDia = date('d', strtotime($fecha));
+    $dia = date('l', strtotime($fecha));
+    $mes = date('F', strtotime($fecha));
+    $anio = date('Y', strtotime($fecha));
+    $dias_ES = array("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+    $dias_EN = array("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
+    $nombredia = str_replace($dias_EN, $dias_ES, $dia);
+    $meses_ES = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+    $meses_EN = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+    $nombreMes = str_replace($meses_EN, $meses_ES, $mes);
+    return $nombredia . " " . $numeroDia . " de " . $nombreMes . " de " . $anio.' - '.$hora;
 }
