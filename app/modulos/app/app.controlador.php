@@ -61,6 +61,20 @@ class AppControlador
             'cajas',
             'reportes-caja',
             'comisiones',
+            'sueldos',
+            'salir'
+        );
+    }
+    public static function ObtenerListaBlancaGefeVentas()
+    {
+        return array(
+            'flujo-caja',
+            'mi-caja',
+            'flujo-caja',
+            'cajas',
+            'reportes-caja',
+            'comisiones',
+            'sueldos',
             'salir'
         );
     }
@@ -508,6 +522,7 @@ class AppControlador
                             'label' => 'Registrar nueva caja',
                             'href' => 'cajas'
                         ],
+                        
                         //Aqui más item de menu
                     ),
                 ]
@@ -523,6 +538,61 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Comisiones',
                             'href' => 'comisiones'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Sueldos',
+                            'href' => 'sueldos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+        );
+    }
+
+    public static function obtnerMenuGefeVentas()
+    {
+        return array(
+            '1' => array(
+                [
+                    'label' => 'Ventas',
+                    'icon' => '<i class="fas fa-funnel-dollar "></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '',
+                            'label' => 'Flujo de caja',
+                            'href' => 'flujo-caja'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Registrar nueva caja',
+                            'href' => 'cajas'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
+            '2' => array(
+                [
+                    'label' => 'Comisiones y sueldos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Comisiones',
+                            'href' => 'comisiones'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Sueldos',
+                            'href' => 'sueldos'
                         ],
 
                         // Aqui más item de menu

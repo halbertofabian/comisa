@@ -10,7 +10,17 @@
 <div class="row">
     <div class="col-12">
         <div class="alert alert-secondary mt-5" role="alert">
-            <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+            <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+
+            <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+
+                <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/ventas/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+            <?php else : ?>
+
+                <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+
+            <?php endif; ?>
         </div>
     </div>
     <div class="col-md-4">
@@ -67,15 +77,41 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
-                                        <select class="form-control" name="igs_tipo" id="igs_tipo">
-                                            <option>COBRANZA</option>
-                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
-                                            <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
-                                            <option value="ABONOS_COBRANZA">ABONOS</option>
-                                            <option value="OTROS_COBRANZA">OTROS</option>
-                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
-                                            <option value="S/E_VENTAS">S/E</option>
-                                            <option value="CONTADO_VENTAS">CONTADO</option>
+                                        <select class="form-control select2" name="igs_tipo" id="igs_tipo" required>
+                                            <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option>COBRANZA</option>
+                                                <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                                <option value="ABONOS_COBRANZA">ABONOS</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
+                                                <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+
+                                            <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                                <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                                <option value="ABONOS_COBRANZA">ABONOS</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
+                                                <option>COBRANZA</option>
+
+                                            <?php else : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option>COBRANZA</option>
+                                                <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                                <option value="ABONOS_COBRANZA">ABONOS</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
+                                                <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                            <?php endif; ?>
+
                                         </select>
                                     </div>
                                 </div>
@@ -112,7 +148,7 @@
                                         <div class="col-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="igs_cuenta">Cuenta</label>
-                                                <select class="form-control" name="igs_cuenta" id="igs_cuenta">
+                                                <select class="form-control select2" name="igs_cuenta" id="igs_cuenta">
 
                                                     <option value="">Seleccione una cuenta</option>
                                                     <?php
@@ -195,7 +231,14 @@
 
                                     <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
-                                    <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VARIOS-COBRANZA">
+
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VENTAS">
+                                    <?php else : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                    <?php endif; ?>
                                 </div>
                                 <input type="hidden" name="tgts_ruta" id="tgts_ruta">
 
@@ -380,7 +423,7 @@
                 </h4>
                 <div class="form-group">
                     <label for="pms_usuario">Empleado</label>
-                    <select class="form-control select2" name="pms_usuario" id="pms_usuario">
+                    <select class="form-control select2 select2" name="pms_usuario" id="pms_usuario">
                         <option value="">Seleccione a un empleado a prestar</option>
                         <?php
                         $empleados = UsuariosModelo::mdlMostrarUsuarios();
@@ -475,7 +518,16 @@
                                     <input type="hidden" id="usr_caja_input" name="usr_caja">
                                     <input type="hidden" id="usr_id_input" name="usr_id">
                                     <input type="hidden" id="copn_id_input" name="copn_id">
-                                    <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
+
+
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENTAS_G">
+                                    <?php else : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA">
+                                    <?php endif; ?>
+
 
 
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">

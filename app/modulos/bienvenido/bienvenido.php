@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') :
+if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza' || $_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas' ) :
     cargarPagina('mi-caja', $rutas);
 ?>
 

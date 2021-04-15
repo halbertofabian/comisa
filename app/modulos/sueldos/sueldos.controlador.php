@@ -62,7 +62,7 @@ class SueldosControlador
 
             $empleado = UsuariosModelo::mdlMostrarUsuarios($_POST['id__usr_sueldo']);
 
-            $_POST['tgts_concepto'] = " del Cobrador / Vendedor <strong>" . $empleado['usr_nombre'] . '</strong>';
+            $_POST['tgts_concepto'] = " del empleado <strong>" . $empleado['usr_nombre'] . '</strong>';
 
             $_POST['tgts_mp'] = "EFECTIVO";
             $_POST['tgts_nota'] = "";
