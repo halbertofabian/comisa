@@ -1284,7 +1284,11 @@ EOF;
                 <p><strong> $ $igs_prestamoCP[CP_SAMUEL]</strong></p>
             </td>
         </tr>   
-        
+        <tr> 
+        <td colspan="2" style="text-align: center;">
+          <hr>
+        </td>
+    </tr> 
         <tr> 
             <td  style="text-align: left;">
                 <p><strong> GASTOS COBRADORES </strong></p>
@@ -1328,14 +1332,7 @@ EOF;
             </td>
         </tr>
           
-        <tr> 
-            <td  style="text-align: left;">
-                <p><strong> RETIRO DE CAJA </strong></p>
-            </td>
-            <td  style="text-align: center;">
-                <p><strong> $ $copn_retiro </strong></p>
-            </td>
-        </tr>  
+         
         <tr> 
             <td  style="text-align: left;">
                 <p><strong> PRESTAMOS</strong></p>
@@ -1346,9 +1343,17 @@ EOF;
         </tr> 
         <tr> 
             <td  style="text-align: left;">
+                <p><strong> RETIRO DE CAJA </strong></p>
+            </td>
+            <td  style="text-align: center; color: blue;">
+                <p><strong> $ $copn_retiro </strong></p>
+            </td>
+        </tr> 
+        <tr> 
+            <td  style="text-align: left;">
                 <p><strong> SALDO EN CAJA </strong></p>
             </td>
-            <td  style="text-align: center;">
+            <td  style="text-align: center; ; color: red;">
                 <p><strong> $ $copn_saldo</strong></p>
             </td>
         </tr> 
