@@ -22,8 +22,8 @@ class SueldosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -39,8 +39,8 @@ class SueldosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -48,16 +48,16 @@ class SueldosModelo
             $con = null;
         }
     }
-    public static function mdlMostrarSueldos()
+    public static function mdlMostrarSueldos($idus)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "SELECT usr_deuda_ext,usr_sueldo FROM tbl_usuarios_usr WHERE usr_id=?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
-            $pps -> execute();
-            return $pps ->fetchAll();
+            $pps->bindValue(1, $idus);
+            $pps->execute();
+            return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -73,8 +73,8 @@ class SueldosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -83,5 +83,3 @@ class SueldosModelo
         }
     }
 }
-
-

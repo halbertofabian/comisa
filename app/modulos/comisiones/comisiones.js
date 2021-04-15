@@ -166,10 +166,7 @@ $("#igs_abono_deuda").on("keyup", function () {
 
 
 $("#formCalculoComisiones").on("submit", function (e) {
-
     e.preventDefault();
-
-
     var datos = new FormData(this);
     datos.append("btnCalcularComisiones", true)
 
