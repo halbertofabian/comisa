@@ -444,6 +444,67 @@
             </div>
         </div>
     </div>
+
+    <div class="col-md-6">
+    
+    <div class="card">
+        
+        <div class="card-body">
+            <h4 class="card-title">Tabulador</h4>
+            <table class="table table_tabulador">
+                <thead>
+                    <tr>
+                        <th>DENOMINACION</th>
+                        <th>CANTIDAD</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="d_1000" class="form-control inputN" value="1000" readonly></td>
+                        <td><input type="text" id="c_1000" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_1000" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_500" class="form-control inputN" value="500" readonly></td>
+                        <td><input type="text" id="c_500" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_500" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_200" class="form-control inputN" value="200" readonly></td>
+                        <td><input type="text" id="c_200" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_200" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_100" class="form-control inputN" value="100" readonly></td>
+                        <td><input type="text" id="c_100" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_100" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_50" class="form-control inputN" value="50" readonly></td>
+                        <td><input type="text" id="c_50" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_50" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_20" class="form-control inputN" value="20" readonly></td>
+                        <td><input type="text" id="c_20" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_20" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td  class="text-center"> <strong>MONEDAS</strong> </td>
+                        <td colspan="2"><input type="text" id="t_moneda" class="form-control inputN tabCalculo"></td>
+                    </tr>
+                    <tr>
+                    
+                        <td colspan="3"><input type="text" id="total_t" class="form-control inputN" readonly></td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </div>
 </div>
 
 <div class="div content-abrir-caja d-none">

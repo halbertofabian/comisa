@@ -11,6 +11,7 @@
  */
 
 
+
 $("#formCerrarCaja").on("submit", function (e) {
 
     e.preventDefault();
@@ -112,3 +113,47 @@ $("#formCerrarCaja").on("submit", function (e) {
         })
 })
 
+
+
+$(".table_tabulador tbody").on("keyup", ".tabCalculo", function () {
+
+   
+    // 1000
+    var sumaTab = 0;
+    var d_1000 = Number($("#d_1000").val())
+    var c_1000 = Number($("#c_1000").val())
+    $("#t_1000").val(d_1000 * c_1000);
+    sumaTab += d_1000 * c_1000;
+
+    var d_500 = Number($("#d_500").val())
+    var c_500 = Number($("#c_500").val())
+    $("#t_500").val(d_500 * c_500);
+    sumaTab += d_500 * c_500;
+
+    var d_200 = Number($("#d_200").val())
+    var c_200 = Number($("#c_200").val())
+    $("#t_200").val(d_200 * c_200);
+    sumaTab += d_200 * c_200;
+
+    var d_100 = Number($("#d_100").val())
+    var c_100 = Number($("#c_100").val())
+    $("#t_100").val(d_100 * c_100);
+    sumaTab += d_100 * c_100;
+
+    var d_50 = Number($("#d_50").val())
+    var c_50 = Number($("#c_50").val())
+    $("#t_50").val(d_50 * c_50);
+    sumaTab += d_50 * c_50;
+
+    var d_20 = Number($("#d_20").val())
+    var c_20 = Number($("#c_20").val())
+    $("#t_20").val(d_20 * c_20);
+    sumaTab += d_20 * c_20;
+
+     var t_moneda = Number($("#t_moneda").val())
+
+     sumaTab += t_moneda;
+     $("#total_t").val(sumaTab)
+
+
+})
