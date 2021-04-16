@@ -89,7 +89,8 @@ $("#formCerrarCaja").on("submit", function (e) {
                                         })
                                             .then((willDelete) => {
                                                 if (willDelete) {
-                                                    location.href = res.pagina
+                                                    //location.href = res.pagina
+                                                    window.open(res.pagina, "_blank")
                                                 } else {
                                                     location.href = res.pagina
                                                 }
@@ -117,7 +118,7 @@ $("#formCerrarCaja").on("submit", function (e) {
 
 $(".table_tabulador tbody").on("keyup", ".tabCalculo", function () {
 
-   
+
     // 1000
     var sumaTab = 0;
     var d_1000 = Number($("#d_1000").val())
@@ -150,10 +151,10 @@ $(".table_tabulador tbody").on("keyup", ".tabCalculo", function () {
     $("#t_20").val(d_20 * c_20);
     sumaTab += d_20 * c_20;
 
-     var t_moneda = Number($("#t_moneda").val())
+    var t_moneda = Number($("#t_moneda").val())
 
-     sumaTab += t_moneda;
-     $("#total_t").val(sumaTab)
+    sumaTab += t_moneda;
+    $("#total_t").val(sumaTab)
 
 
 })
