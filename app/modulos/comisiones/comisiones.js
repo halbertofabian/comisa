@@ -13,8 +13,11 @@
 $("#btnRepComision").on("click", function () {
 
     var id_igs_usuario_responsable = $("#id_igs_usuario_responsable").val()
-    var date_inicio = $("#igs_fecha_inicio").val();
-    var date_fin = $("#igs_fecha_fin").val();
+    var date_inicio = $("#igs_fecha_inicio").val() + "T00:00";
+    var date_fin = $("#igs_fecha_fin").val() + "T23:59";
+     
+
+    
 
     var datos = new FormData();
     datos.append("id_usr", id_igs_usuario_responsable);
