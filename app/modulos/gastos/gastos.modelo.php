@@ -249,4 +249,24 @@ class GastosModelo
             $con = null;;
         }
     }
+
+    public static function mdlConsultarCajaAbierta($tbl_gastos_tgts)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT copn_fecha_cierre FROM tbl_caja_open_copn WHERE copn_id = ?  ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tbl_gastos_tgts);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
 }

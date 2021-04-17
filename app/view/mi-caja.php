@@ -84,10 +84,10 @@
                                                 <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
                                                 <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                                 <option value="ABONOS_COBRANZA">ABONOS</option>
-                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <!-- <option value="OTROS_COBRANZA">OTROS</option> -->
                                                 <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
-                                                <option value="S/E_VENTAS">S/E</option>
-                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                                <!-- <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option> -->
 
                                             <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
                                                 <option value="">SELECCIONE TIPO DE INGRESO</option>
@@ -98,7 +98,7 @@
                                                 <option value="ABONOS_COBRANZA">ABONOS</option>
                                                 <option value="OTROS_COBRANZA">OTROS</option>
                                                 <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
-                                                <option>COBRANZA</option>
+                                                <!-- <option>COBRANZA</option> -->
 
                                             <?php else : ?>
                                                 <option value="">SELECCIONE TIPO DE INGRESO</option>

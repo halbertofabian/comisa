@@ -58,28 +58,28 @@
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
                                         <select class="form-control select2" name="igs_tipo" id="igs_tipo" required>
                                             <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
-                                                <option>COBRANZA</option>
+                                                <!-- <option value="">SELECCIONE TIPO DE INGRESO</option> -->
+                                                <option selected>COBRANZA</option>
                                                 <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                             <option value="ABONOS_COBRANZA">ABONOS</option>
                                             <option value="OTROS_COBRANZA">OTROS</option>
                                             <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
                                             <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
-                                                <option value="S/E_VENTAS">S/E</option>
+                                                <!-- <option value="S/E_VENTAS">S/E</option>
                                                 <option value="CONTADO_VENTAS">CONTADO</option>
-                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option> -->
                                             <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
                                                 <option value="">SELECCIONE TIPO DE INGRESO</option>
                                                 <option value="S/E_VENTAS">S/E</option>
                                                 <option value="CONTADO_VENTAS">CONTADO</option>
-                                                <option>COBRANZA</option>
+                                                <!-- <option>COBRANZA</option> -->
                                                 <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                             <option value="ABONOS_COBRANZA">ABONOS</option>
                                             <option value="OTROS_COBRANZA">OTROS</option>
                                             <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
                                             <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
 
-                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <!-- <option value="OTROS_COBRANZA">OTROS</option> -->
                                             <?php else : ?>
                                                 <option value="">SELECCIONE TIPO DE INGRESO</option>
                                                 <option>COBRANZA</option>

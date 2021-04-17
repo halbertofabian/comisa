@@ -1,9 +1,9 @@
 <script>
     var pagina = ""
 </script>
-<?php cargarComponente('breadcrumb', '', 'Ingresos'); ?>
+<?php cargarComponente('breadcrumb', '', 'Listado de ingresos'); ?>
 <div class="container">
-    <form action="" method="post">
+    <!-- <form action="" method="post">
         <div class="row">
 
             <div class="col-md-2 col-6">
@@ -18,12 +18,6 @@
                     <input type="text" name="igs_concepto" id="igs_concepto" class="form-control " required placeholder="">
                 </div>
             </div>
-            <!-- <div class="col-md-2 col-6">
-            <div class="form-group">
-                <label for="igs_fecha_registro">Fecha</label>
-                <input type="date" name="igs_fecha_registro" id="igs_fecha_registro" class="form-control theDate" required placeholder="">
-            </div>
-        </div> -->
             <div class="form-group col-md-3 col-6">
                 <label for="igs_mp">Método de pago</label>
                 <select name="igs_mp" id="igs_mp" class="form-control">
@@ -42,23 +36,14 @@
         $crearIngreso->ctrAgregarIngresos();
 
         ?>
-    </form>
+    </form> -->
 
     <hr>
     <div class="container">
         <div class="row">
-            <!-- <div class="col-12 mt-1">
-            <button type="button" id="daterange-btn" class="d-none d-sm-inline-block btn btn-default   mr-sm-2 shadow-sm  float-right mb-4">
-                <span>
-                    <i class="fa fa-calendar"></i> Rango de fecha
-                </span>
-                <i class="fa fa-caret-down"></i>
-            </button>
-        </div> -->
-
 
             <div class="col-12">
-                <table class="table tablas table-striped tablaIngresos">
+                <table class="table tablas table-striped dt-responsive tablaIngresos">
                     <thead class="">
                         <tr>
                             <th># Número</th>
@@ -80,6 +65,7 @@
                         }
 
 
+
                         foreach ($ingresos as $key => $igs) :
                         ?>
                             <tr>
@@ -90,12 +76,17 @@
                                 <td><?php echo $igs['igs_fecha_registro'] ?></td>
                                 <td><?php echo $igs['igs_usuario_registro'] ?></td>
                                 <td>
-                                    <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") :  ?>
+
+                                    <?php
+                                    $cajaAbierta = IngresosModelo::mdlConsultarCajaAbierta($igs['igs_id_corte']);
+                                    if ($cajaAbierta['copn_fecha_cierre'] == NULL) :
+                                    ?>
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fa fa-filter" aria-hidden="true"></i>
                                             </button>
                                             <div class="dropdown-menu">
+
 
                                                 <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?php echo $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
 
@@ -103,6 +94,7 @@
                                             </div>
                                         </div>
                                     <?php endif; ?>
+
                                 </td>
 
 

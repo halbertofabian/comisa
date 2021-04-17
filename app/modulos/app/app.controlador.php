@@ -63,6 +63,9 @@ class AppControlador
             'reportes-caja',
             'comisiones',
             'sueldos',
+            'usuarios',
+            'ingresos',
+            'listar-gastos',
             'salir'
         );
     }
@@ -76,6 +79,9 @@ class AppControlador
             'reportes-caja',
             'comisiones',
             'sueldos',
+            'usuarios',
+            'ingresos',
+            'listar-gastos',
             'salir'
         );
     }
@@ -83,6 +89,7 @@ class AppControlador
     public static function obtenerPerfiles()
     {
         return array(
+            'Empleado',
             'Administrador',
             'Supervisor',
             'Vendedor',
@@ -550,6 +557,62 @@ class AppControlador
                     ),
                 ]
             ),
+            '3' => array(
+                [
+                    'label' => 'Trabajadores',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar usuarios',
+                            'href' => 'usuarios'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Alta de usuario',
+                            'href' => 'usuarios/new'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '4' => array(
+                [
+                    'label' => 'Gestión de ingresos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar ingresos',
+                            'href' => 'ingresos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '5' => array(
+                [
+                    'label' => 'Gestión de gastos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar gastos',
+                            'href' => 'listar-gastos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
         );
     }
 
@@ -594,6 +657,62 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Sueldos',
                             'href' => 'sueldos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '3' => array(
+                [
+                    'label' => 'Trabajadores',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar usuarios',
+                            'href' => 'usuarios'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Alta de usuario',
+                            'href' => 'usuarios/new'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '4' => array(
+                [
+                    'label' => 'Gestión de ingresos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar ingresos',
+                            'href' => 'ingresos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '5' => array(
+                [
+                    'label' => 'Gestión de gastos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar gastos',
+                            'href' => 'listar-gastos'
                         ],
 
                         // Aqui más item de menu

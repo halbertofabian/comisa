@@ -101,15 +101,15 @@ cargarComponente('breadcrumb', '', 'Listar Gastos'); ?>
     </div>
 
     <div class="row " id="lista-gastos">
-        <div class="col-12">
+        <!-- <div class="col-12">
             <a href="<?php echo HTTP_HOST . 'gastos' ?>" class="btn btn-primary float-right ml-1">Agregar gasto</a>
 
             <button class="btn btn-dark float-right mb-1 btnListarGastosCat "><i class="fa fa-th" aria-hidden="true"></i> Categoría</button>
-        </div>
+        </div> -->
         <div class="col-12">
 
             <div class="table-responsive">
-                <table class="table tablaGastos table-light tablas  table-striped">
+                <table class="table tablaGastos table-light tablas  dt-responsive table-striped">
                     <thead>
                         <tr>
                             <th>#Número de gasto</th>
@@ -119,7 +119,7 @@ cargarComponente('breadcrumb', '', 'Listar Gastos'); ?>
                             <th>Cantidad</th>
                             <th>Metodo de pago</th>
                             <th>Usuario registro</th>
-                            <th>Nota</th>
+
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -138,21 +138,27 @@ cargarComponente('breadcrumb', '', 'Listar Gastos'); ?>
                                 <td><?php echo $tgts['tgts_cantidad'] ?></td>
                                 <td><?php echo $tgts['tgts_mp'] ?></td>
                                 <td><?php echo $tgts['tgts_usuario_registro'] ?></td>
-                                <td><?php echo $tgts['tgts_nota'] ?></td>
+                                <!-- <td><?php echo $tgts['tgts_nota'] ?></td> -->
+
                                 <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fa fa-filter" aria-hidden="true"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") :  ?>
+                                    <?php
+                                    $cajaAbierta = GastosModelo::mdlConsultarCajaAbierta($tgts['tgts_id_corte']);
+                                    if ($cajaAbierta['copn_fecha_cierre'] == NULL) :
+                                    ?>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-filter" aria-hidden="true"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+
                                                 <button class="dropdown-item text-dark btnEliminarGasto" tgts_id="<?php echo $tgts['tgts_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar gasto </button>
-                                            <?php endif; ?>
-                                            <button class="dropdown-item text-dark btnEditarNota" nota="<?php echo $tgts['tgts_nota'] ?>" idNota="<?php echo $tgts['tgts_id'] ?>" data-toggle="modal" data-target="#mdlEditarNota"> <i class="fa fa-edit" aria-hidden="true"></i> Editar nota</button>
+
+                                                <!-- <button class="dropdown-item text-dark btnEditarNota" nota="<?php echo $tgts['tgts_nota'] ?>" idNota="<?php echo $tgts['tgts_id'] ?>" data-toggle="modal" data-target="#mdlEditarNota"> <i class="fa fa-edit" aria-hidden="true"></i> Editar nota</button> -->
 
 
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

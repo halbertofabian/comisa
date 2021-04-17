@@ -128,6 +128,28 @@ class IngresosModelo
         }
     }
 
+    public static function mdlConsultarCajaAbierta($igs_id_corte)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT copn_fecha_cierre FROM tbl_caja_open_copn WHERE copn_id = ?  ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+
+
+
     public static function mdlConsultarIngresoByCaja2($igs_id_corte_2)
     {
 
