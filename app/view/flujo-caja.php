@@ -256,7 +256,7 @@
                         </div>
                         <div class="modal-footer">
                             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
-                            <button type="submit" class="btn btn-primary" name="btnGuardarGasto">Registrar gasto</button>
+                            <button type="submit" class="btn btn-primary btn-load" name="btnGuardarGasto">Registrar gasto</button>
                         </div>
 
                     </form>
