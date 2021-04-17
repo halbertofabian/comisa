@@ -556,7 +556,7 @@
     </form>
 </div>
 
-<div class="row content-cerrar-caja d-none">
+<!-- <div class="row content-cerrar-caja d-none">
 
     <div class="col-12">
         <div class="card">
@@ -635,6 +635,129 @@
 
                         <div class="col-12">
                             <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div> -->
+
+<div class="row content-cerrar-caja d-none">
+
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body">
+
+                <form id="formCerrarCaja" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-success">Caja abierta</h4>
+
+                                    <input type="hidden" id="cja_id_caja_input" name="cja_id_caja">
+                                    <input type="hidden" id="usr_caja_input" name="usr_caja">
+                                    <input type="hidden" id="usr_id_input" name="usr_id">
+                                    <input type="hidden" id="copn_id_input" name="copn_id">
+                                    <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR">
+                                        <input type="hidden" name="tgts_tipo" value="VENTAS">
+
+
+                                    <?php else : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="COBRANZA">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+                                    <?php endif; ?>
+
+
+                                    <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
+                                    <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>
+                                    <p class="card-text">Sucursal <strong id="cja_sucursal"> </strong> </p>
+                                    <p class="card-text">Fecha de apertura <strong id="cja_fecha_apertura"></strong> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">RETIRO DE CAJA</h4>
+                                    <div class="form-group">
+                                        <label for="copn_saldo">Introduce la cantidad de retiro</label>
+                                        <input type="text" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">EFECTIVO</h4>
+                                    <div class="form-group">
+                                        <label for="copn_ingreso_efectivo">Cantidad en efectivo reportada por el sistema</label>
+                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" readonly class="form-control inputN">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">BANCO</h4>
+                                    <div class="form-group">
+                                        <label for="copn_ingreso_banco">Introduce la cantidad en banco</label>
+                                        <input type="text" name="copn_ingreso_banco" id="copn_ingreso_banco" class="form-control inputN" placeholder="Transaferencias / Depositos / Pagos con Tarjeta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_ingreso_efectivo_usuario">Cantidad reportada por el usuario</label>
+                                                <input type="text" name="copn_ingreso_efectivo_usuario" id="copn_ingreso_efectivo_usuario" class="form-control inputN" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+
+
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_diferencia_efectivo">Diferencia (DEBE)</label>
+                                                <input type="text" name="copn_diferencia_efectivo" id="copn_diferencia_efectivo" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja para <span id="usr_responsable"></span> </button>
                         </div>
                     </div>
                 </form>

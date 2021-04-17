@@ -480,10 +480,18 @@
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
                                     <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
                                         <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+
                                     <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
                                         <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR">
+                                        <input type="hidden" name="tgts_tipo" value="VENTAS">
+
+
                                     <?php else : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="COBRANZA">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
                                     <?php endif; ?>
 
 
@@ -510,8 +518,8 @@
                                 <div class="card-body">
                                     <h4 class="card-title">EFECTIVO</h4>
                                     <div class="form-group">
-                                        <label for="copn_ingreso_efectivo">Introduce la cantidad en efectivo</label>
-                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" class="form-control inputN">
+                                        <label for="copn_ingreso_efectivo">Cantidad en efectivo reportada por el sistema</label>
+                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" readonly class="form-control inputN">
                                     </div>
                                 </div>
                             </div>
@@ -523,6 +531,39 @@
                                     <div class="form-group">
                                         <label for="copn_ingreso_banco">Introduce la cantidad en banco</label>
                                         <input type="text" name="copn_ingreso_banco" id="copn_ingreso_banco" class="form-control inputN" placeholder="Transaferencias / Depositos / Pagos con Tarjeta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_ingreso_efectivo_usuario">Cantidad reportada por el usuario</label>
+                                                <input type="text" name="copn_ingreso_efectivo_usuario" id="copn_ingreso_efectivo_usuario" class="form-control inputN" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+
+
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_diferencia_efectivo">Diferencia (DEBE)</label>
+                                                <input type="text" name="copn_diferencia_efectivo" id="copn_diferencia_efectivo" class="form-control" readonly>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

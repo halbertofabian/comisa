@@ -16,21 +16,42 @@ $("#formCerrarCaja").on("submit", function (e) {
 
     e.preventDefault();
 
-    var copn_ingreso_efectivo = Number($("#copn_ingreso_efectivo").val())
+   
+    var copn_ingreso_efectivo = Number($("#copn_ingreso_efectivo_usuario").val())
     var copn_ingreso_banco = Number($("#copn_ingreso_banco").val())
 
-    var total_efectivo_input = Number($("#copn_ingreso_efectivo").val())
+    var total_efectivo_input = Number($("#copn_ingreso_efectivo_usuario").val())
     var total_efectivo_retiro = Number($("#copn_saldo").val())
 
+    var copn_diferencia_efectivo = Number($("#copn_diferencia_efectivo").val())
     var usurio = $("#cja_responsable").html();
 
     var copn_saldo = total_efectivo_input - total_efectivo_retiro;
 
+    var copn_debe = 0;
+    var copn_favor = 0;
+    var bandera_saldo = 1 ;
 
+    if (copn_diferencia_efectivo < 0) {
+        copn_favor = copn_diferencia_efectivo * -1;
+        copn_debe = 0;
+        bandera_saldo = 2;
+    }
+
+    else if (copn_diferencia_efectivo > 0) {
+        copn_favor = 0;
+        copn_debe = copn_diferencia_efectivo;
+        bandera_saldo = 3;
+
+    }
+    else if (copn_diferencia_efectivo == 0) {
+        copn_favor = 0;
+        copn_debe = 0;
+    }
 
     swal({
         title: "¿Estás seguro de cerrar caja ahora?",
-        text: "  EFECTIVO: " + copn_ingreso_efectivo + "\n BANCO: " + copn_ingreso_banco + "\n RETIRO DE CAJA: " + total_efectivo_retiro + "\n SALDO EN CAJA: " + copn_saldo,
+        text: "  EFECTIVO: " + copn_ingreso_efectivo + "\n BANCO: " + copn_ingreso_banco + "\n RETIRO DE CAJA: " + total_efectivo_retiro + "\n SALDO EN CAJA: " + copn_saldo + "\n DEBE: " + copn_debe + "\n SALDO EXTRA A FAVOR: " + copn_favor,
         icon: "warning",
         buttons: ["No, cancelar", "Si, confirmar "],
         dangerMode: false,
@@ -60,10 +81,9 @@ $("#formCerrarCaja").on("submit", function (e) {
                             datos.append("btnCerrarCaja", true);
                             datos.append("copn_saldo", copn_saldo)
                             datos.append("copn_registro", copn_registro)
-
-
-
-
+                            datos.append("bandera_saldo", bandera_saldo)
+                            datos.append("copn_debe", copn_debe)
+                            datos.append("copn_favor", copn_favor)
 
                             $.ajax({
                                 type: "POST",
@@ -155,6 +175,23 @@ $(".table_tabulador tbody").on("keyup", ".tabCalculo", function () {
 
     sumaTab += t_moneda;
     $("#total_t").val(sumaTab)
-
+    $("#copn_ingreso_efectivo_usuario").val(sumaTab)
+    calcularDif()
 
 })
+
+
+$("#copn_ingreso_efectivo_usuario").on("keyup", function () {
+    calcularDif()
+})
+
+function calcularDif(){
+    var copn_ingreso_efectivo = Number($("#copn_ingreso_efectivo").val())
+    var copn_ingreso_efectivo_usuario = Number($("#copn_ingreso_efectivo_usuario").val())
+
+    var copn_diferencia_efectivo = copn_ingreso_efectivo - copn_ingreso_efectivo_usuario;
+
+    $("#copn_diferencia_efectivo").val(Number(copn_diferencia_efectivo))
+
+    $("#copn_saldo").val(copn_ingreso_efectivo_usuario)
+}

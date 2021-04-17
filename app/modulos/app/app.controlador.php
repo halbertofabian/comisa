@@ -40,6 +40,7 @@ class AppControlador
             'fichas',
             'mi-caja',
             'comisiones',
+            'reportes-caja',
             'sueldos'
         );
     }
