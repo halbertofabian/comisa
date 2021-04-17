@@ -280,7 +280,7 @@ class CajasControlador
             $totalEfectivo = $monto_e +  $ingreso_caja - $monto_g_e;
             $totalBanco = $monto_b - $monto_g_b;
 
-            $_POST['copn_ingreso_efectivo'] = str_replace(",", "", $_POST['copn_ingreso_efectivo']);
+            $_POST['copn_ingreso_efectivo'] = str_replace(",", "", $_POST['copn_ingreso_efectivo_usuario']);
             $_POST['copn_ingreso_banco'] = str_replace(",", "", $_POST['copn_ingreso_banco']);
 
             $_POST['copn_usuario_cerro'] = $_SESSION['session_usr']['usr_nombre'];

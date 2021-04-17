@@ -65,9 +65,10 @@ if (isset($_GET['copn_id'])) {
     $ruta = HTTP_HOST;
     $rutaImg = $ruta . 'app/assets/images/sistema/comisa/logo.jpg';
 
+    preArray($_GET['copn_id']);
     $caja = CajasModelo::mdlMostrarCajasCobranzaById($_GET['copn_id']);
 
-
+    
 
     $igs_c = CajasModelo::mdlConsultarIngresosCajaEfectivo($caja['copn_id'], 'COBRANZA');
 

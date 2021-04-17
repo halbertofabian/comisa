@@ -109,8 +109,15 @@ $("#formCerrarCaja").on("submit", function (e) {
                                         })
                                             .then((willDelete) => {
                                                 if (willDelete) {
-                                                    //location.href = res.pagina
-                                                    window.open(res.pagina, "_blank")
+                                                    if($("#copn_tipo_caja").val() == "CAJA_COBRANZA_G" ||$("#copn_tipo_caja").val() == "CAJA_VENDEDOR_G" ){
+                                                        window.open(res.pagina, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=200,left=200,width=1250,height=700");
+                                                        location.href = urlApp + 'mi-caja'
+                                                    }else{
+                                                        location.href = res.pagina
+                                                    }
+
+                                                    
+                                                    // window.open(res.pagina, "_blank")
                                                 } else {
                                                     location.href = res.pagina
                                                 }

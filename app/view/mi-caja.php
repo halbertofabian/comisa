@@ -666,17 +666,17 @@
                                     <input type="hidden" id="copn_id_input" name="copn_id">
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
                                     <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
                                         <input type="hidden" name="tgts_tipo" value="COBRANZA">
 
 
                                     <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR">
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR_G">
                                         <input type="hidden" name="tgts_tipo" value="VENTAS">
 
 
                                     <?php else : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="COBRANZA">
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
                                         <input type="hidden" name="tgts_tipo" value="COBRANZA">
 
                                     <?php endif; ?>

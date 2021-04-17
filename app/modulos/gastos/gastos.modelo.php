@@ -215,7 +215,7 @@ class GastosModelo
 
         try {
             //code...
-            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria  WHERE tgts_id_corte = ? ";
+            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria  WHERE tgts_id_corte = ? ORDER BY tgts.tgts_id DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $tgts_id_corte);
@@ -235,7 +235,7 @@ class GastosModelo
 
         try {
             //code...
-            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria  WHERE tgts_id_corte2 = ? ";
+            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria  WHERE tgts_id_corte2 = ? ORDER BY tgts.tgts_id DESC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $tgts_id_corte2);
