@@ -9,8 +9,7 @@ $fecha = date('Y-m-d h:i:s');
 define('FECHA', $fecha);
 
 /**
-ssh -p 22 camadmx@camad.edu.mx
-M*mRyGK5^Hiw
+
 
  */
 //M*mRyGK5^Hiw

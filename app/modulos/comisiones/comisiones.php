@@ -137,6 +137,12 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
                     </div>
                     <div class="col-12">
                         <div class="form-group">
+                            <label for="com_cobranza">COBRANZA DE CREDICONTADO % </label>
+                            <input type="text" name="com_cobranza_credicontado" id="com_cobranza_credicontado" class="form-control " placeholder="" value="5">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
                             <label for="com_se">S/E % </label>
                             <input type="text" name="com_se" id="com_se" class="form-control " placeholder="" value="5">
                         </div>
@@ -175,7 +181,10 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
                     <div class="col-12">
                         <div class="form-group">
                             <label for="igs_pago">Pago</label>
-                            <input type="text" name="igs_pago" id="igs_pago" class="form-control inputN" placeholder="" readonly>
+
+                            <input type="text" name="igs_pagox" id="igs_pagox" class="form-control inputN" readonly>
+        
+
                         </div>
                     </div>
                 </div>
@@ -207,16 +216,16 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
             </div>
         </div>
 
-         <div class="form-group mb-5">
-           
-         <button  class="btn btn-primary float-right btn-load" id=" "  name="btnCalcularComisiones">GUARDAR</button>
-         </div>                   
+        <div class="form-group mb-5">
 
-         <!-- <?php 
-        //   $registroComision = new ComisionesControlador();
-        //   $registroComision -> ctrCalcularComisiones();
-         
-         ?>
+            <button class="btn btn-primary float-right btn-load" id=" " name="btnCalcularComisiones">GUARDAR</button>
+        </div>
+
+        <!-- <?php
+                //   $registroComision = new ComisionesControlador();
+                //   $registroComision -> ctrCalcularComisiones();
+
+                ?>
          -->
 
 
