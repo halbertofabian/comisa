@@ -63,7 +63,7 @@ define('SUB_FIJO', 'ST-');
 
 function preArray($array)
 {
-    echo "<pre>", print_r($array), "</pre>";
+    echo "<pre>", var_dump($array), "</pre>";
 }
 
 function cargarComponente($componente, $rutas = "", $label = "", $paginas = "")
