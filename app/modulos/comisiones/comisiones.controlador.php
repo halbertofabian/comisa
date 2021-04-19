@@ -39,7 +39,7 @@ class ComisionesControlador
             $_POST['tgts_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
             $_POST['tgts_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
 
-            $_POST['tgts_cantidad'] =  str_replace(",", "", $_POST['igs_pago']);
+            $_POST['tgts_cantidad'] =  str_replace(",", "", $_POST['igs_pagox']);
 
             $_POST['igs_abono_deuda'] =  str_replace(",", "", $_POST['igs_abono_deuda']);
 

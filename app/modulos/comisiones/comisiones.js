@@ -15,9 +15,6 @@ $("#btnRepComision").on("click", function () {
     var id_igs_usuario_responsable = $("#id_igs_usuario_responsable").val()
     var date_inicio = $("#igs_fecha_inicio").val() + "T00:00";
     var date_fin = $("#igs_fecha_fin").val() + "T23:59";
-     
-
-    
 
     var datos = new FormData();
     datos.append("id_usr", id_igs_usuario_responsable);
@@ -66,6 +63,7 @@ $("#btnRepComision").on("click", function () {
                 var gastos = respuesta.debe
 
                 var com_cobranza = $("#com_cobranza").val()
+                var com_cobranza_cc = $("#com_cobranza_credicontado").val()
                 var com_contado = $("#com_contado").val()
                 var com_se = $("#com_se").val()
 
@@ -73,6 +71,8 @@ $("#btnRepComision").on("click", function () {
                     var com = 0;
                     if (inf.igs_tipo == 'COBRANZA') {
                         com = inf.igs_monto * com_cobranza / 100;
+                    } else if (inf.igs_tipo == 'COBRANZA_CREDICONTADO') {
+                        com = inf.igs_monto * com_cobranza_cc / 100;
                     } else if (inf.igs_tipo == 'CONTADO_VENTAS') {
                         com = inf.igs_monto * com_contado / 100;
                     } else if (inf.igs_tipo == 'S/E_VENTAS') {
@@ -123,7 +123,7 @@ $("#btnRepComision").on("click", function () {
                 var igs_abono_deuda = $("#igs_abono_deuda").val()
 
                 var igs_pago = igs_Apgar - igs_abono_deuda;
-                $("#igs_pago").val(igs_pago);
+                $("#igs_pagox").val(igs_pago);
 
                 $("#igs_deuda_ext").val(respuesta.deuda_ext.usr_deuda_ext);
 
@@ -151,31 +151,34 @@ $("#btnRepComision").on("click", function () {
 // })
 
 $("#igs_abono_deuda").on("keyup", function () {
+    //console.log("aquiii");
 
-    var igs_Apgar = $("#igs_Apagar").val()
-    var igs_abono_deuda = $("#igs_abono_deuda").val()
+    var igs_Apgar = $("#igs_Apagar").val();
+    var igs_abono_deuda = $("#igs_abono_deuda").val();
 
-    var igs_pago = igs_Apgar - igs_abono_deuda;
-    $("#igs_pago").val(igs_pago);
+    var igs_pago = Number(igs_Apgar) -Number(igs_abono_deuda);
+
+
+    $("#igs_pagox").val(igs_pago);
 
     var igs_nueva_deuda = $("#igs_nueva_deuda").val();
     var igs_deuda_ext = $("#igs_deuda_ext").val();
 
-    igs_nueva_deuda = igs_deuda_ext - igs_abono_deuda;
+    igs_nueva_deuda = Number(igs_deuda_ext) - Number(igs_abono_deuda);
     $("#igs_nueva_deuda").val(igs_nueva_deuda);
-
-
 })
 
 
 $("#formCalculoComisiones").on("submit", function (e) {
     e.preventDefault();
     var datos = new FormData(this);
+
+
     datos.append("btnCalcularComisiones", true)
 
     swal({
         title: "¿Seguro de querer agregar esta comisión?",
-        text: "PAGO: " + $("#igs_pago").val() + " \n DEUDA: " + $("#igs_deuda_ext").val() + " \n ABONO: " + $("#igs_abono_deuda").val() + " \n NUEVA DEUDA: " + Number($("#igs_nueva_deuda").val()),
+        text: "PAGO: " + $("#igs_pagox").val() + " \n DEUDA: " + $("#igs_deuda_ext").val() + " \n ABONO: " + $("#igs_abono_deuda").val() + " \n NUEVA DEUDA: " + Number($("#igs_nueva_deuda").val()),
         icon: "warning",
         buttons: ["No, cancelar", "Si, continuar"],
         dangerMode: false,
