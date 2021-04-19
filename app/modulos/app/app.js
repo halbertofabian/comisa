@@ -25,7 +25,7 @@ function startLoadButton() {
 }
 function stopLoadButton(label) {
     $(".btn-load").attr("disabled", false);
-    $(".btn-load").html(`${label}`)
+    $(".btn-load").html('ACEPTAR')
 }
 
 $(".tablas").DataTable({

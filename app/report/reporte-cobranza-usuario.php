@@ -65,9 +65,10 @@ if (isset($_GET['copn_id'])) {
     $ruta = HTTP_HOST;
     $rutaImg = $ruta . 'app/assets/images/sistema/comisa/logo.jpg';
 
+    preArray($_GET['copn_id']);
     $caja = CajasModelo::mdlMostrarCajasCobranzaById($_GET['copn_id']);
 
-
+    
 
     $igs_c = CajasModelo::mdlConsultarIngresosCajaEfectivo($caja['copn_id'], 'COBRANZA');
 
@@ -95,6 +96,12 @@ if (isset($_GET['copn_id'])) {
 
 
     $gts_ventas = CajasModelo::mdlConsultarGastosVentasCajaEfectivo($caja['copn_id']);
+
+    $gts_com = CajasModelo::mdlConsultarGastosComisionesCajaEfectivo($caja['copn_id']);
+
+    $gts_sue = CajasModelo::mdlConsultarGastosSueldosCajaEfectivo($caja['copn_id']);
+
+    
 
 
     $cja_nombre = strtoupper($caja['cja_nombre']);
@@ -1000,6 +1007,207 @@ EOF;
     // Print text using writeHTMLCell()
     $pdf->writeHTMLCell(0, 0, '', '', $footer5, 0, 1, 0, true, '', true);
 
+    /////
+
+    $header9 = <<<EOF
+    
+<table style="border: 1px solid #000">
+    <thead>
+    <tr>
+    <td style="text-align: center;">
+       
+    <p><strong> COMISIONES $cja_nombre</strong></p>
+    
+    </td>
+    <td style="text-align: center;">
+    <p>TIPO DE PAGO: <strong>EFECTIVO</strong></p> <strong></strong>
+    </td>
+    <td style="text-align: center;">
+    <p>FECHA: <strong>$copn_fecha</strong></p> <strong></strong>
+    </td>
+</tr>
+        
+    </thead>
+</table>
+
+EOF;
+
+    // Print text using writeHTMLCell()
+    $pdf->writeHTMLCell(0, 0, '', '', $header9, 0, 1, 0, true, '', true);
+
+
+    $prestamos_header = <<<EOF
+<table style="border: 1px solid #000">
+    <thead>
+        <tr style="text-align: center;">
+        <th style="border: 1px solid #000" ><strong>#MOVIMIENTO</strong></th>
+        <th style="border: 1px solid #000" ><strong>CONCEPTO</strong></th>
+        <th style="border: 1px solid #000" ><strong>MONTO</strong></th>
+        <th style="border: 1px solid #000" ><strong>FECHA REGISTRO</strong></th>
+        <th style="border: 1px solid #000" ><strong>USUARIO REGISTRO</strong></th>
+        </tr>
+    </thead>
+    </table>
+
+EOF;
+    $pdf->writeHTMLCell(0, 0, '', '', $prestamos_header, 0, 1, 0, true, '', true);
+
+
+    $gts_comisiones = 0;
+    foreach ($gts_com as $key => $gts) {
+        # code...
+        $tgts_cantidad = number_format($gts['tgts_cantidad'], 2);
+        $gts_comisiones += $gts['tgts_cantidad'];
+        $prestamos_body = <<<EOF
+
+<table style="border: 1px solid #000">
+    <thead>
+        <tr style="text-align: center; border: 1px solid #000">
+            <td style="border: 1px solid #000">$gts[tgts_id]</td>
+            <td style="border: 1px solid #000" >$gts[tgts_concepto]</td>
+            <td style="border: 1px solid #000" >$tgts_cantidad</td>
+            <td style="border: 1px solid #000" >$gts[tgts_fecha_gasto]</td>
+            <td style="border: 1px solid #000" >$gts[tgts_usuario_registro]</td>
+        </tr>
+        </thead>
+    </table>
+    
+
+EOF;
+        $pdf->writeHTMLCell(0, 0, '', '', $prestamos_body, 0, 1, 0, true, '', true);
+    }
+
+    $gts_comisiones2 = number_format($gts_comisiones, 2);
+    $footer9 = <<<EOF
+
+<table style="border: 1px solid #000">
+    <thead>
+    <tr>
+    <td style="text-align: center;">
+       
+   
+    
+    </td>
+    <td style="text-align: right;">
+    <p><strong>TOTAL: </strong></p>
+    </td>
+    <td style="text-align: center;">
+    <p> <strong> $ $gts_comisiones2</strong></p> <strong></strong>
+    </td>
+</tr>
+        
+    </thead>
+</table>
+
+EOF;
+
+    // Print text using writeHTMLCell()
+    $pdf->writeHTMLCell(0, 0, '', '', $footer9, 0, 1, 0, true, '', true);
+
+
+
+
+    // SUELDOS EL
+
+  
+    $header10 = <<<EOF
+    
+<table style="border: 1px solid #000">
+    <thead>
+    <tr>
+    <td style="text-align: center;">
+       
+    <p><strong> SUELDOS $cja_nombre</strong></p>
+    
+    </td>
+    <td style="text-align: center;">
+    <p>TIPO DE PAGO: <strong>EFECTIVO</strong></p> <strong></strong>
+    </td>
+    <td style="text-align: center;">
+    <p>FECHA: <strong>$copn_fecha</strong></p> <strong></strong>
+    </td>
+</tr>
+        
+    </thead>
+</table>
+
+EOF;
+
+    // Print text using writeHTMLCell()
+    $pdf->writeHTMLCell(0, 0, '', '', $header10, 0, 1, 0, true, '', true);
+
+
+    $sueldos_header = <<<EOF
+<table style="border: 1px solid #000">
+    <thead>
+        <tr style="text-align: center;">
+        <th style="border: 1px solid #000" ><strong>#MOVIMIENTO</strong></th>
+        <th style="border: 1px solid #000" ><strong>CONCEPTO</strong></th>
+        <th style="border: 1px solid #000" ><strong>MONTO</strong></th>
+        <th style="border: 1px solid #000" ><strong>FECHA REGISTRO</strong></th>
+        <th style="border: 1px solid #000" ><strong>USUARIO REGISTRO</strong></th>
+        </tr>
+    </thead>
+    </table>
+
+EOF;
+    $pdf->writeHTMLCell(0, 0, '', '', $sueldos_header, 0, 1, 0, true, '', true);
+
+
+    $gts_sueldos = 0;
+    foreach ($gts_sue as $key => $gts) {
+        # code...
+        $tgts_cantidad = number_format($gts['tgts_cantidad'], 2);
+        $gts_sueldos += $gts['tgts_cantidad'];
+        $sueldos_body = <<<EOF
+
+<table style="border: 1px solid #000">
+    <thead>
+        <tr style="text-align: center; border: 1px solid #000">
+            <td style="border: 1px solid #000">$gts[tgts_id]</td>
+            <td style="border: 1px solid #000" >$gts[tgts_concepto]</td>
+            <td style="border: 1px solid #000" >$tgts_cantidad</td>
+            <td style="border: 1px solid #000" >$gts[tgts_fecha_gasto]</td>
+            <td style="border: 1px solid #000" >$gts[tgts_usuario_registro]</td>
+        </tr>
+        </thead>
+    </table>
+    
+
+EOF;
+        $pdf->writeHTMLCell(0, 0, '', '', $sueldos_body, 0, 1, 0, true, '', true);
+    }
+
+    $gts_sueldos2 = number_format($gts_sueldos, 2);
+    $footer9 = <<<EOF
+
+<table style="border: 1px solid #000">
+    <thead>
+    <tr>
+    <td style="text-align: center;">
+       
+   
+    
+    </td>
+    <td style="text-align: right;">
+    <p><strong>TOTAL: </strong></p>
+    </td>
+    <td style="text-align: center;">
+    <p> <strong> $ $gts_sueldos2</strong></p> <strong></strong>
+    </td>
+</tr>
+        
+    </thead>
+</table>
+
+EOF;
+
+    // Print text using writeHTMLCell()
+    $pdf->writeHTMLCell(0, 0, '', '', $footer9, 0, 1, 0, true, '', true);
+
+
+
+
 
     /// Auqi empieza las sumas 
 
@@ -1077,7 +1285,11 @@ EOF;
                 <p><strong> $ $igs_prestamoCP[CP_SAMUEL]</strong></p>
             </td>
         </tr>   
-        
+        <tr> 
+        <td colspan="2" style="text-align: center;">
+          <hr>
+        </td>
+    </tr> 
         <tr> 
             <td  style="text-align: left;">
                 <p><strong> GASTOS COBRADORES </strong></p>
@@ -1100,23 +1312,16 @@ EOF;
                 <p><strong> COMISIONES </strong></p>
             </td>
             <td  style="text-align: center;">
-                <p><strong> $ </strong></p>
+                <p><strong> $ $gts_comisiones2</strong></p>
             </td>
         </tr>  
-        <tr> 
-            <td  style="text-align: left;">
-                <p><strong> PROVEEDORES </strong></p>
-            </td>
-            <td  style="text-align: center;">
-                <p><strong> $ </strong></p>
-            </td>
-        </tr>  
+        
         <tr> 
             <td  style="text-align: left;">
                 <p><strong> SUELDOS FIJOS </strong></p>
             </td>
             <td  style="text-align: center;">
-                <p><strong> $ </strong></p>
+                <p><strong> $ $gts_sueldos2 </strong></p>
             </td>
         </tr>  
         <tr> 
@@ -1128,14 +1333,7 @@ EOF;
             </td>
         </tr>
           
-        <tr> 
-            <td  style="text-align: left;">
-                <p><strong> RETIRO DE CAJA </strong></p>
-            </td>
-            <td  style="text-align: center;">
-                <p><strong> $ $copn_retiro </strong></p>
-            </td>
-        </tr>  
+         
         <tr> 
             <td  style="text-align: left;">
                 <p><strong> PRESTAMOS</strong></p>
@@ -1146,9 +1344,17 @@ EOF;
         </tr> 
         <tr> 
             <td  style="text-align: left;">
+                <p><strong> RETIRO DE CAJA </strong></p>
+            </td>
+            <td  style="text-align: center; color: blue;">
+                <p><strong> $ $copn_retiro </strong></p>
+            </td>
+        </tr> 
+        <tr> 
+            <td  style="text-align: left;">
                 <p><strong> SALDO EN CAJA </strong></p>
             </td>
-            <td  style="text-align: center;">
+            <td  style="text-align: center; ; color: red;">
                 <p><strong> $ $copn_saldo</strong></p>
             </td>
         </tr> 

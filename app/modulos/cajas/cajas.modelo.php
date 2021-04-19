@@ -297,14 +297,14 @@ class CajasModelo
             //code...
             if ($copn_id != "") {
 
-                $sql = "SELECT copn.*,usr.*,cja.*,scl.* FROM tbl_caja_open_copn copn  JOIN  tbl_usuarios_usr usr ON usr.usr_id = copn.copn_usuario_abrio JOIN tbl_caja_cja cja ON cja.cja_id_caja = copn.copn_id_caja JOIN tbl_sucursal_scl scl ON scl.scl_id = copn.copn_id_sucursal   WHERE copn.copn_id = ? AND copn.copn_tipo_caja = 'CAJA_COBRANZA_G' ORDER BY copn.copn_id  DESC  ";
+                $sql = "SELECT copn.*,usr.*,cja.*,scl.* FROM tbl_caja_open_copn copn  JOIN  tbl_usuarios_usr usr ON usr.usr_id = copn.copn_usuario_abrio JOIN tbl_caja_cja cja ON cja.cja_id_caja = copn.copn_id_caja JOIN tbl_sucursal_scl scl ON scl.scl_id = copn.copn_id_sucursal   WHERE copn.copn_id = ?  ORDER BY copn.copn_id  DESC  ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $copn_id);
                 $pps->execute();
                 return $pps->fetch();
             } elseif ($copn_id == "") {
-                $sql = "SELECT copn.*,usr.*,cja.*,scl.* FROM tbl_caja_open_copn copn  JOIN  tbl_usuarios_usr usr ON usr.usr_id = copn.copn_usuario_abrio JOIN tbl_caja_cja cja ON cja.cja_id_caja = copn.copn_id_caja JOIN tbl_sucursal_scl scl ON scl.scl_id = copn.copn_id_sucursal   WHERE  copn.copn_tipo_caja = 'CAJA_COBRANZA_G'   ORDER BY copn.copn_id  DESC ";
+                $sql = "SELECT copn.*,usr.*,cja.*,scl.* FROM tbl_caja_open_copn copn  JOIN  tbl_usuarios_usr usr ON usr.usr_id = copn.copn_usuario_abrio JOIN tbl_caja_cja cja ON cja.cja_id_caja = copn.copn_id_caja JOIN tbl_sucursal_scl scl ON scl.scl_id = copn.copn_id_sucursal     ORDER BY copn.copn_id  DESC ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->execute();
@@ -318,6 +318,24 @@ class CajasModelo
         }
     }
 
+
+    public static function mdlMostrarCajasByIdUsuario($usr_id = "")
+    {
+        try {
+            //code...
+            $sql = "SELECT copn.*,usr.*,cja.*,scl.* FROM tbl_caja_open_copn copn  JOIN  tbl_usuarios_usr usr ON usr.usr_id = copn.copn_usuario_abrio JOIN tbl_caja_cja cja ON cja.cja_id_caja = copn.copn_id_caja JOIN tbl_sucursal_scl scl ON scl.scl_id = copn.copn_id_sucursal   WHERE usr.usr_id = ?  ORDER BY copn.copn_id  DESC  ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlConsultarIngresosCajaEfectivo($igs_id_corte_2, $igs_tipo = 'COBRANZA')
     {
         try {
@@ -434,6 +452,45 @@ class CajasModelo
     {
         try {
             $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'VENTAS' ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+
+    public static function mdlConsultarGastosComisionesCajaEfectivo($tgts_id_corte2)
+    {
+        try {
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'COMISION' ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tgts_id_corte2);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarGastosSueldosCajaEfectivo($tgts_id_corte2)
+    {
+        try {
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'SUELDO' ";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);

@@ -35,6 +35,16 @@ class UsuariosControlador
         if (isset($_POST['btnGuardarUsuario'])) {
 
 
+            if ($_POST['usr_correo'] != "") {
+                $isExitUsuario = UsuariosModelo::mdlConsultarUsuarioByEmail($_POST['usr_correo']);
+                if ($isExitUsuario != false) {
+                    AppControlador::msj('error', 'Error', 'Este usuario ya existe, asegurate de verificar el correo');
+                    return;
+                }
+            }
+
+
+
             $ruta = "";
 
             if (isset($_FILES["usr_firma"]["tmp_name"])) {
@@ -111,6 +121,9 @@ class UsuariosControlador
             $_POST['usr_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
             $_POST['usr_fecha_registro'] = FECHA;
             $_POST['usr_sueldo'] = str_replace(",", "", $_POST['usr_sueldo']);
+            $_POST['usr_deuda_ext'] = str_replace(",", "", $_POST['usr_deuda_ext']);
+
+
 
             $agregarUsuario = UsuariosModelo::mdlAgregarUsuarios2($_POST);
 
@@ -178,9 +191,16 @@ class UsuariosControlador
     {
         if (isset($_POST['btnActualizarUsuario'])) {
 
+            if ($_POST['usr_correo_v']  != $_POST['usr_correo']) {
+                if ($_POST['usr_correo'] != "") {
+                    $isExitUsuario = UsuariosModelo::mdlConsultarUsuarioByEmail($_POST['usr_correo']);
+                    if ($isExitUsuario != false) {
+                        AppControlador::msj('error', 'Error', 'Este usuario ya existe, asegurate de verificar el correo');
+                        return;
+                    }
+                }
+            }
 
-            preArray($_POST);
-            preArray($_FILES);
             $ruta = $_POST['usr_firma_hidden'];
 
             if (isset($_FILES["usr_firma"]["tmp_name"]) && $_FILES["usr_firma"]["tmp_name"] != "") {
@@ -246,13 +266,14 @@ class UsuariosControlador
                 }
             }
 
-            var_dump($ruta);
+
 
 
 
             $_POST['usr_firma'] = $ruta;
             $_POST['usr_sueldo'] = str_replace(",", "", $_POST['usr_sueldo']);
-            
+            $_POST['usr_deuda_ext'] = str_replace(",", "", $_POST['usr_deuda_ext']);
+
             if ($_POST['usr_clave'] == "") {
                 $_POST['usr_clave'] = $_POST['usr_clave_hidden'];
             } else {
@@ -266,7 +287,7 @@ class UsuariosControlador
             if ($actualizarUsuario) {
                 AppControlador::msj('success', 'Muy bien', 'Usuario actualizado', HTTP_HOST . $url_destino);
             } else {
-                // AppControlador::msj('error', 'Error', 'Este usuario ya existe, asegurate de verificar el correo');
+                AppControlador::msj('error', 'Error', 'Este usuario ya existe, asegurate de verificar el correo');
             }
         }
     }

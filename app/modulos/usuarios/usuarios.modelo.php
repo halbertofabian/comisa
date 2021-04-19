@@ -53,7 +53,7 @@ class UsuariosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_usuarios_usr (usr_matricula,usr_nombre,usr_telefono,usr_correo,usr_clave,usr_rol,usr_usuario_registro,usr_fecha_registro,usr_firma,usr_id_sucursal,usr_sueldo) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_usuarios_usr (usr_matricula,usr_nombre,usr_telefono,usr_correo,usr_clave,usr_rol,usr_usuario_registro,usr_fecha_registro,usr_firma,usr_id_sucursal,usr_deuda_ext,usr_sueldo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr['usr_matricula']);
@@ -66,7 +66,10 @@ class UsuariosModelo
             $pps->bindValue(8, $usr['usr_fecha_registro']);
             $pps->bindValue(9, $usr['usr_firma']);
             $pps->bindValue(10, SUCURSAL_ID);
-            $pps->bindValue(11, $usr['usr_sueldo']);
+            
+            $pps->bindValue(11, $usr['usr_deuda_ext']);
+
+            $pps->bindValue(12, $usr['usr_sueldo']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -141,7 +144,7 @@ class UsuariosModelo
     public static function mdlActualizarUsuarios2($usr)
     {
         try {
-            $sql = "UPDATE  tbl_usuarios_usr SET usr_nombre =?,usr_telefono = ?,usr_correo = ?,usr_clave = ?, usr_rol = ?, usr_firma = ?, usr_sueldo = ? WHERE usr_id = ?";
+            $sql = "UPDATE  tbl_usuarios_usr SET usr_nombre =?,usr_telefono = ?,usr_correo = ?,usr_clave = ?, usr_rol = ?, usr_firma = ?, usr_deuda_ext = ?, usr_sueldo = ? WHERE usr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr['usr_nombre']);
@@ -150,8 +153,9 @@ class UsuariosModelo
             $pps->bindValue(4, $usr['usr_clave']);
             $pps->bindValue(5, $usr['usr_rol']);
             $pps->bindValue(6, $usr['usr_firma']);
-            $pps->bindValue(7, $usr['usr_sueldo']);
-            $pps->bindValue(8, $usr['usr_id']);
+            $pps->bindValue(7, $usr['usr_deuda_ext']);
+            $pps->bindValue(8, $usr['usr_sueldo']);
+            $pps->bindValue(9, $usr['usr_id']);
 
             $pps->execute();
             return $pps->rowCount() > 0;
@@ -275,6 +279,25 @@ class UsuariosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr_nombre);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarUsuarioByEmail($usr_correo)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_correo = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_correo);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {

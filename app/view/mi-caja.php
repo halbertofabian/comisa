@@ -10,7 +10,17 @@
 <div class="row">
     <div class="col-12">
         <div class="alert alert-secondary mt-5" role="alert">
-            <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+            <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+
+            <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+
+                <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/ventas/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+            <?php else : ?>
+
+                <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
+
+            <?php endif; ?>
         </div>
     </div>
     <div class="col-md-4">
@@ -67,15 +77,41 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
-                                        <select class="form-control" name="igs_tipo" id="igs_tipo">
-                                            <option>COBRANZA</option>
-                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
-                                            <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
-                                            <option value="ABONOS_COBRANZA">ABONOS</option>
-                                            <option value="OTROS_COBRANZA">OTROS</option>
-                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
-                                            <option value="S/E_VENTAS">S/E</option>
-                                            <option value="CONTADO_VENTAS">CONTADO</option>
+                                        <select class="form-control select2" name="igs_tipo" id="igs_tipo" required>
+                                            <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option>COBRANZA</option>
+                                                <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                                <option value="ABONOS_COBRANZA">ABONOS</option>
+                                                <!-- <option value="OTROS_COBRANZA">OTROS</option> -->
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
+                                                <!-- <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option> -->
+
+                                            <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                                <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                                <option value="ABONOS_COBRANZA">ABONOS</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
+                                                <!-- <option>COBRANZA</option> -->
+
+                                            <?php else : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option>COBRANZA</option>
+                                                <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                                <option value="ABONOS_COBRANZA">ABONOS</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
+                                                <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                            <?php endif; ?>
+
                                         </select>
                                     </div>
                                 </div>
@@ -112,7 +148,7 @@
                                         <div class="col-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="igs_cuenta">Cuenta</label>
-                                                <select class="form-control" name="igs_cuenta" id="igs_cuenta">
+                                                <select class="form-control select2" name="igs_cuenta" id="igs_cuenta">
 
                                                     <option value="">Seleccione una cuenta</option>
                                                     <?php
@@ -143,7 +179,7 @@
 
                             <div class="modal-footer">
                                 <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
-                                <button type="submit" class="btn btn-primary" name="btnAgregarIngreso">Registrar ingreso</button>
+                                <button type="submit" class="btn btn-primary btn-load" name="btnAgregarIngreso">Registrar ingreso</button>
                             </div>
                             <?php
                             // $crearIngreso = new IngresosControlador();
@@ -195,7 +231,14 @@
 
                                     <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
-                                    <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VARIOS-COBRANZA">
+
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VENTAS">
+                                    <?php else : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                    <?php endif; ?>
                                 </div>
                                 <input type="hidden" name="tgts_ruta" id="tgts_ruta">
 
@@ -233,7 +276,7 @@
                         </div>
                         <div class="modal-footer">
                             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
-                            <button type="submit" class="btn btn-primary" name="btnGuardarGasto">Registrar gasto</button>
+                            <button type="submit" class="btn btn-primary btn-load" name="btnGuardarGasto">Registrar gasto</button>
                         </div>
 
                     </form>
@@ -380,7 +423,7 @@
                 </h4>
                 <div class="form-group">
                     <label for="pms_usuario">Empleado</label>
-                    <select class="form-control select2" name="pms_usuario" id="pms_usuario">
+                    <select class="form-control select2 select2" name="pms_usuario" id="pms_usuario">
                         <option value="">Seleccione a un empleado a prestar</option>
                         <?php
                         $empleados = UsuariosModelo::mdlMostrarUsuarios();
@@ -400,6 +443,67 @@
 
             </div>
         </div>
+    </div>
+
+    <div class="col-md-6">
+    
+    <div class="card">
+        
+        <div class="card-body">
+            <h4 class="card-title">Tabulador</h4>
+            <table class="table table_tabulador">
+                <thead>
+                    <tr>
+                        <th>DENOMINACION</th>
+                        <th>CANTIDAD</th>
+                        <th>TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="d_1000" class="form-control inputN" value="1000" readonly></td>
+                        <td><input type="text" id="c_1000" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_1000" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_500" class="form-control inputN" value="500" readonly></td>
+                        <td><input type="text" id="c_500" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_500" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_200" class="form-control inputN" value="200" readonly></td>
+                        <td><input type="text" id="c_200" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_200" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_100" class="form-control inputN" value="100" readonly></td>
+                        <td><input type="text" id="c_100" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_100" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_50" class="form-control inputN" value="50" readonly></td>
+                        <td><input type="text" id="c_50" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_50" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="d_20" class="form-control inputN" value="20" readonly></td>
+                        <td><input type="text" id="c_20" class="form-control inputN tabCalculo"></td>
+                        <td><input type="text" id="t_20" class="form-control inputN" readonly></td>
+                    </tr>
+                    <tr>
+                        <td  class="text-center"> <strong>MONEDAS</strong> </td>
+                        <td colspan="2"><input type="text" id="t_moneda" class="form-control inputN tabCalculo"></td>
+                    </tr>
+                    <tr>
+                    
+                        <td colspan="3"><input type="text" id="total_t" class="form-control inputN" readonly></td>
+                    </tr>
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     </div>
 </div>
 
@@ -452,7 +556,7 @@
     </form>
 </div>
 
-<div class="row content-cerrar-caja d-none">
+<!-- <div class="row content-cerrar-caja d-none">
 
     <div class="col-12">
         <div class="card">
@@ -475,7 +579,16 @@
                                     <input type="hidden" id="usr_caja_input" name="usr_caja">
                                     <input type="hidden" id="usr_id_input" name="usr_id">
                                     <input type="hidden" id="copn_id_input" name="copn_id">
-                                    <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
+
+
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENTAS_G">
+                                    <?php else : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA">
+                                    <?php endif; ?>
+
 
 
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
@@ -522,6 +635,129 @@
 
                         <div class="col-12">
                             <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div> -->
+
+<div class="row content-cerrar-caja d-none">
+
+    <div class="col-12">
+        <div class="card">
+
+            <div class="card-body">
+
+                <form id="formCerrarCaja" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-success">Caja abierta</h4>
+
+                                    <input type="hidden" id="cja_id_caja_input" name="cja_id_caja">
+                                    <input type="hidden" id="usr_caja_input" name="usr_caja">
+                                    <input type="hidden" id="usr_id_input" name="usr_id">
+                                    <input type="hidden" id="copn_id_input" name="copn_id">
+                                    <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR_G">
+                                        <input type="hidden" name="tgts_tipo" value="VENTAS">
+
+
+                                    <?php else : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+                                    <?php endif; ?>
+
+
+                                    <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
+                                    <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>
+                                    <p class="card-text">Sucursal <strong id="cja_sucursal"> </strong> </p>
+                                    <p class="card-text">Fecha de apertura <strong id="cja_fecha_apertura"></strong> </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">RETIRO DE CAJA</h4>
+                                    <div class="form-group">
+                                        <label for="copn_saldo">Introduce la cantidad de retiro</label>
+                                        <input type="text" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">EFECTIVO</h4>
+                                    <div class="form-group">
+                                        <label for="copn_ingreso_efectivo">Cantidad en efectivo reportada por el sistema</label>
+                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" readonly class="form-control inputN">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">BANCO</h4>
+                                    <div class="form-group">
+                                        <label for="copn_ingreso_banco">Introduce la cantidad en banco</label>
+                                        <input type="text" name="copn_ingreso_banco" id="copn_ingreso_banco" class="form-control inputN" placeholder="Transaferencias / Depositos / Pagos con Tarjeta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_ingreso_efectivo_usuario">Cantidad reportada por el usuario</label>
+                                                <input type="text" name="copn_ingreso_efectivo_usuario" id="copn_ingreso_efectivo_usuario" class="form-control inputN" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+
+
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_diferencia_efectivo">Diferencia (DEBE)</label>
+                                                <input type="text" name="copn_diferencia_efectivo" id="copn_diferencia_efectivo" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja para <span id="usr_responsable"></span> </button>
                         </div>
                     </div>
                 </form>

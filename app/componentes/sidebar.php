@@ -8,8 +8,15 @@
                 <li class="menu-title">MODULOS</li>
                 <?php if ($_SESSION['session_usr']['usr_rol'] == "Jefe de cobranza") : ?>
                     <li>
-                        <a href="<?php echo HTTP_HOST.'mi-caja'?>" class="waves-effect">
-                            <i class="fa fa-home"></i> <span> MI CAJA </span>
+                        <a href="<?php echo HTTP_HOST . 'mi-caja' ?>" class="waves-effect">
+                            <i class="fa fa-home"></i> <span> MI CAJA COBRANZA </span>
+                        </a>
+                    </li>
+
+                <?php elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de ventas") : ?>
+                    <li>
+                        <a href="<?php echo HTTP_HOST . 'mi-caja' ?>" class="waves-effect">
+                            <i class="fa fa-home"></i> <span> MI CAJA VENTAS </span>
                         </a>
                     </li>
                 <?php else : ?>
@@ -24,6 +31,8 @@
                     $menu = AppControlador::obtnerMenuAdmin();
                 } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de cobranza") {
                     $menu = AppControlador::obtnerMenuGefeCobranza();
+                } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de ventas") {
+                    $menu = AppControlador::obtnerMenuGefeVentas();
                 }
 
                 //preArray($menu);

@@ -56,16 +56,43 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
-                                        <select class="form-control" name="igs_tipo" id="igs_tipo">
-                                            <option>COBRANZA</option>
-                                            <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                        <select class="form-control select2" name="igs_tipo" id="igs_tipo" required>
+                                            <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                                <!-- <option value="">SELECCIONE TIPO DE INGRESO</option> -->
+                                                <option selected>COBRANZA</option>
+                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                             <option value="ABONOS_COBRANZA">ABONOS</option>
                                             <option value="OTROS_COBRANZA">OTROS</option>
                                             <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
                                             <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
-                                            <option value="S/E_VENTAS">S/E</option>
-                                            <option value="CONTADO_VENTAS">CONTADO</option>
+                                                <!-- <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option> -->
+                                            <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                                <!-- <option>COBRANZA</option> -->
+                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                            <option value="ABONOS_COBRANZA">ABONOS</option>
                                             <option value="OTROS_COBRANZA">OTROS</option>
+                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
+                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
+
+                                                <!-- <option value="OTROS_COBRANZA">OTROS</option> -->
+                                            <?php else : ?>
+                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                                <option>COBRANZA</option>
+                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
+                                            <option value="ABONOS_COBRANZA">ABONOS</option>
+                                            <option value="OTROS_COBRANZA">OTROS</option>
+                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
+                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
+                                                <option value="S/E_VENTAS">S/E</option>
+                                                <option value="CONTADO_VENTAS">CONTADO</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                            <?php endif; ?>
+
                                         </select>
                                     </div>
                                 </div>
@@ -102,7 +129,7 @@
                                         <div class="col-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="igs_cuenta">Cuenta</label>
-                                                <select class="form-control" name="igs_cuenta" id="igs_cuenta">
+                                                <select class="form-control select2" name="igs_cuenta" id="igs_cuenta">
 
                                                     <option value="">Seleccione una cuenta</option>
                                                     <?php
@@ -183,7 +210,15 @@
                                     <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
 
-                                    <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VENTAS">
+                                    <?php else : ?>
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+                                    <?php endif; ?>
+
+
                                 </div>
 
                                 <input type="hidden" name="tgts_ruta" id="tgts_ruta">
@@ -221,7 +256,7 @@
                         </div>
                         <div class="modal-footer">
                             <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
-                            <button type="submit" class="btn btn-primary" name="btnGuardarGasto">Registrar gasto</button>
+                            <button type="submit" class="btn btn-primary btn-load" name="btnGuardarGasto">Registrar gasto</button>
                         </div>
 
                     </form>
@@ -443,7 +478,22 @@
                                     <input type="hidden" id="usr_id_input" name="usr_id">
                                     <input type="hidden" id="copn_id_input" name="copn_id">
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
-                                    <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+
+                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR">
+                                        <input type="hidden" name="tgts_tipo" value="VENTAS">
+
+
+                                    <?php else : ?>
+                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="COBRANZA">
+                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+                                    <?php endif; ?>
+
 
                                     <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
                                     <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>
@@ -468,8 +518,8 @@
                                 <div class="card-body">
                                     <h4 class="card-title">EFECTIVO</h4>
                                     <div class="form-group">
-                                        <label for="copn_ingreso_efectivo">Introduce la cantidad en efectivo</label>
-                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" class="form-control inputN">
+                                        <label for="copn_ingreso_efectivo">Cantidad en efectivo reportada por el sistema</label>
+                                        <input type="text" name="copn_ingreso_efectivo" id="copn_ingreso_efectivo" readonly class="form-control inputN">
                                     </div>
                                 </div>
                             </div>
@@ -481,6 +531,39 @@
                                     <div class="form-group">
                                         <label for="copn_ingreso_banco">Introduce la cantidad en banco</label>
                                         <input type="text" name="copn_ingreso_banco" id="copn_ingreso_banco" class="form-control inputN" placeholder="Transaferencias / Depositos / Pagos con Tarjeta">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_ingreso_efectivo_usuario">Cantidad reportada por el usuario</label>
+                                                <input type="text" name="copn_ingreso_efectivo_usuario" id="copn_ingreso_efectivo_usuario" class="form-control inputN" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+
+
+
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label for="copn_diferencia_efectivo">Diferencia (DEBE)</label>
+                                                <input type="text" name="copn_diferencia_efectivo" id="copn_diferencia_efectivo" class="form-control" readonly>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

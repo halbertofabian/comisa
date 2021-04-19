@@ -143,7 +143,105 @@ class CajasControlador
 
             $crt_id = $_POST['usr_caja'];
 
+
+            $bandera_saldo = $_POST['bandera_saldo'];
+
+            
+            
+
+            if ($bandera_saldo == 2) {
+
+                // SALDO A FAVOR (INGRESO)
+
+                $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+
+
+                $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario( $_POST['usr_id']);
+
+                $_POST['igs_mp'] = 'EFECTIVO';
+
+
+                $_POST['igs_referencia'] = "";
+                $_POST['igs_cuenta'] = "";
+
+                $_POST['igs_concepto'] = "SALDO EXTRA A FAVOR";
+                $_POST['igs_ruta'] = "";
+                $_POST['igs_tipo'] = "COBRANZA";
+
+
+                $_POST['igs_id_corte'] = $igs_id_corte['usr_caja'];
+                $_POST['igs_id_corte_2'] = $igs_id_corte2['usr_caja'];
+
+
+                $_POST['igs_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+                $_POST['igs_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
+                // $_POST['igs_id_corte'] = CortesControlador::crtConsultarUltimoCorte();
+
+                $_POST['igs_monto'] = str_replace(",", "", $_POST['copn_favor']);
+                $_POST['igs_fecha_registro'] = FECHA;
+                $_POST['igs_usuario_responsable'] = $_POST['usr_id'];
+
+                $igs = IngresosModelo::mdlAgregarIngresos($_POST);
+            } elseif ($bandera_saldo == 3) {
+                // SALDO DEBE  (GASTO) - DEBE = 11
+                if ($_POST['usr_caja'] == $_SESSION['session_usr']['usr_caja']) {
+                    $categoria = 16; // PRESTAMO
+
+                } else {
+                    $categoria = 11; // DEBE 
+                }
+
+                $tgts_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+                if ($tgts_id_corte2['usr_caja'] == 0) {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
+                    );
+                }
+                $tgts_id_corte = $_POST['usr_caja'];
+               
+                
+               
+                if ($tgts_id_corte == 0) {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
+                    );
+                }
+                $_POST['tgts_id_corte'] = $tgts_id_corte;
+                $_POST['tgts_id_corte2'] = $tgts_id_corte2['usr_caja'];
+
+                $_POST['tgts_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+                $_POST['tgts_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
+
+
+
+
+                $_POST['tgts_cantidad'] =   str_replace(",", "", $_POST['copn_debe']);
+                $_POST['tgts_fecha_gasto'] = FECHA;
+
+
+                $_POST['tgts_ruta'] = "";
+                $_POST['tgts_usuario_responsable'] = $_POST['usr_id'];
+                $_POST['tgts_categoria'] = $categoria;
+
+                $empleado = UsuariosModelo::mdlMostrarUsuarios($_POST['usr_id']);
+
+                $_POST['tgts_concepto'] = "FALTANTE DE <strong>" . $empleado['usr_nombre'] . '</strong>';
+
+                $_POST['tgts_mp'] = "EFECTIVO";
+                $_POST['tgts_nota'] = "";
+                
+
+               $gts =  GastosModelo::mdlCrearGasto($_POST);
+            }
+
+
+            
+
+
             if ($_POST['usr_caja'] == $_SESSION['session_usr']['usr_caja']) {
+                // CAJA GENERAL
                 $montos = array(
 
                     'monto_ingresos_e' => CortesModelo::mdlConsultarMontoIngresosPEByCorte2($crt_id),
@@ -153,6 +251,7 @@ class CajasControlador
                 );
             } else {
 
+                // CAJA DE CADA COBRADOR Y VENDEDORES
                 $montos = array(
 
                     'monto_ingresos_e' => CortesModelo::mdlConsultarMontoIngresosPEByCorte($crt_id),
@@ -161,6 +260,7 @@ class CajasControlador
                     'monto_gastos_b' => CortesModelo::mdlConsultarMontoGastosPBByCorte($crt_id),
                 );
             }
+
 
 
 
@@ -180,7 +280,7 @@ class CajasControlador
             $totalEfectivo = $monto_e +  $ingreso_caja - $monto_g_e;
             $totalBanco = $monto_b - $monto_g_b;
 
-            $_POST['copn_ingreso_efectivo'] = str_replace(",", "", $_POST['copn_ingreso_efectivo']);
+            $_POST['copn_ingreso_efectivo'] = str_replace(",", "", $_POST['copn_ingreso_efectivo_usuario']);
             $_POST['copn_ingreso_banco'] = str_replace(",", "", $_POST['copn_ingreso_banco']);
 
             $_POST['copn_usuario_cerro'] = $_SESSION['session_usr']['usr_nombre'];
@@ -195,6 +295,8 @@ class CajasControlador
             if ($_POST['copn_tipo_caja'] == "CAJA_COBRADOR") {
                 $redireccionamiento = HTTP_HOST . 'flujo-caja';
             } elseif ($_POST['copn_tipo_caja'] == "CAJA_COBRANZA_G") {
+                $redireccionamiento = HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $crt_id;
+            }else{
                 $redireccionamiento = HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $crt_id;
             }
 

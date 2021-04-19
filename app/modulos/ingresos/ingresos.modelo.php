@@ -113,7 +113,7 @@ class IngresosModelo
 
         try {
             //code...
-            $sql = "SELECT * FROM tbl_ingresos_igs  WHERE igs_id_corte = ? ";
+            $sql = "SELECT * FROM tbl_ingresos_igs  WHERE igs_id_corte = ? ORDER BY igs_id DESC  ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $igs_id_corte);
@@ -128,12 +128,34 @@ class IngresosModelo
         }
     }
 
+    public static function mdlConsultarCajaAbierta($igs_id_corte)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT copn_fecha_cierre FROM tbl_caja_open_copn WHERE copn_id = ?  ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $igs_id_corte);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+
+
+
     public static function mdlConsultarIngresoByCaja2($igs_id_corte_2)
     {
 
         try {
             //code...
-            $sql = "SELECT * FROM tbl_ingresos_igs  WHERE igs_id_corte_2 = ? ";
+            $sql = "SELECT * FROM tbl_ingresos_igs  WHERE igs_id_corte_2 = ? ORDER BY igs_id DESC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $igs_id_corte_2);

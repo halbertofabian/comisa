@@ -42,7 +42,8 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="usr_correo">Correo electrónico</label>
-                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" value="<?php echo $usr['usr_correo'] ?>" >
+                                <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" value="<?php echo $usr['usr_correo'] ?>">
+                                <input type="hidden" name="usr_correo_v" id="usr_correo_v" class="form-control"  value="<?php echo $usr['usr_correo'] ?>">
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
@@ -81,7 +82,13 @@
                         <div class="col-md-3 col-12">
                             <div class="form-group">
                                 <label for="usr_sueldo">Sueldo</label>
-                                <input type="text" name="usr_sueldo" id="usr_sueldo" class="form-control inputN" placeholder="Sueldo del empleado" value="<?php echo $usr['usr_sueldo']  ?>" >
+                                <input type="text" name="usr_sueldo" id="usr_sueldo" class="form-control inputN" placeholder="Sueldo del empleado" value="<?php echo $usr['usr_sueldo']  ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="usr_deuda_ext">Deuda externa</label>
+                                <input type="text" name="usr_deuda_ext" id="usr_deuda_ext" class="form-control inputN" value="<?php echo $usr['usr_deuda_ext']  ?>">
                             </div>
                         </div>
                         <?php if ($usr['usr_firma'] != "") : ?>
@@ -181,6 +188,12 @@
                                 <input type="text" name="usr_sueldo" id="usr_sueldo" class="form-control inputN" placeholder="Sueldo del empleado">
                             </div>
                         </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="usr_deuda_ext">Deuda externa</label>
+                                <input type="text" name="usr_deuda_ext" id="usr_deuda_ext" class="form-control inputN" placeholder="">
+                            </div>
+                        </div>
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <label for="usr_firma">Firma digital</label>
@@ -217,7 +230,7 @@
                     </div>
                     <div class="col-12">
                         <div class="table-responsive">
-                            <table class="table table-striped tablas tablaUsuarios">
+                            <table class="table table-striped tablas dt-responsive tablaUsuarios">
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
@@ -226,10 +239,10 @@
                                         <th>Rol</th>
                                         <th>Usuario registro</th>
                                         <th>Fecha registro</th>
-                                        <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") : ?>
 
-                                            <th>Acciones</th>
-                                        <?php endif; ?>
+
+                                        <th>Acciones</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -244,22 +257,22 @@
                                             <td><?php echo $usr['usr_rol'] ?></td>
                                             <td><?php echo $usr['usr_usuario_registro'] ?></td>
                                             <td><?php echo $usr['usr_fecha_registro'] ?></td>
-                                            <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") : ?>
 
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-filter" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button>
-                                                            <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
-                                                            <!-- <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Separated link</a> -->
-                                                        </div>
+
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fa fa-filter" aria-hidden="true"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <!-- <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button> -->
+                                                        <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
+                                                        <div class="dropdown-divider"></div>
+                                                       
                                                     </div>
-                                                </td>
-                                            <?php endif; ?>
+                                                </div>
+                                            </td>
+
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
