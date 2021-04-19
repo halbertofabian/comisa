@@ -60,6 +60,7 @@
                                             <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
                                                 <!-- <option value="">SELECCIONE TIPO DE INGRESO</option> -->
                                                 <option selected>COBRANZA</option>
+                                                <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
                                                 <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                             <option value="ABONOS_COBRANZA">ABONOS</option>
                                             <option value="OTROS_COBRANZA">OTROS</option>
@@ -83,6 +84,7 @@
                                             <?php else : ?>
                                                 <option value="">SELECCIONE TIPO DE INGRESO</option>
                                                 <option>COBRANZA</option>
+                                                <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
                                                 <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                             <option value="ABONOS_COBRANZA">ABONOS</option>
                                             <option value="OTROS_COBRANZA">OTROS</option>
