@@ -78,7 +78,7 @@ class GastosModelo
 
     //SELECT tgts.*,gts.gts_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON tgts.tgts_categoria = gts.gts_id
 
-    public static function mdlConsultarGastos($tgts_id = "", $gts_categoria = "")
+    public static function mdlConsultarGastos($tgts_id = "", $gts_categoria = "", $tgst_usuario = "")
     {
         try {
 
@@ -91,11 +91,20 @@ class GastosModelo
                 $pps->bindValue(2, $_SESSION['session_suc']['scl_id']);
                 $pps->execute();
                 return $pps->fetchAll();
-            } else if ($tgts_id == "") {
+            } else if ($tgts_id == "" && $tgst_usuario == "") {
                 $sql = "SELECT tgts.*,gts.gts_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON tgts.tgts_categoria = gts.gts_id WHERE  tgts.tgts_id_sucursal = ?  ORDER BY tgts.tgts_id DESC ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
+
+                $pps->execute();
+                return $pps->fetchAll();
+            } else if ($tgst_usuario != "") {
+                $sql = "SELECT tgts.*,gts.gts_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON tgts.tgts_categoria = gts.gts_id WHERE  tgts.tgts_id_sucursal = ? AND tgts_usuario_registro = ?  ORDER BY tgts.tgts_id DESC ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
+                $pps->bindValue(2, $tgst_usuario);
 
                 $pps->execute();
                 return $pps->fetchAll();

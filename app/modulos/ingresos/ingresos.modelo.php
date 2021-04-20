@@ -57,16 +57,26 @@ class IngresosModelo
             $con = null;
         }
     }
-    public static function mdlMostrarIngresos()
+    public static function mdlMostrarIngresos($usr_id = "")
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_ingresos_igs WHERE igs_id_sucursal =? ORDER BY igs_id DESC";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
-            $pps->execute();
-            return $pps->fetchAll();
+            if ($usr_id == "") {
+                $sql = "SELECT * FROM tbl_ingresos_igs WHERE igs_id_sucursal =? ORDER BY igs_id DESC";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
+                $pps->execute();
+                return $pps->fetchAll();
+            } elseif ($usr_id != "") {
+                $sql = "SELECT * FROM tbl_ingresos_igs WHERE igs_id_sucursal =? AND igs_usuario_registro = ? ORDER BY igs_id DESC";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
+                $pps->bindValue(2, $usr_id);
+                $pps->execute();
+                return $pps->fetchAll();
+            }
         } catch (PDOException $th) {
             //throw $th;
         } finally {

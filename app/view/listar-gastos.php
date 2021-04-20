@@ -125,7 +125,7 @@ cargarComponente('breadcrumb', '', 'Listar Gastos'); ?>
                     </thead>
                     <tbody>
                         <?php
-                        $gastos = GastosModelo::mdlConsultarGastos();
+                        $gastos = GastosModelo::mdlConsultarGastos("", "", $_SESSION['session_usr']['usr_nombre']);
                         foreach ($gastos as $key => $tgts) :
 
                         ?>
