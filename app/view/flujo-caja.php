@@ -174,7 +174,7 @@
 
                 </div>
             </div>
-            <div class="card-body">
+            <!-- <div class="card-body">
                 <div class="row">
                     <div class="col-12">
                         <table class="table table-responsive">
@@ -186,6 +186,29 @@
                                     <th class="text-danger"> <strong>Monto</strong> </th>
                                     <th>MP</th>
                                     <th>Concepto</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyIngresos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-responsive table-igs">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Usuario registro</th>
+                                    <th>Fecha</th>
+                                    <th class="text-danger"> <strong>Monto</strong> </th>
+                                    <th>MP</th>
+                                    <th>Concepto</th>
+                                    <th>Empleado</th>
+                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyIngresos">
@@ -265,7 +288,7 @@
                 </div>
 
             </div>
-            <div class="card-body">
+            <!-- <div class="card-body">
                 <div class="row">
                     <div class="col-12">
                         <table class="table table-responsive">
@@ -277,6 +300,29 @@
                                     <th class="text-danger"> <strong>Monto</strong> </th>
                                     <th>MP</th>
                                     <th>Concepto</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyGastos">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-responsive table-gts">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Usuario registro</th>
+                                    <th>Fecha</th>
+                                    <th class="text-danger"> <strong>Monto</strong> </th>
+                                    <th>MP</th>
+                                    <th>Concepto</th>
+                                    <th>Empleado</th>
+                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyGastos">

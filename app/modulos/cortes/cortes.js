@@ -104,7 +104,7 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
 
                 datos +=
                     `
-                    <tr id="marcador_igs_${igs.igs_id}" class="  ">
+                    <tr id="marcador_igs_${igs.igs_id}" class="row_click">
                     
                         <td>${igs.igs_id}</td>
                         <td>${igs.igs_usuario_registro}</td>
@@ -157,6 +157,8 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
     })
 
 }
+
+
 
 $(".table-igs tbody ").on("click", ".chx_marcador_ingresos", function () {
     var marcador = $(this).attr("marcador")

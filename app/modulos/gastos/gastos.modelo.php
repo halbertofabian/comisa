@@ -215,7 +215,7 @@ class GastosModelo
 
         try {
             //code...
-            $sql = "SELECT tgts.*,gts.* FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria  WHERE tgts_id_corte = ? ORDER BY tgts.tgts_id DESC";
+            $sql = "SELECT tgts.*,gts.*,usr.usr_nombre FROM tbl_gastos_tgts tgts  JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable  WHERE tgts_id_corte = ? ORDER BY tgts.tgts_id DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $tgts_id_corte);
