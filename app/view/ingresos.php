@@ -61,7 +61,7 @@
                         if (isset($rutas[1]) && $rutas[2]) {
                             $ingresos = IngresosModelo::mdlConsultarIngresos2Fecha($rutas[1], $rutas[2]);
                         } else {
-                            $ingresos = IngresosModelo::mdlMostrarIngresos();
+                            $ingresos = IngresosModelo::mdlMostrarIngresos($_SESSION['session_usr']['usr_nombre']);
                         }
 
 
