@@ -447,36 +447,36 @@
         </div>
         <div class="col-md-12">
 
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">
-                    <div class="alert alert-secondary" role="alert">
-                        <strong>GASOLINA</strong>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <div class="alert alert-secondary" role="alert">
+                            <strong>GASOLINA</strong>
+                        </div>
+                    </h4>
+                    <div class="form-group">
+                        <label for="gtsg_usuario">Empleado</label>
+                        <select class="form-control select2 select2" name="gtsg_usuario" id="gtsg_usuario">
+                            <option value="">Seleccione a un empleado</option>
+                            <?php
+                            $empleados = UsuariosModelo::mdlMostrarUsuarios();
+                            foreach ($empleados as $key => $usr) :
+                            ?>
+                                <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
-                </h4>
-                <div class="form-group">
-                    <label for="gtsg_usuario">Empleado</label>
-                    <select class="form-control select2 select2" name="gtsg_usuario" id="gtsg_usuario">
-                        <option value="">Seleccione a un empleado</option>
-                        <?php
-                        $empleados = UsuariosModelo::mdlMostrarUsuarios();
-                        foreach ($empleados as $key => $usr) :
-                        ?>
-                            <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="gtsg_cantidad">Cantidad</label>
-                    <input type="text" name="gtsg_cantidad" id="gtsg_cantidad" class="form-control inputN">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-load" id="btnGuardarGastoGas">Guardar</button>
-                </div>
+                    <div class="form-group">
+                        <label for="gtsg_cantidad">Cantidad</label>
+                        <input type="text" name="gtsg_cantidad" id="gtsg_cantidad" class="form-control inputN">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-load" id="btnGuardarGastoGas">Guardar</button>
+                    </div>
 
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
     <div class="col-md-6">
@@ -540,7 +540,7 @@
 
     </div>
 
-    
+
 
 </div>
 
