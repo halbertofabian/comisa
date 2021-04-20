@@ -196,7 +196,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-responsive">
+                        <table class="table table-responsive table-igs">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -290,7 +290,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-responsive">
+                        <table class="table table-responsive table-gts">
                             <thead>
                                 <tr>
                                     <th>#</th>
