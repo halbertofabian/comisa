@@ -196,7 +196,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-responsive">
+                        <table class="table table-responsive table-igs">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -205,6 +205,8 @@
                                     <th class="text-danger"> <strong>Monto</strong> </th>
                                     <th>MP</th>
                                     <th>Concepto</th>
+                                    <th>Empleado</th>
+                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyIngresos">
@@ -288,7 +290,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-responsive">
+                        <table class="table table-responsive table-gts">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -297,6 +299,8 @@
                                     <th class="text-danger"> <strong>Monto</strong> </th>
                                     <th>MP</th>
                                     <th>Concepto</th>
+                                    <th>Empleado</th>
+                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyGastos">

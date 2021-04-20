@@ -104,7 +104,7 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
 
                 datos +=
                     `
-                    <tr>
+                    <tr id="marcador_igs_${igs.igs_id}" class="row_click">
                     
                         <td>${igs.igs_id}</td>
                         <td>${igs.igs_usuario_registro}</td>
@@ -112,6 +112,10 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
                         <td>${igs.igs_monto}</td>
                         <td>${igs.igs_mp}</td>
                         <td>${igs.igs_concepto}  ${igs.igs_tipo}</td>
+                        <td>${igs.usr_nombre}</td>
+                        <td class="text-center"> 
+                        <input type="checkbox" class="chx_marcador_ingresos" marcador="${igs.igs_id}" > 
+                        </td>
                         
                     
                     </tr>
@@ -154,6 +158,37 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
 
 }
 
+
+
+$(".table-igs tbody ").on("click", ".chx_marcador_ingresos", function () {
+    var marcador = $(this).attr("marcador")
+
+
+
+    if ($(this).prop('checked')) {
+        $("#marcador_igs_"+marcador).addClass("bg-info")
+    } else {
+
+        $("#marcador_igs_"+marcador).removeClass("bg-info")
+
+    }
+})
+
+$(".table-gts tbody ").on("click", ".chx_marcador_gastos", function () {
+    var marcador = $(this).attr("marcador")
+
+
+
+    if ($(this).prop('checked')) {
+        $("#marcador_gts_"+marcador).addClass("bg-info")
+    } else {
+
+        $("#marcador_gts_"+marcador).removeClass("bg-info")
+
+    }
+})
+
+
 function buscarGastosByCaja(tgts_id_corte, usr_id) {
     var datos = new FormData();
     datos.append("btnConsultarGastosByCaja", true)
@@ -186,7 +221,7 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
                 }
                 datos +=
                     `
-                    <tr>
+                    <tr id="marcador_gts_${tgts.tgts_id}">
                     
                         <td>${tgts.tgts_id}</td>
                         <td>${tgts.tgts_usuario_registro}</td>
@@ -195,6 +230,8 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
                         <td>${tgts.tgts_mp}</td>
                         <!--<td>${tgts.gts_nombre}</td>-->
                         <td>${tgts.gts_nombre} ${tgts.tgts_concepto}</td>
+                        <td>${tgts.usr_nombre}</td>
+                        <td class="text-center" > <input type="checkbox" class="chx_marcador_gastos" marcador="${tgts.tgts_id}" name="" id=""> </td>
                         
                     
                     </tr>

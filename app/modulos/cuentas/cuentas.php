@@ -16,7 +16,7 @@
 
         <div class="col-12">
 
-            <table class="table">
+            <table class="table dt-responsive">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -202,7 +202,7 @@
         <div class="row">
             <div class="form-group col-12">
                 <h4>ESTADO DE CUENTA <?php echo $infocta['cbco_nombre'] ?></h4>
-                <table class="table">
+                <table class="table  dt-responsive">
                     <thead>
                         <tr>
                             <th>#</th>

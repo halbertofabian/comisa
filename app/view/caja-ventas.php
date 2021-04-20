@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-12">
-        <?php cargarComponente('breadcrumb', '', 'Flujo de caja por usuario'); ?>
+        <?php cargarComponente('breadcrumb', '', 'CAJA DE VENTAS PARA VENDEDORES'); ?>
     </div>
     <div class="col-md-4">
         <div class="form-group">
@@ -57,43 +57,11 @@
                                     <div class="form-group">
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
                                         <select class="form-control select2" name="igs_tipo" id="igs_tipo" required>
-                                            <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                                <!-- <option value="">SELECCIONE TIPO DE INGRESO</option> -->
-                                                <option selected>COBRANZA</option>
-                                                <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
-                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
-                                            <option value="ABONOS_COBRANZA">ABONOS</option>
-                                            <option value="OTROS_COBRANZA">OTROS</option>
-                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
-                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
-                                                <!-- <option value="S/E_VENTAS">S/E</option>
-                                                <option value="CONTADO_VENTAS">CONTADO</option>
-                                                <option value="OTROS_COBRANZA">OTROS</option> -->
-                                            <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
-                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
-                                                <option value="S/E_VENTAS">S/E</option>
-                                                <option value="CONTADO_VENTAS">CONTADO</option>
-                                                <!-- <option>COBRANZA</option> -->
-                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
-                                            <option value="ABONOS_COBRANZA">ABONOS</option>
-                                            <option value="OTROS_COBRANZA">OTROS</option>
-                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
-                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
 
-                                                <!-- <option value="OTROS_COBRANZA">OTROS</option> -->
-                                            <?php else : ?>
-                                                <option value="">SELECCIONE TIPO DE INGRESO</option>
-                                                <option>COBRANZA</option>
-                                                <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
-                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
-                                            <option value="ABONOS_COBRANZA">ABONOS</option>
-                                            <option value="OTROS_COBRANZA">OTROS</option>
-                                            <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option> 
-                                            <option value="REINGRESOS_COBRANZA">REINGRESOS</option>-->
-                                                <option value="S/E_VENTAS">S/E</option>
-                                                <option value="CONTADO_VENTAS">CONTADO</option>
-                                                <option value="OTROS_COBRANZA">OTROS</option>
-                                            <?php endif; ?>
+                                            <option value="">SELECCIONE TIPO DE INGRESO</option>
+                                            <option value="S/E_VENTAS">S/E</option>
+                                            <option value="CONTADO_VENTAS">CONTADO</option>
+
 
                                         </select>
                                     </div>
@@ -174,7 +142,7 @@
 
                 </div>
             </div>
-            <!-- <div class="card-body">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-12">
                         <table class="table table-responsive">
@@ -186,29 +154,6 @@
                                     <th class="text-danger"> <strong>Monto</strong> </th>
                                     <th>MP</th>
                                     <th>Concepto</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyIngresos">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-responsive table-igs">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario registro</th>
-                                    <th>Fecha</th>
-                                    <th class="text-danger"> <strong>Monto</strong> </th>
-                                    <th>MP</th>
-                                    <th>Concepto</th>
-                                    <th>Empleado</th>
-                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyIngresos">
@@ -235,13 +180,9 @@
                                     <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
 
-                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
-                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VENTAS">
-                                    <?php else : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
-                                    <?php endif; ?>
+
+                                    <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VENTAS">
+
 
 
                                 </div>
@@ -288,7 +229,7 @@
                 </div>
 
             </div>
-            <!-- <div class="card-body">
+            <div class="card-body">
                 <div class="row">
                     <div class="col-12">
                         <table class="table table-responsive">
@@ -300,29 +241,6 @@
                                     <th class="text-danger"> <strong>Monto</strong> </th>
                                     <th>MP</th>
                                     <th>Concepto</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyGastos">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-responsive table-gts">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario registro</th>
-                                    <th>Fecha</th>
-                                    <th class="text-danger"> <strong>Monto</strong> </th>
-                                    <th>MP</th>
-                                    <th>Concepto</th>
-                                    <th>Empleado</th>
-                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyGastos">
@@ -526,21 +444,12 @@
                                     <input type="hidden" id="usr_id_input" name="usr_id">
                                     <input type="hidden" id="copn_id_input" name="copn_id">
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
-                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
-                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+                                    <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR">
+                                    <input type="hidden" name="tgts_tipo" value="VENTAS">
 
 
-                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR">
-                                        <input type="hidden" name="tgts_tipo" value="VENTAS">
 
-
-                                    <?php else : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="COBRANZA">
-                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
-
-                                    <?php endif; ?>
 
 
                                     <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
