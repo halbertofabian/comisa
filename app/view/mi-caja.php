@@ -206,6 +206,7 @@
                                     <th>MP</th>
                                     <th>Concepto</th>
                                     <th>Empleado</th>
+                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyIngresos">
@@ -299,7 +300,7 @@
                                     <th>MP</th>
                                     <th>Concepto</th>
                                     <th>Empleado</th>
-                                    
+                                    <th class="text-center">Marcador</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyGastos">
