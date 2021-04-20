@@ -61,8 +61,19 @@
                                                 <hr>
                                                 <?php if ($cja['cja_uso'] == 0) : ?>
                                                     <strong class="text-danger">Cerrada</strong>
-                                                <?php else : ?>
-                                                    <a href="<?php echo HTTP_HOST . 'cortes/view-r/' . $cja['cja_copn_id'] ?>" class="btn btn-success">Abierta</a>
+                                                <?php else : 
+                                                $usuario_abrio = CajasModelo::mdlMostrarUsuarioCajaUso($cja['cja_copn_id']);
+                                                ?>
+                                                    <!-- <a href="<?php echo HTTP_HOST . 'cortes/view-r/' . $cja['cja_copn_id'] ?>" class="btn btn-success">Abierta</a> -->
+                                                    <div class="alert alert-success" role="alert">
+                                                        <strong>CAJA EN USO POR:</strong>
+                                                        <p><?php echo  strtoupper($usuario_abrio['usr_nombre']) ?></p>
+                                                    </div>
+                                                    <div class="alert alert-warning" role="alert">
+                                                        <strong>Nota:</strong>
+                                                        <p>No olvides cerrar su caja si ya le recibiste.</p>
+                                                    </div>
+                                                    
                                                 <?php endif; ?>
                                             </div>
                                         </div>

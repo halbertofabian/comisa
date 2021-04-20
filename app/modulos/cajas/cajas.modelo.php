@@ -543,4 +543,23 @@ class CajasModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarUsuarioCajaUso($cja_copn_id)
+    {
+        try {
+            $sql = "SELECT usr.usr_nombre FROM tbl_caja_open_copn copn JOIN tbl_usuarios_usr usr ON  copn.copn_usuario_abrio = usr.usr_id WHERE copn.copn_id = ? ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cja_copn_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

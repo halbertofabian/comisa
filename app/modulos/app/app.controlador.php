@@ -530,7 +530,7 @@ class AppControlador
                         ],
                         [
                             'icon' => '',
-                            'label' => 'Registrar nueva caja',
+                            'label' => 'Lista de cajas / Nueva caja',
                             'href' => 'cajas'
                         ],
 
@@ -637,7 +637,7 @@ class AppControlador
                         ],
                         [
                             'icon' => '',
-                            'label' => 'Registrar nueva caja',
+                            'label' => 'Lista de cajas / Nueva caja',
                             'href' => 'cajas'
                         ],
                         //Aqui más item de menu
