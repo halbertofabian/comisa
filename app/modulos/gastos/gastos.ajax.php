@@ -75,6 +75,12 @@ class GastosAjax
         $res = GastosControlador::ctrCrearGasto();
         echo json_encode($res, true);
     }
+
+    public function ajaxRegistrarGastoGasVendedor()
+    {
+        $res = GastosControlador::ctrAgregarGastoGasVendedor();
+        echo json_encode($res, true);
+    }
 }
 
 
@@ -119,4 +125,10 @@ if (isset($_POST['btnConsultarGastosByCaja'])) {
 if (isset($_POST['btnGuardarGasto'])) {
     $btnGuardarGasto = new GastosAjax();
     $btnGuardarGasto->ajaxAgregarGasto();
+}
+
+if (isset($_POST['btnGuardarGastoGas'])) {
+
+    $guardar = new GastosAjax();
+    $guardar->ajaxRegistrarGastoGasVendedor();
 }

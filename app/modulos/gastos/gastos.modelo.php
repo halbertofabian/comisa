@@ -269,4 +269,24 @@ class GastosModelo
             $con = null;;
         }
     }
+
+    public static function mdlAgregarGastoGasEmpleado($gtsg)
+    {
+        try {
+            $sql = "INSERT INTO tbl_gastos_gasolina_gtsg (gtsg_usuario_registro, gtsg_usuario_responsable, gtsg_monto, gtsg_fecha_registro) VALUES(?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $gtsg['gtsg_usuario_registro']);
+            $pps->bindValue(2, $gtsg['gtsg_usuario_responsable']);
+            $pps->bindValue(3, $gtsg['gtsg_cantidad']);
+            $pps->bindValue(4, $gtsg['gtsg_fecha_registro']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
