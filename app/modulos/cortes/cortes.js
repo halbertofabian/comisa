@@ -112,7 +112,7 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
                         <td>${igs.igs_monto}</td>
                         <td>${igs.igs_mp}</td>
                         <td>${igs.igs_concepto}  ${igs.igs_tipo}</td>
-                        <td>${igs.usr_nombre}<td>
+                        <td>${igs.usr_nombre} <input type="checkbox" name="" id=""><td>
                         
                     
                     </tr>
@@ -196,7 +196,7 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
                         <td>${tgts.tgts_mp}</td>
                         <!--<td>${tgts.gts_nombre}</td>-->
                         <td>${tgts.gts_nombre} ${tgts.tgts_concepto}</td>
-                        <td>${tgts.usr_nombre}</td>
+                        <td>${tgts.usr_nombre} <input type="checkbox" name="" id=""> </td>
 
                         
                     
