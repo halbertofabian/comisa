@@ -298,6 +298,7 @@
                                     <th class="text-danger"> <strong>Monto</strong> </th>
                                     <th>MP</th>
                                     <th>Concepto</th>
+                                    <th>Empleado</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyGastos">

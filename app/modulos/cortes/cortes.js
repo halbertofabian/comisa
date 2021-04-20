@@ -196,6 +196,8 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
                         <td>${tgts.tgts_mp}</td>
                         <!--<td>${tgts.gts_nombre}</td>-->
                         <td>${tgts.gts_nombre} ${tgts.tgts_concepto}</td>
+                        <td>${tgts.usr_nombre}</td>
+
                         
                     
                     </tr>
