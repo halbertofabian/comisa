@@ -144,6 +144,9 @@
                             } elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') {
                                 $listaBlanca = AppControlador::ObtenerListaBlancaGefeVentas();
                             }
+                            elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe administrativo') {
+                                $listaBlanca = AppControlador::ObtenerListaBlancaAdministración();
+                            }
 
 
 

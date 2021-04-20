@@ -234,6 +234,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
+                                        <th>Deuda ext.</th>
                                         <th>Teléfono</th>
                                         <th>Correo electrónico</th>
                                         <th>Rol</th>
@@ -252,6 +253,7 @@
                                     ?>
                                         <tr>
                                             <td><?php echo $usr['usr_nombre'] ?></td>
+                                            <td> <strong> <?php echo $usr['usr_deuda_ext'] ?> </strong> </td>
                                             <td><?php echo $usr['usr_telefono'] ?></td>
                                             <td><?php echo $usr['usr_correo'] ?></td>
                                             <td><?php echo $usr['usr_rol'] ?></td>
