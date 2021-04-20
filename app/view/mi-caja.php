@@ -492,7 +492,8 @@
                     <div class="form-group">
                         <button class="btn btn-primary btn-load" id="btnGuardarGastoGas">Guardar</button>
                     </div>
-
+                    
+    
                 </div>
             </div>
         </div>
