@@ -226,3 +226,82 @@ $(".tablaCategorias tbody").on("click", "button.btnEliminarCategoria", function 
             }
         });
 })
+
+$("#btnGuardarGastoGas").on("click", function () {
+    var gtsg_usuario = $("#gtsg_usuario").val()
+    var gtsg_cantidad = Number($("#gtsg_cantidad").val())
+
+    var errormsj = "";
+
+    if (gtsg_usuario == "") {
+        errormsj += "Necesita seleccionar un usuario \n";
+    }
+    if (gtsg_cantidad <= 0) {
+        errormsj += "Necesita ingresar una cantidad mayor a 0 \n";
+    }
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+    
+
+    swal({
+        title: "¿Estás seguro de agregar gasto de gasolina a " + $('select[name="gtsg_usuario"] option:selected').text() + " ?",
+        text: "  CANTIDAD: " + gtsg_cantidad,
+        icon: "warning",
+        buttons: ["No, cancelar", "Si, confirmar "],
+        dangerMode: false,
+        closeOnClickOutside: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+
+                datos.append("gtsg_usuario", gtsg_usuario)
+                datos.append("gtsg_cantidad", gtsg_cantidad)
+                datos.append("btnGuardarGastoGas", true)
+                
+
+                $.ajax({
+
+                    url: urlApp + 'app/modulos/gastos/gastos.ajax.php',
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    beforeSend: function () {
+
+                        startLoadButton()
+
+
+                    },
+                    success: function (res) {
+
+                        if (res.status) {
+                            stopLoadButton("Guardar")
+                            $("#gtsg_usuario").val("")
+                            $("#gtsg_cantidad").val("")
+                            toastr.success(res.mensaje, "¡Muy bien!")
+
+                            var flujo_usr = $("#flujo_usr").val();
+                           buscarFlujoCaja(flujo_usr)
+                        } else {
+                            stopLoadButton("Intentar de nuevo")
+                            toastr.error(res.mensaje, "¡Error!")
+
+                        }
+
+
+                    }
+                })
+            }
+        })
+
+
+
+
+})

@@ -41,7 +41,8 @@ class AppControlador
             'mi-caja',
             'comisiones',
             'reportes-caja',
-            'sueldos'
+            'sueldos',
+            'gastos_gasolina'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -82,7 +83,8 @@ class AppControlador
             'usuarios',
             'ingresos',
             'listar-gastos',
-            'salir'
+            'salir',
+            'gastos_gasolina'
         );
     }
 
@@ -530,7 +532,7 @@ class AppControlador
                             'label' => 'Registrar nueva caja',
                             'href' => 'cajas'
                         ],
-                        
+
                         //Aqui más item de menu
                     ),
                 ]
@@ -714,6 +716,11 @@ class AppControlador
                             'label' => 'Listar gastos',
                             'href' => 'listar-gastos'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Resumen',
+                            'href' => 'gastos_gasolina'
+                        ]
 
                         // Aqui más item de menu
                     ),
