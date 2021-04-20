@@ -471,9 +471,24 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="gtsg_cantidad">Cantidad</label>
-                        <input type="text" name="gtsg_cantidad" id="gtsg_cantidad" class="form-control inputN">
+                        <label for="gtsg_placas_v">Vehiculo</label>
+                        <input type="text" name="gtsg_placas_v" id="gtsg_placas_v" class="form-control inputN">
                     </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-12">
+                            <label for="gtsg_pxl">Precio Litro</label>
+                            <input type="text" name="gtsg_pxl" id="gtsg_pxl" class="form-control inputN">
+                        </div>
+                        <div class="form-group col-md-4 col-12">
+                            <label for="gtsg_cantidad">Cantidad</label>
+                            <input type="text" name="gtsg_cantidad" id="gtsg_cantidad" class="form-control inputN">
+                        </div>
+                        <div class="form-group col-md-4 col-12">
+                            <label for="gtsg_montoApagar">Monto a pagar</label>
+                            <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN" readonly>
+                        </div>
+                    </div>
+                    
                     <div class="form-group">
                         <button class="btn btn-primary btn-load" id="btnGuardarGastoGas">Guardar</button>
                     </div>
