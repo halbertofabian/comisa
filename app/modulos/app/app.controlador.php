@@ -97,7 +97,8 @@ class AppControlador
             'Vendedor',
             'Cobrador',
             'Jefe de cobranza',
-            'Jefe de ventas'
+            'Jefe de ventas',
+            'Jefe administrativo'
         );
     }
 

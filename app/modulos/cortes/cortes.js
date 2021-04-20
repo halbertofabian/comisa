@@ -112,6 +112,7 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
                         <td>${igs.igs_monto}</td>
                         <td>${igs.igs_mp}</td>
                         <td>${igs.igs_concepto}  ${igs.igs_tipo}</td>
+                        <td>${igs.usr_nombre}<td>
                         
                     
                     </tr>
