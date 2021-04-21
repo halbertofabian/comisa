@@ -1,7 +1,7 @@
 listarCategorias();
 
 $("#formAddCategoria").on("submit", function (e) {
-    
+
     e.preventDefault()
 
     var datos = new FormData(this)
@@ -227,6 +227,18 @@ $(".tablaCategorias tbody").on("click", "button.btnEliminarCategoria", function 
         });
 })
 
+$("#gtsg_pxl").on("keyup", function () {
+    calculargastoGasolina();  
+})
+$("#gtsg_cantidad").on("keyup", function () {
+    calculargastoGasolina();  
+})
+function calculargastoGasolina() {
+    var gtsg_precio_litro=$("#gtsg_pxl").val();
+    var gtsg_cantidad_litro=$("#gtsg_cantidad").val();
+     $("#gtsg_montoApagar").val(gtsg_precio_litro * gtsg_cantidad_litro);
+}
+
 $("#btnGuardarGastoGas").on("click", function () {
     var gtsg_usuario = $("#gtsg_usuario").val()
     var gtsg_cantidad = Number($("#gtsg_cantidad").val())
@@ -245,7 +257,7 @@ $("#btnGuardarGastoGas").on("click", function () {
         return;
 
     }
-    
+
 
     swal({
         title: "¿Estás seguro de agregar gasto de gasolina a " + $('select[name="gtsg_usuario"] option:selected').text() + " ?",
@@ -262,7 +274,7 @@ $("#btnGuardarGastoGas").on("click", function () {
                 datos.append("gtsg_usuario", gtsg_usuario)
                 datos.append("gtsg_cantidad", gtsg_cantidad)
                 datos.append("btnGuardarGastoGas", true)
-                
+
 
                 $.ajax({
 
@@ -288,7 +300,7 @@ $("#btnGuardarGastoGas").on("click", function () {
                             toastr.success(res.mensaje, "¡Muy bien!")
 
                             var flujo_usr = $("#flujo_usr").val();
-                           buscarFlujoCaja(flujo_usr)
+                            buscarFlujoCaja(flujo_usr)
                         } else {
                             stopLoadButton("Intentar de nuevo")
                             toastr.error(res.mensaje, "¡Error!")

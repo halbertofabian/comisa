@@ -466,9 +466,12 @@
                             $empleados = UsuariosModelo::mdlMostrarUsuarios();
                             foreach ($empleados as $key => $usr) :
                             ?>
-                                <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
+                                <option value="<?php echo $usr['usr_id'] ?>">
+                                <?php echo $usr['usr_nombre'] ?><span hidden>hg</span> 
+                                </option>
                             <?php endforeach; ?>
                         </select>
+                        <span style="color: red;">hg</span> 
                     </div>
                     <div class="form-group">
                         <label for="gtsg_placas_v">Vehiculo</label>
