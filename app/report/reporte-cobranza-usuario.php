@@ -68,7 +68,9 @@ if (isset($_GET['copn_id'])) {
 
     $caja = CajasModelo::mdlMostrarCajasCobranzaById($_GET['copn_id']);
 
-    $copn_tabulador = json_decode($caja['$copn_tabulador'], true);
+    $copn_tabulador = json_decode($caja['copn_tabulador'], true);
+
+    
 
 
 
@@ -1355,6 +1357,44 @@ EOF;
     // Print text using writeHTMLCell()
     $pdf->writeHTMLCell(0, 0, '', '', $resumen, 0, 1, 0, true, '', true);
 
+
+    $copn_tab_total = 0;
+
+    $copn_tabulador_1000 = $copn_tabulador[0]['c_1000'];
+    $copn_tabulador_500 = $copn_tabulador[0]['c_500'];
+    $copn_tabulador_200 = $copn_tabulador[0]['c_200'];
+    $copn_tabulador_100 = $copn_tabulador[0]['c_100'];
+    $copn_tabulador_50 = $copn_tabulador[0]['c_50'];
+    $copn_tabulador_20 = $copn_tabulador[0]['c_20'];
+    $copn_tabulador_t_moneda = $copn_tabulador[0]['t_moneda'];
+
+    $copn_tabulador_1000_t = $copn_tabulador_1000 *1000;
+    $copn_tab_total += $copn_tabulador_1000_t;
+
+    $copn_tabulador_500_t = $copn_tabulador_500 *500;
+    $copn_tab_total += $copn_tabulador_500_t;
+
+    $copn_tabulador_200_t = $copn_tabulador_200 *200;
+    $copn_tab_total += $copn_tabulador_200_t;
+
+    $copn_tabulador_100_t = $copn_tabulador_100 *100;
+    $copn_tab_total += $copn_tabulador_100_t;
+
+    $copn_tabulador_50_t = $copn_tabulador_50 *50;
+    $copn_tab_total += $copn_tabulador_50_t;
+
+    $copn_tabulador_20_t = $copn_tabulador_20 *20;
+    $copn_tab_total += $copn_tabulador_20_t;
+
+    $copn_tab_total += $copn_tabulador_t_moneda;
+
+
+   
+
+    $copn_tab_total = number_format($copn_tab_total,2);
+
+    
+
     $firma = <<<EOF
     
     <table >
@@ -1378,9 +1418,55 @@ EOF;
         </thead>
     </table>
 
-    <table>
+    <table style=" width:400px">
         <thead>
-        <tr></tr>
+            <tr>
+                <td colspan="3" style="text-align: center;" ><strong>TABULADOR</strong></td>
+            </tr>
+            <tr>
+                <td><strong>DENOMINACION</strong></td>
+                <td><strong>CANTIDAD</strong></td>
+                <td><strong>TOTAL</strong></td>
+            </tr>
+            <tr>
+                <td><strong>1000</strong></td>
+                <td><strong>$copn_tabulador_1000</strong></td>
+                <td><strong>$copn_tabulador_1000_t</strong></td>
+            </tr>
+            <tr>
+                <td><strong>500</strong></td>
+                <td><strong>$copn_tabulador_500</strong></td>
+                <td><strong>$copn_tabulador_500_t</strong></td>
+            </tr>
+            <tr>
+                <td><strong>200</strong></td>
+                <td><strong>$copn_tabulador_200</strong></td>
+                <td><strong>$copn_tabulador_200_t</strong></td>
+            </tr>
+            <tr>
+                <td><strong>100</strong></td>
+                <td><strong>$copn_tabulador_100</strong></td>
+                <td><strong>$copn_tabulador_100_t</strong></td>
+            </tr>
+            <tr>
+                <td><strong>50</strong></td>
+                <td><strong>$copn_tabulador_50</strong></td>
+                <td><strong>$copn_tabulador_50_t</strong></td>
+            </tr>
+            <tr>
+                <td><strong>20</strong></td>
+                <td><strong>$copn_tabulador_20</strong></td>
+                <td><strong>$copn_tabulador_20_t</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2" ><strong>Monedas</strong></td>
+                <td><strong>$copn_tabulador_t_moneda</strong></td>
+            </tr>
+            <tr>
+                <td colspan="2">TOTAL</td>
+                <td> <strong>$copn_tab_total</strong></td>
+            </tr>
+            
         </thead>
     </table>
 
