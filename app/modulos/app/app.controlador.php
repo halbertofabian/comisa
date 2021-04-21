@@ -67,7 +67,8 @@ class AppControlador
             'usuarios',
             'ingresos',
             'listar-gastos',
-            'salir'
+            'salir',
+            'ver-caja'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
