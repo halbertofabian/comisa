@@ -83,10 +83,10 @@
                                                 <option>COBRANZA</option>
                                                 <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
                                                 <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
-                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option> -->
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                                 <option value="ABONOS_COBRANZA">ABONOS</option>
                                                 <!-- <option value="OTROS_COBRANZA">OTROS</option> -->
-                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTAMO DEL JEFE</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
                                                 <!-- <option value="S/E_VENTAS">S/E</option>
                                                 <option value="CONTADO_VENTAS">CONTADO</option> -->
 
@@ -95,10 +95,10 @@
                                                 <option value="S/E_VENTAS">S/E</option>
                                                 <option value="CONTADO_VENTAS">CONTADO</option>
                                                 <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
-                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option> -->
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                                 <option value="ABONOS_COBRANZA">ABONOS</option>
-                                                <!-- <option value="OTROS_COBRANZA">OTROS</option> -->
-                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTAMO DEL JEFE</option>
+                                                <option value="OTROS_COBRANZA">OTROS</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
                                                 <!-- <option>COBRANZA</option> -->
 
                                             <?php else : ?>
@@ -106,10 +106,10 @@
                                                 <option>COBRANZA</option>
                                                 <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
                                                 <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
-                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option> -->
+                                                <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option>
                                                 <option value="ABONOS_COBRANZA">ABONOS</option>
                                                 <option value="OTROS_COBRANZA">OTROS</option>
-                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTAMO DEL JEFE</option>
+                                                <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTO CP. SAMUEL</option>
                                                 <option value="S/E_VENTAS">S/E</option>
                                                 <option value="CONTADO_VENTAS">CONTADO</option>
                                             <?php endif; ?>
@@ -237,11 +237,11 @@
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
 
                                     <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VARIOS-COBRANZA">
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
                                     <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VARIOS-VENTAS">
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VENTAS">
                                     <?php else : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VARIOS">
+                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
                                     <?php endif; ?>
                                 </div>
                                 <input type="hidden" name="tgts_ruta" id="tgts_ruta">

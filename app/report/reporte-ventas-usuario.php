@@ -76,9 +76,9 @@ if (isset($_GET['copn_id'])) {
 
     $igs_b = CajasModelo::mdlConsultarIngresosCajaCobranzaBanco($caja['copn_id']);
 
-    $gts_c = CajasModelo::mdlConsultarGastosCajaEfectivo($caja['copn_id']);
+    $gts_c = CajasModelo::mdlConsultarGastosCajaEfectivo($caja['copn_id'],"VENTAS");
 
-    $gts_v = CajasModelo::mdlConsultarGastosVariosCajaEfectivo($caja['copn_id']);
+    $gts_v = CajasModelo::mdlConsultarGastosVariosCajaEfectivo($caja['copn_id'],"VARIOS-VENTAS");
 
     $gts_pres = CajasModelo::mdlConsultarGastosPrestamosCajaEfectivo($caja['copn_id']);
 
@@ -152,7 +152,7 @@ if (isset($_GET['copn_id'])) {
         <tr>
         <td style="text-align: center;">
            
-        <p><strong>INGRESOS (COBRANZA) $cja_nombre</strong></p>
+        <p><strong>INGRESOS $cja_nombre</strong></p>
         
         </td>
         <td style="text-align: center;">
@@ -237,8 +237,8 @@ EOF;
         $pdf->writeHTMLCell(0, 0, '', '', $ingresos_efectivo_body_r, 0, 1, 0, true, '', true);
     }
 
-    $igs_efectivo2 = $igs_efectivo + $igs_efectivo_r;
-    $igs_efectivo2 = number_format($igs_efectivo2, 2);
+    
+    $igs_efectivo2 = number_format($igs_efectivo_r, 2);
     $footer2 = <<<EOF
     
     <table style="border: 1px solid #000">
@@ -370,7 +370,7 @@ EOF;
         <tr>
         <td style="text-align: center;">
            
-        <p><strong>INGRESOS (COBRANZA) $cja_nombre</strong></p>
+        <p><strong>INGRESOS $cja_nombre</strong></p>
         
         </td>
         <td style="text-align: center;">
@@ -387,7 +387,7 @@ EOF;
 EOF;
 
     // Print text using writeHTMLCell()
-    $pdf->writeHTMLCell(0, 0, '', '', $header2, 0, 1, 0, true, '', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', $header2, 0, 1, 0, true, '', true);
 
 
     $ingresos_banco_header = <<<EOF
@@ -407,7 +407,7 @@ EOF;
         </table>
  
 EOF;
-    $pdf->writeHTMLCell(0, 0, '', '', $ingresos_banco_header, 0, 1, 0, true, '', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', $ingresos_banco_header, 0, 1, 0, true, '', true);
 
 
     $igs_banco = 0;
@@ -435,7 +435,7 @@ EOF;
         
   
 EOF;
-        $pdf->writeHTMLCell(0, 0, '', '', $ingresos_banco_body, 0, 1, 0, true, '', true);
+        // $pdf->writeHTMLCell(0, 0, '', '', $ingresos_banco_body, 0, 1, 0, true, '', true);
     }
 
     $igs_banco2 = number_format($igs_banco, 2);
@@ -463,7 +463,7 @@ EOF;
 EOF;
 
     // Print text using writeHTMLCell()
-    $pdf->writeHTMLCell(0, 0, '', '', $footer3, 0, 1, 0, true, '', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', $footer3, 0, 1, 0, true, '', true);
     $header3 = <<<EOF
     
     <table style="border: 1px solid #000">
@@ -471,7 +471,7 @@ EOF;
         <tr>
         <td style="text-align: center;">
            
-        <p><strong> GASTOS (COBRADORES) $cja_nombre</strong></p>
+        <p><strong> GASTOS VENDEDORES </strong></p>
         
         </td>
         <td style="text-align: center;">
@@ -780,7 +780,7 @@ EOF;
 EOF;
 
     // HEADER
-    //$pdf->writeHTMLCell(0, 0, '', '', $PDF, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $PDF, 0, 1, 0, true, '', true);
     $igs_ventas_efectivo = 0;
     foreach ($igs_v_efectivo as $key => $igs) {
         # code...
@@ -802,7 +802,7 @@ EOF;
         </table>
   
 EOF;
-        //$pdf->writeHTMLCell(0, 0, '', '', $body, 0, 1, 0, true, '', true);
+        $pdf->writeHTMLCell(0, 0, '', '', $body, 0, 1, 0, true, '', true);
     }
 
 
@@ -828,7 +828,7 @@ EOF;
 EOF;
 
     // Print text using writeHTMLCell()
-    //$pdf->writeHTMLCell(0, 0, '', '', $footer2, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $footer2, 0, 1, 0, true, '', true);
 
 
     $PDF = <<<EOF
@@ -866,7 +866,7 @@ EOF;
 EOF;
 
     // HEADER
-    //$pdf->writeHTMLCell(0, 0, '', '', $PDF, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $PDF, 0, 1, 0, true, '', true);
     $igs_ventas_se_efectivo = 0;
     foreach ($igs_vs_efectivo as $key => $igs) {
         # code...
@@ -888,7 +888,7 @@ EOF;
         </table>
   
 EOF;
-       // $pdf->writeHTMLCell(0, 0, '', '', $body, 0, 1, 0, true, '', true);
+        $pdf->writeHTMLCell(0, 0, '', '', $body, 0, 1, 0, true, '', true);
     }
 
 
@@ -914,7 +914,7 @@ EOF;
 EOF;
 
     // Print text using writeHTMLCell()
-    //$pdf->writeHTMLCell(0, 0, '', '', $footer2, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $footer2, 0, 1, 0, true, '', true);
 
 
     $header5 = <<<EOF
@@ -978,7 +978,7 @@ EOF;
         
   
 EOF;
-     //   $pdf->writeHTMLCell(0, 0, '', '', $gastos_efectivo_body, 0, 1, 0, true, '', true);
+       // $pdf->writeHTMLCell(0, 0, '', '', $gastos_efectivo_body, 0, 1, 0, true, '', true);
     }
     $gts_ventas_efectivo_2 = number_format($gts_ventas_efectivo, 2);
     $footer5 = <<<EOF
@@ -1005,7 +1005,7 @@ EOF;
 EOF;
 
     // Print text using writeHTMLCell()
-   // $pdf->writeHTMLCell(0, 0, '', '', $footer5, 0, 1, 0, true, '', true);
+    //$pdf->writeHTMLCell(0, 0, '', '', $footer5, 0, 1, 0, true, '', true);
 
     /////
 
@@ -1243,24 +1243,24 @@ EOF;
         </tr>
 
 
+        
         <tr> 
             <td  style="text-align: left;">
-                <p><strong>COBRANZA EFECTIVO</strong></p>
+                <p><strong>INGRESOS</strong></p>
             </td>
             <td  style="text-align: center;">
-                <p><strong> $ $cobranza_efectivo</strong></p>
-            </td>
-        </tr>
-        <tr> 
-            <td  style="text-align: left;">
-                <p><strong>COBRANZA BANCO </strong></p>
-            </td>
-            <td  style="text-align: center;">
-                <p><strong> $ $cobranza_banco</strong></p>
+                <p><strong> $ $igs_efectivo2</strong></p>
             </td>
         </tr>  
 
-        
+        <tr> 
+            <td  style="text-align: left;">
+                <p><strong>VENTAS </strong></p>
+            </td>
+            <td  style="text-align: center;">
+                <p><strong> $ $igs_ventas_efectivo</strong></p>
+            </td>
+        </tr>  
 
         <tr> 
             <td  style="text-align: left;">
@@ -1283,16 +1283,16 @@ EOF;
           <hr>
         </td>
     </tr> 
+        
+
         <tr> 
             <td  style="text-align: left;">
-                <p><strong> GASTOS COBRADORES </strong></p>
+                <p><strong> GASTOS VENDEDORES </strong></p>
             </td>
             <td  style="text-align: center;">
-                <p><strong> $ $gts_efectivo</strong></p>
+                <p><strong> $ $gts_ventas_efectivo_2</strong></p>
             </td>
         </tr>
-
-        
         <tr> 
             <td  style="text-align: left;">
                 <p><strong> COMISIONES </strong></p>

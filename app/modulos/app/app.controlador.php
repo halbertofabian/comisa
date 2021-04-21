@@ -102,7 +102,8 @@ class AppControlador
             'listar-gastos',
             'salir',
             'caja-ventas',
-            'caja-cobranza'
+            'caja-cobranza',
+            'ver-caja'
         );
     }
 
