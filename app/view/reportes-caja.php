@@ -45,7 +45,11 @@ if ($rutas[1] == 'cobranza') :
                             <td><?php echo $cbz['cja_nombre'] ?></td>
                             <td><?php echo number_format($cbz['copn_saldo'], 2) ?></td>
                             <td><?php echo $cbz['copn_registro'] ?></td>
-                            <td> <a target="_blank" href="<?php echo HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $cbz['copn_id']  ?>" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a> </td>
+                            <td>
+                                <a target="_blank" href="<?php echo HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $cbz['copn_id']  ?>" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                                <a  href="<?php echo HTTP_HOST . 'ver-caja/' . $cbz['copn_usuario_abrio'].'/'.$cbz['copn_id'] ?>"  class="btn btn-primary" > <i class="fa fa-eye" aria-hidden="true"></i> </a>
+
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -94,7 +98,9 @@ if ($rutas[1] == 'cobranza') :
                             <td><?php echo $cbz['cja_nombre'] ?></td>
                             <td><?php echo number_format($cbz['copn_saldo'], 2) ?></td>
                             <td><?php echo $cbz['copn_registro'] ?></td>
-                            <td> <a target="_blank" href="<?php echo HTTP_HOST . 'app/report/reporte-ventas-usuario.php?copn_id=' . $cbz['copn_id']  ?>" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a> </td>
+                            <td>
+                                <a target="_blank" href="<?php echo HTTP_HOST . 'app/report/reporte-ventas-usuario.php?copn_id=' . $cbz['copn_id']  ?>" class="btn btn-outline-primary"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
