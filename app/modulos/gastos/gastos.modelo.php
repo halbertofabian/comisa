@@ -282,13 +282,18 @@ class GastosModelo
     public static function mdlAgregarGastoGasEmpleado($gtsg)
     {
         try {
-            $sql = "INSERT INTO tbl_gastos_gasolina_gtsg (gtsg_usuario_registro, gtsg_usuario_responsable, gtsg_monto, gtsg_fecha_registro) VALUES(?,?,?,?)";
+            $sql = "INSERT INTO tbl_gastos_gasolina_gtsg (gtsg_usuario_registro,gtsg_usuario_responsable,
+            gtsg_vehiculo_placas,gtsg_precio_litro,gtsg_cantidad_litros,gtsg_monto,gtsg_fecha_registro,gtsg_kilometraje) VALUES(?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $gtsg['gtsg_usuario_registro']);
             $pps->bindValue(2, $gtsg['gtsg_usuario_responsable']);
-            $pps->bindValue(3, $gtsg['gtsg_cantidad']);
-            $pps->bindValue(4, $gtsg['gtsg_fecha_registro']);
+            $pps->bindValue(3, $gtsg['gtsg_vehiculo_placas']);
+            $pps->bindValue(4, $gtsg['gtsg_precio_litro']);
+            $pps->bindValue(5, $gtsg['gtsg_cantidad_litros']);
+            $pps->bindValue(6, $gtsg['gtsg_monto']);
+            $pps->bindValue(7, $gtsg['gtsg_fecha_registro']);
+            $pps->bindValue(8, $gtsg['gtsg_kilometraje']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

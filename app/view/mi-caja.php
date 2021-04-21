@@ -467,28 +467,32 @@
                             foreach ($empleados as $key => $usr) :
                             ?>
                                 <option value="<?php echo $usr['usr_id'] ?>">
-                                <?php echo $usr['usr_nombre'] ?><span hidden>hg</span> 
+                                    <?php echo $usr['usr_nombre'] . "/" . $usr['usr_vehiculo'] ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                        <span style="color: red;">hg</span> 
+
                     </div>
                     <div class="form-group">
                         <label for="gtsg_placas_v">Vehiculo</label>
-                        <input type="text" name="gtsg_placas_v" id="gtsg_placas_v" class="form-control inputN">
+                        <input type="text" name="gtsg_placas_v" id="gtsg_placas_v" class="form-control " required>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4 col-12">
                             <label for="gtsg_pxl">Precio Litro</label>
-                            <input type="text" name="gtsg_pxl" id="gtsg_pxl" class="form-control inputN">
+                            <input type="text" name="gtsg_pxl" id="gtsg_pxl" class="form-control inputN" required>
                         </div>
                         <div class="form-group col-md-4 col-12">
                             <label for="gtsg_cantidad">Cantidad</label>
-                            <input type="text" name="gtsg_cantidad" id="gtsg_cantidad" class="form-control inputN">
+                            <input type="text" name="gtsg_cantidad" id="gtsg_cantidad" class="form-control inputN" required>
                         </div>
                         <div class="form-group col-md-4 col-12">
                             <label for="gtsg_montoApagar">Monto a pagar</label>
-                            <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN" readonly>
+                            <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN" readonly required>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="gtsg_kilometraje">Kilometraje</label>
+                            <input type="text" name="gtsg_kilometraje" id="gtsg_kilometraje" class="form-control " >
                         </div>
                     </div>
 

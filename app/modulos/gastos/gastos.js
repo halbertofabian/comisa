@@ -228,28 +228,49 @@ $(".tablaCategorias tbody").on("click", "button.btnEliminarCategoria", function 
 })
 
 $("#gtsg_pxl").on("keyup", function () {
-    calculargastoGasolina();  
+    calculargastoGasolina();
 })
 $("#gtsg_cantidad").on("keyup", function () {
-    calculargastoGasolina();  
+    calculargastoGasolina();
 })
 function calculargastoGasolina() {
-    var gtsg_precio_litro=$("#gtsg_pxl").val();
-    var gtsg_cantidad_litro=$("#gtsg_cantidad").val();
-     $("#gtsg_montoApagar").val(gtsg_precio_litro * gtsg_cantidad_litro);
+    var gtsg_precio_litro = $("#gtsg_pxl").val();
+    var gtsg_cantidad_litro = $("#gtsg_cantidad").val();
+    $("#gtsg_montoApagar").val(gtsg_precio_litro * gtsg_cantidad_litro);
 }
+
+$("#gtsg_usuario").on("change", function () {
+    var vehiculo = $("#gtsg_usuario option:selected").text();
+    var tmp = vehiculo.split("/"); //retorna un array
+    //console.log(tmp);
+    var num = tmp[1];
+    $("#gtsg_placas_v").val(num.trim());
+
+})
 
 $("#btnGuardarGastoGas").on("click", function () {
     var gtsg_usuario = $("#gtsg_usuario").val()
-    var gtsg_cantidad = Number($("#gtsg_cantidad").val())
+    var vehiculo = $("#gtsg_placas_v").val();
+    var gtsg_pxl = $("#gtsg_pxl").val();
+    var gtsg_cantidad = $("#gtsg_cantidad").val();
+    var gtsg_montoApagar = $("#gtsg_montoApagar").val();
+    var gtsg_kilometraje = $("#gtsg_kilometraje").val();
+
+
+
 
     var errormsj = "";
 
     if (gtsg_usuario == "") {
-        errormsj += "Necesita seleccionar un usuario \n";
+        errormsj += "* Necesita seleccionar un usuario \n";
+    }
+    if (vehiculo == "") {
+        errormsj += "* Verifica que el vehiculo este correcto \n";
+    } if (gtsg_pxl <= "") {
+        errormsj += "* Introduce un precio mayor a 0 \n";
     }
     if (gtsg_cantidad <= 0) {
-        errormsj += "Necesita ingresar una cantidad mayor a 0 \n";
+        errormsj += "* Necesita ingresar una cantidad mayor a 0 \n";
     }
 
     if (errormsj != "") {
@@ -261,7 +282,7 @@ $("#btnGuardarGastoGas").on("click", function () {
 
     swal({
         title: "¿Estás seguro de agregar gasto de gasolina a " + $('select[name="gtsg_usuario"] option:selected').text() + " ?",
-        text: "  CANTIDAD: " + gtsg_cantidad,
+        text: "  VEHICULO: " + vehiculo + "\n PRECIO L:$ " + gtsg_pxl + "\n CANTIDAD:" + gtsg_cantidad + "L \n TOTAL A PAGAR:$" + gtsg_montoApagar + "\n KILOMETRAJE:" + gtsg_kilometraje,
         icon: "warning",
         buttons: ["No, cancelar", "Si, confirmar "],
         dangerMode: false,
@@ -270,9 +291,13 @@ $("#btnGuardarGastoGas").on("click", function () {
         .then((willDelete) => {
             if (willDelete) {
                 var datos = new FormData();
+                datos.append("gtsg_usuario_responsable", gtsg_usuario)
+                datos.append("gtsg_vehiculo_placas", vehiculo)
+                datos.append("gtsg_precio_litro", gtsg_pxl)
+                datos.append("gtsg_cantidad_litros", gtsg_cantidad)
+                datos.append("gtsg_monto", gtsg_montoApagar)
 
-                datos.append("gtsg_usuario", gtsg_usuario)
-                datos.append("gtsg_cantidad", gtsg_cantidad)
+                datos.append("gtsg_kilometraje", gtsg_kilometraje)
                 datos.append("btnGuardarGastoGas", true)
 
 
@@ -295,8 +320,13 @@ $("#btnGuardarGastoGas").on("click", function () {
 
                         if (res.status) {
                             stopLoadButton("Guardar")
-                            $("#gtsg_usuario").val("")
-                            $("#gtsg_cantidad").val("")
+
+                            $("#gtsg_usuario").val("");
+                            $("#gtsg_placas_v").val("");
+                            $("#gtsg_pxl").val("");
+                            $("#gtsg_cantidad").val("");
+                            $("#gtsg_montoApagar").val("");
+                            $("#gtsg_kilometraje").val("");
                             toastr.success(res.mensaje, "¡Muy bien!")
 
                             var flujo_usr = $("#flujo_usr").val();

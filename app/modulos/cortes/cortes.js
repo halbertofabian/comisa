@@ -242,15 +242,15 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
 
             $("#tbodyGastos").html(datos);
 
-            $("#tgts_efectivo").html(tgts_efectivo);
-            $("#tgts_banco").html(tgts_banco);
+            $("#tgts_efectivo").html(tgts_efectivo.toFixed(2));
+            $("#tgts_banco").html(tgts_banco.toFixed(2));
 
-            $("#tgts_efectivo_input").val(tgts_efectivo);
-            $("#tgts_banco_input").val(tgts_banco);
+            $("#tgts_efectivo_input").val(tgts_efectivo.toFixed(2));
+            $("#tgts_banco_input").val(tgts_banco.toFixed(2));
 
             var totalEfectivo = $("#igs_efectivo_input").val() - $("#tgts_efectivo_input").val()
-            $("#total_efectivo_input").val(totalEfectivo)
-            $("#total_efectivo").html(totalEfectivo)
+            $("#total_efectivo_input").val(totalEfectivo.toFixed(2))
+            $("#total_efectivo").html(totalEfectivo.toFixed(2))
             $("#copn_ingreso_efectivo").val(totalEfectivo)
             $("#copn_saldo").val(totalEfectivo)
 
@@ -267,7 +267,9 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
 
             $("#total_gts").html(Number($("#tgts_efectivo_input").val()) + Number($("#tgts_banco_input").val()))
 
-            $("#total").html(Number(totalEfectivo) + Number(totalBanco))
+            var aux=Number(totalEfectivo) + Number(totalBanco)
+            $("#total").html(aux.toFixed(2))
+
 
         }
     })

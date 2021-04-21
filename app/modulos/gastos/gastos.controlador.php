@@ -133,12 +133,17 @@ class GastosControlador
     {
         if (isset($_POST['btnGuardarGastoGas'])) {
             $_POST['gtsg_usuario_registro'] = $_SESSION['session_usr']['usr_id'];
-            $_POST['gtsg_usuario_responsable'] = $_POST['gtsg_usuario'];
+            $_POST['gtsg_usuario_responsable'] = $_POST['gtsg_usuario_responsable'];
+            $_POST[' gtsg_vehiculo_placas'] = $_POST['gtsg_vehiculo_placas'];
+            $_POST['gtsg_precio_litro'] = $_POST['gtsg_precio_litro'];
+            $_POST['gtsg_cantidad_litros'] = str_replace(",", "", $_POST['gtsg_cantidad_litros']);
+            $_POST['gtsg_monto'] = $_POST['gtsg_monto'];
             $_POST['gtsg_fecha_registro'] = FECHA;
-            $_POST['gtsg_cantidad'] = str_replace(",", "", $_POST['gtsg_cantidad']);
+            $_POST['gtsg_kilometraje'] = $_POST['gtsg_kilometraje'];
 
-            $guardar = GastosModelo::mdlAgregarGastoGasEmpleado($_POST);
             
+            $guardar = GastosModelo::mdlAgregarGastoGasEmpleado($_POST);
+
 
             if ($guardar) {
                 // Cargar el prestamo a caja principal
@@ -166,7 +171,7 @@ class GastosControlador
 
 
 
-                $_POST['tgts_cantidad'] =   str_replace(",", "", $_POST['gtsg_cantidad']);
+                $_POST['tgts_cantidad'] =   str_replace(",", "", $_POST['gtsg_monto']);
                 $_POST['tgts_fecha_gasto'] = FECHA;
 
 
@@ -174,7 +179,7 @@ class GastosControlador
                 $_POST['tgts_usuario_responsable'] = $_SESSION['session_usr']['usr_id'];
                 $_POST['tgts_categoria'] = 42;
 
-                $empleado = UsuariosModelo::mdlMostrarUsuarios($_POST['gtsg_usuario']);
+                $empleado = UsuariosModelo::mdlMostrarUsuarios($_POST['gtsg_usuario_responsable']);
 
                 $_POST['tgts_concepto'] = "del empleado <strong>" . $empleado['usr_nombre'] . '</strong>';
 
