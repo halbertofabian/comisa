@@ -88,6 +88,25 @@ class AppControlador
         );
     }
 
+    public static function ObtenerListaBlancaAdministración()
+    {
+        return array(
+            
+            'mi-caja',
+            'cajas',
+            'reportes-caja',
+            'comisiones',
+            'sueldos',
+            'usuarios',
+            'ingresos',
+            'listar-gastos',
+            'salir',
+            'caja-ventas',
+            'caja-cobranza',
+            'ver-caja'
+        );
+    }
+
     public static function obtenerPerfiles()
     {
         return array(
@@ -722,6 +741,112 @@ class AppControlador
                             'label' => 'Resumen',
                             'href' => 'gastos_gasolina'
                         ]
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+        );
+    }
+    public static function obtnerMenuGefeAdministracion()
+    {
+        return array(
+            // '1' => array(
+            //     [
+            //         'label' => 'Cobranza',
+            //         'icon' => '<i class="fas fa-funnel-dollar "></i>',
+            //         'href' => '#home',
+            //         'modulos' =>
+            //         array(
+
+            //             [
+            //                 'icon' => '',
+            //                 'label' => 'Flujo de caja',
+            //                 'href' => 'flujo-caja'
+            //             ],
+            //             [
+            //                 'icon' => '',
+            //                 'label' => 'Lista de cajas / Nueva caja',
+            //                 'href' => 'cajas'
+            //             ],
+
+            //             //Aqui más item de menu
+            //         ),
+            //     ]
+            // ),
+            '2' => array(
+                [
+                    'label' => 'Comisiones y sueldos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Comisiones',
+                            'href' => 'comisiones'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Sueldos',
+                            'href' => 'sueldos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '3' => array(
+                [
+                    'label' => 'Trabajadores',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar usuarios',
+                            'href' => 'usuarios'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Alta de usuario',
+                            'href' => 'usuarios/new'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '4' => array(
+                [
+                    'label' => 'Gestión de ingresos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar ingresos',
+                            'href' => 'ingresos'
+                        ],
+
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '5' => array(
+                [
+                    'label' => 'Gestión de gastos',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar gastos',
+                            'href' => 'listar-gastos'
+                        ],
 
                         // Aqui más item de menu
                     ),

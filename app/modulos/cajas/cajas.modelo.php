@@ -429,14 +429,15 @@ class CajasModelo
         }
     }
 
-    public static function mdlConsultarGastosCajaEfectivo($tgts_id_corte2)
+    public static function mdlConsultarGastosCajaEfectivo($tgts_id_corte2,$tgts_tipo = "COBRANZA")
     {
         try {
-            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'COBRANZA' ";
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = ? ";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $tgts_id_corte2);
+            $pps->bindValue(2, $tgts_tipo);
             $pps->execute();
             return $pps->fetchAll();
         } catch (PDOException $th) {
@@ -506,14 +507,15 @@ class CajasModelo
         }
     }
 
-    public static function mdlConsultarGastosVariosCajaEfectivo($tgts_id_corte2)
+    public static function mdlConsultarGastosVariosCajaEfectivo($tgts_id_corte2,$tgts_tipo = "VARIOS-COBRANZA")
     {
         try {
-            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = 'VARIOS-COBRANZA' ";
+            $sql = "SELECT tgts.tgts_id, tgts.tgts_concepto,tgts.tgts_fecha_gasto,tgts.tgts_cantidad,tgts.tgts_mp,tgts.tgts_usuario_registro,gts.gts_nombre,usr.usr_nombre FROM tbl_gastos_tgts tgts JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria JOIN tbl_usuarios_usr usr ON usr.usr_id = tgts.tgts_usuario_responsable WHERE tgts_id_corte2 = ? AND tgts_mp = 'EFECTIVO' AND tgts.tgts_tipo = ? ";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $tgts_id_corte2);
+            $pps->bindValue(2, $tgts_tipo);
             $pps->execute();
             return $pps->fetchAll();
         } catch (PDOException $th) {

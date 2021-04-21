@@ -2,7 +2,7 @@
 
     <!-- LOGO -->
     <div class="topbar-left">
-        <a href="<?php HTTP_HOST ?>" class="logo">
+        <a href="<?php echo HTTP_HOST ?>" class="logo">
             <!-- <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/logo.png" alt="" height="20" class="logo-large"> -->
             <!-- <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/logo-sm.png" alt="" height="22" class="logo-sm"> -->
             <H5 class="logo-large" style="color: #FFF; margin-top: 10px;"><?php echo TITULO_APP ?></H5>
@@ -23,7 +23,7 @@
         </div> -->
 
         <ul class="navbar-right d-flex list-inline float-right mb-0">
-            <li class="list-inline-item dropdown notification-list flags-dropdown d-none d-sm-inline-block">
+            <li class="list-inline-item dropdown notification-list flags-dropdown  d-sm-inline-block">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <!-- <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/flags/us_flag.jpg" alt="" class="flag-img"> -->
                      <?php echo $_SESSION['session_suc']['scl_nombre'] ?><!-- <i class="mdi mdi-chevron-down"></i> -->
@@ -43,7 +43,7 @@
             <li class="list-inline-item dropdown notification-list">
                 <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="<?php echo HTTP_HOST . 'app/' ?>assets/images/users/avatar-6.jpg" alt="user" class="rounded-circle">
-                    <span class="d-none d-md-inline-block ml-1"><?php echo $_SESSION['session_usr']['usr_nombre'] ?><i class="mdi mdi-chevron-down"></i> </span>
+                    <span class=" d-md-inline-block ml-1"><?php echo $_SESSION['session_usr']['usr_nombre'] ?><i class="mdi mdi-chevron-down"></i> </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown">
                     <!-- <a class="dropdown-item" href="#"><i class="dripicons-user text-muted"></i> Profile</a>

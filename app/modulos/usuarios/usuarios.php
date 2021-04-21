@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label for="usr_correo">Correo electrónico</label>
                                 <input type="email" name="usr_correo" id="usr_correo" class="form-control" placeholder="Escribe el correo electrónico" value="<?php echo $usr['usr_correo'] ?>">
-                                <input type="hidden" name="usr_correo_v" id="usr_correo_v" class="form-control"  value="<?php echo $usr['usr_correo'] ?>">
+                                <input type="hidden" name="usr_correo_v" id="usr_correo_v" class="form-control" value="<?php echo $usr['usr_correo'] ?>">
                             </div>
                         </div>
                         <div class="col-md-4 col-12">
@@ -234,6 +234,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
+                                        <th>Deuda ext.</th>
                                         <th>Teléfono</th>
                                         <th>Correo electrónico</th>
                                         <th>Rol</th>
@@ -252,6 +253,7 @@
                                     ?>
                                         <tr>
                                             <td><?php echo $usr['usr_nombre'] ?></td>
+                                            <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
                                             <td><?php echo $usr['usr_telefono'] ?></td>
                                             <td><?php echo $usr['usr_correo'] ?></td>
                                             <td><?php echo $usr['usr_rol'] ?></td>
@@ -268,7 +270,7 @@
                                                         <!-- <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button> -->
                                                         <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
                                                         <div class="dropdown-divider"></div>
-                                                       
+
                                                     </div>
                                                 </div>
                                             </td>

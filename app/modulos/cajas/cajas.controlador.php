@@ -146,8 +146,8 @@ class CajasControlador
 
             $bandera_saldo = $_POST['bandera_saldo'];
 
-            
-            
+
+
 
             if ($bandera_saldo == 2) {
 
@@ -156,7 +156,7 @@ class CajasControlador
                 $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
 
 
-                $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario( $_POST['usr_id']);
+                $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_POST['usr_id']);
 
                 $_POST['igs_mp'] = 'EFECTIVO';
 
@@ -199,9 +199,9 @@ class CajasControlador
                     );
                 }
                 $tgts_id_corte = $_POST['usr_caja'];
-               
-                
-               
+
+
+
                 if ($tgts_id_corte == 0) {
                     return array(
                         'status' => false,
@@ -231,13 +231,13 @@ class CajasControlador
 
                 $_POST['tgts_mp'] = "EFECTIVO";
                 $_POST['tgts_nota'] = "";
-                
 
-               $gts =  GastosModelo::mdlCrearGasto($_POST);
+
+                $gts =  GastosModelo::mdlCrearGasto($_POST);
             }
 
 
-            
+
 
 
             if ($_POST['usr_caja'] == $_SESSION['session_usr']['usr_caja']) {
@@ -294,9 +294,13 @@ class CajasControlador
 
             if ($_POST['copn_tipo_caja'] == "CAJA_COBRADOR") {
                 $redireccionamiento = HTTP_HOST . 'flujo-caja';
+            } elseif ($_POST['copn_tipo_caja'] == "CAJA_VENDEDOR") {
+                $redireccionamiento = HTTP_HOST . 'flujo-caja';
             } elseif ($_POST['copn_tipo_caja'] == "CAJA_COBRANZA_G") {
                 $redireccionamiento = HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $crt_id;
-            }else{
+            } elseif ($_POST['copn_tipo_caja'] == "CAJA_VENDEDOR_G") {
+                $redireccionamiento = HTTP_HOST . 'app/report/reporte-ventas-usuario.php?copn_id=' . $crt_id;
+            } else {
                 $redireccionamiento = HTTP_HOST . 'app/report/reporte-cobranza-usuario.php?copn_id=' . $crt_id;
             }
 

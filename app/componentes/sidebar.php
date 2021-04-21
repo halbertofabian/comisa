@@ -5,7 +5,7 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu" id="side-menu">
-                <li class="menu-title">MODULOS</li>
+                <li class="menu-title"><?php echo $_SESSION['session_usr']['usr_rol'] ?></li>
                 <?php if ($_SESSION['session_usr']['usr_rol'] == "Jefe de cobranza") : ?>
                     <li>
                         <a href="<?php echo HTTP_HOST . 'mi-caja' ?>" class="waves-effect">
@@ -27,12 +27,16 @@
                     </li>
                 <?php endif; ?>
                 <?php
+                $menu ="";
                 if ($_SESSION['session_usr']['usr_rol'] == "Administrador") {
                     $menu = AppControlador::obtnerMenuAdmin();
                 } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de cobranza") {
                     $menu = AppControlador::obtnerMenuGefeCobranza();
                 } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de ventas") {
                     $menu = AppControlador::obtnerMenuGefeVentas();
+                }
+                elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") {
+                    $menu = AppControlador::obtnerMenuGefeAdministracion();
                 }
 
                 //preArray($menu);
