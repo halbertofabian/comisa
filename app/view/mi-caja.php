@@ -488,12 +488,12 @@
                             <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN" readonly>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <button class="btn btn-primary btn-load" id="btnGuardarGastoGas">Guardar</button>
                     </div>
-                    
-    
+
+
                 </div>
             </div>
         </div>
@@ -516,37 +516,37 @@
                     <tbody>
                         <tr>
                             <td><input type="text" id="d_1000" class="form-control inputN" value="1000" readonly></td>
-                            <td><input type="text" id="c_1000" class="form-control inputN tabCalculo"></td>
+                            <td><input type="text" name="c_1000" id="c_1000" class="form-control inputN tabCalculo"></td>
                             <td><input type="text" id="t_1000" class="form-control inputN" readonly></td>
                         </tr>
                         <tr>
                             <td><input type="text" id="d_500" class="form-control inputN" value="500" readonly></td>
-                            <td><input type="text" id="c_500" class="form-control inputN tabCalculo"></td>
+                            <td><input type="text" name="c_500" id="c_500" class="form-control inputN tabCalculo"></td>
                             <td><input type="text" id="t_500" class="form-control inputN" readonly></td>
                         </tr>
                         <tr>
                             <td><input type="text" id="d_200" class="form-control inputN" value="200" readonly></td>
-                            <td><input type="text" id="c_200" class="form-control inputN tabCalculo"></td>
+                            <td><input type="text" name="c_200" id="c_200" class="form-control inputN tabCalculo"></td>
                             <td><input type="text" id="t_200" class="form-control inputN" readonly></td>
                         </tr>
                         <tr>
                             <td><input type="text" id="d_100" class="form-control inputN" value="100" readonly></td>
-                            <td><input type="text" id="c_100" class="form-control inputN tabCalculo"></td>
+                            <td><input type="text" name="c_100" id="c_100" class="form-control inputN tabCalculo"></td>
                             <td><input type="text" id="t_100" class="form-control inputN" readonly></td>
                         </tr>
                         <tr>
                             <td><input type="text" id="d_50" class="form-control inputN" value="50" readonly></td>
-                            <td><input type="text" id="c_50" class="form-control inputN tabCalculo"></td>
+                            <td><input type="text" name="c_50" id="c_50" class="form-control inputN tabCalculo"></td>
                             <td><input type="text" id="t_50" class="form-control inputN" readonly></td>
                         </tr>
                         <tr>
                             <td><input type="text" id="d_20" class="form-control inputN" value="20" readonly></td>
-                            <td><input type="text" id="c_20" class="form-control inputN tabCalculo"></td>
+                            <td><input type="text" name="c_20" id="c_20" class="form-control inputN tabCalculo"></td>
                             <td><input type="text" id="t_20" class="form-control inputN" readonly></td>
                         </tr>
                         <tr>
                             <td class="text-center"> <strong>MONEDAS</strong> </td>
-                            <td colspan="2"><input type="text" id="t_moneda" class="form-control inputN tabCalculo"></td>
+                            <td colspan="2"><input type="text" id="t_moneda" name="c_moneda" class="form-control inputN tabCalculo"></td>
                         </tr>
                         <tr>
 
@@ -716,6 +716,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title text-success">Caja abierta</h4>
+                                    <input type="hidden" name="copn_tabulador" id="copn_tabulador">
 
                                     <input type="hidden" id="cja_id_caja_input" name="cja_id_caja">
                                     <input type="hidden" id="usr_caja_input" name="usr_caja">

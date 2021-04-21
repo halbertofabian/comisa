@@ -16,7 +16,7 @@ $("#formCerrarCaja").on("submit", function (e) {
 
     e.preventDefault();
 
-   
+
     var copn_ingreso_efectivo = Number($("#copn_ingreso_efectivo_usuario").val())
     var copn_ingreso_banco = Number($("#copn_ingreso_banco").val())
 
@@ -30,7 +30,7 @@ $("#formCerrarCaja").on("submit", function (e) {
 
     var copn_debe = 0;
     var copn_favor = 0;
-    var bandera_saldo = 1 ;
+    var bandera_saldo = 1;
 
     if (copn_diferencia_efectivo < 0) {
         copn_favor = copn_diferencia_efectivo * -1;
@@ -109,14 +109,14 @@ $("#formCerrarCaja").on("submit", function (e) {
                                         })
                                             .then((willDelete) => {
                                                 if (willDelete) {
-                                                    if($("#copn_tipo_caja").val() == "CAJA_COBRANZA_G" ||$("#copn_tipo_caja").val() == "CAJA_VENDEDOR_G" ){
+                                                    if ($("#copn_tipo_caja").val() == "CAJA_COBRANZA_G" || $("#copn_tipo_caja").val() == "CAJA_VENDEDOR_G") {
                                                         window.open(res.pagina, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=200,left=200,width=1250,height=700");
                                                         location.href = urlApp + 'mi-caja'
-                                                    }else{
+                                                    } else {
                                                         location.href = res.pagina
                                                     }
 
-                                                    
+
                                                     // window.open(res.pagina, "_blank")
                                                 } else {
                                                     location.href = res.pagina
@@ -145,7 +145,7 @@ $("#formCerrarCaja").on("submit", function (e) {
 
 $(".table_tabulador tbody").on("keyup", ".tabCalculo", function () {
 
-
+    var arrayCantidades = [];
     // 1000
     var sumaTab = 0;
     var d_1000 = Number($("#d_1000").val())
@@ -185,6 +185,23 @@ $(".table_tabulador tbody").on("keyup", ".tabCalculo", function () {
     $("#copn_ingreso_efectivo_usuario").val(sumaTab)
     calcularDif()
 
+    var d_cantidades =
+    {
+        c_1000: c_1000,
+        c_500: c_500,
+        c_200: c_200,
+        c_100: c_100,
+        c_50: c_50,
+        c_20: c_20,
+        t_moneda:t_moneda
+    };
+
+    arrayCantidades.push(d_cantidades);
+
+    $("#copn_tabulador").val(JSON.stringify(arrayCantidades));
+
+    console.log(arrayCantidades);
+
 })
 
 
@@ -192,7 +209,7 @@ $("#copn_ingreso_efectivo_usuario").on("keyup", function () {
     calcularDif()
 })
 
-function calcularDif(){
+function calcularDif() {
     var copn_ingreso_efectivo = Number($("#copn_ingreso_efectivo").val())
     var copn_ingreso_efectivo_usuario = Number($("#copn_ingreso_efectivo_usuario").val())
 

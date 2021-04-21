@@ -243,7 +243,7 @@ class CajasModelo
         try {
             //code...
             $sql = "UPDATE tbl_caja_open_copn SET copn_usuario_cerro = ?, copn_ingreso_efectivo = ?, 
-            copn_ingreso_banco = ?, copn_efectivo_real = ?, copn_banco_real = ?, copn_fecha_cierre = ?, copn_saldo = ?, copn_registro = ?, copn_tipo_caja = ? WHERE copn_id = ? ";
+            copn_ingreso_banco = ?, copn_efectivo_real = ?, copn_banco_real = ?, copn_fecha_cierre = ?, copn_saldo = ?, copn_registro = ?, copn_tipo_caja = ?, copn_tabulador = ? WHERE copn_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $copn['copn_usuario_cerro']);
@@ -255,7 +255,8 @@ class CajasModelo
             $pps->bindValue(7, $copn['copn_saldo']);
             $pps->bindValue(8, $copn['copn_registro']);
             $pps->bindValue(9, $copn['copn_tipo_caja']);
-            $pps->bindValue(10, $copn['copn_id']);
+            $pps->bindValue(10, $copn['copn_tabulador']);
+            $pps->bindValue(11, $copn['copn_id']);
 
 
 

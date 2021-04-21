@@ -65,10 +65,12 @@ if (isset($_GET['copn_id'])) {
     $ruta = HTTP_HOST;
     $rutaImg = $ruta . 'app/assets/images/sistema/comisa/logo.jpg';
 
-    preArray($_GET['copn_id']);
+
     $caja = CajasModelo::mdlMostrarCajasCobranzaById($_GET['copn_id']);
 
-    
+    $copn_tabulador = json_decode($caja['$copn_tabulador'], true);
+
+
 
     $igs_c = CajasModelo::mdlConsultarIngresosCajaEfectivo($caja['copn_id'], 'COBRANZA');
 
@@ -101,7 +103,7 @@ if (isset($_GET['copn_id'])) {
 
     $gts_sue = CajasModelo::mdlConsultarGastosSueldosCajaEfectivo($caja['copn_id']);
 
-    
+
 
 
     $cja_nombre = strtoupper($caja['cja_nombre']);
@@ -888,7 +890,7 @@ EOF;
         </table>
   
 EOF;
-       // $pdf->writeHTMLCell(0, 0, '', '', $body, 0, 1, 0, true, '', true);
+        // $pdf->writeHTMLCell(0, 0, '', '', $body, 0, 1, 0, true, '', true);
     }
 
 
@@ -978,7 +980,7 @@ EOF;
         
   
 EOF;
-     //   $pdf->writeHTMLCell(0, 0, '', '', $gastos_efectivo_body, 0, 1, 0, true, '', true);
+        //   $pdf->writeHTMLCell(0, 0, '', '', $gastos_efectivo_body, 0, 1, 0, true, '', true);
     }
     $gts_ventas_efectivo_2 = number_format($gts_ventas_efectivo, 2);
     $footer5 = <<<EOF
@@ -1005,7 +1007,7 @@ EOF;
 EOF;
 
     // Print text using writeHTMLCell()
-   // $pdf->writeHTMLCell(0, 0, '', '', $footer5, 0, 1, 0, true, '', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', $footer5, 0, 1, 0, true, '', true);
 
     /////
 
@@ -1109,7 +1111,7 @@ EOF;
 
     // SUELDOS EL
 
-  
+
     $header10 = <<<EOF
     
 <table style="border: 1px solid #000">
@@ -1375,6 +1377,13 @@ EOF;
             
         </thead>
     </table>
+
+    <table>
+        <thead>
+        <tr></tr>
+        </thead>
+    </table>
+
     
 EOF;
 

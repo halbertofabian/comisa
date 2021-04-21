@@ -288,6 +288,11 @@ class CajasControlador
             $_POST['copn_banco_real'] = $totalBanco;
             $_POST['copn_fecha_cierre'] = FECHA;
 
+            // if ($_POST['copn_tabulador'] != "") {
+            //     $_POST['copn_tabulador'] = json_encode($_POST['copn_tabulador'],2);
+            // }
+
+
 
 
             $ActaulizarCajaCierre = CajasModelo::mdlCerrarCaja($_POST);

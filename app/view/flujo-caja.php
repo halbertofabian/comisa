@@ -520,7 +520,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title text-success">Caja abierta</h4>
-
+                                    <input type="hidden" name="copn_tabulador" id="copn_tabulador">
                                     <input type="hidden" id="cja_id_caja_input" name="cja_id_caja">
                                     <input type="hidden" id="usr_caja_input" name="usr_caja">
                                     <input type="hidden" id="usr_id_input" name="usr_id">
