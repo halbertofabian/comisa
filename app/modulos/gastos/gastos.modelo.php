@@ -304,4 +304,6 @@ class GastosModelo
             $con = null;
         }
     }
+
+    
 }

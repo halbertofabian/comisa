@@ -65,11 +65,13 @@
                                                 $usuario_abrio = CajasModelo::mdlMostrarUsuarioCajaUso($cja['cja_copn_id']);
                                                 ?>
                                                     <!-- <a href="<?php echo HTTP_HOST . 'cortes/view-r/' . $cja['cja_copn_id'] ?>" class="btn btn-success">Abierta</a> -->
-                                                    <div class="alert alert-success" role="alert">
+                                                    <div class=" alert bg-success text-white" role="alert">
                                                         <strong>CAJA EN USO POR:</strong>
                                                         <p><?php echo  strtoupper($usuario_abrio['usr_nombre']) ?></p>
+                                                        <p>Fecha apertuta:</p>
+                                                        <p><?php echo  fechaCastellano($usuario_abrio['copn_fecha_abrio']) ?></p>
                                                     </div>
-                                                    <div class="alert alert-warning" role="alert">
+                                                    <div class="alert bg-warning" role="alert">
                                                         <strong>Nota:</strong>
                                                         <p>No olvides cerrar su caja si ya le recibiste.</p>
                                                     </div>

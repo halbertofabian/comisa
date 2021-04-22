@@ -91,6 +91,9 @@ if (isset($_GET['copn_id'])) {
     $igs_prestamoCP = CajasModelo::mdlConsultarPrestamoCPCajaCobranzaEfectivo($caja['copn_id']);
 
 
+    
+
+
 
     $igs_abonos = CajasModelo::mdlConsultarIngresosCajaEfectivo($caja['copn_id'], 'ABONOS_COBRANZA');
 

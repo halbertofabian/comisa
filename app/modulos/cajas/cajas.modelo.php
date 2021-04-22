@@ -550,13 +550,30 @@ class CajasModelo
     public static function mdlMostrarUsuarioCajaUso($cja_copn_id)
     {
         try {
-            $sql = "SELECT usr.usr_nombre FROM tbl_caja_open_copn copn JOIN tbl_usuarios_usr usr ON  copn.copn_usuario_abrio = usr.usr_id WHERE copn.copn_id = ? ";
+            $sql = "SELECT usr.usr_nombre,copn.copn_fecha_abrio FROM tbl_caja_open_copn copn JOIN tbl_usuarios_usr usr ON  copn.copn_usuario_abrio = usr.usr_id WHERE copn.copn_id = ? ";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cja_copn_id);
             $pps->execute();
             return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlReporteGasolinaCaja($copn_id)
+    {
+        try {
+            $sql = "SELECT gtsg.*,usr.usr_nombre FROM tbl_gastos_gasolina_gtsg gtsg JOIN tbl_usuarios_usr usr ON gtsg.gtsg_usuario_responsable = usr.usr_id WHERE gtsg_copn_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $copn_id);
+            $pps->execute();
+            return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
             return false;

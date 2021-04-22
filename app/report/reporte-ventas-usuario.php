@@ -104,6 +104,7 @@ if (isset($_GET['copn_id'])) {
 
     
 
+    
 
     $cja_nombre = strtoupper($caja['cja_nombre']);
     $copn_fecha = fechaCastellano($caja['copn_fecha_cierre']);
