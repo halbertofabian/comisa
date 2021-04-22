@@ -57,12 +57,9 @@
                                     <div class="form-group">
                                         <label for="igs_tipo">TIPO DE INGRESO</label>
                                         <select class="form-control select2" name="igs_tipo" id="igs_tipo" required>
-                                            
-                                                <option selected>COBRANZA</option>
-                                                <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
-                                                
-                                            
 
+                                            <option selected>COBRANZA</option>
+                                            <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -121,48 +118,18 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
                             </div>
 
                             <div class="modal-footer">
-                                <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button> -->
+
                                 <button type="submit" class="btn btn-primary btn-load" name="btnAgregarIngreso">Registrar ingreso</button>
                             </div>
-                            <?php
-                            // $crearIngreso = new IngresosControlador();
-                            // $crearIngreso->ctrAgregarIngresos();
-
-                            ?>
                         </form>
                     </div>
 
                 </div>
             </div>
-            <!-- <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario registro</th>
-                                    <th>Fecha</th>
-                                    <th class="text-danger"> <strong>Monto</strong> </th>
-                                    <th>MP</th>
-                                    <th>Concepto</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyIngresos">
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
@@ -203,13 +170,9 @@
                                     <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
                                     <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
 
-                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
-                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="VENTAS">
-                                    <?php else : ?>
-                                        <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
-                                    <?php endif; ?>
+
+                                    <input type="hidden" name="tgts_tipo" id="tgts_tipo" value="COBRANZA">
+
 
 
                                 </div>
@@ -256,27 +219,6 @@
                 </div>
 
             </div>
-            <!-- <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Usuario registro</th>
-                                    <th>Fecha</th>
-                                    <th class="text-danger"> <strong>Monto</strong> </th>
-                                    <th>MP</th>
-                                    <th>Concepto</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbodyGastos">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
@@ -393,37 +335,6 @@
         </div>
 
     </div>
-
-    <!-- PRESTAMOS -->
-
-    <!-- <div class="col-md-6">
-
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Prestamos</h4>
-                <div class="form-group">
-                    <label for="pms_usuario">Empleado</label>
-                    <select class="form-control select2" name="pms_usuario" id="pms_usuario">
-                        <option value="">Seleccione a un empleado a prestar</option>
-                        <?php
-                        $empleados = UsuariosModelo::mdlMostrarUsuarios();
-                        foreach ($empleados as $key => $usr) :
-                        ?>
-                            <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="pms_cantidad">Cantidad</label>
-                    <input type="text" name="pms_cantidad" id="pms_cantidad" class="form-control inputN">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-load" id="btnGuardarPrestamo">Guardar</button>
-                </div>
-
-            </div>
-        </div>
-    </div> -->
 </div>
 
 <div class="div content-abrir-caja d-none">
@@ -494,21 +405,12 @@
                                     <input type="hidden" id="usr_id_input" name="usr_id">
                                     <input type="hidden" id="copn_id_input" name="copn_id">
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
-                                    <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
-                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
+
+                                    <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRADOR">
+                                    <input type="hidden" name="tgts_tipo" value="COBRANZA">
 
 
-                                    <?php elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_VENDEDOR">
-                                        <input type="hidden" name="tgts_tipo" value="VENTAS">
 
-
-                                    <?php else : ?>
-                                        <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="COBRANZA">
-                                        <input type="hidden" name="tgts_tipo" value="COBRANZA">
-
-                                    <?php endif; ?>
 
 
                                     <p class="card-text">Responsable <strong id="cja_responsable"> </strong> </p>
@@ -600,135 +502,7 @@
 
 
 
-<!-- Modal Ingresos-->
-<div class="modal fade" role="dialog" id="mdlIngresos">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdlIngresosLabel">Ingresos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" id="formIngreso">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="igs_usuario">Registrar ingreso para:</label>
-                                <input type="text" name="igs_usuario" id="igs_usuario" class="form-control" readonly>
-                                <input type="hidden" name="igs_usuario_responsable" id="igs_usuario_responsable">
-                            </div>
-                        </div>
-                        <input type="hidden" name="igs_ruta" id="igs_ruta">
 
-
-                        <div class="col-md-4 col-6">
-                            <div class="form-group">
-                                <label for="igs_monto">Ingreso</label>
-                                <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder="">
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="igs_concepto">Concepto:</label>
-                                <input type="text" name="igs_concepto" id="igs_concepto" class="form-control" placeholder="" required>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4 col-6">
-                            <label for="igs_mp">Método de pago</label>
-                            <select name="igs_mp" id="igs_mp" class="form-control">
-                                <option value="EFECTIVO">EFECTIVO</option>
-                                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
-                                <option value="DEPOSITO">DEPOSITO</option>
-                                <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
-                            </select>
-                        </div>
-
-
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                    <button type="submit" class="btn btn-primary" name="btnAgregarIngreso">Registrar ingreso</button>
-                </div>
-                <?php
-                // $crearIngreso = new IngresosControlador();
-                // $crearIngreso->ctrAgregarIngresos();
-
-                ?>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Gastos-->
-<div class="modal fade" role="dialog" id="mdlGastos">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="mdlGastosLabel">Gastos</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" id="formGasto">
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="form-group col-md-4 col-12">
-                            <label for="tgts_usuario_responsable">Registrar gasto para: </label>
-
-                            <input type="text" name="tgts_usuario" id="tgts_usuario" class="form-control" readonly>
-                            <input type="hidden" name="tgts_usuario_responsable" id="tgts_usuario_responsable">
-                        </div>
-                        <input type="hidden" name="tgts_ruta" id="tgts_ruta">
-
-
-                        <div class="form-group col-md-4 col-12">
-                            <label for="tgts_categoria">Categoría</label>
-                            <select name="tgts_categoria" id="tgts_categoria" class="form-control select2">
-                                <option value="">Elija una categoría</option>
-                            </select>
-                            <button type="button" class="btn btn-link float-right" data-toggle="modal" data-target="#mdlCategoria">
-                                Agregar nueva categoría
-                            </button>
-                        </div>
-                        <div class="form-group col-12 col-md-8">
-                            <label for="tgts_concepto">Concepto</label>
-                            <input type="text" name="tgts_concepto" id="tgts_concepto" class="form-control" placeholder="Escriba el concepto de este gasto">
-                        </div>
-                        <div class="form-group col-md-4 col-12">
-                            <label for="tgts_cantidad">Cantidad</label>
-                            <input type="text" name="tgts_cantidad" id="tgts_cantidad" class="form-control inputN" placeholder="0.00">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="tgts_mp">Método de pago</label>
-                            <select name="tgts_mp" id="tgts_mp" class="form-control">
-                                <option value="EFECTIVO">EFECTIVO</option>
-                                <option value="TRANSFERENCIA">TRANSFERENCIA</option>
-                                <option value="DEPOSITO">DEPOSITO</option>
-                                <option value="TARJETA">TARJETA DE CREDITO / DEBITO </option>
-                            </select>
-                        </div>
-                        <input type="hidden" name="tgts_nota">
-                        <!-- <div class="form-group col-12 col-md-8 d-none">
-                            <label for="tgts_nota">Nota</label>
-                            <textarea class="form-control area_larga" name="tgts_nota" id="tgts_nota" cols="30" rows="5"></textarea>
-                        </div> -->
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                    <button type="submit" class="btn btn-primary" name="btnGuardarGasto">Registrar gasto</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-</div>
 
 
 <div class="modal fade" role="dialog" id="mdlCategoria">

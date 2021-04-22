@@ -19,6 +19,22 @@
                             <i class="fa fa-home"></i> <span> MI CAJA VENTAS </span>
                         </a>
                     </li>
+                <?php elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") : ?>
+                    <li>
+                        <a href="<?php echo HTTP_HOST . 'mi-caja' ?>" class="waves-effect">
+                            <i class="fa fa-home"></i> <span> MI CAJA </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo HTTP_HOST . 'caja-cobranza' ?>" class="waves-effect">
+                            <i class="fa fa-home"></i> <span> CAJA COBRANZA </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo HTTP_HOST . 'caja-ventas' ?>" class="waves-effect">
+                            <i class="fa fa-home"></i> <span> CAJA VENTAS </span>
+                        </a>
+                    </li>
                 <?php else : ?>
                     <li>
                         <a href="<?php echo HTTP_HOST ?>" class="waves-effect">
@@ -27,15 +43,14 @@
                     </li>
                 <?php endif; ?>
                 <?php
-                $menu ="";
+                $menu = "";
                 if ($_SESSION['session_usr']['usr_rol'] == "Administrador") {
                     $menu = AppControlador::obtnerMenuAdmin();
                 } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de cobranza") {
                     $menu = AppControlador::obtnerMenuGefeCobranza();
                 } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de ventas") {
                     $menu = AppControlador::obtnerMenuGefeVentas();
-                }
-                elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") {
+                } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") {
                     $menu = AppControlador::obtnerMenuGefeAdministracion();
                 }
 
