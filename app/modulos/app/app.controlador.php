@@ -42,7 +42,8 @@ class AppControlador
             'comisiones',
             'reportes-caja',
             'sueldos',
-            'gastos_gasolina'
+            'gastos_gasolina',
+            'reporte-gasolina'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -85,7 +86,8 @@ class AppControlador
             'ingresos',
             'listar-gastos',
             'salir',
-            'gastos_gasolina'
+            'gastos_gasolina',
+            'reporte-gasolina'
         );
     }
 
@@ -743,6 +745,22 @@ class AppControlador
                             'href' => 'gastos_gasolina'
                         ]
 
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '6' => array(
+                [
+                    'label' => 'Resumen',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Reporte de gasolina',
+                            'href' => 'reporte-gasolina'
+                        ]
                         // Aqui más item de menu
                     ),
                 ]
