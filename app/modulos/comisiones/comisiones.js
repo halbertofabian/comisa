@@ -169,13 +169,9 @@ $("#igs_abono_deuda").on("keyup", function () {
 
     var igs_pago = Number(igs_Apgar) - Number(igs_abono_deuda);
 
-    if (igs_pago < 0) {
-        $("#igs_pagox").val("0.00");
+    $("#igs_pagox").val(igs_pago);
 
-    } else {
-        $("#igs_pagox").val(igs_pago);
-
-    }
+   
 
     var igs_nueva_deuda = $("#igs_nueva_deuda").val();
     var igs_deuda_ext = $("#igs_deuda_ext").val();
