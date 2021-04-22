@@ -161,7 +161,7 @@ $("#btnRepComision").on("click", function () {
 
 // })
 
-$("#igs_abono_deuda").on("keyup", function () {
+$("#igs_abono_deuda,#igs_Apagar").on("keyup", function () {
     //console.log("aquiii");
 
     var igs_Apgar = $("#igs_Apagar").val();
