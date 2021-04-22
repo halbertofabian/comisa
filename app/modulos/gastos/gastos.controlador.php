@@ -141,6 +141,8 @@ class GastosControlador
             $_POST['gtsg_fecha_registro'] = FECHA;
             $_POST['gtsg_kilometraje'] = $_POST['gtsg_kilometraje'];
 
+            $_POST['gtsg_copn_id'] = $_SESSION['session_usr']['usr_caja'];
+
             
             $guardar = GastosModelo::mdlAgregarGastoGasEmpleado($_POST);
 
@@ -185,7 +187,7 @@ class GastosControlador
 
                 $_POST['tgts_mp'] = "EFECTIVO";
                 $_POST['tgts_nota'] = "";
-                $_POST['tgts_tipo'] = "GASTO DE GASOLINA ";
+                $_POST['tgts_tipo'] = "GASTO DE GASOLINA";
 
                 $crearGasto = GastosModelo::mdlCrearGasto($_POST);
 

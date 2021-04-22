@@ -283,7 +283,7 @@ class GastosModelo
     {
         try {
             $sql = "INSERT INTO tbl_gastos_gasolina_gtsg (gtsg_usuario_registro,gtsg_usuario_responsable,
-            gtsg_vehiculo_placas,gtsg_precio_litro,gtsg_cantidad_litros,gtsg_monto,gtsg_fecha_registro,gtsg_kilometraje) VALUES(?,?,?,?,?,?,?,?)";
+            gtsg_vehiculo_placas,gtsg_precio_litro,gtsg_cantidad_litros,gtsg_monto,gtsg_fecha_registro,gtsg_kilometraje,gtsg_copn_id) VALUES(?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $gtsg['gtsg_usuario_registro']);
@@ -294,6 +294,7 @@ class GastosModelo
             $pps->bindValue(6, $gtsg['gtsg_monto']);
             $pps->bindValue(7, $gtsg['gtsg_fecha_registro']);
             $pps->bindValue(8, $gtsg['gtsg_kilometraje']);
+            $pps->bindValue(9, $gtsg['gtsg_copn_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
