@@ -30,24 +30,30 @@ $("#id__usr_sueldo").on("change", function () {
 
                 sueldo = respuesta.usr_sueldo;
                 deudaex = respuesta.usr_deuda_ext;
+                deudaint = respuesta.usr_deuda_int;
+                imss = respuesta.usr_imss;
+
                 $("#igs_sueldo_base").val(sueldo);
+                $("#igs_imss").val(imss);
+
                 $("#igs_deuda_ext").val(deudaex);
-                $("#igs_pago").val(sueldo);
+                $("#igs_pago").val(sueldo - imss);
 
             } else {
             }
         }
     });
 })
-$("#igs_abono_deuda").on("keyup", function () {
+$("#igs_abono_deuda,#igs_imss,#igs_sueldo_base").on("keyup", function () {
 
     var igs_Apgar = $("#igs_sueldo_base").val()
     var igs_abono_deuda = $("#igs_abono_deuda").val()
     var igs_deuda_ext = $("#igs_deuda_ext").val();
+    var igs_imss = $("#igs_imss").val();
     igs_nueva_deuda = igs_deuda_ext - igs_abono_deuda;
     $("#igs_nueva_deuda").val(igs_nueva_deuda);
 
-    var igs_pago = igs_Apgar - igs_abono_deuda;
+    var igs_pago = igs_Apgar - igs_abono_deuda - igs_imss;
     $("#igs_pago").val(igs_pago);
 
     //var igs_nueva_deuda = $("#igs_nueva_deuda").val();

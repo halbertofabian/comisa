@@ -22,10 +22,16 @@ cargarComponente('breadcrumb', '', 'Sueldo de empleados');
 
                 </div>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="">Sueldo:</label>
                     <input type="text" name="igs_sueldo_base" id="igs_sueldo_base" class="form-control inputN" placeholder="">
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label for="igs_imss">IMSS:</label>
+                    <input type="text" name="igs_imss" id="igs_imss" class="form-control inputN" placeholder="">
                 </div>
             </div>
             <div class="col-12 col-md-4">
@@ -49,7 +55,7 @@ cargarComponente('breadcrumb', '', 'Sueldo de empleados');
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="">Total a pagar:</label>
-                    <input type="text" name="igs_pago" id="igs_pago" class="form-control inputN" placeholder="" readonly>
+                    <input type="text" name="igs_pago" id="igs_pago" class="form-control inputN" placeholder="" >
                 </div>
             </div>
             <div class="col-12 col-md-6">

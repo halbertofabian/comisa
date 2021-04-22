@@ -161,8 +161,17 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
         <div class="row">
             <div class="col-12 col-md-4">
                 <div class="form-group">
-                    <label for="igs_descuento">Descuento </label>
+                    <label for="igs_descuento">Descuento -DEBE </label>
                     <input type="text" name="igs_descuento" id="igs_descuento" class="form-control inputN" placeholder="" readonly>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label for="igs_descuento_imss">Descuento - IMSS </label>
+                    <input type="text" name="igs_descuento_imss" id="igs_descuento_imss" class="form-control inputN" placeholder="" readonly>
                 </div>
             </div>
         </div>
@@ -170,7 +179,7 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="igs_Apagar">A pagar </label>
-                    <input type="text" name="igs_Apagar" id="igs_Apagar" class="form-control inputN" placeholder="" readonly>
+                    <input type="text" name="igs_Apagar" id="igs_Apagar" class="form-control inputN" placeholder="" >
                 </div>
             </div>
         </div>
@@ -182,7 +191,7 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores / Vendedores');
                         <div class="form-group">
                             <label for="igs_pago">Pago</label>
 
-                            <input type="text" name="igs_pagox" id="igs_pagox" class="form-control inputN" readonly>
+                            <input type="text" name="igs_pagox" id="igs_pagox" class="form-control inputN" readonly >
         
 
                         </div>

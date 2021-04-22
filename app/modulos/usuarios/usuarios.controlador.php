@@ -201,6 +201,8 @@ class UsuariosControlador
                 }
             }
 
+
+
             $ruta = $_POST['usr_firma_hidden'];
 
             if (isset($_FILES["usr_firma"]["tmp_name"]) && $_FILES["usr_firma"]["tmp_name"] != "") {
@@ -279,6 +281,16 @@ class UsuariosControlador
             } else {
                 $_POST['usr_clave'] = password_hash($_POST['usr_clave'], PASSWORD_DEFAULT);
             }
+
+            
+            $acceso_concentradora = 0;
+
+            if(isset($_POST['usr_acceso_concentradora'])){
+                
+                $acceso_concentradora = $_POST['usr_acceso_concentradora'];
+            }
+
+            $_POST['usr_acceso_concentradora'] = $acceso_concentradora;
 
             $actualizarUsuario = UsuariosModelo::mdlActualizarUsuarios2($_POST);
 

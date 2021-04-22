@@ -57,7 +57,15 @@ define("CLIENTE_ID", 'sus_000001');
 define("SUCURSAL_ID", 'c456153babf04c97a490ac8dd6630550');
 define('SUB_FIJO', 'ST-');
 
+<<<<<<< HEAD
 define('CATEGORIA_GASTOS_GASOLINA',42);
+=======
+// VARIABLES 
+
+define("CATEGORIA_GASTOS_GASOLINA",35);
+
+
+>>>>>>> e2839824274729ab5c0f965944a034b91cf634ea
 
 
 function preArray($array)

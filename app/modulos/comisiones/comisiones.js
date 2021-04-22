@@ -66,9 +66,11 @@ $("#btnRepComision").on("click", function () {
                 var com_cobranza_cc = $("#com_cobranza_credicontado").val()
                 var com_contado = $("#com_contado").val()
                 var com_se = $("#com_se").val()
-
+                var usr_imss = 0;
                 cobros.forEach(inf => {
                     var com = 0;
+                    usr_imss = inf.usr_imss;
+
                     if (inf.igs_tipo == 'COBRANZA') {
                         com = inf.igs_monto * com_cobranza / 100;
                     } else if (inf.igs_tipo == 'COBRANZA_CREDICONTADO') {
@@ -115,15 +117,24 @@ $("#btnRepComision").on("click", function () {
                 });
                 $("#tblDebe").html(tblDebe);
                 $("#igs_descuento").val(sumadescuento);
+                $("#igs_descuento_imss").val(usr_imss)
+                var igs_descuento_imss = $("#igs_descuento_imss").val()
 
 
-                $("#igs_Apagar").val(comision - sumadescuento);
+                $("#igs_Apagar").val(comision - sumadescuento - igs_descuento_imss);
 
                 var igs_Apgar = $("#igs_Apagar").val()
                 var igs_abono_deuda = $("#igs_abono_deuda").val()
 
                 var igs_pago = igs_Apgar - igs_abono_deuda;
-                $("#igs_pagox").val(igs_pago);
+               
+                if (igs_Apgar < 0) {
+                    $("#igs_pagox").val("0.00");
+
+                } else {
+                    $("#igs_pagox").val(igs_pago);
+
+                }
 
                 $("#igs_deuda_ext").val(respuesta.deuda_ext.usr_deuda_ext);
 
@@ -150,16 +161,17 @@ $("#btnRepComision").on("click", function () {
 
 // })
 
-$("#igs_abono_deuda").on("keyup", function () {
+$("#igs_abono_deuda,#igs_Apagar").on("keyup", function () {
     //console.log("aquiii");
 
     var igs_Apgar = $("#igs_Apagar").val();
     var igs_abono_deuda = $("#igs_abono_deuda").val();
 
-    var igs_pago = Number(igs_Apgar) -Number(igs_abono_deuda);
-
+    var igs_pago = Number(igs_Apgar) - Number(igs_abono_deuda);
 
     $("#igs_pagox").val(igs_pago);
+
+   
 
     var igs_nueva_deuda = $("#igs_nueva_deuda").val();
     var igs_deuda_ext = $("#igs_deuda_ext").val();

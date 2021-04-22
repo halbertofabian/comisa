@@ -91,6 +91,19 @@
                                 <input type="text" name="usr_deuda_ext" id="usr_deuda_ext" class="form-control inputN" value="<?php echo $usr['usr_deuda_ext']  ?>">
                             </div>
                         </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="usr_vehiculo">VEHICULO / PLACAS </label>
+                                <input type="text" name="usr_vehiculo" id="usr_vehiculo" class="form-control" value="<?php echo $usr['usr_vehiculo']  ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="usr_imss">IMSS</label>
+                                <input type="text" name="usr_imss" id="usr_imss" class="form-control inputN" value="<?php echo $usr['usr_imss']  ?>">
+                            </div>
+                        </div>
                         <?php if ($usr['usr_firma'] != "") : ?>
                             <div class="col-md-4 col-12 text-center">
                                 <span>Firma digital</span> <br>
@@ -112,7 +125,37 @@
                                 </div>
                             </div>
                         <?php endif; ?>
+
                         <input type="hidden" value="<?php echo $usr['usr_firma'] ?>" name="usr_firma_hidden">
+
+                        <div class="col-12">
+
+                            <hr>
+                            <h5>ACCESOS</h5>
+                            <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador" || $_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") : ?>
+                                <?php
+
+                                if ($usr['usr_acceso_concentradora']) {
+                                    $check = "checked";
+                                } else {
+                                    $check = "";
+                                }
+
+
+                                ?>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="usr_acceso_concentradora" id="usr_acceso_concentradora" value="1" <?php echo $check ?>  >
+                                            Acceso a la caja concentradora
+                                        </label>
+                                    </div>
+
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+
                         <div class="col-md-12 col-12">
                             <div class="form-group">
                                 <input type="submit" value="Guardar cambios" name="btnActualizarUsuario" id="btnActualizarUsuario" class="btn btn-primary float-right" placeholder="Escribe la dirección">
