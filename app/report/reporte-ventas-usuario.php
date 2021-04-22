@@ -105,8 +105,7 @@ if (isset($_GET['copn_id'])) {
     
     $gtsg_gasolina = CajasModelo::mdlReporteGasolinaCaja($caja['copn_id']);
 
-    preArray($gtsg_gasolina);
-    return;
+   
     
 
     $cja_nombre = strtoupper($caja['cja_nombre']);
@@ -1578,7 +1577,7 @@ EOF;
     // Close and output PDF document
     // This method has several options, check the source code documentation for more information.
 
-    // ob_end_clean();
+     ob_end_clean();
 
     $registro = str_replace(".", "", $caja['copn_registro']);
     $pdf->Output($registro . '.pdf', 'I');
