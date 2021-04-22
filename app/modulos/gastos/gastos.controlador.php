@@ -177,7 +177,7 @@ class GastosControlador
 
                 $_POST['tgts_ruta'] = "";
                 $_POST['tgts_usuario_responsable'] = $_SESSION['session_usr']['usr_id'];
-                $_POST['tgts_categoria'] = 42;
+                $_POST['tgts_categoria'] = CATEGORIA_GASTOS_GASOLINA;
 
                 $empleado = UsuariosModelo::mdlMostrarUsuarios($_POST['gtsg_usuario_responsable']);
 
