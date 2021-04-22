@@ -103,7 +103,10 @@ if (isset($_GET['copn_id'])) {
     $gts_sue = CajasModelo::mdlConsultarGastosSueldosCajaEfectivo($caja['copn_id']);
 
     
+    $gtsg_gasolina = CajasModelo::mdlReporteGasolinaCaja($caja['copn_id']);
 
+    preArray($gtsg_gasolina);
+    return;
     
 
     $cja_nombre = strtoupper($caja['cja_nombre']);
@@ -1208,7 +1211,106 @@ EOF;
     $pdf->writeHTMLCell(0, 0, '', '', $footer9, 0, 1, 0, true, '', true);
 
 
+    // Gasolinaaaaa
+    $header10 = <<<EOF
+    
+<table style="border: 1px solid #000">
+    <thead>
+    <tr>
+    <td style="text-align: center;">
+       
+    <p><strong> GASTOS DE GASOLINA ADMINISTRADA $cja_nombre</strong></p>
+    
+    </td>
+    <td style="text-align: center;">
+    <p>TIPO DE PAGO: <strong>EFECTIVO</strong></p> <strong></strong>
+    </td>
+    <td style="text-align: center;">
+    <p>FECHA: <strong>$copn_fecha</strong></p> <strong></strong>
+    </td>
+</tr>
+        
+    </thead>
+</table>
 
+EOF;
+
+    // Print text using writeHTMLCell()
+    $pdf->writeHTMLCell(0, 0, '', '', $header10, 0, 1, 0, true, '', true);
+
+
+    $gasolina_header = <<<EOF
+<table style="border: 1px solid #000">
+    <thead>
+        <tr style="text-align: center;">
+        <th style="border: 1px solid #000" ><strong>FECHA</strong></th>
+        <th style="border: 1px solid #000" ><strong>VEHICULO</strong></th>
+        <th style="border: 1px solid #000" ><strong>KILOMETRAJE</strong></th>
+        <th style="border: 1px solid #000" ><strong>CONDUCTOR</strong></th>
+        <th style="border: 1px solid #000" ><strong>GASOLINA/LITROS</strong></th>
+        <th style="border: 1px solid #000" ><strong>TOTAL</strong></th>
+        </tr>
+    </thead>
+    </table>
+
+EOF;
+    $pdf->writeHTMLCell(0, 0, '', '', $gasolina_header, 0, 1, 0, true, '', true);
+
+
+    $gts_gasolina = 0;
+    foreach ($gtsg_gasolina as $key => $gts) {
+        # code...
+        $tgts_cantidad = number_format($gts['gtsg_monto'], 2);
+        $gts_gasolina += $gts['gtsg_monto'];
+        $fecha_gts['gtsg_fecha_registro'] = fechaCastellano($gtsg_fecha_registro);
+        $gasolina_body = <<<EOF
+
+<table style="border: 1px solid #000">
+    <thead>
+        <tr style="text-align: center; border: 1px solid #000">
+            <td style="border: 1px solid #000">$gts[gtsg_fecha_registro]</td>
+            <td style="border: 1px solid #000" >$gts[gtsg_vehiculo_placas]</td>
+            <td style="border: 1px solid #000" >$gts[gtsg_kilometraje]</td>
+            <td style="border: 1px solid #000" >$gts[usr_nombre]</td>
+            <td style="border: 1px solid #000" >$gts[gtsg_cantidad_litros]</td>
+            <td style="border: 1px solid #000" >$tgts_cantidad</td>
+        </tr>
+        </thead>
+    </table>
+    
+
+EOF;
+        $pdf->writeHTMLCell(0, 0, '', '', $gasolina_body, 0, 1, 0, true, '', true);
+    }
+
+    $gts_gasolina2 = number_format($gts_gasolina, 2);
+    $footer9 = <<<EOF
+
+<table style="border: 1px solid #000">
+    <thead>
+    <tr>
+    <td style="text-align: center;">
+       
+   
+    
+    </td>
+    <td style="text-align: right;">
+    <p><strong>TOTAL: </strong></p>
+    </td>
+    <td style="text-align: center;">
+    <p> <strong> $ $gts_gasolina2</strong></p> <strong></strong>
+    </td>
+</tr>
+        
+    </thead>
+</table>
+
+EOF;
+
+    // Print text using writeHTMLCell()
+    $pdf->writeHTMLCell(0, 0, '', '', $footer9, 0, 1, 0, true, '', true);
+
+    
 
 
     /// Auqi empieza las sumas 
@@ -1476,7 +1578,7 @@ EOF;
     // Close and output PDF document
     // This method has several options, check the source code documentation for more information.
 
-    ob_end_clean();
+    // ob_end_clean();
 
     $registro = str_replace(".", "", $caja['copn_registro']);
     $pdf->Output($registro . '.pdf', 'I');

@@ -132,6 +132,27 @@ class GastosControlador
     public static function ctrAgregarGastoGasVendedor()
     {
         if (isset($_POST['btnGuardarGastoGas'])) {
+
+            $tgts_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+            if ($tgts_id_corte2['usr_caja'] == 0) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
+                );
+            }
+            $tgts_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+            if ($tgts_id_corte['usr_caja'] == 0) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
+                );
+            }
+
+            $_POST['tgts_id_corte'] = $tgts_id_corte['usr_caja'];
+            $_POST['tgts_id_corte2'] = $tgts_id_corte2['usr_caja'];
+
+
+
             $_POST['gtsg_usuario_registro'] = $_SESSION['session_usr']['usr_id'];
             $_POST['gtsg_usuario_responsable'] = $_POST['gtsg_usuario_responsable'];
             $_POST[' gtsg_vehiculo_placas'] = $_POST['gtsg_vehiculo_placas'];
@@ -141,31 +162,16 @@ class GastosControlador
             $_POST['gtsg_fecha_registro'] = FECHA;
             $_POST['gtsg_kilometraje'] = $_POST['gtsg_kilometraje'];
 
-            $_POST['gtsg_copn_id'] = $_SESSION['session_usr']['usr_caja'];
+            $_POST['gtsg_copn_id'] = $tgts_id_corte2['usr_caja'];
 
-            
+
             $guardar = GastosModelo::mdlAgregarGastoGasEmpleado($_POST);
 
 
             if ($guardar) {
                 // Cargar el prestamo a caja principal
 
-                $tgts_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
-                if ($tgts_id_corte2['usr_caja'] == 0) {
-                    return array(
-                        'status' => false,
-                        'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
-                    );
-                }
-                $tgts_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
-                if ($tgts_id_corte['usr_caja'] == 0) {
-                    return array(
-                        'status' => false,
-                        'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
-                    );
-                }
-                $_POST['tgts_id_corte'] = $tgts_id_corte['usr_caja'];
-                $_POST['tgts_id_corte2'] = $tgts_id_corte2['usr_caja'];
+
 
                 $_POST['tgts_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
                 $_POST['tgts_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
