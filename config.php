@@ -57,6 +57,10 @@ define("CLIENTE_ID", 'sus_000001');
 define("SUCURSAL_ID", 'c456153babf04c97a490ac8dd6630550');
 define('SUB_FIJO', 'ST-');
 
+// VARIABLES 
+
+define("CATEGORIA_GASTOS_GASOLINA",35);
+
 
 
 
