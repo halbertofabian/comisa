@@ -52,7 +52,7 @@ class SueldosModelo
     {
         try {
             //code...
-            $sql = "SELECT usr_deuda_ext,usr_sueldo FROM tbl_usuarios_usr WHERE usr_id=?";
+            $sql = "SELECT usr_deuda_int,usr_deuda_ext,usr_sueldo,usr_imss FROM tbl_usuarios_usr WHERE usr_id=?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $idus);

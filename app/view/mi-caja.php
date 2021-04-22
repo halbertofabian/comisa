@@ -8,8 +8,23 @@
 </script>
 
 <div class="row">
+    <div class="col-12 mt-5">
+
+        <div class="alert bg-warning alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>RECORDATORIO <i class="fa fa-bullhorn" aria-hidden="true"></i> :</strong>
+            <p> No olvides cerrar la caja de quien recibes siempre y cuando ya no la necesites, al finalizar tu jornada cierra las cajas que abriste incluyendo la tuya.</p>
+        </div>
+
+        <script>
+            $(".alert").alert();
+        </script>
+
+    </div>
     <div class="col-12">
-        <div class="alert alert-secondary mt-5" role="alert">
+        <div class="alert alert-secondary" role="alert">
             <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
                 <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>
 
@@ -23,6 +38,7 @@
             <?php endif; ?>
         </div>
     </div>
+
     <div class="col-md-4">
         <div class="form-group">
             <label for="flujo_usr">Nombre del usuario</label>
@@ -103,15 +119,10 @@
 
                                             <?php else : ?>
                                                 <option value="">SELECCIONE TIPO DE INGRESO</option>
-                                                <option>COBRANZA</option>
-                                                <option value="COBRANZA_CREDICONTADO">CREDICONTADO DE COBRANZA</option>
                                                 <option value="REINGRESOS_COBRANZA">REINGRESOS</option>
-                                                <!-- <option value="DEPOSITOS_COBRANZA">DEPOSITOS</option> -->
                                                 <option value="ABONOS_COBRANZA">ABONOS</option>
-                                                <option value="OTROS_COBRANZA">OTROS</option>
                                                 <option value="PRESTO_CP_SAMUEL_COBRANZA">PRESTAMO DEL JEFE</option>
-                                                <option value="S/E_VENTAS">S/E</option>
-                                                <option value="CONTADO_VENTAS">CONTADO</option>
+
                                             <?php endif; ?>
 
                                         </select>
@@ -492,7 +503,7 @@
                         </div>
                         <div class="form-group col-12">
                             <label for="gtsg_kilometraje">Kilometraje</label>
-                            <input type="text" name="gtsg_kilometraje" id="gtsg_kilometraje" class="form-control " >
+                            <input type="text" name="gtsg_kilometraje" id="gtsg_kilometraje" class="form-control ">
                         </div>
                     </div>
 
