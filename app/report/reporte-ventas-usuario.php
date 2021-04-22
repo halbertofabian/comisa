@@ -1261,13 +1261,13 @@ EOF;
         # code...
         $tgts_cantidad = number_format($gts['gtsg_monto'], 2);
         $gts_gasolina += $gts['gtsg_monto'];
-        $fecha_gts['gtsg_fecha_registro'] = fechaCastellano($gtsg_fecha_registro);
+        $fecha_gts = fechaCastellano($gts['gtsg_fecha_registro']);
         $gasolina_body = <<<EOF
 
 <table style="border: 1px solid #000">
     <thead>
         <tr style="text-align: center; border: 1px solid #000">
-            <td style="border: 1px solid #000">$gts[gtsg_fecha_registro]</td>
+            <td style="border: 1px solid #000">$fecha_gts</td>
             <td style="border: 1px solid #000" >$gts[gtsg_vehiculo_placas]</td>
             <td style="border: 1px solid #000" >$gts[gtsg_kilometraje]</td>
             <td style="border: 1px solid #000" >$gts[usr_nombre]</td>
@@ -1337,7 +1337,7 @@ EOF;
             </td>
         </tr>
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong>CAJA </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1348,7 +1348,7 @@ EOF;
 
         
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong>INGRESOS</strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1357,7 +1357,7 @@ EOF;
         </tr>  
 
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong>VENTAS </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1366,7 +1366,7 @@ EOF;
         </tr>  
 
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong>ABONOS </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1374,7 +1374,7 @@ EOF;
             </td>
         </tr> 
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong>PRESTO  JEFE </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1389,7 +1389,7 @@ EOF;
         
 
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong> GASTOS VENDEDORES </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1397,7 +1397,15 @@ EOF;
             </td>
         </tr>
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
+                <p><strong> GASTO GASOLINA ADMINISTRADA </strong></p>
+            </td>
+            <td  style="text-align: center;">
+                <p><strong> $ $gts_gasolina2</strong></p>
+            </td>
+        </tr>
+        <tr> 
+            <td  style="text-align: center;">
                 <p><strong> COMISIONES </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1406,7 +1414,7 @@ EOF;
         </tr>  
         
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong> SUELDOS FIJOS </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1414,7 +1422,7 @@ EOF;
             </td>
         </tr>  
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong> GASTOS VARIOS </strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1424,7 +1432,7 @@ EOF;
           
          
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong> PRESTAMOS</strong></p>
             </td>
             <td  style="text-align: center;">
@@ -1432,7 +1440,7 @@ EOF;
             </td>
         </tr> 
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong> RETIRO DE CAJA </strong></p>
             </td>
             <td  style="text-align: center; color: blue;">
@@ -1440,7 +1448,7 @@ EOF;
             </td>
         </tr> 
         <tr> 
-            <td  style="text-align: left;">
+            <td  style="text-align: center;">
                 <p><strong> SALDO EN CAJA </strong></p>
             </td>
             <td  style="text-align: center; ; color: red;">
