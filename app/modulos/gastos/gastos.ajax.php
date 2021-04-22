@@ -81,6 +81,18 @@ class GastosAjax
         $res = GastosControlador::ctrAgregarGastoGasVendedor();
         echo json_encode($res, true);
     }
+
+    public function ajaxMostrarResumenGas()
+    {
+        if ($_POST['gtsg_usuario_responsableGas'] > 0) {
+            $respuesta = GastosModelo::mdlMostrarResumenGas($_POST);
+        } else {
+            $respuesta = GastosModelo::mdlMostrarResumenGasall($_POST);
+        }
+
+        echo json_encode($respuesta, true);
+        
+    }
 }
 
 
@@ -131,4 +143,9 @@ if (isset($_POST['btnGuardarGastoGas'])) {
 
     $guardar = new GastosAjax();
     $guardar->ajaxRegistrarGastoGasVendedor();
+}
+
+if (isset($_POST['btnMostrarResumenGas'])) {
+    $MostrarResumenGas = new GastosAjax();
+    $MostrarResumenGas->ajaxMostrarResumenGas();
 }

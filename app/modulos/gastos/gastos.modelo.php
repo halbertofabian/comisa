@@ -305,5 +305,52 @@ class GastosModelo
         }
     }
 
+    public static function mdlMostrarResumenGas($dts)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT gtsg.*,usr.usr_nombre FROM tbl_gastos_gasolina_gtsg gtsg 
+            JOIN tbl_usuarios_usr usr ON usr.usr_id = gtsg.gtsg_usuario_responsable 
+            WHERE gtsg.gtsg_fecha_registro BETWEEN ? AND ? AND gtsg.gtsg_usuario_responsable=?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $dts['gtsg_fecha_inicio']);
+            $pps->bindValue(2, $dts['gtsg_fecha_fin']);
+            $pps->bindValue(3, $dts['gtsg_usuario_responsableGas']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+
+    public static function mdlMostrarResumenGasall($dts)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT gtsg.*,usr.usr_nombre FROM tbl_gastos_gasolina_gtsg gtsg 
+            JOIN tbl_usuarios_usr usr ON usr.usr_id = gtsg.gtsg_usuario_responsable 
+            WHERE gtsg.gtsg_fecha_registro BETWEEN ? AND ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $dts['gtsg_fecha_inicio']);
+            $pps->bindValue(2, $dts['gtsg_fecha_fin']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+
     
 }

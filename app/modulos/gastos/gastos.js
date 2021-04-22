@@ -259,7 +259,8 @@ $("#btnGuardarGastoGas").on("click", function () {
 
 
 
-    var errormsj = "";
+    
+var errormsj = "";
 
     if (gtsg_usuario == "") {
         errormsj += "* Necesita seleccionar un usuario \n";
@@ -278,7 +279,6 @@ $("#btnGuardarGastoGas").on("click", function () {
         return;
 
     }
-
 
     swal({
         title: "¿Estás seguro de agregar gasto de gasolina a " + $('select[name="gtsg_usuario"] option:selected').text() + " ?",
@@ -343,6 +343,80 @@ $("#btnGuardarGastoGas").on("click", function () {
             }
         })
 
+
+
+
+})
+
+$("#btnMostrarResumenGas").on("click", function () {
+    id_usr = $("#gtsg_usuario_responsableGas").val();
+    finicio = $("#gtsg_fecha_inicio").val() + "T00:00";
+    ffin = $("#gtsg_fecha_fin").val() + "T23:59";
+    //alert (finicio);
+    var errormsj = "";
+
+    if (finicio == "T00:00") {
+        errormsj += "Seleccione una fecha de inicio valida \n";
+    }
+    if (ffin == "T00:00") {
+        errormsj += "Seleccione una fecha de fin valida \n";
+    }
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+
+    var datos = new FormData();
+    datos.append("gtsg_usuario_responsableGas", id_usr)
+    datos.append("gtsg_fecha_inicio", finicio)
+    datos.append("gtsg_fecha_fin", ffin)
+    datos.append("btnMostrarResumenGas", true)
+
+
+    $.ajax({
+
+        url: urlApp + 'app/modulos/gastos/gastos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+
+
+            var tblDatosResumenGastos = ""
+            respuesta.forEach(info => {
+
+                tblDatosResumenGastos +=
+                    `
+                        <tr>
+                        <td>${info.gtsg_id}</td>
+                            <td>${info.gtsg_fecha_registro}</td>
+                            <td>${info.gtsg_vehiculo_placas}</td>
+                            <td>${info.gtsg_kilometraje}</td>
+                            <td>${info.usr_nombre}</td>
+                            <td>${info.gtsg_cantidad_litros}</td>
+                            <td>${info.gtsg_monto}</td>
+                            
+                        </tr>
+                    `;
+
+            });
+
+
+            $("#tblDatosResumenGastos").html(tblDatosResumenGastos)
+
+
+        }
+    })
 
 
 
