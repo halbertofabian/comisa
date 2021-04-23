@@ -352,5 +352,54 @@ class GastosModelo
         }
     }
 
-    
+    public static function mdlMostrarResumenGastos($dts)
+    {
+
+        try {
+            //code...tbl_categoria_gastos_gts
+            $sql = "SELECT gts.*,usr.usr_nombre, cat.gts_nombre FROM tbl_gastos_tgts gts 
+            JOIN tbl_usuarios_usr usr ON usr.usr_id = gts.tgts_usuario_responsable
+            JOIN tbl_categoria_gastos_gts cat ON cat.gts_id = gts.tgts_categoria 
+            WHERE (gts.tgts_fecha_gasto BETWEEN ? AND ?) AND gts.tgts_usuario_responsable=? AND gts.tgts_categoria =? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $dts['gts_fecha_inicio']);
+            $pps->bindValue(2, $dts['gts_fecha_fin']);
+            $pps->bindValue(3, $dts['tgts_usuario_responsable']);
+            $pps->bindValue(4, $dts['tgts_categoria']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+
+    public static function mdlMostrarResumenGastosall($dts)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT gts.*,usr.usr_nombre, cat.gts_nombre FROM tbl_gastos_tgts gts 
+            JOIN tbl_usuarios_usr usr ON usr.usr_id = gts.tgts_usuario_responsable
+            JOIN tbl_categoria_gastos_gts cat ON cat.gts_id = gts.tgts_categoria 
+            WHERE (gts.tgts_fecha_gasto BETWEEN ? AND ?)  AND gts.tgts_categoria =? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $dts['gts_fecha_inicio']);
+            $pps->bindValue(2, $dts['gts_fecha_fin']);
+            $pps->bindValue(3, $dts['tgts_categoria']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
 }
