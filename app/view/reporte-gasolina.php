@@ -44,9 +44,7 @@ cargarComponente('breadcrumb', '', 'Reporte de gasto de gasolina');
         </div>
 
         <div class="row">
-            <div class="alert alert-dark col-12" role="alert">
-                <strong>Cobranza</strong>
-            </div>
+            
             <table class="table">
                 <thead class="thead-light">
                     <tr>
