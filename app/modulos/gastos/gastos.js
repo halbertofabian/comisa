@@ -259,8 +259,8 @@ $("#btnGuardarGastoGas").on("click", function () {
 
 
 
-    
-var errormsj = "";
+
+    var errormsj = "";
 
     if (gtsg_usuario == "") {
         errormsj += "* Necesita seleccionar un usuario \n";
@@ -413,6 +413,81 @@ $("#btnMostrarResumenGas").on("click", function () {
 
 
             $("#tblDatosResumenGastos").html(tblDatosResumenGastos)
+
+
+        }
+    })
+
+})
+
+$("#btnMostrarGastosUsr").on("click", function () {
+    id_usr = $("#gts_usuario").val();
+    categoria = $("#tgts_categoria").val();
+    finicio = $("#gts_fecha_inicio").val() + "T00:00";
+    ffin = $("#gts_fecha_fin").val() + "T23:59";
+    //alert (finicio);
+    var errormsj = "";
+    if (categoria <=0) {
+        errormsj += "Seleccione una categoria \n";
+    }
+
+    if (finicio == "T00:00") {
+        errormsj += "Seleccione una fecha de inicio valida \n";
+    }
+    if (ffin == "T00:00") {
+        errormsj += "Seleccione una fecha de fin valida \n";
+    }
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+
+    var datos = new FormData();
+    datos.append("tgts_usuario_responsable", id_usr)
+    datos.append("tgts_categoria",categoria)
+    datos.append("gts_fecha_inicio", finicio)
+    datos.append("gts_fecha_fin", ffin)
+    datos.append("btnMostrarGastosUsr", true)
+
+
+    $.ajax({
+
+        url: urlApp + 'app/modulos/gastos/gastos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+
+
+            var tblDatosResumenGastosUsrs = ""
+            respuesta.forEach(info => {
+
+                tblDatosResumenGastosUsrs +=
+                    `
+                        <tr>
+                        <td>${info.tgts_id}</td>
+                        <td>${info.usr_nombre}</td>
+                            <td>${info.gts_nombre}</td>
+                            <td>${info.tgts_fecha_gasto}</td>
+                            <td>${info.tgts_cantidad}</td>
+                            
+                        </tr>
+                    `;
+
+            });
+
+
+            $("#tblDatosGastosUsr").html(tblDatosResumenGastosUsrs)
 
 
         }

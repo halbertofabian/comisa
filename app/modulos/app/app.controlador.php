@@ -43,7 +43,8 @@ class AppControlador
             'reportes-caja',
             'sueldos',
             'gastos_gasolina',
-            'reporte-gasolina'
+            'reporte-gasolina',
+            'reporte-gastos'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -87,7 +88,8 @@ class AppControlador
             'listar-gastos',
             'salir',
             'gastos_gasolina',
-            'reporte-gasolina'
+            'reporte-gasolina',
+            'reporte-gastos'
         );
     }
 
@@ -741,8 +743,8 @@ class AppControlador
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Resumen',
-                            'href' => 'gastos_gasolina'
+                            'label' => 'Reporte de gastos',
+                            'href' => 'reporte-gastos'
                         ]
 
                         // Aqui más item de menu

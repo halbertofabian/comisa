@@ -93,6 +93,18 @@ class GastosAjax
         echo json_encode($respuesta, true);
         
     }
+
+    public function ajaxMostrarResumenGastos()
+    {
+        if ($_POST['tgts_usuario_responsable'] > 0) {
+            $respuesta = GastosModelo::mdlMostrarResumenGastos($_POST);
+        } else {
+            $respuesta = GastosModelo::mdlMostrarResumenGastosall($_POST);
+        }
+
+        echo json_encode($respuesta, true);
+        
+    }
 }
 
 
@@ -148,4 +160,9 @@ if (isset($_POST['btnGuardarGastoGas'])) {
 if (isset($_POST['btnMostrarResumenGas'])) {
     $MostrarResumenGas = new GastosAjax();
     $MostrarResumenGas->ajaxMostrarResumenGas();
+}
+
+if (isset($_POST['btnMostrarGastosUsr'])) {
+    $MostrarResumenGastos = new GastosAjax();
+    $MostrarResumenGastos->ajaxMostrarResumenGastos();
 }
