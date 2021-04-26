@@ -88,7 +88,7 @@ class ComisionesModelo
 
         try {
             //code...
-            $sql = "SELECT igs.*, usr.usr_nombre,usr.usr_imss FROM tbl_ingresos_igs igs 
+            $sql = "SELECT igs.*, usr.usr_nombre,usr.usr_imss,usr.usr_deuda_int FROM tbl_ingresos_igs igs 
             JOIN tbl_usuarios_usr usr ON igs.igs_usuario_responsable = usr.usr_id 
             WHERE (igs.igs_fecha_registro BETWEEN ? AND ?) AND 
             ((igs.igs_tipo='COBRANZA' OR igs.igs_tipo='COBRANZA_CREDICONTADO' OR igs.igs_tipo = 'CONTADO_VENTAS' OR igs.igs_tipo = 'S/E_VENTAS') AND igs.igs_usuario_responsable=?)";

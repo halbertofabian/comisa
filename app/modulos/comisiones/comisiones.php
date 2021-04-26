@@ -116,6 +116,7 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores');
                     <tr>
                         <th>#</th>
                         <th>Fecha</th>
+                        <th>Concepto</th>
                         <th>Cantidad</th>
                     </tr>
                 </thead>

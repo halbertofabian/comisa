@@ -67,9 +67,11 @@ $("#btnRepComision").on("click", function () {
                 var com_contado = $("#com_contado").val()
                 var com_se = $("#com_se").val()
                 var usr_imss = 0;
+                var usr_deuda_int = 0;
                 cobros.forEach(inf => {
                     var com = 0;
                     usr_imss = inf.usr_imss;
+                    usr_deuda_int = inf.usr_deuda_int;
 
                     if (inf.igs_tipo == 'COBRANZA') {
                         com = inf.igs_monto * com_cobranza / 100;
@@ -107,8 +109,10 @@ $("#btnRepComision").on("click", function () {
                 gastos.forEach(infdebe => {
                     tblDebe +=
                         `<tr>
-                        <td></td>
+                        <td>${infdebe.tgts_id}</td>
                         <td>${infdebe.tgts_fecha_gasto}</td>
+                        <td>${infdebe.tgts_concepto}</td>
+
                         <td>${infdebe.tgts_cantidad}</td>
                         </tr>
                     `;
@@ -118,10 +122,14 @@ $("#btnRepComision").on("click", function () {
                 $("#tblDebe").html(tblDebe);
                 $("#igs_descuento").val(sumadescuento);
                 $("#igs_descuento_imss").val(usr_imss)
+                $("#igs_deuda_int").val(usr_deuda_int)
+
+                
+                var igs_deuda_int = $("#igs_deuda_int").val()
                 var igs_descuento_imss = $("#igs_descuento_imss").val()
 
 
-                $("#igs_Apagar").val(comision - sumadescuento - igs_descuento_imss);
+                $("#igs_Apagar").val(comision - sumadescuento - igs_descuento_imss - igs_deuda_int);
 
                 var igs_Apgar = $("#igs_Apagar").val()
                 var igs_abono_deuda = $("#igs_abono_deuda").val()
@@ -190,7 +198,7 @@ $("#formCalculoComisiones").on("submit", function (e) {
 
     swal({
         title: "¿Seguro de querer agregar esta comisión?",
-        text: "PAGO: " + $("#igs_pagox").val() + " \n DEUDA: " + $("#igs_deuda_ext").val() + " \n ABONO: " + $("#igs_abono_deuda").val() + " \n NUEVA DEUDA: " + Number($("#igs_nueva_deuda").val()),
+        text: "PAGO: " + $("#igs_pagox").val() + " \n DEUDA EXTERNA: " + $("#igs_deuda_ext").val() + " \n DEUDA INTERNA: " + $("#igs_deuda_int").val() + " \n ABONO: " + $("#igs_abono_deuda").val() + " \n NUEVA DEUDA: " + Number($("#igs_nueva_deuda").val()),
         icon: "warning",
         buttons: ["No, cancelar", "Si, continuar"],
         dangerMode: false,

@@ -43,6 +43,8 @@ class ComisionesControlador
 
             $_POST['igs_abono_deuda'] =  str_replace(",", "", $_POST['igs_abono_deuda']);
 
+            $_POST['igs_deuda_int'] =  str_replace(",", "", $_POST['igs_deuda_int']);
+
             $_POST['tgts_fecha_gasto'] = FECHA;
 
             $_POST['tgts_ruta'] = "";
@@ -61,6 +63,9 @@ class ComisionesControlador
             if ($crearGasto) {
                 if ($_POST['igs_abono_deuda'] > 0) {
                     UsuariosModelo::mdlDisminuirDeudaExterna($_POST['id_igs_usuario_responsable'], $_POST['igs_abono_deuda']);
+                }
+                if ($_POST['igs_deuda_int'] > 0) {
+                    UsuariosModelo::mdlDisminuirDeudaInterna($_POST['id_igs_usuario_responsable'], $_POST['igs_deuda_int']);
                 }
                 return array(
                     'status' => true,
