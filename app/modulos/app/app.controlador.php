@@ -94,6 +94,7 @@ class AppControlador
             'gastos_gasolina',
             'reporte-gasolina',
             'reporte-gastos',
+            'ver-caja',
             'abonos',
         );
     }
@@ -101,7 +102,7 @@ class AppControlador
     public static function ObtenerListaBlancaAdministración()
     {
         return array(
-            
+
             'mi-caja',
             'cajas',
             'reportes-caja',
@@ -117,6 +118,7 @@ class AppControlador
             'reporte-gastos',
             'reporte-gasolina',
             'abonos',
+            'ver-caja'
         );
     }
 
