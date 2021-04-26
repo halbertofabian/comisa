@@ -13,8 +13,18 @@
 $("#btnGuardarPrestamo").on("click", function () {
     var pms_usuario = $("#pms_usuario").val()
     var pms_cantidad = Number($("#pms_cantidad").val())
+    var pms_tipo = $("input[type=radio][name=pms_tipo]:checked").val();
+
+
+    alert(pms_tipo)
+
+
 
     var errormsj = "";
+
+    if (pms_tipo == undefined) {
+        errormsj += "Necesita seleccionar un tiopo de prestamo \n";
+    }
 
     if (pms_usuario == "") {
         errormsj += "Necesita seleccionar un usuario \n";
@@ -43,6 +53,8 @@ $("#btnGuardarPrestamo").on("click", function () {
 
                 datos.append("pms_usuario", pms_usuario)
                 datos.append("pms_cantidad", pms_cantidad)
+                datos.append("pms_tipo", pms_tipo)
+                
                 datos.append("btnGuardarPrestamos", true)
 
                 $.ajax({

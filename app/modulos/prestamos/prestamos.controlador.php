@@ -20,6 +20,8 @@ class PrestamosControlador
             $_POST['pms_cantidad'] = str_replace(",", "", $_POST['pms_cantidad']);
             $_POST['pms_cantidad_adeudo'] = $_POST['pms_cantidad'];
 
+
+
             $guardar = PrestamosModelo::mdlAgregarPrestamos($_POST);
 
             if ($guardar) {
@@ -67,7 +69,12 @@ class PrestamosControlador
                 $crearGasto = GastosModelo::mdlCrearGasto($_POST);
 
                 if ($crearGasto) {
-                    $usr_prestamo = UsuariosModelo::mdlAcomularDeudaExterna($_POST['pms_usuario'], $_POST['tgts_cantidad']);
+                    if ($_POST['pms_tipo'] == 'Externo') {
+                        $usr_prestamo = UsuariosModelo::mdlAcomularDeudaExterna($_POST['pms_usuario'], $_POST['tgts_cantidad']);
+                    } elseif ($_POST['pms_tipo'] == 'Interno') {
+                        $usr_prestamo = UsuariosModelo::mdlAcomularDeudaInterna($_POST['pms_usuario'], $_POST['tgts_cantidad']);
+                    }
+
                     if ($usr_prestamo) {
                         return array(
                             'status' => true,

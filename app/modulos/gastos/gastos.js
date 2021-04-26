@@ -386,14 +386,23 @@ $("#btnMostrarResumenGas").on("click", function () {
         dataType: "json",
         beforeSend: function () {
 
+            startLoadButton();
+
 
         },
         success: function (respuesta) {
             // console.log(respuesta)
 
+            stopLoadButton()
+
 
             var tblDatosResumenGastos = ""
+            var totalGastos = 0;
+            var totalLitros = 0;
             respuesta.forEach(info => {
+
+                totalGastos += Number(info.gtsg_monto);
+                totalLitros += Number(info.gtsg_cantidad_litros);
 
                 tblDatosResumenGastos +=
                     `
@@ -411,6 +420,18 @@ $("#btnMostrarResumenGas").on("click", function () {
 
             });
 
+            tblDatosResumenGastos +=
+                `
+            <tr>
+                       
+                        <td colspan="4"></td>
+                        <td style="text-align:right;" >Total:</td>
+                        <td> <strong> ${totalLitros} </strong> </td>
+                        <td> <strong> ${totalGastos} </strong></td>
+                            
+            </tr>
+            
+            `;
 
             $("#tblDatosResumenGastos").html(tblDatosResumenGastos)
 
@@ -427,7 +448,7 @@ $("#btnMostrarGastosUsr").on("click", function () {
     ffin = $("#gts_fecha_fin").val() + "T23:59";
     //alert (finicio);
     var errormsj = "";
-    if (categoria <=0) {
+    if (categoria <= 0) {
         errormsj += "Seleccione una categoria \n";
     }
 
@@ -446,7 +467,7 @@ $("#btnMostrarGastosUsr").on("click", function () {
 
     var datos = new FormData();
     datos.append("tgts_usuario_responsable", id_usr)
-    datos.append("tgts_categoria",categoria)
+    datos.append("tgts_categoria", categoria)
     datos.append("gts_fecha_inicio", finicio)
     datos.append("gts_fecha_fin", ffin)
     datos.append("btnMostrarGastosUsr", true)
@@ -463,15 +484,19 @@ $("#btnMostrarGastosUsr").on("click", function () {
         dataType: "json",
         beforeSend: function () {
 
+            startLoadButton()
 
         },
         success: function (respuesta) {
             // console.log(respuesta)
 
 
+            stopLoadButton()
             var tblDatosResumenGastosUsrs = ""
+            var totalGastos = 0;
             respuesta.forEach(info => {
 
+                totalGastos += Number(info.tgts_cantidad);
                 tblDatosResumenGastosUsrs +=
                     `
                         <tr>
@@ -486,6 +511,14 @@ $("#btnMostrarGastosUsr").on("click", function () {
 
             });
 
+            tblDatosResumenGastosUsrs +=
+                `
+                <tr>
+                    <td colspan="4" style="text-align:right;" >Total: </td>
+                    <td> <strong>${totalGastos}</strong></td>
+                    
+                </tr>
+            `;
 
             $("#tblDatosGastosUsr").html(tblDatosResumenGastosUsrs)
 

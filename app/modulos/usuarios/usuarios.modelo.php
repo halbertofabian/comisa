@@ -440,6 +440,26 @@ class UsuariosModelo
             $con = null;
         }
     }
+
+    public static function mdlAcomularDeudaInterna($usr_id, $usr_deuda_int)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_usuarios_usr SET usr_deuda_int = usr_deuda_int + ? WHERE usr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_deuda_int);
+            $pps->bindValue(2, $usr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlDisminuirDeudaExterna($usr_id, $usr_deuda_ext)
     {
         try {

@@ -17,7 +17,7 @@ class PrestamosModelo
     public static function mdlAgregarPrestamos($pms)
     {
         try {
-            $sql = "INSERT INTO tbl_prestamos_pms (pms_usuario,pms_cantidad,pms_cantidad_adeudo,pms_fecha_registro,pms_usuario_registro) VALUES(?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_prestamos_pms (pms_usuario,pms_cantidad,pms_cantidad_adeudo,pms_fecha_registro,pms_usuario_registro,pms_tipo) VALUES(?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $pms['pms_usuario']);
@@ -25,6 +25,7 @@ class PrestamosModelo
             $pps->bindValue(3, $pms['pms_cantidad_adeudo']);
             $pps->bindValue(4, $pms['pms_fecha_registro']);
             $pps->bindValue(5, $pms['pms_usuario_registro']);
+            $pps->bindValue(6, $pms['pms_tipo']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

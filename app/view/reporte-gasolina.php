@@ -60,13 +60,12 @@ cargarComponente('breadcrumb', '', 'Reporte de gasto de gasolina');
                     </tr>
                 </thead>
                 <tbody id="tblDatosResumenGastos">
-                   
-                    
+
+
                 </tbody>
             </table>
-
-
+            
         </div>
-       
+
     </form>
 </div>

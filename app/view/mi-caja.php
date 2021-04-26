@@ -438,7 +438,25 @@
                         <strong>PRESTAMOS</strong>
                     </div>
                 </h4>
+
                 <div class="form-group">
+                    <label for="">Tipo de prestamo</label>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="pms_tipo" id="pms_tipo_inerno" value="Interno" required >
+                            Prestamo semanal (interno)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="pms_tipo" id="pms_tipo_extero" value="Externo" required >
+                            Prestamo externo
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
                     <label for="pms_usuario">Empleado</label>
                     <select class="form-control select2 select2" name="pms_usuario" id="pms_usuario">
                         <option value="">Seleccione a un empleado a prestar</option>
@@ -466,7 +484,7 @@
                 <div class="card-body">
                     <h4 class="card-title">
                         <div class="alert alert-secondary" role="alert">
-                            <strong>GASOLINA</strong>
+                            <strong>GASOLINA ADMINISTRADA</strong>
                         </div>
                     </h4>
                     <div class="form-group">

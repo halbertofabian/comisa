@@ -70,7 +70,9 @@ class AppControlador
             'ingresos',
             'listar-gastos',
             'salir',
-            'ver-caja'
+            'ver-caja',
+            'reporte-gastos',
+            'reporte-gasolina'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -108,7 +110,9 @@ class AppControlador
             'salir',
             'caja-ventas',
             'caja-cobranza',
-            'ver-caja'
+            'ver-caja',
+            'reporte-gastos',
+            'reporte-gasolina'
         );
     }
 
@@ -531,6 +535,22 @@ class AppControlador
                     ),
                 ]
             ),
+            '13' => array(
+                [
+                    'label' => 'Resumen',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Reporte de gasolina',
+                            'href' => 'reporte-gasolina'
+                        ]
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
 
             // Aqui más  menus
         );
@@ -634,6 +654,11 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Listar gastos',
                             'href' => 'listar-gastos'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Reporte de gastos',
+                            'href' => 'reporte-gastos'
                         ],
 
                         // Aqui más item de menu
@@ -869,6 +894,22 @@ class AppControlador
                             'href' => 'listar-gastos'
                         ],
 
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '6' => array(
+                [
+                    'label' => 'Resumen',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Reporte de gasolina',
+                            'href' => 'reporte-gasolina'
+                        ]
                         // Aqui más item de menu
                     ),
                 ]
