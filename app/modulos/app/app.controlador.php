@@ -44,7 +44,8 @@ class AppControlador
             'sueldos',
             'gastos_gasolina',
             'reporte-gasolina',
-            'reporte-gastos'
+            'reporte-gastos',
+            'abonos',
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -72,7 +73,8 @@ class AppControlador
             'salir',
             'ver-caja',
             'reporte-gastos',
-            'reporte-gasolina'
+            'reporte-gasolina',
+            'abonos',
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -91,7 +93,8 @@ class AppControlador
             'salir',
             'gastos_gasolina',
             'reporte-gasolina',
-            'reporte-gastos'
+            'reporte-gastos',
+            'abonos',
         );
     }
 
@@ -112,7 +115,8 @@ class AppControlador
             'caja-cobranza',
             'ver-caja',
             'reporte-gastos',
-            'reporte-gasolina'
+            'reporte-gasolina',
+            'abonos',
         );
     }
 
@@ -513,6 +517,11 @@ class AppControlador
                             'label' => 'Sueldos',
                             'href' => 'sueldos'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Abonos',
+                            'href' => 'abonos'
+                        ],
 
                         // Aqui más item de menu
                     ),
@@ -598,6 +607,11 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Sueldos',
                             'href' => 'sueldos'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Abonos',
+                            'href' => 'abonos'
                         ],
 
                         // Aqui más item de menu
@@ -709,6 +723,11 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Sueldos',
                             'href' => 'sueldos'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Abonos',
+                            'href' => 'abonos'
                         ],
 
                         // Aqui más item de menu
