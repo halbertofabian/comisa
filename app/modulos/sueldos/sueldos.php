@@ -28,41 +28,62 @@ cargarComponente('breadcrumb', '', 'Sueldo de empleados');
                     <input type="text" name="igs_sueldo_base" id="igs_sueldo_base" class="form-control inputN" placeholder="">
                 </div>
             </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label for="igs_imss">IMSS:</label>
-                    <input type="text" name="igs_imss" id="igs_imss" class="form-control inputN" placeholder="">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <div class="form-group">
+                            <label for="igs_imss">(-) IMSS:</label>
+                            <input type="text" name="igs_imss" id="igs_imss" class="form-control inputN" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">(-) Abono deuda externa:</label>
+                            <input type="text" name="igs_abono_deuda" id="igs_abono_deuda" value="0" class="form-control inputN" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">Deuda externa:</label>
+                            <input type="text" name="igs_deuda_ext" id="igs_deuda_ext" class="form-control inputN" placeholder="" readonly>
+                        </div>
+                    </div>
+                    <div class="col-6"></div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">Nueva deuda:</label>
+                            <input type="text" name="igs_nueva_deuda" id="igs_nueva_deuda" class="form-control inputN" placeholder="" readonly>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="">(-) Deuda interna: (Prestamos semanales)</label>
+                            <input type="text" name="igs_deuda_int" id="igs_deuda_int" class="form-control inputN" placeholder="" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12">
+                        <div class="form-group">
+                            <label for="">Total a pagar:</label>
+                            <input type="text" name="igs_pago" id="igs_pago" class="form-control inputN" placeholder="">
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12">
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary  float-right btn-load" id=" " name="">GUARDAR</button>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label for="">Deuda:</label>
-                    <input type="text" name="igs_deuda_ext" id="igs_deuda_ext" class="form-control inputN" placeholder="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label for="">Abono:</label>
-                    <input type="text" name="igs_abono_deuda" id="igs_abono_deuda" value="0" class="form-control inputN" placeholder="">
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label for="">Nueva deuda:</label>
-                    <input type="text" name="igs_nueva_deuda" id="igs_nueva_deuda" class="form-control inputN" placeholder="" readonly>
-                </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="form-group">
-                    <label for="">Total a pagar:</label>
-                    <input type="text" name="igs_pago" id="igs_pago" class="form-control inputN" placeholder="" >
-                </div>
-            </div>
-            <div class="col-12 col-md-6">
-                <div class="form-group mt-4">
-                    <button type="submit" class="btn btn-primary  float-right btn-load" id=" " name="">GUARDAR</button>
-                </div>
-            </div>
+
+
+
+
+
+
 
 
         </div>

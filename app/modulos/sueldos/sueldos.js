@@ -33,11 +33,15 @@ $("#id__usr_sueldo").on("change", function () {
                 deudaint = respuesta.usr_deuda_int;
                 imss = respuesta.usr_imss;
 
+                igs_deuda_int = respuesta.usr_deuda_int
+
+                $("#igs_deuda_int").val(igs_deuda_int);
+
                 $("#igs_sueldo_base").val(sueldo);
                 $("#igs_imss").val(imss);
 
                 $("#igs_deuda_ext").val(deudaex);
-                $("#igs_pago").val(sueldo - imss);
+                $("#igs_pago").val(sueldo - imss - igs_deuda_int);
 
             } else {
             }
@@ -50,10 +54,13 @@ $("#igs_abono_deuda,#igs_imss,#igs_sueldo_base").on("keyup", function () {
     var igs_abono_deuda = $("#igs_abono_deuda").val()
     var igs_deuda_ext = $("#igs_deuda_ext").val();
     var igs_imss = $("#igs_imss").val();
+
+    var igs_deuda_int = $("#igs_deuda_int").val();
+
     igs_nueva_deuda = igs_deuda_ext - igs_abono_deuda;
     $("#igs_nueva_deuda").val(igs_nueva_deuda);
 
-    var igs_pago = igs_Apgar - igs_abono_deuda - igs_imss;
+    var igs_pago = igs_Apgar - igs_abono_deuda - igs_imss - igs_deuda_int;
     $("#igs_pago").val(igs_pago);
 
     //var igs_nueva_deuda = $("#igs_nueva_deuda").val();
@@ -79,7 +86,7 @@ $("#formsueldo").on("submit", function (e) {
     })
         .then((willDelete) => {
             if (willDelete) {
-                
+
                 $.ajax({
 
                     url: urlApp + 'app/modulos/sueldos/sueldos.ajax.php',
