@@ -52,13 +52,8 @@ cargarComponente('breadcrumb', '', 'Abonos');
                         <th>Usuario Registro</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                    </tr>
-
+                <tbody id="tblDatosprestamo">
+                   
                 </tbody>
             </table>
 
@@ -69,13 +64,13 @@ cargarComponente('breadcrumb', '', 'Abonos');
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="">Deuda:</label>
-                    <input class="form-control" type="text" name="" id="" readonly>
+                    <input class="form-control" type="text" name="totaldeuda" id="totaldeuda" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-6">
                 <div class="form-group">
-                    <label for="">Abono:</label>
-                    <input class="form-control" type="text" name="" id="" >
+                    <label for="absemp_abono">Abono:</label>
+                    <input class="form-control" type="text" name="absemp_abono" id="absemp_abono" >
                 </div>
             </div>
 
@@ -85,9 +80,6 @@ cargarComponente('breadcrumb', '', 'Abonos');
                 </div>
             </div>
         </div>
-
-
-
 
     </form>
 </div>

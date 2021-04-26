@@ -34,7 +34,17 @@ class SueldosAjax
         $respuesta = SueldosControlador::ctrCalcularSueldo();
         echo json_encode($respuesta, true);
     }
+    public function ajaxMostrarinfodeuda()
+    {
+        $respuesta = SueldosModelo::mdlmostrarInfoDeuda($_POST);
+        echo json_encode($respuesta, true);
+    }
 
+    public function ajaxAbonodeuda()
+    {
+        $respuesta = SueldosControlador::ctrAbonardeuda();
+        echo json_encode($respuesta, true);
+    }
 }
 
 if (isset($_POST['btnConsultaInfSueldo'])) {
@@ -45,4 +55,14 @@ if (isset($_POST['btnConsultaInfSueldo'])) {
 if (isset($_POST['btnCalcularSueldo'])) {
     $CalcularSueldoUsuarios = new SueldosAjax();
     $CalcularSueldoUsuarios->ajaxCalcularSueldo();
+}
+
+if (isset($_POST['btnMostrarDeuda'])) {
+    $Mostrarinfodeuda = new SueldosAjax();
+    $Mostrarinfodeuda->ajaxMostrarinfodeuda();
+}
+
+if (isset($_POST['btnAbonoDeuda'])) {
+    $Abonodeuda = new SueldosAjax();
+    $Abonodeuda->ajaxAbonodeuda();
 }

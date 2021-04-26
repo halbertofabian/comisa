@@ -82,4 +82,46 @@ class SueldosModelo
             $con = null;
         }
     }
+
+    
+    public static function mdlmostrarInfoDeuda($inf)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_prestamos_pms WHERE pms_usuario=? AND pms_tipo=?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $inf['pms_usuario']);
+            $pps->bindValue(2, $inf['pms_tipo']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlRegistrarAbono($infAbono)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_abonos_empleados_absemp(absemp_fecha, absemp_abono, absemp_id_usuario, absemp_tipo_prestamo) 
+            VALUES (?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $infAbono['absemp_fecha']);
+            $pps->bindValue(2, $infAbono['absemp_abono']);
+            $pps->bindValue(3, $infAbono['absemp_id_usuario']);
+            $pps->bindValue(4, $infAbono['absemp_tipo_prestamo']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
