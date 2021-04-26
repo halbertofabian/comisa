@@ -127,3 +127,159 @@ $("#formsueldo").on("submit", function (e) {
 
 
 })
+
+$("#btnMostrarDeuda").on("click", function () {
+
+    pms_usuario = $("#absemp_id_usuario").val();
+    pms_tipo = $("#absemp_tipo_prestamo").val();
+
+    var errormsj = "";
+    if (pms_usuario <= 0) {
+        errormsj += "*Seleccione un usuario \n";
+    }
+
+    if (pms_tipo == "") {
+        errormsj += "*Seleccione tipo de deuda \n";
+    }
+   
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+
+    var datos = new FormData();
+    datos.append("btnMostrarDeuda", true);
+    datos.append("pms_usuario", pms_usuario);
+    datos.append("pms_tipo", pms_tipo);
+
+    $.ajax({
+        url: urlApp + 'app/modulos/sueldos/sueldos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+            startLoadButton()
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+            stopLoadButton()
+            var tblinfPrestamos = ""
+            var totalprestamo = 0;
+            respuesta.forEach(info => {
+
+                totalprestamo += Number(info.pms_cantidad);
+                tblinfPrestamos +=
+                    `
+                        <tr>
+                        <td>${info.pms_id}</td>
+                        <td>${info.pms_cantidad}</td>
+                        <td>${info.pms_fecha_registro}</td>
+                        <td>${info.pms_usuario_registro}</td>   
+                        </tr>
+                    `;
+
+            })
+            $("#tblDatosprestamo").html(tblinfPrestamos)
+            $("#totaldeuda").val(totalprestamo);
+        }
+    });
+});
+
+$("#btnAbonoDeuda").on("click", function () {
+
+    pms_usuario = $("#absemp_id_usuario").val();
+    pms_tipo = $("#absemp_tipo_prestamo").val();
+    absemp_abono = $("#absemp_abono").val();
+    deudaact=$("#totaldeuda").val();
+    
+
+    var errormsj = "";
+    if (pms_usuario <= 0) {
+        errormsj += "*Seleccione un usuario \n";
+    }
+
+    if (pms_tipo == "") {
+        errormsj += "*Seleccione tipo de deuda \n";
+    }
+    if (absemp_abono <=0) {
+        errormsj += "*El abono debe ser mayor a 0 \n";
+    }
+    if (deudaact > 0 || deudaact=="") {
+        errormsj += "*Este usuario no tiene deuda \n";
+    }
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+
+    var datos = new FormData();
+    datos.append("btnAbonoDeuda", true);
+    datos.append("pms_usuario", pms_usuario);
+    datos.append("pms_tipo", pms_tipo);
+    datos.append("absemp_abono", absemp_abono);
+
+    $.ajax({
+        url: urlApp + 'app/modulos/sueldos/sueldos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+            startLoadButton()
+        },
+        success: function (res) {
+            // console.log(respuesta)
+            stopLoadButton()
+
+            if (res.status) {
+                swal({
+                    title: "Muy bien",
+                    text: res.mensaje,
+                    icon: "success",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    });
+            } else {
+                swal({
+                    title: "Error",
+                    text: res.mensaje,
+                    icon: "error",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    });
+
+            }
+
+
+        }
+    });
+});

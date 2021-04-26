@@ -93,4 +93,36 @@ class SueldosControlador
             }
         }
     }
+
+    public function ctrAbonardeuda()
+    {
+        if (isset($_POST)) {
+            $_POST['absemp_fecha'] = FECHA;
+            $_POST['absemp_abono'] = $_POST['absemp_abono'];
+            $_POST['absemp_id_usuario'] = $_POST['pms_usuario'];
+            $_POST['absemp_tipo_prestamo'] = $_POST['pms_tipo'];
+
+            $abonoregistrado = SueldosModelo::mdlRegistrarAbono($_POST);
+            if ($abonoregistrado) {
+
+                if ($_POST['absemp_tipo_prestamo'] == "Interno") {
+                    UsuariosModelo::mdlDisminuirDeudaInterna( $_POST['absemp_id_usuario'], $_POST['absemp_abono']);
+                }
+                if ($_POST['absemp_tipo_prestamo'] == "Externo") {
+                    UsuariosModelo::mdlDisminuirDeudaExterna( $_POST['absemp_id_usuario'], $_POST['absemp_abono']);
+                }
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Abono registrado con éxito',
+                    'pagina' => HTTP_HOST
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo registrar abono, intenta de nuevo.',
+                    'pagina' => HTTP_HOST . 'abonos'
+                );
+            }
+        }
+    }
 }
