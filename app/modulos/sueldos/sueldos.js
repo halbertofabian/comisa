@@ -78,7 +78,7 @@ $("#formsueldo").on("submit", function (e) {
 
     swal({
         title: "Verifique si los datos de la operacion son correctos",
-        text: "PAGO: " + $("#igs_pago").val() + " \n DEUDA: " + $("#igs_deuda_ext").val() + " \n ABONO: " + $("#igs_abono_deuda").val() + " \n NUEVA DEUDA: " + Number($("#igs_nueva_deuda").val()),
+        text: "PAGO: " + $("#igs_pago").val() + " \n DEUDA EXTERNA: " + $("#igs_deuda_ext").val() + " \n DEUDA INTERNA: " + $("#igs_deuda_int").val() + " \n ABONO DEUDA EXTERNA: " + $("#igs_abono_deuda").val() + " \n NUEVA DEUDA: " + Number($("#igs_nueva_deuda").val()),
         icon: "warning",
         buttons: ["No, cancelar", "Si, continuar"],
         dangerMode: false,
