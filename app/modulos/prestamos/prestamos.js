@@ -16,7 +16,7 @@ $("#btnGuardarPrestamo").on("click", function () {
     var pms_tipo = $("input[type=radio][name=pms_tipo]:checked").val();
 
 
-    alert(pms_tipo)
+   
 
 
 

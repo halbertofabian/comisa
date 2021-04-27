@@ -109,14 +109,16 @@ class SueldosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_abonos_empleados_absemp(absemp_fecha, absemp_abono, absemp_id_usuario, absemp_tipo_prestamo) 
-            VALUES (?,?,?,?)";
+            $sql = "INSERT INTO tbl_abonos_empleados_absemp(absemp_fecha, absemp_abono, absemp_id_usuario, absemp_tipo_prestamo,absemp_usuario_registro) 
+            VALUES (?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $infAbono['absemp_fecha']);
             $pps->bindValue(2, $infAbono['absemp_abono']);
             $pps->bindValue(3, $infAbono['absemp_id_usuario']);
             $pps->bindValue(4, $infAbono['absemp_tipo_prestamo']);
+            $pps->bindValue(5, $infAbono['absemp_usuario_registro']);
+            
             $pps->execute();
             
             return $pps->rowCount() > 0;

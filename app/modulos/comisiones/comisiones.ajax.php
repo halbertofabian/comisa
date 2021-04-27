@@ -16,6 +16,7 @@
 include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/comisiones/comisiones.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/sueldos/sueldos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/gastos/gastos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.controlador.php';

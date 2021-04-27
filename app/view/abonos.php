@@ -43,19 +43,27 @@ cargarComponente('breadcrumb', '', 'Abonos');
 
         </div>
         <div class="row">
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Cantidad</th>
-                        <th>Fecha de prestamo</th>
-                        <th>Usuario Registro</th>
-                    </tr>
-                </thead>
-                <tbody id="tblDatosprestamo">
-                   
-                </tbody>
-            </table>
+            <div class="col-12">
+            <div class="alert alert-dark" role="alert">
+                <strong>Tabla de prestamos</strong>
+            </div>
+            </div>
+            <div class="col-12">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Cantidad</th>
+                            <th>Fecha de prestamo</th>
+                            <th>Usuario Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblDatosprestamo">
+
+                    </tbody>
+                </table>
+            </div>
+
 
 
         </div>
@@ -70,7 +78,7 @@ cargarComponente('breadcrumb', '', 'Abonos');
             <div class="col-12 col-md-6">
                 <div class="form-group">
                     <label for="absemp_abono">Abono:</label>
-                    <input class="form-control" type="text" name="absemp_abono" id="absemp_abono" >
+                    <input class="form-control" type="text" name="absemp_abono" id="absemp_abono">
                 </div>
             </div>
 

@@ -74,9 +74,24 @@ class SueldosControlador
             $crearGasto = GastosModelo::mdlCrearGasto($_POST);
             if ($crearGasto) {
                 if ($_POST['igs_abono_deuda'] > 0) {
+
+                    $_POST['absemp_fecha'] = FECHA;
+                    $_POST['absemp_abono'] = $_POST['igs_abono_deuda'];
+                    $_POST['absemp_id_usuario'] = $_POST['id__usr_sueldo'];
+                    $_POST['absemp_tipo_prestamo'] = 'Externo';
+                    $_POST['absemp_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+
+                    SueldosModelo::mdlRegistrarAbono($_POST);
                     UsuariosModelo::mdlDisminuirDeudaExterna($_POST['id__usr_sueldo'], $_POST['igs_abono_deuda']);
                 }
                 if ($_POST['igs_deuda_int'] > 0) {
+                    $_POST['absemp_fecha'] = FECHA;
+                    $_POST['absemp_abono'] = $_POST['igs_deuda_int'];
+                    $_POST['absemp_id_usuario'] = $_POST['id__usr_sueldo'];
+                    $_POST['absemp_tipo_prestamo'] = 'Interno';
+                    $_POST['absemp_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+
+                    SueldosModelo::mdlRegistrarAbono($_POST);
                     UsuariosModelo::mdlDisminuirDeudaInterna($_POST['id__usr_sueldo'], $_POST['igs_deuda_int']);
                 }
                 return array(
@@ -98,20 +113,72 @@ class SueldosControlador
     {
         if (isset($_POST)) {
             $_POST['absemp_fecha'] = FECHA;
-            $_POST['absemp_abono'] = $_POST['absemp_abono'];
+            $_POST['absemp_abono'] = str_replace(",", "", $_POST['absemp_abono']);
             $_POST['absemp_id_usuario'] = $_POST['pms_usuario'];
             $_POST['absemp_tipo_prestamo'] = $_POST['pms_tipo'];
+            $_POST['absemp_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
 
             $abonoregistrado = SueldosModelo::mdlRegistrarAbono($_POST);
 
-            
+
+
+
             if ($abonoregistrado) {
 
+                $empleado = UsuariosModelo::mdlMostrarUsuarios($_POST['pms_usuario']);
+                // Ingreso a caja 
+
+                //Cortes controlador
+                $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+                if ($igs_id_corte2['usr_caja'] == 0) {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
+                    );
+                }
+
+                $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+                if ($igs_id_corte['usr_caja'] == 0) {
+
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera'
+                    );
+                }
+
+
+
+
+                $_POST['igs_mp'] = 'EFECTIVO';
+
+
+                $_POST['igs_referencia'] = "";
+                $_POST['igs_cuenta'] = "";
+
+                $_POST['igs_concepto'] = "Abono del empleado <strong>" . $empleado['usr_nombre'] . "</strong>";
+                $_POST['igs_ruta'] = "";
+                $_POST['igs_tipo'] = "ABONOS_COBRANZA";
+
+
+                $_POST['igs_id_corte'] = $igs_id_corte['usr_caja'];
+                $_POST['igs_id_corte_2'] = $igs_id_corte2['usr_caja'];
+
+
+                $_POST['igs_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+                $_POST['igs_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
+                // $_POST['igs_id_corte'] = CortesControlador::crtConsultarUltimoCorte();
+
+                $_POST['igs_monto'] = str_replace(",", "", $_POST['absemp_abono']);
+                $_POST['igs_fecha_registro'] = FECHA;
+                $_POST['igs_usuario_responsable'] = $_SESSION['session_usr']['usr_id'];
+
+                $igs = IngresosModelo::mdlAgregarIngresos($_POST);
+
                 if ($_POST['absemp_tipo_prestamo'] == "Interno") {
-                    UsuariosModelo::mdlDisminuirDeudaInterna( $_POST['absemp_id_usuario'], $_POST['absemp_abono']);
+                    UsuariosModelo::mdlDisminuirDeudaInterna($_POST['absemp_id_usuario'], $_POST['absemp_abono']);
                 }
                 if ($_POST['absemp_tipo_prestamo'] == "Externo") {
-                    UsuariosModelo::mdlDisminuirDeudaExterna( $_POST['absemp_id_usuario'], $_POST['absemp_abono']);
+                    UsuariosModelo::mdlDisminuirDeudaExterna($_POST['absemp_id_usuario'], $_POST['absemp_abono']);
                 }
                 return array(
                     'status' => true,

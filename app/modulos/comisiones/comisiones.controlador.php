@@ -62,9 +62,23 @@ class ComisionesControlador
             $crearGasto = GastosModelo::mdlCrearGasto($_POST);
             if ($crearGasto) {
                 if ($_POST['igs_abono_deuda'] > 0) {
+                    $_POST['absemp_fecha'] = FECHA;
+                    $_POST['absemp_abono'] = $_POST['igs_abono_deuda'];
+                    $_POST['absemp_id_usuario'] = $_POST['id_igs_usuario_responsable'];
+                    $_POST['absemp_tipo_prestamo'] = 'Externo';
+                    $_POST['absemp_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+
+                    SueldosModelo::mdlRegistrarAbono($_POST);
                     UsuariosModelo::mdlDisminuirDeudaExterna($_POST['id_igs_usuario_responsable'], $_POST['igs_abono_deuda']);
                 }
                 if ($_POST['igs_deuda_int'] > 0) {
+                    $_POST['absemp_fecha'] = FECHA;
+                    $_POST['absemp_abono'] = $_POST['igs_deuda_int'];
+                    $_POST['absemp_id_usuario'] = $_POST['id_igs_usuario_responsable'];
+                    $_POST['absemp_tipo_prestamo'] = 'Interno';
+                    $_POST['absemp_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+
+                    SueldosModelo::mdlRegistrarAbono($_POST);
                     UsuariosModelo::mdlDisminuirDeudaInterna($_POST['id_igs_usuario_responsable'], $_POST['igs_deuda_int']);
                 }
                 return array(

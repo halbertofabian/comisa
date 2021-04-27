@@ -278,6 +278,7 @@
                                     <tr>
                                         <th>Nombre</th>
                                         <th>Deuda ext.</th>
+                                        <th>Deuda int.</th>
                                         <th>Teléfono</th>
                                         <th>Correo electrónico</th>
                                         <th>Rol</th>
@@ -297,6 +298,7 @@
                                         <tr>
                                             <td><?php echo $usr['usr_nombre'] ?></td>
                                             <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
+                                            <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
                                             <td><?php echo $usr['usr_telefono'] ?></td>
                                             <td><?php echo $usr['usr_correo'] ?></td>
                                             <td><?php echo $usr['usr_rol'] ?></td>
