@@ -103,6 +103,8 @@ class SueldosControlador
             $_POST['absemp_tipo_prestamo'] = $_POST['pms_tipo'];
 
             $abonoregistrado = SueldosModelo::mdlRegistrarAbono($_POST);
+
+            
             if ($abonoregistrado) {
 
                 if ($_POST['absemp_tipo_prestamo'] == "Interno") {

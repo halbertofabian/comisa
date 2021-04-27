@@ -141,7 +141,7 @@ $("#btnMostrarDeuda").on("click", function () {
     if (pms_tipo == "") {
         errormsj += "*Seleccione tipo de deuda \n";
     }
-   
+
 
     if (errormsj != "") {
         toastr.warning(errormsj, 'Error de datos')
@@ -170,10 +170,13 @@ $("#btnMostrarDeuda").on("click", function () {
             // console.log(respuesta)
             stopLoadButton()
             var tblinfPrestamos = ""
-            var totalprestamo = 0;
-            respuesta.forEach(info => {
+            deudaint = ""
+            deudaext = ""
 
-                totalprestamo += Number(info.pms_cantidad);
+            respuesta.forEach(info => {
+                deudaint = info.usr_deuda_int
+                deudaext = info.usr_deuda_ext
+
                 tblinfPrestamos +=
                     `
                         <tr>
@@ -183,10 +186,12 @@ $("#btnMostrarDeuda").on("click", function () {
                         <td>${info.pms_usuario_registro}</td>   
                         </tr>
                     `;
-
             })
             $("#tblDatosprestamo").html(tblinfPrestamos)
-            $("#totaldeuda").val(totalprestamo);
+        
+            if (pms_tipo == "Interno") { $("#totaldeuda").val(deudaint); }
+            if (pms_tipo == "Externo") { $("#totaldeuda").val(deudaext); }
+
         }
     });
 });
@@ -196,8 +201,8 @@ $("#btnAbonoDeuda").on("click", function () {
     pms_usuario = $("#absemp_id_usuario").val();
     pms_tipo = $("#absemp_tipo_prestamo").val();
     absemp_abono = $("#absemp_abono").val();
-    deudaact=$("#totaldeuda").val();
-    
+    deudaact = $("#totaldeuda").val();
+
 
     var errormsj = "";
     if (pms_usuario <= 0) {
@@ -207,10 +212,10 @@ $("#btnAbonoDeuda").on("click", function () {
     if (pms_tipo == "") {
         errormsj += "*Seleccione tipo de deuda \n";
     }
-    if (absemp_abono <=0) {
+    if (absemp_abono <= 0) {
         errormsj += "*El abono debe ser mayor a 0 \n";
     }
-    if (deudaact > 0 || deudaact=="") {
+    if (deudaact < 0 || deudaact == "") {
         errormsj += "*Este usuario no tiene deuda \n";
     }
 

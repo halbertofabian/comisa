@@ -88,7 +88,9 @@ class SueldosModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_prestamos_pms WHERE pms_usuario=? AND pms_tipo=?";
+            $sql = "SELECT pms.*, usr.usr_deuda_ext,usr.usr_deuda_int FROM tbl_prestamos_pms pms
+            JOIN tbl_usuarios_usr usr ON usr.usr_id=pms.pms_usuario 
+            WHERE pms.pms_usuario=? AND pms.pms_tipo=?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $inf['pms_usuario']);
@@ -116,6 +118,7 @@ class SueldosModelo
             $pps->bindValue(3, $infAbono['absemp_id_usuario']);
             $pps->bindValue(4, $infAbono['absemp_tipo_prestamo']);
             $pps->execute();
+            
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
