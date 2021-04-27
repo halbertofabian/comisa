@@ -173,9 +173,13 @@ $("#btnMostrarDeuda").on("click", function () {
             deudaint = ""
             deudaext = ""
 
-            respuesta.forEach(info => {
-                deudaint = info.usr_deuda_int
-                deudaext = info.usr_deuda_ext
+            infoPrestamo = respuesta.infoPrestamo;
+
+            deudaint = respuesta.infoDeuda.usr_deuda_int
+            deudaext = respuesta.infoDeuda.usr_deuda_ext
+
+            infoPrestamo.forEach(info => {
+
 
                 tblinfPrestamos +=
                     `
@@ -188,7 +192,7 @@ $("#btnMostrarDeuda").on("click", function () {
                     `;
             })
             $("#tblDatosprestamo").html(tblinfPrestamos)
-        
+
             if (pms_tipo == "Interno") { $("#totaldeuda").val(deudaint); }
             if (pms_tipo == "Externo") { $("#totaldeuda").val(deudaext); }
 

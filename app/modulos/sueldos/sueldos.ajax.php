@@ -37,8 +37,15 @@ class SueldosAjax
     }
     public function ajaxMostrarinfodeuda()
     {
-        $respuesta = SueldosModelo::mdlmostrarInfoDeuda($_POST);
-        echo json_encode($respuesta, true);
+        $data = array();
+
+        $data =  ([
+
+            'infoPrestamo' => SueldosModelo::mdlmostrarInfoDeuda($_POST),
+            'infoDeuda' => SueldosModelo::mdlMostrarSueldos($_POST['pms_usuario'])
+        ]);
+
+        echo json_encode($data, true);
     }
 
     public function ajaxAbonodeuda()
