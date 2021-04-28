@@ -9,7 +9,8 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="">Número de traspaso</label>
-                    <input type="text" name="tps_num_traspaso" id="tps_num_traspaso" class="form-control" placeholder="">
+                    <?php $newnumT= TraspasosControlador::ctrConsultarSiguienteTraspaso();?>
+                    <input type="text" value="<?php echo $newnumT?>" name="tps_num_traspaso" id="tps_num_traspaso" class="form-control" placeholder="" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-4">
@@ -123,7 +124,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
 
             <div class="col-md-6">
 
-                <div class="card">
+                <div class="card" style="overflow:scroll; height: 600px;">
                     <div class="card-header">
                         Almacén destino
                     </div>
@@ -158,7 +159,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
 
             </div>
             <div class="col-md-6">
-                <input type="text" name="tps_lista_productos" id="tps_lista_productos">
+                <input type="hidden" name="tps_lista_productos" id="tps_lista_productos">
             </div>
 
             <div class="col-md-6">

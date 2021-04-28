@@ -73,7 +73,7 @@ $("#tps_ams_id_origen").on("change", function () {
 var myArray = [];
 
 $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
-    
+
     var audio = document.getElementById("audio");
 
     var idp = $(this).val();
@@ -156,6 +156,42 @@ $(".tblAmsDestino tbody ").on("click", ".btnDeleteCambio", function () {
 
 $("#form_traspaso_product").on("submit", function (e) {
     e.preventDefault();
+
+    nt = $("#tps_num_traspaso").val();
+    tp = $("#tps_tipo").val();
+    Aorigen = $("#tps_ams_id_origen").val();
+    Adestino = $("#tps_ams_id_destino").val();
+    usrecibe = $("#tps_user_id_receptor").val();
+    pdts = $("#tps_lista_productos").val();
+
+    var errormsj = "";
+
+    if (nt == "") {
+        errormsj = "Ingrese un numero de traspaso valido \n";
+    }
+    if (tp == "") {
+        errormsj = "Necesita seleccionar un tipo\n";
+    }
+    if (Aorigen == "") {
+        errormsj = "Necesita seleccionar un almacen de origien \n";
+    }
+    if (Adestino == "") {
+        errormsj = "Necesita seleccionar un almacen destino \n";
+    }
+
+    if (usrecibe == "") {
+        errormsj = "Necesita seleccionar al usuario que recibe \n";
+    }
+    if (pdts == "") {
+        errormsj = "Necesita seleccionar al menos un producto \n";
+    }
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+
     var datos = new FormData(this);
     datos.append("btnTraspasar", true);
     $.ajax({
@@ -167,9 +203,19 @@ $("#form_traspaso_product").on("submit", function (e) {
         processData: false,
         dataType: "json",
         beforeSend: function () {
+            
         },
         success: function (respuesta) {
             // console.log(respuesta)
+            if (respuesta.status) {
+                toastr.success(respuesta.mensaje, "¡Muy bien!")
+                window.open(respuesta.pagina, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=200,left=200,width=1250,height=700");
+               // location.href = urlApp
+            }
+            else {
+                stopLoadButton("Intentar de nuevo")
+                toastr.error(respuesta.mensaje, "¡Error!")
+            }
 
         }
     })

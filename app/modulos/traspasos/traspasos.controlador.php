@@ -111,25 +111,49 @@ class TraspasosControlador
 
         if ($actualizarStokOrigen && $actualizarStokDestino) {
             $traspaso = TraspasosModelo::mdlTraspasarProductosAlamacen($traspasoData);
-            echo "actualizado";
+            //echo "actualizado";
         } elseif ($insertarP && $actualizarStokOrigen) {
             # code...
             $traspaso = TraspasosModelo::mdlTraspasarProductosAlamacen($traspasoData);
-            echo "registrado";
+            //echo "registrado";
+        }
+        $redireccionamiento = HTTP_HOST . 'app/report/reporte-traspasos-usuario.php?tps_num=' . $_POST["tps_num_traspaso"];
+
+
+        if ($traspaso) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El registro de mercancia se realizo correctamente',
+                'pagina' => $redireccionamiento
+            );
         } else {
-            echo "error XD";
+            return array(
+                'status' => false,
+                'mensaje' => 'Uuups , algo fallo al registrar la mercancia. Reintentalo'
+            );
         }
     }
 
     public function ctrFiltrarProductosAlamacen()
     {
         $palabra = $_POST["teclasoltada"];
-        $idalmacen=$_POST['tps_ams_id_origen'];
+        $idalmacen = $_POST['tps_ams_id_origen'];
         $query = ProductosModelo::mdlMostrarProductosAlamacen($idalmacen);
         if ($palabra != "") {
 
-            $query = ProductosModelo::mdlMostrarProductosAlamacenFiltrado($palabra,$idalmacen);
+            $query = ProductosModelo::mdlMostrarProductosAlamacenFiltrado($palabra, $idalmacen);
         }
         return $query;
+    }
+
+    public static function ctrConsultarSiguienteTraspaso()
+    {
+        $tps_id = TraspasosModelo::mdlConsultarUltimoTraspaso();
+        $tps_id['tps_id'] = $tps_id['tps_id'] + 1;
+        $tps_id['tps_id'] =  strlen($tps_id['tps_id']) == 0 ? "0001"  : $tps_id['tps_id'];
+        $tps_id['tps_id'] =  strlen($tps_id['tps_id']) == 1 ? "000" . $tps_id['tps_id'] : $tps_id['tps_id'];
+        $tps_id['tps_id'] =  strlen($tps_id['tps_id']) == 2 ? "00" . $tps_id['tps_id'] : $tps_id['tps_id'];
+        $tps_id['tps_id'] =  strlen($tps_id['tps_id']) == 3 ? "0" . $tps_id['tps_id'] : $tps_id['tps_id'];
+        return "T-" . $tps_id['tps_id'];
     }
 }

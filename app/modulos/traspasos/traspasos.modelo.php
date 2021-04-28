@@ -110,4 +110,22 @@ class TraspasosModelo
             $con = null;
         }
     }
+
+    public static function mdlConsultarUltimoTraspaso()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_traspasos_tps ORDER BY tps_id DESC LIMIT 1 ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
