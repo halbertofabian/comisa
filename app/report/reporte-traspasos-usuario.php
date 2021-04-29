@@ -7,6 +7,7 @@ if (isset($_GET['tps_num'])) {
     require_once DOCUMENT_ROOT . 'app/modulos/cajas/cajas.modelo.php';
     require_once DOCUMENT_ROOT . 'app/modulos/sucursales/sucursales.modelo.php';
     require_once DOCUMENT_ROOT . 'app/modulos/traspasos/traspasos.modelo.php';
+    require_once DOCUMENT_ROOT . 'app/lib/phpqrcode/qrlib.php';
     /**
      * Creates an example PDF TEST document using TCPDF
      * @package com.tecnick.tcpdf
@@ -69,7 +70,22 @@ if (isset($_GET['tps_num'])) {
     //
     $infoTps = TraspasosModelo::mdlConsultarTraspasoId($_GET['tps_num']);
     $listp = json_decode($infoTps["tps_lista_productos"], true);
+
+    $scl_nombre = $_SESSION['session_suc']['scl_nombre'];
+    $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
     //preArray($listp);
+
+    $dir = DOCUMENT_ROOT . "app/assets/images/temp_qr/";
+    if (!file_exists($dir))
+        mkdir($dir, 0777, true);
+    $filename = $dir . 'test.png';
+    $tamano = 10;
+    $level = 'H';
+    $frameSize = 3;
+    $contenido = $infoTps["tps_lista_productos"];
+
+    QRcode::png($contenido, $filename, $level, $tamano, $frameSize);
+    $QR = '<img src="' . $filename . '" width="100px height="100px""> </img>';
 
 
     // Set some content to print
@@ -82,8 +98,8 @@ if (isset($_GET['tps_num'])) {
                     
                 </td>
                 <td style="text-align:center ;">
-                        sucursal nombre <br>
-                        sucursal direccion
+                        SUCURSAL: $scl_nombre <br>
+                        DIRECCION: $scl_direccion
                 </td>
                 <td style="text-align: center;">
                 <p>TRASPASO: <strong>$infoTps[tps_num_traspaso]</strong></p><br> 
@@ -158,15 +174,15 @@ EOF;
     </table> 
 EOF;
 
-    // Print text using writeHTMLCell()
-    $pdf->writeHTMLCell(0, 0, '', '', $header2, 0, 1, 0, true, '', true);
+        // Print text using writeHTMLCell()
+        $pdf->writeHTMLCell(0, 0, '', '', $header2, 0, 1, 0, true, '', true);
 
         //***** */
 
         for ($i = 1; $i <= $infP['cantidad']; $i++) {
-        
-        # code...
-        $tps_body2 = <<<EOF
+
+            # code...
+            $tps_body2 = <<<EOF
     
     <table  style="text-align: center;  padding-top:10px; padding-bottom:2px;">
         <thead>
@@ -184,14 +200,57 @@ EOF;
     EOF;
 
 
-        $pdf->writeHTMLCell(0, 0, '', '', $tps_body2, 0, 1, 0, true, '', true);
+            $pdf->writeHTMLCell(0, 0, '', '', $tps_body2, 0, 1, 0, true, '', true);
         }
     }
+    $seccionqr = <<<EOF
 
+    <table  style="padding-top:10px; padding-bottom:2px;">
+        <thead>
+            <tr>
+            <td></td>
+            <td></td>
+                <td>
+                <img src="$filename" width="200" height="200">  
+                </td>
+            </tr>
+        </thead>
+    </table>
+    
+EOF;
 
+    $pdf->writeHTMLCell(0, 0, '', '', $seccionqr, 0, 1, 0, true, '', true);
     // ---------------------------------------------------------
 
+    $firma = <<<EOF
     
+    <table >
+        <thead>
+        <tr>
+        <td style="text-align: center; width:33%;">
+           
+            <p style="border-top: 1px solid #000;">ENTREGA</p>
+        
+        </td>
+        <td style="text-align: center; width:33%;">
+           
+            
+        
+        </td>
+        <td style="text-align: center;width:33%;">
+        <p style="border-top: 1px solid #000;">RECIBE</p>
+        </td>
+    </tr>
+            
+        </thead>
+    </table>
+ 
+EOF;
+
+    // Print text using writeHTMLCell()
+    $pdf->writeHTMLCell(0, 0, '', '', $firma, 0, 1, 0, true, '', true);
+
+
     ob_end_clean();
 
     $registro = str_replace(".", "", "prueba");
