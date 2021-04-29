@@ -56,6 +56,10 @@ require_once DOCUMENT_ROOT . 'app/lib/phpMailer/Exception.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/PHPMailer.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/SMTP.php';
 
+
+//QR CODE
+require_once DOCUMENT_ROOT . 'lib/phpqrcode/qrlib.php';
+
 //Iniciar aplicacion
 iniciarApp();
 
