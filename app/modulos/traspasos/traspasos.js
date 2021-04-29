@@ -44,7 +44,7 @@ $("#tps_ams_id_origen").on("change", function () {
                 tblDatos +=
                     `
                         <tr>
-                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br>${pds_sku[0]}</td>
+                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br>/${pds_sku[0]}</td>
                             <td  style="display:none;" id="CatProduct${pds_sku[0]}">${pds.pds_categoria}</td>
                             <td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>
                             <td><input type="number" id="cpasar${pds_sku[0]}" class="form-control" value="1" /></td>

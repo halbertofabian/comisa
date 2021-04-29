@@ -6,6 +6,7 @@ if (isset($_GET['tps_num'])) {
 
     require_once DOCUMENT_ROOT . 'app/modulos/cajas/cajas.modelo.php';
     require_once DOCUMENT_ROOT . 'app/modulos/sucursales/sucursales.modelo.php';
+    require_once DOCUMENT_ROOT . 'app/modulos/traspasos/traspasos.modelo.php';
     /**
      * Creates an example PDF TEST document using TCPDF
      * @package com.tecnick.tcpdf
@@ -66,6 +67,11 @@ if (isset($_GET['tps_num'])) {
     $rutaImg = $ruta . 'app/assets/images/sistema/comisa/logo.jpg';
 
     //
+    $infoTps = TraspasosModelo::mdlConsultarTraspasoId($_GET['tps_num']);
+    $listp = json_decode($infoTps["tps_lista_productos"], true);
+    //preArray($listp);
+
+
     // Set some content to print
     $header = <<<EOF
     <table>
@@ -76,17 +82,18 @@ if (isset($_GET['tps_num'])) {
                     
                 </td>
                 <td style="text-align:center ;">
-                        $scl_nombre <br>
-                        $scl_direccion
+                        sucursal nombre <br>
+                        sucursal direccion
                 </td>
                 <td style="text-align: center;">
-                <p>REGISTRO: <strong>$caja[copn_registro]</strong></p> <strong></strong>
+                <p>TRASPASO: <strong>$infoTps[tps_num_traspaso]</strong></p><br> 
+                FECHA:<strong>$infoTps[tps_fecha]</strong>
                 </td>
             </tr>
             <tr>
                 <td style="background-color:#24008D; width:100%; color:#fff;text-align: center;vertical-align:text-top; font-size:12px ">
                     
-                        REPORTE DE $cja_nombre
+                        REPORTE DEL USUARIO: $infoTps[receptor]
                   
                 </td>
             </tr>
@@ -94,24 +101,16 @@ if (isset($_GET['tps_num'])) {
         </thead>
     </table>
    
-    <table style="border: 1px solid #000">
-        <thead>
-        <tr>
-        <td style="text-align: center;">
-           
-        <p><strong>INGRESOS $cja_nombre</strong></p>
-        
-        </td>
-        <td style="text-align: center;">
-        <p>TIPO DE PAGO: <strong>EFECTIVO</strong></p> <strong></strong>
-        </td>
-        <td style="text-align: center;">
-        <p>FECHA: <strong>$copn_fecha</strong></p> <strong></strong>
-        
-        </td>
-    </tr>
-            
-        </thead>
+    <table style="background-color: #f8f9fa; padding-top:5px; padding-bottom:5px; font-weight:bold;">
+    <thead>
+        <tr  style="text-align: center;">
+            <th>#SKU</th>
+            <th>PRODUCTO</th>
+            <th>CATEGORIA</th>
+            <th>CANTIDAD</th>    
+        </tr> 
+    </thead>
+    
     </table>
     
 EOF;
@@ -119,37 +118,82 @@ EOF;
     // Print text using writeHTMLCell()
     $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
 
+    foreach ($listp as $key => $infP) {
+        $array = explode("/", $infP['nombre']);
+        $namep = $array[0];
 
-    // ---------------------------------------------------------
+        # code...
+        $tps_body = <<<EOF
 
-    $footer2 = <<<EOF
-    
-    <table style="border: 1px solid #000">
-        <thead>
-        <tr>
-        <td style="text-align: center;">
-           
-       
+<table style="background-color: #e9ecef; padding-top:10px; padding-bottom:2px;">
+    <thead>
+        <tr style="text-align: center; ">
+            <td >$infP[id]</td>
+            <td >$namep</td>
+            <td >$infP[categoria]</td>
+            <td >$infP[cantidad]</td>
+        </tr>
         
-        </td>
-        <td style="text-align: right;">
-        <p><strong>TOTAL: </strong></p>
-        </td>
-        <td style="text-align: center;">
-        <p> <strong> $ $igs_efectivo2</strong></p> <strong></strong>
-        </td>
-    </tr>
-            
-        </thead>
+    </thead>
     </table>
     
+
+EOF;
+
+
+        $pdf->writeHTMLCell(0, 0, '', '', $tps_body, 0, 1, 0, true, '', true);
+        //********* */
+        $header2 = <<<EOF
+    
+   
+    <table  style="font-weight:bold; font-size: 0.95em">
+    <thead>
+        <tr  style="text-align: center;">
+            <th>#</th>
+            <th>S/E</th>
+            <th>CONTADO</th>    
+        </tr> 
+    </thead>
+    
+    </table> 
 EOF;
 
     // Print text using writeHTMLCell()
-    $pdf->writeHTMLCell(0, 0, '', '', $footer2, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $header2, 0, 1, 0, true, '', true);
 
-    ob_end_clean();
+        //***** */
+
+        for ($i = 1; $i <= $infP['cantidad']; $i++) {
+        
+        # code...
+        $tps_body2 = <<<EOF
     
-    $registro = str_replace(".", "", $caja['copn_registro']);
+    <table  style="text-align: center;  padding-top:10px; padding-bottom:2px;">
+        <thead>
+            <tr style="text-align: center; padding-top:10px; padding-bottom:2px;">
+                <td style="border: 1px solid #000">$i</td>
+                
+                <td style="border: 1px solid #000"></td>
+                <td style="border: 1px solid #000"></td>
+            </tr>
+            
+        </thead>
+        </table>
+        
+    
+    EOF;
+
+
+        $pdf->writeHTMLCell(0, 0, '', '', $tps_body2, 0, 1, 0, true, '', true);
+        }
+    }
+
+
+    // ---------------------------------------------------------
+
+    
+    ob_end_clean();
+
+    $registro = str_replace(".", "", "prueba");
     $pdf->Output($registro . '.pdf', 'I');
 }

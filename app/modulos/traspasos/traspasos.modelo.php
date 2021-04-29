@@ -128,4 +128,31 @@ class TraspasosModelo
             $con = null;
         }
     }
+
+    public static function mdlConsultarTraspasoId($idtps)
+    {
+        try {
+            //code...
+            $sql = "SELECT tps.*,usr_reg.usr_nombre AS registro,
+            ams_ori.ams_nombre AS origen,
+            usr_rec.usr_nombre AS receptor,
+            ams_des.ams_nombre AS destino FROM tbl_traspasos_tps tps 
+            JOIN tbl_usuarios_usr usr_reg ON usr_reg.usr_id =tps.tps_user_registro 
+            JOIN tbl_almacenes_ams ams_ori ON ams_ori.ams_id=tps.tps_ams_id_origen 
+            JOIN tbl_usuarios_usr usr_rec ON usr_rec.usr_id =tps.tps_user_id_receptor 
+            JOIN tbl_almacenes_ams ams_des ON ams_des.ams_id=tps.tps_ams_id_destino 
+            WHERE tps_num_traspaso=? LIMIT 1 ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $idtps);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
