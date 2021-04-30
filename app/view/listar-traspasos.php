@@ -45,6 +45,10 @@ cargarComponente('breadcrumb', '', 'Listar traspasos'); ?>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $ptps['tps_num_traspaso'] ?>">
                                     ver
                                 </button>
+
+                                <a target="_blank" href="<?php HTTP_HOST ?>app/report/reporte-traspasos-usuario.php?tps_num=<?php echo $ptps['tps_num_traspaso'] ?>" class="btn btn-outline-primary">
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                </a>
                                 <!-- Modal -->
                                 <div class="modal " id="exampleModal<?php echo $ptps['tps_num_traspaso'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl " role="document">
@@ -54,6 +58,9 @@ cargarComponente('breadcrumb', '', 'Listar traspasos'); ?>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
+
+
+
                                             </div>
                                             <div class="modal-body">
                                                 <div class="container">
