@@ -219,7 +219,7 @@ EOF;
     
 EOF;
 
-    $pdf->writeHTMLCell(0, 0, '', '', $seccionqr, 0, 1, 0, true, '', true);
+   $pdf->writeHTMLCell(0, 0, '', '', $seccionqr, 0, 1, 0, true, '', true);
     // ---------------------------------------------------------
 
     $firma = <<<EOF

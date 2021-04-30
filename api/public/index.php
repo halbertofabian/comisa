@@ -24,7 +24,7 @@ $app->get('/prueba', function (Request $request, Response $response) {
         $db = Conexion::conectar();
         $rs = $db->query($sql);
         if ($rs->rowCount() > 0) {
-            
+
             echo json_encode(array(
                 'status' => true,
                 'mensaje' => 'Listado de productos',
@@ -45,5 +45,9 @@ $app->get('/prueba', function (Request $request, Response $response) {
             'data' => ''
         ));
     }
+});
+
+$app->post('/login', function (Request $request, Response $response) {
+    echo "Aqui toy";
 });
 $app->run();
