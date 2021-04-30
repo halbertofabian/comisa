@@ -46,6 +46,7 @@ class AppControlador
             'reporte-gasolina',
             'reporte-gastos',
             'abonos',
+            'listar-traspasos'
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -118,7 +119,8 @@ class AppControlador
             'reporte-gastos',
             'reporte-gasolina',
             'abonos',
-            'ver-caja'
+            'ver-caja',
+            'listar-traspasos'
         );
     }
 
@@ -364,6 +366,12 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Traspaso de mercancia',
                             'href' => 'traspasos/new'
+                        ],
+                        
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar traspasos de mercancia',
+                            'href' => 'listar-traspasos'
                         ],
                         // Aqui más item de menu
                     ),
