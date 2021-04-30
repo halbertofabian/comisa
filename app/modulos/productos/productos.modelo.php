@@ -132,7 +132,7 @@ class ProductosModelo
     public static function mdlMostrarProductosAlamacen($ams_id)
     {
         try {
-            $sql = "SELECT * FROM tbl_productos_pds WHERE pds_ams_id =? ";
+            $sql = "SELECT * FROM tbl_productos_pds WHERE pds_ams_id =? AND pds_stok>0";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_id);

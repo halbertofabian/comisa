@@ -161,7 +161,14 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
             <div class="col-md-6">
                 <input type="hidden" name="tps_lista_productos" id="tps_lista_productos">
             </div>
-
+            <div class="col-md-6">
+            <div class="form-group">
+                    <label for="">Total de productos a traspasar</label>
+                    <input type="text" class="form-control" id="suma_pds" name="suma_pds"readonly>
+                </div>
+            </div>
+            <div class="col-md-6">
+            </div>
             <div class="col-md-6">
                 <button type="submit" class="btn btn-primary  btn-load float-right mb-2" name="btnTraspasar" id="btnTraspasar">Traspasar</button>
             </div>

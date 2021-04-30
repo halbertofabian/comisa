@@ -71,6 +71,7 @@ $("#tps_ams_id_origen").on("change", function () {
 })
 
 var myArray = [];
+var sumaproductos = "";
 
 $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
@@ -84,6 +85,7 @@ $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
     var CatProduct = $("#CatProduct" + idp).text();
 
     var tbodytraspaso = "";
+
 
 
     if (Number(pdisponible) >= Number(cpasar) && Number(cpasar) > 0) {
@@ -109,27 +111,33 @@ $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
                         </tr>
                     `;
+        
+
         posicion = myArray.findIndex(produc => produc.id === idp);
         if (posicion == -1) {
             myArray.push(productoArray);
+
             //console.log(myArray);
             $("#tbodoytraspaso").append(tbodytraspaso);
             $("#tps_lista_productos").val(JSON.stringify(myArray));
+            sumarCantidadProduc(cpasar);
         } else {
             //console.log("sumar");
             var val1 = myArray[posicion].cantidad;
             var nuevoVal = Number(val1) + Number(cpasar);
             if (pdisponible >= nuevoVal) {
                 myArray[posicion].cantidad = nuevoVal;
+                //Arreglo de los productos que van almacenar
                 $("#tps_lista_productos").val(JSON.stringify(myArray));
                 var CPA = $("#addcant" + idp).text();
                 $("#addcant" + idp).text(Number(CPA) + Number(cpasar));
+                sumarCantidadProduc(cpasar);
+
             } else {
                 toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")
             }
-
-
         }
+
         audio.play();
     }
     else {
@@ -138,8 +146,25 @@ $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
 });
 
+//Suma del total de los productos a traspasar;
+function sumarCantidadProduc(numerop) {
+    sumaproductos = Number(sumaproductos) + Number(numerop)
+        $("#suma_pds").val(sumaproductos);
+  }
+  function restarCantidadProduc(numerop) {
+      var cantidadActual=$("#suma_pds").val();
+      console.log(cantidadActual);
+      console.log(numerop);
+
+        $("#suma_pds").val(Number(cantidadActual)-Number(numerop));
+  }
+
 $(".tblAmsDestino tbody ").on("click", ".btnDeleteCambio", function () {
     var id = $(this).val();
+    //*Restar productos a la cnatidad total */
+    var cantidadRestar=$("#addcant"+id).text();
+    restarCantidadProduc(cantidadRestar);
+    //*** */
     //$("#btn" + id).removeClass("btn-secondary");
     //$("#btn" + id).addClass("btn-primary");
     // $("#btn" + id).attr("disabled", false);
@@ -203,18 +228,20 @@ $("#form_traspaso_product").on("submit", function (e) {
         processData: false,
         dataType: "json",
         beforeSend: function () {
-            
+            startLoadButton()
         },
         success: function (respuesta) {
+            stopLoadButton()
             // console.log(respuesta)
             if (respuesta.status) {
                 toastr.success(respuesta.mensaje, "¡Muy bien!")
                 window.open(respuesta.pagina, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=200,left=200,width=1250,height=700");
-               // location.href = urlApp
+                location.href =respuesta.paginaInicio ;
             }
             else {
                 stopLoadButton("Intentar de nuevo")
                 toastr.error(respuesta.mensaje, "¡Error!")
+                location.href =respuesta.paginaInicio ;
             }
 
         }
@@ -239,6 +266,7 @@ $("#buscadorP").on("keyup", function () {
         processData: false,
         dataType: "json",
         beforeSend: function () {
+            
         },
         success: function (respuesta) {
             // console.log(respuesta)

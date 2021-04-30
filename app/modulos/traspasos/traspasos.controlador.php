@@ -118,18 +118,21 @@ class TraspasosControlador
             //echo "registrado";
         }
         $redireccionamiento = HTTP_HOST . 'app/report/reporte-traspasos-usuario.php?tps_num=' . $_POST["tps_num_traspaso"];
+        $redirecciontpsNew=HTTP_HOST.'traspasos/new';
 
 
         if ($traspaso) {
             return array(
                 'status' => true,
                 'mensaje' => 'El registro de mercancia se realizo correctamente',
-                'pagina' => $redireccionamiento
+                'pagina' => $redireccionamiento,
+                'paginaInicio'=>$redirecciontpsNew
             );
         } else {
             return array(
                 'status' => false,
-                'mensaje' => 'Uuups , algo fallo al registrar la mercancia. Reintentalo'
+                'mensaje' => 'Uuups , algo fallo al registrar la mercancia. Reintentalo',
+                'paginaInicio'=>$redirecciontpsNew
             );
         }
     }

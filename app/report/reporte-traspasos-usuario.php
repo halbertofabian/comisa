@@ -102,7 +102,8 @@ if (isset($_GET['tps_num'])) {
                         DIRECCION: $scl_direccion
                 </td>
                 <td style="text-align: center;">
-                <p>TRASPASO: <strong>$infoTps[tps_num_traspaso]</strong></p><br> 
+                <p>TRASPASO: <strong>$infoTps[tps_num_traspaso]</strong></p><br>
+                TIPO:<strong>$infoTps[tps_tipo]</strong> <br>
                 FECHA:<strong>$infoTps[tps_fecha]</strong>
                 </td>
             </tr>
@@ -224,12 +225,13 @@ EOF;
 
     $firma = <<<EOF
     
-    <table >
+    <table style="padding-top:30px; ">
         <thead>
         <tr>
         <td style="text-align: center; width:33%;">
            
-            <p style="border-top: 1px solid #000;">ENTREGA</p>
+            <p style="border-top: 1px solid #000;">ENTREGA</p><br>
+            <strong>$infoTps[registro]</strong>
         
         </td>
         <td style="text-align: center; width:33%;">
@@ -239,6 +241,9 @@ EOF;
         </td>
         <td style="text-align: center;width:33%;">
         <p style="border-top: 1px solid #000;">RECIBE</p>
+        <br>
+            <strong>$infoTps[receptor]</strong>
+        
         </td>
     </tr>
             
