@@ -201,4 +201,23 @@ class ProductosModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarProductosAlmId($dts)
+    {
+        try {
+            //code...
+                $sql = "SELECT * FROM tbl_productos_pds WHERE pds_ams_id =? ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $dts['pds_ams_id']);
+                $pps->execute();
+                return $pps->fetchAll();
+           
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

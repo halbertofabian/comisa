@@ -373,6 +373,11 @@ class AppControlador
                             'label' => 'Listar traspasos de mercancia',
                             'href' => 'listar-traspasos'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar productos',
+                            'href' => 'productos'
+                        ],
                         // Aqui más item de menu
                     ),
                 ]

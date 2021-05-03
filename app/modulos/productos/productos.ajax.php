@@ -26,10 +26,20 @@ class ProductosAjax
         $respuesta = ProductosControlador::ctrImportarProductosExcel();
         echo json_encode($respuesta, true);
     }
+    public function ajaxmostrarProductosAlmacenid()
+    {
+
+        $respuesta = ProductosModelo::mdlMostrarProductosAlmId($_POST);
+        echo json_encode($respuesta, true);
+    }
 }
 
 
 if (isset($_POST['btnImportarProductos'])) {
     $impotarProductos = new ProductosAjax();
     $impotarProductos->ajaxImportarProductos();
+}
+if (isset($_POST['selectAlmacen'])) {
+    $mostrarProductos = new ProductosAjax();
+    $mostrarProductos->ajaxmostrarProductosAlmacenid();
 }

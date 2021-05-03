@@ -11,7 +11,7 @@
  */
 
 $(".btnDisplayProductos").on("click", function () {
-    
+
     var display = $(this).attr('data-display')
     if (display != "") {
         $("#card-filtro-producto").removeClass('d-none')
@@ -91,8 +91,6 @@ $("#formImportarProductosComisa").on("submit", function (e) {
                     beforeSend: function () {
 
                         startLoadButton()
-                        
-
 
                     },
                     success: function (respuesta) {
@@ -140,4 +138,88 @@ $("#formImportarProductosComisa").on("submit", function (e) {
                 })
             }
         });
+})
+
+$("#pds_ams_id").on("change", function () {
+    var optseleccionada = $(this).val();
+    var datos = new FormData();
+    datos.append("selectAlmacen", true);
+    datos.append("pds_ams_id", optseleccionada);
+
+    $.ajax({
+        url: urlApp + 'app/modulos/productos/productos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+            var tblDatos = ""
+            respuesta.forEach(pds => {
+                var pds_sku = pds.pds_sku;
+                var pds_sku = pds_sku.split("/");
+
+                if (pds.pds_stok <= pds.pds_stok_min || pds.pds_stok == 0){
+                    color="danger";
+
+                }else{
+                    color="success";
+                }
+
+                if (pds.pds_fecha_modificacion == '0000-00-00 00:00:00') {
+                textin="Creado el "+pds.pds_fecha_creacion;
+                tipousr=pds.pds_usaurio_registro;
+
+                }else {
+                textin="Ultima modificación el:"+pds.pds_fecha_modificacion; 
+                tipousr=pds.pds_usuario_modifico;
+                }
+
+                tblDatos +=
+                    `
+                        <tr  class="pds_content text-center" pds_id="${pds.pds_id_producto}" style="height: 110px;">
+                        <td><input type="checkbox" class="pds_action_product" name="pds_action_product[]" value="${pds.pds_id_producto }"></td>
+                        <td><img src="${pds.pds_imagen_portada}" width="50" height="50" alt="no fount"></td>
+                        <td>
+                            <a href="" class="bt btn-link">${pds.pds_nombre}</a>
+                            <div class="d-none pds_id_move" id="pds_id_${pds.pds_id_producto}">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="" style="font-size: 11px; color: #737B82; ">ID: ${pds.pds_id_producto}</p>
+                                    </div>
+                                    <div class="col-12 btn-group">
+                                        <button class="btn btn-sm btn-default"><i class="fa fa-trash"></i></button>
+                                        <button class="btn btn-sm btn-default"><i class="fa fa-edit"></i></button>
+                                        <button class="btn btn-sm btn-default">Editar rapido</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </td>
+                        <td>
+                            
+                        </td>
+                        <td>
+                            <strong class="text-${color}">${pds.pds_stok}</strong>
+                        </td>
+                        <td>${pds.pds_categoria}</td>
+                        <td>
+                                ${textin}<br> <strong class="text-warning">${tipousr}</strong>';
+                        </td>
+                        </tr>
+                    `;
+
+            })
+
+            $("#bodyviewProd").html(tblDatos)
+
+        }
+
+    })
 })

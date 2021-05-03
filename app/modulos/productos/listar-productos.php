@@ -69,6 +69,22 @@ $productos = ProductosModelo::mdlMostrarProductosActivos();
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="">Productos del almacen:</label>
+                        <select class="form-control select2" name="pds_ams_id" id="pds_ams_id">
+                            <option value="">Seleccione un almacén origén</option>
+                            <?php
+
+                            $sucursales = AlmacenesModelo::mdlMostrarAlamcenesTraspaso('I', $_SESSION['session_suc']['scl_id']);
+                            // $sucursales = AlmacenesModelo::mdlMostrarAlamcenesTraspaso('E');
+                            foreach ($sucursales as $key => $scl) :
+                            ?>
+                                <option value="<?php echo $scl['ams_id'] ?>"><?php echo $scl['scl_nombre'] . ' - ' . $scl['ams_nombre']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -93,7 +109,7 @@ $productos = ProductosModelo::mdlMostrarProductosActivos();
                                 <th>Fecha</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="bodyviewProd">
 
 
                             <?php foreach ($productos as $key => $pds) : ?>
@@ -119,10 +135,10 @@ $productos = ProductosModelo::mdlMostrarProductosActivos();
                                         </div>
 
                                     </td>
-                                    <td><?php 
-                                    $pds_sku = explode("/",$pds['pds_sku']);
-                                    echo $pds_sku[0]; ?>
-                                    
+                                    <td><?php
+                                        $pds_sku = explode("/", $pds['pds_sku']);
+                                        echo $pds_sku[0]; ?>
+
                                     </td>
                                     <td>
                                         <?php
