@@ -99,7 +99,8 @@ if (isset($_GET['tps_num'])) {
                 </td>
                 <td style="text-align:center ;">
                         SUCURSAL: $scl_nombre <br>
-                        DIRECCION: $scl_direccion
+                        DIRECCION: $scl_direccion <br>
+                        TOTAL DE PRODUCTOS:<strong></strong>
                 </td>
                 <td style="text-align: center;">
                 <p>TRASPASO: <strong>$infoTps[tps_num_traspaso]</strong></p><br>
@@ -134,10 +135,11 @@ EOF;
 
     // Print text using writeHTMLCell()
     $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
-
+        $sumatotalp=0;
     foreach ($listp as $key => $infP) {
         $array = explode("/", $infP['nombre']);
         $namep = $array[0];
+        $sumatotalp=$sumatotalp+$infP['cantidad'];
 
         # code...
         $tps_body = <<<EOF
@@ -196,14 +198,32 @@ EOF;
             
         </thead>
         </table>
-        
     
     EOF;
-
 
             $pdf->writeHTMLCell(0, 0, '', '', $tps_body2, 0, 1, 0, true, '', true);
         }
     }
+
+    //--------------------------
+    $seccionTOTAL = <<<EOF
+
+    <table  style="text-align: center; background-color: #e9ecef; padding-top:10px; padding-bottom:2px;">
+        <thead>
+            <tr>
+            <td></td>
+            <td>TOTAL DE PRODUCTOS</td>
+            <td><strong>$sumatotalp</strong></td>
+            </tr>
+        </thead>
+    </table>
+    
+EOF;
+
+   $pdf->writeHTMLCell(0, 0, '', '', $seccionTOTAL, 0, 1, 0, true, '', true);
+
+    //----------------------------------
+    
     $seccionqr = <<<EOF
 
     <table  style="padding-top:10px; padding-bottom:2px;">
