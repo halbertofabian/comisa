@@ -91,19 +91,22 @@ class GastosAjax
         }
 
         echo json_encode($respuesta, true);
-        
     }
 
     public function ajaxMostrarResumenGastos()
     {
-        if ($_POST['tgts_usuario_responsable'] > 0) {
-            $respuesta = GastosModelo::mdlMostrarResumenGastos($_POST);
+        if ($_POST['tgts_usuario_responsable'] > 0 && $_POST['tgts_categoria']>0) {
+
+            $respuesta = GastosModelo::mdlMostrarResumenGastosxy($_POST);
+        } elseif ($_POST['tgts_usuario_responsable'] > 0) {
+            $respuesta = GastosModelo::mdlMostrarResumenGastosx($_POST);
+        } elseif ($_POST['tgts_categoria']>0) {
+            $respuesta = GastosModelo::mdlMostrarResumenGastosy($_POST);
         } else {
             $respuesta = GastosModelo::mdlMostrarResumenGastosall($_POST);
         }
 
         echo json_encode($respuesta, true);
-        
     }
 }
 

@@ -10,6 +10,7 @@ cargarComponente('breadcrumb', '', 'Reporte de gastos');
                     <label for="gts_usuario">Usuario: </label>
                     <select class="form-control select2" name="gts_usuario" id="gts_usuario">
                         <option value="">Seleccione un usuario</option>
+                        <option value="">TODOS LOS USUARIOS</option>
                         <?php
 
                         $usuarios = UsuariosModelo::mdlMostrarUsuarios();
@@ -19,7 +20,7 @@ cargarComponente('breadcrumb', '', 'Reporte de gastos');
                             <option value="<?php echo $usr['usr_id'] ?>"><?php echo $usr['usr_nombre']; ?></option>
                         <?php endforeach; ?>
                     </select>
-
+  
                 </div>
             </div>
             <div class="col-12 col-md-3">
@@ -27,6 +28,8 @@ cargarComponente('breadcrumb', '', 'Reporte de gastos');
                     <label for="">Categorias</label>
                     <select name="tgts_categoria" id="tgts_categoria" class="form-control select2">
                         <option value="">Elija una categoría</option>
+                        <option value="">TODAS LAS CATEGORIAS</option>
+
                     </select>
                 </div>
             </div>

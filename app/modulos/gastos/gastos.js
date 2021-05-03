@@ -448,9 +448,6 @@ $("#btnMostrarGastosUsr").on("click", function () {
     ffin = $("#gts_fecha_fin").val() + "T23:59";
     //alert (finicio);
     var errormsj = "";
-    if (categoria <= 0) {
-        errormsj += "Seleccione una categoria \n";
-    }
 
     if (finicio == "T00:00") {
         errormsj += "Seleccione una fecha de inicio valida \n";
