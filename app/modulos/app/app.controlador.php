@@ -97,6 +97,8 @@ class AppControlador
             'reporte-gastos',
             'ver-caja',
             'abonos',
+            'ventas'
+            
         );
     }
 
@@ -822,6 +824,28 @@ class AppControlador
                             'label' => 'Reporte de gasolina',
                             'href' => 'reporte-gasolina'
                         ]
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            
+            '7' => array(
+                [
+                    'label' => 'Plantillas',
+                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Crear plantilla de ventas',
+                            'href' => 'ventas/crear-plantilla'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Cargar datos a plantilla',
+                            'href' => 'ventas/cargar-plantilla'
+                        ],
                         // Aqui más item de menu
                     ),
                 ]
