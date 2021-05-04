@@ -24,5 +24,26 @@ class VentasControlador
     public function ctrEliminarVentas()
     {
     }
-}
 
+    public function ctrCrearPlantilla()
+    {
+        if (isset($_POST)) {
+            $_POST['pvts_usr_registro'] = $_SESSION['session_usr']['usr_nombre'];
+            $creado = VentasModelo::mdlCrearPlantilla($_POST);
+
+            if ($creado) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Se creo la plantilla',
+                    'pagina' => HTTP_HOST . 'ventas/cargar-plantilla'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo crear la plantilla, intenta de nuevo.',
+                    'pagina' => HTTP_HOST . 'ventas/crear-plantilla'
+                );
+            }
+        }
+    }
+}
