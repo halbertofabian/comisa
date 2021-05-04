@@ -207,7 +207,7 @@ class UsuariosModelo
     public static function mdlMostrarUsuarios($usr_id = "", $usr_rol = "", $usr_searh = false, $usr_matricula = "")
     {
         try {
-            //code...
+            //code..
             if ($usr_searh && $usr_matricula != "") {
                 $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_matricula = ? ";
                 $con = Conexion::conectar();
@@ -223,7 +223,7 @@ class UsuariosModelo
                 $pps->bindValue(1, $usr_rol);
                 // $pps->bindValue(2, SUCURSAL_ID);
                 $pps->execute();
-                return $pps->fetch();
+                return $pps->fetch(); 
             } else if ($usr_id == "" && $usr_rol != "") {
                 $sql = "SELECT usr.*,scl.scl_nombre FROM tbl_usuarios_usr usr JOIN tbl_sucursal_scl scl ON usr.usr_id_sucursal = scl.scl_id  WHERE usr_rol = ? AND usr_id_sucursal = ?   ORDER BY usr_id DESC ";
                 $con = Conexion::conectar();
