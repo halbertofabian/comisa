@@ -18,6 +18,7 @@ include_once '../../../config.php';
 require_once DOCUMENT_ROOT . 'app/modulos/ventas/ventas.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/ventas/ventas.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
+require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 class VentasAjax
 {
     public function ajaxcrearPlantilla()
@@ -25,11 +26,29 @@ class VentasAjax
         $respuesta = VentasControlador::ctrCrearPlantilla();
         echo json_encode($respuesta, true);
     }
+    public function ajaxbuscartipoCargarPlantilla()
+    {
+        $respuesta = VentasControlador::ctrbuscartipoCargarPlantilla();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxCargarInfoPlantilla()
+    {
+        $respuesta = VentasControlador::ctrCargarinfoPlantilla();
+        echo json_encode($respuesta, true);
+    }
 }
 
 if (isset($_POST['btn_crear_plantilla'])) {
     $crearPlantilla = new VentasAjax();
     $crearPlantilla->ajaxcrearPlantilla();
+}
+if (isset($_POST['select_plantilla'])) {
+    $mostrarInfoPlantillaVts = new VentasAjax();
+    $mostrarInfoPlantillaVts->ajaxbuscartipoCargarPlantilla();
+}
+if (isset($_POST['btn_cargar_plantilla'])) {
+    $cargarInfoPlantillaVts = new VentasAjax();
+    $cargarInfoPlantillaVts->ajaxCargarInfoPlantilla();
 }
 
 
