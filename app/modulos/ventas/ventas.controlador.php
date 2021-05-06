@@ -105,13 +105,13 @@ class VentasControlador
                 return array(
                     'status' => $aux,
                     'mensaje' => 'Se insertaron correctamente los datos',
-                    'pagina' => HTTP_HOST . ''
+                    'pagina' => HTTP_HOST . 'ventas/cargar-plantilla'
                 );
             } elseif ($aux == "actualizado") {
                 return array(
                     'status' => $aux,
                     'mensaje' => 'Se actualizaron correctamente los datos',
-                    'pagina' => HTTP_HOST . ''
+                    'pagina' => HTTP_HOST . 'ventas/cargar-plantilla'
                 );
             }
         }

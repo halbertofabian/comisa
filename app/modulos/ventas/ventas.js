@@ -113,7 +113,7 @@ $("#pvts_num_semana").on("change", function () {
                     <tr id="${datos['dvts_id_vendedor']}">
                     <td>
                     <input data-toggle="tooltip" data-placement="top" title="${datos['usr_nombre']}" type="text" class="form-control" value="${datos['usr_nombre']}" readonly>
-                    <input type="hidden" name="vendedor[]" id="" value="${datos['dvts_id_vendedor']}">
+                    <input type="hidden" name="vendedor[]"  value="${datos['dvts_id_vendedor']}">
                     </td>
                     <td><input type="text" name="sabado[]" id="vtss_${datos['dvts_id_vendedor']}" value="${datos['dvts_sabado']}" class="form-control inputdia "></td>
                     <td><input type="text" name="domingo[]" id="vtsd_${datos['dvts_id_vendedor']}" value="${datos['dvts_domingo']}" class="form-control inputdia" ></td>
@@ -123,11 +123,13 @@ $("#pvts_num_semana").on("change", function () {
                     <td><input type="text" name="jueves[]" id="vtsj_${datos['dvts_id_vendedor']}" value="${datos['dvts_jueves']}" class="form-control inputdia "></td>
                     <td><input type="text" name="viernes[]" id="vtsv_${datos['dvts_id_vendedor']}" value="${datos['dvts_viernes']}" class="form-control inputdia "></td>
                     <td>
-                    <input type="text" name="total[]" id="vtst_${datos['dvts_id_vendedor']}" value="${datos['dvts_total']}" class="form-control" readonly>
-                    <input type="hidden" name="dvts_id[]" id="" value="${datos['dvts_id']}">
+                    <input type="text" name="total[]" id="vtst_${datos['dvts_id_vendedor']}" value="${datos['dvts_total']}" class="form-control " readonly>
+                    <input type="hidden" class="vtsTotal" value="${datos['dvts_id_vendedor']}_${datos['dvts_total']}">
+                    <input type="hidden" name="dvts_id[]"  value="${datos['dvts_id']}">
                     </td>
                     </tr>`;
                 });
+
 
             } else {
                 respuesta.info.forEach(datos => {
@@ -135,7 +137,7 @@ $("#pvts_num_semana").on("change", function () {
                     <tr id="${datos['usr_id']}">
                     <td>
                     <input data-toggle="tooltip" data-placement="top" title="${datos['usr_nombre']}" type="text" class="form-control" value="${datos['usr_nombre']}" readonly>
-                    <input type="hidden" name="vendedor[]" id="" value="${datos['usr_id']}">
+                    <input type="hidden" name="vendedor[]"  value="${datos['usr_id']}">
                     </td>
                     <td><input type="text" name="sabado[]" id="vtss_${datos['usr_id']}" class="form-control inputdia "></td>
                     <td><input type="text" name="domingo[]" id="vtsd_${datos['usr_id']}" class="form-control inputdia" ></td>
@@ -145,14 +147,16 @@ $("#pvts_num_semana").on("change", function () {
                     <td><input type="text" name="jueves[]" id="vtsj_${datos['usr_id']}" class="form-control inputdia "></td>
                     <td><input type="text" name="viernes[]" id="vtsv_${datos['usr_id']}" class="form-control inputdia "></td>
                     <td>
-                    <input type="text" name="total[]" id="vtst_${datos['usr_id']}" class="form-control" readonly>
-                    <input type="hidden" name="dvts_id[]" id="" value="">
+                    <input type="text" name="total[]" id="vtst_${datos['usr_id']}" class="form-control " readonly>
+                    <input type="hidden" class="vtsTotal" value="${datos['usr_id']}_">
+                    <input type="hidden" name="dvts_id[]"  value="">
                     </td>
                     </tr>`;
                 });
             }
             $("#inftblcargarPlantilla").html(tbinfNumVentas);
-                $("#btn_cargar_plantilla").removeClass("d-none");
+            $("#btn_cargar_plantilla").removeClass("d-none");
+            $("#seccion_pgs_vts").removeClass("d-none");
         }
     });
 
@@ -179,21 +183,60 @@ $("#form_cargar_plantilla").on("submit", function (e) {
 
             if (respuesta.status == "insertado") {
                 toastr.success(respuesta.mensaje, "¡Muy bien!")
-                setTimeout(function () {
-                    location.href = respuesta.pagina
-                }, 1000);
 
             }
             if (respuesta.status == "actualizado") {
                 toastr.success(respuesta.mensaje, "¡Muy bien!")
-                setTimeout(function () {
-                    location.href = respuesta.pagina
-                }, 1000);
-
             }
 
         }
     })
 
 
+})
+
+$("#btn_cal_pg").on("click", function () {
+    var vtsmas = Number($("#vtsmas").val());
+    var vtsmenos = Number($("#vtsmenos").val());
+    var preciomas = Number($("#pvtsmas").val());
+    var preciomenos = Number($("#pvtsmenos").val());
+    var ek = $('.vtsTotal').map((_, el) => el.value).get()
+    /*
+$.each(ek, function() {
+    alert('this is ' + this);
+  });
+  */
+
+    ek.forEach(dts => {
+        separador = "_";
+        textseparado = dts.split(separador);
+        usrid = textseparado[0];
+        deudainterna=Number($("#dint_"+usrid).val());
+        numvts= Number(textseparado[1]);
+        //limpiar abono para evitar confusion
+        $("#abn_"+usrid).val("");
+        //
+        if(numvts>=vtsmas){
+            
+            $("#apagar_"+usrid).val((numvts*preciomas)-deudainterna);
+            $("#apagaraux_"+usrid).val((numvts*preciomas)-deudainterna);
+        }if(numvts<vtsmenos){
+            
+            $("#apagar_"+usrid).val((numvts*preciomenos)-deudainterna);
+            $("#apagaraux_"+usrid).val((numvts*preciomenos)-deudainterna);
+        }
+    });
+
+})
+
+$(".table_vts_pago tbody").on("keyup", ".inputAbono", function () {
+    var id = $(this).attr("id");
+    var apagar="";
+    separador = "_";
+    idseparado = id.split(separador);
+    usrid = idseparado[1];
+    var abono= Number($(this).val());
+    var pago= Number($("#apagaraux_"+usrid).val());
+    apagar=pago-abono;
+    $("#apagar_"+usrid).val(apagar);
 })
