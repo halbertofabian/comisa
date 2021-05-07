@@ -449,4 +449,26 @@ class GastosModelo
             $con = null;;
         }
     }
+
+   
+    public static function mdlMostrarSumDebeUsr($idus)
+    {
+
+        try {
+            //code...
+            $sql = " SELECT SUM(tgts_cantidad) FROM tbl_gastos_tgts WHERE tgts_categoria=11 AND tgts_usuario_responsable=?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $idus);
+           
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
 }

@@ -84,6 +84,7 @@ $(".table_cargarPlantilla tbody").on("keyup", ".inputdia", function () {
     var vts_v = Number($("#vtsv_" + usrid).val());
     sumaVts = vts_s + vts_d + vts_l + vts_m + vts_mi + vts_j + vts_v;
     $("#vtst_" + usrid).val(sumaVts);
+    $("#vtstaux_" + usrid).val(usrid+"_"+sumaVts);
 
 
 })
@@ -124,7 +125,7 @@ $("#pvts_num_semana").on("change", function () {
                     <td><input type="text" name="viernes[]" id="vtsv_${datos['dvts_id_vendedor']}" value="${datos['dvts_viernes']}" class="form-control inputdia "></td>
                     <td>
                     <input type="text" name="total[]" id="vtst_${datos['dvts_id_vendedor']}" value="${datos['dvts_total']}" class="form-control " readonly>
-                    <input type="hidden" class="vtsTotal" value="${datos['dvts_id_vendedor']}_${datos['dvts_total']}">
+                    <input type="hidden" class="vtsTotal" id="vtstaux_${datos['dvts_id_vendedor']}" value="${datos['dvts_id_vendedor']}_${datos['dvts_total']}">
                     <input type="hidden" name="dvts_id[]"  value="${datos['dvts_id']}">
                     </td>
                     </tr>`;
