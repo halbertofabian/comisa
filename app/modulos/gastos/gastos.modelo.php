@@ -451,15 +451,41 @@ class GastosModelo
     }
 
    
-    public static function mdlMostrarSumDebeUsr($idus)
+    public static function mdlMostrarSumDebeAllUsr($fi,$ff)
     {
 
         try {
             //code...
-            $sql = " SELECT SUM(tgts_cantidad) FROM tbl_gastos_tgts WHERE tgts_categoria=11 AND tgts_usuario_responsable=?";
+            $sql = "SELECT tgts_usuario_responsable,SUM(tgts_cantidad) AS sumadbe,tgts_fecha_gasto FROM tbl_gastos_tgts 
+            WHERE tgts_categoria=11 AND (tgts_fecha_gasto BETWEEN ? AND ?) 
+            GROUP BY tgts_usuario_responsable ORDER BY tgts_usuario_responsable ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $fi);
+            $pps->bindValue(2, $ff);
+           
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;;
+        }
+    }
+    public static function mdlMostrarSumDebeUsr($idus,$fi,$ff)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT SUM(tgts_cantidad) AS sumadbe,tgts_fecha_gasto FROM tbl_gastos_tgts 
+            WHERE tgts_categoria=11 AND tgts_usuario_responsable=? AND (tgts_fecha_gasto BETWEEN ? AND ?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $idus);
+            $pps->bindValue(2, $fi);
+            $pps->bindValue(3, $ff);
            
             $pps->execute();
             return $pps->fetch();

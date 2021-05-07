@@ -155,7 +155,23 @@ $("#pvts_num_semana").on("change", function () {
                     </tr>`;
                 });
             }
+            tb2inf="";
+            respuesta.info2.forEach(dts => {
+                tb2inf += `
+                <tr>
+                            <td> <input type="text" name="" id="" value="${dts['usr_nombre']}" class="form-control" readonly></td>
+                            <td><input type="text" name="" id="dint_${dts['usr_id']}" value="${dts['usr_deuda_int']}" class="form-control" readonly></td>
+                            <td><input type="text" name="" id="" value="${dts['sumadeuda']}" class="form-control" readonly></td>
+                            <td><input type="text" name="" id="dext_${dts['usr_id']}" value="${dts['usr_deuda_ext']}" class="form-control" readonly></td>
+                            <td><input type="text" name="" id="abn_${dts['usr_id']}" class="form-control inputAbono"></td>
+                            <td><input type="text" name="" id="apagar_${dts['usr_id']}" class="form-control" readonly>
+                            <input type="hidden" id="apagaraux_${dts['usr_id']}" class="form-control" readonly></td>
+                        </tr>
+                >`;
+            });
+
             $("#inftblcargarPlantilla").html(tbinfNumVentas);
+            $("#tb2inf").html(tb2inf);
             $("#btn_cargar_plantilla").removeClass("d-none");
             $("#seccion_pgs_vts").removeClass("d-none");
         }

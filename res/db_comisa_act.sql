@@ -12,6 +12,9 @@ ALTER TABLE `tbl_traspasos_tps` ADD CONSTRAINT `ams_traspasos_fk` FOREIGN KEY (`
 ALTER TABLE `tbl_traspasos_tps` ADD CONSTRAINT `ams_traspasos2_fk` FOREIGN KEY (`tps_ams_id_destino`) REFERENCES `tbl_almacenes_ams`(`ams_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `tbl_traspasos_tps` ADD UNIQUE (`tps_num_traspaso`);
+////////////////////////////////
+********************************
+ALTER TABLE `tbl_plantilla_ventas_pvts` CHANGE `pvts_fecha_inicio` `pvts_fecha_inicio` DATE NOT NULL, CHANGE `pvts_fecha_fin` `pvts_fecha_fin` DATE NOT NULL;
 
 //////////////////////////////// todo lo nuevo plantillas
 

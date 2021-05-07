@@ -123,6 +123,24 @@ class VentasModelo
             $con = null;
         }
     }
+    public static function mdlMostrarPlantillaById($idplantilla)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_plantilla_ventas_pvts WHERE pvts_id=?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $idplantilla);
+
+            $pps -> execute();
+            return $pps ->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlMostrarinfoPlantillasId($idp)
     {

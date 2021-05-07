@@ -44,7 +44,7 @@ cargarComponente('breadcrumb', '', 'Carga de datos de plantilla');
 
 
                         ?>
-                            <option value="<?= $info['pvts_id'] ?>">SEMANA <?= $info['pvts_id'] ?> Del <?= $diain ?> al <?= $diafin ?> de <?= $meses[$cadena_formateada] ?> <?= $anio ?> </option>
+                            <option value="<?= $info['pvts_id'] ?>">SEMANA <?= $info['pvts_num_semana'] ?> Del <?= $diain ?> al <?= $diafin ?> de <?= $meses[$cadena_formateada] ?> <?= $anio ?> </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -99,26 +99,8 @@ cargarComponente('breadcrumb', '', 'Carga de datos de plantilla');
                         <th>A pagar</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php
-                    $aux = "";
-                    $rol = "Vendedor";
-                    $usuarios = UsuariosModelo::mdlMostrarUsuarios($aux, $rol);
-                    foreach ($usuarios as $key => $usr) :
-                        //$usr['usr_id']
-                        //$id=87;
-                        $sumdebe=GastosModelo::mdlMostrarSumDebeUsr($usr['usr_id']);
-                    ?>
-                        <tr>
-                            <td> <input type="text" name="" id="" value="<?= $usr['usr_nombre'] ?>" class="form-control" readonly></td>
-                            <td><input type="text" name="" id="dint_<?= $usr['usr_id'] ?>" value="<?= $usr['usr_deuda_int'] ?>" class="form-control" readonly></td>
-                            <td><input type="text" name="" id="" value="<?= $sumdebe['SUM(tgts_cantidad)'] ?>" class="form-control" readonly></td>
-                            <td><input type="text" name="" id="dext_<?= $usr['usr_id'] ?>" value="<?= $usr['usr_deuda_ext'] ?>" class="form-control" readonly></td>
-                            <td><input type="text" name="" id="abn_<?= $usr['usr_id'] ?>" class="form-control inputAbono"></td>
-                            <td><input type="text" name="" id="apagar_<?= $usr['usr_id'] ?>" class="form-control" readonly>
-                            <input type="hidden" id="apagaraux_<?= $usr['usr_id'] ?>" class="form-control" readonly></td>
-                        </tr>
-                    <?php endforeach; ?>
+                <tbody id="tb2inf">
+                     
                 </tbody>
             </table>
 

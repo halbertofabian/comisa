@@ -50,10 +50,41 @@ class VentasControlador
     {
         if (isset($_POST)) {
             $datosexistentes = VentasModelo::mdlMostrarinfoPlantillasId($_POST['dvts_id_plantilla']);
+
+            $aux = "";
+            $rol = "Vendedor";
+            $usuarios = UsuariosModelo::mdlMostrarUsuarios($aux, $rol);
+            //Sacar fecha para saber la suma por semana
+            $dtsplantilla=VentasModelo::mdlMostrarPlantillaById($_POST['dvts_id_plantilla']);
+            $sumdebe=GastosModelo::mdlMostrarSumDebeAllUsr($dtsplantilla['pvts_fecha_inicio']."T00:00",$dtsplantilla['pvts_fecha_fin']."T23:59");
+            
+
+            
+            $newArrayCompuesto=[];
+            $x=0;
+            foreach ($usuarios as $key => $usr) {
+            $tdebe=GastosModelo::mdlMostrarSumDebeUsr($usr['usr_id'],$dtsplantilla['pvts_fecha_inicio']."T00:00",$dtsplantilla['pvts_fecha_fin']."T23:59");
+          
+        
+            if($tdebe['sumadbe']>0){
+                $x=$tdebe['sumadbe'];
+            }
+            array_push($newArrayCompuesto,array(
+                "usr_id" =>$usr['usr_id'],
+                "usr_nombre"=>$usr['usr_nombre'],
+                "usr_deuda_int"=>$usr['usr_deuda_int'],
+                "sumadeuda"=>$x,
+                "usr_deuda_ext"=>$usr['usr_deuda_ext'],
+            ));
+
+            }
+
+
             if ($datosexistentes) {
                 return array(
                     'status' => true,
-                    'info' => $datosexistentes
+                    'info' => $datosexistentes,
+                    'info2'=> $newArrayCompuesto
                 );
             } else {
                 $aux = "";
@@ -61,7 +92,8 @@ class VentasControlador
                 $usuarios = UsuariosModelo::mdlMostrarUsuarios($aux, $rol);
                 return array(
                     'status' => false,
-                    'info' => $usuarios
+                    'info' => $usuarios,
+                    'info2'=> $newArrayCompuesto
                 );
             }
         }
