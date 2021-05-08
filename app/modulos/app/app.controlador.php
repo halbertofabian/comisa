@@ -78,6 +78,7 @@ class AppControlador
             'reporte-gasolina',
             'abonos',
             'reporte-ingresos',
+            'kardex'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -101,6 +102,7 @@ class AppControlador
             'abonos',
             'ventas',
             'reporte-ingresos',
+            'kardex'
             
         );
     }
@@ -125,7 +127,8 @@ class AppControlador
             'reporte-gasolina',
             'abonos',
             'ver-caja',
-            'listar-traspasos'
+            'listar-traspasos',
+            'kardex'
         );
     }
 
@@ -864,6 +867,7 @@ class AppControlador
                     ),
                 ]
             ),
+            
         );
     }
     public static function obtnerMenuGefeAdministracion()
