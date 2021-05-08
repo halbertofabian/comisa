@@ -179,4 +179,47 @@ class IngresosModelo
             $con = null;;
         }
     }
+
+    public static function mdlMostrarResumenIngresosId($inf)
+    {
+        try {
+            $sql = "SELECT igs.*,usr.usr_nombre FROM tbl_ingresos_igs igs 
+            JOIN tbl_usuarios_usr usr ON usr.usr_id=igs.igs_usuario_responsable
+            WHERE (igs.igs_concepto!='INICIO DE CAJA' AND igs.igs_concepto!='REINGRESOS_COBRANZA') AND 
+            (igs.igs_fecha_registro BETWEEN ? AND ?) AND igs.igs_usuario_responsable=? ORDER BY igs.igs_fecha_registro DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $inf['igs_fecha_inicio']);
+            $pps->bindValue(2, $inf['igs_fecha_fin']);
+            $pps->bindValue(3, $inf['igs_usuario_responsable']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarResumenIngresosAll($inf)
+    {
+        try {
+            $sql = "SELECT igs.*,usr.usr_nombre FROM tbl_ingresos_igs igs 
+            JOIN tbl_usuarios_usr usr ON usr.usr_id=igs.igs_usuario_responsable
+            WHERE (igs.igs_concepto!='INICIO DE CAJA' AND igs.igs_concepto!='REINGRESOS_COBRANZA') AND 
+            (igs.igs_fecha_registro BETWEEN ? AND ?) ORDER BY igs.igs_fecha_registro DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $inf['igs_fecha_inicio']);
+            $pps->bindValue(2, $inf['igs_fecha_fin']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

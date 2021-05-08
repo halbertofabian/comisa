@@ -46,7 +46,8 @@ class AppControlador
             'reporte-gasolina',
             'reporte-gastos',
             'abonos',
-            'listar-traspasos'
+            'listar-traspasos',
+            
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -76,6 +77,7 @@ class AppControlador
             'reporte-gastos',
             'reporte-gasolina',
             'abonos',
+            'reporte-ingresos',
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -97,7 +99,8 @@ class AppControlador
             'reporte-gastos',
             'ver-caja',
             'abonos',
-            'ventas'
+            'ventas',
+            'reporte-ingresos',
             
         );
     }
@@ -669,6 +672,11 @@ class AppControlador
                             'label' => 'Listar ingresos',
                             'href' => 'ingresos'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Reporte de ingresos',
+                            'href' => 'reporte-ingresos'
+                        ],
 
                         // Aqui más item de menu
                     ),
@@ -784,6 +792,12 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Listar ingresos',
                             'href' => 'ingresos'
+                        ],
+                        
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Reporte de ingresos',
+                            'href' => 'reporte-ingresos'
                         ],
 
                         // Aqui más item de menu

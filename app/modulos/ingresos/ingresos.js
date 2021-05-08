@@ -83,4 +83,82 @@ $(".tablaIngresos tbody").on("click", "button.btnEliminarIngreso", function () {
 })
 
 
+$("#btnMostrarIngresosUsr").on("click", function () {
+    
+    id_usr = $("#igs_usuario").val();
+    finicio = $("#igs_fecha_inicio").val() + "T00:00";
+    ffin = $("#igs_fecha_fin").val() + "T23:59";
+    //alert (finicio);
+    var errormsj = "";
+
+    if (finicio == "T00:00") {
+        errormsj += "Seleccione una fecha de inicio valida \n";
+    }
+    if (ffin == "T00:00") {
+        errormsj += "Seleccione una fecha de fin valida \n";
+    }
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+
+    var datos = new FormData();
+    datos.append("igs_usuario_responsable", id_usr)
+    datos.append("igs_fecha_inicio", finicio)
+    datos.append("igs_fecha_fin", ffin)
+    datos.append("btnMostrarIngresosUsr", true)
+
+
+    $.ajax({
+
+        url: urlApp + 'app/modulos/ingresos/ingresos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+            startLoadButton()
+
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+
+
+            stopLoadButton()
+            var tblDatosResumenIngresosUsrs = ""
+            var total = 0;
+            respuesta.forEach(info => {
+
+                total += Number(info.igs_monto);
+                tblDatosResumenIngresosUsrs +=
+                    `
+                        <tr>
+                        <td>${info.igs_id}</td>
+                        <td>${info.usr_nombre}</td>
+                        <td>${info.igs_concepto}</td>
+                        <td>${info.igs_monto}</td>
+                        <td>${info.igs_mp}</td>
+                        <td>${info.igs_referencia}</td>
+                            <td>${info.igs_tipo}</td>
+                            <td>${info.igs_fecha_registro}</td>
+                            <td>${info.igs_usuario_registro}</td>
+                              
+                        </tr>
+                    `;
+
+            });
+            $("#tblDatosIngresosUsr").html(tblDatosResumenIngresosUsrs)
+            $("#tigs").text($.number(total,2))
+        }
+    })
+
+})
+
+
+
 

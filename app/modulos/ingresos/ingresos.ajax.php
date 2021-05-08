@@ -50,6 +50,17 @@ class IngresosAjax
         }
         echo json_encode($res, true);
     }
+
+    public function ajaxMostrarResumenIngresos()
+    {
+        if ($_POST['igs_usuario_responsable'] > 0 ) {
+
+            $respuesta = IngresosModelo::mdlMostrarResumenIngresosId($_POST);
+        } else {
+            $respuesta = IngresosModelo::mdlMostrarResumenIngresosAll($_POST);
+        }
+        echo json_encode($respuesta, true);
+    }
 }
 
 
@@ -69,4 +80,9 @@ if (isset($_POST['btnConsultarIngresosByCaja'])) {
 if (isset($_POST['btnAgregarIngreso'])) {
     $btnAgregarIngreso = new IngresosAjax();
     $btnAgregarIngreso->ajaxAgregarIngreso();
+}
+
+if (isset($_POST['btnMostrarIngresosUsr'])) {
+    $MostrarResumenIngresos = new IngresosAjax();
+    $MostrarResumenIngresos->ajaxMostrarResumenIngresos();
 }
