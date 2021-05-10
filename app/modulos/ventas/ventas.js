@@ -257,3 +257,98 @@ $(".table_vts_pago tbody").on("keyup", ".inputAbono", function () {
     apagar=pago-abono;
     $("#apagar_"+usrid).val(apagar);
 })
+
+$("#btnMostrarKardex").on("click", function () {
+    
+    id_usr = $("#igs_usuario").val();
+    finicio = $("#igs_fecha_inicio").val() + "T00:00";
+    ffin = $("#igs_fecha_fin").val() + "T23:59";
+    //alert (finicio);
+    var errormsj = "";
+
+    if (finicio == "T00:00") {
+        errormsj += "Seleccione una fecha de inicio valida \n";
+    }
+    if (ffin == "T00:00") {
+        errormsj += "Seleccione una fecha de fin valida \n";
+    }
+
+    if (errormsj != "") {
+        toastr.warning(errormsj, 'Error de datos')
+        return;
+
+    }
+
+    var datos = new FormData();
+    datos.append("usuario_responsable", id_usr)
+    datos.append("fecha_inicio", finicio)
+    datos.append("fecha_fin", ffin)
+    datos.append("btnMostrarKardex", true)
+
+
+    $.ajax({
+
+        url: urlApp + 'app/modulos/ventas/ventas.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+
+            startLoadButton()
+
+        },
+        success: function (respuesta) {
+            // console.log(respuesta)
+            stopLoadButton()
+            var tblDatosResumenIngresosUsrs = ""
+            var total = 0;
+            var tblDatosResumenGastosUsrs = ""
+            var totalGastos = 0;
+            if(respuesta.status){
+                respuesta.ingresos.forEach(info => {
+
+                    total += Number(info.igs_monto);
+                    tblDatosResumenIngresosUsrs +=
+                        `
+                            <tr>
+                            <td>${info.igs_id}</td>
+                            <td>${info.igs_monto}</td>
+                            <td>${info.igs_mp}</td>
+                            <td>${info.igs_fecha_registro}</td>
+                               
+                            </tr>
+                        `;
+    
+                });
+            }
+            
+            respuesta.gastos.forEach(info => {
+
+                totalGastos += Number(info.tgts_cantidad);
+                tblDatosResumenGastosUsrs +=
+                    `
+                        <tr>
+                        <td>${info.tgts_id}</td>
+                        <td>${info.tgts_cantidad}</td>
+                        <td>${info.tgts_mp}</td>
+                        <td>${info.tgts_fecha_gasto}</td>
+    
+                        </tr>
+                    `;
+
+            });
+            
+            
+            $("#KardexIngresosUsr").html(tblDatosResumenIngresosUsrs)
+            $("#KardexGastosUsr").html(tblDatosResumenGastosUsrs)
+            $("#sumigs").text($.number(total,2))
+            $("#sumgts").text($.number(totalGastos,2))
+            dif=total-totalGastos;
+            $("#dif").text($.number(dif,2))
+        }
+    })
+
+})

@@ -21,6 +21,7 @@ require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/gastos/gastos.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.modelo.php';
 class VentasAjax
 {
     public function ajaxcrearPlantilla()
@@ -38,6 +39,12 @@ class VentasAjax
         $respuesta = VentasControlador::ctrCargarinfoPlantilla();
         echo json_encode($respuesta, true);
     }
+
+    public function ajaxMostrarKardex()
+    {
+            $respuesta = VentasControlador::ctrMostrarKardex($_POST);
+        echo json_encode($respuesta, true);
+    }
 }
 
 if (isset($_POST['btn_crear_plantilla'])) {
@@ -51,6 +58,11 @@ if (isset($_POST['select_plantilla'])) {
 if (isset($_POST['btn_cargar_plantilla'])) {
     $cargarInfoPlantillaVts = new VentasAjax();
     $cargarInfoPlantillaVts->ajaxCargarInfoPlantilla();
+}
+
+if (isset($_POST['btnMostrarKardex'])) {
+    $MostrarKardex = new VentasAjax();
+    $MostrarKardex->ajaxMostrarKardex();
 }
 
 

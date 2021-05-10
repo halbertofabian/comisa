@@ -148,4 +148,45 @@ class VentasControlador
             }
         }
     }
+
+    public function ctrMostrarKardex()
+    {   
+        $aux="";
+        $_POST['igs_usuario_responsable'] =$_POST['usuario_responsable'];
+        $_POST['igs_fecha_inicio'] =$_POST['fecha_inicio'];
+        $_POST['igs_fecha_fin'] =$_POST['fecha_fin'];
+
+        $_POST['tgts_usuario_responsable'] =$_POST['usuario_responsable'];
+        $_POST['gts_fecha_inicio'] =$_POST['fecha_inicio'];
+        $_POST['gts_fecha_fin'] =$_POST['fecha_fin'];
+
+        if ($_POST['usuario_responsable'] > 0 ) {
+            $respuesta1 = IngresosModelo::mdlMostrarResumenIngresosId($_POST);
+            $respuesta2 = GastosModelo::mdlMostrarResumenGastosx($_POST);
+            $aux="1";
+
+        } else {
+            $respuesta1 = IngresosModelo::mdlMostrarResumenIngresosAll($_POST);
+            $respuesta2 = GastosModelo::mdlMostrarResumenGastosall($_POST);
+            $aux="1";
+           
+        }
+            if ($aux!="") {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'bien',
+                    'ingresos'=> $respuesta1,
+                    'gastos'=> $respuesta2,
+
+                
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Algo fallo, intenta de nuevo.',
+                    
+                );
+            } 
+    }
+
 }
