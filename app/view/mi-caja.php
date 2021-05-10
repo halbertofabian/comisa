@@ -81,6 +81,11 @@
                     <div class="col-12">
                         <form method="post" id="formIngreso">
 
+                            <!-- <div class="form-group">
+                                <label for=""></label>
+                                <input type="date" name="igs_fecha_input" id="igs_fecha_input" class="form-control theDate">
+                            </div> -->
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -443,13 +448,13 @@
                     <label for="">Tipo de prestamo</label>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="pms_tipo" id="pms_tipo_inerno" value="Interno" required >
+                            <input type="radio" class="form-check-input" name="pms_tipo" id="pms_tipo_inerno" value="Interno" required>
                             Prestamo semanal (interno)
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="pms_tipo" id="pms_tipo_extero" value="Externo" required >
+                            <input type="radio" class="form-check-input" name="pms_tipo" id="pms_tipo_extero" value="Externo" required>
                             Prestamo externo
                         </label>
                     </div>

@@ -70,6 +70,7 @@ class IngresosControlador
             // $_POST['igs_id_corte'] = CortesControlador::crtConsultarUltimoCorte();
 
             $_POST['igs_monto'] = str_replace(",", "", $_POST['igs_monto']);
+            
             $_POST['igs_fecha_registro'] = FECHA;
 
             $crearIngreso = IngresosModelo::mdlAgregarIngresos($_POST);
