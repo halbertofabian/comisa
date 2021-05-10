@@ -5,6 +5,24 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
     <div class="container">
         <form method="post" id="tblAgregarClientes">
             <div class="row">
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="">FOLIO DE CONTROL:</label>
+                        <input type="text" name="" id="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="">CUENTA Nº:</label>
+                        <input type="text" name="" id="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="">FECHA:</label>
+                        <input type="date" name="" id="" class="form-control theDate">
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
                         <strong>DATOS DEL CLIENTE:</strong>
@@ -165,6 +183,272 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                     </div>
                 </div>
                 <div class="col-12">
+                    <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                        <strong>DATOS DEL CONYUGE:</strong>
+                    </div>
+                </div>
+
+
+                <div class="col-md-8 col-12">
+                    <div class="form-group">
+                        <label for="cts_nombre_conyuge">NOMBRE:</label>
+                        <input type="text" name="cts_nombre_conyuge" id="cts_nombre_conyuge" class="form-control" placeholder="NOMBRE">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_trabajo_conyuge">TRABAJA EN:</label>
+                        <input type="text" name="cts_trabajo_conyuge" id="cts_trabajo_conyuge" class="form-control" placeholder="TRABAJA EN">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_puesto_conyuge">PUESTO:</label>
+                        <input type="text" name="cts_puesto_conyuge" id="cts_puesto_conyuge" class="form-control" placeholder="PUESTO">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_dirtrabajo_conyuge">DIRECCION:</label>
+                        <input type="text" name="cts_dirtrabajo_conyuge" id="cts_dirtrabajo_conyuge" class="form-control" placeholder="DIRECCION">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_coltrabajo_conyuge">COL:</label>
+                        <input type="text" name="cts_coltrabajo_conyuge" id="cts_coltrabajo_conyuge" class="form-control" placeholder="COL">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_teltrabajo_conyuge">TELEFONO:</label>
+                        <input type="text" name="cts_teltrabajo_conyuge" id="cts_teltrabajo_conyuge" class="form-control" placeholder="TELEFONO">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_anttrabajo_conyuge">ANTIGÜEDAD:</label>
+                        <input type="number" name="cts_anttrabajo_conyuge" id="cts_anttrabajo_conyuge" class="form-control" placeholder="TIEMPO">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_tiempo_trabajo_conyuge">ELIJE TIEMPO:</label>
+                        <select name="cts_tiempo_trabajo_conyuge" id="cts_tiempo_trabajo_conyuge" class="form-control">
+                            <option value="AÑOS">AÑOS</option>
+                            <option value="MESES">MESES</option>
+                            <option value="DIAS">DIAS</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                        <strong>DATOS DEL FIADOR:</strong>
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_nombre_fiador">NOMBRE:</label>
+                        <input type="text" name="cts_nombre_fiador" id="cts_nombre_fiador" class="form-control" placeholder="NOMBRE">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_parentesco_fiador">PARENTESCO:</label>
+                        <input type="text" name="cts_parentesco_fiador" id="cts_parentesco_fiador" class="form-control" placeholder="PARENTESCO">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_tel_fiador">TEL:</label>
+                        <input type="text" name="cts_tel_fiador" id="cts_tel_fiador" class="form-control" placeholder="TEL">
+                    </div>
+                </div>
+                <div class="col-md-8 col-12">
+                    <div class="form-group">
+                        <label for="cts_direccion_fiador">DIRECCIÓN:</label>
+                        <input type="text" name="cts_direccion_fiador" id="cts_direccion_fiador" class="form-control" placeholder="DIRECCION">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_colonia_fiador">COLONIA:</label>
+                        <input type="text" name="cts_colonia_fiador" id="cts_colonia_fiador" class="form-control" placeholder="COL">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_trabajo_fiador">TRABAJA EN:</label>
+                        <input type="text" name="cts_trabajo_fiador" id="cts_trabajo_fiador" class="form-control" placeholder="TRABAJA EN">
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_dirtrabajo_fiador">DIRECCION:</label>
+                        <input type="text" name="cts_dirtrabajo_fiador" id="cts_dirtrabajo_fiador" class="form-control" placeholder="DIRECCION">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_teltrabajo_fiador">TEL:</label>
+                        <input type="text" name="cts_teltrabajo_fiador" id="cts_teltrabajo_fiador" class="form-control" placeholder="TELEFONO">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_coltrabajo_fiador">COL:</label>
+                        <input type="text" name="cts_coltrabajo_fiador" id="cts_coltrabajo_fiador" class="form-control" placeholder="COL">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_fcelector_fiador">FOLIO CRED.ELECTOR:</label>
+                        <input type="text" name="cts_fcelector_fiador" id="cts_fcelector_fiador" class="form-control" placeholder="FOLIO CRED.ELECTOR">
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_anttrabajo_fiador">ANTIGÜEDAD:</label>
+                        <input type="number" name="cts_anttrabajo_fiador" id="cts_anttrabajo_fiador" class="form-control" placeholder="TIEMPO">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_tiempo_trabajo_fiador">ELIJE TIEMPO:</label>
+                        <select name="cts_tiempo_trabajo_fiador" id="cts_tiempo_trabajo_fiador" class="form-control">
+                            <option value="AÑOS">AÑOS</option>
+                            <option value="MESES">MESES</option>
+                            <option value="DIAS">DIAS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                        <strong>REFERENCIAS:</strong>
+                    </div>
+                </div>
+                <div class="col-md-8 col-12">
+                    <div class="form-group">
+                        <label for="cts_nombre_ref1">NOMBRE:</label>
+                        <input type="text" name="cts_nombre_ref1" id="cts_nombre_ref1" class="form-control" placeholder="NOMBRE">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_parentesco_ref1">PARENTESCO:</label>
+                        <input type="text" name="cts_parentesco_ref1" id="cts_parentesco_ref1" class="form-control" placeholder="PARENTESCO">
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label for="cts_direccion_ref1">DIRECCION:</label>
+                        <input type="text" name="cts_direccion_ref1" id="cts_direccion_ref1" class="form-control" placeholder="DIRECCION">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_col_ref1">COL:</label>
+                        <input type="text" name="cts_col_ref1" id="cts_col_ref1" class="form-control" placeholder="COL">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_tel_ref1">TEL:</label>
+                        <input type="text" name="cts_tel_ref1" id="cts_tel_ref1" class="form-control" placeholder="TELEFONO">
+                    </div>
+                </div>
+                <div class="col-md-8 col-12">
+                    <div class="form-group">
+                        <label for="cts_nombre_ref2">NOMBRE:</label>
+                        <input type="text" name="cts_nombre_ref2" id="cts_nombre_ref2" class="form-control" placeholder="NOMBRE">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="cts_parentesco_ref2">PARENTESCO:</label>
+                        <input type="text" name="cts_parentesco_ref2" id="cts_parentesco_ref2" class="form-control" placeholder="PARENTESCO">
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-group">
+                        <label for="cts_direccion_ref2">DIRECCION:</label>
+                        <input type="text" name="cts_direccion_ref2" id="cts_direccion_ref2" class="form-control" placeholder="DIRECCION">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_col_ref2">COL:</label>
+                        <input type="text" name="cts_col_ref2" id="cts_col_ref2" class="form-control" placeholder="COL">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <label for="cts_tel_ref2">TEL:</label>
+                        <input type="text" name="cts_tel_ref2" id="cts_tel_ref2" class="form-control" placeholder="TELEFONO">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                        <strong>LLENADO POR EL CLIENTE:</strong>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>FORMA DE PAGO</strong>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <input type="text" name="cts_fp" id="cts_fp" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>FECHA PROXIMO PAGO</strong>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <input type="date" name="cts_fecha_pp" id="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>DIA Y HORARIO DE PAGO DEL CLIENTE</strong>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <select name="cts_dia_pago" id="cts_dia_pago" class="form-control">
+                            <option value="">SELECCIONE DIA</option>
+                            <option value="LUNES">LUNES</option>
+                            <option value="MARTES">MARTES</option>
+                            <option value="MIERCOLES">MIERCOLES</option>
+                            <option value="JUEVES">JUEVES</option>
+                            <option value="VIERNES">VIERNES</option>
+                            <option value="SABADO">SABADO</option>
+                            <option value="DOMINGO">DOMINGO</option>
+                        </select>
+                        <input type="time" name="cts_horario_pago" id="cts_horario_pago" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="alert alert-secondary" role="alert">
+                        <strong>PLAZO DE CREDITO</strong>
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="form-group">
+                        <input type="text" name="cts_plazo_credito" id="cts_plazo_credito" class="form-control">
+                    </div>
+                </div>
+
+
+                <div class="col-12">
                     <button type="submit" class="btn btn-primary btn-sm-block float-right btn-load">GUARDAR</button>
                 </div>
             </div>
@@ -271,10 +555,6 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
         </div>
     </div>
 <?php endif; ?>
-
-
-
-
 
 
 <!-- Modal -->
