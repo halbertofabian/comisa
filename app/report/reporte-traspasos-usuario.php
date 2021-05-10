@@ -75,6 +75,19 @@ if (isset($_GET['tps_num'])) {
     $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
     //preArray($listp);
 
+    //INFORMACION DEL CONTENIDO QR
+    $informacionQR = array(
+        'productos'=>$listp
+,
+        
+        'infvendedor' => array(
+            'idusr' => $infoTps["tps_user_id_receptor"],
+            'nombre' => $infoTps["receptor"],
+            'camioneta' => $infoTps["destino"],
+        )
+    );
+   preArray($informacionQR);
+
     $dir = DOCUMENT_ROOT . "app/assets/images/temp_qr/";
     if (!file_exists($dir))
         mkdir($dir, 0777, true);
@@ -82,7 +95,7 @@ if (isset($_GET['tps_num'])) {
     $tamano = 10;
     $level = 'H';
     $frameSize = 3;
-    $contenido = $infoTps["tps_lista_productos"];
+    $contenido = json_encode($informacionQR);
 
     QRcode::png($contenido, $filename, $level, $tamano, $frameSize);
     $QR = '<img src="' . $filename . '" width="100px height="100px""> </img>';
@@ -135,11 +148,11 @@ EOF;
 
     // Print text using writeHTMLCell()
     $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
-        $sumatotalp=0;
+    $sumatotalp = 0;
     foreach ($listp as $key => $infP) {
         $array = explode("/", $infP['nombre']);
         $namep = $array[0];
-        $sumatotalp=$sumatotalp+$infP['cantidad'];
+        $sumatotalp = $sumatotalp + $infP['cantidad'];
 
         # code...
         $tps_body = <<<EOF
@@ -220,10 +233,10 @@ EOF;
     
 EOF;
 
-   $pdf->writeHTMLCell(0, 0, '', '', $seccionTOTAL, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $seccionTOTAL, 0, 1, 0, true, '', true);
 
     //----------------------------------
-    
+
     $seccionqr = <<<EOF
 
     <table  style="padding-top:10px; padding-bottom:2px;">
@@ -240,7 +253,7 @@ EOF;
     
 EOF;
 
-   $pdf->writeHTMLCell(0, 0, '', '', $seccionqr, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $seccionqr, 0, 1, 0, true, '', true);
     // ---------------------------------------------------------
 
     $firma = <<<EOF
