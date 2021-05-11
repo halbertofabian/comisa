@@ -3,7 +3,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
     cargarComponente('breadcrumb', '', 'Nuevo cliente');
 ?>
     <div class="container">
-        <form id="formNewClientAdd" method="post" >
+        <form id="formNewClientAdd" >
             <div class="row">
             <!-- 
                 <div class="col-md-4 col-12">
@@ -123,9 +123,9 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                     <div class="form-group">
                         <label for="clts_antiguedad_trabajo_1">ELIJE TIEMPO:</label>
                         <select name="clts_antiguedad_trabajo_1" id="clts_antiguedad_trabajo_1" class="form-control">
+                            <option value="">SELECCIONE UNA OPCION</option>
                             <option value="AÑOS">AÑOS</option>
                             <option value="MESES">MESES</option>
-
                             <option value="DIAS">DIAS</option>
                         </select>
                     </div>
@@ -148,6 +148,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                     <div class="form-group">
                         <label for="clts_tipo_vivienda">LA CASA ES:</label>
                         <select name="clts_tipo_vivienda" id="clts_tipo_vivienda" class="form-control">
+                        <option value="">SELECCIONE UNA OPCION</option>
                             <option value="PROPIA">PROPIA</option>
                             <option value="RENTADA">RENTADA</option>
                             <option value="PRESTADA">PRESTADA</option>
@@ -164,6 +165,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                     <div class="form-group">
                         <label for="clts_tiempo_casa_1">ELIJE TIEMPO:</label>
                         <select name="clts_tiempo_casa_1" id="clts_tiempo_casa_1" class="form-control">
+                        <option value="">SELECCIONE UNA OPCION</option>
                             <option value="AÑOS">AÑOS</option>
                             <option value="MESES">MESES</option>
 
@@ -237,6 +239,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                     <div class="form-group">
                         <label for="clts_tiempo_trabajo_conyuge">ELIJE TIEMPO:</label>
                         <select name="clts_tiempo_trabajo_conyuge" id="clts_tiempo_trabajo_conyuge" class="form-control">
+                        <option value="">SELECCIONE UNA OPCION</option>
                             <option value="AÑOS">AÑOS</option>
                             <option value="MESES">MESES</option>
                             <option value="DIAS">DIAS</option>
@@ -320,6 +323,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                     <div class="form-group">
                         <label for="clts_tiempo_trabajo_fiador">ELIJE TIEMPO:</label>
                         <select name="clts_tiempo_trabajo_fiador" id="clts_tiempo_trabajo_fiador" class="form-control">
+                        <option value="">SELECCIONE UNA OPCION</option>
                             <option value="AÑOS">AÑOS</option>
                             <option value="MESES">MESES</option>
                             <option value="DIAS">DIAS</option>

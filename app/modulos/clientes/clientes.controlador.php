@@ -14,13 +14,17 @@ class ClientesControlador
 {
     public static function ctrAgregarClientes()
     {
-        if (isset($_POST['btnAgregarClientes'])) {
-            $_POST['cts_antiguedad_trabajo'] =  $_POST['cts_antiguedad_trabajo'] . '-' . $_POST['cts_antiguedad_trabajo_1'];
-            $_POST['cts_tiempo_casa'] =  $_POST['cts_tiempo_casa'] . '-' . $_POST['cts_tiempo_casa_1'];
-            $_POST['cts_fecha_registro'] = FECHA;
-            $_POST['cts_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
-            $_POST['cts_ruta'] = '-';
+        if (isset($_POST['btnNewClientAdd'])) {
+            $_POST['clts_ruta'] = '';
+            $_POST['clts_usuario_registro'] = $_SESSION['session_usr']['usr_id'];
 
+            $_POST['clts_antiguedad_tbj'] =  $_POST['clts_antiguedad_trabajo'] . '-' . $_POST['clts_antiguedad_trabajo_1'];
+            $_POST['clts_antiguedad_viviendo'] =  $_POST['clts_tiempo_casa'] . '-' . $_POST['clts_tiempo_casa_1'];
+            $_POST['clts_tbj_ant_conyuge'] =  $_POST['clts_anttrabajo_conyuge'] . '-' . $_POST['clts_tiempo_trabajo_conyuge'];
+            $_POST['clts_tbj_ant_fiador'] =  $_POST['clts_anttrabajo_fiador'] . '-' . $_POST['clts_tiempo_trabajo_fiador'];
+            //$_POST['cts_fecha_registro'] = FECHA;
+            
+            
             $agrgarClientes = ClientesModelo::mdlAgregarClientes($_POST);
 
 
