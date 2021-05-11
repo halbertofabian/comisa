@@ -27,8 +27,8 @@ class ClientesModelo
             clts_parentesco_fiador, clts_tel_fiador, clts_dir_fiador, clts_col_fiador, clts_tbj_fiador, clts_tbj_dir_fiador, 
             clts_tbj_tel_fiador, clts_tbj_col_fiador, clts_fc_elector_fiador, clts_tbj_ant_fiador, clts_nom_ref1, 
             clts_parentesco_ref1, clts_dir_ref1, clts_col_ref1, clts_tel_ref1, clts_nom_ref2, clts_parentesco_ref2, 
-            clts_dir_ref2, clts_col_ref2, clts_tel_ref2) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            clts_dir_ref2, clts_col_ref2, clts_tel_ref2,clts_ubicacion,clts_foto_ine,clts_foto_cpdomicilio) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cts['clts_ruta']);
@@ -84,6 +84,10 @@ class ClientesModelo
             $pps->bindValue(48,$cts['clts_dir_ref2']);
             $pps->bindValue(49,$cts['clts_col_ref2']);
             $pps->bindValue(50,$cts['clts_tel_ref2']);
+
+            $pps->bindValue(51,$cts['clts_ubicacion']);
+            $pps->bindValue(52,$cts['clts_foto_ine']);
+            $pps->bindValue(53,$cts['clts_foto_cpdomicilio']);
 
             
 

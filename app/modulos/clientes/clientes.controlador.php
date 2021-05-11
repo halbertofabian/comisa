@@ -22,6 +22,10 @@ class ClientesControlador
             $_POST['clts_antiguedad_viviendo'] =  $_POST['clts_tiempo_casa'] . '-' . $_POST['clts_tiempo_casa_1'];
             $_POST['clts_tbj_ant_conyuge'] =  $_POST['clts_anttrabajo_conyuge'] . '-' . $_POST['clts_tiempo_trabajo_conyuge'];
             $_POST['clts_tbj_ant_fiador'] =  $_POST['clts_anttrabajo_fiador'] . '-' . $_POST['clts_tiempo_trabajo_fiador'];
+            $_POST['clts_ubicacion']='';
+            $_POST['clts_foto_ine']='';
+            $_POST['clts_foto_cpdomicilio']='';
+
             //$_POST['cts_fecha_registro'] = FECHA;
             
             
