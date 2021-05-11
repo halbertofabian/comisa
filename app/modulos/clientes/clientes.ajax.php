@@ -41,7 +41,7 @@ class ClientesAjax
     }
 }
 
-if (isset($_POST['btnAgregarClientes'])) {
+if (isset($_POST['btnNewClientAdd'])) {
     $agregarClientes = new ClientesAjax();
     $agregarClientes->ajaxAgregarClientes();
 }

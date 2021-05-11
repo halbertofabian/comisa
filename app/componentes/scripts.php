@@ -15,3 +15,4 @@
 <script src="<?php echo HTTP_HOST . 'app/modulos/comisiones/comisiones.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/sueldos/sueldos.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/ventas/ventas.js' ?>"></script>
+<script src="<?php echo HTTP_HOST . 'app/modulos/clientes/clientes.js' ?>"></script>

@@ -9,13 +9,12 @@
  *  Instagram: http://instagram.com/softmormx
  *  Twitter: https://twitter.com/softmormx
  */
+ 
 
-$("#tblAgregarClientes").on("submit", function (e) {
+$("#formNewClientAdd").on("submit", function (e) {
     e.preventDefault();
     var datos = new FormData(this);
-    datos.append("btnAgregarClientes", true);
-
-    alert("Hola mundo")
+    datos.append("btnNewClientAdd", true);
     $.ajax({
         type: "POST",
         url: urlApp + 'app/modulos/clientes/clientes.ajax.php',
