@@ -197,12 +197,3 @@ $(".tablaClientes tbody").on("click", "button.btnVerCliente", function () {
     buscarCliente(cts_id)
 })
 
-$("#cts_buscar_cliente").on("change", function () {
-    var cts_id = $(this).val()
-
-    $(".content-cliente").removeClass('d-none')
-
-    buscarCliente(cts_id)
-
-
-})

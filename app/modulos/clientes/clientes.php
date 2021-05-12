@@ -246,6 +246,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                         </select>
                     </div>
                 </div>
+                
                 <div class="col-12">
                     <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
                         <strong>DATOS DEL FIADOR:</strong>

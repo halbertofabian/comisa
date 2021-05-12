@@ -27,6 +27,8 @@ require_once 'app/modulos/proveedores/proveedores.controlador.php';
 require_once 'app/modulos/comisiones/comisiones.controlador.php';
 require_once 'app/modulos/traspasos/traspasos.controlador.php';
 require_once 'app/modulos/ventas/ventas.controlador.php';
+require_once 'app/modulos/clientes/clientes.controlador.php';
+require_once 'app/modulos/contratos/contratos.controlador.php';
 
 
 require_once 'app/modulos/login/login.modelo.php';
@@ -53,6 +55,8 @@ require_once 'app/modulos/comisiones/comisiones.modelo.php';
 require_once 'app/modulos/proveedores/proveedores.modelo.php';
 require_once 'app/modulos/traspasos/traspasos.modelo.php';
 require_once 'app/modulos/ventas/ventas.modelo.php';
+require_once 'app/modulos/clientes/clientes.modelo.php';
+require_once 'app/modulos/contratos/contratos.modelo.php';
 
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/Exception.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/PHPMailer.php';

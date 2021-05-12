@@ -122,14 +122,14 @@ class ClientesModelo
         try {
             //code...
             if ($cts_id == "") {
-                $sql = "SELECT * FROM tbl_clientes_cts";
+                $sql = "SELECT * FROM tbl_clientes_clts";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
 
                 $pps->execute();
                 return $pps->fetchAll();
             } elseif ($cts_id != "") {
-                $sql = "SELECT * FROM tbl_clientes_cts WHERE cts_id = ?";
+                $sql = "SELECT * FROM tbl_clientes_clts WHERE clts_id = ?";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $cts_id);
