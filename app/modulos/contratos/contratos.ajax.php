@@ -27,11 +27,19 @@ class ContratosAjax
         $res = ClientesModelo::mdlMostrarClientes($_POST['clts_id']);
         echo json_encode($res, true);
     }
+    public function ajaxCrearContrato()
+    {
+        $res = ContratosControlador::ctrAgregarContratos();
+        echo json_encode($res, true);
+    }
 
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
     $consultarCliente->ajaxConsultarCliente();
 }
-
+if (isset($_POST['btnNewContratoAdd'])) {
+    $crearcontrato = new ContratosAjax();
+    $crearcontrato->ajaxCrearContrato();
+}
 

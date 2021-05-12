@@ -75,7 +75,7 @@ function buscarInfoCliente(clts_id) {
 
             $("#clts_tipo_vivienda").val(res.clts_tipo_vivienda)
             textseparado2 =res.clts_antiguedad_viviendo.split(separador)
-            console.log(textseparado2)
+            
             $("#clts_tiempo_casa").val(textseparado2[0])//
             $("#clts_tiempo_casa_1").val(textseparado2[1])
             $("#clts_vivienda_anomde").val(res.clts_vivienda_anomde)
@@ -119,3 +119,49 @@ function buscarInfoCliente(clts_id) {
         }
     })
 }
+
+
+$("#form_new_contrato").on("submit", function (e) {
+    e.preventDefault();
+    
+    var datos = new FormData(this);
+    datos.append("btnNewContratoAdd", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            startLoadButton()
+        },
+        success: function (res) {
+            console.log(res)
+
+            if (res.status) {
+                stopLoadButton()
+
+                swal({
+                    title: "¡Muy bien!",
+                    text: res.mensaje,
+                    icon: "success",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    });
+            } else {
+                toastr.error(res.mensaje, 'Error')
+                stopLoadButton('INTENTAR DE NUEVO')
+            }
+        }
+    })
+})

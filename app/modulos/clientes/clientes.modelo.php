@@ -117,6 +117,23 @@ class ClientesModelo
             $con = null;
         }
     }
+    public static function actualizarInfIdClient($client)
+    {
+        try {
+            //code...
+            $sql = "";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarClientes($cts_id = "")
     {
         try {
