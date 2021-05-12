@@ -2,7 +2,7 @@
 cargarComponente('breadcrumb', '', 'Nuevo contrato');
 ?>
 <div class="container">
-    <div class="form">
+    <form id="form_new_contrato" enctype="multipart/formdata" >
         <div class="row">
             <div class="col-md-6 col-12">
                 <div class="form-group">
@@ -477,5 +477,34 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                 </table>
             </div>
         </div>
-    </div>
+        <div class="row content-cliente d-none">
+            <div class="col-12">
+                <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                    <strong>6.- ARCHIVOS: </strong>
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label for="ctrs_foto_evidencia"><strong class="text-primary"></strong>FOTO DEL CLIENTE CON EL PRODUCTO:</label>
+                    <input type="file" class="form-control-file" name="ctrs_foto_evidencia">
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label for="ctrs_foto_pagare"><strong class="text-primary"></strong>FOTO DEL PAGARE:</label>
+                    <input type="file" class="form-control-file" name="ctrs_foto_pagare">
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <div class="form-group">
+                    <label for="ctrs_foto_fachada"><strong class="text-primary"></strong>FOTO DE FACHADA DE LA CASA:</label>
+                    <input type="file" class="form-control-file" name="ctrs_foto_fachada">
+                </div>
+            </div>
+            <div class="col-md-6 col-12">
+                <button type="submit" class="btn btn-primary btn-sm-block float-right btn-load">GUARDAR</button>
+            </div>
+        </div>
+
+    </form>
 </div>

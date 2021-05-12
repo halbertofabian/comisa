@@ -17,10 +17,21 @@ require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 
+require_once DOCUMENT_ROOT . 'app/modulos/clientes/clientes.modelo.php';
+
 
 class ContratosAjax
 {
-}
+    public function ajaxConsultarCliente()
+    {
+        $res = ClientesModelo::mdlMostrarClientes($_POST['clts_id']);
+        echo json_encode($res, true);
+    }
 
+}
+if (isset($_POST['btnMostrarInfCltId'])) {
+    $consultarCliente = new ContratosAjax();
+    $consultarCliente->ajaxConsultarCliente();
+}
 
 
