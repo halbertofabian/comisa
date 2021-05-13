@@ -138,43 +138,43 @@ $("#form_new_contrato").on("submit", function (e) {
             startLoadButton()
         },
         success: function (res) {
-
+            stopLoadButton()
             if (res.status) {
-                stopLoadButton()
 
-                if (res.tp1 == "1") {
-                    toastr.info(res.msg1, "NOTA")
-                }
-                if (res.tp1 == "2") {
-                    toastr.success(res.msg1, "Muy bien!")
-                }
-                if (res.tp1 == "3") {
-                    toastr.warning(res.msg1, "Alerta!")
-                }
+                swal({
+                    title: "Muy bien!, Se creo el contrato",
+                    text: "ESTADO DE LAS FOTOS: \n"+"Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: "+res.msg3 + "\n",
+                    icon: "success",
+                    buttons: [false, "OK"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    })
 
-                if (res.tp2 == "1") {
-                    toastr.info(res.msg2, "NOTA")
-                }
-                if (res.tp2 == "2") {
-                    toastr.success(res.msg2, "Muy bien!")
-                }
-                if (res.tp2 == "3") {
-                    toastr.warning(res.msg2, "Alerta!")
-                }
+            } else {
 
-                if (res.tp3 == "1") {
-                    toastr.info(res.msg2, "NOTA")
-                }
-                if (res.tp3 == "2") {
-                    toastr.success(res.msg2, "Muy bien!")
-                }
-                if (res.tp3 == "3") {
-                    toastr.warning(res.msg2, "Alerta!")
-                }
-
-
+                swal({
+                    title: "Error",
+                    text: res.mensaje,
+                    icon: "error",
+                    buttons: [false, "Intentar de nuevo"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        location.href = res.pagina
+                    } else {
+                        location.href = res.pagina
+                    }
+                })
 
             }
+
         }
     })
 })
