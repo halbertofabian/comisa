@@ -13,11 +13,14 @@ require_once DOCUMENT_ROOT . "app/modulos/conexion/conexion.php";
 
 class ContratosModelo
 {
-    public static function mdlAgregarContratos()
+    public static function mdlAgregarContratos($ctr)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "INSERT INTO `tbl_contratos_ctrs`(`ctrs_id`, `ctrs_cuenta`, `ctrs_cliente`, `ctrs_vendedor`, 
+            `ctrs_fecha_registro`, `ctrs_forma_pago`, `ctrs_dia_pago`, `ctrs_horario_pago`, `ctrs_plazo_credito`, 
+            `ctrs_detalles_vt`, `ctrs_foto_evidencia`, `ctrs_foto_pagare`, `ctrs_foto_fachada`) 
+            VALUES (1],2],3],4],5],6],7],8],9],10],11],12],13])";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 

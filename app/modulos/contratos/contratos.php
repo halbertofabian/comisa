@@ -486,24 +486,24 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="ctrs_foto_evidencia"><strong class="text-primary"></strong>FOTO DEL CLIENTE CON EL PRODUCTO:</label>
-                        <input type="file" class="form-control-file" name="ctrs_foto_evidencia">
+                        <label for="ctrs_evidencia"><strong class="text-primary"></strong>FOTO DEL CLIENTE CON EL PRODUCTO:</label>
+                        <input type="file" class="form-control-file" name="ctrs_evidencia">
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="ctrs_foto_pagare"><strong class="text-primary"></strong>FOTO DEL PAGARE:</label>
-                        <input type="file" class="form-control-file" name="ctrs_foto_pagare">
+                        <label for="ctrs_pagare"><strong class="text-primary"></strong>FOTO DEL PAGARE:</label>
+                        <input type="file" class="form-control-file" name="ctrs_pagare">
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="ctrs_foto_fachada"><strong class="text-primary"></strong>FOTO DE FACHADA DE LA CASA:</label>
-                        <input type="file" class="form-control-file" name="ctrs_foto_fachada">
+                        <label for="ctrs_fachada"><strong class="text-primary"></strong>FOTO DE FACHADA DE LA CASA:</label>
+                        <input type="file" class="form-control-file" name="ctrs_fachada">
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
-                    <button type="submit" class="btn btn-primary btn-sm-block float-right btn-load">GUARDAR</button>
+                    <button type="submit" class="btn btn-primary btn-sm-block float-right ">GUARDAR</button>
                 </div>
             </div>
         

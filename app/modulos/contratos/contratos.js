@@ -68,14 +68,14 @@ function buscarInfoCliente(clts_id) {
             $("#clts_direccion_tbj").val(res.clts_direccion_tbj)
             $("#clts_col_tbj").val(res.clts_col_tbj)
             $("#clts_tel_tbj").val(res.clts_tel_tbj)
-            textseparado =res.clts_antiguedad_tbj.split(separador)
+            textseparado = res.clts_antiguedad_tbj.split(separador)
             $("#clts_antiguedad_trabajo").val(textseparado[0])
             $("#clts_antiguedad_trabajo_1").val(textseparado[1])
             $("#clts_igs_mensual_tbj").val(res.clts_igs_mensual_tbj)
 
             $("#clts_tipo_vivienda").val(res.clts_tipo_vivienda)
-            textseparado2 =res.clts_antiguedad_viviendo.split(separador)
-            
+            textseparado2 = res.clts_antiguedad_viviendo.split(separador)
+
             $("#clts_tiempo_casa").val(textseparado2[0])//
             $("#clts_tiempo_casa_1").val(textseparado2[1])
             $("#clts_vivienda_anomde").val(res.clts_vivienda_anomde)
@@ -87,7 +87,7 @@ function buscarInfoCliente(clts_id) {
             $("#clts_tbj_dir_conyuge").val(res.clts_tbj_dir_conyuge)
             $("#clts_tbj_col_conyuge").val(res.clts_tbj_col_conyuge)
             $("#clts_tbj_tel_conyuge").val(res.clts_tbj_tel_conyuge)
-            textseparado3 =res.clts_tbj_ant_conyuge.split(separador)
+            textseparado3 = res.clts_tbj_ant_conyuge.split(separador)
             $("#clts_anttrabajo_conyuge").val(textseparado3[0])//
             $("#clts_tiempo_trabajo_conyuge").val(textseparado3[1])
 
@@ -101,7 +101,7 @@ function buscarInfoCliente(clts_id) {
             $("#clts_tbj_tel_fiador").val(res.clts_tbj_tel_fiador)
             $("#clts_tbj_col_fiador").val(res.clts_tbj_col_fiador)
             $("#clts_fc_elector_fiador").val(res.clts_fc_elector_fiador)
-            textseparado4=res.clts_tbj_ant_fiador.split(separador)
+            textseparado4 = res.clts_tbj_ant_fiador.split(separador)
             $("#clts_anttrabajo_fiador").val(textseparado4[0])//
             $("#clts_tiempo_trabajo_fiador").val(textseparado4[1])
 
@@ -123,7 +123,7 @@ function buscarInfoCliente(clts_id) {
 
 $("#form_new_contrato").on("submit", function (e) {
     e.preventDefault();
-    
+
     var datos = new FormData(this);
     datos.append("btnNewContratoAdd", true);
     $.ajax({
@@ -138,29 +138,42 @@ $("#form_new_contrato").on("submit", function (e) {
             startLoadButton()
         },
         success: function (res) {
-            console.log(res)
 
             if (res.status) {
                 stopLoadButton()
 
-                swal({
-                    title: "¡Muy bien!",
-                    text: res.mensaje,
-                    icon: "success",
-                    buttons: [false, "Continuar"],
-                    dangerMode: true,
-                    closeOnClickOutside: false,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            location.href = res.pagina
-                        } else {
-                            location.href = res.pagina
-                        }
-                    });
-            } else {
-                toastr.error(res.mensaje, 'Error')
-                stopLoadButton('INTENTAR DE NUEVO')
+                if (res.tp1 == "1") {
+                    toastr.info(res.msg1, "NOTA")
+                }
+                if (res.tp1 == "2") {
+                    toastr.success(res.msg1, "Muy bien!")
+                }
+                if (res.tp1 == "3") {
+                    toastr.warning(res.msg1, "Alerta!")
+                }
+
+                if (res.tp2 == "1") {
+                    toastr.info(res.msg2, "NOTA")
+                }
+                if (res.tp2 == "2") {
+                    toastr.success(res.msg2, "Muy bien!")
+                }
+                if (res.tp2 == "3") {
+                    toastr.warning(res.msg2, "Alerta!")
+                }
+
+                if (res.tp3 == "1") {
+                    toastr.info(res.msg2, "NOTA")
+                }
+                if (res.tp3 == "2") {
+                    toastr.success(res.msg2, "Muy bien!")
+                }
+                if (res.tp3 == "3") {
+                    toastr.warning(res.msg2, "Alerta!")
+                }
+
+
+
             }
         }
     })
