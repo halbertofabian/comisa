@@ -60,7 +60,7 @@ class ContratosControlador
                     mkdir($dirPersonal, 0777, true);
                 }
 
-                if (file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO.jpg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO.jpeg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO.png')) {
+                if (file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.png')) {
                     $msg1 = "Ya existe";
                     $tp1 = "1";
                 } else {
@@ -68,8 +68,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_evidencia']['tmp_name'] != "") {
                         $MIME = explode("/", $_FILES['ctrs_evidencia']['type']);
                         $type1 = $MIME[1];
-                        move_uploaded_file($_FILES['ctrs_evidencia']['tmp_name'], $dirPersonal . '/CLIENTE_CON_PRODUCTO.' . $type1);
-                        $_POST['ctrs_foto_evidencia'] = "$dirPersonal . '/CLIENTE_CON_PRODUCTO.' . $type1";
+                        move_uploaded_file($_FILES['ctrs_evidencia']['tmp_name'], $dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.' . $type1);
+                        $_POST['ctrs_foto_evidencia'] = $dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.' . $type1;
                         $msg1 = "Se subio correctamente";
                         $tp1 = "2";
                     } else {
@@ -78,7 +78,7 @@ class ContratosControlador
                     }
                 }
 
-                if (file_exists($dirPersonal . '/PAGARE.jpg') || file_exists($dirPersonal . '/PAGARE.jpeg') || file_exists($dirPersonal . '/PAGARE.png')) {
+                if (file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.png')) {
                     $msg1 = "Ya existe ";
                     $tp2 = "1";
                 } else {
@@ -86,8 +86,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_pagare']['tmp_name'] != "") {
                         $MIME2 = explode("/", $_FILES['ctrs_pagare']['type']);
                         $type2 = $MIME2[1];
-                        move_uploaded_file($_FILES['ctrs_pagare']['tmp_name'], $dirPersonal . '/PAGARE.' . $type2);
-                        $_POST['ctrs_foto_pagare'] = "$dirPersonal . '/PAGARE.' . $type2";
+                        move_uploaded_file($_FILES['ctrs_pagare']['tmp_name'], $dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.' . $type2);
+                        $_POST['ctrs_foto_pagare'] = $dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.' . $type2;
                         $msg2 = "Se subio correctamente";
                         $tp2 = "2";
                     } else {
@@ -96,7 +96,7 @@ class ContratosControlador
                     }
                 }
 
-                if (file_exists($dirPersonal . '/FACHADA_DE_CASA.jpg') || file_exists($dirPersonal . '/FACHADA_DE_CASA.jpeg') || file_exists($dirPersonal . '/FACHADA_DE_CASA.png')) {
+                if (file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.png')) {
                     $msg3 = "Ya existe ";
                     $tp3 = "1";
                 } else {
@@ -104,8 +104,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_fachada']['tmp_name'] != "") {
                         $MIME3 = explode("/", $_FILES['ctrs_fachada']['type']);
                         $type3 = $MIME3[1];
-                        move_uploaded_file($_FILES['ctrs_fachada']['tmp_name'], $dirPersonal . '/FACHADA_DE_CASA.' . $type3);
-                        $_POST['ctrs_foto_fachada'] = "$dirPersonal . '/FACHADA_DE_CASA.' . $type3";
+                        move_uploaded_file($_FILES['ctrs_fachada']['tmp_name'], $dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.' . $type3);
+                        $_POST['ctrs_foto_fachada'] = $dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.' . $type3;
                         $msg3 = "Se subio correctamente";
                         $tp3 = "2";
                     } else {
