@@ -39,6 +39,13 @@ class ClientesAjax
         $respuesta = ClientesControlador::ctrImportarcLIEExcel();
         echo json_encode($respuesta, true);
     }
+    public function ajaxConsultarClienteByNom()
+    {
+        
+        $nombre=$_POST['clts_nombre'];
+        $res = ClientesModelo::mdlMostrarClientesByNomb($nombre);
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnNewClientAdd'])) {
@@ -53,4 +60,8 @@ if (isset($_POST['btnVerCliente'])) {
     $consultarCliente = new ClientesAjax();
     $consultarCliente->cts_id = $_POST['cts_id'];
     $consultarCliente->ajaxConsultarCliente();
+}
+if (isset($_POST['btn_buscar_infoC'])) {
+    $consultarClt = new ClientesAjax();
+    $consultarClt->ajaxConsultarClienteByNom();
 }

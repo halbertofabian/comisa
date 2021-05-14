@@ -9,7 +9,7 @@
  *  Instagram: http://instagram.com/softmormx
  *  Twitter: https://twitter.com/softmormx
  */
- 
+
 
 $("#formNewClientAdd").on("submit", function (e) {
     e.preventDefault();
@@ -165,7 +165,7 @@ function buscarCliente(cts_id) {
         success: function (res) {
             stopLoadButton('VER')
 
-            console.log(res)
+            //console.log(res)
 
             $('#mdlMostrarCliente').modal('show')
 
@@ -195,5 +195,45 @@ function buscarCliente(cts_id) {
 $(".tablaClientes tbody").on("click", "button.btnVerCliente", function () {
     var cts_id = $(this).attr('cts_id')
     buscarCliente(cts_id)
+})
+
+$("#btn_buscar_infoC").on("click", function () {
+    var nomAux = $('#clts_nombre_aux').val();
+    var datos = new FormData();
+    datos.append("clts_nombre", nomAux);
+    datos.append("btn_buscar_infoC", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/clientes/clientes.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            //startLoadButton()
+        },
+        success: function (res) {
+            if (res) {
+                var tblDatos = ""
+                res.forEach(clt => {
+                    tblDatos +=
+                        `
+                        <tr>
+                        <td>${clt.clts_id}</td>
+                        <td>${clt.clts_ruta}</td>  
+                        <td>${clt.clts_nombre}</td>  
+                        <td>${clt.clts_telefono}</td>  
+                        <td>${clt.clts_domicilio}</td>    
+                        </tr>
+                    `;
+
+                })
+
+                $("#TbFiltroNombre").html(tblDatos)
+            }
+        }
+    })
+
 })
 

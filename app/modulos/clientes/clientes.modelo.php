@@ -198,7 +198,7 @@ class ClientesModelo
     {
         try {
             //code...
-            if ($cts_id == "") {
+            if ($cts_id == "" ) {
                 $sql = "SELECT * FROM tbl_clientes_clts";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
@@ -212,6 +212,24 @@ class ClientesModelo
                 $pps->bindValue(1, $cts_id);
                 $pps->execute();
                 return $pps->fetch();
+            }
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarClientesByNomb($cts_nom)
+    {
+        try {
+            //code...
+            if ($cts_nom != "") {
+                $sql = "SELECT * FROM tbl_clientes_clts WHERE clts_nombre LIKE '%" . $cts_nom . "%'";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->execute();
+                return $pps->fetchAll();
             }
         } catch (PDOException $th) {
             //throw $th;
