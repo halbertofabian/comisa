@@ -5,7 +5,7 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
     <form id="form_new_contrato" enctype="multipart/formdata">
         
             <div class="row">
-                <div class="col-md-6 col-12">
+                <div class="col-md-4 col-12">
                     <div class="form-group">
                         <label for="">Buscar cliente</label>
                         <select class="form-control select2" name="select_id_cliente" id="cts_buscar_cliente">
@@ -20,6 +20,12 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                         </select>
                     </div>
                 </div>
+                <div class="col-md-4 col-12 content-cliente d-none">
+                                <div class="form-group">
+                                    <label for="ctrs_id"><strong class="text-primary">*</strong>FOLIO DE CONTRATO:</label>
+                                    <input type="text" name="ctrs_id" id="ctrs_id" class="form-control" placeholder="FOLIO DE CONTRATO" required>
+                                </div>
+                            </div>
             </div>
             <div class="row content-cliente d-none">
                 <div class="col-12">
@@ -431,7 +437,7 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                             </td>
                             <td>
 
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" name="ctrs_forma_pago" id="ctrs_forma_pago" required>
                             </td>
                         </tr>
                         <tr class="text-center">
@@ -441,7 +447,7 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                             <td>
                                 <div class="form-group">
                                     <label for=""></label>
-                                    <select class="form-control" name="" id="">
+                                    <select class="form-control" name="ctrs_dia_pago" id="ctrs_dia_pago" required>
                                         <option value="">SELECCIONE UN DIA</option>
                                         <option>SABADO</option>
                                         <option>DOMINGO</option>
@@ -452,7 +458,7 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                                         <option>VIERNES</option>
                                     </select>
                                 </div>
-                                <input type="time" class="form-control">
+                                <input type="time" class="form-control" name="ctrs_horario_pago" id="ctrs_horario_pago" required>
                             </td>
                         </tr>
                     </table>
@@ -464,7 +470,7 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                                 <strong>FECHA DE PRÓXIMO PAGO</strong>
                             </td>
                             <td>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" name="ctrs_fecha_pp" id="ctrs_fecha_pp" required>
                             </td>
                         </tr>
                         <tr class="text-center">
@@ -472,7 +478,7 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                                 <strong>PLAZO DE CRÉDITO</strong>
                             </td>
                             <td>
-                                <input type="number" class="form-control" placeholder="Exprese en semanas">
+                                <input type="number" class="form-control" name="ctrs_plazo_credito" id="ctrs_plazo_credito" placeholder="Exprese en semanas" required>
                             </td>
                         </tr>
                     </table>
@@ -486,20 +492,20 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="ctrs_foto_evidencia"><strong class="text-primary"></strong>FOTO DEL CLIENTE CON EL PRODUCTO:</label>
-                        <input type="file" class="form-control-file" name="ctrs_foto_evidencia">
+                        <label for="ctrs_evidencia"><strong class="text-primary"></strong>FOTO DEL CLIENTE CON EL PRODUCTO:</label>
+                        <input type="file" class="form-control-file" name="ctrs_evidencia">
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="ctrs_foto_pagare"><strong class="text-primary"></strong>FOTO DEL PAGARE:</label>
-                        <input type="file" class="form-control-file" name="ctrs_foto_pagare">
+                        <label for="ctrs_pagare"><strong class="text-primary"></strong>FOTO DEL PAGARE:</label>
+                        <input type="file" class="form-control-file" name="ctrs_pagare">
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="form-group">
-                        <label for="ctrs_foto_fachada"><strong class="text-primary"></strong>FOTO DE FACHADA DE LA CASA:</label>
-                        <input type="file" class="form-control-file" name="ctrs_foto_fachada">
+                        <label for="ctrs_fachada"><strong class="text-primary"></strong>FOTO DE FACHADA DE LA CASA:</label>
+                        <input type="file" class="form-control-file" name="ctrs_fachada">
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
