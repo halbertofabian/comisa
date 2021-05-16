@@ -68,8 +68,8 @@ $app->get('/traspaso/{id}', function (Request $request, Response $response, arra
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $id);
         $pps->execute();
-        $rs = $pps->fetch();
-        $listp = json_decode($rs["tps_lista_productos"], true);
+        $rs = $pps->fetch(PDO::FETCH_ASSOC);
+        $listp = json_decode($rs["tps_lista_productos"],true);
         $informacionQR = array(
             'productos'=>$listp
     ,
@@ -80,7 +80,7 @@ $app->get('/traspaso/{id}', function (Request $request, Response $response, arra
                 'camioneta' => $rs["destino"],
             )
         );
-        echo json_encode($informacionQR,true);
+        echo json_encode(array($informacionQR),true);
     } catch (PDOException $th) {
         //throw $th;
         return false;
