@@ -86,7 +86,7 @@ if (isset($_GET['tps_num'])) {
             'camioneta' => $infoTps["destino"],
         )
     );
-   preArray($informacionQR);
+   //preArray($informacionQR);
 
     $dir = DOCUMENT_ROOT . "app/assets/images/temp_qr/";
     if (!file_exists($dir))
