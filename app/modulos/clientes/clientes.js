@@ -214,15 +214,15 @@ $("#btn_buscar_infoC").on("click", function () {
             //startLoadButton()
         },
         success: function (res) {
-            if (res) {
+            if (res.status) {
                 var tblDatos = ""
-                res.forEach(clt => {
+                res.clientes.forEach(clt => {
                     tblDatos +=
                         `
                         <tr>
                         <td>${clt.clts_id}</td>
                         <td>${clt.clts_ruta}</td>  
-                        <td>${clt.clts_nombre}</td>  
+                        <td><a href="${res.pagina}clientes/editar/${clt.clts_id}">${clt.clts_nombre}</a></td>  
                         <td>${clt.clts_telefono}</td>  
                         <td>${clt.clts_domicilio}</td>    
                         </tr>

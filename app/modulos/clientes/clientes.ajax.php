@@ -42,8 +42,8 @@ class ClientesAjax
     public function ajaxConsultarClienteByNom()
     {
         
-        $nombre=$_POST['clts_nombre'];
-        $res = ClientesModelo::mdlMostrarClientesByNomb($nombre);
+       
+        $res = ClientesControlador::ctrMostrarClientesByNombre();
         echo json_encode($res, true);
     }
 }

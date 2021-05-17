@@ -50,8 +50,15 @@ class ClientesControlador
     public function ctrActualizarClientes()
     {
     }
-    public function ctrMostrarClientes()
+    public function ctrMostrarClientesByNombre()
     {
+        $nombre=$_POST['clts_nombre'];
+        $clientes = ClientesModelo::mdlMostrarClientesByNomb($nombre);
+        return array(
+            'status' => true,
+            'clientes'=>$clientes,
+            'pagina' => HTTP_HOST
+        );
     }
     public function ctrEliminarClientes()
     {
