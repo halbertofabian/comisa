@@ -79,7 +79,7 @@ class ContratosControlador
                 }
 
                 if (file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.png')) {
-                    $msg1 = "Ya existe ";
+                    $msg2 = "Ya existe ";
                     $tp2 = "1";
                 } else {
 

@@ -63,11 +63,7 @@ class ClientesControlador
             $_POST['clts_foto_cpdomicilio'] = "";
 
             //*- subir imagenes
-            if (
-                $_POST['clts_id'] &&
-                ($_FILES['ineFrente']['tmp_name'] != "" || $_FILES['ineReverso']['tmp_name'] != "" || $_FILES['cdom']['tmp_name'] != "")
-            ) {
-                echo "entro xdd";
+           
 
                 $ft1 = false;
                 $msg1 = "";
@@ -111,7 +107,7 @@ class ClientesControlador
                 }
 
                 if (file_exists($dirPersonal . '/INE_R.jpg') || file_exists($dirPersonal . '/INE_R.jpeg') || file_exists($dirPersonal . '/INE_R.png')) {
-                    $msg1 = "Ya existe ";
+                    $msg2 = "Ya existe ";
                     $tp2 = "1";
                 } else {
 
@@ -145,25 +141,26 @@ class ClientesControlador
                         $tp3 = "3";
                     }
                 }
-            }
+            
 
-            echo "xddd";
-            die();
-            //$editaClientes = ClientesModelo::mdlAgregarClientes($_POST);
-            $editaClientes = true;
-
-
+            
+            $editaClientes = ClientesModelo::actualizar2InfIdClient($_POST);
+            
             if ($editaClientes) {
                 return array(
                     'status' => true,
-                    'mensaje' => 'Cliente registrado con éxito',
-                    'pagina' => HTTP_HOST . 'clientes/new'
+                    'mensaje' => 'Cliente actualizado',
+                    'pagina' => HTTP_HOST . 'clientes/buscar',
+                    'msg1' => $msg1,
+                    'msg2' => $msg2,
+                    'msg3' => $msg3,
+                    
                 );
             } else {
                 return array(
                     'status' => false,
-                    'mensaje' => '¡Ups! Ocurrio un error, intenta de nuevo',
-                    'pagina' => HTTP_HOST . 'clientes/new'
+                    'mensaje' => 'No se realizo ningun cambio',
+                   
                 );
             }
         }

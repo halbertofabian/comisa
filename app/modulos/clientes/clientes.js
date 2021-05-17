@@ -258,8 +258,8 @@ $("#form_editaCliente").on("submit", function (e) {
             if (res.status) {
 
                 swal({
-                    title: "Muy bien!, Se creo el contrato",
-                    text: "ESTADO DE LAS FOTOS: \n"+"Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: "+res.msg3 + "\n",
+                    title: "Muy bien!, Se actulizaron los datos",
+                    text: "ESTADO DE LAS FOTOS: \n"+"INE(FRENTE): " + res.msg1 + "\n INE(REVERSO): " + res.msg2 + "\n COMPROBANTE: "+res.msg3 + "\n",
                     icon: "success",
                     buttons: [false, "OK"],
                     dangerMode: true,
@@ -275,19 +275,13 @@ $("#form_editaCliente").on("submit", function (e) {
             } else {
 
                 swal({
-                    title: "Error",
+                    title: "Ojo",
                     text: res.mensaje,
-                    icon: "error",
-                    buttons: [false, "Intentar de nuevo"],
+                    icon: "info",
+                    buttons: [false, "Seguir editando"],
                     dangerMode: true,
                 })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        location.href = res.pagina
-                    } else {
-                        location.href = res.pagina
-                    }
-                })
+                
 
             }
 
