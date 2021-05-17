@@ -556,7 +556,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
 
 ?>
     <div class="container">
-        <form id="" enctype="multipart/formdata">
+        <form id="form_editaCliente" enctype="multipart/formdata">
             <div class="row">
                 <div class="row ">
                     <div class="col-12">
@@ -565,7 +565,8 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                             <div class="col-12">
                                 <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
 
-                                    <strong>1.- DATOS DEL CLIENTE: <span id="cts_ruta"></span> </strong>
+                                    <strong>1.- DATOS DEL CLIENTE: </strong>
+                                    <input type="hidden" name="clts_id" value="<?= $clt['clts_id'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -616,6 +617,12 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                                 <div class="form-group">
                                     <label for="clts_cred_elector_n">CRED. ELECTOR Nº:</label>
                                     <input type="text" name="clts_cred_elector_n" value="<?= $clt['clts_cred_elector_n'] ?>" id="clts_cred_elector_n" class="form-control" placeholder="CRED. ELECTOR Nº">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-group">
+                                    <label for="clts_ubicacion"><strong class="text-primary"></strong>UBICACION:</label>
+                                    <input type="text" name="clts_ubicacion" value="<?= $clt['clts_ubicacion'] ?>" id="clts_ubicacion" class="form-control" placeholder="UBICACION">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -758,7 +765,6 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                         </div>
 
                     </div>
-
                 </div>
                 <div class="row ">
                     <div class="col-12">
@@ -1002,14 +1008,36 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row ">
-                <div class="col-12">
-                    <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
-                        <strong>6.- : </strong>
-                    </div>
-                </div>
 
+                <div class="row ">
+                    <div class="col-12">
+                        <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                            <strong>DOCUMENTACION: </strong>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="ineFrente"><strong class="text-primary"></strong>FOTO DE INE (FRENTE) :</label>
+                            <input type="file" class="form-control-file" name="ineFrente">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="ineReverso"><strong class="text-primary"></strong>FOTO DE INE (REVERSO):</label>
+                            <input type="file" class="form-control-file" name="ineReverso">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="form-group">
+                            <label for="cdom"><strong class="text-primary"></strong>FOTO DE COMPROBANTE DE DOMICILIO:</label>
+                            <input type="file" class="form-control-file" name="cdom">
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <button type="submit" class="btn btn-primary btn-sm-block float-right ">GUARDAR</button>
+                    </div>
+
+                </div>
             </div>
         </form>
     </div>

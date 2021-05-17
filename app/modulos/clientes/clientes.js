@@ -237,3 +237,61 @@ $("#btn_buscar_infoC").on("click", function () {
 
 })
 
+$("#form_editaCliente").on("submit", function (e) {
+    e.preventDefault();
+    
+    var datos = new FormData(this);
+    datos.append("btnEditaClient", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/clientes/clientes.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            startLoadButton()
+        },
+        success: function (res) {
+            stopLoadButton()
+            if (res.status) {
+
+                swal({
+                    title: "Muy bien!, Se creo el contrato",
+                    text: "ESTADO DE LAS FOTOS: \n"+"Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: "+res.msg3 + "\n",
+                    icon: "success",
+                    buttons: [false, "OK"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    })
+
+            } else {
+
+                swal({
+                    title: "Error",
+                    text: res.mensaje,
+                    icon: "error",
+                    buttons: [false, "Intentar de nuevo"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        location.href = res.pagina
+                    } else {
+                        location.href = res.pagina
+                    }
+                })
+
+            }
+
+        }
+    })
+})
+
