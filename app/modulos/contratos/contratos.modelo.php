@@ -64,11 +64,12 @@ class ContratosModelo
             $con = null;
         }
     }
-    public static function mdlMostrarContratos()
+    public static function mdlMostrarContratos($clts_nom)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
+            JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE clts.clts_nombre LIKE  '%" . $clts_nom . "%'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 

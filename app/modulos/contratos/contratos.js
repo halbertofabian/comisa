@@ -198,43 +198,24 @@ $("#btn_Mostar_ctrs").on("click", function (e) {
            // startLoadButton()
         },
         success: function (res) {
-           // stopLoadButton()
             if (res.status) {
+                var tblDatos = ""
+                res.ctrs.forEach(ctr => {
+                    tblDatos +=
+                        `
+                        <tr>
+                        <td>${ctr.ctrs_id}</td>
+                        <td>${ctr.ctrs_cuenta}</td>  
+                        <td><a href="${res.pagina}clientes/editar/${ctr.ctrs_cliente}">${ctr.clts_nombre}</a></td>  
+                        <td>${ctr.ctrs_fecha_registro}</td>  
+                        
+                        </tr>
+                    `;
 
-                swal({
-                    title: "Muy bien!, Se actualizo el contrato",
-                    text: "ESTADO DE LAS FOTOS: \n"+"Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: "+res.msg3 + "\n",
-                    icon: "success",
-                    buttons: [false, "OK"],
-                    dangerMode: true,
-                })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            location.href = res.pagina
-                        } else {
-                            location.href = res.pagina
-                        }
-                    })
-
-            } else {
-
-                swal({
-                    title: "Error",
-                    text: res.mensaje,
-                    icon: "error",
-                    buttons: [false, "Intentar de nuevo"],
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        location.href = res.pagina
-                    } else {
-                        location.href = res.pagina
-                    }
                 })
 
+                $("#tbl_list_ctrs").html(tblDatos)
             }
-
         }
     })
 })

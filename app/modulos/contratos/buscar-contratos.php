@@ -30,7 +30,7 @@
                                        
                                     </tr>
                                 </thead>
-                                <tbody id="TbFiltroNombre">
+                                <tbody id="tbl_list_ctrs">
                                 </tbody>
 
                             </table>

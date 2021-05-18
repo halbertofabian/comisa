@@ -142,6 +142,13 @@ class ContratosControlador
     }
     public function ctrMostrarContratos()
     {
+        $res = ContratosModelo::mdlMostrarContratos($_POST['nombre']);
+        return array(
+            'status'=>true,
+            'ctrs' => $res,
+            'pagina' => HTTP_HOST
+
+        );
     }
     public function ctrEliminarContratos()
     {
