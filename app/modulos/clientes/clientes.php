@@ -553,7 +553,6 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
     }
     $clt = ClientesModelo::mdlMostrarClientes($id);
     //preArray($clt);
-
 ?>
     <div class="container">
         <form id="form_editaCliente" enctype="multipart/formdata">
@@ -1041,8 +1040,6 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
             </div>
         </form>
     </div>
-
-
 <?php else :
     cargarComponente('breadcrumb', '', 'Lista de clientes');
 ?>

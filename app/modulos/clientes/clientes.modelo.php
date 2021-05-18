@@ -87,8 +87,8 @@ class ClientesModelo
 
             $pps->bindValue(51,$cts['clts_ubicacion']);
             $pps->bindValue(52,$cts['clts_foto_ine']);
-            $pps->bindValue(52,$cts['clts_foto_ineReverso']);
-            $pps->bindValue(53,$cts['clts_foto_cpdomicilio']);
+            $pps->bindValue(53,$cts['clts_foto_ineReverso']);
+            $pps->bindValue(54,$cts['clts_foto_cpdomicilio']);
 
             
 

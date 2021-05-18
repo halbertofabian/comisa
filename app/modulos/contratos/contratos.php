@@ -1,9 +1,17 @@
 <?php
-cargarComponente('breadcrumb', '', 'Nuevo contrato');
+if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "buscar") :
+    include_once 'app/modulos/contratos/buscar-contratos.php';
+    
+    
+?>
+    
+<?php
+else :
+    cargarComponente('breadcrumb', '', 'Nuevo contrato');
 ?>
 <div class="container">
-    <form id="form_new_contrato" enctype="multipart/formdata">
-        
+        <form id="form_new_contrato" enctype="multipart/formdata">
+
             <div class="row">
                 <div class="col-md-4 col-12">
                     <div class="form-group">
@@ -21,184 +29,184 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                     </div>
                 </div>
                 <div class="col-md-4 col-12 content-cliente d-none">
-                                <div class="form-group">
-                                    <label for="ctrs_id"><strong class="text-primary">*</strong>FOLIO DE CONTRATO:</label>
-                                    <input type="text" name="ctrs_id" id="ctrs_id" class="form-control" placeholder="FOLIO DE CONTRATO" required>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                        <label for="ctrs_id"><strong class="text-primary">*</strong>FOLIO DE CONTRATO:</label>
+                        <input type="text" name="ctrs_id" id="ctrs_id" class="form-control" placeholder="FOLIO DE CONTRATO" required>
+                    </div>
+                </div>
             </div>
             <div class="row content-cliente d-none">
                 <div class="col-12">
-                    
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
-                                    <button type="button" id="btn_infPersonal" class="btn btn-default  "><i class="fa fa-plus"></i></i></button>
-                                    <strong>1.- DATOS DEL CLIENTE: <span id="cts_ruta"></span> </strong>
-                                </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                                <button type="button" id="btn_infPersonal" class="btn btn-default  "><i class="fa fa-plus"></i></i></button>
+                                <strong>1.- DATOS DEL CLIENTE: <span id="cts_ruta"></span> </strong>
                             </div>
                         </div>
-                        <div class="row d-none" id="dts-client">
-                            <div class="col-md-8 col-12">
-                                <div class="form-group">
-                                    <label for="clts_nombre"><strong class="text-primary">*</strong>NOMBRE:</label>
-                                    <input type="text" name="clts_nombre" id="clts_nombre" class="form-control" placeholder="NOMBRE">
-                                </div>
+                    </div>
+                    <div class="row d-none" id="dts-client">
+                        <div class="col-md-8 col-12">
+                            <div class="form-group">
+                                <label for="clts_nombre"><strong class="text-primary">*</strong>NOMBRE:</label>
+                                <input type="text" name="clts_nombre" id="clts_nombre" class="form-control" placeholder="NOMBRE">
                             </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_telefono"><strong class="text-primary">*</strong>TELÉFONO:</label>
-                                    <input type="number" name="clts_telefono" id="clts_telefono" class="form-control" placeholder="TELÉFONO">
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-12">
-                                <div class="form-group">
-                                    <label for="clts_domicilio"><strong class="text-primary">*</strong>DOMICILIO:</label>
-                                    <input type="text" name="clts_domicilio" id="clts_domicilio" class="form-control" placeholder="DOMICILIO">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_col"><strong class="text-primary">*</strong>COL:</label>
-                                    <input type="text" name="clts_col" id="clts_col" class="form-control" placeholder="COLONIA">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_entre_calles"><strong class="text-primary">*</strong>ENTRE CALLES:</label>
-                                    <input type="text" name="clts_entre_calles" id="clts_entre_calles" class="form-control" placeholder="ENTRE CALLES">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_fachada_color">FACHADA DE COLOR:</label>
-                                    <input type="text" name="clts_fachada_color" id="clts_fachada_color" class="form-control" placeholder="FACHADA DE COLOR">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_puerta_color">PUERTA COLOR:</label>
-                                    <input type="text" name="clts_puerta_color" id="clts_puerta_color" class="form-control" placeholder="PUERTA COLOR">
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-12">
-                                <div class="form-group">
-                                    <label for="clts_cred_elector_n">CRED. ELECTOR Nº:</label>
-                                    <input type="text" name="clts_cred_elector_n" id="clts_cred_elector_n" class="form-control" placeholder="CRED. ELECTOR Nº">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
-                                    <strong>DATOS DEL TRABAJO:</strong>
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-12">
-                                <div class="form-group">
-                                    <label for="clts_trabajo"><strong class="text-primary">*</strong>TRABAJA EN:</label>
-                                    <input type="text" name="clts_trabajo" id="clts_trabajo" class="form-control" placeholder="TRABAJA EN">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_puesto"><strong class="text-primary">*</strong>PUESTO:</label>
-                                    <input type="text" name="clts_puesto" id="clts_puesto" class="form-control" placeholder="PUESTO">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="clts_direccion_tbj"><strong class="text-primary">*</strong>DIRECCIÓN:</label>
-                                    <input type="text" name="clts_direccion_tbj" id="clts_direccion_tbj" class="form-control" placeholder="DIRECCION">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="clts_col_tbj"><strong class="text-primary">*</strong>COL:</label>
-                                    <input type="text" name="clts_col_tbj" id="clts_col_tbj" class="form-control" placeholder="COL">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-12">
-                                <div class="form-group">
-                                    <label for="clts_tel_tbj">TEL:</label>
-                                    <input type="number" name="clts_tel_tbj" id="clts_tel_tbj" class="form-control" placeholder="TEL">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_antiguedad_trabajo">ANTIGÜEDAD:</label>
-                                    <input type="number" name="clts_antiguedad_trabajo" id="clts_antiguedad_trabajo" class="form-control" placeholder="ANTIGÜEDAD">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_antiguedad_trabajo_1">ELIJE TIEMPO:</label>
-                                    <select name="clts_antiguedad_trabajo_1" id="clts_antiguedad_trabajo_1" class="form-control">
-                                        <option value="">SELECCIONE UNA OPCION</option>
-                                        <option value="AÑOS">AÑOS</option>
-                                        <option value="MESES">MESES</option>
-                                        <option value="DIAS">DIAS</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_igs_mensual_tbj">INGRESO MENSUAL:</label>
-                                    <input type="number" name="clts_igs_mensual_tbj" id="clts_igs_mensual_tbj" class="form-control" placeholder="INGRESO MENSUAL">
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
-                                    <strong>DATOS DE LA VIVIENDA:</strong>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_tipo_vivienda">LA CASA ES:</label>
-                                    <select name="clts_tipo_vivienda" id="clts_tipo_vivienda" class="form-control">
-                                        <option value="">SELECCIONE UNA OPCION</option>
-                                        <option value="PROPIA">PROPIA</option>
-                                        <option value="RENTADA">RENTADA</option>
-                                        <option value="PRESTADA">PRESTADA</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_tiempo_casa"><strong class="text-primary">*</strong>TIEMPO VIVIENDO AQUÍ:</label>
-                                    <input type="number" name="clts_tiempo_casa" id="clts_tiempo_casa" class="form-control" placeholder="TIEMPO VIVIENDO AQUÍ">
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-12">
-                                <div class="form-group">
-                                    <label for="clts_tiempo_casa_1">ELIJE TIEMPO:</label>
-                                    <select name="clts_tiempo_casa_1" id="clts_tiempo_casa_1" class="form-control">
-                                        <option value="">SELECCIONE UNA OPCION</option>
-                                        <option value="AÑOS">AÑOS</option>
-                                        <option value="MESES">MESES</option>
-
-                                        <option value="DIAS">DIAS</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="clts_vivienda_anomde">A NOMBRE DE:</label>
-                                    <input type="text" name="clts_vivienda_anomde" id="clts_vivienda_anomde" class="form-control" placeholder="A NOMBRE DE">
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="clts_nreg_propiedad">Nº REG. DE LA PROPIEDAD:</label>
-                                    <input type="text" name="clts_nreg_propiedad" id="clts_nreg_propiedad" class="form-control" placeholder="Nº REG. DE LA PROPIEDAD">
-                                </div>
-                            </div>
-
-
                         </div>
-                    
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_telefono"><strong class="text-primary">*</strong>TELÉFONO:</label>
+                                <input type="number" name="clts_telefono" id="clts_telefono" class="form-control" placeholder="TELÉFONO">
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <div class="form-group">
+                                <label for="clts_domicilio"><strong class="text-primary">*</strong>DOMICILIO:</label>
+                                <input type="text" name="clts_domicilio" id="clts_domicilio" class="form-control" placeholder="DOMICILIO">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_col"><strong class="text-primary">*</strong>COL:</label>
+                                <input type="text" name="clts_col" id="clts_col" class="form-control" placeholder="COLONIA">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_entre_calles"><strong class="text-primary">*</strong>ENTRE CALLES:</label>
+                                <input type="text" name="clts_entre_calles" id="clts_entre_calles" class="form-control" placeholder="ENTRE CALLES">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_fachada_color">FACHADA DE COLOR:</label>
+                                <input type="text" name="clts_fachada_color" id="clts_fachada_color" class="form-control" placeholder="FACHADA DE COLOR">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_puerta_color">PUERTA COLOR:</label>
+                                <input type="text" name="clts_puerta_color" id="clts_puerta_color" class="form-control" placeholder="PUERTA COLOR">
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <div class="form-group">
+                                <label for="clts_cred_elector_n">CRED. ELECTOR Nº:</label>
+                                <input type="text" name="clts_cred_elector_n" id="clts_cred_elector_n" class="form-control" placeholder="CRED. ELECTOR Nº">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                                <strong>DATOS DEL TRABAJO:</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-12">
+                            <div class="form-group">
+                                <label for="clts_trabajo"><strong class="text-primary">*</strong>TRABAJA EN:</label>
+                                <input type="text" name="clts_trabajo" id="clts_trabajo" class="form-control" placeholder="TRABAJA EN">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_puesto"><strong class="text-primary">*</strong>PUESTO:</label>
+                                <input type="text" name="clts_puesto" id="clts_puesto" class="form-control" placeholder="PUESTO">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="clts_direccion_tbj"><strong class="text-primary">*</strong>DIRECCIÓN:</label>
+                                <input type="text" name="clts_direccion_tbj" id="clts_direccion_tbj" class="form-control" placeholder="DIRECCION">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="clts_col_tbj"><strong class="text-primary">*</strong>COL:</label>
+                                <input type="text" name="clts_col_tbj" id="clts_col_tbj" class="form-control" placeholder="COL">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                                <label for="clts_tel_tbj">TEL:</label>
+                                <input type="number" name="clts_tel_tbj" id="clts_tel_tbj" class="form-control" placeholder="TEL">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_antiguedad_trabajo">ANTIGÜEDAD:</label>
+                                <input type="number" name="clts_antiguedad_trabajo" id="clts_antiguedad_trabajo" class="form-control" placeholder="ANTIGÜEDAD">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_antiguedad_trabajo_1">ELIJE TIEMPO:</label>
+                                <select name="clts_antiguedad_trabajo_1" id="clts_antiguedad_trabajo_1" class="form-control">
+                                    <option value="">SELECCIONE UNA OPCION</option>
+                                    <option value="AÑOS">AÑOS</option>
+                                    <option value="MESES">MESES</option>
+                                    <option value="DIAS">DIAS</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_igs_mensual_tbj">INGRESO MENSUAL:</label>
+                                <input type="number" name="clts_igs_mensual_tbj" id="clts_igs_mensual_tbj" class="form-control" placeholder="INGRESO MENSUAL">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="alert alert-dark" role="alert" style="height: 10px; padding: 30px;">
+                                <strong>DATOS DE LA VIVIENDA:</strong>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_tipo_vivienda">LA CASA ES:</label>
+                                <select name="clts_tipo_vivienda" id="clts_tipo_vivienda" class="form-control">
+                                    <option value="">SELECCIONE UNA OPCION</option>
+                                    <option value="PROPIA">PROPIA</option>
+                                    <option value="RENTADA">RENTADA</option>
+                                    <option value="PRESTADA">PRESTADA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_tiempo_casa"><strong class="text-primary">*</strong>TIEMPO VIVIENDO AQUÍ:</label>
+                                <input type="number" name="clts_tiempo_casa" id="clts_tiempo_casa" class="form-control" placeholder="TIEMPO VIVIENDO AQUÍ">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <div class="form-group">
+                                <label for="clts_tiempo_casa_1">ELIJE TIEMPO:</label>
+                                <select name="clts_tiempo_casa_1" id="clts_tiempo_casa_1" class="form-control">
+                                    <option value="">SELECCIONE UNA OPCION</option>
+                                    <option value="AÑOS">AÑOS</option>
+                                    <option value="MESES">MESES</option>
+
+                                    <option value="DIAS">DIAS</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="clts_vivienda_anomde">A NOMBRE DE:</label>
+                                <input type="text" name="clts_vivienda_anomde" id="clts_vivienda_anomde" class="form-control" placeholder="A NOMBRE DE">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="clts_nreg_propiedad">Nº REG. DE LA PROPIEDAD:</label>
+                                <input type="text" name="clts_nreg_propiedad" id="clts_nreg_propiedad" class="form-control" placeholder="Nº REG. DE LA PROPIEDAD">
+                            </div>
+                        </div>
+
+
+                    </div>
+
                 </div>
 
             </div>
@@ -512,6 +520,11 @@ cargarComponente('breadcrumb', '', 'Nuevo contrato');
                     <button type="submit" class="btn btn-primary btn-sm-block float-right btn-load">GUARDAR</button>
                 </div>
             </div>
-        
-    </form>
-</div>
+
+        </form>
+    </div>
+  
+<?php
+
+endif;
+?>
