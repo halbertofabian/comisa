@@ -5,7 +5,7 @@ $idctr = 0;
 if ($rutas[2] > 0) {
     $idctr = $rutas[2];
 }
-$clt = ClientesModelo::mdlMostrarInfoContrato($idctr);
+$clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
 //preArray($clt);
 ?>
 

@@ -94,6 +94,28 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarInfoContrato($idctr)
+    {
+        try {
+            //c4ode...
+            
+                $sql = "";
+            
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+   
     public static function mdlEliminarContratos()
     {
         try {
