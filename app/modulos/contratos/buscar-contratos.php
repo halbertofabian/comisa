@@ -5,10 +5,16 @@
         <form>
 
             <div class="row">
-                <div class="col-md-6 col-12">
+                <div class="col-md-4 col-12">
                     <div class="form-group">
-                        <label for="">Buscar cliente</label>
-                        <input type="text" name="ctrs_cliente_aux" id="ctrs_cliente_aux" class="form-control" placeholder="INTRODUCE UN NOMBRE">
+                        <label for="">Contrato a nombre de:</label>
+                        <input type="text" name="ctrs_cliente_aux" id="ctrs_cliente_aux" class="form-control" placeholder="INTRODUCE EL NOMBRE DE UN CLIENTE">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="">Numero de contrato:</label>
+                        <input type="text" name="ctrs_Naux" id="ctrs_Naux" class="form-control" placeholder="INTRODUCE EL NUMERO DE CONTRATO">
                     </div>
                 </div>
                 <div class="col-md-4 col-12 ">

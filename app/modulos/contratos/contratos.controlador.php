@@ -142,7 +142,7 @@ class ContratosControlador
     }
     public function ctrMostrarContratos()
     {
-        $res = ContratosModelo::mdlMostrarContratos($_POST['nombre']);
+        $res = ContratosModelo::mdlMostrarContratos($_POST['nombre'],$_POST['id_ctr']);
         return array(
             'status'=>true,
             'ctrs' => $res,

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  Desarrollador: ifixitmor
  *  Fecha de creación: 04/02/2021 18:14
@@ -28,7 +29,7 @@ class ContratosModelo
             $pps->bindValue(3, $ctr['ctrs_cliente']);
             $pps->bindValue(4, $ctr['ctrs_vendedor']);
             $pps->bindValue(5, $ctr['ctrs_fecha_registro']);
-            $pps->bindValue(6, $ctr['ctrs_forma_pago']);	
+            $pps->bindValue(6, $ctr['ctrs_forma_pago']);
             $pps->bindValue(7, $ctr['ctrs_fecha_pp']);
             $pps->bindValue(8, $ctr['ctrs_dia_pago']);
             $pps->bindValue(9, $ctr['ctrs_horario_pago']);
@@ -38,8 +39,8 @@ class ContratosModelo
             $pps->bindValue(13, $ctr['ctrs_foto_pagare']);
             $pps->bindValue(14, $ctr['ctrs_foto_fachada']);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -55,8 +56,8 @@ class ContratosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -64,17 +65,28 @@ class ContratosModelo
             $con = null;
         }
     }
-    public static function mdlMostrarContratos($clts_nom)
+    public static function mdlMostrarContratos($clts_nom, $id_ctr)
     {
         try {
-            //code...
-            $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
+            //c4ode...
+            if ($clts_nom != '' && $id_ctr == '') {
+                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
             JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE clts.clts_nombre LIKE  '%" . $clts_nom . "%'";
+            } elseif ($clts_nom == '' && $id_ctr != '') {
+                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
+            JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE ctrs.ctrs_id LIKE  '%" . $id_ctr . "%' ";
+            } elseif ($clts_nom != '' && $id_ctr != '') {
+                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
+            JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE (clts.clts_nombre LIKE  '%" . $clts_nom . "%') AND (ctrs.ctrs_id LIKE  '%" . $id_ctr . "%')";
+            } elseif ($clts_nom == '' && $id_ctr == '') {
+                $sql = "";
+            }
+
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps ->fetchAll();
+            $pps->execute();
+            return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -90,8 +102,8 @@ class ContratosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -100,7 +112,3 @@ class ContratosModelo
         }
     }
 }
-
-
-
-
