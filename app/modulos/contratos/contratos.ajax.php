@@ -38,6 +38,11 @@ class ContratosAjax
         $res = ContratosControlador::ctrMostrarContratos();
         echo json_encode($res, true);
     }
+    public function ajaxEditarContrato()
+    {
+        $res = ContratosControlador::ctrActualizarContratos();
+        echo json_encode($res, true);
+    }
 
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
@@ -52,4 +57,9 @@ if (isset($_POST['btnNewContratoAdd'])) {
 if (isset($_POST['btn_Mostar_ctrs'])) {
     $mostrarContratos = new ContratosAjax();
     $mostrarContratos->ajaxMostrarContratos();
+}
+
+if (isset($_POST['btnEditarctrs'])) {
+    $editarcontrato = new ContratosAjax();
+    $editarcontrato->ajaxEditarContrato();
 }

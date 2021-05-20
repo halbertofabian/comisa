@@ -10,7 +10,7 @@ $clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
 ?>
 
 <div class="container">
-    <form id="form_editaCliente" enctype="multipart/formdata">
+    <form id="form-edita-contrato" enctype="multipart/formdata">
         <div class="row">
             <div class="row ">
                 <div class="col-12">
@@ -21,6 +21,7 @@ $clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
 
                                 <strong>1.- DATOS DEL CLIENTE: </strong>
                                 <input type="hidden" name="clts_id" value="<?= $clt['clts_id'] ?>">
+                                <input type="hidden" name="ctrs_id" value="<?= $clt['ctrs_id'] ?>">
                             </div>
                         </div>
                     </div>
@@ -117,7 +118,7 @@ $clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
                         <?php
 
                         $arrayAntTrabajo = explode("-", $clt['clts_antiguedad_tbj']);
-                        $arrayTiempo = ['AÑOS', 'MESES', 'DIAS']
+                        $arrayTiempo = ['AÑOS', 'MESES', 'DIAS'];
                         ?>
                         <div class="col-md-4 col-12">
                             <div class="form-group">
@@ -477,7 +478,7 @@ $clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
                             </td>
                             <td>
 
-                                <input type="text" class="form-control" name="ctrs_forma_pago" id="ctrs_forma_pago" required>
+                                <input type="text" class="form-control"  value="<?= $clt['ctrs_forma_pago'] ?>" name="ctrs_forma_pago" id="ctrs_forma_pago" required>
                             </td>
                         </tr>
                         <tr class="text-center">
@@ -489,16 +490,20 @@ $clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
                                     <label for=""></label>
                                     <select class="form-control" name="ctrs_dia_pago" id="ctrs_dia_pago" required>
                                         <option value="">SELECCIONE UN DIA</option>
-                                        <option>SABADO</option>
-                                        <option>DOMINGO</option>
-                                        <option>LUNES</option>
-                                        <option>MARTES</option>
-                                        <option>MIERCOLES</option>
-                                        <option>JUEVES</option>
-                                        <option>VIERNES</option>
+                                        <?php
+                                        $arrayDias = ['SABADO', 'DOMINGO', 'LUNES','MARTES','MIERCOLES','JUEVES','VIERNES'];
+                                        foreach ($arrayDias as $d) :
+                                        if ($d == $clt['ctrs_dia_pago']) :
+                                    ?>
+                                            <option selected value="<?= $clt['ctrs_dia_pago'] ?>"><?= $clt['ctrs_dia_pago'] ?></option>
+                                        <?php else : ?>
+                                            <option value="<?= $d ?>"><?= $d ?></option>
+                                    <?php
+                                        endif;
+                                    endforeach; ?>
                                     </select>
                                 </div>
-                                <input type="time" class="form-control" name="ctrs_horario_pago" id="ctrs_horario_pago" required>
+                                <input type="time" class="form-control" value="<?= $clt['ctrs_horario_pago'] ?>" name="ctrs_horario_pago" id="ctrs_horario_pago" required>
                             </td>
                         </tr>
                     </table>
@@ -510,7 +515,7 @@ $clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
                                 <strong>FECHA DE PRÓXIMO PAGO</strong>
                             </td>
                             <td>
-                                <input type="date" class="form-control" name="ctrs_fecha_pp" id="ctrs_fecha_pp" required>
+                                <input type="date" class="form-control" value="<?= $clt['ctrs_fecha_pp'] ?>" name="ctrs_fecha_pp" id="ctrs_fecha_pp" required>
                             </td>
                         </tr>
                         <tr class="text-center">
@@ -518,7 +523,7 @@ $clt = ContratosModelo::mdlMostrarInfoContrato($idctr);
                                 <strong>PLAZO DE CRÉDITO</strong>
                             </td>
                             <td>
-                                <input type="number" class="form-control" name="ctrs_plazo_credito" id="ctrs_plazo_credito" placeholder="Exprese en semanas" required>
+                                <input type="number" class="form-control" value="<?= $clt['ctrs_plazo_credito'] ?>" name="ctrs_plazo_credito" id="ctrs_plazo_credito" placeholder="Exprese en semanas" required>
                             </td>
                         </tr>
                     </table>

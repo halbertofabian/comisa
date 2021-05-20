@@ -48,13 +48,23 @@ class ContratosModelo
             $con = null;
         }
     }
-    public static function mdlActualizarContratos()
+    public static function mdlActualizarContratos($ctr)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "UPDATE tbl_contratos_ctrs SET ctrs_forma_pago=?,ctrs_fecha_pp=?,ctrs_dia_pago=?,ctrs_horario_pago=?,
+            ctrs_plazo_credito=?,ctrs_foto_evidencia=?,ctrs_foto_pagare=?,ctrs_foto_fachada=? WHERE ctrs_id=?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctrs_forma_pago']);
+            $pps->bindValue(2, $ctr['ctrs_fecha_pp']);
+            $pps->bindValue(3, $ctr['ctrs_dia_pago']);
+            $pps->bindValue(4, $ctr['ctrs_horario_pago']);
+            $pps->bindValue(5, $ctr['ctrs_plazo_credito']);
+            $pps->bindValue(6, $ctr['ctrs_foto_evidencia']);
+            $pps->bindValue(7, $ctr['ctrs_foto_pagare']);
+            $pps->bindValue(8, $ctr['ctrs_foto_fachada']);
+            $pps->bindValue(9, $ctr['ctrs_id']);
 
             $pps->execute();
             return $pps->rowCount() > 0;
@@ -99,15 +109,15 @@ class ContratosModelo
     {
         try {
             //c4ode...
-            
-                $sql = "";
-            
+
+            $sql = "SELECT ctrs.*, clts.* FROM tbl_contratos_ctrs ctrs
+            JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE ctrs.ctrs_id=?";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
+            $pps->bindValue(1, $idctr);
             $pps->execute();
-            return $pps->fetchAll();
+            return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -115,7 +125,7 @@ class ContratosModelo
             $con = null;
         }
     }
-   
+
     public static function mdlEliminarContratos()
     {
         try {

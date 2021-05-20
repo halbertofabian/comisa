@@ -221,3 +221,60 @@ $("#btn_Mostar_ctrs").on("click", function (e) {
         }
     })
 })
+
+$("#form-edita-contrato").on("submit", function (e) {
+    e.preventDefault();
+    var datos = new FormData(this);
+    datos.append("btnEditarctrs", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            //startLoadButton()
+        },
+        success: function (res) {
+            //stopLoadButton()
+            if (res.status) {
+
+                swal({
+                    title: "Muy bien!, Se actualizaron datos del contrato",
+                    text: "ESTADO DE LAS FOTOS: \n"+"Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: "+res.msg3 + "\n",
+                    icon: "success",
+                    buttons: [false, "OK"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    })
+
+            } else {
+
+                swal({
+                    title: "Error",
+                    text: res.mensaje,
+                    icon: "error",
+                    buttons: [false, "Intentar de nuevo"],
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        location.href = res.pagina
+                    } else {
+                        location.href = res.pagina
+                    }
+                })
+
+            }
+
+        }
+    })
+})
