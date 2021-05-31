@@ -84,7 +84,7 @@ $(".tablaIngresos tbody").on("click", "button.btnEliminarIngreso", function () {
 
 
 $("#btnMostrarIngresosUsr").on("click", function () {
-    
+
     id_usr = $("#igs_usuario").val();
     finicio = $("#igs_fecha_inicio").val() + "T00:00";
     ffin = $("#igs_fecha_fin").val() + "T23:59";
@@ -153,12 +153,63 @@ $("#btnMostrarIngresosUsr").on("click", function () {
 
             });
             $("#tblDatosIngresosUsr").html(tblDatosResumenIngresosUsrs)
-            $("#tigs").text($.number(total,2))
+            $("#tigs").text($.number(total, 2))
         }
     })
 
 })
 
+$("td.edita").dblclick(function () {
 
+    var OriginalContent = $(this).text();
+    var idcompuesto = $(this).attr("id");
+    separador = "/";
+    textseparado = idcompuesto.split(separador);
+    idigs = textseparado[1];
+    if (textseparado[0] == 'monto') {
+        $(this).html("<input class='form-control' type='text' value='" + OriginalContent + "' />");
+    }
+    if (textseparado[0] == 'fecha') {
+        $(this).html("<input class='form-control' type='datetime-local' value='" + OriginalContent + "' />");
+    }
+    $(this).children().first().focus();
+    $(this).children().first().keypress(function (e) {
+        if (e.which == 13) {
+            var newContent = $(this).val();
+            $(this).parent().text(newContent);
+
+            //******************* */
+            var datos = new FormData();
+            datos.append("igs_id", idigs)
+            datos.append("igs_monto", newContent)
+            datos.append("editMtIgs", true)
+
+
+            $.ajax({
+
+                url: urlApp + 'app/modulos/ingresos/ingresos.ajax.php',
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                beforeSend: function () {
+                    //startLoadButton()
+                },
+                success: function (respuesta) {
+                    // stopLoadButton()
+                }
+                /************ */
+            })
+
+        }
+    });
+    $(this).children().first().blur(function () {
+        $(this).parent().text(OriginalContent);
+
+
+    });
+});
 
 

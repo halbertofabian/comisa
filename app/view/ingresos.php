@@ -1,15 +1,16 @@
 <script>
     var pagina = ""
 </script>
+
 <?php cargarComponente('breadcrumb', '', 'Listado de ingresos'); ?>
 <div class="container">
-    <!-- <form action="" method="post">
+    <!-- 
+    <form action="" method="post">
         <div class="row">
-
             <div class="col-md-2 col-6">
                 <div class="form-group">
                     <label for="igs_monto">Ingreso</label>
-                    <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder="">
+                    <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder=""> 
                 </div>
             </div>
             <div class="col-md-7 col-6">
@@ -31,13 +32,14 @@
                 <button type="submit" name="btnAgregarIngreso" class="btn btn-primary float-right mt-1">Ingresar</button>
             </div>
         </div>
-        <?php
-        $crearIngreso = new IngresosControlador();
-        $crearIngreso->ctrAgregarIngresos();
+        
+    </form> 
+    -->
+    <?php
+    $crearIngreso = new IngresosControlador();
+    $crearIngreso->ctrAgregarIngresos();
 
-        ?>
-    </form> -->
-
+    ?>
     <hr>
     <div class="container">
         <div class="row">
@@ -71,9 +73,9 @@
                             <tr>
                                 <td><?php echo $igs['igs_id'] ?></td>
                                 <td><?php echo $igs['igs_concepto'] ?></td>
-                                <td><?php echo  number_format($igs['igs_monto'], 2) ?></td>
+                                <td class="edita" id="monto/<?= $igs['igs_id'] ?>"><?= number_format($igs['igs_monto'], 2) ?></td>
                                 <td><?php echo $igs['igs_mp'] ?></td>
-                                <td><?php echo $igs['igs_fecha_registro'] ?></td>
+                                <td class="edita" id="fecha/<?= $igs['igs_id'] ?>"> <?= $igs['igs_fecha_registro'] ?> </td>
                                 <td><?php echo $igs['igs_usuario_registro'] ?></td>
                                 <td>
 
