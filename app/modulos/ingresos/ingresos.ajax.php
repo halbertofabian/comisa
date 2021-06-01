@@ -61,6 +61,11 @@ class IngresosAjax
         }
         echo json_encode($respuesta, true);
     }
+    public function ajaxEditaCpsIngresos()
+    {
+        $res = IngresosControlador::ctrActualizarIngresos();
+        echo json_encode($res, true);
+    }
 }
 
 
@@ -85,4 +90,9 @@ if (isset($_POST['btnAgregarIngreso'])) {
 if (isset($_POST['btnMostrarIngresosUsr'])) {
     $MostrarResumenIngresos = new IngresosAjax();
     $MostrarResumenIngresos->ajaxMostrarResumenIngresos();
+}
+
+if (isset($_POST['editarinfIgs'])) {
+    $editacamposdeIngresos = new IngresosAjax();
+    $editacamposdeIngresos->ajaxEditaCpsIngresos();
 }

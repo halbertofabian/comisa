@@ -160,7 +160,7 @@ $("#btnMostrarIngresosUsr").on("click", function () {
 })
 
 $("td.edita").dblclick(function () {
-
+    
     var OriginalContent = $(this).text();
     var idcompuesto = $(this).attr("id");
     separador = "/";
@@ -172,6 +172,9 @@ $("td.edita").dblclick(function () {
     if (textseparado[0] == 'fecha') {
         $(this).html("<input class='form-control' type='datetime-local' value='" + OriginalContent + "' />");
     }
+    if (textseparado[0] == 'ref') {
+        $(this).html("<input class='form-control' type='text' value='" + OriginalContent + "' />");
+    }
     $(this).children().first().focus();
     $(this).children().first().keypress(function (e) {
         if (e.which == 13) {
@@ -181,8 +184,9 @@ $("td.edita").dblclick(function () {
             //******************* */
             var datos = new FormData();
             datos.append("igs_id", idigs)
-            datos.append("igs_monto", newContent)
-            datos.append("editMtIgs", true)
+            datos.append("campo", textseparado[0])
+            datos.append("valor", newContent)
+            datos.append("editarinfIgs", true)
 
 
             $.ajax({
@@ -199,6 +203,11 @@ $("td.edita").dblclick(function () {
                 },
                 success: function (respuesta) {
                     // stopLoadButton()
+                    if (respuesta.status) {
+                        toastr.success(respuesta.mensaje, 'Muy bien')
+                    }else{
+                        toastr.info(respuesta.mensaje, 'Algo salio mal')
+                    }
                 }
                 /************ */
             })
@@ -211,5 +220,6 @@ $("td.edita").dblclick(function () {
 
     });
 });
+
 
 
