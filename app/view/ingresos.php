@@ -72,12 +72,12 @@
                             foreach ($ingresos as $key => $igs) :
                         ?>
                                 <tr>
-                                    <td><?php echo $igs['igs_id'] ?></td>
-                                    <td><?php echo $igs['igs_concepto'] ?></td>
+                                    <td><button class="btn btn-primary delete " value="<?= $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> </button> <?= $igs['igs_id'] ?></td>
+                                    <td><?= $igs['igs_concepto'] ?></td>
                                     <td class="edita" id="monto/<?= $igs['igs_id'] ?>"><?= number_format($igs['igs_monto'], 2) ?></td>
-                                    <td><?php echo $igs['igs_mp'] ?></td>
+                                    <td><?= $igs['igs_mp'] ?></td>
                                     <td class="edita" id="fecha/<?= $igs['igs_id'] ?>"> <?= $igs['igs_fecha_registro'] ?> </td>
-                                    <td><?php echo $igs['igs_usuario_registro'] ?></td>
+                                    <td><?= $igs['igs_usuario_registro'] ?></td>
                                     <td class="edita" id="ref/<?= $igs['igs_id'] ?>"> <?= $igs['igs_referencia']  ?></td>
                                     <td>
                                         <?php
@@ -89,7 +89,7 @@
                                                     <i class="fa fa-filter" aria-hidden="true"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?php echo $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
+                                                    <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?= $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
                                                 </div>
                                             </div>
                                         <?php endif; ?>
