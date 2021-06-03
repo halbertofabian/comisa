@@ -53,27 +53,22 @@ $app->post('/login', function (Request $request, Response $response) {
 });
 $app->post('/comisa-datos', function (Request $request, Response $response) {
     $json = $request->getBody();
-    $data = json_decode($json, true);
-    foreach ($data as $value) {
-        try {
-            //code...
-            $sql = "INSERT INTO ejemplo (Nombre, Correo) VALUES(?,?) ";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-
-            $pps->bindValue(1, $value['nombre']);
-            $pps->bindValue(2, $value['email']);
-            $pps->execute();
-            
-        } catch (PDOException $th) {
-            //throw $th;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
+    try {
+        //code...
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo) VALUES(?) ";
+        $con = Conexion::conectar();
+        $pps = $con->prepare($sql);
+        $pps->bindValue(1, $json);
+        $pps->execute();
+    } catch (PDOException $th) {
+        //throw $th;
+    } finally {
+        $pps = null;
+        $con = null;
     }
+    $datos = array('mensaje' => 'Los datos se agregaron correctamente');
 
-    return print 'Los datos se agregaron correctamente';
+    return json_encode($datos);
 });
 
 $app->get('/traspaso/{id}', function (Request $request, Response $response, array $args) {
