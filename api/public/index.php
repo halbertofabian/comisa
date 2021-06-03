@@ -50,9 +50,18 @@ $app->get('/prueba', function (Request $request, Response $response) {
 $app->post('/login', function (Request $request, Response $response) {
     echo "Aqui toy";
 });
+$app->post('/comisa-datos', function (Request $request, Response $response) {
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+    foreach ($data as $value) {
+        $name = $value['nombre'];
+        $email = $value['email'];
+        echo "nombre: $name correo: $email <br>";
+    }
+});
 
 $app->get('/traspaso/{id}', function (Request $request, Response $response, array $args) {
-    $id = "T-".$args['id'];
+    $id = "T-" . $args['id'];
     try {
         //code...
         $sql = "SELECT tps.*,usr_reg.usr_nombre AS registro,
@@ -69,18 +78,17 @@ $app->get('/traspaso/{id}', function (Request $request, Response $response, arra
         $pps->bindValue(1, $id);
         $pps->execute();
         $rs = $pps->fetch(PDO::FETCH_ASSOC);
-        $listp = json_decode($rs["tps_lista_productos"],true);
+        $listp = json_decode($rs["tps_lista_productos"], true);
         $informacionQR = array(
-            'productos'=>$listp
-    ,
-            
+            'productos' => $listp,
+
             'infvendedor' => array(
                 'idusr' => $rs["tps_user_id_receptor"],
                 'nombre' => $rs["receptor"],
                 'camioneta' => $rs["destino"],
             )
         );
-        echo json_encode(array($informacionQR),true);
+        echo json_encode(array($informacionQR), true);
     } catch (PDOException $th) {
         //throw $th;
         return false;
