@@ -43,20 +43,7 @@ class IngresosModelo
             $con = null;
         }
     }
-    public static function mdlActualizarIngresos()
-    {
-        try {
-            //code...
-            $sql = "";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-        } catch (PDOException $th) {
-            //throw $th;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
-    }
+
     public static function mdlMostrarIngresos($usr_id = "")
     {
         try {
@@ -215,6 +202,43 @@ class IngresosModelo
             $pps->bindValue(2, $inf['igs_fecha_fin']);
             $pps->execute();
             return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarIngresos($igs_id, $campo, $valor)
+    {
+        try {
+            //code...
+            if ($campo == "monto") {
+                $sql = "UPDATE tbl_ingresos_igs SET igs_monto=? WHERE igs_id=?";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $valor);
+                $pps->bindValue(2, $igs_id);
+                $pps->execute();
+                return $pps->rowCount() > 0;
+            } elseif ($campo == "fecha") {
+                $sql = "UPDATE tbl_ingresos_igs SET igs_fecha_registro=? WHERE igs_id=?";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $valor);
+                $pps->bindValue(2, $igs_id);
+                $pps->execute();
+                return $pps->rowCount() > 0;
+            } elseif ($campo == "ref") {
+                $sql = "UPDATE tbl_ingresos_igs SET igs_referencia=? WHERE igs_id=?";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $valor);
+                $pps->bindValue(2, $igs_id);
+                $pps->execute();
+                return $pps->rowCount() > 0;
+            }
         } catch (PDOException $th) {
             //throw $th;
         } finally {

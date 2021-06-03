@@ -214,15 +214,15 @@ $("#btn_buscar_infoC").on("click", function () {
             //startLoadButton()
         },
         success: function (res) {
-            if (res) {
+            if (res.status) {
                 var tblDatos = ""
-                res.forEach(clt => {
+                res.clientes.forEach(clt => {
                     tblDatos +=
                         `
                         <tr>
                         <td>${clt.clts_id}</td>
                         <td>${clt.clts_ruta}</td>  
-                        <td>${clt.clts_nombre}</td>  
+                        <td><a href="${res.pagina}clientes/editar/${clt.clts_id}">${clt.clts_nombre}</a></td>  
                         <td>${clt.clts_telefono}</td>  
                         <td>${clt.clts_domicilio}</td>    
                         </tr>
@@ -235,5 +235,57 @@ $("#btn_buscar_infoC").on("click", function () {
         }
     })
 
+})
+
+$("#form_editaCliente").on("submit", function (e) {
+    e.preventDefault();
+    
+    var datos = new FormData(this);
+    datos.append("btnEditaClient", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/clientes/clientes.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            startLoadButton()
+        },
+        success: function (res) {
+            stopLoadButton()
+            if (res.status) {
+
+                swal({
+                    title: "Muy bien!, Se actulizaron los datos",
+                    text: "ESTADO DE LAS FOTOS: \n"+"INE(FRENTE): " + res.msg1 + "\n INE(REVERSO): " + res.msg2 + "\n COMPROBANTE: "+res.msg3 + "\n",
+                    icon: "success",
+                    buttons: [false, "OK"],
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    })
+
+            } else {
+
+                swal({
+                    title: "Ojo",
+                    text: res.mensaje,
+                    icon: "info",
+                    buttons: [false, "Seguir editando"],
+                    dangerMode: true,
+                })
+                
+
+            }
+
+        }
+    })
 })
 

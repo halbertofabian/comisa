@@ -41,9 +41,12 @@ class ClientesAjax
     }
     public function ajaxConsultarClienteByNom()
     {
-        
-        $nombre=$_POST['clts_nombre'];
-        $res = ClientesModelo::mdlMostrarClientesByNomb($nombre);
+        $res = ClientesControlador::ctrMostrarClientesByNombre();
+        echo json_encode($res, true);
+    }
+    public function ajaxEditaClientId()
+    {
+        $res = ClientesControlador::ctrActualizarClientes();
         echo json_encode($res, true);
     }
 }
@@ -64,4 +67,8 @@ if (isset($_POST['btnVerCliente'])) {
 if (isset($_POST['btn_buscar_infoC'])) {
     $consultarClt = new ClientesAjax();
     $consultarClt->ajaxConsultarClienteByNom();
+}
+if (isset($_POST['btnEditaClient'])) {
+    $editaClt = new ClientesAjax();
+    $editaClt->ajaxEditaClientId();
 }

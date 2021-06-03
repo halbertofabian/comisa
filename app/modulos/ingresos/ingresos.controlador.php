@@ -135,6 +135,21 @@ class IngresosControlador
     }
     public function ctrActualizarIngresos()
     {
+        if(isset($_POST)){
+            $actDato=IngresosModelo::mdlActualizarIngresos($_POST['igs_id'],$_POST['campo'],$_POST['valor']);
+            if ($actDato) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El dato se actualizo correctamente',
+                    
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo actualizar el dato', 
+                );
+            }
+        }
     }
     public function ctrMostrarIngresos()
     {
@@ -153,7 +168,7 @@ class IngresosControlador
             } else {
                 return array(
                     'status' => false,
-                    'mensaje' => 'INo se pudo eliminar este ingreso, intente de  nuevo',
+                    'mensaje' => 'No se pudo eliminar este ingreso, intente de  nuevo',
                     'pagina' => HTTP_HOST . 'ingresos'
                 );
             }

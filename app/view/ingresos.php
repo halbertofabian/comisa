@@ -1,15 +1,16 @@
 <script>
     var pagina = ""
 </script>
+
 <?php cargarComponente('breadcrumb', '', 'Listado de ingresos'); ?>
 <div class="container">
-    <!-- <form action="" method="post">
+    <!-- 
+    <form action="" method="post">
         <div class="row">
-
             <div class="col-md-2 col-6">
                 <div class="form-group">
                     <label for="igs_monto">Ingreso</label>
-                    <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder="">
+                    <input type="text" name="igs_monto" id="igs_monto" class="form-control inputN" placeholder=""> 
                 </div>
             </div>
             <div class="col-md-7 col-6">
@@ -31,19 +32,20 @@
                 <button type="submit" name="btnAgregarIngreso" class="btn btn-primary float-right mt-1">Ingresar</button>
             </div>
         </div>
-        <?php
-        $crearIngreso = new IngresosControlador();
-        $crearIngreso->ctrAgregarIngresos();
+        
+    </form> 
+    -->
+    <?php
+    $crearIngreso = new IngresosControlador();
+    $crearIngreso->ctrAgregarIngresos();
 
-        ?>
-    </form> -->
-
+    ?>
     <hr>
     <div class="container">
         <div class="row">
 
-            <div class="col-12">
-                <table class="table tablas table-striped dt-responsive tablaIngresos">
+            <div class="col-12" style="overflow:scroll; height: 750px;">
+                <table class="table  table-striped  tablaIngresos">
                     <thead class="">
                         <tr>
                             <th># Número</th>
@@ -52,59 +54,83 @@
                             <th>Metodo de pago</th>
                             <th>Fecha registro</th>
                             <th>Usuario registro</th>
+                            <th>Referencia</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         //var_dump($rutas);
+                      
                         if (isset($rutas[1]) && $rutas[2]) {
                             $ingresos = IngresosModelo::mdlConsultarIngresos2Fecha($rutas[1], $rutas[2]);
                         } else {
                             $ingresos = IngresosModelo::mdlMostrarIngresos($_SESSION['session_usr']['usr_nombre']);
                         }
-
-
-
-                        foreach ($ingresos as $key => $igs) :
+                        if ($_SESSION['session_usr']['usr_rol'] == "Administrador" || $_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") :
+                          
+                            foreach ($ingresos as $key => $igs) :
                         ?>
-                            <tr>
-                                <td><?php echo $igs['igs_id'] ?></td>
-                                <td><?php echo $igs['igs_concepto'] ?></td>
-                                <td><?php echo  number_format($igs['igs_monto'], 2) ?></td>
-                                <td><?php echo $igs['igs_mp'] ?></td>
-                                <td><?php echo $igs['igs_fecha_registro'] ?></td>
-                                <td><?php echo $igs['igs_usuario_registro'] ?></td>
-                                <td>
-
-                                    <?php
-                                    $cajaAbierta = IngresosModelo::mdlConsultarCajaAbierta($igs['igs_id_corte']);
-                                    if ($cajaAbierta['copn_fecha_cierre'] == NULL) :
-                                    ?>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fa fa-filter" aria-hidden="true"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-
-
-                                                <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?php echo $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
-
-
+                                <tr>
+                                    <td><button class="btn btn-primary delete " value="<?= $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> </button> <?= $igs['igs_id'] ?></td>
+                                    <td><?= $igs['igs_concepto'] ?></td>
+                                    <td class="edita" id="monto/<?= $igs['igs_id'] ?>"><?= number_format($igs['igs_monto'], 2) ?></td>
+                                    <td><?= $igs['igs_mp'] ?></td>
+                                    <td class="edita" id="fecha/<?= $igs['igs_id'] ?>"> <?= $igs['igs_fecha_registro'] ?> </td>
+                                    <td><?= $igs['igs_usuario_registro'] ?></td>
+                                    <td class="edita" id="ref/<?= $igs['igs_id'] ?>"> <?= $igs['igs_referencia']  ?></td>
+                                    <td>
+                                        <?php
+                                        $cajaAbierta = IngresosModelo::mdlConsultarCajaAbierta($igs['igs_id_corte']);
+                                        if ($cajaAbierta['copn_fecha_cierre'] == NULL) :
+                                        ?>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-filter" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?= $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endif; ?>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach;
+                        else :
+                            foreach ($ingresos as $key => $igs) :
+                            ?>
+                                <tr>
+                                    <td><?= $igs['igs_id'] ?></td>
+                                    <td><?= $igs['igs_concepto'] ?></td>
+                                    <td <?= $igs['igs_id'] ?>><?= number_format($igs['igs_monto'], 2) ?></td>
+                                    <td><?= $igs['igs_mp'] ?></td>
+                                    <td><?= $igs['igs_fecha_registro'] ?> </td>
+                                    <td><?= $igs['igs_usuario_registro'] ?></td>
+                                    <td><?= $igs['igs_referencia']  ?></td>
+                                    <td>
+                                        <?php
+                                        $cajaAbierta = IngresosModelo::mdlConsultarCajaAbierta($igs['igs_id_corte']);
+                                        if ($cajaAbierta['copn_fecha_cierre'] == NULL) :
+                                        ?>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-filter" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?php echo $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
 
-                                </td>
+                        <?php
+                            endforeach;
 
-
-                            </tr>
-                        <?php endforeach; ?>
-
+                        endif; ?>
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </div>
