@@ -77,8 +77,7 @@ if (isset($_GET['tps_num'])) {
 
     //INFORMACION DEL CONTENIDO QR
     $informacionQR = array(
-        'productos'=>$listp
-,
+        'productos'=>$listp,
         
         'infvendedor' => array(
             'idusr' => $infoTps["tps_user_id_receptor"],
@@ -95,7 +94,7 @@ if (isset($_GET['tps_num'])) {
     $tamano = 10;
     $level = 'H';
     $frameSize = 3;
-    $contenido = json_encode($informacionQR);
+    $contenido = json_encode(array($informacionQR),true);
 
     QRcode::png($contenido, $filename, $level, $tamano, $frameSize);
     $QR = '<img src="' . $filename . '" width="100px height="100px""> </img>';
@@ -212,7 +211,7 @@ EOF;
         </thead>
         </table>
     
-    EOF;
+EOF;
 
             $pdf->writeHTMLCell(0, 0, '', '', $tps_body2, 0, 1, 0, true, '', true);
         }
@@ -293,4 +292,5 @@ EOF;
 
     $registro = str_replace(".", "", "prueba");
     $pdf->Output($registro . '.pdf', 'I');
+    
 }
