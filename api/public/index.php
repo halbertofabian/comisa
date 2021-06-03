@@ -8,6 +8,7 @@ require '../vendor/autoload.php';
 require '../src/config/db.php';
 
 
+
 $app = new \Slim\App;
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
@@ -54,10 +55,25 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
     $json = $request->getBody();
     $data = json_decode($json, true);
     foreach ($data as $value) {
-        $name = $value['nombre'];
-        $email = $value['email'];
-        echo "nombre: $name correo: $email <br>";
+        try {
+            //code...
+            $sql = "INSERT INTO ejemplo (Nombre, Correo) VALUES(?,?) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps->bindValue(1, $value['nombre']);
+            $pps->bindValue(2, $value['email']);
+            $pps->execute();
+            
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
     }
+
+    return print 'Los datos se agregaron correctamente';
 });
 
 $app->get('/traspaso/{id}', function (Request $request, Response $response, array $args) {
