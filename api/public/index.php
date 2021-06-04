@@ -53,12 +53,14 @@ $app->post('/login', function (Request $request, Response $response) {
 });
 $app->post('/comisa-datos', function (Request $request, Response $response) {
     $json = $request->getBody();
+    $datosVendedor = json_decode($json, true);
     try {
-        //code...
-        $sql = "INSERT INTO tbl_contratos_2 (cts_todo) VALUES(?) ";
+
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id) VALUES(?,?)";
         $con = Conexion::conectar();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $json);
+        $pps->bindValue(2, $datosVendedor[0]['vendedor']['id']);
         $pps->execute();
     } catch (PDOException $th) {
         //throw $th;
@@ -109,4 +111,40 @@ $app->get('/traspaso/{id}', function (Request $request, Response $response, arra
     }
 });
 
+
+
+
+$app->get('/prueba2', function (Request $request, Response $response, array $args) {
+    $name = '[
+        {
+           "vendedor":{
+              "id":"118",
+              "nombre":"Juan hernandez",
+              "camioneta":"CAMIONETA X45R3-88E"
+           }
+        },
+        {
+           "contrato":[
+              {
+                 "no":"55",
+                 "nombre":"TGG",
+                 "ubicacion":"GGGG",
+                 "total_venta":444,
+                 "enganche":444,
+                 "sobre_enganche":444,
+                 "total_crédito":0,
+                 "productos":[
+                    {
+                       "nombreProducto":"BUROES (PAR)/0006",
+                       "cantidad":1
+                    }
+                 ]
+              }
+           ]
+        }
+     ]';
+
+    $json = json_decode($name, true);
+    echo '<pre>', print_r($json[0]['vendedor']['id']), '</pre>';
+});
 $app->run();
