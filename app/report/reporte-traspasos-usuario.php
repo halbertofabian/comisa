@@ -77,15 +77,15 @@ if (isset($_GET['tps_num'])) {
 
     //INFORMACION DEL CONTENIDO QR
     $informacionQR = array(
-        'productos'=>$listp,
-        
+        'tps_num' => $_GET['tps_num'],
+        'productos' => $listp,
         'infvendedor' => array(
             'idusr' => $infoTps["tps_user_id_receptor"],
             'nombre' => $infoTps["receptor"],
-            'camioneta' => $infoTps["destino"],
+            'camioneta' => $infoTps["destino"]
         )
     );
-   //preArray($informacionQR);
+    //preArray($informacionQR);
 
     $dir = DOCUMENT_ROOT . "app/assets/images/temp_qr/";
     if (!file_exists($dir))
@@ -94,7 +94,7 @@ if (isset($_GET['tps_num'])) {
     $tamano = 10;
     $level = 'H';
     $frameSize = 3;
-    $contenido = json_encode(array($informacionQR),true);
+    $contenido = json_encode(array($informacionQR), true);
 
     QRcode::png($contenido, $filename, $level, $tamano, $frameSize);
     $QR = '<img src="' . $filename . '" width="100px height="100px""> </img>';
@@ -292,5 +292,4 @@ EOF;
 
     $registro = str_replace(".", "", "prueba");
     $pdf->Output($registro . '.pdf', 'I');
-    
 }

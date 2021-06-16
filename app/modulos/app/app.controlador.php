@@ -48,6 +48,7 @@ class AppControlador
             'abonos',
             'listar-traspasos',
             
+            
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -102,7 +103,11 @@ class AppControlador
             'abonos',
             'ventas',
             'reporte-ingresos',
-            'kardex'
+            'kardex',
+            'traspasos',
+            'listar-traspasos',
+            'contratos'
+
             
         );
     }
@@ -862,6 +867,45 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Cargar datos a plantilla',
                             'href' => 'ventas/cargar-plantilla'
+                        ],
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '8' => array(
+                [
+                    'label' => 'Almacenes',
+                    'icon' => '<i class="link-icon fa fa-amazon"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Nuevo producto',
+                            'href' => 'productos/new'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Nueva compra de mercancia',
+                            'href' => 'compras/new'
+                        ],
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Traspaso de mercancia',
+                            'href' => 'traspasos/new'
+                        ],
+                        
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar traspasos de mercancia',
+                            'href' => 'listar-traspasos'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar productos',
+                            'href' => 'productos'
                         ],
                         // Aqui más item de menu
                     ),

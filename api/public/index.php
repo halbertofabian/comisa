@@ -73,6 +73,33 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
     return json_encode($datos);
 });
 
+$app->get('/sicronizar_datos', function (Request $request, Response $response) {
+    $json = $request->getBody();
+    // $json ='[{"tps_num":"T-0006","productos":[{"id":"0003","nombre":"BASE DE CAMA INDIVIDUAL\/0003","categoria":"MADERA","cantidad":"5"},{"id":"0004","nombre":"BASE DE CAMA MATRIMONIAL\/0004","categoria":"MADERA","cantidad":"5"},{"id":"0006","nombre":"BUROES (PAR)\/0006","categoria":"MADERA","cantidad":"4"},{"id":"0008","nombre":"CAJONERA DE 10 MARIN\/0008","categoria":"MADERA","cantidad":"4"}],"infvendedor":{"idusr":"105","nombre":"LUIS FERNANDO FERNANDEZ","camioneta":"CAMIONETA XL90"}}]';
+    $datosTraspasos = json_decode($json, true);
+
+    try {
+
+        $sql = "UPDATE tbl_traspasos_tps SET tps_lista_productos_devueltos = ? WHERE tps_num_traspaso = ? ";
+        $con = Conexion::conectar();
+        $pps = $con->prepare($sql);
+        $pps->bindValue(1, $json);
+        $pps->bindValue(2, $datosTraspasos[0]['tps_num']);
+        $pps->execute();
+
+        
+        
+    } catch (PDOException $th) {
+        throw $th;
+    } finally {
+        $pps = null;
+        $con = null;
+    }
+    $datos = array('mensaje' => 'Los productos se sincronizarón correctamente');
+
+    return json_encode($datos);
+});
+
 $app->get('/traspaso/{id}', function (Request $request, Response $response, array $args) {
     $id = "T-" . $args['id'];
     try {
@@ -114,37 +141,12 @@ $app->get('/traspaso/{id}', function (Request $request, Response $response, arra
 
 
 
-$app->get('/prueba2', function (Request $request, Response $response, array $args) {
-    $name = '[
-        {
-           "vendedor":{
-              "id":"118",
-              "nombre":"Juan hernandez",
-              "camioneta":"CAMIONETA X45R3-88E"
-           }
-        },
-        {
-           "contrato":[
-              {
-                 "no":"55",
-                 "nombre":"TGG",
-                 "ubicacion":"GGGG",
-                 "total_venta":444,
-                 "enganche":444,
-                 "sobre_enganche":444,
-                 "total_crédito":0,
-                 "productos":[
-                    {
-                       "nombreProducto":"BUROES (PAR)/0006",
-                       "cantidad":1
-                    }
-                 ]
-              }
-           ]
-        }
-     ]';
+$app->post('/prueba2', function (Request $request, Response $response, array $args) {
+    $json = $request->getBody();
+    $datosTraspasos = json_decode($json, true);
+    // $name = '[{"tps_num":"T-0006","productos":[{"id":"0003","nombre":"BASE DE CAMA INDIVIDUAL\/0003","categoria":"MADERA","cantidad":"5"},{"id":"0004","nombre":"BASE DE CAMA MATRIMONIAL\/0004","categoria":"MADERA","cantidad":"5"},{"id":"0006","nombre":"BUROES (PAR)\/0006","categoria":"MADERA","cantidad":"4"},{"id":"0008","nombre":"CAJONERA DE 10 MARIN\/0008","categoria":"MADERA","cantidad":"4"}],"infvendedor":{"idusr":"105","nombre":"LUIS FERNANDO FERNANDEZ","camioneta":"CAMIONETA XL90"}}]';
 
-    $json = json_decode($name, true);
-    echo '<pre>', print_r($json[0]['vendedor']['id']), '</pre>';
+    $json = json_decode($datosTraspasos, true);
+    preArray($json[0]['tps_num']);
 });
 $app->run();
