@@ -73,7 +73,7 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
     return json_encode($datos);
 });
 
-$app->get('/sicronizar_datos', function (Request $request, Response $response) {
+$app->post('/sicronizar_datos', function (Request $request, Response $response) {
     $json = $request->getBody();
     // $json ='[{"tps_num":"T-0006","productos":[{"id":"0003","nombre":"BASE DE CAMA INDIVIDUAL\/0003","categoria":"MADERA","cantidad":"5"},{"id":"0004","nombre":"BASE DE CAMA MATRIMONIAL\/0004","categoria":"MADERA","cantidad":"5"},{"id":"0006","nombre":"BUROES (PAR)\/0006","categoria":"MADERA","cantidad":"4"},{"id":"0008","nombre":"CAJONERA DE 10 MARIN\/0008","categoria":"MADERA","cantidad":"4"}],"infvendedor":{"idusr":"105","nombre":"LUIS FERNANDO FERNANDEZ","camioneta":"CAMIONETA XL90"}}]';
     $datosTraspasos = json_decode($json, true);
