@@ -184,6 +184,8 @@ class ProductosControlador
                 if (ProductosModelo::mdlAgregarProductos($data)) {
                     $countInsert += 1;
                 } else {
+                    // actualizar 
+                    
                 }
             }
 

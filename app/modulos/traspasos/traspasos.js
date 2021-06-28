@@ -283,7 +283,7 @@ $("#buscadorP").on("keyup", function () {
                             <td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>
                             <td><input type="number" id="cpasar${pds_sku[0]}" class="form-control" value="1" /></td>
                             <td>
-                                <button id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">
+                                <button type="button" id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">
                                     <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
                                 </button>
                             </td>

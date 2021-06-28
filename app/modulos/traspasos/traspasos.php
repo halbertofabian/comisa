@@ -41,7 +41,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                         // $sucursales = AlmacenesModelo::mdlMostrarAlamcenesTraspaso('E');
                         foreach ($sucursales as $key => $scl) :
                         ?>
-                            <option value="<?php echo $scl['ams_id'] ?>"><?php echo $scl['scl_nombre'] . ' - ' . $scl['ams_nombre']; ?></option>
+                            <option value="<?php echo $scl['ams_id'] ?>"><?php echo  $scl['ams_nombre']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -57,7 +57,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                         // $sucursales = AlmacenesModelo::mdlMostrarAlamcenesTraspaso('E');
                         foreach ($sucursales as $key => $scl) :
                         ?>
-                            <option value="<?php echo $scl['ams_id'] ?>"><?php echo $scl['scl_nombre'] . ' - ' . $scl['ams_nombre']; ?></option>
+                            <option value="<?php echo $scl['ams_id'] ?>"><?php echo  $scl['ams_nombre']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
