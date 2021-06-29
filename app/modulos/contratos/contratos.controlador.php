@@ -12,7 +12,7 @@
  */
 class ContratosControlador
 {
-    public function ctrAgregarContratos()
+    public  static function ctrAgregarContratos()
     {
         if (isset($_POST)) {
 
@@ -60,7 +60,7 @@ class ContratosControlador
                     mkdir($dirPersonal, 0777, true);
                 }
 
-                if (file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.png')) {
+                if (file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.jpg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.jpeg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.png')) {
                     $msg1 = "Ya existe";
                     $tp1 = "1";
                 } else {
@@ -68,8 +68,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_evidencia']['tmp_name'] != "") {
                         $MIME = explode("/", $_FILES['ctrs_evidencia']['type']);
                         $type1 = $MIME[1];
-                        move_uploaded_file($_FILES['ctrs_evidencia']['tmp_name'], $dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.' . $type1);
-                        $_POST['ctrs_foto_evidencia'] = $dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.' . $type1;
+                        move_uploaded_file($_FILES['ctrs_evidencia']['tmp_name'], $dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.' . $type1);
+                        $_POST['ctrs_foto_evidencia'] = $dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.' . $type1;
                         $msg1 = "Se subio correctamente";
                         $tp1 = "2";
                     } else {
@@ -78,7 +78,7 @@ class ContratosControlador
                     }
                 }
 
-                if (file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.png')) {
+                if (file_exists($dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.jpg') || file_exists($dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.jpeg') || file_exists($dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.png')) {
                     $msg2 = "Ya existe ";
                     $tp2 = "1";
                 } else {
@@ -86,8 +86,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_pagare']['tmp_name'] != "") {
                         $MIME2 = explode("/", $_FILES['ctrs_pagare']['type']);
                         $type2 = $MIME2[1];
-                        move_uploaded_file($_FILES['ctrs_pagare']['tmp_name'], $dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.' . $type2);
-                        $_POST['ctrs_foto_pagare'] = $dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.' . $type2;
+                        move_uploaded_file($_FILES['ctrs_pagare']['tmp_name'], $dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.' . $type2);
+                        $_POST['ctrs_foto_pagare'] = $dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.' . $type2;
                         $msg2 = "Se subio correctamente";
                         $tp2 = "2";
                     } else {
@@ -96,7 +96,7 @@ class ContratosControlador
                     }
                 }
 
-                if (file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.png')) {
+                if (file_exists($dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.jpg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.jpeg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.png')) {
                     $msg3 = "Ya existe ";
                     $tp3 = "1";
                 } else {
@@ -104,8 +104,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_fachada']['tmp_name'] != "") {
                         $MIME3 = explode("/", $_FILES['ctrs_fachada']['type']);
                         $type3 = $MIME3[1];
-                        move_uploaded_file($_FILES['ctrs_fachada']['tmp_name'], $dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.' . $type3);
-                        $_POST['ctrs_foto_fachada'] = $dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.' . $type3;
+                        move_uploaded_file($_FILES['ctrs_fachada']['tmp_name'], $dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.' . $type3);
+                        $_POST['ctrs_foto_fachada'] = $dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.' . $type3;
                         $msg3 = "Se subio correctamente";
                         $tp3 = "2";
                     } else {
@@ -132,24 +132,23 @@ class ContratosControlador
                     'pagina' => HTTP_HOST
 
                 );
-            }else{
-
+            } else {
             }
         }
     }
-    public function ctrActualizarContratos()
+    public static function ctrActualizarContratos()
     {
         if (isset($_POST)) {
 
             //* Creacion de variables compuestas para actulizar cliente
-            
+
             $_POST['clts_antiguedad_tbj'] =  $_POST['clts_antiguedad_trabajo'] . '-' . $_POST['clts_antiguedad_trabajo_1'];
             $_POST['clts_antiguedad_viviendo'] =  $_POST['clts_tiempo_casa'] . '-' . $_POST['clts_tiempo_casa_1'];
             $_POST['clts_tbj_ant_conyuge'] =  $_POST['clts_anttrabajo_conyuge'] . '-' . $_POST['clts_tiempo_trabajo_conyuge'];
             $_POST['clts_tbj_ant_fiador'] =  $_POST['clts_anttrabajo_fiador'] . '-' . $_POST['clts_tiempo_trabajo_fiador'];
 
             //** */
-        
+
 
             $_POST['ctrs_foto_evidencia'] = "";
             $_POST['ctrs_foto_pagare'] = "";
@@ -157,7 +156,7 @@ class ContratosControlador
 
 
             //*- subir imagenes
-            if ($_POST['clts_id'] ) {
+            if ($_POST['clts_id']) {
                 $ft1 = false;
                 $msg1 = "";
                 $tp1 = "";
@@ -181,7 +180,7 @@ class ContratosControlador
                     mkdir($dirPersonal, 0777, true);
                 }
 
-                if (file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.png')) {
+                if (file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.jpg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.jpeg') || file_exists($dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.png')) {
                     $msg1 = "Ya existe";
                     $tp1 = "1";
                 } else {
@@ -189,8 +188,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_evidencia']['tmp_name'] != "") {
                         $MIME = explode("/", $_FILES['ctrs_evidencia']['type']);
                         $type1 = $MIME[1];
-                        move_uploaded_file($_FILES['ctrs_evidencia']['tmp_name'], $dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.' . $type1);
-                        $_POST['ctrs_foto_evidencia'] = $dirPersonal . '/CLIENTE_CON_PRODUCTO_'.$_POST['ctrs_id'].'.' . $type1;
+                        move_uploaded_file($_FILES['ctrs_evidencia']['tmp_name'], $dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.' . $type1);
+                        $_POST['ctrs_foto_evidencia'] = $dirPersonal . '/CLIENTE_CON_PRODUCTO_' . $_POST['ctrs_id'] . '.' . $type1;
                         $msg1 = "Se subio correctamente";
                         $tp1 = "2";
                     } else {
@@ -199,7 +198,7 @@ class ContratosControlador
                     }
                 }
 
-                if (file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.png')) {
+                if (file_exists($dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.jpg') || file_exists($dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.jpeg') || file_exists($dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.png')) {
                     $msg2 = "Ya existe ";
                     $tp2 = "1";
                 } else {
@@ -207,8 +206,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_pagare']['tmp_name'] != "") {
                         $MIME2 = explode("/", $_FILES['ctrs_pagare']['type']);
                         $type2 = $MIME2[1];
-                        move_uploaded_file($_FILES['ctrs_pagare']['tmp_name'], $dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.' . $type2);
-                        $_POST['ctrs_foto_pagare'] = $dirPersonal . '/PAGARE_'.$_POST['ctrs_id'].'.' . $type2;
+                        move_uploaded_file($_FILES['ctrs_pagare']['tmp_name'], $dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.' . $type2);
+                        $_POST['ctrs_foto_pagare'] = $dirPersonal . '/PAGARE_' . $_POST['ctrs_id'] . '.' . $type2;
                         $msg2 = "Se subio correctamente";
                         $tp2 = "2";
                     } else {
@@ -217,7 +216,7 @@ class ContratosControlador
                     }
                 }
 
-                if (file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.jpg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.jpeg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.png')) {
+                if (file_exists($dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.jpg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.jpeg') || file_exists($dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.png')) {
                     $msg3 = "Ya existe ";
                     $tp3 = "1";
                 } else {
@@ -225,8 +224,8 @@ class ContratosControlador
                     if ($_FILES['ctrs_fachada']['tmp_name'] != "") {
                         $MIME3 = explode("/", $_FILES['ctrs_fachada']['type']);
                         $type3 = $MIME3[1];
-                        move_uploaded_file($_FILES['ctrs_fachada']['tmp_name'], $dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.' . $type3);
-                        $_POST['ctrs_foto_fachada'] = $dirPersonal . '/FACHADA_DE_CASA_'.$_POST['ctrs_id'].'.' . $type3;
+                        move_uploaded_file($_FILES['ctrs_fachada']['tmp_name'], $dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.' . $type3);
+                        $_POST['ctrs_foto_fachada'] = $dirPersonal . '/FACHADA_DE_CASA_' . $_POST['ctrs_id'] . '.' . $type3;
                         $msg3 = "Se subio correctamente";
                         $tp3 = "2";
                     } else {
@@ -253,16 +252,15 @@ class ContratosControlador
                     'pagina' => HTTP_HOST
 
                 );
-            }else{
-
+            } else {
             }
         }
     }
-    public function ctrMostrarContratos()
+    public static function ctrMostrarContratos()
     {
-        $res = ContratosModelo::mdlMostrarContratos($_POST['nombre'],$_POST['id_ctr']);
+        $res = ContratosModelo::mdlMostrarContratos($_POST['nombre'], $_POST['id_ctr']);
         return array(
-            'status'=>true,
+            'status' => true,
             'ctrs' => $res,
             'pagina' => HTTP_HOST
 
@@ -270,5 +268,92 @@ class ContratosControlador
     }
     public function ctrEliminarContratos()
     {
+    }
+
+    public static function ctrConsultarContratos()
+    {
+        if (isset($_POST['btnConsultarNumeroTraspaso'])) {
+            return ContratosModelo::mdlConsultarContratos($_POST['tps_prefijo'] . '' . $_POST['tps_num_traspaso']);
+        }
+    }
+
+    public static function ctrRegistrarVentasContrato()
+    {
+
+        if (isset($_POST['btnRegistrarVentasContrato'])) {
+
+
+            $arraySize = sizeof($_POST['vts_n_contrato']);
+
+            $contadorVentas = 0;
+
+
+            for ($i = 0; $i < $arraySize; $i++) {
+
+                $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+                if ($igs_id_corte2['usr_caja'] == 0) {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo',
+                        'pagina' => HTTP_HOST.'mi-caja'
+                    );
+                }
+
+                $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_POST['igs_usuario_responsable']);
+                if ($igs_id_corte['usr_caja'] == 0) {
+
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera',
+                        'pagina' => HTTP_HOST.'flujo-caja'
+                    );
+                }
+
+                $_POST['igs_mp'] = "EFECTIVO";
+                $_POST['igs_referencia'] = "";
+                $_POST['igs_cuenta'] = "";
+                $_POST['igs_ruta'] = "";
+
+                $_POST['igs_id_corte'] = $igs_id_corte['usr_caja'];
+                $_POST['igs_id_corte_2'] = $igs_id_corte2['usr_caja'];
+
+                $_POST['igs_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+                $_POST['igs_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
+
+
+
+
+                $vts_total_venta =  str_replace(",", "", $_POST['vts_total'][$i]);
+                $vts_enganche =  str_replace(",", "", $_POST['vts_enganche'][$i]);
+                $vts_se =  str_replace(",", "", $_POST['vts_se'][$i]);
+
+                $total_enganche = $vts_enganche  + $vts_se;
+
+
+
+                if ($total_enganche >= $vts_total_venta) {
+                    $_POST['igs_tipo'] = 'CONTADO_VENTAS';
+                } else {
+                    $_POST['igs_tipo'] = 'S/E_VENTAS';
+                }
+
+                $_POST['igs_monto'] =  $vts_se;
+                $_POST['igs_concepto'] =  $_POST['vts_nombre_cliente'][$i] . ' Nº ' . $_POST['vts_n_contrato'][$i];
+                $_POST['igs_fecha_registro'] = FECHA;
+                $_POST['igs_cuenta'] = 0;
+
+                $crearIngreso = IngresosModelo::mdlAgregarIngresos($_POST);
+                if ($crearIngreso) {
+
+                    $contadorVentas++;
+                }
+            }
+
+            return array(
+                'status' => true,
+                'mensaje' => 'Se registraron ' . $contadorVentas . ' ventas.',
+                'pagina' => HTTP_HOST.'flujo-caja'
+            );
+        }
     }
 }

@@ -38,5 +38,46 @@ class AlmacenesControlador
     {
     }
 
-    
+    public static function ctrMerncanciaDevuelta($tps_num_traspaso)
+    {
+        if (isset($_POST['btnSincronizarInventario'])) {
+
+
+            $tps =  AlmacenesModelo::mdlConsultarMerncanciaDevuelta($tps_num_traspaso);
+
+            $ams_destino = $tps['tps_ams_id_origen'];
+            $ams_origen = $tps['tps_ams_id_destino'];
+            $scl_id = $_SESSION['session_suc']['scl_id'];
+
+            //    $pds_sku = str_replace("/", "", $pds_sku);
+            //    $pds_sku = $pds_sku . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $_POST['pds_ams_id'];
+
+            $pds_json = json_decode($tps['tps_lista_productos_devueltos'], true);
+            $productos =  $pds_json[0]['productos'];
+
+            foreach ($productos as $key => $pds) {
+                $pds_sku_destino = $pds['id'] . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $ams_destino;
+                $pds_sku_origen = $pds['id'] . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $ams_origen;
+                $pds_stok = $pds['cantidad'];
+                // Actualizar Inventario destino 
+                AlmacenesModelo::mdlSumarCantidadesSku($pds_sku_destino, $pds_stok);
+                // Actualizar inventario origen 
+                AlmacenesModelo::mdlRestarCantidadesSku($pds_sku_origen);
+            }
+
+            return array(
+
+                'status' => true,
+                'mensaje' => 'Productos sincronizados correctamente'
+            );
+        }
+    }
+
+    public static function ctrConsultarMerncanciaDevuelta()
+    {
+        if (isset($_POST['btnConsultarNumeroTraspaso'])) {
+
+            return AlmacenesModelo::mdlConsultarMerncanciaDevuelta($_POST['tps_prefijo'] . '' . $_POST['tps_num_traspaso']);
+        }
+    }
 }

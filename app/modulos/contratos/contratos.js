@@ -143,7 +143,7 @@ $("#form_new_contrato").on("submit", function (e) {
 
                 swal({
                     title: "Muy bien!, Se creo el contrato",
-                    text: "ESTADO DE LAS FOTOS: \n"+"Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: "+res.msg3 + "\n",
+                    text: "ESTADO DE LAS FOTOS: \n" + "Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: " + res.msg3 + "\n",
                     icon: "success",
                     buttons: [false, "OK"],
                     dangerMode: true,
@@ -165,13 +165,13 @@ $("#form_new_contrato").on("submit", function (e) {
                     buttons: [false, "Intentar de nuevo"],
                     dangerMode: true,
                 })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        location.href = res.pagina
-                    } else {
-                        location.href = res.pagina
-                    }
-                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    })
 
             }
 
@@ -181,12 +181,12 @@ $("#form_new_contrato").on("submit", function (e) {
 
 $("#btn_Mostar_ctrs").on("click", function (e) {
     e.preventDefault();
-    nom=$("#ctrs_cliente_aux").val();
-    ctr=$("#ctrs_Naux").val();
+    nom = $("#ctrs_cliente_aux").val();
+    ctr = $("#ctrs_Naux").val();
 
     var datos = new FormData();
-    datos.append("nombre",nom);
-    datos.append("id_ctr",ctr);
+    datos.append("nombre", nom);
+    datos.append("id_ctr", ctr);
     datos.append("btn_Mostar_ctrs", true);
     $.ajax({
         type: "POST",
@@ -197,7 +197,7 @@ $("#btn_Mostar_ctrs").on("click", function (e) {
         processData: false,
         contentType: false,
         beforeSend: function () {
-           // startLoadButton()
+            // startLoadButton()
         },
         success: function (res) {
             if (res.status) {
@@ -243,7 +243,7 @@ $("#form-edita-contrato").on("submit", function (e) {
 
                 swal({
                     title: "Muy bien!, Se actualizaron datos del contrato",
-                    text: "ESTADO DE LAS FOTOS: \n"+"Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: "+res.msg3 + "\n",
+                    text: "ESTADO DE LAS FOTOS: \n" + "Cliente con producto: " + res.msg1 + "\n Pagare: " + res.msg2 + "\n Facha de casa: " + res.msg3 + "\n",
                     icon: "success",
                     buttons: [false, "OK"],
                     dangerMode: true,
@@ -265,16 +265,82 @@ $("#form-edita-contrato").on("submit", function (e) {
                     buttons: [false, "Intentar de nuevo"],
                     dangerMode: true,
                 })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        location.href = res.pagina
-                    } else {
-                        location.href = res.pagina
-                    }
-                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    })
 
             }
 
         }
     })
+})
+
+
+$("#formRegistarVentas").on("click", function (e) {
+    e.preventDefault();
+    var datos = new FormData(this);
+    datos.append("btnRegistrarVentasContrato", true);
+
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            //startLoadButton()
+        },
+        success: function (res) {
+            //stopLoadButton()
+            if (res.status) {
+
+                swal({
+                    title: "Muy bien",
+                    text: res.mensaje,
+                    icon: "success",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    });
+
+
+            } else {
+
+                swal({
+                    title: "Error",
+                    text: res.mensaje,
+                    icon: "error",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    });
+
+
+            }
+        }
+    })
+
+
 })

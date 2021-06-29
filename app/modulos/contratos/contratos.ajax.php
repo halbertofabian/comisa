@@ -15,9 +15,12 @@ include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.controlador.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/clientes/clientes.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 
 
 class ContratosAjax
@@ -44,6 +47,15 @@ class ContratosAjax
         echo json_encode($res, true);
     }
 
+    public function ajaxRegistrarVentasContrato(){
+
+        $res = ContratosControlador::ctrRegistrarVentasContrato();
+        echo json_encode($res, true);
+
+    }
+
+
+
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -62,4 +74,11 @@ if (isset($_POST['btn_Mostar_ctrs'])) {
 if (isset($_POST['btnEditarctrs'])) {
     $editarcontrato = new ContratosAjax();
     $editarcontrato->ajaxEditarContrato();
+}
+
+if(isset($_POST['btnRegistrarVentasContrato'])){
+
+    $registrarVentas = new ContratosAjax();
+    $registrarVentas -> ajaxRegistrarVentasContrato();
+
 }

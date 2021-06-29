@@ -143,4 +143,24 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlConsultarContratos($tps_num_traspaso)
+    {
+        try {
+            //c4ode...
+
+            $sql = "SELECT *FROM tbl_contratos_2 ctrs WHERE tps_num_traspaso = ?";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tps_num_traspaso);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

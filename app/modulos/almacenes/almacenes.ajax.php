@@ -20,5 +20,20 @@ require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class AlmacenesAjax
 {
+    
+    public $tps_numero_traspaso;
+
+    public function ajaxMerncanciaDevuelta(){
+        $res = AlmacenesControlador::ctrMerncanciaDevuelta($this->tps_numero_traspaso);
+        echo json_encode($res, true);
+    }
+
+}
+
+if(isset($_POST['btnSincronizarInventario'])){
+    $consultarMerncanciaDevuelta = new AlmacenesAjax();
+    $consultarMerncanciaDevuelta -> tps_numero_traspaso = $_POST['tps_num_traspaso'];
+    $consultarMerncanciaDevuelta -> ajaxMerncanciaDevuelta();
+
 }
 

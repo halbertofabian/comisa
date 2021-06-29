@@ -47,8 +47,8 @@ class AppControlador
             'reporte-gastos',
             'abonos',
             'listar-traspasos',
-            
-            
+
+
         );
     }
     public static function obtenerListaBlancaAlumno()
@@ -108,7 +108,7 @@ class AppControlador
             'listar-traspasos',
             'contratos'
 
-            
+
         );
     }
 
@@ -133,7 +133,9 @@ class AppControlador
             'abonos',
             'ver-caja',
             'listar-traspasos',
-            'kardex'
+            'kardex',
+            'almacenes',
+            'traspasos'
         );
     }
 
@@ -380,7 +382,7 @@ class AppControlador
                             'label' => 'Traspaso de mercancia',
                             'href' => 'traspasos/new'
                         ],
-                        
+
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Listar traspasos de mercancia',
@@ -736,6 +738,11 @@ class AppControlador
                             'label' => 'Lista de cajas / Nueva caja',
                             'href' => 'cajas'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Contratos',
+                            'href' => 'contratos/vendedor'
+                        ],
                         //Aqui más item de menu
                     ),
                 ]
@@ -801,7 +808,7 @@ class AppControlador
                             'label' => 'Listar ingresos',
                             'href' => 'ingresos'
                         ],
-                        
+
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Reporte de ingresos',
@@ -850,7 +857,7 @@ class AppControlador
                     ),
                 ]
             ),
-            
+
             '7' => array(
                 [
                     'label' => 'Plantillas',
@@ -896,7 +903,7 @@ class AppControlador
                             'label' => 'Traspaso de mercancia',
                             'href' => 'traspasos/new'
                         ],
-                        
+
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Listar traspasos de mercancia',
@@ -911,7 +918,7 @@ class AppControlador
                     ),
                 ]
             ),
-            
+
         );
     }
     public static function obtnerMenuGefeAdministracion()
@@ -1030,6 +1037,29 @@ class AppControlador
                             'label' => 'Reporte de gasolina',
                             'href' => 'reporte-gasolina'
                         ]
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '7' => array(
+                [
+                    'label' => 'Flujo de mercancia',
+                    'icon' => '<i class="link-icon fa fa-exchange" aria-hidden="true"></i>
+                    ',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Entradas',
+                            'href' => 'almacenes/entradas'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Salidas',
+                            'href' => 'traspasos/new'
+                        ],
+
                         // Aqui más item de menu
                     ),
                 ]

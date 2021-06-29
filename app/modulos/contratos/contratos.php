@@ -1,21 +1,29 @@
 <?php
 if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "buscar") :
     include_once 'app/modulos/contratos/buscar-contratos.php';
-    
-    
+
+
 ?>
 <?php
 elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "editar") :
     include_once 'app/modulos/contratos/editar-contratos.php';
-    
-    
+
+
 ?>
-    
+<?php
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "vendedor") :
+    cargarComponente('breadcrumb', '', 'Registro de ventas');
+
+    include_once 'app/modulos/contratos/contratos_vendedor.php';
+
+
+?>
+
 <?php
 else :
     cargarComponente('breadcrumb', '', 'Nuevo contrato');
 ?>
-<div class="container">
+    <div class="container">
         <form id="form_new_contrato" enctype="multipart/formdata">
 
             <div class="row">
@@ -529,7 +537,7 @@ else :
 
         </form>
     </div>
-  
+
 <?php
 
 endif;

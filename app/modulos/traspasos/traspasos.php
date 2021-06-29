@@ -1,8 +1,9 @@
 <?php
+
+
+
 cargarComponente('breadcrumb', '', 'Generar traspaso');
-
 ?>
-
 <div class="container">
     <form id="form_traspaso_product">
         <div class="row">
@@ -25,7 +26,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                     <label for="">TIPO</label>
                     <select class="form-control" name="tps_tipo" id="tps_tipo">
                         <option>ENTRADA</option>
-                        <option>SALIDA</option>
+                        <option selected>SALIDA</option>
                     </select>
                 </div>
             </div>

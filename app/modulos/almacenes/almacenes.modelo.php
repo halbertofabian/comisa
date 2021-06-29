@@ -116,4 +116,59 @@ class AlmacenesModelo
             $con = null;
         }
     }
+
+    public static function mdlConsultarMerncanciaDevuelta($tps_num_traspaso)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT tps.*,ams_o.ams_nombre,ams_d.ams_nombre,usr.usr_nombre FROM tbl_traspasos_tps tps JOIN tbl_almacenes_ams ams_o ON tps.tps_ams_id_origen = ams_o.ams_id JOIN tbl_almacenes_ams ams_d ON tps.tps_ams_id_destino = ams_d.ams_id JOIN tbl_usuarios_usr usr ON tps.tps_user_id_receptor = usr.usr_id WHERE tps.tps_num_traspaso = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $tps_num_traspaso);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlSumarCantidadesSku($pds_sku,$pds_stok)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_productos_pds SET pds_stok= pds_stok + ? WHERE pds_sku =?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pds_stok);
+            $pps->bindValue(2, $pds_sku);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlRestarCantidadesSku($pds_sku)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_productos_pds SET pds_stok = 0 WHERE pds_sku =?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pds_sku);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

@@ -17,3 +17,4 @@
 <script src="<?php echo HTTP_HOST . 'app/modulos/ventas/ventas.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/clientes/clientes.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/contratos/contratos.js' ?>"></script>
+<script src="<?php echo HTTP_HOST . 'app/modulos/almacenes/almacenes.js' ?>"></script>
