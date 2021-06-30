@@ -25,6 +25,6 @@ echo "Existencias \n";
 foreach ($productos as $key => $pds) :
     $pds_sku = explode("/", $pds['pds_sku']);
     echo $pds_sku[0] . ",";
-    echo $pds['pds_nombre'] . ",";
+    echo explode(",", "", $pds['pds_nombre']) . ",";
     echo $pds['pds_stok'] . "\n";
 endforeach;
