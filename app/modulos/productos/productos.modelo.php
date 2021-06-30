@@ -146,6 +146,24 @@ class ProductosModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarProductosAlamacenInventario($ams_id)
+    {
+        try {
+            $sql = "SELECT * FROM tbl_productos_pds WHERE pds_ams_id =?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_id);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (\Throwable $th) {
+            return false;
+        } finally {
+
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarProductosAlamacenFiltrado($text, $ams_id)
     {
         try {

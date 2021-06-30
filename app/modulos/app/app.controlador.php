@@ -135,7 +135,9 @@ class AppControlador
             'listar-traspasos',
             'kardex',
             'almacenes',
-            'traspasos'
+            'traspasos',
+            'productos',
+            'compras'
         );
     }
 
@@ -1060,6 +1062,57 @@ class AppControlador
                             'href' => 'traspasos/new'
                         ],
 
+                        // Aqui más item de menu
+                    ),
+                ]
+            ),
+            '8' => array(
+                [
+                    'label' => 'Almacenes',
+                    'icon' => '<i class="link-icon fa fa-amazon"></i>',
+                    'href' => '#softMarket',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Nuevo producto',
+                            'href' => 'productos/new'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Nueva compra de mercancia',
+                            'href' => 'compras/new'
+                        ],
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Traspaso de mercancia',
+                            'href' => 'traspasos/new'
+                        ],
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar traspasos de mercancia',
+                            'href' => 'listar-traspasos'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar productos',
+                            'href' => 'productos'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Importar productos',
+                            'href' => 'productos/importar'
+                        ],
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Exportar productos',
+                            'href' => 'export/exportar-productos.php'
+                        ],
+                        
                         // Aqui más item de menu
                     ),
                 ]

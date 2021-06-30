@@ -280,7 +280,7 @@ $("#form-edita-contrato").on("submit", function (e) {
 })
 
 
-$("#formRegistarVentas").on("click", function (e) {
+$("#formRegistarVentas").on("submit", function (e) {
     e.preventDefault();
     var datos = new FormData(this);
     datos.append("btnRegistrarVentasContrato", true);
@@ -344,3 +344,8 @@ $("#formRegistarVentas").on("click", function (e) {
 
 
 })
+$(".btnMostrarImg").on("click", function(){
+    urlImg = $(this).attr("src");
+    $(".imagenURL").attr("src", urlImg);
+    $("#modelId").modal("show");
+});

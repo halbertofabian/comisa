@@ -118,6 +118,7 @@
                                         <p class="card-text"><?= $contratos['contrato'][0]['nombre']  ?></p>
                                         <!-- <p class="card-text"><?= $contratos['contrato'][0]['ubicacion']  ?></p> -->
                                         <p class="card-text text-primary"><?= $contratos['contrato'][0]['productos'][0]['nombreProducto']  ?></p>
+                                        <p class="card-text text-primary">CANTIDAD: <?= $contratos['contrato'][0]['productos'][0]['cantidad']  ?></p>
 
 
                                     </div>
@@ -141,22 +142,112 @@
                                     </div>
 
                                     <div class="col-md-8">
-
                                         <div id="crs_<?= $contratos['contrato'][0]['no']  ?>" class="carousel slide" data-ride="carousel">
                                             <ol class="carousel-indicators">
                                                 <li data-target="#crs_<?= $contratos['contrato'][0]['no']  ?>" data-slide-to="0" class="active"></li>
                                                 <li data-target="#crs_<?= $contratos['contrato'][0]['no']  ?>" data-slide-to="1"></li>
                                                 <li data-target="#crs_<?= $contratos['contrato'][0]['no']  ?>" data-slide-to="2"></li>
                                             </ol>
-                                            <div class="carousel-inner">
+                                            <div class="carousel-inner border shadow">
+
                                                 <div class="carousel-item active">
-                                                    <img class="d-block w-100 img-thumbnail"" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="First slide">
+                                                    <div class="row">
+                                                        <?php if (isset($contratos['contrato'][0]['fotoCliente']) && $contratos['contrato'][0]['fotoCliente'] != "") : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail img-fluid btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['fotoCliente']; ?>" alt="First slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto cliente/producto</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail img-fluid" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto cliente/producto</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <?php if (isset($contratos['contrato'][0]['fotoCredencialFrontal']) && $contratos['contrato'][0]['fotoCredencialFrontal'] != "") : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['fotoCredencialFrontal']; ?>" alt="First slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto credencial frontal</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto credencial frontal</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <?php if (isset($contratos['contrato'][0]['comprobanteDomicilio']) && $contratos['contrato'][0]['comprobanteDomicilio'] != "") : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['fotoCredencialFrontal']; ?>" alt="First slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto credencial trasera</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto credencial trasera</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+
+                                                    </div>
                                                 </div>
                                                 <div class="carousel-item">
-                                                    <img class="d-block w-100 img-thumbnail"" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img class="d-block w-100 img-thumbnail"" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Third slide">
+                                                    <div class="row">
+                                                        <?php if (isset($contratos['contrato'][0]['fotoPagare']) && $contratos['contrato'][0]['fotoPagare'] != "") : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail img-fluid btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['fotoPagare']; ?>" alt="First slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto pagaré</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail img-fluid" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto pagaré</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <?php if (isset($contratos['contrato'][0]['fotoFachada']) && $contratos['contrato'][0]['fotoFachada'] != "") : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['fotoFachada']; ?>" alt="First slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto fachada</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto fachada</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        <?php if (isset($contratos['contrato'][0]['comprobanteDomicilio']) && $contratos['contrato'][0]['comprobanteDomicilio'] != "") : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['comprobanteDomicilio']; ?>" alt="First slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto comprobante domicilio</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <div class="col-xl-4 text-center">
+                                                                <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
+                                                                <div class="carousel-caption d-none d-md-block">
+                                                                    <h5>Foto comprobante domicilio</h5>
+                                                                </div>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <a class="carousel-control-prev" href="#crs_<?= $contratos['contrato'][0]['no']  ?>" role="button" data-slide="prev">
@@ -195,3 +286,25 @@
         </form>
 <?php endif;
 endif; ?>
+
+<!-- Modal -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Foto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <img src="" class="img-fluid w-100 imagenURL" alt="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
