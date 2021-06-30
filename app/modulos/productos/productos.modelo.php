@@ -62,13 +62,16 @@ class ProductosModelo
             $con = null;
         }
     }
-    public static function mdlActualizarProductos()
+    public static function mdlActualizarProductosExcelInventario($data)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "UPDATE tbl_productos_pds SET pds_stok = ? WHERE pds_sku = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+
+            $pps -> bindValue(1,$data['pds_stok']);
+            $pps -> bindValue(2,$data['pds_sku']);
 
             $pps->execute();
             return $pps->rowCount() > 0;
