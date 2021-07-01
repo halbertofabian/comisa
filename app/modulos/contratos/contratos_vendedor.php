@@ -94,7 +94,7 @@
                 <?php
                 $arraysize = sizeof($ctr);
 
-                // preArray($ctr_cliente);
+                //preArray($ctr);
 
                 for ($i = 1; $i < $arraysize; $i++) :
                     $contratos = $ctr[$i];
@@ -121,8 +121,8 @@
                                         <input type="hidden" name="vts_n_contrato[]" value="<?= $contratos['contrato'][0]['no']  ?>">
 
 
-                                        <p class="card-text"><?= $contratos['contrato'][0]['nombre']  ?></p>
-                                        <!-- <p class="card-text"><?= $contratos['contrato'][0]['ubicacion']  ?></p> -->
+                                        <!-- <p class="card-text"><?= $contratos['contrato'][0]['nombre']  ?></p> -->
+                                        <p class="card-text"><?= $contratos['contrato'][0]['ubicacion']  ?></p>
                                         <p class="card-text text-primary"><?= $contratos['contrato'][0]['productos'][0]['nombreProducto']  ?></p>
                                         <p class="card-text text-primary">CANTIDAD: <?= $contratos['contrato'][0]['productos'][0]['cantidad']  ?></p>
                                         <p class="card-text text-danger">FECHA: <?= $ctr_cliente['fecha']  ?></p>
