@@ -58,7 +58,7 @@ $app->get('/clientes_control', function (Request $request, Response $response) {
 
     try {
         //code...
-        $sql = "SELECT * FROM `tbl_control_clientes_ctls`";
+        $sql = "SELECT * FROM `tbl_clientes_clts`";
         $db = Conexion::conectar();
         $rs = $db->query($sql);
         if ($rs->rowCount() > 0) {
