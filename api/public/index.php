@@ -54,6 +54,37 @@ $app->get('/prueba', function (Request $request, Response $response) {
     }
 });
 
+$app->get('/clientes_control', function (Request $request, Response $response) {
+
+    try {
+        //code...
+        $sql = "SELECT * FROM `tbl_control_clientes_ctls`";
+        $db = Conexion::conectar();
+        $rs = $db->query($sql);
+        if ($rs->rowCount() > 0) {
+
+            echo json_encode(array(
+                'status' => true,
+                'mensaje' => 'Listado de productos',
+                'data' => $rs->fetchAll(PDO::FETCH_ASSOC)
+            ), true);
+        } else {
+            echo json_encode(array(
+                'status' => false,
+                'mensaje' => 'No hay resultados',
+                'data' => ''
+            ), true);
+        }
+    } catch (PDOException $e) {
+        //throw $th;
+        echo json_encode(array(
+            'status' => false,
+            'mensaje' => $e->getMessage() . '',
+            'data' => ''
+        ));
+    }
+});
+
 $app->get('/acceso/{clave}', function (Request $request, Response $response, array $args) {
 $clave =  $args['clave'];
     try {

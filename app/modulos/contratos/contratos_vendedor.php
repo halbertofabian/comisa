@@ -128,7 +128,7 @@
 
 
                                         <!-- <p class="card-text"><?= $contratos['contrato'][0]['nombre']  ?></p> -->
-                                        <p class="card-text"><?= $contratos['contrato'][0]['ubicacion']  ?></p>
+                                        <p class="card-text"><?= isset($contratos['contrato'][0]['ubicacion'])   ? $contratos['contrato'][0]['ubicacion'] : "";  ?></p>
                                         <p class="card-text text-primary"><?= $contratos['contrato'][0]['productos'][0]['nombreProducto']  ?></p>
                                         <p class="card-text text-primary">CANTIDAD: <?= $contratos['contrato'][0]['productos'][0]['cantidad']  ?></p>
                                         <p class="card-text text-danger">FECHA: <?= $ctr_cliente['fecha']  ?></p>
