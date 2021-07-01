@@ -86,12 +86,13 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
     $datosVendedor = json_decode($json, true);
     try {
 
-        $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id,tps_num_traspaso) VALUES(?,?,?)";
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id,tps_num_traspaso,fecha) VALUES(?,?,?,?)";
         $con = Conexion::conectar();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $json);
         $pps->bindValue(2, $datosVendedor[0]['vendedor']['id']);
         $pps->bindValue(3, $datosVendedor[0]['vendedor']['tps_num']);
+        $pps->bindValue(4, FECHA);
         $pps->execute();
     } catch (PDOException $th) {
         //throw $th;

@@ -18,40 +18,33 @@ class ProductosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_productos_pds (pds_visivilidad,pds_sku,pds_nombre,pds_descripcion_corta,pds_descripcion_larga,pds_marca,pds_modelo,pds_categoria,pds_caracteristicas,pds_etiquetas,pds_stok,pds_stok_min,pds_stok_max,pds_precio_compra,pds_precio_publico,pds_precio_mayoreo,pds_precio_especial,pds_precio_promocion,pds_fecha_inicio_promocion,pds_fecha_fin_promocion,pds_imagen_portada,pds_imagenes,pds_fecha_creacion,pds_fecha_modificacion,pds_usaurio_registro,pds_usuario_modifico,pds_estado,pds_sucursal_id,pds_suscriptor_id,pds_ams_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_productos_pds (pds_sku,pds_nombre,pds_categoria,pds_stok,pds_stok_min,pds_precio_credito,pds_enganche,pds_pago_semanal,pds_precio_contado,pds_precio_compra_mes_1,pds_precio_compra_mes_2,pds_imagen_portada,pds_fecha_creacion,pds_fecha_modificacion,pds_usaurio_registro,pds_usuario_modifico,pds_estado,pds_sucursal_id,pds_suscriptor_id,pds_ams_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $pds['pds_visivilidad']);
-            $pps->bindValue(2, $pds['pds_sku']);
-            $pps->bindValue(3, $pds['pds_nombre']);
-            $pps->bindValue(4, $pds['pds_descripcion_corta']);
-            $pps->bindValue(5, $pds['pds_descripcion_larga']);
-            $pps->bindValue(6, $pds['pds_marca']);
-            $pps->bindValue(7, $pds['pds_modelo']);
-            $pps->bindValue(8, $pds['pds_categoria']);
-            $pps->bindValue(9, $pds['pds_caracteristicas']);
-            $pps->bindValue(10, $pds['pds_etiquetas']);
-            $pps->bindValue(11, $pds['pds_stok']);
-            $pps->bindValue(12, $pds['pds_stok_min']);
-            $pps->bindValue(13, $pds['pds_stok_max']);
-            $pps->bindValue(14, $pds['pds_precio_compra']);
-            $pps->bindValue(15, $pds['pds_precio_publico']);
-            $pps->bindValue(16, $pds['pds_precio_mayoreo']);
-            $pps->bindValue(17, $pds['pds_precio_especial']);
-            $pps->bindValue(18, $pds['pds_precio_promocion']);
-            $pps->bindValue(19, $pds['pds_fecha_inicio_promocion']);
-            $pps->bindValue(20, $pds['pds_fecha_fin_promocion']);
-            $pps->bindValue(21, $pds['pds_imagen_portada']);
-            $pps->bindValue(22, $pds['pds_imagenes']);
-            $pps->bindValue(23, $pds['pds_fecha_creacion']);
-            $pps->bindValue(24, $pds['pds_fecha_modificacion']);
-            $pps->bindValue(25, $pds['pds_usaurio_registro']);
-            $pps->bindValue(26, $pds['pds_usuario_modifico']);
-            $pps->bindValue(27, $pds['pds_estado']);
+            $pps->bindValue(1, $pds['pds_sku']);
+            $pps->bindValue(2, $pds['pds_nombre']);
+            $pps->bindValue(3, $pds['pds_categoria']);
+            $pps->bindValue(4, $pds['pds_stok']);
+            $pps->bindValue(5, $pds['pds_stok_min']);
 
-            $pps->bindValue(28, $pds['pds_sucursal_id']);
-            $pps->bindValue(29, $pds['pds_suscriptor_id']);
-            $pps->bindValue(30, $pds['pds_ams_id']);
+            $pps->bindValue(6, $pds['pds_precio_credito']);
+            $pps->bindValue(7, $pds['pds_enganche']);
+            $pps->bindValue(8, $pds['pds_pago_semanal']);
+            $pps->bindValue(9, $pds['pds_precio_contado']);
+            $pps->bindValue(10, $pds['pds_precio_compra_mes_1']);
+
+            $pps->bindValue(11, $pds['pds_precio_compra_mes_2']);
+            $pps->bindValue(12, $pds['pds_imagen_portada']);
+            $pps->bindValue(13, $pds['pds_fecha_creacion']);
+            $pps->bindValue(14, $pds['pds_fecha_modificacion']);
+            $pps->bindValue(15, $pds['pds_usaurio_registro']);
+
+            $pps->bindValue(16, $pds['pds_usuario_modifico']);
+            $pps->bindValue(17, $pds['pds_estado']);
+            $pps->bindValue(18, $pds['pds_sucursal_id']);
+            $pps->bindValue(19, $pds['pds_suscriptor_id']);
+            $pps->bindValue(20, $pds['pds_ams_id']);
 
             $pps->execute();
             return $pps->rowCount() > 0;

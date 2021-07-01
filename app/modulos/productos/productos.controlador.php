@@ -63,6 +63,14 @@ class ProductosControlador
             if (empty($_POST['pds_fecha_fin_promocion'])) {
                 $_POST['pds_fecha_fin_promocion'] = "0000-00-00 00:00:00";
             }
+            
+            $_POST['pds_precio_credito'] = str_replace(",","",$_POST['pds_precio_credito']);
+            $_POST['pds_enganche'] = str_replace(",","",$_POST['pds_enganche']);
+            $_POST['pds_pago_semanal'] = str_replace(",","",$_POST['pds_pago_semanal']);
+            $_POST['pds_precio_contado'] = str_replace(",","",$_POST['pds_precio_contado']);
+            $_POST['pds_precio_compra_mes_1'] = str_replace(",","",$_POST['pds_precio_compra_mes_1']);
+            $_POST['pds_precio_compra_mes_2'] = str_replace(",","",$_POST['pds_precio_compra_mes_2']);
+            
 
             $agregarProductos = ProductosModelo::mdlAgregarProductos($_POST);
 

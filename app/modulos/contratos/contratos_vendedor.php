@@ -94,7 +94,7 @@
                 <?php
                 $arraysize = sizeof($ctr);
 
-                //preArray($ctr);
+                // preArray($ctr_cliente);
 
                 for ($i = 1; $i < $arraysize; $i++) :
                     $contratos = $ctr[$i];
@@ -108,17 +108,24 @@
 
                             <div class="card-body">
                                 <div class="row">
+                                <div class="col-12">
+                                <h4 class="card-title"> <span class="text-danger">Nº</span> <?= $contratos['contrato'][0]['no']  ?></h4>
+
+                                <label for="">Nombre del cliente</label>
+                                <input type="text" name="vts_nombre_cliente[]" class="form-control mb-2" value="<?= $contratos['contrato'][0]['nombre']  ?>">
+                                
+                                </div>
 
                                     <div class="col-md-2">
 
                                         <input type="hidden" name="vts_n_contrato[]" value="<?= $contratos['contrato'][0]['no']  ?>">
-                                        <input type="hidden" name="vts_nombre_cliente[]" value="<?= $contratos['contrato'][0]['nombre']  ?>">
 
-                                        <h4 class="card-title"> <span class="text-danger">Nº</span> <?= $contratos['contrato'][0]['no']  ?></h4>
+
                                         <p class="card-text"><?= $contratos['contrato'][0]['nombre']  ?></p>
                                         <!-- <p class="card-text"><?= $contratos['contrato'][0]['ubicacion']  ?></p> -->
                                         <p class="card-text text-primary"><?= $contratos['contrato'][0]['productos'][0]['nombreProducto']  ?></p>
                                         <p class="card-text text-primary">CANTIDAD: <?= $contratos['contrato'][0]['productos'][0]['cantidad']  ?></p>
+                                        <p class="card-text text-danger">FECHA: <?= $ctr_cliente['fecha']  ?></p>
 
 
                                     </div>
@@ -182,9 +189,9 @@
                                                                 </div>
                                                             </div>
                                                         <?php endif; ?>
-                                                        <?php if (isset($contratos['contrato'][0]['comprobanteDomicilio']) && $contratos['contrato'][0]['comprobanteDomicilio'] != "") : ?>
+                                                        <?php if (isset($contratos['contrato'][0]['fotoCredencialTrasera']) && $contratos['contrato'][0]['fotoCredencialTrasera'] != "") : ?>
                                                             <div class="col-xl-4 text-center">
-                                                                <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['fotoCredencialFrontal']; ?>" alt="First slide">
+                                                                <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $contratos['contrato'][0]['fotoCredencialTrasera']; ?>" alt="First slide">
                                                                 <div class="carousel-caption d-none d-md-block">
                                                                     <h5>Foto credencial trasera</h5>
                                                                 </div>

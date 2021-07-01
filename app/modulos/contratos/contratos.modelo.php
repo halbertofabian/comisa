@@ -149,7 +149,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT *FROM tbl_contratos_2 ctrs WHERE tps_num_traspaso = ?";
+            $sql = "SELECT * FROM tbl_contratos_2 ctrs WHERE tps_num_traspaso = ?";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);

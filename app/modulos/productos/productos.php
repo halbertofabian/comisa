@@ -6,7 +6,7 @@ if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "update") :
 
 
 <?php elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "new") :
-    cargarComponente('breadcrumb_nivel_1', '', 'Nuevo producto', array(['ruta' => 'productos', 'label' => 'Listar productos']));
+    cargarComponente('breadcrumb_nivel_1', '', 'Nuevo producto', array(['ruta' => 'productos', 'label' => 'Listar mercancía']));
 
     include_once 'app/modulos/productos/nuevo-producto.php';
 

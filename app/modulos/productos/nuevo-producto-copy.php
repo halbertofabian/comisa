@@ -9,11 +9,11 @@
                         <div class="form-group">
                             <label for="">Elije un almacén</label>
                             <select class="form-control" name="pds_ams_id" id="pds_ams_id">
-                                <?php
-                                $almacenes = AlmacenesModelo::mdlMostrarAlmacenes($_SESSION['session_suc']['scl_id']);
-                                foreach ($almacenes as $key => $ams):
+                                <?php 
+                                    $almacenes = AlmacenesModelo::mdlMostrarAlmacenes($_SESSION['session_suc']['scl_id']);
+                                    foreach ($almacenes as $key => $ams) :
                                 ?>
-                                    <option value="<?php echo $ams['ams_id'] ?>"><?php echo $ams['ams_nombre'] ?></option>
+                                <option value="<?php echo $ams['ams_id'] ?>"><?php echo $ams['ams_nombre'] ?></option>
 
                                 <?php endforeach; ?>
                             </select>
@@ -23,89 +23,105 @@
                             <input type="text" name="pds_nombre" id="pds_nombre" class="form-control" placeholder="Ingrese el nombre del producto" required>
 
                         </div>
-
+                        <div class="form-group">
+                            <textarea id="pds_descripcion_corta" name="pds_descripcion_corta"></textarea>
+                        </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-
                             <div class="col-12 col-md-12">
-
-                                <div class="row">
-                                    <div class="col-md-12 col-12">
-                                        <div class="form-group">
-                                            <label for="pds_sku">SKU <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="SKU se refiere a una unidad de almacenamiento de inventario, un identificador único para cada producto y servicio que se puede comprar."></i><strong class="text-primary" data-toggle="tooltip" data-placement="right" title="Campo obligatorio, por favor llenelo">*</strong></label>
-                                            <input type="text" name="pds_sku" id="pds_sku" class="form-control" placeholder="" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_stok">Existencia <strong class="text-primary" data-toggle="tooltip" data-placement="right" title="Campo obligatorio, por favor llenelo">*</strong> </label>
-                                            <input type="number" name="pds_stok" id="pds_stok" class="form-control" placeholder="" value="0" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_stok_min">Existencia mínima <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="El sistema te notificará cuando la cantidad de inventario sea igual o inferior a la que pongas en este campo."></i> </label>
-                                            <input type="number" name="pds_stok_min" id="pds_stok_min" class="form-control" placeholder="" value="0">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6">
-                                        <!-- <div class="form-group">
+                                <ul class="nav nav-pills nav-primary" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active show" id="tab-general-tab" data-toggle="pill" href="#tab-general" role="tab" aria-controls="tab-general" aria-selected="true"> General <i class="fa fa-bars" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="v-pills-detalle-precio-tab" data-toggle="pill" href="#v-pills-detalle-precio" role="tab" aria-controls="v-pills-detalle-precio" aria-selected="false">Precio promoción <i class="fas fa-digital-tachograph"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="v-pills-detalle-tab" data-toggle="pill" href="#v-pills-detalle" role="tab" aria-controls="v-pills-detalle" aria-selected="false">Detalle <i class="fas fa-align-justify"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="tab-content" id="v-pills-tabContent">
+                                    <div class="tab-pane fade active show" id="tab-general" role="tabpanel" aria-labelledby="tab-general-tab">
+                                        <div class="row">
+                                            <div class="col-md-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="pds_sku">SKU <i class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="SKU se refiere a una unidad de almacenamiento de inventario, un identificador único para cada producto y servicio que se puede comprar."></i><strong class="text-primary" data-toggle="tooltip" data-placement="right" title="Campo obligatorio, por favor llenelo">*</strong></label>
+                                                    <input type="text" name="pds_sku" id="pds_sku" class="form-control" placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-6">
+                                                <div class="form-group">
+                                                    <label for="pds_stok">Existencia <strong class="text-primary" data-toggle="tooltip" data-placement="right" title="Campo obligatorio, por favor llenelo">*</strong> </label>
+                                                    <input type="number" name="pds_stok" id="pds_stok" class="form-control" placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-6">
+                                                <div class="form-group">
+                                                    <label for="pds_stok_min">Existencia mínima</label>
+                                                    <input type="number" name="pds_stok_min" id="pds_stok_min" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-6">
+                                                <!-- <div class="form-group">
                                                     <label for="pds_inpuesto">Inpuesto %</label>
                                                     <input type="text" name="pds_inpuesto" id="pds_inpuesto" class="form-control" placeholder="">
                                                 </div> -->
-                                    </div>
-                                    <!-- <div class="col-md-4 col-6">
+                                            </div>
+                                            <!-- <div class="col-md-4 col-6">
                                                 <div class="form-group">
                                                     <label for="pds_stok_max">Existencia máxima</label>-->
-                                    <input type="hidden" name="pds_stok_max" id="pds_stok_max" class="form-control" placeholder="">
-                                    <!-- </div>
+                                            <input type="hidden" name="pds_stok_max" id="pds_stok_max" class="form-control" placeholder="">
+                                            <!-- </div>
                                             </div> -->
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_precio_credito">Crédito <strong class="text-primary"></strong></label>
-                                            <input type="text" name="pds_precio_credito" id="pds_precio_credito" class="form-control inputN" placeholder="" value="0">
-                                        </div>
-                                    </div>
+                                            <div class="col-md-4 col-6">
+                                                <div class="form-group">
+                                                    <label for="pds_precio_compra">Precio compra <strong class="text-primary" data-toggle="tooltip" data-placement="right" title="Campo obligatorio, por favor llenelo">*</strong></label>
+                                                    <input type="text" name="pds_precio_compra" id="pds_precio_compra" class="form-control inputN" placeholder="" value="0" required>
+                                                </div>
+                                            </div>
 
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_enganche">Enganche <strong class="text-primary"></strong></label>
-                                            <input type="text" name="pds_enganche" id="pds_enganche" class="form-control inputN" placeholder="" value="0">
-                                        </div>
-                                    </div>
+                                            <div class="col-md-4 col-6">
+                                                <div class="form-group">
+                                                    <label for="pds_precio_publico">Precio publico <strong class="text-primary" data-toggle="tooltip" data-placement="right" title="Campo obligatorio, por favor llenelo">*</strong></label>
+                                                    <input type="text" name="pds_precio_publico" id="pds_precio_publico" class="form-control inputN" placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-6">
+                                                <div class="form-group">
+                                                    <label for="pds_porcentaje_precio_publico">Ganancia %</label>
+                                                    <input type="number" name="pds_porcentaje_precio_publico" id="pds_porcentaje_precio_publico" class="form-control" placeholder="">
+                                                </div>
+                                            </div>
 
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_pago_semanal">Pago semanal <strong class="text-primary"></strong></label>
-                                            <input type="text" name="pds_pago_semanal" id="pds_pago_semanal" class="form-control inputN" placeholder="" value="0">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_precio_contado">Contado <strong class="text-primary"></strong></label>
-                                            <input type="text" name="pds_precio_contado" id="pds_precio_contado" class="form-control inputN" placeholder="" value="0">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_precio_compra_mes_1">A un mes <strong class="text-primary"></strong></label>
-                                            <input type="text" name="pds_precio_compra_mes_1" id="pds_precio_compra_mes_1" class="form-control inputN" placeholder="" value="0">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-6">
-                                        <div class="form-group">
-                                            <label for="pds_precio_compra_mes_2">A dos meses <strong class="text-primary"></strong></label>
-                                            <input type="text" name="pds_precio_compra_mes_2" id="pds_precio_compra_mes_2" class="form-control inputN" placeholder="" value="0">
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
-                            <!-- <div class="tab-pane fade" id="v-pills-detalle-precio" role="tabpanel" aria-labelledby="v-pills-detalle-precio-tab">
+                                            <div class="col-md-4 col-6">
+                                                <div class="form-group">
+                                                    <label for="pds_precio_mayoreo">Precio mayoreo</label>
+                                                    <input type="text" name="pds_precio_mayoreo" id="pds_precio_mayoreo" class="form-control inputN" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="pds_porcentaje_precio_mayoreo">Ganancia %</label>
+                                                    <input type="number" name="pds_porcentaje_precio_mayoreo" id="pds_porcentaje_precio_mayoreo" readonly class="form-control inputN" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="pds_porcentaje_descuento_mayoreo">Descuento %</label>
+                                                    <input type="text" name="pds_porcentaje_descuento_mayoreo" id="pds_porcentaje_descuento_mayoreo" class="form-control inputN" readonly placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="v-pills-detalle-precio" role="tabpanel" aria-labelledby="v-pills-detalle-precio-tab">
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="form-group">
@@ -161,12 +177,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> -->
-
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="card">
+                    <div class="card-body">
+                        <textarea id="pds_descripcion_larga" name="pds_descripcion_larga"></textarea>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4 col-12">
                 <div class="card">
@@ -175,7 +196,21 @@
                         <div class="row">
 
                             <div class="col-12">
-                                <h4 class="card-title">Categoría</h4>
+                                <h4 class="card-title">Detalles</h4>
+                                <p class="card-text text-primary">Visibilidad</p>
+                                <div class="" data-toggle="">
+                                    <label class="btn  active">
+                                        <input type="radio" name="pds_visivilidad" id="pds_visivilidad_pos" checked value="POS"> POS
+                                    </label>
+
+                                    <label class="btn ">
+                                        <input type="radio" name="pds_visivilidad" id="pds_visivilidad_online" value="ONLINE"> ONLINE
+                                    </label>
+                                    <label class="btn ">
+                                        <input type="radio" name="pds_visivilidad" id="pds_visivilidad_pos_online" value="POS/ONLINE"> POS / ONLINE
+                                    </label>
+                                </div>
+                                <p class="card-text text-primary">Categorías</p>
 
                                 <div class="row">
                                     <div class="col-12">
@@ -204,16 +239,16 @@
 
                                 </div>
 
-                                <input type="hidden" name="pds_imagen_portada" id="pds_imagen_portada" value="<?php echo HTTP_HOST . 'app/assets/images/sistema/logo-productos-sm.jpeg' ?>"><br>
 
-                                <!-- <div class="text-center img-portada">
+                                <div class="text-center img-portada">
                                     <p class="text-primary text-center">Imagen del producto <strong class="text-dark">250 x 250 px</strong></p>
                                     <img src="<?php echo HTTP_HOST . 'app/assets/images/sistema/logo-productos-sm.jpeg' ?>" id="pds_imagen_portada_muestra" width="250" height="250" alt="">
 
+                                    <input type="hidden" name="pds_imagen_portada" id="pds_imagen_portada" value="<?php echo HTTP_HOST . 'app/assets/images/sistema/logo-productos-sm.jpeg' ?>"><br>
 
                                     <button type="button" class="btn btn-link btnAgregarImagen" data-toggle="modal" data-target="#mdlAgregarImagen">Agregar imágen</button>
                                     <button type="button" class="btn btn-link text-primary d-none">Quitar imágen</button>
-                                </div> -->
+                                </div>
                                 <!-- <div class="text-center img-galeria">
                                     <p class="text-primary">Galeria del producto</p>
                                     <button class="btn btn-link">Imágenes a la galería del producto</button>
