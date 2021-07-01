@@ -108,17 +108,23 @@
 
                             <div class="card-body">
                                 <div class="row">
-                                <div class="col-12">
-                                <h4 class="card-title"> <span class="text-danger">Nº</span> <?= $contratos['contrato'][0]['no']  ?></h4>
+                                    <div class="col-4">
+                                        <label for="">Número de folio</label>
 
-                                <label for="">Nombre del cliente</label>
-                                <input type="text" name="vts_nombre_cliente[]" class="form-control mb-2" value="<?= $contratos['contrato'][0]['nombre']  ?>">
-                                
-                                </div>
+                                        <input type="text" name="vts_n_contrato[]" class="form-control mb-2" value="<?= $contratos['contrato'][0]['no']  ?>">
+
+                                    </div>
+                                    <div class="col-12">
+
+
+                                        <label for="">Nombre del cliente</label>
+                                        <input type="text" name="vts_nombre_cliente[]" class="form-control mb-2" value="<?= $contratos['contrato'][0]['nombre']  ?>">
+
+                                    </div>
 
                                     <div class="col-md-2">
 
-                                        <input type="hidden" name="vts_n_contrato[]" value="<?= $contratos['contrato'][0]['no']  ?>">
+
 
 
                                         <!-- <p class="card-text"><?= $contratos['contrato'][0]['nombre']  ?></p> -->
