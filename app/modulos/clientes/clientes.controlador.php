@@ -27,10 +27,10 @@ class ClientesControlador
             $_POST['clts_foto_ineReverso'] = '';
             $_POST['clts_foto_cpdomicilio'] = '';
 
-            //$_POST['cts_fecha_registro'] = FECHA;
+            //$_POST['clts_fecha_registro'] = FECHA;
 
 
-            $agrgarClientes = ClientesModelo::mdlAgregarClientes($_POST);
+            $agrgarClientes = ClientesModelo::mdlAgregarClientesByExcel($_POST);
 
 
             if ($agrgarClientes) {
@@ -63,89 +63,89 @@ class ClientesControlador
             $_POST['clts_foto_cpdomicilio'] = "";
 
             //*- subir imagenes
-           
-
-                $ft1 = false;
-                $msg1 = "";
-                $tp1 = "";
-
-                $ft2 = false;
-                $msg2 = "";
-                $tp2 = "";
-
-                $ft3 = false;
-                $msg3 = "";
-                $tp3 = "";
 
 
-                $dirGeneral = DOCUMENT_ROOT . "app/assets/images/imgclientes";
-                $dirPersonal = DOCUMENT_ROOT . "app/assets/images/imgclientes/" . $_POST['clts_id']."/docs";
+            $ft1 = false;
+            $msg1 = "";
+            $tp1 = "";
 
-                if (!file_exists($dirGeneral)) {
-                    mkdir($dirGeneral, 0777, true);
-                }
-                if (!file_exists($dirPersonal)) {
-                    mkdir($dirPersonal, 0777, true);
-                }
+            $ft2 = false;
+            $msg2 = "";
+            $tp2 = "";
 
-                if (file_exists($dirPersonal . '/INE.jpg') || file_exists($dirPersonal . '/INE.jpeg') || file_exists($dirPersonal . '/INE.png')) {
-                    $msg1 = "Ya existe";
-                    $tp1 = "1";
+            $ft3 = false;
+            $msg3 = "";
+            $tp3 = "";
+
+
+            $dirGeneral = DOCUMENT_ROOT . "app/assets/images/imgclientes";
+            $dirPersonal = DOCUMENT_ROOT . "app/assets/images/imgclientes/" . $_POST['clts_id'] . "/docs";
+
+            if (!file_exists($dirGeneral)) {
+                mkdir($dirGeneral, 0777, true);
+            }
+            if (!file_exists($dirPersonal)) {
+                mkdir($dirPersonal, 0777, true);
+            }
+
+            if (file_exists($dirPersonal . '/INE.jpg') || file_exists($dirPersonal . '/INE.jpeg') || file_exists($dirPersonal . '/INE.png')) {
+                $msg1 = "Ya existe";
+                $tp1 = "1";
+            } else {
+
+                if ($_FILES['ineFrente']['tmp_name'] != "") {
+                    $MIME = explode("/", $_FILES['ineFrente']['type']);
+                    $type1 = $MIME[1];
+                    move_uploaded_file($_FILES['ineFrente']['tmp_name'], $dirPersonal . '/INE.' . $type1);
+                    $_POST['clts_foto_ine'] = $dirPersonal . '/INE' . $type1;
+                    $msg1 = "Se subio correctamente";
+                    $tp1 = "2";
                 } else {
-
-                    if ($_FILES['ineFrente']['tmp_name'] != "") {
-                        $MIME = explode("/", $_FILES['ineFrente']['type']);
-                        $type1 = $MIME[1];
-                        move_uploaded_file($_FILES['ineFrente']['tmp_name'], $dirPersonal . '/INE.' . $type1);
-                        $_POST['clts_foto_ine'] = $dirPersonal . '/INE' . $type1;
-                        $msg1 = "Se subio correctamente";
-                        $tp1 = "2";
-                    } else {
-                        $msg1 = "Aun no se sube";
-                        $tp1 = "3";
-                    }
+                    $msg1 = "Aun no se sube";
+                    $tp1 = "3";
                 }
+            }
 
-                if (file_exists($dirPersonal . '/INE_R.jpg') || file_exists($dirPersonal . '/INE_R.jpeg') || file_exists($dirPersonal . '/INE_R.png')) {
-                    $msg2 = "Ya existe ";
-                    $tp2 = "1";
+            if (file_exists($dirPersonal . '/INE_R.jpg') || file_exists($dirPersonal . '/INE_R.jpeg') || file_exists($dirPersonal . '/INE_R.png')) {
+                $msg2 = "Ya existe ";
+                $tp2 = "1";
+            } else {
+
+                if ($_FILES['ineReverso']['tmp_name'] != "") {
+                    $MIME2 = explode("/", $_FILES['ineReverso']['type']);
+                    $type2 = $MIME2[1];
+                    move_uploaded_file($_FILES['ineReverso']['tmp_name'], $dirPersonal . '/INE_R.' . $type2);
+                    $_POST['clts_foto_ineReverso'] = $dirPersonal . '/INE_R' . $type2;
+                    $msg2 = "Se subio correctamente";
+                    $tp2 = "2";
                 } else {
-
-                    if ($_FILES['ineReverso']['tmp_name'] != "") {
-                        $MIME2 = explode("/", $_FILES['ineReverso']['type']);
-                        $type2 = $MIME2[1];
-                        move_uploaded_file($_FILES['ineReverso']['tmp_name'], $dirPersonal . '/INE_R.' . $type2);
-                        $_POST['clts_foto_ineReverso'] = $dirPersonal . '/INE_R' . $type2;
-                        $msg2 = "Se subio correctamente";
-                        $tp2 = "2";
-                    } else {
-                        $msg2 = "Aun no se sube";
-                        $tp2 = "3";
-                    }
+                    $msg2 = "Aun no se sube";
+                    $tp2 = "3";
                 }
+            }
 
-                if (file_exists($dirPersonal . '/CDOMICILIO.jpg') || file_exists($dirPersonal . '/CDOMICILIO.jpeg') || file_exists($dirPersonal . '/CDOMICILIO.png')) {
-                    $msg3 = "Ya existe ";
-                    $tp3 = "1";
+            if (file_exists($dirPersonal . '/CDOMICILIO.jpg') || file_exists($dirPersonal . '/CDOMICILIO.jpeg') || file_exists($dirPersonal . '/CDOMICILIO.png')) {
+                $msg3 = "Ya existe ";
+                $tp3 = "1";
+            } else {
+
+                if ($_FILES['cdom']['tmp_name'] != "") {
+                    $MIME3 = explode("/", $_FILES['cdom']['type']);
+                    $type3 = $MIME3[1];
+                    move_uploaded_file($_FILES['cdom']['tmp_name'], $dirPersonal . '/CDOMICILIO.' . $type3);
+                    $_POST['clts_foto_cpdomicilio'] = $dirPersonal . '/CDOMICILIO.' . $type3;
+                    $msg3 = "Se subio correctamente";
+                    $tp3 = "2";
                 } else {
-
-                    if ($_FILES['cdom']['tmp_name'] != "") {
-                        $MIME3 = explode("/", $_FILES['cdom']['type']);
-                        $type3 = $MIME3[1];
-                        move_uploaded_file($_FILES['cdom']['tmp_name'], $dirPersonal . '/CDOMICILIO.' . $type3);
-                        $_POST['clts_foto_cpdomicilio'] = $dirPersonal . '/CDOMICILIO.' . $type3;
-                        $msg3 = "Se subio correctamente";
-                        $tp3 = "2";
-                    } else {
-                        $msg3 = "Aun no se sube";
-                        $tp3 = "3";
-                    }
+                    $msg3 = "Aun no se sube";
+                    $tp3 = "3";
                 }
-            
+            }
 
-            
+
+
             $editaClientes = ClientesModelo::actualizar2InfIdClient($_POST);
-            
+
             if ($editaClientes) {
                 return array(
                     'status' => true,
@@ -154,13 +154,13 @@ class ClientesControlador
                     'msg1' => $msg1,
                     'msg2' => $msg2,
                     'msg3' => $msg3,
-                    
+
                 );
             } else {
                 return array(
                     'status' => false,
                     'mensaje' => 'No se realizo ningun cambio',
-                   
+
                 );
             }
         }
@@ -200,75 +200,173 @@ class ClientesControlador
 
             //var_dump($objPHPExcel);
 
-            $objPHPExcel->setActiveSheetIndex(13);
+            $objPHPExcel->setActiveSheetIndex(0);
 
-            $numRows = $objPHPExcel->setActiveSheetIndex(13)->getHighestRow();
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
             $countInsert = 0;
             $countUpdate = 0;
             //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
 
             for ($i = 2; $i <= $numRows; $i++) {
 
+                $clts_numero = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $clts_ruta = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
 
-                $cts_ruta = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
-                $cts_nombre = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
-                $cts_telefono_1 = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
-                $cts_domicilio = $objPHPExcel->getActiveSheet()->getCell('I' . $i)->getCalculatedValue();
-                $cts_colonia = $objPHPExcel->getActiveSheet()->getCell('J' . $i)->getCalculatedValue();
-                $cts_calles = $objPHPExcel->getActiveSheet()->getCell('K' . $i)->getCalculatedValue();
-                $cts_fachada_color = $objPHPExcel->getActiveSheet()->getCell('L' . $i)->getCalculatedValue();
-                $cts_puerta_color = $objPHPExcel->getActiveSheet()->getCell('M' . $i)->getCalculatedValue();
-                $cts_trabajo = $objPHPExcel->getActiveSheet()->getCell('N' . $i)->getCalculatedValue();
-                $cts_puesto = $objPHPExcel->getActiveSheet()->getCell('O' . $i)->getCalculatedValue();
-                $cts_direccion_trabajo = $objPHPExcel->getActiveSheet()->getCell('P' . $i)->getCalculatedValue();
-                $cts_colonia_trabajo = $objPHPExcel->getActiveSheet()->getCell('Q' . $i)->getCalculatedValue();
-                $cts_telefono_trabajo = $objPHPExcel->getActiveSheet()->getCell('R' . $i)->getCalculatedValue();
-                $cts_antiguedad_trabajo = $objPHPExcel->getActiveSheet()->getCell('S' . $i)->getCalculatedValue();
-                $cts_ingreso_mensual_trabajo = $objPHPExcel->getActiveSheet()->getCell('T' . $i)->getCalculatedValue();
-                $cts_credencial_elector = $objPHPExcel->getActiveSheet()->getCell('U' . $i)->getCalculatedValue();
-                $cts_tipo_casa_a = $objPHPExcel->getActiveSheet()->getCell('Y' . $i)->getCalculatedValue();
-                $cts_tipo_casa_b = $objPHPExcel->getActiveSheet()->getCell('Z' . $i)->getCalculatedValue();
-                $cts_tipo_casa_c = $objPHPExcel->getActiveSheet()->getCell('AA' . $i)->getCalculatedValue();
-                $cts_tiempo_casa = $objPHPExcel->getActiveSheet()->getCell('AB' . $i)->getCalculatedValue();
-                $cts_nombre_casa = $objPHPExcel->getActiveSheet()->getCell('AC' . $i)->getCalculatedValue();
-                $cts_reg_propiedad = $objPHPExcel->getActiveSheet()->getCell('AD' . $i)->getCalculatedValue();
+                $dia = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $mes = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+                $ano = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
+                $fecha_concatenda = $ano . '-' . $mes . '-' . $dia;
+                $clts_fecha_registro =  $fecha_concatenda; //date_format($fecha_concatenda,'Y/m/d');
 
-                $cts_fecha_registro = FECHA;
-                $cts_usuario_registro = $_SESSION['session_usr']['usr_nombre'];
+                $clts_nombre = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
+                $clts_telefono = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
+                $clts_domicilio = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+                $clts_col = $objPHPExcel->getActiveSheet()->getCell('I' . $i)->getCalculatedValue();
+                $clts_entre_calles = $objPHPExcel->getActiveSheet()->getCell('J' . $i)->getCalculatedValue();
+                $clts_fachada_color = $objPHPExcel->getActiveSheet()->getCell('K' . $i)->getCalculatedValue();
+                $clts_puerta_color = $objPHPExcel->getActiveSheet()->getCell('L' . $i)->getCalculatedValue();
+                $clts_trabajo = $objPHPExcel->getActiveSheet()->getCell('M' . $i)->getCalculatedValue();
+                $clts_puesto = $objPHPExcel->getActiveSheet()->getCell('N' . $i)->getCalculatedValue();
+                $clts_direccion_tbj = $objPHPExcel->getActiveSheet()->getCell('O' . $i)->getCalculatedValue();
+                $clts_col_tbj = $objPHPExcel->getActiveSheet()->getCell('P' . $i)->getCalculatedValue();
+                $clts_tel_tbj = $objPHPExcel->getActiveSheet()->getCell('Q' . $i)->getCalculatedValue();
+                $clts_antiguedad_tbj = $objPHPExcel->getActiveSheet()->getCell('R' . $i)->getCalculatedValue();
+                $clts_igs_mensual_tbj = $objPHPExcel->getActiveSheet()->getCell('S' . $i)->getCalculatedValue();
+                $clts_no_cred = $objPHPExcel->getActiveSheet()->getCell('T' . $i)->getCalculatedValue();
+
+
+                $clts_tipo_vivienda_propia = $objPHPExcel->getActiveSheet()->getCell('U' . $i)->getCalculatedValue();
+                $clts_tipo_vivienda_rentada = $objPHPExcel->getActiveSheet()->getCell('V' . $i)->getCalculatedValue();
+                $clts_tipo_vivienda_prestada = $objPHPExcel->getActiveSheet()->getCell('W' . $i)->getCalculatedValue();
+
+                $clts_tipo_vivienda_propia = str_replace("-", "", $clts_tipo_vivienda_propia);
+                $clts_tipo_vivienda_rentada = str_replace("-", "", $clts_tipo_vivienda_rentada);
+                $clts_tipo_vivienda_prestada = str_replace("-", "", $clts_tipo_vivienda_prestada);
+
+
+                $clts_tipo_vivienda = $clts_tipo_vivienda_propia . '' . $clts_tipo_vivienda_rentada . '' . $clts_tipo_vivienda_prestada;
+
+
+
+                $clts_antiguedad_viviendo = $objPHPExcel->getActiveSheet()->getCell('X' . $i)->getCalculatedValue();
+                $clts_vivienda_anomde = $objPHPExcel->getActiveSheet()->getCell('Y' . $i)->getCalculatedValue();
+                $clts_nreg_propiedad = $objPHPExcel->getActiveSheet()->getCell('Z' . $i)->getCalculatedValue();
+
+                $clts_nom_conyuge = $objPHPExcel->getActiveSheet()->getCell('AA' . $i)->getCalculatedValue();
+                $clts_tbj_conyuge = $objPHPExcel->getActiveSheet()->getCell('AB' . $i)->getCalculatedValue();
+                $clts_tbj_puesto_conyuge = $objPHPExcel->getActiveSheet()->getCell('AC' . $i)->getCalculatedValue();
+                $clts_tbj_dir_conyuge = $objPHPExcel->getActiveSheet()->getCell('AD' . $i)->getCalculatedValue();
+                $clts_tbj_col_conyuge = $objPHPExcel->getActiveSheet()->getCell('AE' . $i)->getCalculatedValue();
+                $clts_tbj_tel_conyuge = $objPHPExcel->getActiveSheet()->getCell('AF' . $i)->getCalculatedValue();
+
+                $clts_tbj_ant_conyuge = $objPHPExcel->getActiveSheet()->getCell('AG' . $i)->getCalculatedValue();
+                $clts_nom_fiador = $objPHPExcel->getActiveSheet()->getCell('AH' . $i)->getCalculatedValue();
+                $clts_parentesco_fiador = $objPHPExcel->getActiveSheet()->getCell('AI' . $i)->getCalculatedValue();
+                $clts_tel_fiador = $objPHPExcel->getActiveSheet()->getCell('AJ' . $i)->getCalculatedValue();
+                $clts_dir_fiador = $objPHPExcel->getActiveSheet()->getCell('AK' . $i)->getCalculatedValue();
+                $clts_col_fiador = $objPHPExcel->getActiveSheet()->getCell('AL' . $i)->getCalculatedValue();
+                $clts_tbj_fiador = $objPHPExcel->getActiveSheet()->getCell('AM' . $i)->getCalculatedValue();
+                $clts_tbj_dir_fiador = $objPHPExcel->getActiveSheet()->getCell('AN' . $i)->getCalculatedValue();
+                $clts_tbj_tel_fiador = $objPHPExcel->getActiveSheet()->getCell('AO' . $i)->getCalculatedValue();
+                $clts_tbj_col_fiador = $objPHPExcel->getActiveSheet()->getCell('AP' . $i)->getCalculatedValue();
+                $clts_fc_elector_fiador = $objPHPExcel->getActiveSheet()->getCell('AQ' . $i)->getCalculatedValue();
+                $clts_tbj_ant_fiador = $objPHPExcel->getActiveSheet()->getCell('AR' . $i)->getCalculatedValue();
+                $clts_nom_ref1 = $objPHPExcel->getActiveSheet()->getCell('AS' . $i)->getCalculatedValue();
+                $clts_parentesco_ref1 = $objPHPExcel->getActiveSheet()->getCell('AT' . $i)->getCalculatedValue();
+                $clts_dir_ref1 = $objPHPExcel->getActiveSheet()->getCell('AU' . $i)->getCalculatedValue();
+                $clts_col_ref1 = $objPHPExcel->getActiveSheet()->getCell('AV' . $i)->getCalculatedValue();
+                $clts_tel_ref1 = $objPHPExcel->getActiveSheet()->getCell('AW' . $i)->getCalculatedValue();
+                $clts_nom_ref2 = $objPHPExcel->getActiveSheet()->getCell('AX' . $i)->getCalculatedValue();
+                $clts_parentesco_ref2 = $objPHPExcel->getActiveSheet()->getCell('AY' . $i)->getCalculatedValue();
+                $clts_dir_ref2 = $objPHPExcel->getActiveSheet()->getCell('AZ' . $i)->getCalculatedValue();
+                $clts_col_ref2 = $objPHPExcel->getActiveSheet()->getCell('BA' . $i)->getCalculatedValue();
+                $clts_tel_ref2 = $objPHPExcel->getActiveSheet()->getCell('BB' . $i)->getCalculatedValue();
+                $clts_ubicacion = $objPHPExcel->getActiveSheet()->getCell('BC' . $i)->getCalculatedValue();
+                $ctls_tipo_cliente = $objPHPExcel->getActiveSheet()->getCell('BD' . $i)->getCalculatedValue();
+                $ctls_curp = $objPHPExcel->getActiveSheet()->getCell('BE' . $i)->getCalculatedValue();
+                $ctls_observaciones = $objPHPExcel->getActiveSheet()->getCell('BF' . $i)->getCalculatedValue();
+                $ctls_cuentas = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
+
+
 
                 $data = array(
-                    'cts_ruta' => $cts_ruta,
-                    'cts_nombre' => $cts_nombre,
-                    'cts_telefono_1' => $cts_telefono_1,
-                    'cts_domicilio' => $cts_domicilio,
-                    'cts_colonia' => $cts_colonia,
-                    'cts_calles' => $cts_calles,
-                    'cts_fachada_color' => $cts_fachada_color,
-                    'cts_puerta_color' => $cts_puerta_color,
-                    'cts_trabajo' => $cts_trabajo,
-                    'cts_puesto' => $cts_puesto,
-                    'cts_direccion_trabajo' => $cts_direccion_trabajo,
-                    'cts_colonia_trabajo' => $cts_colonia_trabajo,
-                    'cts_telefono_trabajo' => $cts_telefono_trabajo,
-                    'cts_antiguedad_trabajo' => $cts_antiguedad_trabajo,
-                    'cts_ingreso_mensual_trabajo' => $cts_ingreso_mensual_trabajo,
-                    'cts_credencial_elector' => $cts_credencial_elector,
-                    'cts_tipo_casa' => str_replace('-', '', $cts_tipo_casa_a . '' . $cts_tipo_casa_b . '' . $cts_tipo_casa_c),
-                    'cts_tiempo_casa' => $cts_tiempo_casa,
-                    'cts_nombre_casa' => $cts_nombre_casa,
-                    'cts_reg_propiedad' => $cts_reg_propiedad,
-                    'cts_fecha_registro' => $cts_fecha_registro,
-                    'cts_usuario_registro' => $cts_usuario_registro
+
+                    'clts_id' => NULL,
+                    'clts_numero' => $clts_numero,
+                    'clts_ruta' => $clts_ruta,
+                    'clts_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
+                    'clts_fecha_registro' => $clts_fecha_registro,
+                    'clts_nombre' => $clts_nombre,
+                    'clts_telefono' => $clts_telefono,
+                    'clts_domicilio' => $clts_domicilio,
+                    'clts_col' => $clts_col,
+                    'clts_entre_calles' => $clts_entre_calles,
+                    'clts_fachada_color' => $clts_fachada_color,
+                    'clts_puerta_color' => $clts_puerta_color,
+                    'clts_trabajo' => $clts_trabajo,
+                    'clts_puesto' => $clts_puesto,
+                    'clts_direccion_tbj' => $clts_direccion_tbj,
+                    'clts_col_tbj' => $clts_col_tbj,
+                    'clts_tel_tbj' => $clts_tel_tbj,
+                    'clts_antiguedad_tbj' => $clts_antiguedad_tbj,
+                    'clts_igs_mensual_tbj' => $clts_igs_mensual_tbj,
+                    'clts_no_cred' => $clts_no_cred,
+                    'clts_tipo_vivienda' => $clts_tipo_vivienda,
+                    'clts_antiguedad_viviendo' => $clts_antiguedad_viviendo,
+                    'clts_vivienda_anomde' => $clts_vivienda_anomde,
+                    'clts_nreg_propiedad' => $clts_nreg_propiedad,
+                    'clts_nom_conyuge' => $clts_nom_conyuge,
+                    'clts_tbj_conyuge' => $clts_tbj_conyuge,
+                    'clts_tbj_puesto_conyuge' => $clts_tbj_puesto_conyuge,
+                    'clts_tbj_dir_conyuge' => $clts_tbj_dir_conyuge,
+                    'clts_tbj_col_conyuge' => $clts_tbj_col_conyuge,
+                    'clts_tbj_tel_conyuge' => $clts_tbj_tel_conyuge,
+                    'clts_tbj_ant_conyuge' => $clts_tbj_ant_conyuge,
+                    'clts_nom_fiador' => $clts_nom_fiador,
+                    'clts_parentesco_fiador' => $clts_parentesco_fiador,
+                    'clts_tel_fiador' => $clts_tel_fiador,
+                    'clts_dir_fiador' => $clts_dir_fiador,
+                    'clts_col_fiador' => $clts_col_fiador,
+                    'clts_tbj_fiador' => $clts_tbj_fiador,
+                    'clts_tbj_dir_fiador' => $clts_tbj_dir_fiador,
+                    'clts_tbj_tel_fiador' => $clts_tbj_tel_fiador,
+                    'clts_tbj_col_fiador' => $clts_tbj_col_fiador,
+                    'clts_fc_elector_fiador' => $clts_fc_elector_fiador,
+                    'clts_tbj_ant_fiador' => $clts_tbj_ant_fiador,
+                    'clts_nom_ref1' => $clts_nom_ref1,
+                    'clts_parentesco_ref1' => $clts_parentesco_ref1,
+                    'clts_dir_ref1' => $clts_dir_ref1,
+                    'clts_col_ref1' => $clts_col_ref1,
+                    'clts_tel_ref1' => $clts_tel_ref1,
+                    'clts_nom_ref2' => $clts_nom_ref2,
+                    'clts_parentesco_ref2' => $clts_parentesco_ref2,
+                    'clts_dir_ref2' => $clts_dir_ref2,
+                    'clts_col_ref2' => $clts_col_ref2,
+                    'clts_tel_ref2' => $clts_tel_ref2,
+                    'clts_ubicacion' => $clts_ubicacion,
+                    'clts_foto_ine' => "",
+                    'clts_foto_ineReverso' => "",
+                    'clts_foto_cpdomicilio' => "",
+                    'ctls_tipo_cliente' => $ctls_tipo_cliente,
+                    'ctls_curp' => $ctls_curp,
+                    'ctls_observaciones' => $ctls_observaciones,
+                    'ctls_cuentas' => $ctls_cuentas,
+
                 );
 
-                //var_dump($data);
 
-                if (ClientesModelo::mdlAgregarClientes($data)) {
+
+
+
+                // $insert = ClientesModelo::mdlAgregarClientesByExcel($data);
+                // preArray($insert);
+                
+                if (ClientesModelo::mdlAgregarClientesByExcel($data)) {
                     $countInsert += 1;
                 } else {
-                    // if (UsuariosModelo::mdlActualizarUsuarios($data)) {
-                    //     $countUpdate += 1;
-                    // }
+                    if (UsuariosModelo::mdlActualizarUsuarios($data)) {
+                        $countUpdate += 1;
+                    }
                 }
             }
 
