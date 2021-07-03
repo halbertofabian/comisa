@@ -125,7 +125,7 @@ class TraspasosControlador
 
 
         // if ($actualizarStokOrigen && $actualizarStokDestino) {
-        if ($actualizarStokOrigen && $actualizarStokDestino) {
+        if ($actualizarStokOrigen) {
             $traspaso = TraspasosModelo::mdlTraspasarProductosAlamacen($traspasoData);
             //echo "actualizado";
         } elseif ($insertarP && $actualizarStokOrigen) {
