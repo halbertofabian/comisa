@@ -84,6 +84,7 @@
 
     <script src="<?php echo HTTP_HOST . 'app/' ?>plugins/jquery-number/jquery.number.js"></script>
 
+    <script src="<?php echo HTTP_HOST . 'app/' ?>plugins/jquery-mask/dist/jquery.mask.min.js"></script>
 
 
 </head>
@@ -143,8 +144,7 @@
                                 $listaBlanca = AppControlador::ObtenerListaBlancaGefeCobranza();
                             } elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') {
                                 $listaBlanca = AppControlador::ObtenerListaBlancaGefeVentas();
-                            }
-                            elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe administrativo') {
+                            } elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe administrativo') {
                                 $listaBlanca = AppControlador::ObtenerListaBlancaAdministración();
                             }
 

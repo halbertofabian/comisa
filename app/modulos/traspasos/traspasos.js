@@ -10,7 +10,19 @@
  *  Twitter: https://twitter.com/softmormx
  */
 
+$(document).ready(function () {
+    buscarProductosAlmacenOrigen();
+})
+
+
 $("#tps_ams_id_origen").on("change", function () {
+
+    buscarProductosAlmacenOrigen();
+
+})
+
+
+function buscarProductosAlmacenOrigen() {
 
     var tps_ams_id_origen = $("#tps_ams_id_origen").val()
 
@@ -44,9 +56,9 @@ $("#tps_ams_id_origen").on("change", function () {
                 tblDatos +=
                     `
                         <tr>
-                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br>/${pds_sku[0]}</td>
+                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br><strong class="text-primary"> SKU: ${pds_sku[0]} </strong></td>
                             <td  style="display:none;" id="CatProduct${pds_sku[0]}">${pds.pds_categoria}</td>
-                            <td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>
+                            <!--<td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>-->
                             <td><input type="number" id="cpasar${pds_sku[0]}" class="form-control" value="1" /></td>
                             <td>
                                 <button type="button" id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">
@@ -67,20 +79,29 @@ $("#tps_ams_id_origen").on("change", function () {
 
         }
     })
-
-})
+}
 
 var myArray = [];
 var sumaproductos = "";
 
 $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
-    var audio = document.getElementById("audio");
+    //let audio = document.getElementById("audio");
+
+    var sonidoSuccess = new Audio(urlApp + 'app/assets/audio/scanner-beep-checkout.mp3')
+
+    sonidoSuccess.play();
+
+
+
+
+
+
 
     var idp = $(this).val();
 
     var pname = $("#pname" + idp).text();
-    var pdisponible = $("#pdisponible" + idp).text();
+    //var pdisponible = $("#pdisponible" + idp).text();
     var cpasar = $("#cpasar" + idp).val();
     var CatProduct = $("#CatProduct" + idp).text();
 
@@ -88,16 +109,16 @@ $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
 
 
-    if (Number(pdisponible) >= Number(cpasar) && Number(cpasar) > 0) {
-        // $(this).attr("disabled", true);
-        // $(this).removeClass("btn-primary");
-        // $(this).addClass("btn-secondary");
+    // if (Number(pdisponible) >= Number(cpasar) && Number(cpasar) > 0) {
+    // $(this).attr("disabled", true);
+    // $(this).removeClass("btn-primary");
+    // $(this).addClass("btn-secondary");
 
-        var productoArray = { id: idp, nombre: pname, categoria: CatProduct, cantidad: cpasar };
-        //console.log(productoArray)
+    var productoArray = { id: idp, nombre: pname, categoria: CatProduct, cantidad: cpasar };
+    //console.log(productoArray)
 
-        tbodytraspaso +=
-            `
+    tbodytraspaso +=
+        `
                         <tr id="filaPcambiado${idp}">
 
                             <td id="">${pname}</td>
@@ -111,58 +132,69 @@ $(".tblAms tbody ").on("click", ".btnCambioMerca", function () {
 
                         </tr>
                     `;
-        
 
-        posicion = myArray.findIndex(produc => produc.id === idp);
-        if (posicion == -1) {
-            myArray.push(productoArray);
 
-            //console.log(myArray);
-            $("#tbodoytraspaso").append(tbodytraspaso);
-            $("#tps_lista_productos").val(JSON.stringify(myArray));
-            sumarCantidadProduc(cpasar);
-        } else {
-            //console.log("sumar");
-            var val1 = myArray[posicion].cantidad;
-            var nuevoVal = Number(val1) + Number(cpasar);
-            if (pdisponible >= nuevoVal) {
-                myArray[posicion].cantidad = nuevoVal;
-                //Arreglo de los productos que van almacenar
-                $("#tps_lista_productos").val(JSON.stringify(myArray));
-                var CPA = $("#addcant" + idp).text();
-                $("#addcant" + idp).text(Number(CPA) + Number(cpasar));
-                sumarCantidadProduc(cpasar);
+    posicion = myArray.findIndex(produc => produc.id === idp);
+    if (posicion == -1) {
 
-            } else {
-                toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")
-            }
-        }
+        myArray.push(productoArray);
 
-        audio.play();
+        //console.log(myArray);
+        $("#tbodoytraspaso").append(tbodytraspaso);
+        $("#tps_lista_productos").val(JSON.stringify(myArray));
+        sumarCantidadProduc(cpasar);
+    } else {
+        //console.log("sumar");
+        var val1 = myArray[posicion].cantidad;
+        var nuevoVal = Number(val1) + Number(cpasar);
+        // if (pdisponible >= nuevoVal) {
+        myArray[posicion].cantidad = nuevoVal;
+        //Arreglo de los productos que van almacenar
+        $("#tps_lista_productos").val(JSON.stringify(myArray));
+        var CPA = $("#addcant" + idp).text();
+        $("#addcant" + idp).text(Number(CPA) + Number(cpasar));
+        sumarCantidadProduc(cpasar);
+
+        // } else {
+        //     toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")
+        // }
     }
-    else {
-        toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")
-    }
+
+
+
+
+
+    // else {
+    //     toastr.warning("El stok es menor a la cantidad que desea traspasar", "ADVERTENCIA")
+    // }
 
 });
 
 //Suma del total de los productos a traspasar;
 function sumarCantidadProduc(numerop) {
     sumaproductos = Number(sumaproductos) + Number(numerop)
-        $("#suma_pds").val(sumaproductos);
-  }
-  function restarCantidadProduc(numerop) {
-      var cantidadActual=$("#suma_pds").val();
-      console.log(cantidadActual);
-      console.log(numerop);
+    $("#suma_pds").val(sumaproductos);
+}
+function restarCantidadProduc(numerop) {
+    var cantidadActual = $("#suma_pds").val();
+    console.log(cantidadActual);
+    console.log(numerop);
 
-        $("#suma_pds").val(Number(cantidadActual)-Number(numerop));
-  }
+    $("#suma_pds").val(Number(cantidadActual) - Number(numerop));
+    if ($("#suma_pds").val() == "0") {
+        sumaproductos = "";
+    }
+}
 
 $(".tblAmsDestino tbody ").on("click", ".btnDeleteCambio", function () {
+
+    var sonidoSuccess = new Audio(urlApp + 'app/assets/audio/delete_audio.mpeg')
+
+    sonidoSuccess.play();
+
     var id = $(this).val();
     //*Restar productos a la cnatidad total */
-    var cantidadRestar=$("#addcant"+id).text();
+    var cantidadRestar = $("#addcant" + id).text();
     restarCantidadProduc(cantidadRestar);
     //*** */
     //$("#btn" + id).removeClass("btn-secondary");
@@ -181,6 +213,8 @@ $(".tblAmsDestino tbody ").on("click", ".btnDeleteCambio", function () {
 
 $("#form_traspaso_product").on("submit", function (e) {
     e.preventDefault();
+
+
 
     nt = $("#tps_num_traspaso").val();
     tp = $("#tps_tipo").val();
@@ -217,35 +251,49 @@ $("#form_traspaso_product").on("submit", function (e) {
 
     }
 
-    var datos = new FormData(this);
-    datos.append("btnTraspasar", true);
-    $.ajax({
-        url: urlApp + 'app/modulos/traspasos/traspasos.ajax.php',
-        method: "POST",
-        data: datos,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        beforeSend: function () {
-            startLoadButton()
-        },
-        success: function (respuesta) {
-            stopLoadButton()
-            // console.log(respuesta)
-            if (respuesta.status) {
-                toastr.success(respuesta.mensaje, "¡Muy bien!")
-                window.open(respuesta.pagina, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=200,left=200,width=1250,height=700");
-                location.href =respuesta.paginaInicio ;
-            }
-            else {
-                stopLoadButton("Intentar de nuevo")
-                toastr.error(respuesta.mensaje, "¡Error!")
-                location.href =respuesta.paginaInicio ;
-            }
 
-        }
+    swal({
+        title: "¿Estas seguro(a) de realizar este movimiento de mercancía?",
+        text: "",
+        icon: "info",
+        buttons: ["Calcelar", "Si, realizar movimiento"],
+        dangerMode: true,
     })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                var datos = new FormData(this);
+                datos.append("btnTraspasar", true);
+                $.ajax({
+                    url: urlApp + 'app/modulos/traspasos/traspasos.ajax.php',
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    beforeSend: function () {
+                        startLoadButton()
+                    },
+                    success: function (respuesta) {
+                        stopLoadButton()
+                        // console.log(respuesta)
+                        if (respuesta.status) {
+                            toastr.success(respuesta.mensaje, "¡Muy bien!")
+                            window.open(respuesta.pagina, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=200,left=200,width=1250,height=700");
+                            location.href = respuesta.paginaInicio;
+                        }
+                        else {
+                            stopLoadButton("Intentar de nuevo")
+                            toastr.error(respuesta.mensaje, "¡Error!")
+                        }
+
+                    }
+                })
+            }
+        })
+
+
 })
 
 $("#buscadorP").on("keyup", function () {
@@ -266,7 +314,7 @@ $("#buscadorP").on("keyup", function () {
         processData: false,
         dataType: "json",
         beforeSend: function () {
-            
+
         },
         success: function (respuesta) {
             // console.log(respuesta)
@@ -278,9 +326,9 @@ $("#buscadorP").on("keyup", function () {
                 tblDatos +=
                     `
                         <tr>
-                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br>${pds_sku[0]}</td>
+                            <td id="pname${pds_sku[0]}">${pds.pds_nombre}<br> <strong class="text-primary"> SKU: ${pds_sku[0]} </strong> </td>
                             <td  style="display:none;" id="CatProduct${pds_sku[0]}">${pds.pds_categoria}</td>
-                            <td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>
+                            <!--<td id="pdisponible${pds_sku[0]}">${pds.pds_stok}</td>-->
                             <td><input type="number" id="cpasar${pds_sku[0]}" class="form-control" value="1" /></td>
                             <td>
                                 <button type="button" id="btn${pds_sku[0]}" class="btn btn-primary btnCambioMerca" value="${pds_sku[0]}">

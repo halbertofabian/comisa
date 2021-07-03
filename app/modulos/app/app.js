@@ -1,6 +1,10 @@
 var urlApp = $(".urlApp").attr("urlApp")
 
 
+$('.phone_mx').mask('(000) 000 0000');
+
+
+
 // alert(session);
 
 var date = new Date();

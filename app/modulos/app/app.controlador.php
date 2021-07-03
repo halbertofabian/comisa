@@ -106,7 +106,11 @@ class AppControlador
             'kardex',
             'traspasos',
             'listar-traspasos',
-            'contratos'
+            'contratos',
+            'clientes-mal-historial',
+            'clientes',
+            'importar-clientes-mal-historial',
+            'new-mal-historial'
 
 
         );
@@ -744,6 +748,24 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Contratos',
                             'href' => 'contratos/vendedor'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
+
+            '9' => array(
+                [
+                    'label' => 'Clientes',
+                    'icon' => '<i class="fa fa-users" aria-hidden="true"></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '<i class="fa fa-user-times" aria-hidden="true"></i>',
+                            'label' => 'Clientes con mal historial',
+                            'href' => 'clientes-mal-historial'
                         ],
                         //Aqui más item de menu
                     ),

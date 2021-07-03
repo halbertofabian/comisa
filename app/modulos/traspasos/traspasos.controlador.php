@@ -25,7 +25,7 @@ class TraspasosControlador
     {
     }
 
-    public function ctrTraspasarProductosAlamacen()
+    public static function ctrTraspasarProductosAlamacen()
     {
 
         $almancenidOrigen = $_POST["tps_ams_id_origen"];
@@ -52,6 +52,8 @@ class TraspasosControlador
 
             );
             $infPexistente = ProductosModelo::mdlMostrarProductosActivos("Activo", $skuOrigen);
+
+            
             //DATOS PARA LA TABLA PRODUCTOS:INSERT O UPDATE
             $data = array(
                 "pds_id_producto" => "",
@@ -86,10 +88,22 @@ class TraspasosControlador
                 "pds_suscriptor_id" => $_SESSION['session_sus']['sus_id'],
                 'pds_ams_id' => $almancenidDestino,
 
+
+                'pds_precio_credito' => $infPexistente["pds_precio_credito"],
+                'pds_enganche' => $infPexistente["pds_enganche"],
+                'pds_pago_semanal' => $infPexistente["pds_pago_semanal"],
+                'pds_precio_contado' => $infPexistente["pds_precio_contado"],
+                'pds_precio_compra_mes_1' => $infPexistente["pds_precio_compra_mes_1"],
+                'pds_precio_compra_mes_2' => $infPexistente["pds_precio_compra_mes_2"],
+                'pds_precio_compra_mes_1' => $infPexistente["pds_precio_compra_mes_1"],
+                'pds_precio_compra_mes_1' => $infPexistente["pds_precio_compra_mes_1"],
+
                 "usr_rol" => 'Alumno',
                 "usr_fecha_registro" => FECHA,
                 "usr_id_sucursal" => SUCURSAL_ID,
-                'pds_marca' => ''
+                'pds_marca' => '',
+
+
             );
 
             if ($verificaexistencia) {
@@ -137,7 +151,7 @@ class TraspasosControlador
         }
     }
 
-    public function ctrFiltrarProductosAlamacen()
+    public static function ctrFiltrarProductosAlamacen()
     {
         $palabra = $_POST["teclasoltada"];
         $idalmacen = $_POST['tps_ams_id_origen'];

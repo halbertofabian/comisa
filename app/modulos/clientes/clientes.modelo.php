@@ -147,7 +147,7 @@ class ClientesModelo
             $pps->execute();
 
 
-            return $pps->errorInfo();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             throw $th->getMessage();
             return  $th->getMessage();

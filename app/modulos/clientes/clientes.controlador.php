@@ -486,7 +486,8 @@ class ClientesControlador
                 'status' => true,
                 'mensaje' => "Carga de clientes con éxito",
                 'insert' =>  $countInsert,
-                'update' => $countUpdate
+                'update' => $countUpdate,
+                'pagina' => HTTP_HOST . 'clientes-mal-historial'
             );
         } catch (Exception $th) {
             $th->getMessage();
@@ -497,5 +498,32 @@ class ClientesControlador
                 'update' => ""
             );
         }
+    }
+
+    public static function ctrlRegistrarClienteMal()
+    {
+
+         $_POST['clts_id'] = NULL;   
+         $_POST['clts_articulo'] = "";   
+         $_POST['clts_fecha_venta'] = FECHA;   
+        $registrarClienteMal = ClientesModelo::mdlAgregarClientesMorososByExcel($_POST);
+
+        if($registrarClienteMal){
+            return array(
+                'status' => true,
+                'mensaje' => 'Se guardo correctamente el registro',
+                'pagina' => HTTP_HOST . 'clientes-mal-historial'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => '¡Ups! Ocurrio un error, intenta de nuevo',
+                'pagina' => HTTP_HOST . ''
+            );
+        }
+
+        
+
+
     }
 }

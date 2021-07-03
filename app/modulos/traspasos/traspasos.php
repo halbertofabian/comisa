@@ -1,17 +1,15 @@
 <?php
 
-
-
-cargarComponente('breadcrumb', '', 'Generar traspaso');
+cargarComponente('breadcrumb', '', 'Generar salida');
 ?>
 <div class="container">
     <form id="form_traspaso_product">
         <div class="row">
             <div class="col-12 col-md-4">
                 <div class="form-group">
-                    <label for="">Número de traspaso</label>
-                    <?php $newnumT= TraspasosControlador::ctrConsultarSiguienteTraspaso();?>
-                    <input type="text" value="<?php echo $newnumT?>" name="tps_num_traspaso" id="tps_num_traspaso" class="form-control" placeholder="" readonly>
+                    <label for="">Número de movimiento</label>
+                    <?php $newnumT = TraspasosControlador::ctrConsultarSiguienteTraspaso(); ?>
+                    <input type="text" value="<?php echo $newnumT ?>" name="tps_num_traspaso" id="tps_num_traspaso" class="form-control" placeholder="" readonly>
                 </div>
             </div>
             <div class="col-12 col-md-4">
@@ -35,15 +33,18 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                 <div class="form-group">
                     <label for="">DE:</label>
                     <select class="form-control select2" name="tps_ams_id_origen" id="tps_ams_id_origen">
-                        <option value="">Seleccione un almacén origén</option>
+                        <option value="1">BODEGA</option>
                         <?php
 
-                        $sucursales = AlmacenesModelo::mdlMostrarAlamcenesTraspaso('I', $_SESSION['session_suc']['scl_id']);
+                        // $sucursales = AlmacenesModelo::mdlMostrarAlamcenesTraspaso('I', $_SESSION['session_suc']['scl_id']);
                         // $sucursales = AlmacenesModelo::mdlMostrarAlamcenesTraspaso('E');
-                        foreach ($sucursales as $key => $scl) :
+                        // foreach ($sucursales as $key => $scl) :
                         ?>
-                            <option value="<?php echo $scl['ams_id'] ?>"><?php echo  $scl['ams_nombre']; ?></option>
-                        <?php endforeach; ?>
+                        <!-- <option value="<?php //echo $scl['ams_id'] 
+                                            ?>"><?php //echo  $scl['ams_nombre']; 
+                                                                            ?></option> -->
+                        <?php //endforeach; 
+                        ?>
                     </select>
                 </div>
             </div>
@@ -91,7 +92,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                     </div>
                     <div class="card-body">
                         <div class="form-group d-none scan-ams-origen">
-                            <label for=""> Código / Nombre del producto </label>
+                            <label for="buscadorP"> Código / Nombre del producto </label>
                             <input style="text-transform: uppercase;" type="text" name="buscadorP" id="buscadorP" class="form-control" placeholder="Escanea el código del producto o dígite el nombre ">
                         </div>
                         <div class="table">
@@ -99,7 +100,7 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                                 <thead>
                                     <tr>
                                         <th>PRODUCTO</th>
-                                        <th>CANTIDAD DISPONIBLE</th>
+                                        <!-- <th>CANTIDAD DISPONIBLE</th> -->
                                         <th>CANTIDAD A PASAR</th>
                                         <th>ACCION</th>
                                     </tr>
@@ -163,15 +164,15 @@ cargarComponente('breadcrumb', '', 'Generar traspaso');
                 <input type="hidden" name="tps_lista_productos" id="tps_lista_productos">
             </div>
             <div class="col-md-6">
-            <div class="form-group">
-                    <label for="">Total de productos a traspasar</label>
-                    <input type="text" class="form-control" id="suma_pds" name="suma_pds"readonly>
+                <div class="form-group">
+                    <label for="">Total de árticulos</label>
+                    <input type="text" class="form-control" id="suma_pds" name="suma_pds" readonly>
                 </div>
             </div>
             <div class="col-md-6">
             </div>
             <div class="col-md-6">
-                <button type="submit" class="btn btn-primary  btn-load float-right mb-2" name="btnTraspasar" id="btnTraspasar">Traspasar</button>
+                <button type="submit" class="btn btn-primary  btn-load float-right mb-2" name="btnTraspasar" id="btnTraspasar">Generar movimiento</button>
             </div>
 
         </div>

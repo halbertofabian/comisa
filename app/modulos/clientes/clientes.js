@@ -112,9 +112,9 @@ $("#formImportarClientes").on("submit", function (e) {
                             })
                                 .then((willDelete) => {
                                     if (willDelete) {
-                                        window.location.href = "./clientes"
+                                        window.location.href = respuesta.pagina
                                     } else {
-                                        window.location.href = "./clientes"
+
 
                                     }
                                 })
@@ -143,6 +143,51 @@ $("#formImportarClientes").on("submit", function (e) {
                 })
             }
         });
+})
+
+
+$("#formRegistrarClienteMal").on("submit", function (e) {
+    e.preventDefault();
+    var datos = new FormData(this);
+    datos.append("btnRegistrarClienteMal", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/clientes/clientes.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            startLoadButton()
+        },
+        success: function (res) {
+            console.log(res)
+
+            if (res.status) {
+                stopLoadButton('GUARDAR')
+
+                swal({
+                    title: "¡Muy bien!",
+                    text: res.mensaje,
+                    icon: "success",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    });
+            } else {
+                toastr.error(res.mensaje, 'Error')
+                stopLoadButton('INTENTAR DE NUEVO')
+            }
+        }
+    })
 })
 
 
@@ -239,7 +284,7 @@ $("#btn_buscar_infoC").on("click", function () {
 
 $("#form_editaCliente").on("submit", function (e) {
     e.preventDefault();
-    
+
     var datos = new FormData(this);
     datos.append("btnEditaClient", true);
     $.ajax({
@@ -259,7 +304,7 @@ $("#form_editaCliente").on("submit", function (e) {
 
                 swal({
                     title: "Muy bien!, Se actulizaron los datos",
-                    text: "ESTADO DE LAS FOTOS: \n"+"INE(FRENTE): " + res.msg1 + "\n INE(REVERSO): " + res.msg2 + "\n COMPROBANTE: "+res.msg3 + "\n",
+                    text: "ESTADO DE LAS FOTOS: \n" + "INE(FRENTE): " + res.msg1 + "\n INE(REVERSO): " + res.msg2 + "\n COMPROBANTE: " + res.msg3 + "\n",
                     icon: "success",
                     buttons: [false, "OK"],
                     dangerMode: true,
@@ -281,7 +326,7 @@ $("#form_editaCliente").on("submit", function (e) {
                     buttons: [false, "Seguir editando"],
                     dangerMode: true,
                 })
-                
+
 
             }
 

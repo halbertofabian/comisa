@@ -128,7 +128,7 @@ class ProductosModelo
     public static function mdlMostrarProductosAlamacen($ams_id)
     {
         try {
-            $sql = "SELECT * FROM tbl_productos_pds WHERE pds_ams_id =? AND pds_stok>0";
+            $sql = "SELECT * FROM tbl_productos_pds WHERE pds_ams_id =?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_id);
@@ -164,7 +164,7 @@ class ProductosModelo
     {
         try {
             $sql = "SELECT * FROM tbl_productos_pds WHERE (pds_sku LIKE '%" . $text . "%' OR 
-            pds_descripcion_corta LIKE '%" . $text . "%' OR pds_categoria LIKE '%" . $text . "%') AND pds_ams_id =$ams_id ";
+            pds_nombre LIKE '%" . $text . "%' OR pds_categoria LIKE '%" . $text . "%') AND pds_ams_id =$ams_id ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_id);

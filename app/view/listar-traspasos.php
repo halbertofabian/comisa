@@ -10,7 +10,7 @@ cargarComponente('breadcrumb', '', 'Listar traspasos'); ?>
 <div class="container">
     <div class="row">
         <div class="form-group col-12">
-            <table class="table tablas">
+            <table class="table tablas table-bordered table-strip ">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -41,14 +41,17 @@ cargarComponente('breadcrumb', '', 'Listar traspasos'); ?>
                             <td><?php echo $ptps['receptor'] ?></td>
                             <td><?php echo $ptps['tps_fecha'] ?></td>
                             <td>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $ptps['tps_num_traspaso'] ?>">
-                                    ver
-                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal<?php echo $ptps['tps_num_traspaso'] ?>">
+                                        ver
+                                    </button>
 
-                                <a target="_blank" href="<?php HTTP_HOST ?>app/report/reporte-traspasos-usuario.php?tps_num=<?php echo $ptps['tps_num_traspaso'] ?>" class="btn btn-outline-primary">
-                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                                </a>
+                                    <a target="_blank" href="<?php HTTP_HOST ?>app/report/reporte-traspasos-usuario.php?tps_num=<?php echo $ptps['tps_num_traspaso'] ?>" class="btn btn-outline-primary">
+                                        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <!-- Button trigger modal -->
+
                                 <!-- Modal -->
                                 <div class="modal " id="exampleModal<?php echo $ptps['tps_num_traspaso'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-xl " role="document">
