@@ -53,7 +53,7 @@ class TraspasosControlador
             );
             $infPexistente = ProductosModelo::mdlMostrarProductosActivos("Activo", $skuOrigen);
 
-            
+
             //DATOS PARA LA TABLA PRODUCTOS:INSERT O UPDATE
             $data = array(
                 "pds_id_producto" => "",
@@ -107,6 +107,7 @@ class TraspasosControlador
             );
 
             if ($verificaexistencia) {
+
                 //existe: se tiene que actualizar
                 //ACTUALIZAR: SUMAR AL STOK DESTINO LA CANTIDAD TRASPASADA
                 $actualizarStokDestino = ProductosModelo::mdlActualizarStokDestino($pds_stok, $verificaexistencia["pds_id_producto"]);
@@ -123,6 +124,7 @@ class TraspasosControlador
         }
 
 
+        // if ($actualizarStokOrigen && $actualizarStokDestino) {
         if ($actualizarStokOrigen && $actualizarStokDestino) {
             $traspaso = TraspasosModelo::mdlTraspasarProductosAlamacen($traspasoData);
             //echo "actualizado";
@@ -132,7 +134,7 @@ class TraspasosControlador
             //echo "registrado";
         }
         $redireccionamiento = HTTP_HOST . 'app/report/reporte-traspasos-usuario.php?tps_num=' . $_POST["tps_num_traspaso"];
-        $redirecciontpsNew=HTTP_HOST.'traspasos/new';
+        $redirecciontpsNew = HTTP_HOST . 'traspasos/new';
 
 
         if ($traspaso) {
@@ -140,13 +142,13 @@ class TraspasosControlador
                 'status' => true,
                 'mensaje' => 'El registro de mercancia se realizo correctamente',
                 'pagina' => $redireccionamiento,
-                'paginaInicio'=>$redirecciontpsNew
+                'paginaInicio' => $redirecciontpsNew
             );
         } else {
             return array(
                 'status' => false,
                 'mensaje' => 'Uuups , algo fallo al registrar la mercancia. Reintentalo',
-                'paginaInicio'=>$redirecciontpsNew
+                'paginaInicio' => $redirecciontpsNew
             );
         }
     }
