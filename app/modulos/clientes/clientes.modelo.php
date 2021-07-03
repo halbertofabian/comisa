@@ -27,9 +27,9 @@ class ClientesModelo
             clts_parentesco_fiador, clts_tel_fiador, clts_dir_fiador, clts_col_fiador, clts_tbj_fiador, clts_tbj_dir_fiador, 
             clts_tbj_tel_fiador, clts_tbj_col_fiador, clts_fc_elector_fiador, clts_tbj_ant_fiador, clts_nom_ref1, 
             clts_parentesco_ref1, clts_dir_ref1, clts_col_ref1, clts_tel_ref1, clts_nom_ref2, clts_parentesco_ref2, 
-            clts_dir_ref2, clts_col_ref2, clts_tel_ref2,clts_ubicacion,clts_foto_ine,clts_foto_ineReverso,clts_foto_cpdomicilio,ctls_tipo_cliente,ctls_curp,ctls_observaciones,ctls_cuentas) 
+            clts_dir_ref2, clts_col_ref2, clts_tel_ref2,clts_ubicacion,clts_foto_ine,clts_foto_ineReverso,clts_foto_cpdomicilio,clts_tipo_cliente,clts_curp,clts_observaciones,clts_cuentas) 
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
-            
+
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
@@ -100,11 +100,49 @@ class ClientesModelo
             $pps->bindValue(55, $cts['clts_foto_ineReverso']);
 
             $pps->bindValue(56, $cts['clts_foto_cpdomicilio']);
-            $pps->bindValue(57, $cts['ctls_tipo_cliente']);
-            $pps->bindValue(58, $cts['ctls_curp']);
-            $pps->bindValue(59, $cts['ctls_observaciones']);
-            $pps->bindValue(60, $cts['ctls_cuentas']);
+            $pps->bindValue(57, $cts['clts_tipo_cliente']);
+            $pps->bindValue(58, $cts['clts_curp']);
+            $pps->bindValue(59, $cts['clts_observaciones']);
+            $pps->bindValue(60, $cts['clts_cuentas']);
 
+
+            $pps->execute();
+
+
+            return $pps->errorInfo();
+        } catch (PDOException $th) {
+            throw $th->getMessage();
+            return  $th->getMessage();
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlAgregarClientesMorososByExcel($cts)
+    {
+
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_clientes_problemas_clts (clts_id,clts_ruta,clts_nombre,clts_telefono,clts_domicilio,clts_col,clts_ubicacion,clts_tipo_cliente,clts_curp,clts_observaciones,clts_cuenta,clts_articulo,clts_fecha_venta) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+
+            $pps->bindValue(1, $cts["clts_id"]);
+            $pps->bindValue(2, $cts["clts_ruta"]);
+            $pps->bindValue(3, $cts["clts_nombre"]);
+            $pps->bindValue(4, $cts["clts_telefono"]);
+            $pps->bindValue(5, $cts["clts_domicilio"]);
+            $pps->bindValue(6, $cts["clts_col"]);
+            $pps->bindValue(7, $cts["clts_ubicacion"]);
+            $pps->bindValue(8, $cts["clts_tipo_cliente"]);
+            $pps->bindValue(9, $cts["clts_curp"]);
+            $pps->bindValue(10, $cts["clts_observaciones"]);
+            $pps->bindValue(11, $cts["clts_cuenta"]);
+            $pps->bindValue(12, $cts["clts_articulo"]);
+            $pps->bindValue(13, $cts["clts_fecha_venta"]);
 
             $pps->execute();
 

@@ -36,7 +36,7 @@ class ClientesAjax
     public function ajaxImportarClientes()
     {
 
-        $respuesta = ClientesControlador::ctrImportarcLIEExcel();
+        $respuesta = ClientesControlador::ctrAgregarClientesMorososByExcel();
         echo json_encode($respuesta, true);
     }
     public function ajaxConsultarClienteByNom()

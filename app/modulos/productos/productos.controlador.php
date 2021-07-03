@@ -139,6 +139,87 @@ class ProductosControlador
 
 
 
+               $data = array();  //var_dump($data);
+
+                if (ProductosModelo::mdlAgregarProductos($data)) {
+                    $countInsert += 1;
+                } else {
+                    if (
+                        ProductosModelo::mdlActualizarProductosExcelInventario(array(
+                            'pds_stok' => $pds_stok,
+                            'pds_sku' => $pds_sku
+
+                        ))
+                    ) {
+                        $countUpdate += 1;
+                    }
+                }
+            }
+
+            return array(
+                'status' => true,
+                'mensaje' => "Carga de productos con éxito",
+                'insert' =>  $countInsert,
+                'update' => $countUpdate
+            );
+        } catch (Exception $th) {
+            $th->getMessage();
+            return array(
+                'status' => false,
+                'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
+                'insert' =>  "",
+                'update' => ""
+            );
+        }
+    }
+
+
+    public static function ctrImportarProductosExcelZ()
+    {
+        try {
+
+
+
+            //$nombreArchivo = $_SERVER['DOCUMENT_ROOT'] . '/dupont/exportxlsx/tbl_productos_dupont.xls';
+
+            $nombreArchivo = $_FILES['archivoExcel']['tmp_name'];
+
+
+
+
+            //var_dump($nombreArchivo);
+
+            // Cargar hoja de calculo
+            $leerExcel = PHPExcel_IOFactory::createReaderForFile($nombreArchivo);
+
+            $objPHPExcel = $leerExcel->load($nombreArchivo);
+
+            //var_dump($objPHPExcel);
+
+            $objPHPExcel->setActiveSheetIndex(0);
+
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $countInsert = 0;
+            $countUpdate = 0;
+            //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
+
+            for ($i = 2; $i <= $numRows; $i++) {
+
+
+                //$pds_id_producto = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $pds_sku = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $pds_nombre = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $pds_stok = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+
+                if ($pds_stok < 0 || $pds_stok == "" || $pds_stok == NULL) {
+                    $pds_stok = 0;
+                }
+
+                $pds_sku = str_replace("/", "", $pds_sku);
+                $pds_sku = $pds_sku . '/' . $_SESSION['session_suc']['scl_id'] . '/' . $_POST['pds_ams_id'];
+
+
+
                 $data = array(
                     "pds_id_producto" => "",
                     "pds_nombre" => $pds_nombre,

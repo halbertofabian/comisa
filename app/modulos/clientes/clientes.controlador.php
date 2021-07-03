@@ -48,7 +48,7 @@ class ClientesControlador
             }
         }
     }
-    public function ctrActualizarClientes()
+    public static function ctrActualizarClientes()
     {
         if (isset($_POST['btnEditaClient'])) {
 
@@ -165,7 +165,7 @@ class ClientesControlador
             }
         }
     }
-    public function ctrMostrarClientesByNombre()
+    public static function  ctrMostrarClientesByNombre()
     {
         $nombre = $_POST['clts_nombre'];
         $clientes = ClientesModelo::mdlMostrarClientesByNomb($nombre);
@@ -282,10 +282,10 @@ class ClientesControlador
                 $clts_col_ref2 = $objPHPExcel->getActiveSheet()->getCell('BA' . $i)->getCalculatedValue();
                 $clts_tel_ref2 = $objPHPExcel->getActiveSheet()->getCell('BB' . $i)->getCalculatedValue();
                 $clts_ubicacion = $objPHPExcel->getActiveSheet()->getCell('BC' . $i)->getCalculatedValue();
-                $ctls_tipo_cliente = $objPHPExcel->getActiveSheet()->getCell('BD' . $i)->getCalculatedValue();
-                $ctls_curp = $objPHPExcel->getActiveSheet()->getCell('BE' . $i)->getCalculatedValue();
-                $ctls_observaciones = $objPHPExcel->getActiveSheet()->getCell('BF' . $i)->getCalculatedValue();
-                $ctls_cuentas = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
+                $clts_tipo_cliente = $objPHPExcel->getActiveSheet()->getCell('BD' . $i)->getCalculatedValue();
+                $clts_curp = $objPHPExcel->getActiveSheet()->getCell('BE' . $i)->getCalculatedValue();
+                $clts_observaciones = $objPHPExcel->getActiveSheet()->getCell('BF' . $i)->getCalculatedValue();
+                $clts_cuentas = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
 
 
 
@@ -347,10 +347,10 @@ class ClientesControlador
                     'clts_foto_ine' => "",
                     'clts_foto_ineReverso' => "",
                     'clts_foto_cpdomicilio' => "",
-                    'ctls_tipo_cliente' => $ctls_tipo_cliente,
-                    'ctls_curp' => $ctls_curp,
-                    'ctls_observaciones' => $ctls_observaciones,
-                    'ctls_cuentas' => $ctls_cuentas,
+                    'clts_tipo_cliente' => $clts_tipo_cliente,
+                    'clts_curp' => $clts_curp,
+                    'clts_observaciones' => $clts_observaciones,
+                    'clts_cuentas' => $clts_cuentas,
 
                 );
 
@@ -360,13 +360,125 @@ class ClientesControlador
 
                 // $insert = ClientesModelo::mdlAgregarClientesByExcel($data);
                 // preArray($insert);
-                
+
                 if (ClientesModelo::mdlAgregarClientesByExcel($data)) {
                     $countInsert += 1;
                 } else {
                     if (UsuariosModelo::mdlActualizarUsuarios($data)) {
                         $countUpdate += 1;
                     }
+                }
+            }
+
+            return array(
+                'status' => true,
+                'mensaje' => "Carga de clientes con éxito",
+                'insert' =>  $countInsert,
+                'update' => $countUpdate
+            );
+        } catch (Exception $th) {
+            $th->getMessage();
+            return array(
+                'status' => false,
+                'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
+                'insert' =>  "",
+                'update' => ""
+            );
+        }
+    }
+
+    public static function ctrAgregarClientesMorososByExcel()
+    {
+        try {
+
+
+
+            //$nombreArchivo = $_SERVER['DOCUMENT_ROOT'] . '/dupont/exportxlsx/tbl_productos_dupont.xls';
+
+            $nombreArchivo = $_FILES['archivoExcel']['tmp_name'];
+
+
+
+
+            //var_dump($nombreArchivo);
+
+            // Cargar hoja de calculo
+            $leerExcel = PHPExcel_IOFactory::createReaderForFile($nombreArchivo);
+
+            $objPHPExcel = $leerExcel->load($nombreArchivo);
+
+            //var_dump($objPHPExcel);
+
+            $objPHPExcel->setActiveSheetIndex(0);
+
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $countInsert = 0;
+            $countUpdate = 0;
+            //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
+
+            for ($i = 2; $i <= $numRows; $i++) {
+
+                $clts_ruta = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $clts_cuenta = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $clts_nombre = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $clts_telefono = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+                $clts_domicilio = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
+                $clts_ubicacion = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
+                $clts_tipo_cliente = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
+                $clts_curp = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+                $clts_articulo = $objPHPExcel->getActiveSheet()->getCell('I' . $i)->getCalculatedValue();
+                $clts_fecha_venta = $objPHPExcel->getActiveSheet()->getCell('J' . $i)->getCalculatedValue();
+                $clts_observaciones = $objPHPExcel->getActiveSheet()->getCell('K' . $i)->getCalculatedValue();
+
+
+                if ($clts_telefono == NULL ||  $clts_telefono  == "" || $clts_telefono == null) {
+                    $clts_telefono = "-";
+                }
+
+                if ($clts_domicilio == NULL ||  $clts_domicilio  == "" || $clts_domicilio == null) {
+                    $clts_domicilio = "-";
+                }
+
+                if ($clts_tipo_cliente == NULL ||  $clts_tipo_cliente  == "" || $clts_tipo_cliente == null) {
+                    $clts_tipo_cliente = "-";
+                }
+
+                if ($clts_curp == NULL ||  $clts_curp  == "" || $clts_curp == null) {
+                    $clts_curp = "-";
+                }
+
+
+                // date('Y-m-d', strtotime($cts_vigencia)
+                $clts_fecha_venta =   date('Y-m-d', strtotime($clts_fecha_venta));
+                $data = array(
+                    "clts_id" => "",
+                    "clts_ruta" => $clts_ruta,
+                    "clts_nombre" => $clts_nombre,
+                    "clts_telefono" => $clts_telefono,
+                    "clts_domicilio" => $clts_domicilio,
+                    "clts_col" => "",
+                    "clts_ubicacion" => $clts_ubicacion,
+                    "clts_tipo_cliente" => $clts_tipo_cliente,
+                    "clts_curp" => $clts_curp,
+                    "clts_observaciones" => $clts_observaciones,
+                    "clts_cuenta" => $clts_cuenta,
+                    "clts_articulo" => $clts_articulo,
+                    "clts_fecha_venta" =>  ""
+                );
+
+
+
+
+
+                // $insert = ClientesModelo::mdlAgregarClientesByExcel($data);
+                // preArray($insert);
+
+                if (ClientesModelo::mdlAgregarClientesMorososByExcel($data)) {
+                    $countInsert += 1;
+                } else {
+                    // if (UsuariosModelo::mdlActualizarUsuarios($data)) {
+                    //     $countUpdate += 1;
+                    // }
                 }
             }
 
