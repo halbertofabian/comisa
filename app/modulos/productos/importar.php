@@ -5,7 +5,7 @@
             <p>Instrucciones:</p>
             <ol>
 
-                <li> Descarga el archivo de ejemplo <a href="<?php echo HTTP_HOST . 'app/upload/file_examples/ejemplo_importar_alumnos.xls' ?>" class="btn"> <i class="fa fa-download"></i> Descargar ejemplo</a></li>
+                <li> Descarga el archivo de ejemplo <a href="<?php echo HTTP_HOST . 'export/Formato importar productos.xlsx' ?>" class="btn"> <i class="fa fa-download"></i> Descargar ejemplo</a></li>
                 <li> Llena tu Excel siguiendo el ejemplo </li>
                 <li> Guardalo con extensión .xls o .csv </li>
                 <li> Cargue el archivo excel permitido </li>

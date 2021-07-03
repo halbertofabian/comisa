@@ -63,14 +63,14 @@ class ProductosControlador
             if (empty($_POST['pds_fecha_fin_promocion'])) {
                 $_POST['pds_fecha_fin_promocion'] = "0000-00-00 00:00:00";
             }
-            
-            $_POST['pds_precio_credito'] = str_replace(",","",$_POST['pds_precio_credito']);
-            $_POST['pds_enganche'] = str_replace(",","",$_POST['pds_enganche']);
-            $_POST['pds_pago_semanal'] = str_replace(",","",$_POST['pds_pago_semanal']);
-            $_POST['pds_precio_contado'] = str_replace(",","",$_POST['pds_precio_contado']);
-            $_POST['pds_precio_compra_mes_1'] = str_replace(",","",$_POST['pds_precio_compra_mes_1']);
-            $_POST['pds_precio_compra_mes_2'] = str_replace(",","",$_POST['pds_precio_compra_mes_2']);
-            
+
+            $_POST['pds_precio_credito'] = str_replace(",", "", $_POST['pds_precio_credito']);
+            $_POST['pds_enganche'] = str_replace(",", "", $_POST['pds_enganche']);
+            $_POST['pds_pago_semanal'] = str_replace(",", "", $_POST['pds_pago_semanal']);
+            $_POST['pds_precio_contado'] = str_replace(",", "", $_POST['pds_precio_contado']);
+            $_POST['pds_precio_compra_mes_1'] = str_replace(",", "", $_POST['pds_precio_compra_mes_1']);
+            $_POST['pds_precio_compra_mes_2'] = str_replace(",", "", $_POST['pds_precio_compra_mes_2']);
+
 
             $agregarProductos = ProductosModelo::mdlAgregarProductos($_POST);
 
@@ -96,6 +96,8 @@ class ProductosControlador
     public static function ctrImportarProductosExcel()
     {
         try {
+
+
 
 
 
@@ -128,10 +130,30 @@ class ProductosControlador
                 //$pds_id_producto = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
                 $pds_sku = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
                 $pds_nombre = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
-                $pds_stok = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $pds_categoria = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $pds_stok = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+                $pds_stok_min = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
+
+                $pds_precio_credito = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
+                $pds_enganche = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
+                $pds_pago_semanal = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+                $pds_precio_contado = $objPHPExcel->getActiveSheet()->getCell('I' . $i)->getCalculatedValue();
+                $pds_precio_compra_mes_1 = $objPHPExcel->getActiveSheet()->getCell('J' . $i)->getCalculatedValue();
+                $pds_precio_compra_mes_2 = $objPHPExcel->getActiveSheet()->getCell('K' . $i)->getCalculatedValue();
+
+
+                $pds_precio_credito = str_replace(",", "", $pds_precio_credito);
+                $pds_enganche = str_replace(",", "", $pds_enganche);
+                $pds_pago_semanal = str_replace(",", "", $pds_pago_semanal);
+                $pds_precio_contado = str_replace(",", "", $pds_precio_contado);
+                $pds_precio_compra_mes_1 = str_replace(",", "", $pds_precio_compra_mes_1);
+                $pds_precio_compra_mes_2 = str_replace(",", "", $pds_precio_compra_mes_2);
 
                 if ($pds_stok < 0 || $pds_stok == "" || $pds_stok == NULL) {
                     $pds_stok = 0;
+                }
+                if ($pds_stok_min < 0 || $pds_stok_min == "" || $pds_stok_min == NULL) {
+                    $pds_stok_min = 0;
                 }
 
                 $pds_sku = str_replace("/", "", $pds_sku);
@@ -139,8 +161,30 @@ class ProductosControlador
 
 
 
-               $data = array();  //var_dump($data);
-
+                $data = array(
+                    'pds_sku' => $pds_sku,
+                    'pds_nombre' => $pds_nombre,
+                    'pds_categoria' => $pds_categoria,
+                    'pds_stok' => $pds_stok,
+                    'pds_stok_min' => $pds_stok_min,
+                    'pds_precio_credito' => $pds_precio_credito,
+                    'pds_enganche' => $pds_enganche,
+                    'pds_pago_semanal' => $pds_pago_semanal,
+                    'pds_precio_contado' => $pds_precio_contado,
+                    'pds_precio_compra_mes_1' => $pds_precio_compra_mes_1,
+                    'pds_precio_compra_mes_2' => $pds_precio_compra_mes_2,
+                    'pds_imagen_portada' =>  HTTP_HOST . 'app/assets/images/sistema/logo-productos-sm.jpeg',
+                    'pds_fecha_creacion' => FECHA,
+                    'pds_fecha_modificacion' => "",
+                    'pds_usaurio_registro' => $_SESSION['session_usr']['usr_nombre'],
+                    'pds_usuario_modifico' => "",
+                    'pds_estado' => "Activo",
+                    "pds_sucursal_id" => $_SESSION['session_suc']['scl_id'],
+                    "pds_suscriptor_id" => $_SESSION['session_sus']['sus_id'],
+                    'pds_ams_id' => $_POST['pds_ams_id']
+                );  
+                
+               
                 if (ProductosModelo::mdlAgregarProductos($data)) {
                     $countInsert += 1;
                 } else {
@@ -158,7 +202,7 @@ class ProductosControlador
 
             return array(
                 'status' => true,
-                'mensaje' => "Carga de productos con éxito",
+                'mensaje' => "Carga de productos con éxito x",
                 'insert' =>  $countInsert,
                 'update' => $countUpdate
             );
