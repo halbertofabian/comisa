@@ -85,6 +85,38 @@ $app->get('/clientes_control', function (Request $request, Response $response) {
     }
 });
 
+
+$app->get('/productos', function (Request $request, Response $response) {
+
+    try {
+        //code...
+        $sql = "SELECT pds_nombre,pds_precio_credito,pds_enganche,pds_pago_semanal,pds_precio_contado,pds_precio_compra_mes_1,pds_precio_compra_mes_2 FROM tbl_productos_pds WHERE pds_estado = 'Activo' AND pds_ams_id = 1 ORDER BY pds_id_producto DESC";
+        $db = Conexion::conectar();
+        $rs = $db->query($sql);
+        if ($rs->rowCount() > 0) {
+
+            echo json_encode(array(
+                'status' => true,
+                'mensaje' => 'Listado de productos',
+                'data' => $rs->fetchAll(PDO::FETCH_ASSOC)
+            ), true);
+        } else {
+            echo json_encode(array(
+                'status' => false,
+                'mensaje' => 'No hay resultados',
+                'data' => ''
+            ), true);
+        }
+    } catch (PDOException $e) {
+        //throw $th;
+        echo json_encode(array(
+            'status' => false,
+            'mensaje' => $e->getMessage() . '',
+            'data' => ''
+        ));
+    }
+});
+
 $app->get('/acceso/{clave}', function (Request $request, Response $response, array $args) {
 $clave =  $args['clave'];
     try {
