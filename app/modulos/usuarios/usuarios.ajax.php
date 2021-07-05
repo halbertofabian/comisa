@@ -94,7 +94,7 @@ class UsuariosAjax
             $dir = DOCUMENT_ROOT . "media/qr/";
             if (!file_exists($dir))
                 mkdir($dir, 0777, true);
-            $filename = $dir . 'QR' . $respuesta['usr_id'] . '.png';
+            $filename = $dir . 'QR' . $respuesta['usr_caja'] . '.png';
             $tamano = 10;
             $level = 'H';
             $frameSize = 3;
