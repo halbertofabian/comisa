@@ -146,7 +146,7 @@
                                 <div class="form-group">
                                     <div class="form-check">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" name="usr_acceso_concentradora" id="usr_acceso_concentradora" value="1" <?php echo $check ?>  >
+                                            <input type="checkbox" class="form-check-input" name="usr_acceso_concentradora" id="usr_acceso_concentradora" value="1" <?php echo $check ?>>
                                             Acceso a la caja concentradora
                                         </label>
                                     </div>
@@ -277,6 +277,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
+                                        <th>Código QR</th>
                                         <th>Deuda ext.</th>
                                         <th>Deuda int.</th>
                                         <th>Teléfono</th>
@@ -297,6 +298,61 @@
                                     ?>
                                         <tr>
                                             <td><?php echo $usr['usr_nombre'] ?></td>
+                                            <td>
+                                                <button class="btn btn-dark" data-toggle="modal" data-target="#mdlQR_<?= $usr['usr_id'] ?>"><i class="fa fa-qrcode" aria-hidden="true"></i></button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="mdlQR_<?= $usr['usr_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="mdlQRLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="mdlQRLabel">QR <?= $usr['usr_nombre'] ?></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <?php
+
+                                                                $sincronizacion = array(
+                                                                    'nombre_suc' => $_SESSION['session_suc']['scl_nombre'],
+                                                                    'url_suc' => HTTP_HOST,
+                                                                    'infovendedor' => array(
+                                                                        'idusr' => $usr['usr_id'],
+                                                                        'nombre' => $usr['usr_nombre'],
+                                                                        'camioneta' => ""
+                                                                    ),
+                                                                );
+
+                                                                $sin_json = json_encode(array($sincronizacion), true);
+
+                                                                $dir = DOCUMENT_ROOT . "media/qr/";
+                                                                if (!file_exists($dir))
+                                                                    mkdir($dir, 0777, true);
+                                                                $filename = $dir . 'QR' . $usr['usr_id'] . '.png';
+                                                                $tamano = 10;
+                                                                $level = 'H';
+                                                                $frameSize = 3;
+                                                                // $contenido = json_encode(array($informacionQR), true);
+
+                                                               
+                                                                QRcode::png($sin_json, $filename, $level, $tamano, $frameSize);
+                                                                //$QR = '<img src="' . $filename . '" width="100px height="100px""  alt="' . $filename . '"> </img>';
+                                                                
+                                                                ?>
+                                                                <div class="row">
+                                                                    <div class="col-12 text-center">
+                                                                        <img src="<?= HTTP_HOST ?>media/qr/QR<?= $usr['usr_id'] ?>.png" width="250px" height="250px" alt="1">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
                                             <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
                                             <td><?php echo $usr['usr_telefono'] ?></td>
