@@ -330,7 +330,7 @@
                                                                         'infovendedor' => array(
                                                                             'idusr' => $usr['usr_id'],
                                                                             'nombre' => $usr['usr_nombre'],
-                                                                            'camioneta' => ""
+                                                                            'camioneta' => "1"
                                                                         ),
                                                                     );
 
