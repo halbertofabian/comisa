@@ -550,7 +550,7 @@
 
                                     <div class="row">
                                         <div class="col-12 text-center">
-                                            <img src="" class="img-responsive img_qr_usr" width="250px" height="250px" alt="1">
+                                            <img src="" class="img-responsive img_qr_usr" width="100%" height="250px" alt="1">
                                         </div>
                                     </div>
                                 </div>
