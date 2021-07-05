@@ -153,7 +153,7 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
         $pps->bindValue(1, $json);
         $pps->bindValue(2, $datosVendedor[0]['vendedor']['id']);
         $pps->bindValue(3, FECHA);
-        $pps->bindValue(4, $datosVendedor[0]['vendedor']['caja_id']);
+        $pps->bindValue(4, $datosVendedor[0]['vendedor']['caja_abierta']);
 
         $pps->execute();
     } catch (PDOException $th) {
