@@ -118,19 +118,17 @@ $app->get('/productos', function (Request $request, Response $response) {
 });
 
 $app->get('/acceso/{clave}', function (Request $request, Response $response, array $args) {
-$clave =  $args['clave'];
+    $clave =  $args['clave'];
     try {
         //code...
         $sql = "SELECT true FROM tbl_sucursal_scl WHERE scl_clave_acceso = ?";
-         $con = Conexion::conectar();
+        $con = Conexion::conectar();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $clave);
         $pps->execute();
         $rs = $pps->fetch();
-        
-        echo json_encode($rs,true);
-     
 
+        echo json_encode($rs, true);
     } catch (PDOException $e) {
         //throw $th;
         echo json_encode(array(
@@ -149,13 +147,14 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
     $datosVendedor = json_decode($json, true);
     try {
 
-        $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id,tps_num_traspaso,fecha) VALUES(?,?,?,?)";
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id,fecha,caja_id) VALUES(?,?,?,?)";
         $con = Conexion::conectar();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $json);
         $pps->bindValue(2, $datosVendedor[0]['vendedor']['id']);
-        $pps->bindValue(3, $datosVendedor[0]['vendedor']['tps_num']);
-        $pps->bindValue(4, FECHA);
+        $pps->bindValue(3, FECHA);
+        $pps->bindValue(4, $datosVendedor[0]['vendedor']['caja_id']);
+
         $pps->execute();
     } catch (PDOException $th) {
         //throw $th;
@@ -179,13 +178,8 @@ $app->get('/sicronizar_datos_2', function (Request $request, Response $response)
         $con = Conexion::conectar();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $json);
-       // $pps->bindValue(2, $datosTraspasos[0]['tps_num']);
+        // $pps->bindValue(2, $datosTraspasos[0]['tps_num']);
         $pps->execute();
-
-        
-
-        
-        
     } catch (PDOException $th) {
         throw $th;
     } finally {
@@ -208,13 +202,8 @@ $app->post('/sincronizar_datos', function (Request $request, Response $response)
         $con = Conexion::conectar();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $json);
-       $pps->bindValue(2, $datosTraspasos[0]['tps_num']);
+        $pps->bindValue(2, $datosTraspasos[0]['tps_num']);
         $pps->execute();
-
-        
-
-        
-        
     } catch (PDOException $th) {
         throw $th;
     } finally {
@@ -270,7 +259,7 @@ $app->get('/traspaso/{id}', function (Request $request, Response $response, arra
 $app->get('/prueba2', function (Request $request, Response $response, array $args) {
     // $json = $request->getBody();
     // $datosTraspasos = json_decode($json, true);
-     $datosTraspasos = '[{"tps_num":"T-0011","productos":[{"id":"0003","nombre":"BASE DE CAMA INDIVIDUAL\/0003","categoria":"MADERA","cantidad":"5"},{"id":"0004","nombre":"BASE DE CAMA MATRIMONIAL\/0004","categoria":"MADERA","cantidad":"5"},{"id":"0006","nombre":"BUROES (PAR)\/0006","categoria":"MADERA","cantidad":"4"},{"id":"0008","nombre":"CAJONERA DE 10 MARIN\/0008","categoria":"MADERA","cantidad":"4"}],"infvendedor":{"idusr":"105","nombre":"LUIS FERNANDO FERNANDEZ","camioneta":"CAMIONETA XL90"}}]';
+    $datosTraspasos = '[{"tps_num":"T-0011","productos":[{"id":"0003","nombre":"BASE DE CAMA INDIVIDUAL\/0003","categoria":"MADERA","cantidad":"5"},{"id":"0004","nombre":"BASE DE CAMA MATRIMONIAL\/0004","categoria":"MADERA","cantidad":"5"},{"id":"0006","nombre":"BUROES (PAR)\/0006","categoria":"MADERA","cantidad":"4"},{"id":"0008","nombre":"CAJONERA DE 10 MARIN\/0008","categoria":"MADERA","cantidad":"4"}],"infvendedor":{"idusr":"105","nombre":"LUIS FERNANDO FERNANDEZ","camioneta":"CAMIONETA XL90"}}]';
 
     $json = json_decode($datosTraspasos, true);
     preArray($json[0]['tps_num']);

@@ -149,13 +149,13 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT * FROM tbl_contratos_2 ctrs WHERE tps_num_traspaso = ?";
+            $sql = "SELECT * FROM tbl_contratos_2 ctrs WHERE caja_id = ?";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $tps_num_traspaso);
             $pps->execute();
-            return $pps->fetch();
+            return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
         } finally {

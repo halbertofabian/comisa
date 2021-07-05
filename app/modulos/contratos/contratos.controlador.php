@@ -273,7 +273,12 @@ class ContratosControlador
     public static function ctrConsultarContratos()
     {
         if (isset($_POST['btnConsultarNumeroTraspaso'])) {
-            return ContratosModelo::mdlConsultarContratos($_POST['tps_prefijo'] . '' . $_POST['tps_num_traspaso']);
+            $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_POST['usr_id']);
+           
+            return array(
+                'datos_contrato' => ContratosModelo::mdlConsultarContratos($igs_id_corte['usr_caja']),
+                'datos_vendedor' => $igs_id_corte
+            );
         }
     }
 
@@ -295,7 +300,7 @@ class ContratosControlador
                     return array(
                         'status' => false,
                         'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo',
-                        'pagina' => HTTP_HOST.'mi-caja'
+                        'pagina' => HTTP_HOST . 'mi-caja'
                     );
                 }
 
@@ -305,7 +310,7 @@ class ContratosControlador
                     return array(
                         'status' => false,
                         'mensaje' => 'Para poder hacer un cargo a este usuario, necesita sincronizarse a una caja o cargar cartera',
-                        'pagina' => HTTP_HOST.'flujo-caja'
+                        'pagina' => HTTP_HOST . 'flujo-caja'
                     );
                 }
 
@@ -352,7 +357,7 @@ class ContratosControlador
             return array(
                 'status' => true,
                 'mensaje' => 'Se registraron ' . $contadorVentas . ' ventas.',
-                'pagina' => HTTP_HOST.'flujo-caja'
+                'pagina' => HTTP_HOST . 'flujo-caja'
             );
         }
     }
