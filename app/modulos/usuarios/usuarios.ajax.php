@@ -17,6 +17,7 @@ include_once '../../../config.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/Exception.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/PHPMailer.php';
 require_once DOCUMENT_ROOT . 'app/lib/phpMailer/SMTP.php';
+require_once DOCUMENT_ROOT . 'app/lib/phpqrcode/qrlib.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/configuracion/configuracion.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/configuracion/configuracion.controlador.php';
@@ -72,6 +73,39 @@ class UsuariosAjax
     public function ajaxListarUsuarioByID()
     {
         $respuesta = UsuariosModelo::mdlMostrarUsuarios($this->usr_id, $this->usr_rol, $this->usr_searh);
+
+
+        if ($respuesta['usr_caja'] != 0) {
+
+
+            $sincronizacion = array(
+                'nombre_suc' => $_SESSION['session_suc']['scl_nombre'],
+                'url_suc' => HTTP_HOST,
+                'infovendedor' => array(
+                    'idusr' => $respuesta['usr_id'],
+                    'nombre' => $respuesta['usr_nombre'],
+                    'camioneta' => "",
+                    'caja_abierta' => $respuesta['usr_caja']
+                ),
+            );
+
+            $sin_json = json_encode(array($sincronizacion), true);
+
+            $dir = DOCUMENT_ROOT . "media/qr/";
+            if (!file_exists($dir))
+                mkdir($dir, 0777, true);
+            $filename = $dir . 'QR' . $respuesta['usr_id'] . '.png';
+            $tamano = 10;
+            $level = 'H';
+            $frameSize = 3;
+            // $contenido = json_encode(array($informacionQR), true);
+
+
+            QRcode::png($sin_json, $filename, $level, $tamano, $frameSize);
+        }
+
+        
+
         echo json_encode($respuesta, true);
     }
 

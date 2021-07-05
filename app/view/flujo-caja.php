@@ -547,6 +547,12 @@
                                     <p class="card-text">Caja <strong id="cja_nombre"> </strong> </p>
                                     <p class="card-text">Sucursal <strong id="cja_sucursal"> </strong> </p>
                                     <p class="card-text">Fecha de apertura <strong id="cja_fecha_apertura"></strong> </p>
+
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <img src="" class="img-responsive img_qr_usr" width="250px" height="250px" alt="1">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

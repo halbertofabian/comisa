@@ -313,41 +313,53 @@
                                                             <div class="modal-body">
                                                                 <?php
 
-                                                                $sincronizacion = array(
-                                                                    'nombre_suc' => $_SESSION['session_suc']['scl_nombre'],
-                                                                    'url_suc' => HTTP_HOST,
-                                                                    'infovendedor' => array(
-                                                                        'idusr' => $usr['usr_id'],
-                                                                        'nombre' => $usr['usr_nombre'],
-                                                                        'camioneta' => ""
-                                                                    ),
-                                                                );
 
-                                                                $sin_json = json_encode(array($sincronizacion), true);
+                                                                $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($usr['usr_id']);
 
-                                                                $dir = DOCUMENT_ROOT . "media/qr/";
-                                                                if (!file_exists($dir))
-                                                                    mkdir($dir, 0777, true);
-                                                                $filename = $dir . 'QR' . $usr['usr_id'] . '.png';
-                                                                $tamano = 10;
-                                                                $level = 'H';
-                                                                $frameSize = 3;
-                                                                // $contenido = json_encode(array($informacionQR), true);
-
-                                                               
-                                                                QRcode::png($sin_json, $filename, $level, $tamano, $frameSize);
-                                                                //$QR = '<img src="' . $filename . '" width="100px height="100px""  alt="' . $filename . '"> </img>';
-                                                                
-                                                                ?>
-                                                                <div class="row">
-                                                                    <div class="col-12 text-center">
-                                                                        <img src="<?= HTTP_HOST ?>media/qr/QR<?= $usr['usr_id'] ?>.png" width="250px" height="250px" alt="1">
+                                                                if ($igs_id_corte['usr_caja'] == 0) : ?>
+                                                                    <div class="row">
+                                                                        <div class="col-12 text-center">
+                                                                            
+                                                                        </div>
                                                                     </div>
-                                                                </div>
+                                                                <?php else :
+
+                                                                    $sincronizacion = array(
+                                                                        'nombre_suc' => $_SESSION['session_suc']['scl_nombre'],
+                                                                        'url_suc' => HTTP_HOST,
+                                                                        'infovendedor' => array(
+                                                                            'idusr' => $usr['usr_id'],
+                                                                            'nombre' => $usr['usr_nombre'],
+                                                                            'camioneta' => ""
+                                                                        ),
+                                                                    );
+
+                                                                    $sin_json = json_encode(array($sincronizacion), true);
+
+                                                                    $dir = DOCUMENT_ROOT . "media/qr/";
+                                                                    if (!file_exists($dir))
+                                                                        mkdir($dir, 0777, true);
+                                                                    $filename = $dir . 'QR' . $usr['usr_id'] . '.png';
+                                                                    $tamano = 10;
+                                                                    $level = 'H';
+                                                                    $frameSize = 3;
+                                                                    // $contenido = json_encode(array($informacionQR), true);
+
+
+                                                                    QRcode::png($sin_json, $filename, $level, $tamano, $frameSize);
+                                                                    //$QR = '<img src="' . $filename . '" width="100px height="100px""  alt="' . $filename . '"> </img>';
+
+                                                                ?>
+                                                                    <div class="row">
+                                                                        <div class="col-12 text-center">
+                                                                            <img src="<?= HTTP_HOST ?>media/qr/QR<?= $usr['usr_id'] ?>.png" width="250px" height="250px" alt="1">
+                                                                        </div>
+                                                                    </div>
+                                                                <?php endif; ?>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-                                                              
+
                                                             </div>
                                                         </div>
                                                     </div>

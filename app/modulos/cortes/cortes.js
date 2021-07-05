@@ -370,7 +370,9 @@ function buscarFlujoCaja(flujo_usr) {
 
                 $("#tgts_usuario").val(res.usr_nombre)
                 $("#tgts_usuario_responsable").val(res.usr_id)
+                var rutaQr = urlApp + 'media/qr/QR'+res.usr_id+'.png';
 
+                $(".img_qr_usr").attr("src",rutaQr)
 
                 buscarCajaCorte(res.usr_caja);
 
