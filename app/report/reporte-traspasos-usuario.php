@@ -112,10 +112,9 @@ if (isset($_GET['tps_num'])) {
                 <td style="text-align:center ;">
                         SUCURSAL: $scl_nombre <br>
                         DIRECCION: $scl_direccion <br>
-                        TOTAL DE PRODUCTOS:<strong></strong>
                 </td>
                 <td style="text-align: center;">
-                <p>TRASPASO: <strong>$infoTps[tps_num_traspaso]</strong></p><br>
+                <p>SALIDA: <strong>$infoTps[tps_num_traspaso]</strong></p><br>
                 TIPO:<strong>$infoTps[tps_tipo]</strong> <br>
                 FECHA:<strong>$infoTps[tps_fecha]</strong>
                 </td>
@@ -131,12 +130,12 @@ if (isset($_GET['tps_num'])) {
         </thead>
     </table>
    
-    <table style="background-color: #f8f9fa; padding-top:5px; padding-bottom:5px; font-weight:bold;">
+    <table style="background-color: #f8f9fa; padding-top:5px; padding-bottom:5px; font-weight:bold;text-align:center">
     <thead>
         <tr  style="text-align: center;">
             <th>#SKU</th>
             <th>PRODUCTO</th>
-            <th>CATEGORIA</th>
+            <!--<th>CATEGORIA</th>-->
             <th>CANTIDAD</th>    
         </tr> 
     </thead>
@@ -161,8 +160,8 @@ EOF;
         <tr style="text-align: center; ">
             <td >$infP[id]</td>
             <td >$namep</td>
-            <td >$infP[categoria]</td>
-            <td >$infP[cantidad]</td>
+            <!--<td >$infP[categoria]</td>-->
+            <td  >$infP[cantidad]</td>
         </tr>
         
     </thead>
@@ -223,8 +222,9 @@ EOF;
     <table  style="text-align: center; background-color: #e9ecef; padding-top:10px; padding-bottom:2px;">
         <thead>
             <tr>
-            
-            <td colspan="3" style="text-align:right">TOTAL DE PRODUCTOS </td>
+            <td>
+            </td>
+            <td><strong> TOTAL DE ARTÍCULOS </strong> </td>
             <td><strong>$sumatotalp</strong></td>
             </tr>
         </thead>
