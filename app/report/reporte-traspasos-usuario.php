@@ -224,7 +224,7 @@ EOF;
         <thead>
             <tr>
             
-            <td colspan="3" style="text-align:right">TOTAL DE PRODUCTOS</td>
+            <td colspan="3" style="text-align:right">TOTAL DE PRODUCTOS </td>
             <td><strong>$sumatotalp</strong></td>
             </tr>
         </thead>
