@@ -110,7 +110,11 @@ class AppControlador
             'clientes-mal-historial',
             'clientes',
             'importar-clientes-mal-historial',
-            'new-mal-historial'
+            'new-mal-historial',
+            'almacenes',
+            'traspasos',
+            'productos',
+            'compras',
 
 
         );
