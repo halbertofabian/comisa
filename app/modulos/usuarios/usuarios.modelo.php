@@ -257,10 +257,11 @@ class UsuariosModelo
         }
     }
 
+    // Vendedores y Cobradores con caja abierta
     public static function mdlMostrarVendedoresConCajaAbierta()
     {
         try {
-            $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_rol = 'Vendedor' AND usr_caja != 0 ";
+            $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_rol = 'Vendedor' OR usr_rol = 'Cobrador' AND usr_caja != 0 ";
             $con = Conexion::conectar();
             $pps = $con -> prepare($sql);
             // $pps->bindValue(2, SUCURSAL_ID);
