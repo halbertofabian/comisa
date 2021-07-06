@@ -190,7 +190,7 @@ EOF;
 EOF;
 
         // Print text using writeHTMLCell()
-        $pdf->writeHTMLCell(0, 0, '', '', $header2, 0, 1, 0, true, '', true);
+        //$pdf->writeHTMLCell(0, 0, '', '', $header2, 0, 1, 0, true, '', true);
 
         //***** */
 
@@ -213,7 +213,7 @@ EOF;
     
 EOF;
 
-            $pdf->writeHTMLCell(0, 0, '', '', $tps_body2, 0, 1, 0, true, '', true);
+            //$pdf->writeHTMLCell(0, 0, '', '', $tps_body2, 0, 1, 0, true, '', true);
         }
     }
 
@@ -223,8 +223,8 @@ EOF;
     <table  style="text-align: center; background-color: #e9ecef; padding-top:10px; padding-bottom:2px;">
         <thead>
             <tr>
-            <td></td>
-            <td>TOTAL DE PRODUCTOS</td>
+            
+            <td colspan="3" style="text-align:right">TOTAL DE PRODUCTOS</td>
             <td><strong>$sumatotalp</strong></td>
             </tr>
         </thead>
@@ -252,7 +252,7 @@ EOF;
     
 EOF;
 
-    $pdf->writeHTMLCell(0, 0, '', '', $seccionqr, 0, 1, 0, true, '', true);
+    //$pdf->writeHTMLCell(0, 0, '', '', $seccionqr, 0, 1, 0, true, '', true);
     // ---------------------------------------------------------
 
     $firma = <<<EOF
