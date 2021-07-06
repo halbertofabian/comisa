@@ -1102,6 +1102,11 @@ class AppControlador
 
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Registrar nuevo almacen',
+                            'href' => 'almacenes'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Nuevo producto',
                             'href' => 'productos/new'
                         ],
