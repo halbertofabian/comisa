@@ -18,6 +18,14 @@ elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "vendedor") :
 
 
 ?>
+<?php
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "listar") :
+    cargarComponente('breadcrumb', '', 'Listar contratos');
+
+    include_once 'app/modulos/contratos/listar-contratos.php';
+
+
+?>
 
 <?php
 else :

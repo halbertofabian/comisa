@@ -126,14 +126,24 @@ class ContratosModelo
         }
     }
 
-    public static function mdlEliminarContratos()
+    public static function mdlPreregistrarContrato($data)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "INSERT INTO tbl_contrato_crt (ctr_folio,ctr_fecha_contrato,ctr_id_vendedor,ctr_cliente,ctr_productos,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_nota,ctr_fotos) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
+            $pps->bindValue(1, $data['ctr_folio']);
+            $pps->bindValue(2, $data['ctr_fecha_contrato']);
+            $pps->bindValue(3, $data['ctr_id_vendedor']);
+            $pps->bindValue(4, $data['ctr_cliente']);
+            $pps->bindValue(5, $data['ctr_productos']);
+            $pps->bindValue(6, $data['ctr_total']);
+            $pps->bindValue(7, $data['ctr_enganche']);
+            $pps->bindValue(8, $data['ctr_pago_adicional']);
+            $pps->bindValue(9, $data['ctr_saldo']);
+            $pps->bindValue(10, $data['ctr_nota']);
+            $pps->bindValue(11, $data['ctr_fotos']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

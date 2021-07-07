@@ -115,7 +115,7 @@ class AppControlador
             'traspasos',
             'productos',
             'compras',
-
+            'listar-contratos'
 
         );
     }
@@ -753,6 +753,12 @@ class AppControlador
                             'label' => 'Contratos',
                             'href' => 'contratos/vendedor'
                         ],
+
+                        [
+                            'icon' => '',
+                            'label' => 'Listar contratos',
+                            'href' => 'contratos/listar'
+                        ],
                         //Aqui más item de menu
                     ),
                 ]
@@ -1143,7 +1149,7 @@ class AppControlador
                             'label' => 'Exportar productos',
                             'href' => 'export/exportar-productos.php'
                         ],
-                        
+
                         // Aqui más item de menu
                     ),
                 ]

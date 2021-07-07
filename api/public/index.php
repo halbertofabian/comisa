@@ -90,7 +90,7 @@ $app->get('/productos', function (Request $request, Response $response) {
 
     try {
         //code...
-        $sql = "SELECT pds_nombre,pds_precio_credito,pds_enganche,pds_pago_semanal,pds_precio_contado,pds_precio_compra_mes_1,pds_precio_compra_mes_2 FROM tbl_productos_pds WHERE pds_estado = 'Activo' AND pds_ams_id = 1 ORDER BY pds_id_producto DESC";
+        $sql = "SELECT pds_sku,pds_nombre,pds_precio_credito,pds_enganche,pds_pago_semanal,pds_precio_contado,pds_precio_compra_mes_1,pds_precio_compra_mes_2 FROM tbl_productos_pds WHERE pds_estado = 'Activo' AND pds_ams_id = 1 ORDER BY pds_id_producto DESC";
         $db = Conexion::conectar();
         $rs = $db->query($sql);
         if ($rs->rowCount() > 0) {
