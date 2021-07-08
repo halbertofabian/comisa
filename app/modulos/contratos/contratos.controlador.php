@@ -332,9 +332,11 @@ class ContratosControlador
                 $vts_enganche =  str_replace(",", "", $_POST['vts_enganche'][$i]);
                 $vts_se =  str_replace(",", "", $_POST['vts_se'][$i]);
 
+                
+
                 $total_enganche = $vts_enganche  + $vts_se;
 
-
+                $ctr_saldo = $vts_total_venta - $total_enganche;
 
                 if ($total_enganche >= $vts_total_venta) {
                     $_POST['igs_tipo'] = 'CONTADO_VENTAS';
@@ -346,6 +348,24 @@ class ContratosControlador
                 $_POST['igs_concepto'] =  $_POST['vts_nombre_cliente'][$i] . ' Nº ' . $_POST['vts_n_contrato'][$i];
                 $_POST['igs_fecha_registro'] = FECHA;
                 $_POST['igs_cuenta'] = 0;
+
+
+                $preRegistrarContratos = ContratosModelo::mdlPreregistrarContrato(array(
+                    'ctr_folio' => $_POST['vts_n_contrato'][$i],
+                    'ctr_fecha_contrato	' => $_POST['vts_fecha'][$i],
+                    'ctr_id_vendedor' => $igs_id_corte['usr_id'],
+                    'ctr_cliente' => $_POST['vts_nombre_cliente'][$i],
+
+                    'ctr_productos' => "",
+
+                    'ctr_total' => $vts_total_venta,
+                    'ctr_enganche' => $vts_total_venta,
+                    'ctr_pago_adicional' => $vts_total_venta,
+                    'ctr_saldo' => $ctr_saldo,
+
+                    'ctr_nota' => $_POST['ctr_nota'][$i],
+                    'ctr_fotos' => ""
+                ));
 
                 $crearIngreso = IngresosModelo::mdlAgregarIngresos($_POST);
                 if ($crearIngreso) {

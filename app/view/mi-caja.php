@@ -8,7 +8,7 @@
 </script>
 
 <div class="row">
-    <div class="col-12 mt-5">
+    <!-- <div class="col-12 mt-5">
 
         <div class="alert bg-warning alert-dismissible fade show" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -22,8 +22,8 @@
             $(".alert").alert();
         </script>
 
-    </div>
-    <div class="col-12">
+    </div> -->
+    <div class="col-12 mt-5">
         <div class="alert alert-secondary" role="alert">
             <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
                 <strong>MI CAJA</strong> <a href="<?php echo HTTP_HOST . 'reportes-caja/cobranza/' . $_SESSION['session_usr']['usr_id'] ?>" class="btn btn-link float-right">Mis reportes</a>

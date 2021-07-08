@@ -123,32 +123,47 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                 <label for="">Fecha de venta</label>
                                                 <input type="text" name="vts_fecha[]" id="" class="form-control" readonly value="<?= $vtr_contratos[0]['fecha'] ?>">
                                             </div>
-                                            
-                                            <table class="table">
+                                            <div class="form-group">
+                                                <label for="">Nota</label>
+                                                <textarea name="ctr_nota[]" id="" cols="30" class="form-control" rows="2"></textarea>
+                                            </div>
 
-                                                <thead>
-                                                    <tr>
-                                                        <th>Producto</th>
-                                                        <th>Cantidad</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    foreach ($vtr_contratos[0]['productos'] as $key => $pds_venta) : ?>
-                                                        <tr class="text-center">
-                                                            <td>
-                                                            <strong class="text-primary"><?= $pds_venta['nombreProducto']?></strong>
-                                                            </td>
-                                                            <td>
-                                                            <strong class="text-danger"><?= $pds_venta['cantidad']?></strong>
-                                                            </td>
-                                                            
-                                                        <?php endforeach; ?>
-                                                        </tr>
 
-                                                </tbody>
+                                            <div class="row">
 
-                                            </table>
+                                            <div class="col-md-9"> <strong>Productos.</strong> </div>
+                                            <div class="col-md-3"> <strong>Cant.</strong> </div>
+
+                                                <?php
+                                                foreach ($vtr_contratos[0]['productos'] as $key => $pds_venta) : ?>
+                                                    <div class="col-md-9">
+                                                        <div class="form-group">
+
+                                                            <select class="form-control select2" name="vts_producto[]" id="">
+                                                                // Pendiente ID
+                                                                <option selected ><?= $pds_venta['nombreProducto'] ?></option>
+
+                                                                <?php
+
+                                                                $producto = ProductosModelo::mdlMostrarProductosAlamacen(1);
+                                                                foreach ($producto as $key => $pds) :
+                                                                ?>
+
+                                                                    <option value="<?= $pds['pds_sku'] ?>"><?= $pds['pds_nombre'] ?></option>
+
+                                                                <?php endforeach; ?>
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control" name="vts_cantidad[]" value="<?= $pds_venta['cantidad'] ?>">
+
+                                                    </div>
+
+                                                <?php endforeach; ?>
+
+                                            </div>
 
                                         </div>
                                     </div>
@@ -166,6 +181,7 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                             <div class="carousel-item active">
                                                 <div class="row">
                                                     <?php if (isset($vtr_contratos[0]['fotoCliente']) && $vtr_contratos[0]['fotoCliente'] != "") : ?>
+                                                    <input type="hidden" name="vdr_foto_cliente[]" value="<?= $vtr_contratos[0]['fotoCliente']; ?>">
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail img-fluid btnMostrarImg" height="150" width="200" src="<?= $vtr_contratos[0]['fotoCliente']; ?>" alt="First slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -173,6 +189,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                             </div>
                                                         </div>
                                                     <?php else : ?>
+                                                        <input type="hidden" name="vdr_foto_cliente[]" value="">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail img-fluid" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -181,6 +199,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                         </div>
                                                     <?php endif; ?>
                                                     <?php if (isset($vtr_contratos[0]['fotoCredencialFrontal']) && $vtr_contratos[0]['fotoCredencialFrontal'] != "") : ?>
+                                                        <input type="hidden" name="fotoCredencialFrontal[]" value="<?= $vtr_contratos[0]['fotoCredencialFrontal']; ?>">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $vtr_contratos[0]['fotoCredencialFrontal']; ?>" alt="First slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -188,6 +208,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                             </div>
                                                         </div>
                                                     <?php else : ?>
+                                                        <input type="hidden" name="fotoCredencialFrontal[]" value="">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -196,6 +218,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                         </div>
                                                     <?php endif; ?>
                                                     <?php if (isset($vtr_contratos[0]['fotoCredencialTrasera']) && $vtr_contratos[0]['fotoCredencialTrasera'] != "") : ?>
+                                                        <input type="hidden" name="fotoCredencialTrasera[]" value="<?= $vtr_contratos[0]['fotoCredencialTrasera']; ?>">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $vtr_contratos[0]['fotoCredencialTrasera']; ?>" alt="First slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -203,6 +227,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                             </div>
                                                         </div>
                                                     <?php else : ?>
+                                                        <input type="hidden" name="fotoCredencialTrasera[]" value="">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -216,6 +242,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                             <div class="carousel-item">
                                                 <div class="row">
                                                     <?php if (isset($vtr_contratos[0]['fotoPagare']) && $vtr_contratos[0]['fotoPagare'] != "") : ?>
+                                                        <input type="hidden" name="fotoPagare[]" value="<?= $vtr_contratos[0]['fotoPagare']; ?>">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail img-fluid btnMostrarImg" height="150" width="200" src="<?= $vtr_contratos[0]['fotoPagare']; ?>" alt="First slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -223,6 +251,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                             </div>
                                                         </div>
                                                     <?php else : ?>
+                                                        <input type="hidden" name="fotoPagare[]" value="">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail img-fluid" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -231,6 +261,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                         </div>
                                                     <?php endif; ?>
                                                     <?php if (isset($vtr_contratos[0]['fotoFachada']) && $vtr_contratos[0]['fotoFachada'] != "") : ?>
+                                                        <input type="hidden" name="fotoFachada[]" value="<?= $vtr_contratos[0]['fotoFachada']; ?>">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $vtr_contratos[0]['fotoFachada']; ?>" alt="First slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -238,6 +270,8 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                             </div>
                                                         </div>
                                                     <?php else : ?>
+                                                        <input type="hidden" name="fotoFachada[]" value="">
+
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -246,6 +280,7 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                         </div>
                                                     <?php endif; ?>
                                                     <?php if (isset($vtr_contratos[0]['comprobanteDomicilio']) && $vtr_contratos[0]['comprobanteDomicilio'] != "") : ?>
+                                                        <input type="hidden" name="comprobanteDomicilio[]" value="<?= $vtr_contratos[0]['comprobanteDomicilio']; ?>">
                                                         <div class="col-xl-4 text-center">
                                                             <img class="img-thumbnail btnMostrarImg" height="150" width="200" src="<?= $vtr_contratos[0]['comprobanteDomicilio']; ?>" alt="First slide">
                                                             <div class="carousel-caption d-none d-md-block">
@@ -254,6 +289,7 @@ if (isset($_POST['btnConsultarNumeroTraspaso'])) :
                                                         </div>
                                                     <?php else : ?>
                                                         <div class="col-xl-4 text-center">
+                                                        <input type="hidden" name="comprobanteDomicilio[]" value="">
                                                             <img class="img-thumbnail" style="height: 260px;" src=" data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_17a56598b94%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_17a56598b94%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22276.9921875%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Second slide">
                                                             <div class="carousel-caption d-none d-md-block">
                                                                 <h5>Foto comprobante domicilio</h5>
