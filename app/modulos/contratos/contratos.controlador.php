@@ -274,7 +274,7 @@ class ContratosControlador
     {
         if (isset($_POST['btnConsultarNumeroTraspaso'])) {
             $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($_POST['usr_id']);
-           
+
             return array(
                 'datos_contrato' => ContratosModelo::mdlConsultarContratos($igs_id_corte['usr_caja']),
                 'datos_vendedor' => $igs_id_corte
@@ -291,6 +291,9 @@ class ContratosControlador
             $arraySize = sizeof($_POST['vts_n_contrato']);
 
             $contadorVentas = 0;
+            $contadorContratos = 0;
+            $contadorProductos = 0;
+            $folios = "";
 
 
             for ($i = 0; $i < $arraySize; $i++) {
@@ -332,7 +335,7 @@ class ContratosControlador
                 $vts_enganche =  str_replace(",", "", $_POST['vts_enganche'][$i]);
                 $vts_se =  str_replace(",", "", $_POST['vts_se'][$i]);
 
-                
+
 
                 $total_enganche = $vts_enganche  + $vts_se;
 
@@ -350,33 +353,102 @@ class ContratosControlador
                 $_POST['igs_cuenta'] = 0;
 
 
-                $preRegistrarContratos = ContratosModelo::mdlPreregistrarContrato(array(
+                // Ajuste de imagenes
+                $img = array(
+                    'img_cliente' =>  $_POST['fotoCliente'][$i],
+                    'img_cred_fro' =>  $_POST['fotoCredencialFrontal'][$i],
+                    'img_cred_tra' =>  $_POST['fotoCredencialTrasera'][$i],
+                    'img_pagare' =>  $_POST['fotoPagare'][$i],
+                    'img_fachada' =>  $_POST['fotoFachada'][$i],
+                    'img_comprobante' =>  $_POST['comprobanteDomicilio'][$i],
+                );
+
+                // Ajuste de productos
+
+                $datos = array(
                     'ctr_folio' => $_POST['vts_n_contrato'][$i],
-                    'ctr_fecha_contrato	' => $_POST['vts_fecha'][$i],
+                    'ctr_fecha_contrato' => $_POST['vts_fecha'][$i],
                     'ctr_id_vendedor' => $igs_id_corte['usr_id'],
                     'ctr_cliente' => $_POST['vts_nombre_cliente'][$i],
-
-                    'ctr_productos' => "",
-
+                    'ctr_productos' => $_POST['vdr_productos'][$i],
                     'ctr_total' => $vts_total_venta,
-                    'ctr_enganche' => $vts_total_venta,
-                    'ctr_pago_adicional' => $vts_total_venta,
+                    'ctr_enganche' => $vts_enganche,
+                    'ctr_pago_adicional' => $vts_se,
                     'ctr_saldo' => $ctr_saldo,
-
+                    'ctr_elaboro' => 'VENDEDOR/' . $igs_id_corte['usr_nombre'],
                     'ctr_nota' => $_POST['ctr_nota'][$i],
-                    'ctr_fotos' => ""
-                ));
+                    'ctr_fotos' => json_encode($img, true),
 
-                $crearIngreso = IngresosModelo::mdlAgregarIngresos($_POST);
-                if ($crearIngreso) {
+                    // Referencias
+                    'ctr_nombre_ref_1' => $_POST['vts_nombre_ref_1'][$i],
+                    'ctr_parentesco_ref_1' => $_POST['vts_parentesco_ref_1'][$i],
+                    'ctr_direccion_ref_1' => $_POST['vts_direccion_ref_1'][$i],
+                    'ctr_colonia_ref_1' => $_POST['vts_colonia_ref_1'][$i],
+                    'ctr_telefono_ref_1' => $_POST['vts_telefono_ref_1'][$i],
 
-                    $contadorVentas++;
+
+                );
+
+
+
+
+
+
+                $preRegistrarContratos = ContratosModelo::mdlPreregistrarContrato($datos);
+
+                if ($preRegistrarContratos != 0) {
+
+                    $contadorContratos++;
+                    $folios .= $datos['ctr_folio'] . '-';
+
+                    $crearIngreso = IngresosModelo::mdlAgregarIngresos($_POST);
+
+                    if ($crearIngreso) {
+
+                        $contadorVentas++;
+                    }
+
+                    // REGISTAR PRODUCTOS VENDIDOS
+                    $productosVenta = json_decode($_POST['vdr_productos'][$i], true);
+                    $productosArray = array();
+
+                    foreach ($productosVenta as $key => $vpds) {
+
+
+                        $pds_id_producto = ProductosModelo::mdlMostrarProductoBySKUFast($vpds['sku'] . '/' . $_SESSION['session_suc']['scl_id'] . '/1');
+
+                        $auxProductos = array(
+                            'vpds_sku' => $pds_id_producto['pds_id_producto'],
+                            'vpds_cantidad' => $vpds['cantidad']
+                        );
+
+
+                        array_push($productosArray, $auxProductos);
+                    }
+
+                    foreach ($productosArray as $key => $pds_venta) {
+
+
+                        $datos_productos = array(
+                            'vpds_contrato' => $preRegistrarContratos,
+                            'vpds_sku' => $pds_venta['vpds_sku'],
+                            'vpds_cantidad' => $pds_venta['vpds_cantidad'],
+                            'vpds_fecha_venta' => $_POST['vts_fecha'][$i]
+                        );
+
+                        $registroProducto = ProductosModelo::ctrRegistrarVentasproductos($datos_productos);
+
+                        if ($registroProducto) {
+                            $contadorProductos++;
+                        }
+                    }
+                } else {
                 }
             }
-
+            $folios = trim($folios, '-');
             return array(
                 'status' => true,
-                'mensaje' => 'Se registraron ' . $contadorVentas . ' ventas.',
+                'mensaje' => 'Se registraron ' . $contadorVentas . ' ventas , ' . $contadorContratos . ' contratos ' . ' ' . $folios . ' y se descontarón ' . $contadorProductos . ' productos del  inventario',
                 'pagina' => HTTP_HOST . 'flujo-caja'
             );
         }

@@ -130,7 +130,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_contrato_crt (ctr_folio,ctr_fecha_contrato,ctr_id_vendedor,ctr_cliente,ctr_productos,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_elaboro,ctr_nota,ctr_fotos) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_contrato_crt (ctr_folio,ctr_fecha_contrato,ctr_id_vendedor,ctr_cliente,ctr_productos,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_elaboro,ctr_nota,ctr_fotos,ctr_nombre_ref_1,ctr_parentesco_ref_1,ctr_direccion_ref_1,ctr_colonia_ref_1,ctr_telefono_ref_1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $data['ctr_folio']);
@@ -143,11 +143,16 @@ class ContratosModelo
             $pps->bindValue(8, $data['ctr_pago_adicional']);
             $pps->bindValue(9, $data['ctr_saldo']);
             $pps->bindValue(10, $data['ctr_elaboro']);
-            
             $pps->bindValue(11, $data['ctr_nota']);
             $pps->bindValue(12, $data['ctr_fotos']);
+
+            $pps->bindValue(13, $data['ctr_nombre_ref_1']);
+            $pps->bindValue(14, $data['ctr_parentesco_ref_1']);
+            $pps->bindValue(15, $data['ctr_direccion_ref_1']);
+            $pps->bindValue(16, $data['ctr_colonia_ref_1']);
+            $pps->bindValue(17, $data['ctr_telefono_ref_1']);
             $pps->execute();
-            return $pps->rowCount() > 0;
+            return $con -> lastInsertId();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -175,4 +180,25 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlConsultarContratosAll()
+    {
+        try {
+            //c4ode...
+
+            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_folio DESC";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    
 }

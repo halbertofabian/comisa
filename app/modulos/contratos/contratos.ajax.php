@@ -21,6 +21,7 @@ require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/clientes/clientes.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.modelo.php';
 
 
 class ContratosAjax

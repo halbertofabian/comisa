@@ -19,7 +19,7 @@ class ProductosModelo
         try {
             //code...
             $sql = "INSERT INTO tbl_productos_pds (pds_sku,pds_nombre,pds_categoria,pds_stok,pds_stok_min,pds_precio_credito,pds_enganche,pds_pago_semanal,pds_precio_contado,pds_precio_compra_mes_1,pds_precio_compra_mes_2,pds_imagen_portada,pds_fecha_creacion,pds_fecha_modificacion,pds_usaurio_registro,pds_usuario_modifico,pds_estado,pds_sucursal_id,pds_suscriptor_id,pds_ams_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            
+
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $pds['pds_sku']);
@@ -63,8 +63,8 @@ class ProductosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> bindValue(1,$data['pds_stok']);
-            $pps -> bindValue(2,$data['pds_sku']);
+            $pps->bindValue(1, $data['pds_stok']);
+            $pps->bindValue(2, $data['pds_sku']);
 
             $pps->execute();
             return $pps->rowCount() > 0;
@@ -100,6 +100,24 @@ class ProductosModelo
                 $pps->execute();
                 return $pps->fetch();
             }
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarProductoBySKUFast($pds_sku = "")
+    {
+        try {
+
+            $sql = "SELECT pds_id_producto FROM tbl_productos_pds WHERE  pds_sku = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pds_sku);
+            $pps->execute();
+            return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -234,5 +252,26 @@ class ProductosModelo
         }
     }
 
-    
+    public static function ctrRegistrarVentasproductos($data)
+    {
+
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_venta_producto_vpds (vpds_contrato,vpds_sku,vpds_cantidad,vpds_fecha_venta) VALUES (?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $data['vpds_contrato']);
+            $pps->bindValue(2, $data['vpds_sku']);
+            $pps->bindValue(3, $data['vpds_cantidad']);
+            $pps->bindValue(4, $data['vpds_fecha_venta']);
+
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
