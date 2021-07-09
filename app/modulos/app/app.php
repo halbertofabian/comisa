@@ -87,6 +87,9 @@
     <script src="<?php echo HTTP_HOST . 'app/' ?>plugins/jquery-mask/dist/jquery.mask.min.js"></script>
 
 
+    <script src="<?php echo HTTP_HOST . 'app/' ?>assets/js/code_bar.min.js"></script>
+
+
 </head>
 
 

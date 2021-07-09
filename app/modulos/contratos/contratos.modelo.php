@@ -105,6 +105,25 @@ class ContratosModelo
         }
     }
 
+    public static function mdlMostrarContratoByFolio($ctr_folio)
+    {
+        try {
+            //c4ode...
+
+            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr_folio =?";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_folio);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarInfoContrato($idctr)
     {
         try {
@@ -152,7 +171,7 @@ class ContratosModelo
             $pps->bindValue(16, $data['ctr_colonia_ref_1']);
             $pps->bindValue(17, $data['ctr_telefono_ref_1']);
             $pps->execute();
-            return $con -> lastInsertId();
+            return $con->lastInsertId();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -199,6 +218,4 @@ class ContratosModelo
             $con = null;
         }
     }
-
-    
 }

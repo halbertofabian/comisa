@@ -756,6 +756,12 @@ class AppControlador
 
                         [
                             'icon' => '',
+                            'label' => 'Buscar contrato',
+                            'href' => 'contratos/buscar'
+                        ],
+
+                        [
+                            'icon' => '',
                             'label' => 'Listar contratos',
                             'href' => 'contratos/listar'
                         ],

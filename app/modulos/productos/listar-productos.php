@@ -96,11 +96,7 @@ $productos = ProductosModelo::mdlMostrarProductosActivos();
                     <table class="table tablaProductos table-light tablas table-bordered table-striped dt-responsive">
                         <thead>
                             <tr>
-                                <th>
 
-                                    <input type="checkbox" name="" id="checkboxAllProducto">
-
-                                </th>
                                 <th><i class="fas fa-image"></i></th>
                                 <th>Nombre</th>
                                 <th>SKU</th>
@@ -114,25 +110,11 @@ $productos = ProductosModelo::mdlMostrarProductosActivos();
 
                             <?php foreach ($productos as $key => $pds) : ?>
                                 <tr class="pds_content text-center" pds_id="pds_id_<?php echo $pds['pds_id_producto'] ?>" style="height: 110px;">
-                                    <td><input type="checkbox" class="pds_action_product" name="pds_action_product[]" value="<?php echo $pds['pds_id_producto'] ?>"></td>
+
                                     <td><img src="<?php echo $pds['pds_imagen_portada'] ?>" width="50" height="50" alt="no fount"></td>
                                     <td>
-                                        <a href="" class="bt btn-link"><?php echo $pds['pds_nombre'] ?></a>
-                                        <div class="d-none pds_id_move" id="pds_id_<?php echo $pds['pds_id_producto'] ?>">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <p class="" style="font-size: 11px; color: #737B82; ">ID: <?php echo $pds['pds_id_producto']  ?></p>
-                                                </div>
-                                                <div class="col-12 btn-group">
-                                                    <button class="btn btn-sm btn-default"><i class="fa fa-trash"></i></button>
-                                                    <button class="btn btn-sm btn-default"><i class="fa fa-edit"></i></button>
-                                                    <button class="btn btn-sm btn-default">Editar rapido</button>
+                                        <a href="<?= HTTP_HOST . 'productos/update/' . $pds['pds_id_producto'] ?>" class="bt btn-link"><?php echo $pds['pds_nombre'] ?></a>
 
-
-                                                </div>
-                                            </div>
-
-                                        </div>
 
                                     </td>
                                     <td><?php

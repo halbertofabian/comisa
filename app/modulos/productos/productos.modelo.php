@@ -125,6 +125,24 @@ class ProductosModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarProductoById($pds_id_producto = "")
+    {
+        try {
+
+            $sql = "SELECT * FROM tbl_productos_pds WHERE  pds_id_producto = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pds_id_producto);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlEliminarProductos()
     {
         try {

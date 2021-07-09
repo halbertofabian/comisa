@@ -1,6 +1,7 @@
 <?php
 if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "update") :
     cargarComponente('breadcrumb_nivel_1', '', 'Editar producto #' . $rutas[2], array(['ruta' => 'productos', 'label' => 'Listar productos']));
+    include_once 'app/modulos/productos/editar-productos.php';
 
     //$pds = ProductosModelo::mdlMostrarProductos($rutas[2]); ?>
 
