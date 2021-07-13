@@ -7,6 +7,12 @@ require_once '../../config.php';
 require '../vendor/autoload.php';
 require '../src/config/db.php';
 
+// Requerir controlador y modelo de contratos 
+
+require_once '../../app/modulos/contratos/contratos.controlador.php';
+require_once '../../app/modulos/contratos/contratos.modelo.php';
+
+
 
 
 
@@ -28,7 +34,7 @@ $app->get('/prueba', function (Request $request, Response $response) {
     try {
         //code...
         $sql = "SELECT * FROM `tbl_productos_pds` ORDER BY `pds_id_producto` ASC";
-        $db = Conexion::conectar();
+        $db = ConexionAPI::conectarAPI();
         $rs = $db->query($sql);
         if ($rs->rowCount() > 0) {
 
@@ -59,7 +65,7 @@ $app->get('/clientes_control', function (Request $request, Response $response) {
     try {
         //code...
         $sql = "SELECT clts_id,clts_ruta,clts_nombre,clts_telefono,clts_domicilio,clts_col,clts_ubicacion,clts_tipo_cliente,clts_curp,clts_observaciones,clts_cuenta,clts_articulo,clts_fecha_venta FROM tbl_clientes_problemas_clts ORDER BY clts_id DESC";
-        $db = Conexion::conectar();
+        $db = ConexionAPI::conectarAPI();
         $rs = $db->query($sql);
         if ($rs->rowCount() > 0) {
 
@@ -91,7 +97,7 @@ $app->get('/productos', function (Request $request, Response $response) {
     try {
         //code...
         $sql = "SELECT pds_sku,pds_nombre,pds_precio_credito,pds_enganche,pds_pago_semanal,pds_precio_contado,pds_precio_compra_mes_1,pds_precio_compra_mes_2 FROM tbl_productos_pds WHERE pds_estado = 'Activo' AND pds_ams_id = 1 ORDER BY pds_id_producto DESC";
-        $db = Conexion::conectar();
+        $db = ConexionAPI::conectarAPI();
         $rs = $db->query($sql);
         if ($rs->rowCount() > 0) {
 
@@ -122,7 +128,7 @@ $app->get('/acceso/{clave}', function (Request $request, Response $response, arr
     try {
         //code...
         $sql = "SELECT true FROM tbl_sucursal_scl WHERE scl_clave_acceso = ?";
-        $con = Conexion::conectar();
+        $con = ConexionAPI::conectarAPI();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $clave);
         $pps->execute();
@@ -142,30 +148,43 @@ $app->get('/acceso/{clave}', function (Request $request, Response $response, arr
 $app->post('/login', function (Request $request, Response $response) {
     echo "Aqui toy";
 });
+
 $app->post('/comisa-datos', function (Request $request, Response $response) {
     $json = $request->getBody();
+
     $datosVendedor = json_decode($json, true);
-    try {
 
-        $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id,fecha,caja_id) VALUES(?,?,?,?)";
-        $con = Conexion::conectar();
-        $pps = $con->prepare($sql);
-        $pps->bindValue(1, $json);
-        $pps->bindValue(2, $datosVendedor[0]['vendedor']['id']);
-        $pps->bindValue(3, FECHA);
-        $pps->bindValue(4, $datosVendedor[0]['vendedor']['caja_abierta']);
+    $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
 
-        $pps->execute();
-    } catch (PDOException $th) {
-        //throw $th;
-    } finally {
-        $pps = null;
-        $con = null;
-    }
-    $datos = array('mensaje' => 'Los datos se agregaron correctamente');
+    return json_encode($subirctr, true);
 
-    return json_encode($datos);
+    # code...
+
 });
+// $app->post('/comisa-datos', function (Request $request, Response $response) {
+//     $json = $request->getBody();
+//     $datosVendedor = json_decode($json, true);
+//     try {
+
+//         $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id,fecha,caja_id) VALUES(?,?,?,?)";
+//         $con = ConexionAPI::conectarAPI();
+//         $pps = $con->prepare($sql);
+//         $pps->bindValue(1, $json);
+//         $pps->bindValue(2, $datosVendedor[0]['vendedor']['id']);
+//         $pps->bindValue(3, FECHA);
+//         $pps->bindValue(4, $datosVendedor[0]['vendedor']['caja_abierta']);
+
+//         $pps->execute();
+//     } catch (PDOException $th) {
+//         //throw $th;
+//     } finally {
+//         $pps = null;
+//         $con = null;
+//     }
+//     $datos = array('mensaje' => 'Los datos se agregaron correctamente');
+
+//     return json_encode($datos);
+// });
 
 
 $app->get('/sicronizar_datos_2', function (Request $request, Response $response) {
@@ -175,7 +194,7 @@ $app->get('/sicronizar_datos_2', function (Request $request, Response $response)
     try {
 
         $sql = "UPDATE tbl_traspasos_tps SET tps_lista_productos_devueltos = ?  ";
-        $con = Conexion::conectar();
+        $con = ConexionAPI::conectarAPI();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $json);
         // $pps->bindValue(2, $datosTraspasos[0]['tps_num']);
@@ -199,7 +218,7 @@ $app->post('/sincronizar_datos', function (Request $request, Response $response)
     try {
 
         $sql = "UPDATE tbl_traspasos_tps SET tps_lista_productos_devueltos = ? WHERE tps_num_traspaso = ? ";
-        $con = Conexion::conectar();
+        $con = ConexionAPI::conectarAPI();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $json);
         $pps->bindValue(2, $datosTraspasos[0]['tps_num']);
@@ -228,7 +247,7 @@ $app->get('/traspaso/{id}', function (Request $request, Response $response, arra
         JOIN tbl_usuarios_usr usr_rec ON usr_rec.usr_id =tps.tps_user_id_receptor 
         JOIN tbl_almacenes_ams ams_des ON ams_des.ams_id=tps.tps_ams_id_destino 
         WHERE tps_num_traspaso=? LIMIT 1 ";
-        $con = Conexion::conectar();
+        $con = ConexionAPI::conectarAPI();
         $pps = $con->prepare($sql);
         $pps->bindValue(1, $id);
         $pps->execute();

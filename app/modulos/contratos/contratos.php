@@ -1,5 +1,13 @@
 <?php
-if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "buscar") :
+if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "buscar" && isset($rutas[2])) :
+    
+    include_once 'app/modulos/contratos/contrato-view.php';
+
+
+
+?>
+<?php
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "buscar") :
     include_once 'app/modulos/contratos/buscar-contratos.php';
 
 

@@ -63,6 +63,14 @@ class ContratosAjax
 
     }
 
+    public function ajaxBuscarContrato2(){
+
+        $res = ContratosModelo::mdlMostrarContratosByFolioCaja($_POST['crt_filtro']);
+        echo json_encode($res, true);
+
+
+    }
+
 
 
 }
@@ -95,4 +103,11 @@ if(isset($_POST['btnRegistrarVentasContrato'])){
 if(isset($_POST['btnBuscarContratos'])){
     $buscarContrato = new ContratosAjax();
     $buscarContrato->ajaxBuscarContrato();
+}
+
+if(isset($_POST['btnBuscarContratos2'])){
+
+    $buscarContrato = new ContratosAjax();
+    $buscarContrato -> ajaxBuscarContrato2();
+
 }

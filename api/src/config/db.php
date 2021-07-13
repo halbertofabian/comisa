@@ -1,9 +1,9 @@
 <?php
 
-class Conexion
+class ConexionAPI
 {
 
-    static public function conectar()
+    static public function conectarAPI()
     {
 
         try {
