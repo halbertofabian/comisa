@@ -75,7 +75,7 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
                     if (cts.clts_registro_venta == 0) {
                         estado_venta = `<span class="badge badge-pill badge-danger float-right mr-1">PENDIENTE PARA REGISTRO VENTAS</span>`;
                     } else {
-                        estado_venta = `<span class="d-none badge badge-pill badge-success float-right ">REGISTRADO EN VENTAS</span>`;
+                        estado_venta = `<span class="badge badge-pill badge-success float-right ">REGISTRADO EN VENTAS</span>`;
                     }
 
 
