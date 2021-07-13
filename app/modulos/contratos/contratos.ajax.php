@@ -48,31 +48,32 @@ class ContratosAjax
         echo json_encode($res, true);
     }
 
-    public function ajaxRegistrarVentasContrato(){
+    public function ajaxRegistrarVentasContrato()
+    {
 
         $res = ContratosControlador::ctrRegistrarVentasContrato();
         echo json_encode($res, true);
-
     }
 
-    public function ajaxBuscarContrato(){
+    public function ajaxBuscarContrato()
+    {
 
         $res = ContratosModelo::mdlMostrarContratoByFolio($_POST['crt_folio']);
         echo json_encode($res, true);
-
-
     }
 
-    public function ajaxBuscarContrato2(){
+    public function ajaxBuscarContrato2()
+    {
 
         $res = ContratosModelo::mdlMostrarContratosByFolioCaja($_POST['crt_filtro']);
         echo json_encode($res, true);
-
-
     }
 
-
-
+    public function ajaxActualizarContrato()
+    {
+        $res = ContratosControlador::ctrActualizarContrato();
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -93,21 +94,24 @@ if (isset($_POST['btnEditarctrs'])) {
     $editarcontrato->ajaxEditarContrato();
 }
 
-if(isset($_POST['btnRegistrarVentasContrato'])){
+if (isset($_POST['btnRegistrarVentasContrato'])) {
 
     $registrarVentas = new ContratosAjax();
-    $registrarVentas -> ajaxRegistrarVentasContrato();
-
+    $registrarVentas->ajaxRegistrarVentasContrato();
 }
 
-if(isset($_POST['btnBuscarContratos'])){
+if (isset($_POST['btnBuscarContratos'])) {
     $buscarContrato = new ContratosAjax();
     $buscarContrato->ajaxBuscarContrato();
 }
 
-if(isset($_POST['btnBuscarContratos2'])){
+if (isset($_POST['btnBuscarContratos2'])) {
 
     $buscarContrato = new ContratosAjax();
-    $buscarContrato -> ajaxBuscarContrato2();
+    $buscarContrato->ajaxBuscarContrato2();
+}
 
+if (isset($_POST['btnGuadarDatosContrato'])) {
+    $actualizarContrato = new ContratosAjax();
+    $actualizarContrato->ajaxActualizarContrato();
 }

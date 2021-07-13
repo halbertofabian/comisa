@@ -75,9 +75,9 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
             <div class="card-body">
                 <div class="row row-encabezado">
                     <div class="col-md-3 btn-group">
-                        <a href="${urlApp+'contratos/buscar/'+cts.ctr_id}" target="_blank" class="btn btn-primary text-center">
+                        <a href="${urlApp+'contratos/buscar/'+cts.ctr_id}"  class="btn btn-primary text-center">
                             <i class="fa fa-eye" aria-hidden="true"></i>
-                            <h6 class=" text-center">${cts.clts_folio_nuevo}</h6>
+                            <h6 class=" text-center">${cts.clts_folio_nuevo} <br> ${cts.ctr_folio}</h6>
                         </a>
                         <button type="button" class="btn btn-secondary text-center btnImprimirContrato" ctr_folio="${cts.clts_folio_nuevo}" >
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>

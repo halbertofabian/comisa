@@ -344,8 +344,34 @@ $("#formRegistarVentas").on("submit", function (e) {
 
 
 })
-$(".btnMostrarImg").on("click", function(){
+$(".btnMostrarImg").on("click", function () {
     urlImg = $(this).attr("src");
     $(".imagenURL").attr("src", urlImg);
     $("#modelId").modal("show");
 });
+
+
+$("#formGuardarContrato").on("submit", function (e) {
+    e.preventDefault();
+
+    var datos = new FormData(this);
+    datos.append("btnGuadarDatosContrato", true);
+
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            //startLoadButton()
+        },
+        success: function (res) {
+
+            console.log(res);
+
+        }
+    })
+})

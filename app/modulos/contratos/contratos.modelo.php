@@ -262,7 +262,7 @@ class ContratosModelo
             $pps->bindValue(31, $ctr['clts_trabajo']);
             $pps->bindValue(32, $ctr['clts_puesto']);
             $pps->bindValue(33, $ctr['clts_direccion_tbj']);
-            $pps->bindValue(34, $ctr['clts_col_tbj	']);
+            $pps->bindValue(34, $ctr['clts_col_tbj']);
             $pps->bindValue(35, $ctr['clts_tel_tbj']);
             $pps->bindValue(36, $ctr['clts_antiguedad_tbj']);
             $pps->bindValue(37, $ctr['clts_igs_mensual_tbj']);
@@ -342,7 +342,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.clts_caja LIKE '%$ctr_filtro%'";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.clts_caja LIKE '%$ctr_filtro%' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();

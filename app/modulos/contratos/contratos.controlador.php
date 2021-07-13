@@ -470,7 +470,6 @@ class ContratosControlador
             $ctr_id['ctr_id'] = strlen($ctr_id['ctr_id']) == 5 ? "0" . $ctr_id['ctr_id'] : $ctr_id['ctr_id'];
         }
         return $ctr_id['ctr_id'];
-
     }
 
     public static function ctrSetearDatos($data)
@@ -538,7 +537,7 @@ class ContratosControlador
                 'clts_trabajo' =>  dstring($cts["clts_trabajo"]),
                 'clts_puesto' =>  dstring($cts["clts_puesto"]),
                 'clts_direccion_tbj' =>  dstring($cts["clts_direccion_tbj"]),
-                'clts_col_tbj	' =>  dstring($cts["clts_col_tbj"]),
+                'clts_col_tbj' =>  dstring($cts["clts_col_tbj"]),
                 'clts_tel_tbj' =>  dstring($cts["clts_tel_tbj"]),
                 'clts_antiguedad_tbj' =>  dstring($cts["clts_antiguedad_tbj"]),
                 'clts_igs_mensual_tbj' =>  dnum($cts["clts_igs_mensual_tbj"]),
@@ -622,5 +621,92 @@ class ContratosControlador
         );
 
         // preArray($contratos);
+    }
+    public static function ctrActualizarContrato()
+    {
+        $datos = array(
+         'ctr_id' => $_POST['ctr_id'],
+         'ctr_folio' => $_POST['ctr_folio'],
+         'ctr_fecha_contrato' => $_POST['ctr_fecha_contrato'],
+         'ctr_id_vendedor' => $_POST['ctr_id_vendedor'],
+         'ctr_cliente' => dstring($_POST['ctr_cliente']),
+         'ctr_numero_cuenta' => $_POST['ctr_numero_cuenta'],
+         'ctr_ruta' => $_POST['ctr_ruta'],
+         'ctr_forma_pago' => $_POST['ctr_forma_pago'],
+         'ctr_dia_pago' => dstring($_POST['ctr_dia_pago']),
+         'ctr_proximo_pago' => $_POST['ctr_proximo_pago'],
+
+         'ctr_plazo_credito' => $_POST['ctr_plazo_credito'],
+        //  'ctr_tipo_pago' => $_POST['ctr_tipo_pago'],
+        //  'ctr_productos' => $_POST['ctr_productos'],
+         'ctr_total' => $_POST['ctr_total'],
+         'ctr_enganche' => $_POST['ctr_enganche'],
+         'ctr_pago_adicional' => $_POST['ctr_pago_adicional'],
+         'ctr_saldo' => $_POST['ctr_saldo'],
+        //  'ctr_elaboro' => $_POST['ctr_elaboro'],
+         'ctr_nota' => dstring($_POST['ctr_nota']),
+        //  'ctr_fotos' => $_POST['ctr_fotos'],
+
+         'ctr_nombre_ref_1' => dstring($_POST['ctr_nombre_ref_1']),
+         'ctr_parentesco_ref_1' => dstring($_POST['ctr_parentesco_ref_1']),
+         'ctr_direccion_ref_1' => dstring($_POST['ctr_direccion_ref_1']),
+         'ctr_colonia_ref_1' => dstring($_POST['ctr_colonia_ref_1']),
+         'ctr_telefono_ref_1' => $_POST['ctr_telefono_ref_1'],
+         'clts_curp' => dstring($_POST['clts_curp']),
+         'clts_telefono' => $_POST['clts_telefono'],
+         'clts_domicilio' => dstring($_POST['clts_domicilio']),
+         'clts_col' => dstring($_POST['clts_col']),
+         'clts_entre_calles' => dstring($_POST['clts_entre_calles']),
+
+         'clts_trabajo' => dstring($_POST['clts_trabajo']),
+         'clts_puesto' => dstring($_POST['clts_puesto']),
+         'clts_direccion_tbj' => dstring($_POST['clts_direccion_tbj']),
+         'clts_col_tbj' => dstring($_POST['clts_col_tbj']),
+         'clts_tel_tbj' => $_POST['clts_tel_tbj'],
+         'clts_antiguedad_tbj' => dstring($_POST['clts_antiguedad_tbj']),
+         'clts_igs_mensual_tbj' => $_POST['clts_igs_mensual_tbj'],
+         'clts_tipo_vivienda' => dstring($_POST['clts_tipo_vivienda']),
+         'clts_vivienda_anomde' => dstring($_POST['clts_vivienda_anomde']),
+         'clts_antiguedad_viviendo' => dstring($_POST['clts_antiguedad_viviendo']),
+
+         'clts_coordenadas' => $_POST['clts_coordenadas'],
+         'clts_nom_conyuge' => dstring($_POST['clts_nom_conyuge']),
+         'clts_tbj_conyuge' => dstring($_POST['clts_tbj_conyuge']),
+         'clts_tbj_puesto_conyuge' => dstring($_POST['clts_tbj_puesto_conyuge']),
+         'clts_tbj_dir_conyuge' => dstring($_POST['clts_tbj_dir_conyuge']),
+         'clts_tbj_col_conyuge' => dstring($_POST['clts_tbj_col_conyuge']),
+         'clts_tbj_tel_conyuge' => $_POST['clts_tbj_tel_conyuge'],
+         'clts_tbj_ant_conyuge' => dstring($_POST['clts_tbj_ant_conyuge']),
+         'clts_tbj_ing_conyuge' => $_POST['clts_tbj_ing_conyuge'],
+         'clts_nom_fiador' => dstring($_POST['clts_nom_fiador']),
+
+         'clts_parentesco_fiador' => dstring($_POST['clts_parentesco_fiador']),
+         'clts_tel_fiador' => $_POST['clts_tel_fiador'],
+         'clts_dir_fiador' => dstring($_POST['clts_dir_fiador']),
+         'clts_col_fiador' => dstring($_POST['clts_col_fiador']),
+         'clts_tbj_fiador' => dstring($_POST['clts_tbj_fiador']),
+         'clts_tbj_dir_fiador' => dstring($_POST['clts_tbj_dir_fiador']),
+         'clts_tbj_tel_fiador' => $_POST['clts_tbj_tel_fiador'],
+         'clts_tbj_col_fiador' => dstring($_POST['clts_tbj_col_fiador']),
+         'clts_tbj_ant_fiador' => dstring($_POST['clts_tbj_ant_fiador']),
+        //  'clts_fotos_fiador' => $_POST['clts_fotos_fiador'],
+
+         'clts_nom_ref2' => dstring($_POST['clts_nom_ref2']),
+         'clts_parentesco_ref2' => dstring($_POST['clts_parentesco_ref2']),
+         'clts_dir_ref2' => dstring($_POST['clts_dir_ref2']),
+         'clts_col_ref2' => dstring($_POST['clts_col_ref2']),
+         'clts_tel_ref2' => $_POST['clts_tel_ref2'],
+         'clts_nom_ref3' => dstring($_POST['clts_nom_ref3']),
+         'clts_parentesco_ref3' => dstring($_POST['clts_parentesco_ref3']),
+         'clts_dir_ref3' => dstring($_POST['clts_dir_ref3']),
+         'clts_col_ref3' => dstring($_POST['clts_col_ref3']),
+         'clts_tel_ref3' => dstring($_POST['clts_tel_ref3']),
+
+         'sobre_enganche_pendiente' => $_POST['sobre_enganche_pendiente'],
+         'clts_registro_venta' => $_POST['clts_registro_venta'],
+         'clts_caja' => $_POST['clts_caja'],
+         'clts_folio_nuevo' => $_POST['clts_folio_nuevo'],
+         'ctr_pago_credito' => $_POST['ctr_pago_credito'],
+        );
     }
 }
