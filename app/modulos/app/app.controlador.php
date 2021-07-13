@@ -748,15 +748,10 @@ class AppControlador
                             'label' => 'Lista de cajas / Nueva caja',
                             'href' => 'cajas'
                         ],
-                        [
-                            'icon' => '',
-                            'label' => 'Contratos',
-                            'href' => 'contratos/vendedor'
-                        ],
 
                         [
                             'icon' => '',
-                            'label' => 'Buscar contrato',
+                            'label' => 'Buscar contratos',
                             'href' => 'contratos/buscar'
                         ],
 

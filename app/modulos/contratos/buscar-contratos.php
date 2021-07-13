@@ -5,12 +5,12 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
 <div class="card">
 
     <div class="card-body">
-        <h6 class="">FILTRO DE CONTRATOS</h6>
+
         <form id="formConsultaContratos" method="post">
             <div class="row">
 
                 <div class="form-group col-md-4">
-                    <label for="crt_filtro">Nº CONTRATO / Nº CAJA </label>
+                    <label for="crt_filtro">Nº CONTRATO / Nº CAJA / Nº FOLIO </label>
                     <input type="text" name="crt_filtro" id="crt_filtro" class="form-control " placeholder="">
 
                 </div>
@@ -20,13 +20,20 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
             </div>
             <div class="row">
                 <div class="form-group col-md-4 ">
-                    <button type="submit" class="btn btn-primary float-right">BUSCAR</button>
+                    <button type="submit" class="btn btn-primary float-right btn-load">BUSCAR</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
 
+<div class="d-none div-load">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
 
 <div class="row" id="row-contratos">
 
@@ -53,9 +60,13 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
             processData: false,
             contentType: false,
             beforeSend: function() {
-                //startLoadButton()
+                startLoadButton()
+                $(".div-load").removeClass('d-none')
             },
             success: function(res) {
+                $(".div-load").addClass('d-none')
+
+                stopLoadButton('Buscar');
 
                 console.log(res);
                 var contrato = "";
