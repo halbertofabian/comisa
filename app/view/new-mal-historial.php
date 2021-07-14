@@ -7,7 +7,7 @@ cargarComponente('breadcrumb_nivel_1', '', 'Agregar cliente con mal historial', 
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="form-group col-md-1">
+                <div class="form-group col-md-2">
                     <label for="clts_ruta">RUTA</label>
                     <select class="form-control" name="clts_ruta" id="clts_ruta">
                         <?php
@@ -17,11 +17,20 @@ cargarComponente('breadcrumb_nivel_1', '', 'Agregar cliente con mal historial', 
                             $ruta = $i <= 9 ? "0" . $i : $i;
 
                         ?>
-                            <option value="R-<?= $i ?>"><?= $ruta ?></option>
+                            <option value="R<?= $i ?>"><?= $ruta ?></option>
                         <?php endfor; ?>
 
                     </select>
                 </div>
+                <div class="form-group col-md-2">
+                    <label for="clts_cuenta">Cuenta</label>
+                    <input type="text" name="clts_cuenta" id="clts_cuenta" class="form-control" placeholder="Ingrese la cuenta del cliente">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="clts_fecha_venta">Fecha de venta</label>
+                    <input type="text" name="clts_fecha_venta" id="clts_fecha_venta" class="form-control">
+                </div>
+
                 <div class="form-group col-md-5">
                     <label for="clts_nombre">Nombre del cliente *</label>
                     <input type="text" name="clts_nombre" id="clts_nombre" class="form-control" placeholder="Ingresa el nombre del cliente" required>
@@ -56,11 +65,7 @@ cargarComponente('breadcrumb_nivel_1', '', 'Agregar cliente con mal historial', 
                     <input type="text" name="clts_tipo_cliente" id="clts_tipo_cliente" class="form-control" placeholder="Ingrese la situación actual del cliente" required>
                 </div>
 
-                <div class="form-group col-md-4">
-                    <label for="clts_cuenta">Cuenta</label>
-                    <input type="text" name="clts_cuenta" id="clts_cuenta" class="form-control" placeholder="Ingrese la cuenta del cliente">
-                </div>
-
+               
                 <div class="form-group col-12">
                   <label for="clts_observaciones"></label>
                     <textarea name="clts_observaciones" id="clts_observaciones" cols="30" rows="5" class="form-control" placeholder="Escriba aquí las observaciones"></textarea>

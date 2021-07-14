@@ -58,7 +58,7 @@ cargarComponente('breadcrumb', '', 'Listado de clientes con mal historial');
 
                                 <td><?= $cts_mal['clts_nombre'] ?></td>
                                 <td><?= $cts_mal['clts_telefono'] ?></td>
-                                <td><?= $cts_mal['clts_domicilio'] ?></td>
+                                <td><?= $cts_mal['clts_domicilio'].' '.$cts_mal['clts_col'] ?></td>
                                 <td><?= $cts_mal['clts_ubicacion'] ?></td>
                                 <td><?= '<strong class="text-danger">' . $cts_mal['clts_tipo_cliente'] . '</strong>' ?></td>
                                 <td><?= $cts_mal['clts_observaciones'] ?></td>

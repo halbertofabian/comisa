@@ -505,7 +505,7 @@ class ClientesControlador
 
          $_POST['clts_id'] = NULL;   
          $_POST['clts_articulo'] = "";   
-         $_POST['clts_fecha_venta'] = FECHA;   
+         $_POST['clts_fecha_venta'] = $_POST['clts_fecha_venta'];   
         $registrarClienteMal = ClientesModelo::mdlAgregarClientesMorososByExcel($_POST);
 
         if($registrarClienteMal){
