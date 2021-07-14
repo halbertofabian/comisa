@@ -205,7 +205,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_folio DESC";
+            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_id DESC";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
