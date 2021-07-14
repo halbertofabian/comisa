@@ -12,25 +12,19 @@ $contratos = ContratosModelo::mdlConsultarContratosAll();
             <thead>
                 <tr>
                     <th># FOLIO</th>
-                    <th>FECHA </th>
+                    <th>FECHA</th>
                     <th>VENDEDOR</th>
                     <th>CLIENTE</th>
-                    <th>NOTA</th>
-                    <th>REFERENCIAS</th>
-                    <th>FOTOS</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 foreach ($contratos as $key => $cts) : ?>
                 <tr>
-                <td><?= $cts['ctr_folio'] ?></td>
+                <td> <a href="<?= HTTP_HOST.'contratos/buscar/'.$cts['ctr_id']?>" class="btn btn-primary"> <?= $cts['ctr_folio'] ?> </a> </td>
                 <td><?= $cts['ctr_fecha_contrato'] ?></td>
                 <td><?= $cts['usr_nombre'] ?></td>
                 <td><?= $cts['ctr_cliente'] ?></td>
-                <td><?= $cts['ctr_nota'] ?></td>
-                <td></td>
-                <th></th>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
