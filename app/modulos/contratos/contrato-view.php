@@ -569,6 +569,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                         <input type="text" name="sobre_enganche_pendiente" id="sobre_enganche_pendiente" class="form-control inputN" value="<?= $ctr['sobre_enganche_pendiente'] ?>">
                     </div>
                 </div>
+
                 <div class="col-12">
                     <div class="form-group">
                         <label for="ctr_nota">Observaciones</label>
@@ -583,6 +584,30 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                         <button class="btn btn-primary text-center float-right btn-block" name="btnGuadarDatosContrato"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     </div>
                 </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <?php if($ctr['ctr_aprovado_ventas']==1):?>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="ctr_aprovado_ventas" id="ctr_aprovado_ventas" value="aprovado_ventas" checked>
+                                    Aprovado por ventas
+                                </label>
+                            </div>
+                            <?php else: ?>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="ctr_aprovado_ventas" id="ctr_aprovado_ventas" value="aprovado_ventas">
+                                    Aprovado por ventas
+                                </label>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+
 
             </div>
         </div>

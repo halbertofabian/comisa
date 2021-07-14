@@ -604,7 +604,8 @@ class ContratosControlador
                 'clts_registro_venta' => '0',
                 'clts_caja' => $caja_abierta,
                 'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
-                'ctr_pago_credito' => dnum($cts["ctr_pago_credito"])
+                'ctr_pago_credito' => dnum($cts["ctr_pago_credito"]),
+                'ctr_aprovado_ventas' => 0
 
             );
 
@@ -642,6 +643,10 @@ class ContratosControlador
         if (isset($_POST['btnGuadarDatosContrato'])) {
             startLoadButton();
 
+            $aprovado_ventas = 0;
+            if (isset($_POST['ctr_aprovado_ventas'])) {
+                $aprovado_ventas = 1;
+            }
             $datos = array(
                 'ctr_id' => $_POST['ctr_id'],
                 // 'ctr_folio' => $_POST['ctr_folio'],
@@ -725,6 +730,7 @@ class ContratosControlador
                 // 'clts_caja' => $_POST['clts_caja'],
                 'clts_folio_nuevo' => $_POST['clts_folio_nuevo'],
                 'ctr_pago_credito' => dnum($_POST['ctr_pago_credito']),
+                'ctr_aprovado_ventas' =>  $aprovado_ventas
             );
             $actualizarContrato = ContratosModelo::mdlActualizarPreContratos($datos);
             if ($actualizarContrato) {

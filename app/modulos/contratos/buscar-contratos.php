@@ -73,7 +73,7 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
                 res.forEach(cts => {
                     var estado_venta = "";
                     if (cts.clts_registro_venta == 0) {
-                        estado_venta = `<span class="badge badge-pill badge-danger float-right mr-1">PENDIENTE PARA REGISTRO VENTAS</span>`;
+                        estado_venta = `<a href="${urlApp+'contratos/cerrar-venta/'+cts.ctr_id}" class="btn btn-danger float-right mr-1" style="color:fff">CERRAR VENTA</a>`;
                     } else {
                         estado_venta = `<span class="badge badge-pill badge-success float-right ">REGISTRADO EN VENTAS</span>`;
                     }
@@ -151,6 +151,7 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
                     <div class="col-12 float-right">
                         <span class="badge badge-pill badge-primary">${cts.usr_nombre}</span>
                         <span class="badge badge-pill badge-dark">${cts.clts_caja}</span>
+                        
                         ${estado_venta}
                         
                     </div>
