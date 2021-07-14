@@ -453,13 +453,14 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
 
                 <?php
+
                 $fecha = substr($ctr['ctr_proximo_pago'], 0, 10);
 
                 ?>
                 <div class="col-md-6">
                     <div class="form-group text-center">
-                        <label for="">FECHA PROXIMO PAGO</label>
-                        <input type="date" name="" id="" class="form-control inputN" value="<?= $fecha ?>">
+                        <label for="ctr_proximo_pago">FECHA PROXIMO PAGO</label>
+                        <input type="date" name="ctr_proximo_pago" id="ctr_proximo_pago" class="form-control inputN" value="<?= $fecha ?>">
                         <small id="helpId" class="text-muted text-center"><?= fechaCastellano($fecha) ?></small>
                     </div>
                 </div>

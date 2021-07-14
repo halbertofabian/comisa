@@ -640,6 +640,8 @@ class ContratosControlador
     public  function ctrActualizarContrato()
     {
         if (isset($_POST['btnGuadarDatosContrato'])) {
+            startLoadButton();
+
             $datos = array(
                 'ctr_id' => $_POST['ctr_id'],
                 // 'ctr_folio' => $_POST['ctr_folio'],
@@ -719,14 +721,14 @@ class ContratosControlador
                 'clts_tel_ref3' => dstring($_POST['clts_tel_ref3']),
 
                 'sobre_enganche_pendiente' => dnum($_POST['sobre_enganche_pendiente']),
-                'clts_registro_venta' => $_POST['clts_registro_venta'],
-                'clts_caja' => $_POST['clts_caja'],
+                // 'clts_registro_venta' => $_POST['clts_registro_venta'],
+                // 'clts_caja' => $_POST['clts_caja'],
                 'clts_folio_nuevo' => $_POST['clts_folio_nuevo'],
                 'ctr_pago_credito' => dnum($_POST['ctr_pago_credito']),
             );
             $actualizarContrato = ContratosModelo::mdlActualizarPreContratos($datos);
             if ($actualizarContrato) {
-                AppControlador::msj('success', 'Muy bien', 'Contrato guardado');
+                AppControlador::msj('success', 'Muy bien', 'Contrato guardado', HTTP_HOST . 'contratos/buscar/' . $_POST['ctr_id']);
             }
         }
     }
