@@ -28,7 +28,7 @@ cargarComponente('breadcrumb_nivel_1', '', 'Agregar cliente con mal historial', 
                 </div>
                 <div class="form-group col-md-2">
                     <label for="clts_fecha_venta">Fecha de venta</label>
-                    <input type="text" name="clts_fecha_venta" id="clts_fecha_venta" class="form-control">
+                    <input type="date" name="clts_fecha_venta" id="clts_fecha_venta" class="form-control">
                 </div>
 
                 <div class="form-group col-md-5">
