@@ -6,7 +6,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 // preArray($ctr);
 ?>
 
-<form id="formGuardarContrato" method="post">
+<form id="" method="post">
     <div class="card card-contrato">
         <div class="card-header text-center bg-primary">
             <strong style="color:aliceblue">CONTRATO DE COMPRAVENTA</strong>
@@ -435,14 +435,14 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="">FORMA</label>
-                        <input type="text" name="" id="" class="form-control inputN" value="<?= $ctr['ctr_pago_credito'] ?>">
+                        <label for="ctr_pago_credito">FORMA</label>
+                        <input type="text" name="ctr_pago_credito" id="ctr_pago_credito" class="form-control inputN" value="<?= $ctr['ctr_pago_credito'] ?>">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="">DE PAGO</label>
-                        <select name="" id="" class="form-control">
+                        <label for="ctr_forma_pago">DE PAGO</label>
+                        <select name="ctr_forma_pago" id="ctr_forma_pago" class="form-control">
                             <option selected><?= $ctr['ctr_forma_pago'] ?></option>
                             <option>SEMANALES</option>
                             <option>CATORCENALES</option>
@@ -559,6 +559,22 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                         <input type="text" name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>">
                     </div>
                 </div>
+                <div class="col-md-5"></div>
+                <div class="col-md-3 text-right">
+                    <label for="sobre_enganche_pendiente" class="mt-2">PENDIENTE SOBRE ENGANCHE:</label>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" name="sobre_enganche_pendiente" id="sobre_enganche_pendiente" class="form-control inputN" value="<?= $ctr['sobre_enganche_pendiente'] ?>">
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="ctr_nota">Observaciones</label>
+                        <textarea name="ctr_nota" id="ctr_nota" class="form-control" cols="30" rows="5"><?= $ctr['ctr_nota'] ?></textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="ctr_id" id="ctr_id" value="<?= $ctr['ctr_id'] ?>">
 
                 <div class="col-md-9"></div>
                 <div class="col-md-3">
@@ -570,4 +586,10 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             </div>
         </div>
     </div>
+    <?php
+
+    $actualizar = new ContratosControlador();
+    $actualizar->ctrActualizarContrato();
+
+    ?>
 </form>
