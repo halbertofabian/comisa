@@ -588,20 +588,20 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <?php if($ctr['ctr_aprovado_ventas']==1):?>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="ctr_aprovado_ventas" id="ctr_aprovado_ventas" value="aprovado_ventas" checked>
-                                    Aprovado por ventas
-                                </label>
-                            </div>
-                            <?php else: ?>
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input type="checkbox" class="form-check-input" name="ctr_aprovado_ventas" id="ctr_aprovado_ventas" value="aprovado_ventas">
-                                    Aprovado por ventas
-                                </label>
-                            </div>
+                            <?php if ($ctr['ctr_aprovado_ventas'] == 1) : ?>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="ctr_aprovado_ventas" id="ctr_aprovado_ventas" value="aprovado_ventas" checked>
+                                        Aprovado por ventas
+                                    </label>
+                                </div>
+                            <?php else : ?>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="ctr_aprovado_ventas" id="ctr_aprovado_ventas" value="aprovado_ventas">
+                                        Aprovado por ventas
+                                    </label>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -619,3 +619,47 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 
     ?>
 </form>
+
+<div class="card">
+
+    <div class="card-body">
+        <h5 class="card-title">Fotos cliente</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $cliente_fotos = $ctr['ctr_fotos'];
+                $cliente_fotos = json_decode($cliente_fotos, true);
+                // preArray($cliente_fotos);
+                ?>
+                <label for="">Cliente con el producto</label>
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_cliente'] ?>" alt="">
+            </div>
+            <div class="col-md-6">
+                <label for="">Comprobante de domicilio</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_comprobante'] ?>" alt="">
+            </div>
+
+            <div class="col-md-6">
+                <label for="">Credencial frontal</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_cred_fro'] ?>" alt="">
+            </div>
+            <div class="col-md-6">
+                <label for="">Credencial trasera</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_cred_tra'] ?>" alt="">
+            </div>
+            <div class="col-md-6">
+                <label for="">Pagaré</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_pagare'] ?>" alt="">
+            </div>
+            <div class="col-md-6">
+                <label for="">Fachada</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_fachada'] ?>" alt="">
+            </div>
+        </div>
+    </div>
+</div>
