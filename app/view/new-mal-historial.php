@@ -26,12 +26,12 @@ cargarComponente('breadcrumb_nivel_1', '', 'Agregar cliente con mal historial', 
                     <label for="clts_cuenta">Cuenta</label>
                     <input type="text" name="clts_cuenta" id="clts_cuenta" class="form-control" placeholder="Ingrese la cuenta del cliente">
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-3">
                     <label for="clts_fecha_venta">Fecha de venta</label>
                     <input type="date" name="clts_fecha_venta" id="clts_fecha_venta" class="form-control">
                 </div>
 
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-4">
                     <label for="clts_nombre">Nombre del cliente *</label>
                     <input type="text" name="clts_nombre" id="clts_nombre" class="form-control" placeholder="Ingresa el nombre del cliente" required>
                 </div>
@@ -46,11 +46,11 @@ cargarComponente('breadcrumb_nivel_1', '', 'Agregar cliente con mal historial', 
                     <input type="text" name="clts_telefono" id="clts_telefono" class="form-control phone_mx" placeholder="Ingresa el número del cliente">
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="clts_domicilio">Domicilio *</label>
                     <input type="text" name="clts_domicilio" id="clts_domicilio" class="form-control" placeholder="Ingrese el domicilio" required>
                 </div>
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-3">
                     <label for="clts_col">Colonia</label>
                     <input type="text" name="clts_col" id="clts_col" class="form-control" placeholder="Ingrese la colonia">
                 </div>
