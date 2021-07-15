@@ -18,7 +18,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_contratos_ctrs(ctrs_id, ctrs_cuenta, ctrs_cliente, ctrs_vendedor, 
+            $sql = "INSERT INTO tbl_contrato_crt_1 (ctrs_id, ctrs_cuenta, ctrs_cliente, ctrs_vendedor, 
             ctrs_fecha_registro, ctrs_forma_pago, ctrs_fecha_pp	,ctrs_dia_pago, ctrs_horario_pago, ctrs_plazo_credito, 
             ctrs_detalles_vt, ctrs_foto_evidencia, ctrs_foto_pagare, ctrs_foto_fachada) 
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -52,7 +52,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_contratos_ctrs SET ctrs_forma_pago=?,ctrs_fecha_pp=?,ctrs_dia_pago=?,ctrs_horario_pago=?,
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctrs_forma_pago=?,ctrs_fecha_pp=?,ctrs_dia_pago=?,ctrs_horario_pago=?,
             ctrs_plazo_credito=?,ctrs_foto_evidencia=?,ctrs_foto_pagare=?,ctrs_foto_fachada=? WHERE ctrs_id=?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
@@ -80,13 +80,13 @@ class ContratosModelo
         try {
             //c4ode...
             if ($clts_nom != '' && $id_ctr == '') {
-                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
+                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contrato_crt_1 ctrs 
             JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE clts.clts_nombre LIKE  '%" . $clts_nom . "%'";
             } elseif ($clts_nom == '' && $id_ctr != '') {
-                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
+                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contrato_crt_1 ctrs 
             JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE ctrs.ctrs_id LIKE  '%" . $id_ctr . "%' ";
             } elseif ($clts_nom != '' && $id_ctr != '') {
-                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contratos_ctrs ctrs 
+                $sql = "SELECT ctrs.*, clts.clts_nombre FROM tbl_contrato_crt_1 ctrs 
             JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE (clts.clts_nombre LIKE  '%" . $clts_nom . "%') AND (ctrs.ctrs_id LIKE  '%" . $id_ctr . "%')";
             } elseif ($clts_nom == '' && $id_ctr == '') {
                 $sql = "";
@@ -110,7 +110,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr_folio =?";
+            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr_folio =?";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
@@ -129,7 +129,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT ctrs.*, clts.* FROM tbl_contratos_ctrs ctrs
+            $sql = "SELECT ctrs.*, clts.* FROM tbl_contrato_crt_1 ctrs
             JOIN tbl_clientes_clts clts ON clts.clts_id=ctrs.ctrs_cliente WHERE ctrs.ctrs_id=?";
 
             $con = Conexion::conectar();
@@ -149,7 +149,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_contrato_crt (ctr_folio,ctr_fecha_contrato,ctr_id_vendedor,ctr_cliente,ctr_productos,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_elaboro,ctr_nota,ctr_fotos,ctr_nombre_ref_1,ctr_parentesco_ref_1,ctr_direccion_ref_1,ctr_colonia_ref_1,ctr_telefono_ref_1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_contrato_crt_1 (ctr_folio,ctr_fecha_contrato,ctr_id_vendedor,ctr_cliente,ctr_productos,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_elaboro,ctr_nota,ctr_fotos,ctr_nombre_ref_1,ctr_parentesco_ref_1,ctr_direccion_ref_1,ctr_colonia_ref_1,ctr_telefono_ref_1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $data['ctr_folio']);
@@ -205,7 +205,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_id DESC";
+            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_id DESC";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
@@ -222,7 +222,7 @@ class ContratosModelo
     public static function mdlSubirPreContratos($ctr)
     {
         try {
-            $sql = " INSERT INTO tbl_contrato_crt VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+            $sql = " INSERT INTO tbl_contrato_crt_1 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
@@ -326,7 +326,7 @@ class ContratosModelo
     public static function mdlActualizarPreContratos($ctr)
     {
         try {
-            $sql = "UPDATE tbl_contrato_crt  SET ctr_cliente =?,ctr_numero_cuenta = ?, ctr_ruta = ? , ctr_forma_pago = ?,ctr_dia_pago = ? , ctr_proximo_pago = ?, ctr_plazo_credito = ?, ctr_total = ?, ctr_enganche = ?, ctr_pago_adicional = ?, ctr_saldo = ?, ctr_nota = ?, ctr_nombre_ref_1 = ?, ctr_parentesco_ref_1 = ?, ctr_direccion_ref_1 = ?,ctr_colonia_ref_1 = ?, ctr_telefono_ref_1 = ?, clts_curp = ?, clts_telefono = ?,clts_domicilio = ?, clts_col = ?, clts_entre_calles = ?, clts_trabajo = ?, clts_puesto = ?, clts_direccion_tbj = ?, clts_col_tbj = ?, clts_tel_tbj = ?,    clts_antiguedad_tbj = ?, clts_igs_mensual_tbj = ?, clts_tipo_vivienda = ?, clts_vivienda_anomde = ?, clts_antiguedad_viviendo = ?, clts_coordenadas = ?, clts_nom_conyuge = ?, clts_tbj_conyuge = ?, clts_tbj_puesto_conyuge = ?, clts_tbj_dir_conyuge = ?, clts_tbj_col_conyuge = ?, clts_tbj_tel_conyuge = ?, clts_tbj_ant_conyuge = ?, clts_tbj_ing_conyuge = ?, clts_nom_fiador = ?, clts_parentesco_fiador = ?, clts_tel_fiador  = ?, clts_dir_fiador = ?, clts_col_fiador = ?, clts_tbj_fiador = ?, clts_tbj_dir_fiador = ?, clts_tbj_tel_fiador = ?, clts_tbj_col_fiador = ?,clts_tbj_ant_fiador = ?, clts_nom_ref2 = ?, clts_parentesco_ref2 = ?, clts_dir_ref2 = ?, clts_col_ref2 = ?, clts_tel_ref2 = ?, clts_nom_ref3 = ?, clts_parentesco_ref3 = ?, clts_dir_ref3 = ?, clts_col_ref3 = ?, clts_tel_ref3 = ?, sobre_enganche_pendiente = ? , ctr_pago_credito = ?,ctr_aprovado_ventas = ? , ctr_fecha_contrato = ? WHERE ctr_id = ? ";
+            $sql = "UPDATE tbl_contrato_crt_1  SET ctr_cliente =?,ctr_numero_cuenta = ?, ctr_ruta = ? , ctr_forma_pago = ?,ctr_dia_pago = ? , ctr_proximo_pago = ?, ctr_plazo_credito = ?, ctr_total = ?, ctr_enganche = ?, ctr_pago_adicional = ?, ctr_saldo = ?, ctr_nota = ?, ctr_nombre_ref_1 = ?, ctr_parentesco_ref_1 = ?, ctr_direccion_ref_1 = ?,ctr_colonia_ref_1 = ?, ctr_telefono_ref_1 = ?, clts_curp = ?, clts_telefono = ?,clts_domicilio = ?, clts_col = ?, clts_entre_calles = ?, clts_trabajo = ?, clts_puesto = ?, clts_direccion_tbj = ?, clts_col_tbj = ?, clts_tel_tbj = ?,    clts_antiguedad_tbj = ?, clts_igs_mensual_tbj = ?, clts_tipo_vivienda = ?, clts_vivienda_anomde = ?, clts_antiguedad_viviendo = ?, clts_coordenadas = ?, clts_nom_conyuge = ?, clts_tbj_conyuge = ?, clts_tbj_puesto_conyuge = ?, clts_tbj_dir_conyuge = ?, clts_tbj_col_conyuge = ?, clts_tbj_tel_conyuge = ?, clts_tbj_ant_conyuge = ?, clts_tbj_ing_conyuge = ?, clts_nom_fiador = ?, clts_parentesco_fiador = ?, clts_tel_fiador  = ?, clts_dir_fiador = ?, clts_col_fiador = ?, clts_tbj_fiador = ?, clts_tbj_dir_fiador = ?, clts_tbj_tel_fiador = ?, clts_tbj_col_fiador = ?,clts_tbj_ant_fiador = ?, clts_nom_ref2 = ?, clts_parentesco_ref2 = ?, clts_dir_ref2 = ?, clts_col_ref2 = ?, clts_tel_ref2 = ?, clts_nom_ref3 = ?, clts_parentesco_ref3 = ?, clts_dir_ref3 = ?, clts_col_ref3 = ?, clts_tel_ref3 = ?, sobre_enganche_pendiente = ? , ctr_pago_credito = ?,ctr_aprovado_ventas = ? , ctr_fecha_contrato = ? WHERE ctr_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
@@ -424,7 +424,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT ctr_id FROM tbl_contrato_crt  ORDER BY ctr_id DESC LIMIT 1";
+            $sql = "SELECT ctr_id FROM tbl_contrato_crt_1  ORDER BY ctr_id DESC LIMIT 1";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
@@ -442,7 +442,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.clts_caja LIKE '%$ctr_filtro%' ";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.clts_caja LIKE '%$ctr_filtro%' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
@@ -460,7 +460,7 @@ class ContratosModelo
     {
         try {
             //c4ode...
-            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id  WHERE ctr.ctr_id  = ?";
+            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id  WHERE ctr.ctr_id  = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr_id);
