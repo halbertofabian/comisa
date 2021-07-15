@@ -85,7 +85,7 @@ if (isset($_GET['ctr_id'])) {
     <thead>
         <tr>
             <td style="text-align:center; width:25%">
-                <img src="{$rutaImg}" width="200" height="200" /> <br>
+                <img src="{$rutaImg}" width="100" height="100" /> <br>
                 R.F.C: FAAS750810MVV9
             </td>
             <td style="text-align:center ; width:55%">
@@ -429,7 +429,7 @@ EOF;
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
     $pdf->writeHTMLCell(0, 0, '', '', $referancias, 0, 1, 0, true, '', true);
 
-    $plazo_crdito = <<<EOF
+$plazo_crdito = <<<EOF
 <table style="text-align:center;background-color:#E9ECEF;color:#002973;border: 1px solid #002973">
     <thead>
         <tr>
@@ -533,7 +533,7 @@ EOF;
 
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
 
-    $pagos_credito = <<<EOF
+$pagos_credito = <<<EOF
 <table style="">
     <thead>
         <tr>
@@ -583,6 +583,61 @@ EOF;
 EOF;
     $pdf->writeHTMLCell(0, 0, '', '', $pagos_credito, 0, 1, 0, true, '', true);
 
+
+    $plazo_crdito = <<<EOF
+    <table style="text-align:center;background-color:#f7bfbe;color:#ee0430;border: 1px solid #ee0430">
+        <thead>
+            <tr>
+                <td>
+                    CUENTAS A DEPOSITAR
+                </td>
+            </tr> 
+        </thead>
+    </table>
+    <br><br>
+    <table>
+        <thead>
+            <tr>
+                <td style="width:25%;text-align: center;vertical-align: middle; border: 1px solid #ee0430;background-color:#f7bfbe;color:#ee0430;">
+                    <strong>BBVA BANCOMER</strong>
+                </td>
+            
+                <td style="text-align:center; width:25%;border: 1px solid #ee0430;">
+                    <span style="color:#000"> 4152 3136 1605 5716 </span>
+                </td>
+                <td style="width:25%;text-align: center;vertical-align: middle; border: 1px solid #ee0430;background-color:#f7bfbe;color:#ee0430;">
+                    <strong>BANCOPPEL</strong>
+                </td>
+            
+                <td style="text-align:center; width:25%;border: 1px solid #ee0430;">
+                    <span style="color:#000"> 4169 1603 4603 9028 </span>
+                </td>
+            </tr> 
+        </thead>
+    </table>
+    <br><br>
+    <table style="">
+        <thead>
+            <tr>
+                <td style="width:25%;text-align: center;vertical-align: middle; border: 1px solid #ee0430;background-color:#f7bfbe;color:#ee0430;">
+                    <strong>BANAMEX</strong>
+                </td>
+            
+                <td style="text-align:center; width:25%;border: 1px solid #ee0430;">
+                    <span style="color:#000"> 5204 1650 9532 0796 </span>   
+                </td>
+                <td style="width:50%;text-align: center;vertical-align: middle; border: 1px solid #ee0430;background-color:#f7bfbe;color:#ee0430;">
+                <strong>Nota:</strong> La empresa no se hace responsable si deposita a otras cuentas
+                </td>
+            
+                
+            </tr> 
+            
+        </thead>
+    </table>
+EOF;
+        $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
+        $pdf->writeHTMLCell(0, 0, '', '', $plazo_crdito, 0, 1, 0, true, '', true);    
 
     ob_end_clean();
 
