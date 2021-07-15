@@ -55,7 +55,7 @@ if (isset($_GET['ctr_id'])) {
     // dejavusans is a UTF-8 Unicode font, if you only need to
     // print standard ASCII chars, you can use core fonts like
     // helvetica or times to reduce file size.
-    $pdf->SetFont('helvetica', '', 9, '', true);
+    $pdf->SetFont('helvetica', '', 8, '', true);
 
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
