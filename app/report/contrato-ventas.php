@@ -75,6 +75,8 @@ if (isset($_GET['ctr_id'])) {
 
     $ctr = ContratosModelo::mdlMostrarContratosById($_GET['ctr_id']);
 
+    $ctr['ctr_fecha_contrato'] = fechaCastellano($ctr['ctr_fecha_contrato']);
+    $ctr['ctr_proximo_pago'] = fechaCastellano($ctr['ctr_proximo_pago']);
 
 
     $encabezado = <<<EOF
@@ -82,11 +84,11 @@ if (isset($_GET['ctr_id'])) {
 <table>
     <thead>
         <tr>
-            <td style="text-align:center; width:20%">
+            <td style="text-align:center; width:25%">
                 <img src="{$rutaImg}" width="200" height="200" /> <br>
-                RFC: FAAS750810MVV9
+                R.F.C: FAAS750810MVV9
             </td>
-            <td style="text-align:center ; width:60%">
+            <td style="text-align:center ; width:55%">
                     MATRIZ: TUXTEPEC, OAX.<br>
                     CARR. FED. AL INGENIO LOTE 500 B COL. REACOMODO <br>
                     PLAYA DE MONO TELS.: 01 (287) 87 193 17 <BR>
@@ -215,8 +217,11 @@ EOF;
             <td>
             <strong>A NOMBRE DE: </strong>  <span style="color:#000"> $ctr[clts_vivienda_anomde] </span>
             </td>
-            <td colspan="2">
+            <td>
             <strong>CORDENADAS:</strong>  <span style="color:#000"> $ctr[clts_coordenadas] </span>
+            </td>
+            <td>
+            <strong>CURP:</strong>  <span style="color:#000"> $ctr[clts_curp] </span>
             </td>
             
         </tr> 
@@ -424,7 +429,7 @@ EOF;
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
     $pdf->writeHTMLCell(0, 0, '', '', $referancias, 0, 1, 0, true, '', true);
 
-    $referancias = <<<EOF
+    $plazo_crdito = <<<EOF
 <table style="text-align:center;background-color:#E9ECEF;color:#002973;border: 1px solid #002973">
     <thead>
         <tr>
@@ -443,14 +448,14 @@ EOF;
             </td>
         
             <td style="text-align:center; width:25%;border: 1px solid #002973;">
-                
+                <span style="color:#000"> $ $ctr[ctr_pago_credito] $ctr[ctr_forma_pago] </span>
             </td>
             <td style="width:25%;text-align: center;vertical-align: middle; border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
                 <strong>FECHA PROXIMO PAGO</strong>
             </td>
         
             <td style="text-align:center; width:25%;border: 1px solid #002973;">
-                
+                <span style="color:#000"> $ctr[ctr_proximo_pago] </span>
             </td>
         </tr> 
         
@@ -465,13 +470,14 @@ EOF;
             </td>
         
             <td style="text-align:center; width:25%;border: 1px solid #002973;">
-                
+                <span style="color:#000"> $ctr[ctr_dia_pago] </span>   
             </td>
             <td style="width:25%;text-align: center;vertical-align: middle; border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
                 <strong>PLAZO DE CREDITO</strong>
             </td>
         
             <td style="text-align:center; width:25%;border: 1px solid #002973;">
+            <span style="color:#000"> $ctr[ctr_plazo_credito] </span>   
                 
             </td>
         </tr> 
@@ -480,10 +486,10 @@ EOF;
 </table>
 EOF;
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
-    $pdf->writeHTMLCell(0, 0, '', '', $referancias, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $plazo_crdito, 0, 1, 0, true, '', true);
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
 
-    $referancias = <<<EOF
+    $mercancia = <<<EOF
 <table style="text-align:center;background-color:#E9ECEF;color:#002973;border: 1px solid #002973">
     <thead>
         <tr>
@@ -503,24 +509,29 @@ EOF;
     </thead>
 </table>
 
-
-
-
-<table style="text-align:center;color:#002973;border: 1px solid #002973">
-    <thead>
-        <tr>
-            <td>ROBAR</td>
-            <td>ROPERO BARCELONA</td>
-            <td>1</td>
-        </tr> 
-    </thead>
-</table>
 EOF;
 
+    $pdf->writeHTMLCell(0, 0, '', '', $mercancia, 0, 1, 0, true, '', true);
 
-    $pdf->writeHTMLCell(0, 0, '', '', $referancias, 0, 1, 0, true, '', true);
+
+    $productos = json_decode($ctr['ctr_productos'], true);
+
+    foreach ($productos as $key => $pds) {
+$mercancia_json = <<<EOF
+        <table style="text-align:center;color:#002973;border: 1px solid #002973">
+            <thead>
+                <tr>
+                    <td>$pds[sku]</td>
+                    <td>$pds[nombreProducto]</td>
+                    <td>$pds[cantidad]</td>
+                </tr> 
+            </thead>
+        </table>
+EOF;
+        $pdf->writeHTMLCell(0, 0, '', '', $mercancia_json, 0, 1, 0, true, '', true);
+    }
+
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
-
 
     $pagos_credito = <<<EOF
 <table style="">
@@ -530,8 +541,8 @@ EOF;
             <td style="width:25%;text-align: right;vertical-align: middle; color:#002973;">
                 <strong>TOTAL </strong>.
             </td>
-            <td style="text-align:right; width:25%;border: 1px solid #002973;">
-                
+            <td style="text-align:left; width:25%;border: 1px solid #002973;">
+            <span style="color:#000">$ $ctr[ctr_total] </span> 
             </td>
         </tr> 
 
@@ -540,7 +551,8 @@ EOF;
             <td style="width:25%;text-align: right;vertical-align: middle;color:#002973;">
                 <strong>ENGANCHE </strong>.
             </td>
-            <td style="text-align:right; width:25%;border: 1px solid #002973;">
+            <td style="text-align:left; width:25%;border: 1px solid #002973;">
+            <span style="color:#000">$ $ctr[ctr_enganche] </span> 
                 
             </td>
         </tr> 
@@ -550,7 +562,8 @@ EOF;
             <td style="width:25%;text-align: right;vertical-align: middle; color:#002973;">
                 <strong>PAGO ADICIONAL </strong>.
             </td>
-            <td style="text-align:right; width:25%;border: 1px solid #002973;">
+            <td style="text-align:left; width:25%;border: 1px solid #002973;">
+            <span style="color:#000">$ $ctr[ctr_pago_adicional] </span> 
                 
             </td>
         </tr> 
@@ -560,7 +573,8 @@ EOF;
             <td style="width:25%;text-align: right;vertical-align: middle;color:#002973;">
                 <strong>SALDO </strong>.
             </td>
-            <td style="text-align:right; width:25%;border: 1px solid #002973;">
+            <td style="text-align:left; width:25%;border: 1px solid #002973;">
+            <span style="color:#000">$ $ctr[ctr_saldo] </span> 
                 
             </td>
         </tr> 

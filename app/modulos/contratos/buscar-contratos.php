@@ -90,12 +90,12 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
                             <i class="fa fa-eye" aria-hidden="true"></i>
                             <h6 class=" text-center">${cts.clts_folio_nuevo} <br> ${cts.ctr_folio}</h6>
                         </a>
-                        <button type="button" class="btn btn-secondary text-center btnImprimirContrato" ctr_folio="${cts.clts_folio_nuevo}" >
+                        <a href="${urlApp+'app/report/contrato-ventas.php?ctr_id='+cts.ctr_id}" target="_blacnk"  class="btn btn-secondary text-center btnImprimirContrato" ctr_id="${cts.ctr_id}" >
                             <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                             <h6 class=" text-center">
                                 IMPRIMIR
                             </h6>
-                        </button>
+                        </a>
                     </div>
                     <div class="col-md-3">
                         <h6 class=" text-center">${cts.ctr_ruta}</h6>
@@ -169,4 +169,11 @@ cargarComponente('breadcrumb', '', 'Buscar contrato');
             }
         })
     })
+
+    $(".btnImprimirContrato").on("click", function(){
+        alert("Hola mundo")
+        var ctr_id = $(this).attr("ctr_id");
+        window.open(urlApp+'app/report/contrato-ventas.php?ctr_id='+ctr_id, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=200,left=200,width=1250,height=700");
+    })
+
 </script>

@@ -10,6 +10,9 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
     <div class="card card-contrato">
         <div class="card-header text-center bg-primary">
             <strong style="color:aliceblue">CONTRATO DE COMPRAVENTA</strong>
+            <a href="<?= HTTP_HOST ?>app/report/contrato-ventas.php?ctr_id=<?= $ctr['ctr_id'] ?>" target="_blacnk" class="btn btn-secondary text-center btnImprimirContrato float-right">
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            </a>
         </div>
         <div class="card-body">
             <div class="row">
