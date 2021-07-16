@@ -738,4 +738,29 @@ class ContratosControlador
             }
         }
     }
+
+    public static function ctrListarContrato()
+    {
+
+
+        $year_actual = getdate();
+
+        if ($_POST['ctr_folio'] != "") {
+            // Buscar contratos por numero de folio o numero de contrato
+            return ContratosModelo::mdlMostrarContratosFolio($_POST['ctr_folio']);
+        } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "") {
+            // Buscar contratos por vendedor
+            $_POST['ctr_fecha_inicio'] = $_POST['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $_POST['ctr_fecha_inicio'] . 'T00:00';
+            $_POST['ctr_fecha_fin'] = $_POST['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $_POST['ctr_fecha_fin'] . 'T23:59';
+
+            return ContratosModelo::mdlMostrarContratosFecha(
+                $_POST['ctr_vendedor'],
+                $_POST['ctr_fecha_inicio'],
+                $_POST['ctr_fecha_fin']
+            );
+        } else {
+            // Listar los ultimos 10 contratos
+            return ContratosModelo::mdlMostrarContratosLimit();
+        }
+    }
 }
