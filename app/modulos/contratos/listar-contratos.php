@@ -80,7 +80,7 @@
         </div>
 
     </div>
-    <div class="card-body">
+    <div class="card-body" style="height:500px; overflow-y: scroll;">
         <div class="row">
             <div class="col-12  table-responsive">
                 <table class="table table-striped table-hover" width="100%">
