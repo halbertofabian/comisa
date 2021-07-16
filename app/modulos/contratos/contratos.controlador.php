@@ -748,7 +748,7 @@ class ContratosControlador
         if ($_POST['ctr_folio'] != "") {
             // Buscar contratos por numero de folio o numero de contrato
             return ContratosModelo::mdlMostrarContratosFolio($_POST['ctr_folio']);
-        } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "") {
+        } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "" or $_POST['ctr_vendedor'] != "") {
             // Buscar contratos por vendedor
             $_POST['ctr_fecha_inicio'] = $_POST['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $_POST['ctr_fecha_inicio'] . 'T00:00';
             $_POST['ctr_fecha_fin'] = $_POST['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $_POST['ctr_fecha_fin'] . 'T23:59';
