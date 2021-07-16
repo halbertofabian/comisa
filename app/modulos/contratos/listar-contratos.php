@@ -128,6 +128,7 @@
         ctr_fecha_inicio = "",
         ctr_fecha_fin = "") {
 
+        $("#tbodyContratos").html("");
         var datos = new FormData();
 
         datos.append("ctr_folio", ctr_folio)
