@@ -154,7 +154,7 @@
 
                 res.forEach(ctr => {
 
-                    tbodyContratos =
+                    tbodyContratos +=
                         `
                         <tr class="text-center">
 
