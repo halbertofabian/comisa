@@ -522,7 +522,7 @@
                         </div>
                         <div class="form-group col-md-4 col-12">
                             <label for="gtsg_montoApagar">Monto a pagar</label>
-                            <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN" readonly required>
+                            <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN"  required>
                         </div>
                         <div class="form-group col-12">
                             <label for="gtsg_kilometraje">Kilometraje</label>
