@@ -185,7 +185,7 @@
 
                 });
 
-                alert(ctr_folio);
+                //alert(ctr_folio);
 
                 var urlExport = urlApp + 'export/contratos.php?ctr_folio=' + ctr_folio + '&ctr_vendedor=' + ctr_vendedor + '&ctr_fecha_inicio=' + ctr_fecha_inicio + '&ctr_fecha_fin=' + ctr_fecha_fin
 

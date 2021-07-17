@@ -112,6 +112,9 @@ if (isset($_GET['ctr_id'])) {
                     <div style="width:50%;text-align: center;border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
                         FECHA <br>  <span style="color:#000"> $ctr[ctr_fecha_contrato] </span>
                     </div>
+                    <div style="width:50%;text-align: center;border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
+                        VENDEDOR <br>  <span style="color:#000"> $ctr[usr_nombre] </span>
+                    </div>
                 </div>  
             </td>
         </tr> 
@@ -129,11 +132,11 @@ EOF;
     <thead>
         <tr>
             <td  style="width:15%;vertical-align: middle;  border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
-               Nº CONTRATO
+               Nº TICKET
             </td>
            
             <td style="text-align:center; width:15%;border: 1px solid #002973;">
-                  <span style="color:#000"> $ctr[clts_folio_nuevo] </span>
+                  <span style="color:#000"> $ctr[ctr_folio] </span>
             </td>
             <td style="text-align:left ; width:60%; font-size: 20px;color:#002973;font-style: italic;">
             
