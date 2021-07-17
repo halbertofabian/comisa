@@ -47,6 +47,11 @@ class AppControlador
             'reporte-gastos',
             'abonos',
             'listar-traspasos',
+            'contratos',
+            'clientes-mal-historial',
+            'clientes',
+            'importar-clientes-mal-historial',
+            'new-mal-historial',
 
 
         );
@@ -145,7 +150,12 @@ class AppControlador
             'almacenes',
             'traspasos',
             'productos',
-            'compras'
+            'compras',
+            'contratos',
+            'clientes-mal-historial',
+            'clientes',
+            'importar-clientes-mal-historial',
+            'new-mal-historial',
         );
     }
 
