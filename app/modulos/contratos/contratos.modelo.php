@@ -495,7 +495,7 @@ class ContratosModelo
     public static function mdlMostrarContratosLimitExcel()
     {
         try {
-            $sql = "SELECT usr.usr_nombre, ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_id DESC LIMIT 10 ";
+            $sql = "SELECT ctr.*, usr.usr_nombre  FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_id DESC LIMIT 10 ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();

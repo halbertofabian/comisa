@@ -104,7 +104,7 @@
         </div>
     </div>
     <div class="card-footer text-muted">
-        <a href="" id="btnExportarContratos" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
+        <a href="" target="_blanck" id="btnExportarContratos" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
             Descargar
         </a>
     </div>
