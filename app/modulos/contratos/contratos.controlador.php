@@ -745,9 +745,10 @@ class ContratosControlador
 
         $year_actual = getdate();
 
-        if ($_POST['ctr_folio'] != "") {
+        if ($_POST['ctr_folio'] != "" ) {
             // Buscar contratos por numero de folio o numero de contrato
             return ContratosModelo::mdlMostrarContratosFolio($_POST['ctr_folio']);
+        
         } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "" or $_POST['ctr_vendedor'] != "") {
             // Buscar contratos por vendedor
             $_POST['ctr_fecha_inicio'] = $_POST['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $_POST['ctr_fecha_inicio'] . 'T00:00';
@@ -761,6 +762,32 @@ class ContratosControlador
         } else {
             // Listar los ultimos 10 contratos
             return ContratosModelo::mdlMostrarContratosLimit();
+        }
+    }
+
+    public static function ctrListarContratoExcel($ctr)
+    {
+
+
+        $year_actual = getdate();
+
+        if ($ctr['ctr_folio'] != "" ) {
+            // Buscar contratos por numero de folio o numero de contrato
+            return ContratosModelo::mdlMostrarContratosFolioExcel($ctr['ctr_folio']);
+        
+        } elseif ($ctr['ctr_fecha_inicio'] != "" or $ctr['ctr_fecha_fin'] != "" or $ctr['ctr_vendedor'] != "") {
+            // Buscar contratos por vendedor
+            $ctr['ctr_fecha_inicio'] = $ctr['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $ctr['ctr_fecha_inicio'] . 'T00:00';
+            $ctr['ctr_fecha_fin'] = $ctr['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $ctr['ctr_fecha_fin'] . 'T23:59';
+
+            return ContratosModelo::mdlMostrarContratosFechaExcel(
+                $ctr['ctr_vendedor'],
+                $ctr['ctr_fecha_inicio'],
+                $ctr['ctr_fecha_fin']
+            );
+        } else {
+            // Listar los ultimos 10 contratos
+            return ContratosModelo::mdlMostrarContratosLimitExcel();
         }
     }
 }

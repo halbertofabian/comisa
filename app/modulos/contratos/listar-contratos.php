@@ -104,8 +104,9 @@
         </div>
     </div>
     <div class="card-footer text-muted">
-        <button class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
-            Descargar</button>
+        <a href="" id="btnExportarContratos" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
+            Descargar
+        </a>
     </div>
 </div>
 
@@ -183,6 +184,12 @@
 
 
                 });
+
+                alert(ctr_folio);
+
+                var urlExport = urlApp + 'export/contratos.php?ctr_folio=' + ctr_folio + '&ctr_vendedor=' + ctr_vendedor + '&ctr_fecha_inicio=' + ctr_fecha_inicio + '&ctr_fecha_fin=' + ctr_fecha_fin
+
+                $("#btnExportarContratos").attr("href", urlExport)
                 $("#tbodyContratos").html(tbodyContratos);
             }
         })

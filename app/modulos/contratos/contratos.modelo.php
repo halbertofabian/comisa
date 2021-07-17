@@ -492,10 +492,40 @@ class ContratosModelo
         }
     }
 
+    public static function mdlMostrarContratosLimitExcel()
+    {
+        try {
+            $sql = "SELECT usr.usr_nombre, ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_id DESC LIMIT 10 ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarContratosFolio($ctr_filtro)
     {
         try {
             $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' ORDER BY ctr.ctr_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarContratosFolioExcel($ctr_filtro)
+    {
+        try {
+            $sql = "SELECT usr.usr_nombre, ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' ORDER BY ctr.ctr_id DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
@@ -512,6 +542,25 @@ class ContratosModelo
     {
         try {
             $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
+            LIKE '%$ctr_vendedor%' AND ( ctr.ctr_fecha_contrato BETWEEN ? AND ? ) ORDER BY ctr.ctr_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps -> bindValue(1,$ctr_fecha_inicio);
+            $pps -> bindValue(2,$ctr_fecha_fin);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarContratosFechaExcel($ctr_vendedor,$ctr_fecha_inicio,$ctr_fecha_fin)
+    {
+        try {
+            $sql = "SELECT usr.usr_nombre,ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
             LIKE '%$ctr_vendedor%' AND ( ctr.ctr_fecha_contrato BETWEEN ? AND ? ) ORDER BY ctr.ctr_id DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);

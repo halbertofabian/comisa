@@ -982,6 +982,23 @@ class AppControlador
             //         ),
             //     ]
             // ),
+            '9' => array(
+                [
+                    'label' => 'Clientes',
+                    'icon' => '<i class="fa fa-users" aria-hidden="true"></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '<i class="fa fa-user-times" aria-hidden="true"></i>',
+                            'label' => 'Clientes con mal historial',
+                            'href' => 'clientes-mal-historial'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
             '2' => array(
                 [
                     'label' => 'Comisiones y sueldos',
