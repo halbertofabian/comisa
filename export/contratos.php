@@ -66,7 +66,7 @@ foreach ($contratos_set as $key => $ctr) {
     $cantidad_productos = 0;
     foreach ($productos as $key => $pds) {
         # code...
-        $cadena_productos .= $pds['nombreProducto'] . ' ' . $pds['cantidad'] . '-';
+        $cadena_productos .= $pds['nombreProducto'];
         $cantidad_productos += $pds['cantidad'];
     }
 
