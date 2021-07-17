@@ -87,6 +87,9 @@ if (isset($_GET['ctr_id'])) {
             <td style="text-align:center; width:25%">
                 <img src="{$rutaImg}" width="100" height="100" /> <br>
                 R.F.C: FAAS750810MVV9
+                <div style="width:50%;text-align: center;border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
+                        VENDEDOR <br>  <span style="color:#000"> $ctr[usr_nombre] </span>
+                </div>
             </td>
             <td style="text-align:center ; width:55%">
                     MATRIZ: TUXTEPEC, OAX.<br>
@@ -112,9 +115,7 @@ if (isset($_GET['ctr_id'])) {
                     <div style="width:50%;text-align: center;border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
                         FECHA <br>  <span style="color:#000"> $ctr[ctr_fecha_contrato] </span>
                     </div>
-                    <div style="width:50%;text-align: center;border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
-                        VENDEDOR <br>  <span style="color:#000"> $ctr[usr_nombre] </span>
-                    </div>
+                    
                 </div>  
             </td>
         </tr> 
