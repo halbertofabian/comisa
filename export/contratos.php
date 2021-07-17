@@ -25,6 +25,7 @@ $contratos_set = ContratosControlador::ctrListarContratoExcel($_GET);
 
 $contratos = array();
 
+
 foreach ($contratos_set as $key => $ctr) {
     
     $ctls_propia = "";
@@ -62,8 +63,8 @@ foreach ($contratos_set as $key => $ctr) {
 
     // Productos 
     $productos = json_decode($ctr['ctr_productos'], true);
-    $cadena_productos = "";
-    $cantidad_productos = 0;
+   $cadena_productos = "";
+   $cantidad_productos = 0;
     foreach ($productos as $key => $pds) {
         # code...
         $cadena_productos .= $pds['nombreProducto'];
@@ -93,6 +94,7 @@ foreach ($contratos_set as $key => $ctr) {
         'ctr_plazo_credito' => $ctr['ctr_plazo_credito'],
         'ctr_tipo_pago' => $ctr['ctr_tipo_pago'],
         'ctr_productos' => $cadena_productos,
+        'ctr_cantidad_productos' => $cantidad_productos,
         'ctr_total' => $ctr['ctr_total'],
         'ctr_enganche' => $ctr['ctr_enganche'],
         'ctr_pago_adicional' => $ctr['ctr_pago_adicional'],
@@ -164,7 +166,9 @@ foreach ($contratos_set as $key => $ctr) {
         'ctr_aprovado_ventas' => $ctr['ctr_aprovado_ventas'],
         'usr_nombre' => $ctr['usr_nombre']
     );
+    
     array_push($contratos, $datos);
+    
 }
 
 
@@ -275,9 +279,9 @@ foreach ($contratos as $key => $ctr) {
     echo "-,";
     echo "-,";
     echo "-,";
-    echo dnum($ctls_propia) . ",";
-    echo dnum($ctls_rentada) . ",";
-    echo dnum($ctls_prestada) . ",";
+    echo dnum($ctr['clts_propia']) . ",";
+    echo dnum($ctr['clts_rentada']) . ",";
+    echo dnum($ctr['clts_prestada']) . ",";
     echo dnum($ctr['clts_antiguedad_viviendo']) . ",";
     echo dnum($ctr['clts_vivienda_anomde']) . ",";
     echo "-,";
@@ -310,11 +314,11 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['clts_col_ref2']) . ",";
     echo dnum($ctr['clts_tel_ref2']) . ",";
     echo dnum($ctr['ctr_forma_pago']) . ",";
-    echo dnum($fecha_pago). ",";
+    echo dnum($ctr['ctr_proximo_pago']). ",";
     echo dnum($ctr['ctr_dia_pago']) . ",";
     echo dnum($ctr['ctr_plazo_credito']) . ",";
-    echo dnum($cantidad_productos) . ",";
-    echo dnum($cadena_productos) . ",";
+    echo dnum($ctr['ctr_cantidad_productos']) . ",";
+    echo dnum($ctr['ctr_productos']) . ",";
     echo dnum($ctr['ctr_total']) . ",";
     echo dnum($ctr['ctr_enganche']) . ",";
     echo dnum($ctr['ctr_pago_adicional']) . ",";
