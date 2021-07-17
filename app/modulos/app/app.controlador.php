@@ -84,7 +84,12 @@ class AppControlador
             'reporte-gasolina',
             'abonos',
             'reporte-ingresos',
-            'kardex'
+            'kardex',
+            'contratos',
+            'clientes-mal-historial',
+            'clientes',
+            'importar-clientes-mal-historial',
+            'new-mal-historial',
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -618,6 +623,23 @@ class AppControlador
     public static function obtnerMenuGefeCobranza()
     {
         return array(
+            '6' => array(
+                [
+                    'label' => 'Clientes',
+                    'icon' => '<i class="fa fa-users" aria-hidden="true"></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '<i class="fa fa-user-times" aria-hidden="true"></i>',
+                            'label' => 'Clientes con mal historial',
+                            'href' => 'clientes-mal-historial'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
             '1' => array(
                 [
                     'label' => 'Cobranza',
