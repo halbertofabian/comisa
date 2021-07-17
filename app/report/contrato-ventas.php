@@ -540,7 +540,7 @@ $pagos_credito = <<<EOF
 <table style="">
     <thead>
         <tr>
-            <td style="width:50%;"></td>
+            <td style="width:50%; text-align: center;">OBSERVACIONES</td>
             <td style="width:25%;text-align: right;vertical-align: middle; color:#002973;">
                 <strong>TOTAL </strong>.
             </td>
@@ -550,7 +550,7 @@ $pagos_credito = <<<EOF
         </tr> 
 
         <tr>
-            <td style="width:50%;"></td>
+            <td style="width:50%;color:#002973;font-size:6.5px">$ctr[ctr_nota]</td>
             <td style="width:25%;text-align: right;vertical-align: middle;color:#002973;">
                 <strong>ENGANCHE </strong>.
             </td>
