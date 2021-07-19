@@ -76,8 +76,19 @@ if (isset($_GET['ctr_id'])) {
     $ctr = ContratosModelo::mdlMostrarContratosById($_GET['ctr_id']);
 
     $ctr['ctr_fecha_contrato'] = fechaCastellano($ctr['ctr_fecha_contrato']);
-    $ctr['ctr_proximo_pago'] = fechaCastellano($ctr['ctr_proximo_pago']);
 
+    $ctr['ctr_proximo_pago'] = fechaCastellano(substr($ctr['ctr_proximo_pago'], 0, 10));
+
+    $plazo_crdito_cad = "";
+    if ($ctr['ctr_forma_pago'] == "SEMANALES") {
+        $plazo_crdito_cad = "SEMANAS";
+    } elseif ($ctr['ctr_forma_pago'] == "CATORCENALES") {
+        $plazo_crdito_cad = "CATORCENAS";
+    } elseif ($ctr['ctr_forma_pago'] == "QUINCENALES") {
+        $plazo_crdito_cad = "QUINCENAS";
+    } elseif ($ctr['ctr_forma_pago'] == "MENSUALES") {
+        $plazo_crdito_cad = "MESES";
+    }
 
     $encabezado = <<<EOF
 
@@ -226,6 +237,18 @@ EOF;
             </td>
             <td>
             <strong>CURP:</strong>  <span style="color:#000"> $ctr[clts_curp] </span>
+            </td>
+            
+        </tr> 
+        <tr>
+            <td>
+            <strong>FACHADA COLOR: </strong>  <span style="color:#000"> $ctr[clts_fachada_color] </span>
+            </td>
+            <td>
+            <strong>PUERTA COLOR:</strong>  <span style="color:#000"> $ctr[clts_puerta_color] </span>
+            </td>
+            <td>
+           
             </td>
             
         </tr> 
@@ -433,12 +456,12 @@ EOF;
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
     $pdf->writeHTMLCell(0, 0, '', '', $referancias, 0, 1, 0, true, '', true);
 
-$plazo_crdito = <<<EOF
+    $plazo_crdito = <<<EOF
 <table style="text-align:center;background-color:#E9ECEF;color:#002973;border: 1px solid #002973">
     <thead>
         <tr>
             <td>
-                5.- LLENADO POR EL CLIENTE
+                5.- FORMA DE PAGO
             </td>
         </tr> 
     </thead>
@@ -481,7 +504,7 @@ $plazo_crdito = <<<EOF
             </td>
         
             <td style="text-align:center; width:25%;border: 1px solid #002973;">
-            <span style="color:#000"> $ctr[ctr_plazo_credito] </span>   
+            <span style="color:#000"> $ctr[ctr_plazo_credito] $plazo_crdito_cad </span>   
                 
             </td>
         </tr> 
@@ -521,7 +544,7 @@ EOF;
     $productos = json_decode($ctr['ctr_productos'], true);
 
     foreach ($productos as $key => $pds) {
-$mercancia_json = <<<EOF
+        $mercancia_json = <<<EOF
         <table style="text-align:center;color:#002973;border: 1px solid #002973">
             <thead>
                 <tr>
@@ -537,7 +560,7 @@ EOF;
 
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
 
-$pagos_credito = <<<EOF
+    $pagos_credito = <<<EOF
 <table style="">
     <thead>
         <tr>
@@ -640,8 +663,8 @@ EOF;
         </thead>
     </table>
 EOF;
-        $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
-        $pdf->writeHTMLCell(0, 0, '', '', $plazo_crdito, 0, 1, 0, true, '', true);    
+    $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $plazo_crdito, 0, 1, 0, true, '', true);
 
     ob_end_clean();
 

@@ -117,7 +117,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="clts_direccion_tbj">DIREACCION:</label>
+                        <label for="clts_direccion_tbj">DIRECCION:</label>
                         <input type="text" name="clts_direccion_tbj" id="clts_direccion_tbj" class="form-control" value="<?= $ctr['clts_direccion_tbj'] ?>">
                     </div>
                 </div>
@@ -170,6 +170,18 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                     <div class="form-group">
                         <label for="clts_coordenadas">CORDENADAS:</label>
                         <input type="text" name="clts_coordenadas" id="clts_coordenadas" class="form-control" value="<?= $ctr['clts_coordenadas'] ?>">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="clts_fachada_color">FACHADA COLOR:</label>
+                        <input type="text" name="clts_fachada_color" id="clts_fachada_color" class="form-control" value="<?= $ctr['clts_fachada_color'] ?>">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="clts_puerta_color">PUERTA COLOR:</label>
+                        <input type="text" name="clts_puerta_color" id="clts_puerta_color" class="form-control" value="<?= $ctr['clts_puerta_color'] ?>">
                     </div>
                 </div>
 
@@ -267,7 +279,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="clts_dir_fiador">DIECCION:</label>
+                        <label for="clts_dir_fiador">DIRECCION:</label>
                         <input type="text" name="clts_dir_fiador" id="clts_dir_fiador" class="form-control" value="<?= $ctr['clts_dir_fiador'] ?>">
                     </div>
                 </div>
@@ -292,7 +304,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label for="clts_tbj_tel_fiador">TRABAJA EN:</label>
+                        <label for="clts_tbj_tel_fiador">TEL.:</label>
                         <input type="text" name="clts_tbj_tel_fiador" id="clts_tbj_tel_fiador" class="form-control" value="<?= $ctr['clts_tbj_tel_fiador'] ?>">
                     </div>
                 </div>
@@ -430,7 +442,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
     </div>
     <div class="card card-llenado">
         <div class="card-header text-center bg-primary">
-            <strong style="color:aliceblue">5.- LLENADO POR EL CLIENTE </strong>
+            <strong style="color:aliceblue">5.- FORMA DE PAGO </strong>
         </div>
         <div class="card-body">
 

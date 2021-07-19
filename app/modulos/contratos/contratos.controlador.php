@@ -600,12 +600,16 @@ class ContratosControlador
                 'clts_tel_ref3' =>  dstring($cts["clts_tel_ref3"]),
                 'sobre_enganche_pendiente' =>  $cts["sobre_enganche_pendiente"],
 
-                //Nuevos atributos 
+                
                 'clts_registro_venta' => '0',
                 'clts_caja' => $caja_abierta,
                 'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
                 'ctr_pago_credito' => dnum($cts["ctr_pago_credito"]),
-                'ctr_aprovado_ventas' => 0
+                'ctr_aprovado_ventas' => 0,
+
+                //Nuevos atributos 
+                'clts_fachada_color' => "",
+                'clts_puerta_color' => ""
 
             );
 
@@ -730,7 +734,9 @@ class ContratosControlador
                 // 'clts_caja' => $_POST['clts_caja'],
                 'clts_folio_nuevo' => $_POST['clts_folio_nuevo'],
                 'ctr_pago_credito' => dnum($_POST['ctr_pago_credito']),
-                'ctr_aprovado_ventas' =>  $aprovado_ventas
+                'ctr_aprovado_ventas' =>  $aprovado_ventas,
+                'clts_fachada_color' => $_POST['clts_fachada_color'],
+                'clts_puerta_color' => $_POST['clts_puerta_color']
             );
             $actualizarContrato = ContratosModelo::mdlActualizarPreContratos($datos);
             if ($actualizarContrato) {
