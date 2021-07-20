@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label for="ctr_folio">FILTRO DE BUSQUEDA</label>
                     <input type="text" name="ctr_folio" id="ctr_folio" class="form-control" placeholder="">
-                    <small id="helpId" class="">Nº FOLIO / Nº CONTRATO / Nº TICKET</small>
+                    <small id="helpId" class="">Nº TICKET / CTA / RUTA </small>
                 </div>
             </div>
             <div class="col-md-3">
@@ -80,6 +80,14 @@
         </div>
 
     </div>
+    <div class="d-load d-none">
+        <div class="d-flex justify-content-center mt-5">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
     <div class="card-body" style="height:500px; overflow-y: scroll;">
         <div class="row">
             <div class="col-12  table-responsive">
@@ -111,7 +119,7 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <form  id="formImportarContratos" method="post">
+                <form id="formImportarContratos" method="post">
                     <input type="file" id="input_file" class="form-control">
                     <button type="submit" class="btn btn-primary mt-1 float-right btnImportarContratos btn-load">Importar contratos</button>
                 </form>
@@ -125,6 +133,7 @@
         listarContrato();
     })
     $("#btnListarContratos").on("click", function() {
+
 
 
         var ctr_folio = $("#ctr_folio").val();
@@ -159,9 +168,13 @@
             contentType: false,
             beforeSend: function() {
                 //startLoadButton()
+                $(".d-load").removeClass("d-none")
+
+
             },
             success: function(res) {
-                console.log(res);
+
+                $(".d-load").addClass("d-none")
                 var tbodyContratos = "";
 
                 res.forEach(ctr => {
