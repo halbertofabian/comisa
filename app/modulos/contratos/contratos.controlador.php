@@ -610,7 +610,9 @@ class ContratosControlador
 
                 //Nuevos atributos 
                 'clts_fachada_color' => "",
-                'clts_puerta_color' => ""
+                'clts_puerta_color' => "",
+                'ctr_status_cuenta' => "",
+                'ctr_saldo_actual' => $cts["ctr_saldo"]
 
             );
 

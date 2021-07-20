@@ -266,8 +266,8 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['clts_domicilio']) . ",";
     echo dnum($ctr['clts_col']) . ",";
     echo dnum($ctr['clts_entre_calles']) . ",";
-    echo dnum($ctr['clts_fachada_color']);
-    echo dnum($ctr['clts_puerta_color']);
+    echo dnum($ctr['clts_fachada_color']). ",";
+    echo dnum($ctr['clts_puerta_color']). ",";
     echo dnum($ctr['clts_trabajo']) . ",";
     echo dnum($ctr['clts_puesto']) . ",";
     echo dnum($ctr['clts_direccion_tbj']) . ",";
