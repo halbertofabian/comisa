@@ -164,7 +164,9 @@ foreach ($contratos_set as $key => $ctr) {
         'clts_folio_nuevo' => $ctr['clts_folio_nuevo'],
         'ctr_forma_pago' => $ctr['ctr_pago_credito'].' '.$ctr['ctr_forma_pago'],
         'ctr_aprovado_ventas' => $ctr['ctr_aprovado_ventas'],
-        'usr_nombre' => $ctr['usr_nombre']
+        'usr_nombre' => $ctr['usr_nombre'],
+        'clts_puerta_color' => $ctr['clts_puerta_color'],
+        'clts_fachada_color' => $ctr['clts_fachada_color']
     );
     
     array_push($contratos, $datos);
