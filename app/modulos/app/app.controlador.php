@@ -991,29 +991,24 @@ class AppControlador
     public static function obtnerMenuGefeAdministracion()
     {
         return array(
-            // '1' => array(
-            //     [
-            //         'label' => 'Cobranza',
-            //         'icon' => '<i class="fas fa-funnel-dollar "></i>',
-            //         'href' => '#home',
-            //         'modulos' =>
-            //         array(
+            '10' => array(
+                [
+                    
+                    'label' => 'Contratos',
+                    'icon' => '<i class="fa fa-file-text-o "></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
 
-            //             [
-            //                 'icon' => '',
-            //                 'label' => 'Flujo de caja',
-            //                 'href' => 'flujo-caja'
-            //             ],
-            //             [
-            //                 'icon' => '',
-            //                 'label' => 'Lista de cajas / Nueva caja',
-            //                 'href' => 'cajas'
-            //             ],
-
-            //             //Aqui más item de menu
-            //         ),
-            //     ]
-            // ),
+                        [
+                            'icon' => '',
+                            'label' => 'Contratos',
+                            'href' => 'contratos/listar'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
             '9' => array(
                 [
                     'label' => 'Clientes',
