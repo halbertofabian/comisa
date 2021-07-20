@@ -104,9 +104,19 @@
         </div>
     </div>
     <div class="card-footer text-muted">
-        <a href="" target="_blanck" id="btnExportarContratos" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
-            Descargar
-        </a>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="" target="_blanck" id="btnExportarContratos" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
+                    Descargar
+                </a>
+            </div>
+            <div class="col-md-6">
+                <form  id="formImportarContratos" method="post">
+                    <input type="file" id="input_file" class="form-control">
+                    <button type="submit" class="btn btn-primary mt-1 float-right btnImportarContratos btn-load">Importar contratos</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -171,11 +181,11 @@
                                </div>
                             </td>
                             <td>${ctr.ctr_folio}</td>
-                            <td></td>
+                            <td>${ctr.ctr_numero_cuenta+""+ctr.ctr_ruta}</td>
                             <td>${ctr.ctr_numero_cuenta}</td>
                             <td>${ctr.ctr_ruta}</td>
                             <td>${ctr.ctr_cliente}</td>
-                            <td>${ctr.usr_nombre}</td>
+                            <td>${ctr.ctr_elaboro}</td>
                             <td>${ctr.ctr_fecha_contrato}</td>
                         
                         </tr>

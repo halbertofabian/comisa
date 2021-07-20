@@ -526,7 +526,8 @@ class ContratosControlador
                 'ctr_saldo' => $cts["ctr_saldo"],
 
 
-                'ctr_elaboro' => dstring('Vendedor/' . $data[0]['vendedor']['nombre']),
+                'ctr_elaboro' => dstring($data[0]['vendedor']['nombre']),
+
                 'ctr_nota' => "",
                 'ctr_fotos' => json_encode(array(
                     // Fotos  cliente
@@ -600,7 +601,7 @@ class ContratosControlador
                 'clts_tel_ref3' =>  dstring($cts["clts_tel_ref3"]),
                 'sobre_enganche_pendiente' =>  $cts["sobre_enganche_pendiente"],
 
-                
+
                 'clts_registro_venta' => '0',
                 'clts_caja' => $caja_abierta,
                 'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
@@ -751,10 +752,9 @@ class ContratosControlador
 
         $year_actual = getdate();
 
-        if ($_POST['ctr_folio'] != "" ) {
+        if ($_POST['ctr_folio'] != "") {
             // Buscar contratos por numero de folio o numero de contrato
             return ContratosModelo::mdlMostrarContratosFolio($_POST['ctr_folio']);
-        
         } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "" or $_POST['ctr_vendedor'] != "") {
             // Buscar contratos por vendedor
             $_POST['ctr_fecha_inicio'] = $_POST['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $_POST['ctr_fecha_inicio'] . 'T00:00';
@@ -777,10 +777,9 @@ class ContratosControlador
 
         $year_actual = getdate();
 
-        if ($ctr['ctr_folio'] != "" ) {
+        if ($ctr['ctr_folio'] != "") {
             // Buscar contratos por numero de folio o numero de contrato
             return ContratosModelo::mdlMostrarContratosFolioExcel($ctr['ctr_folio']);
-        
         } elseif ($ctr['ctr_fecha_inicio'] != "" or $ctr['ctr_fecha_fin'] != "" or $ctr['ctr_vendedor'] != "") {
             // Buscar contratos por vendedor
             $ctr['ctr_fecha_inicio'] = $ctr['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $ctr['ctr_fecha_inicio'] . 'T00:00';
@@ -794,6 +793,285 @@ class ContratosControlador
         } else {
             // Listar los ultimos 10 contratos
             return ContratosModelo::mdlMostrarContratosLimitExcel();
+        }
+    }
+
+    public static function ctrSubirContratoByExcel()
+    {
+        try {
+
+
+
+            //$nombreArchivo = $_SERVER['DOCUMENT_ROOT'] . '/dupont/exportxlsx/tbl_productos_dupont.xls';
+
+            $nombreArchivo = $_FILES['archivoExcel']['tmp_name'];
+
+
+
+
+            //var_dump($nombreArchivo);
+
+            // Cargar hoja de calculo
+            $leerExcel = PHPExcel_IOFactory::createReaderForFile($nombreArchivo);
+
+            $objPHPExcel = $leerExcel->load($nombreArchivo);
+
+            //var_dump($objPHPExcel);
+
+            $objPHPExcel->setActiveSheetIndex(0);
+
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $countInsert = 0;
+            $countUpdate = 0;
+            //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
+
+            $leyenda = "";
+            for ($i = 4; $i <= $numRows; $i++) {
+
+
+                $ctr_numero_cuenta = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $ctr_ruta = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $dia = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+                $mes = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
+                $ano = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
+                $fecha_concatenada = $ano . '-' . $mes . '-' . $dia;
+                $ctr_fecha_contrato =  $fecha_concatenada; //date_format($fecha_concatenada,'Y/m/d');
+                $ctr_cliente = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
+                $clts_telefono = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+                $clts_domicilio = $objPHPExcel->getActiveSheet()->getCell('I' . $i)->getCalculatedValue();
+                $clts_col = $objPHPExcel->getActiveSheet()->getCell('J' . $i)->getCalculatedValue();
+                $clts_entre_calles = $objPHPExcel->getActiveSheet()->getCell('K' . $i)->getCalculatedValue();
+                $clts_fachada_color = $objPHPExcel->getActiveSheet()->getCell('L' . $i)->getCalculatedValue();
+                $clts_puerta_color = $objPHPExcel->getActiveSheet()->getCell('M' . $i)->getCalculatedValue();
+                $clts_trabajo = $objPHPExcel->getActiveSheet()->getCell('N' . $i)->getCalculatedValue();
+                $clts_puesto = $objPHPExcel->getActiveSheet()->getCell('O' . $i)->getCalculatedValue();
+                $clts_direccion_tbj = $objPHPExcel->getActiveSheet()->getCell('P' . $i)->getCalculatedValue();
+                $clts_col_tbj = $objPHPExcel->getActiveSheet()->getCell('Q' . $i)->getCalculatedValue();
+                $clts_tel_tbj = $objPHPExcel->getActiveSheet()->getCell('R' . $i)->getCalculatedValue();
+                $clts_antiguedad_tbj = $objPHPExcel->getActiveSheet()->getCell('S' . $i)->getCalculatedValue();
+                $clts_igs_mensual_tbj = $objPHPExcel->getActiveSheet()->getCell('T' . $i)->getCalculatedValue();
+                $clts_tipo_vivienda_propia = $objPHPExcel->getActiveSheet()->getCell('Y' . $i)->getCalculatedValue();
+                $clts_tipo_vivienda_rentada = $objPHPExcel->getActiveSheet()->getCell('Z' . $i)->getCalculatedValue();
+                $clts_tipo_vivienda_prestada = $objPHPExcel->getActiveSheet()->getCell('AA' . $i)->getCalculatedValue();
+                $clts_tipo_vivienda_propia = str_replace("-", "", $clts_tipo_vivienda_propia);
+                $clts_tipo_vivienda_rentada = str_replace("-", "", $clts_tipo_vivienda_rentada);
+                $clts_tipo_vivienda_prestada = str_replace("-", "", $clts_tipo_vivienda_prestada);
+                $clts_tipo_vivienda = $clts_tipo_vivienda_propia . '' . $clts_tipo_vivienda_rentada . '' . $clts_tipo_vivienda_prestada;
+                $clts_antiguedad_viviendo = $objPHPExcel->getActiveSheet()->getCell('AB' . $i)->getCalculatedValue();
+                $clts_vivienda_anomde = $objPHPExcel->getActiveSheet()->getCell('AC' . $i)->getCalculatedValue();
+                $clts_nom_conyuge = $objPHPExcel->getActiveSheet()->getCell('AE' . $i)->getCalculatedValue();
+                $clts_tbj_conyuge = $objPHPExcel->getActiveSheet()->getCell('AF' . $i)->getCalculatedValue();
+                $clts_tbj_puesto_conyuge = $objPHPExcel->getActiveSheet()->getCell('AG' . $i)->getCalculatedValue();
+                $clts_tbj_dir_conyuge = $objPHPExcel->getActiveSheet()->getCell('AH' . $i)->getCalculatedValue();
+                $clts_tbj_col_conyuge = $objPHPExcel->getActiveSheet()->getCell('AI' . $i)->getCalculatedValue();
+                $clts_tbj_tel_conyuge = $objPHPExcel->getActiveSheet()->getCell('AJ' . $i)->getCalculatedValue();
+                $clts_tbj_ant_conyuge = $objPHPExcel->getActiveSheet()->getCell('AK' . $i)->getCalculatedValue();
+                $clts_nom_fiador = $objPHPExcel->getActiveSheet()->getCell('AL' . $i)->getCalculatedValue();
+                $clts_parentesco_fiador = $objPHPExcel->getActiveSheet()->getCell('AM' . $i)->getCalculatedValue();
+                $clts_tel_fiador = $objPHPExcel->getActiveSheet()->getCell('AN' . $i)->getCalculatedValue();
+                $clts_dir_fiador = $objPHPExcel->getActiveSheet()->getCell('AO' . $i)->getCalculatedValue();
+                $clts_col_fiador = $objPHPExcel->getActiveSheet()->getCell('AP' . $i)->getCalculatedValue();
+                $clts_tbj_fiador = $objPHPExcel->getActiveSheet()->getCell('AQ' . $i)->getCalculatedValue();
+                $clts_tbj_dir_fiador = $objPHPExcel->getActiveSheet()->getCell('AR' . $i)->getCalculatedValue();
+                $clts_tbj_tel_fiador = $objPHPExcel->getActiveSheet()->getCell('AS' . $i)->getCalculatedValue();
+                $clts_tbj_col_fiador = $objPHPExcel->getActiveSheet()->getCell('AT' . $i)->getCalculatedValue();
+                $clts_tbj_ant_fiador = $objPHPExcel->getActiveSheet()->getCell('AV' . $i)->getCalculatedValue();
+                $ctr_nombre_ref_1 = $objPHPExcel->getActiveSheet()->getCell('AW' . $i)->getCalculatedValue();
+                $ctr_parentesco_ref_1 = $objPHPExcel->getActiveSheet()->getCell('AX' . $i)->getCalculatedValue();
+                $ctr_direccion_ref_1 = $objPHPExcel->getActiveSheet()->getCell('AY' . $i)->getCalculatedValue();
+                $ctr_colonia_ref_1 = $objPHPExcel->getActiveSheet()->getCell('AZ' . $i)->getCalculatedValue();
+                $ctr_telefono_ref_1 = $objPHPExcel->getActiveSheet()->getCell('BA' . $i)->getCalculatedValue();
+                $clts_nom_ref2 = $objPHPExcel->getActiveSheet()->getCell('AB' . $i)->getCalculatedValue();
+                $clts_parentesco_ref2 = $objPHPExcel->getActiveSheet()->getCell('AC' . $i)->getCalculatedValue();
+                $clts_dir_ref2 = $objPHPExcel->getActiveSheet()->getCell('BD' . $i)->getCalculatedValue();
+                $clts_col_ref2 = $objPHPExcel->getActiveSheet()->getCell('BE' . $i)->getCalculatedValue();
+                $clts_tel_ref2 = $objPHPExcel->getActiveSheet()->getCell('BF' . $i)->getCalculatedValue();
+                $ctr_pago_t = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
+                $ctr_pago_credito = (int) filter_var($ctr_pago_t, FILTER_SANITIZE_NUMBER_INT);
+                $ctr_forma_pago =  (string) filter_var($ctr_pago_t, FILTER_SANITIZE_STRING);
+                $ctr_proximo_pago = $objPHPExcel->getActiveSheet()->getCell('BH' . $i)->getCalculatedValue();
+                $ctr_dia_pago = $objPHPExcel->getActiveSheet()->getCell('BI' . $i)->getCalculatedValue();
+                $clts_plazo_c = $objPHPExcel->getActiveSheet()->getCell('BJ' . $i)->getCalculatedValue();
+                $ctr_plazo_credito = (int) filter_var($clts_plazo_c, FILTER_SANITIZE_NUMBER_INT);
+                $clts_cant_pds = $objPHPExcel->getActiveSheet()->getCell('BK' . $i)->getCalculatedValue();
+                $clts_des_pds = $objPHPExcel->getActiveSheet()->getCell('BL' . $i)->getCalculatedValue();
+                $ctr_total = $objPHPExcel->getActiveSheet()->getCell('BM' . $i)->getCalculatedValue();
+                $ctr_enganche = $objPHPExcel->getActiveSheet()->getCell('BN' . $i)->getCalculatedValue();
+                $ctr_pago_adicional = $objPHPExcel->getActiveSheet()->getCell('BO' . $i)->getCalculatedValue();
+                $ctr_elaboro = $objPHPExcel->getActiveSheet()->getCell('BP' . $i)->getCalculatedValue();
+                $ctr_status_cuenta =  $objPHPExcel->getActiveSheet()->getCell('BR' . $i)->getCalculatedValue();
+                $ctr_saldo =  $objPHPExcel->getActiveSheet()->getCell('BS' . $i)->getCalculatedValue();
+                $ctr_nota =  $objPHPExcel->getActiveSheet()->getCell('BV' . $i)->getCalculatedValue();
+                $clts_coordenadas = $objPHPExcel->getActiveSheet()->getCell('BW' . $i)->getCalculatedValue();
+                $clts_curp = $objPHPExcel->getActiveSheet()->getCell('BX' . $i)->getCalculatedValue();
+                $ctr_saldo_actual =  $objPHPExcel->getActiveSheet()->getCell('BY' . $i)->getCalculatedValue();
+                $clts_tbj_ing_conyuge =  $objPHPExcel->getActiveSheet()->getCell('BZ' . $i)->getCalculatedValue();
+
+                $ctr_productos = json_encode(array(array(
+                    'sku' => '',
+                    'nombreProducto' => $clts_des_pds,
+                    'cantidad' => $clts_cant_pds
+                )),true);
+
+                $ctr = array(
+                    'ctr_id' => '',
+                    'ctr_folio' => '',
+                    'ctr_fecha_contrato' => $ctr_fecha_contrato,
+                    'ctr_id_vendedor' => VENDEDOR_P,
+                    'ctr_cliente' => dstring($ctr_cliente),
+                    'ctr_numero_cuenta' => dstring($ctr_numero_cuenta),
+                    'ctr_ruta' => dstring($ctr_ruta),
+                    'ctr_forma_pago' => dstring($ctr_forma_pago),
+                    'ctr_dia_pago' => dstring($ctr_dia_pago),
+                    'ctr_proximo_pago' => dstring($ctr_proximo_pago),
+                    'ctr_plazo_credito' => dstring($ctr_plazo_credito),
+                    'ctr_tipo_pago' => '',
+                    'ctr_productos' => $ctr_productos,
+                    'ctr_total' => dnum($ctr_total),
+                    'ctr_enganche' => dnum($ctr_enganche),
+                    'ctr_pago_adicional' => dnum($ctr_pago_adicional),
+                    'ctr_saldo' => dnum($ctr_saldo),
+                    'ctr_elaboro' => dstring($ctr_elaboro),
+                    'ctr_nota' => dstring($ctr_nota),
+                    'ctr_fotos' => json_encode(array(
+                        // Fotos  cliente
+                        'img_cliente' =>  '',
+                        'img_cred_fro' =>  '',
+                        'img_cred_tra' =>  '',
+                        'img_pagare' => '',
+                        'img_fachada' =>  '',
+                        'img_comprobante' =>  ''
+                    ), true),
+                    'ctr_nombre_ref_1' => dstring($ctr_nombre_ref_1),
+                    'ctr_parentesco_ref_1' => dstring($ctr_parentesco_ref_1),
+                    'ctr_direccion_ref_1' => dstring($ctr_direccion_ref_1),
+                    'ctr_colonia_ref_1' => dstring($ctr_colonia_ref_1),
+                    'ctr_telefono_ref_1' => dstring($ctr_telefono_ref_1),
+                    'clts_curp' => dstring($clts_curp),
+                    'clts_telefono' => dstring($clts_telefono),
+                    'clts_domicilio' =>  dstring($clts_domicilio),
+                    'clts_col' =>  dstring($clts_col),
+                    'clts_entre_calles' =>  dstring($clts_entre_calles),
+                    'clts_trabajo' =>  dstring($clts_trabajo),
+                    'clts_puesto' =>  dstring($clts_puesto),
+                    'clts_direccion_tbj' =>  dstring($clts_direccion_tbj),
+                    'clts_col_tbj' =>  dstring($clts_col_tbj),
+                    'clts_tel_tbj' =>  dstring($clts_tel_tbj),
+                    'clts_antiguedad_tbj' =>  dstring($clts_antiguedad_tbj),
+                    'clts_igs_mensual_tbj' =>  dnum($clts_igs_mensual_tbj),
+                    'clts_tipo_vivienda' =>  dstring($clts_tipo_vivienda),
+                    'clts_vivienda_anomde' =>  dstring($clts_vivienda_anomde),
+                    'clts_antiguedad_viviendo' =>  dstring($clts_antiguedad_viviendo),
+                    'clts_coordenadas' =>  dstring($clts_coordenadas),
+                    'clts_nom_conyuge' =>  dstring($clts_nom_conyuge),
+                    'clts_tbj_conyuge' =>  dstring($clts_tbj_conyuge),
+                    'clts_tbj_puesto_conyuge' =>  dstring($clts_tbj_puesto_conyuge),
+                    'clts_tbj_dir_conyuge' =>  dstring($clts_tbj_dir_conyuge),
+                    'clts_tbj_col_conyuge' =>  dstring($clts_tbj_col_conyuge),
+                    'clts_tbj_tel_conyuge' =>  dstring($clts_tbj_tel_conyuge),
+                    'clts_tbj_ant_conyuge' =>  dstring($clts_tbj_ant_conyuge),
+                    'clts_tbj_ing_conyuge' =>  dnum($clts_tbj_ing_conyuge),
+                    'clts_nom_fiador' =>  dstring($clts_nom_fiador),
+                    'clts_parentesco_fiador' =>  dstring($clts_parentesco_fiador),
+                    'clts_tel_fiador' =>  dstring($clts_tel_fiador),
+                    'clts_dir_fiador' =>  dstring($clts_dir_fiador),
+                    'clts_col_fiador' =>  dstring($clts_col_fiador),
+                    'clts_tbj_fiador' =>  dstring($clts_tbj_fiador),
+                    'clts_tbj_dir_fiador' =>  dstring($clts_tbj_dir_fiador),
+                    'clts_tbj_tel_fiador' =>  dstring($clts_tbj_tel_fiador),
+                    'clts_tbj_col_fiador' =>  dstring($clts_tbj_col_fiador),
+                    'clts_tbj_ant_fiador' =>  dstring($clts_tbj_ant_fiador),
+                    'clts_fotos_fiador' => json_encode(array(
+                        'img_cred_fro' =>  '',
+                        'img_cred_tra' =>  '',
+                        'img_comprobante' => '',
+                        'img_pagare' =>  ''
+                    ), true),
+                    'clts_nom_ref2' => dstring($clts_nom_ref2),
+                    'clts_parentesco_ref2' => dstring($clts_parentesco_ref2),
+                    'clts_dir_ref2' => dstring($clts_dir_ref2),
+                    'clts_col_ref2' => dstring($clts_col_ref2),
+                    'clts_tel_ref2' => dstring($clts_tel_ref2),
+                    'clts_nom_ref3' => dstring('-'),
+                    'clts_parentesco_ref3' => dstring('-'),
+                    'clts_dir_ref3' => dstring('-'),
+                    'clts_col_ref3' => dstring('-'),
+                    'clts_tel_ref3' => dstring('-'),
+                    'sobre_enganche_pendiente' => 0.00,
+                    'clts_registro_venta' => '1',
+                    'clts_caja' => '',
+                    'clts_folio_nuevo' => '',
+                    'ctr_pago_credito' => dnum($ctr_pago_credito),
+                    'ctr_aprovado_ventas' => 1,
+                    'clts_fachada_color' => dstring($clts_fachada_color),
+                    'clts_puerta_color' => dstring($clts_puerta_color),
+                    'ctr_status_cuenta' => dstring($ctr_status_cuenta),
+                    'ctr_saldo_actual' => dnum($ctr_saldo_actual)
+                );
+
+
+
+
+            
+
+                $ctr_isset = ContratosModelo::mdlmBuscarContratosCodigo($ctr_numero_cuenta, $ctr_ruta);
+                
+                
+
+                if(!$ctr_isset){
+                    // REGISTRAR CONTRATO 
+                    $registrarContrato = ContratosModelo::mdlSubirPreContratos($ctr);
+                   
+                    if($registrarContrato){
+                        $countInsert += 1;
+                    }else{
+                       
+                    }
+                }else{
+                    // ACTUALIZAR CONTRATO
+                    
+
+                    $actualizarContrato = ContratosModelo::mdlActualizarPreContratosExcel($ctr);
+                    if($actualizarContrato){
+                        $countUpdate += 1;
+                    } 
+                    
+
+                }
+                
+
+
+
+
+                // $insert = ClientesModelo::mdlAgregarClientesByExcel($data);
+                // preArray($insert);
+
+                // if (ClientesModelo::mdlAgregarClientesByExcel($ctr)) {
+                //     $countInsert += 1;
+                // } else {
+                //     if (UsuariosModelo::mdlActualizarUsuarios($ctr)) {
+                //         $countUpdate += 1;
+                //     }
+                // }
+            }
+
+
+           
+            return array(
+                'status' => true,
+                'mensaje' => "Carga de contratos con éxito",
+                'insert' =>  $countInsert,
+                'update' => $countUpdate,
+                'pagina' => HTTP_HOST.'contratos/listar'
+            );
+        } catch (Exception $th) {
+            $th->getMessage();
+            return array(
+                'status' => false,
+                'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
+                'insert' =>  "",
+                'update' => ""
+            );
         }
     }
 }

@@ -23,6 +23,8 @@ require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.modelo.php';
 
+require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
+
 
 class ContratosAjax
 {
@@ -78,6 +80,12 @@ class ContratosAjax
         $res = ContratosControlador::ctrListarContrato();
         echo json_encode($res, true);
     }
+    public function ajaxImportarContratos()
+    {
+
+        $respuesta = ContratosControlador::ctrSubirContratoByExcel();
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -123,4 +131,9 @@ if (isset($_POST['btnGuadarDatosContrato'])) {
 if(isset($_POST['btnListarContratos'])){
     $listarContrato = new ContratosAjax();
     $listarContrato -> ajaxListarContrato();
+}
+
+if (isset($_POST['btnImportarContratos'])) {
+    $impotarProductos = new ContratosAjax();
+    $impotarProductos->ajaxImportarContratos();
 }
