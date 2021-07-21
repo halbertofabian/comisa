@@ -75,6 +75,27 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlAsignarCuenta($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_numero_cuenta =?,ctr_ruta = ? WHERE ctr_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps -> bindValue(1,$ctr['ctr_numero_cuenta']);
+            $pps -> bindValue(2,$ctr['ctr_ruta']);
+            $pps -> bindValue(3,$ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    
     public static function mdlMostrarContratos($clts_nom, $id_ctr)
     {
         try {
@@ -145,6 +166,27 @@ class ContratosModelo
         }
     }
 
+    public static function mdlMostrarUltimaCuenta($ctr_ruta)
+    {
+        try {
+            //c4ode...
+
+            $sql = "SELECT ctr_numero_cuenta FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? ORDER BY ctr_numero_cuenta DESC LIMIT 1";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_ruta);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+
     public static function mdlPreregistrarContrato($data)
     {
         try {
@@ -205,7 +247,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_id DESC";
+            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id ORDER BY ctr.ctr_fecha_contrato DESC";
 
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
@@ -315,7 +357,7 @@ class ContratosModelo
             $pps->bindValue(79, $ctr['ctr_status_cuenta']);
             $pps->bindValue(80, $ctr['ctr_saldo_actual']);
 
-            
+
 
 
 
@@ -417,7 +459,7 @@ class ContratosModelo
             $pps->bindValue(66, $ctr['clts_fachada_color']);
             $pps->bindValue(67, $ctr['clts_puerta_color']);
             $pps->bindValue(68, $ctr['ctr_status_cuenta']);
-            $pps->bindValue(69, $ctr['ctr_saldo_actual']); 
+            $pps->bindValue(69, $ctr['ctr_saldo_actual']);
             $pps->bindValue(70, $ctr['ctr_id']);
 
             $pps->execute();
@@ -519,7 +561,7 @@ class ContratosModelo
             $pps->bindValue(66, $ctr['clts_fachada_color']);
             $pps->bindValue(67, $ctr['clts_puerta_color']);
             $pps->bindValue(68, $ctr['ctr_status_cuenta']);
-            $pps->bindValue(69, $ctr['ctr_saldo_actual']); 
+            $pps->bindValue(69, $ctr['ctr_saldo_actual']);
             $pps->bindValue(70, $ctr['ctr_numero_cuenta']);
             $pps->bindValue(71, $ctr['ctr_ruta']);
 

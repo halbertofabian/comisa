@@ -739,7 +739,9 @@ class ContratosControlador
                 'ctr_pago_credito' => dnum($_POST['ctr_pago_credito']),
                 'ctr_aprovado_ventas' =>  $aprovado_ventas,
                 'clts_fachada_color' => $_POST['clts_fachada_color'],
-                'clts_puerta_color' => $_POST['clts_puerta_color']
+                'clts_puerta_color' => $_POST['clts_puerta_color'],
+                'ctr_status_cuenta' => "",
+                'ctr_saldo_actual' => ""
             );
             $actualizarContrato = ContratosModelo::mdlActualizarPreContratos($datos);
             if ($actualizarContrato) {

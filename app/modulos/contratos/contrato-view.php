@@ -1,5 +1,5 @@
 <?php
-cargarComponente('breadcrumb_nivel_1', '', 'Contrato', array(['ruta' => 'contratos', 'label' => 'Listar contratos']));
+cargarComponente('breadcrumb_nivel_1', '', 'Contrato', array(['ruta' => 'contratos/listar', 'label' => 'Listar contratos']));
 
 
 $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
@@ -19,31 +19,22 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-3 text-center">
                     <div class="form-group">
 
-                        <input type="text" name="clts_folio_nuevo" id="clts_folio_nuevo" class="form-control text-center" value="<?= $ctr['clts_folio_nuevo'] ?>" required readonly>
+                        <input type="hidden" name="clts_folio_nuevo" id="clts_folio_nuevo" class="form-control text-center" value="<?= $ctr['clts_folio_nuevo'] ?>" required readonly>
+                        <input type="text" name="ctr_folio" id="ctr_folio" class="form-control text-center" value="<?= $ctr['ctr_folio'] ?>" required readonly>
 
                     </div>
                     <p class="card-text text-center">Nº CONTRATO</p>
                 </div>
                 <div class="col-md-3 text-center">
                     <div class="form-group">
-                        <select name="ctr_ruta" id="ctr_ruta" class="form-control">
-                            <option value="<?= $ctr['ctr_ruta'] ?>"><?= $ctr['ctr_ruta'] ?></option>
-                            <?php
-                            for ($i = 1; $i <= 16; $i++) {
-                                echo '<option value="R' . $i . '">R' . $i . '</option>';
-                            }
-                            ?>
-                        </select>
-
-
-
+                        <input type="text" name="ctr_ruta" id="ctr_ruta" class="form-control" value="<?= $ctr['ctr_ruta'] ?>" readonly>
                     </div>
                     <p class="card-text text-center">RUTA</p>
                 </div>
                 <div class="col-md-3 text-center">
                     <div class="form-group">
 
-                        <input type="text" name="ctr_numero_cuenta" id="ctr_numero_cuenta" class="form-control text-center" value="<?= $ctr['ctr_numero_cuenta'] ?>" required>
+                        <input type="text" name="ctr_numero_cuenta" id="ctr_numero_cuenta" class="form-control text-center" value="<?= $ctr['ctr_numero_cuenta'] ?>" required readonly >
 
                     </div>
                     <p class="card-text text-center">Nº CUENTA</p>

@@ -86,6 +86,20 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrSubirContratoByExcel();
         echo json_encode($respuesta, true);
     }
+
+    public function ajaxConsultarContratoById(){
+        $respuesta = ContratosModelo::mdlMostrarContratosById($_POST['ctr_id']);
+        echo json_encode($respuesta, true);
+    }
+
+    public function ajaxConsultarUltimoCuentaRuta(){
+        $respuesta = ContratosModelo::mdlMostrarUltimaCuenta($_POST['ctr_ruta']);
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxAsignarCuenta(){
+        $respuesta = ContratosModelo::mdlAsignarCuenta($_POST);
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -136,4 +150,20 @@ if(isset($_POST['btnListarContratos'])){
 if (isset($_POST['btnImportarContratos'])) {
     $impotarProductos = new ContratosAjax();
     $impotarProductos->ajaxImportarContratos();
+}
+
+if(isset($_POST['btnAsignarRuta'])){
+    $mostrarContratoId = new ContratosAjax();
+    $mostrarContratoId -> ajaxConsultarContratoById();
+}
+
+if(isset($_POST['btnBuscarRuta'])){
+    $mostrarUltimaCuenta = new ContratosAjax();
+    $mostrarUltimaCuenta -> ajaxConsultarUltimoCuentaRuta();
+}
+
+if(isset($_POST['btnAsignarRutaCuenta'])){
+    $asignarRutaCuenta = new ContratosAjax();
+    $asignarRutaCuenta -> ajaxAsignarCuenta();
+
 }

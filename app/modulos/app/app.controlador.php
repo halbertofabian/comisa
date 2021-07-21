@@ -640,6 +640,29 @@ class AppControlador
                     ),
                 ]
             ),
+            '7' => array(
+                [
+                    
+                    'label' => 'Contratos',
+                    'icon' => '<i class="fa fa-file-text-o "></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '',
+                            'label' => 'Gestión de contratos',
+                            'href' => 'contratos/listar'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Listar todos los contratos',
+                            'href' => 'contratos/todos'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
             '1' => array(
                 [
                     'label' => 'Cobranza',
@@ -765,7 +788,7 @@ class AppControlador
             '1' => array(
                 [
                     'label' => 'Ventas',
-                    'icon' => '<i class="fas fa-funnel-dollar "></i>',
+                    'icon' => '<i class="fa fa-shopping-bag"></i>',
                     'href' => '#home',
                     'modulos' =>
                     array(
@@ -780,23 +803,34 @@ class AppControlador
                             'label' => 'Lista de cajas / Nueva caja',
                             'href' => 'cajas'
                         ],
-
-                        [
-                            'icon' => '',
-                            'label' => 'Buscar contratos',
-                            'href' => 'contratos/buscar'
-                        ],
-
-                        [
-                            'icon' => '',
-                            'label' => 'Listar contratos',
-                            'href' => 'contratos/listar'
-                        ],
                         //Aqui más item de menu
                     ),
                 ]
             ),
 
+            '10' => array(
+                [
+                    
+                    'label' => 'Contratos',
+                    'icon' => '<i class="fa fa-file-text-o "></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '',
+                            'label' => 'Gestión de contratos',
+                            'href' => 'contratos/listar'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Listar todos los contratos',
+                            'href' => 'contratos/todos'
+                        ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
             '9' => array(
                 [
                     'label' => 'Clientes',
@@ -1002,8 +1036,13 @@ class AppControlador
 
                         [
                             'icon' => '',
-                            'label' => 'Contratos',
+                            'label' => 'Gestión de contratos',
                             'href' => 'contratos/listar'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Listar todos los contratos',
+                            'href' => 'contratos/todos'
                         ],
                         //Aqui más item de menu
                     ),
