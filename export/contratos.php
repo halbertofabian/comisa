@@ -58,8 +58,8 @@ foreach ($contratos_set as $key => $ctr) {
     $ano_c = $fecha_contrato[0];
 
     // Fecha de pago
-    $fecha_pago = date_create(substr($ctr['ctr_proximo_pago'], 0, 10));
-    $fecha_pago = date_format($fecha_pago, 'd/m/y');
+    $fecha_pago = $ctr['ctr_proximo_pago'];
+    // $fecha_pago = date_format($fecha_pago, 'd/m/y');
 
     // Productos 
     $productos = json_decode($ctr['ctr_productos'], true);
@@ -173,7 +173,7 @@ foreach ($contratos_set as $key => $ctr) {
     
 }
 
-
+echo "CONTROL DE CONTRATOS \n";
 echo "CODIGO,";
 echo "NUMERO,";
 echo "RUTA,";
@@ -335,4 +335,41 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['clts_curp']) . ",";
     echo dnum($ctr['ctr_saldo']) . ",";
     echo dnum($ctr['clts_tbj_ing_conyuge']) . "\n";
+
+   
 }
+
+echo "\n";
+echo "\n";
+echo "\n";
+echo "CONTROL DE VENTAS \n";
+echo ",";
+echo "No.,";
+echo "FECHA,";
+echo "FOLIO,";
+echo "CLIENTE,";
+echo "ARTICULO,";
+echo "DOMICILIO,";
+echo "POBLADO,";
+echo "RUTA,";
+echo "ENG.,";
+echo "S/E.,";
+echo "PEND. ENGANCHE ,";
+echo "VENDEDOR \n";
+
+foreach ($contratos as $key => $ctr) {
+    echo ",";
+    echo $key.",";
+    echo $ctr['ctr_dia'].'/'.$ctr['ctr_mes'].'/'.$ctr['ctr_ano'] .",";
+    echo dnum($ctr['ctr_folio']) . ",";
+    echo dnum($ctr['ctr_cliente']) . ",";
+    echo dnum($ctr['ctr_productos']) . ",";
+    echo dnum($ctr['clts_domicilio']) . ",";
+    echo dnum($ctr['clts_col']) . ",";
+    echo dnum($ctr['ctr_ruta']) . ",";
+    echo dnum($ctr['ctr_enganche']) . ",";
+    echo dnum($ctr['ctr_pago_adicional']) . ",";
+    echo dnum($ctr['sobre_enganche_pendiente']) . ",";
+    echo dnum($ctr['usr_nombre']) . "\n";
+}
+
