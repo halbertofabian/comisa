@@ -91,7 +91,7 @@
     <div class="card-body" style="height:500px; overflow-y: scroll;">
         <div class="row">
             <div class="col-12  table-responsive">
-                <table class="table table-striped table-hover tblContratos" width="100%">
+                <table class="table table-hover tblContratos" width="100%">
                     <thead>
                         <tr class="text-center">
                             <th>+Opciones</th>
@@ -253,6 +253,8 @@
                     var ctr_fecha_inicio = $("#ctr_fecha_inicio").val();
                     var ctr_fecha_fin = $("#ctr_fecha_fin").val();
                     listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin);
+
+                    $('#exampleModal').modal('hide')
                 } else {
                     toastr.error("Intente de nuevo", "Error");
                 }
@@ -386,9 +388,16 @@
 
                 res.forEach(ctr => {
 
+                    var bg_color = "#FFF";
+
+                   
+                    if (ctr.ctr_aprovado_ventas == 1) {
+                        bg_color = "#46CD93";
+                    }
+
                     tbodyContratos +=
                         `
-                        <tr class="text-center">
+                        <tr class="text-center" style="background-color:${bg_color}">
 
                             <td>
                                <div class="btn-group">
