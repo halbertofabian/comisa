@@ -642,7 +642,7 @@ class AppControlador
             ),
             '7' => array(
                 [
-                    
+
                     'label' => 'Contratos',
                     'icon' => '<i class="fa fa-file-text-o "></i>',
                     'href' => '#home',
@@ -810,7 +810,7 @@ class AppControlador
 
             '10' => array(
                 [
-                    
+
                     'label' => 'Contratos',
                     'icon' => '<i class="fa fa-file-text-o "></i>',
                     'href' => '#home',
@@ -959,35 +959,40 @@ class AppControlador
                 ]
             ),
 
-            '7' => array(
-                [
-                    'label' => 'Plantillas',
-                    'icon' => '<i class="link-icon fa fa-dollar"></i>',
-                    'href' => '#softMarket',
-                    'modulos' =>
-                    array(
-                        [
-                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Crear plantilla de ventas',
-                            'href' => 'ventas/crear-plantilla'
-                        ],
-                        [
-                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Cargar datos a plantilla',
-                            'href' => 'ventas/cargar-plantilla'
-                        ],
-                        // Aqui más item de menu
-                    ),
-                ]
-            ),
+            // '7' => array(
+            //     [
+            //         'label' => 'Plantillas',
+            //         'icon' => '<i class="link-icon fa fa-dollar"></i>',
+            //         'href' => '#softMarket',
+            //         'modulos' =>
+            //         array(
+            //             [
+            //                 'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+            //                 'label' => 'Crear plantilla de ventas',
+            //                 'href' => 'ventas/crear-plantilla'
+            //             ],
+            //             [
+            //                 'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+            //                 'label' => 'Cargar datos a plantilla',
+            //                 'href' => 'ventas/cargar-plantilla'
+            //             ],
+            //             // Aqui más item de menu
+            //         ),
+            //     ]
+            // ),
             '8' => array(
                 [
-                    'label' => 'Almacenes',
-                    'icon' => '<i class="link-icon fa fa-amazon"></i>',
+                    'label' => 'Flujo de mercancía',
+                    'icon' => '<i class="link-icon fa fa-exchange"></i>',
                     'href' => '#softMarket',
                     'modulos' =>
                     array(
 
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Registrar nuevo almacen',
+                            'href' => 'almacenes'
+                        ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Nuevo producto',
@@ -1001,7 +1006,7 @@ class AppControlador
 
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Traspaso de mercancia',
+                            'label' => 'Salida de mercancía',
                             'href' => 'traspasos/new'
                         ],
 
@@ -1015,6 +1020,18 @@ class AppControlador
                             'label' => 'Listar productos',
                             'href' => 'productos'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Importar productos',
+                            'href' => 'productos/importar'
+                        ],
+
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Exportar productos',
+                            'href' => 'export/exportar-productos.php'
+                        ],
+
                         // Aqui más item de menu
                     ),
                 ]
@@ -1027,7 +1044,7 @@ class AppControlador
         return array(
             '10' => array(
                 [
-                    
+
                     'label' => 'Contratos',
                     'icon' => '<i class="fa fa-file-text-o "></i>',
                     'href' => '#home',
@@ -1159,33 +1176,33 @@ class AppControlador
                     ),
                 ]
             ),
-            '7' => array(
-                [
-                    'label' => 'Flujo de mercancia',
-                    'icon' => '<i class="link-icon fa fa-exchange" aria-hidden="true"></i>
-                    ',
-                    'href' => '#softMarket',
-                    'modulos' =>
-                    array(
-                        [
-                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Entradas',
-                            'href' => 'almacenes/entradas'
-                        ],
-                        [
-                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Salidas',
-                            'href' => 'traspasos/new'
-                        ],
+            // '7' => array(
+            //     [
+            //         'label' => 'Flujo de mercancia',
+            //         'icon' => '<i class="link-icon fa fa-exchange" aria-hidden="true"></i>
+            //         ',
+            //         'href' => '#softMarket',
+            //         'modulos' =>
+            //         array(
+            //             [
+            //                 'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+            //                 'label' => 'Entradas',
+            //                 'href' => 'almacenes/entradas'
+            //             ],
+            //             [
+            //                 'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+            //                 'label' => 'Salidas',
+            //                 'href' => 'traspasos/new'
+            //             ],
 
-                        // Aqui más item de menu
-                    ),
-                ]
-            ),
+            //             // Aqui más item de menu
+            //         ),
+            //     ]
+            // ),
             '8' => array(
                 [
-                    'label' => 'Almacenes',
-                    'icon' => '<i class="link-icon fa fa-amazon"></i>',
+                    'label' => 'Flujo de mercancía',
+                    'icon' => '<i class="link-icon fa fa-exchange"></i>',
                     'href' => '#softMarket',
                     'modulos' =>
                     array(
@@ -1208,7 +1225,7 @@ class AppControlador
 
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Traspaso de mercancia',
+                            'label' => 'Salida de mercancía',
                             'href' => 'traspasos/new'
                         ],
 
