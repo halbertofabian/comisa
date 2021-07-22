@@ -34,7 +34,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-3 text-center">
                     <div class="form-group">
 
-                        <input type="text" name="ctr_numero_cuenta" id="ctr_numero_cuenta" class="form-control text-center" value="<?= $ctr['ctr_numero_cuenta'] ?>" required readonly >
+                        <input type="text" name="ctr_numero_cuenta" id="ctr_numero_cuenta" class="form-control text-center" value="<?= $ctr['ctr_numero_cuenta'] ?>" required readonly>
 
                     </div>
                     <p class="card-text text-center">Nº CUENTA</p>
@@ -576,20 +576,10 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                     </div>
                 </div>
 
-                <div class="col-12">
-                    <div class="form-group">
-                        <label for="ctr_nota">Observaciones</label>
-                        <textarea name="ctr_nota" id="ctr_nota" class="form-control" cols="30" rows="5"><?= $ctr['ctr_nota'] ?></textarea>
-                    </div>
-                </div>
+                
                 <input type="hidden" name="ctr_id" id="ctr_id" value="<?= $ctr['ctr_id'] ?>">
 
-                <div class="col-md-9"></div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <button class="btn btn-primary text-center float-right btn-block" name="btnGuadarDatosContrato"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
-                    </div>
-                </div>
+
 
                 <div class="col-md-6">
                     <div class="card">
@@ -618,6 +608,54 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             </div>
         </div>
     </div>
+
+    <div class="card card-status">
+        <div class="card-header text-center bg-primary">
+            <strong style="color:aliceblue">7.- Estado de la cuenta </strong>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ctr_status_cuenta">SATATUS DE CUENTA:</label>
+                        <input type="text" name="ctr_status_cuenta" id="ctr_status_cuenta" class="form-control" value="<?= $ctr['ctr_status_cuenta'] ?>">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ctr_saldo_actual">SALDO ACTUAL:</label>
+                        <input type="text" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>">
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label for="ctr_nota">Observaciones</label>
+                        <textarea name="ctr_nota" id="ctr_nota" class="form-control" cols="30" rows="5"><?= $ctr['ctr_nota'] ?></textarea>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="card">
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-9 mt-5"></div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <button class="btn btn-primary text-center float-right btn-block" name="btnGuadarDatosContrato"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php
 
     $actualizar = new ContratosControlador();
