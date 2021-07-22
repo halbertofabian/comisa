@@ -89,7 +89,9 @@ if (isset($_GET['ctr_id'])) {
     } elseif ($ctr['ctr_forma_pago'] == "MENSUALES") {
         $plazo_crdito_cad = "MESES";
     }
-
+$scl_rfc = $_SESSION['session_suc']['scl_rfc'];
+$scl_direccion = $_SESSION['session_suc']['scl_direccion'];
+$scl_horario = $_SESSION['session_suc']['scl_horario'];
     $encabezado = <<<EOF
 
 <table>
@@ -97,21 +99,15 @@ if (isset($_GET['ctr_id'])) {
         <tr>
             <td style="text-align:center; width:25%">
                 <img src="{$rutaImg}" width="100" height="100" /> <br>
-                R.F.C: FAAS750810MVV9
+                $scl_rfc
                 <div style="width:50%;text-align: center;border: 1px solid #002973;background-color:#E9ECEF;color:#002973;">
                         VENDEDOR <br>  <span style="color:#000"> $ctr[usr_nombre] </span>
                 </div>
             </td>
             <td style="text-align:center ; width:55%">
-                    MATRIZ: TUXTEPEC, OAX.<br>
-                    CARR. FED. AL INGENIO LOTE 500 B COL. REACOMODO <br>
-                    PLAYA DE MONO TELS.: 01 (287) 87 193 17 <BR>
-                    SUCURSAL: ALMADA #210 ENTRE DIAS MIRON Y ALTAMIRANO <BR>
-                    COL.: LOMAS DE JAZMIN, TIERRA BLANCA, VER.
+                    $scl_direccion
                     <BR><BR>
-                    HORARIOS DE OFICINA: De 8:00 am A 14:00 hrs. <br>
-                    y de 16:00 hrs. a 18:00. Lunes a Viernes <br>
-                    Sábado De 8:00 am a 14:00 hrs.
+                    $scl_horario
                     
                     
             </td>
@@ -663,8 +659,8 @@ EOF;
         </thead>
     </table>
 EOF;
-    $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
-    $pdf->writeHTMLCell(0, 0, '', '', $plazo_crdito, 0, 1, 0, true, '', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
+    // $pdf->writeHTMLCell(0, 0, '', '', $plazo_crdito, 0, 1, 0, true, '', true);
 
     ob_end_clean();
 

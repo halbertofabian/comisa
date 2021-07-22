@@ -81,6 +81,8 @@ class UsuariosAjax
             $sincronizacion = array(
                 'nombre_suc' => $_SESSION['session_suc']['scl_nombre'],
                 'url_suc' => HTTP_HOST,
+                'scl_direccion' => $_SESSION['session_suc']['scl_direccion'],
+                'scl_horario' => $_SESSION['session_suc']['scl_horario'],
                 'infovendedor' => array(
                     'idusr' => $respuesta['usr_id'],
                     'nombre' => $respuesta['usr_nombre'],
