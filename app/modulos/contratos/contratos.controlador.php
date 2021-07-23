@@ -611,7 +611,7 @@ class ContratosControlador
                 //Nuevos atributos 
                 'clts_fachada_color' => "",
                 'clts_puerta_color' => "",
-                'ctr_status_cuenta' => "",
+                'ctr_status_cuenta' => "VIGENTE",
                 'ctr_saldo_actual' => $cts["ctr_saldo"]
 
             );
@@ -830,7 +830,7 @@ class ContratosControlador
             //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
 
             $leyenda = "";
-            for ($i = 4; $i <= $numRows; $i++) {
+            for ($i = 2; $i <= $numRows; $i++) {
 
 
                 $ctr_numero_cuenta = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
@@ -890,10 +890,32 @@ class ContratosControlador
                 $clts_dir_ref2 = $objPHPExcel->getActiveSheet()->getCell('BD' . $i)->getCalculatedValue();
                 $clts_col_ref2 = $objPHPExcel->getActiveSheet()->getCell('BE' . $i)->getCalculatedValue();
                 $clts_tel_ref2 = $objPHPExcel->getActiveSheet()->getCell('BF' . $i)->getCalculatedValue();
-                $ctr_pago_t = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
-                $ctr_pago_credito = (int) filter_var($ctr_pago_t, FILTER_SANITIZE_NUMBER_INT);
-                $ctr_forma_pago =  (string) filter_var($ctr_pago_t, FILTER_SANITIZE_STRING);
-                $ctr_proximo_pago = $objPHPExcel->getActiveSheet()->getCell('BH' . $i)->getCalculatedValue();
+
+                // $ctr_pago_t = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
+                // $ctr_pago_credito = (int) filter_var($ctr_pago_t, FILTER_SANITIZE_NUMBER_INT);
+                // $ctr_forma_pago =  (string) filter_var($ctr_pago_t, FILTER_SANITIZE_STRING);
+
+                $ctr_forma_pago = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
+
+
+                // $cell = $excel->getActiveSheet()->getCell('B' . $i);
+                // $InvDate = $cell->getValue();
+                // if (PHPExcel_Shared_Date::isDateTime($cell)) {
+                //     $InvDate = date($format, PHPExcel_Shared_Date::ExcelToPHP($InvDate));
+                // }
+
+                $cell = $objPHPExcel->getActiveSheet()->getCell('BH' . $i);
+                $ctr_proximo_pago = $cell->getValue();
+
+                if ($ctr_proximo_pago != 0) {
+                    if (PHPExcel_Shared_Date::isDateTime($cell)) {
+                        $ctr_proximo_pago = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($ctr_proximo_pago));
+                    }
+                }
+
+                
+
+
                 $ctr_dia_pago = $objPHPExcel->getActiveSheet()->getCell('BI' . $i)->getCalculatedValue();
                 $clts_plazo_c = $objPHPExcel->getActiveSheet()->getCell('BJ' . $i)->getCalculatedValue();
                 $ctr_plazo_credito = (int) filter_var($clts_plazo_c, FILTER_SANITIZE_NUMBER_INT);
@@ -910,12 +932,26 @@ class ContratosControlador
                 $clts_curp = $objPHPExcel->getActiveSheet()->getCell('BX' . $i)->getCalculatedValue();
                 $ctr_saldo_actual =  $objPHPExcel->getActiveSheet()->getCell('BY' . $i)->getCalculatedValue();
                 $clts_tbj_ing_conyuge =  $objPHPExcel->getActiveSheet()->getCell('BZ' . $i)->getCalculatedValue();
+                $ctr_pago_credito = $objPHPExcel->getActiveSheet()->getCell('CA' . $i)->getCalculatedValue();
+
 
                 $ctr_productos = json_encode(array(array(
                     'sku' => '',
                     'nombreProducto' => $clts_des_pds,
                     'cantidad' => $clts_cant_pds
-                )),true);
+                )), true);
+
+                // $ctr_proximo_pago_array =  explode('/', $ctr_proximo_pago);
+
+                // $dia_p = $ctr_proximo_pago_array[0];
+                // $mes_p = $ctr_proximo_pago_array[1];
+                // $ano_p = $ctr_proximo_pago_array[2];
+
+                // $fecha_p = $dia_p.'-'.$mes_p.'-'.$ano_p;
+
+                //  $dateNew = DateTime::createFromFormat('m-d-Y', $ctr_proximo_pago)->format('Y/m/d');
+                // echo $InvDate . "<br>";
+
 
                 $ctr = array(
                     'ctr_id' => '',
@@ -927,7 +963,7 @@ class ContratosControlador
                     'ctr_ruta' => dstring($ctr_ruta),
                     'ctr_forma_pago' => dstring($ctr_forma_pago),
                     'ctr_dia_pago' => dstring($ctr_dia_pago),
-                    'ctr_proximo_pago' => dstring($ctr_proximo_pago),
+                    'ctr_proximo_pago' => $ctr_proximo_pago,
                     'ctr_plazo_credito' => dstring($ctr_plazo_credito),
                     'ctr_tipo_pago' => '',
                     'ctr_productos' => $ctr_productos,
@@ -1016,33 +1052,30 @@ class ContratosControlador
 
 
 
-            
+
 
                 $ctr_isset = ContratosModelo::mdlmBuscarContratosCodigo($ctr_numero_cuenta, $ctr_ruta);
-                
-                
 
-                if(!$ctr_isset){
+
+
+                if (!$ctr_isset) {
                     // REGISTRAR CONTRATO 
                     $registrarContrato = ContratosModelo::mdlSubirPreContratos($ctr);
-                   
-                    if($registrarContrato){
+
+                    if ($registrarContrato) {
                         $countInsert += 1;
-                    }else{
-                       
+                    } else {
                     }
-                }else{
+                } else {
                     // ACTUALIZAR CONTRATO
-                    
+
 
                     $actualizarContrato = ContratosModelo::mdlActualizarPreContratosExcel($ctr);
-                    if($actualizarContrato){
+                    if ($actualizarContrato) {
                         $countUpdate += 1;
-                    } 
-                    
-
+                    }
                 }
-                
+
 
 
 
@@ -1060,13 +1093,13 @@ class ContratosControlador
             }
 
 
-           
+
             return array(
                 'status' => true,
                 'mensaje' => "Carga de contratos con éxito",
                 'insert' =>  $countInsert,
                 'update' => $countUpdate,
-                'pagina' => HTTP_HOST.'contratos/listar'
+                'pagina' => HTTP_HOST . 'contratos/listar'
             );
         } catch (Exception $th) {
             $th->getMessage();

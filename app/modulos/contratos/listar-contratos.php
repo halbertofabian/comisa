@@ -304,7 +304,9 @@
                     $('#ctr_ruta option')[0].selected = true;
 
                 } else {
-                    $("#ctr_ruta option[value=" + res.ctr_ruta + "]").attr("selected", true);
+                    $('#ctr_ruta option')[0].selected = true;
+
+                    // $("#ctr_ruta option[value=" + res.ctr_ruta + "]").attr("selected", true);
                 }
                 if (res.ctr_ruta != '-' && res.ctr_numero_cuenta != 0) {
 
@@ -325,7 +327,7 @@
                         });
                 }
 
-                $("#ctr_numero_cuenta").val(res.ctr_numero_cuenta)
+                //$("#ctr_numero_cuenta").val(res.ctr_numero_cuenta)
 
                 $("#ctr_ticket").html(res.ctr_folio);
                 $("#ctr_nombre").html(res.ctr_cliente);
@@ -408,7 +410,7 @@
                                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 </a>
                                 <button   class="btn btn-primary text-center btnAsignarRuta" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#exampleModal" >
-                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <i class="fa fa-map" aria-hidden="true"></i>
 
                                 </button>
                                </div>
