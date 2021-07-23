@@ -43,7 +43,7 @@
                 <div class="form-group">
                     <label for="ctr_folio">FILTRO DE BUSQUEDA</label>
                     <input type="text" name="ctr_folio" id="ctr_folio" class="form-control" placeholder="">
-                    <small id="helpId" class="">Nº TICKET / CTA / RUTA </small>
+                    <small id="helpId" class="">Nº TICKET / CTA / RUTA / NOMBRE </small>
                 </div>
             </div>
             <div class="col-md-3">
@@ -345,6 +345,14 @@
     })
 
 
+    $("#ctr_folio").on("keyup", function() {
+        var ctr_folio = $("#ctr_folio").val();
+        var ctr_vendedor = $("#ctr_vendedor").val();
+        var ctr_fecha_inicio = $("#ctr_fecha_inicio").val();
+        var ctr_fecha_fin = $("#ctr_fecha_fin").val();
+        listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin);
+    })
+
     $("#btnListarContratos").on("click", function() {
 
         var ctr_folio = $("#ctr_folio").val();
@@ -392,7 +400,7 @@
 
                     var bg_color = "#FFF";
 
-                   
+
                     if (ctr.ctr_aprovado_ventas == 1) {
                         bg_color = "#46CD93";
                     }
@@ -403,7 +411,7 @@
 
                             <td>
                                <div class="btn-group">
-                                <a href="${urlApp+'contratos/buscar/'+ctr.ctr_id}"  class="btn btn-warning text-center">
+                                <a href="${urlApp+'contratos/buscar/'+ctr.ctr_id}" target="_blacnk"   class="btn btn-warning text-center">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a href="${urlApp+'app/report/contrato-ventas.php?ctr_id='+ctr.ctr_id}" target="_blacnk"  class="btn btn-secondary text-center btnImprimirContrato" ctr_id="${ctr.ctr_id}" >
