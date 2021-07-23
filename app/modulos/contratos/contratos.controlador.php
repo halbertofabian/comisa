@@ -913,7 +913,7 @@ class ContratosControlador
                     }
                 }
 
-                
+
 
 
                 $ctr_dia_pago = $objPHPExcel->getActiveSheet()->getCell('BI' . $i)->getCalculatedValue();
@@ -952,6 +952,12 @@ class ContratosControlador
                 //  $dateNew = DateTime::createFromFormat('m-d-Y', $ctr_proximo_pago)->format('Y/m/d');
                 // echo $InvDate . "<br>";
 
+                $ctr_saldo = $ctr_total + ($ctr_enganche + $ctr_pago_adicional);
+
+                if ($ctr_pago_credito != 0)
+                    $ctr_plazo_credito = ceil($ctr_saldo /  $ctr_pago_credito);
+
+                $ctr_saldo_actual =  $ctr_saldo;
 
                 $ctr = array(
                     'ctr_id' => '',
