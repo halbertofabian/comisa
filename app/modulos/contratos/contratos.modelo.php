@@ -665,7 +665,7 @@ class ContratosModelo
     public static function mdlMostrarContratosFolio($ctr_filtro)
     {
         try {
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.ctr_numero_cuenta LIKE '%$ctr_filtro%' OR ctr.ctr_ruta LIKE '%$ctr_filtro%' OR ctr.ctr_cliente LIKE '%$ctr_filtro%' OR concat_ws('',ctr_numero_cuenta,ctr_ruta) = '$ctr_filtro' ORDER BY ctr.ctr_fecha_contrato DESC";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.ctr_numero_cuenta = '$ctr_filtro' OR ctr.ctr_ruta = '$ctr_filtro' OR ctr.ctr_cliente LIKE '%$ctr_filtro%' OR concat_ws('',ctr_numero_cuenta,ctr_ruta) = '$ctr_filtro' ORDER BY ctr.ctr_fecha_contrato DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
@@ -680,7 +680,7 @@ class ContratosModelo
     public static function mdlMostrarContratosFolioExcel($ctr_filtro)
     {
         try {
-            $sql = "SELECT usr.usr_nombre, ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.ctr_numero_cuenta LIKE '%$ctr_filtro%' OR ctr.ctr_ruta LIKE '%$ctr_filtro%' OR ctr.ctr_cliente LIKE '%$ctr_filtro%' OR concat_ws('',ctr_numero_cuenta,ctr_ruta) = '$ctr_filtro' ORDER BY ctr.ctr_fecha_contrato DESC";
+            $sql = "SELECT usr.usr_nombre, ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_folio LIKE '%$ctr_filtro%' OR ctr.clts_folio_nuevo LIKE '%$ctr_filtro%' OR ctr.ctr_numero_cuenta = '$ctr_filtro' OR ctr.ctr_ruta = '$ctr_filtro' OR ctr.ctr_cliente LIKE '%$ctr_filtro%' OR concat_ws('',ctr_numero_cuenta,ctr_ruta) = '$ctr_filtro' ORDER BY ctr.ctr_fecha_contrato DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
