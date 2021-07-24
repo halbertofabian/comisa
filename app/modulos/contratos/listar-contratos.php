@@ -114,6 +114,12 @@
     </div>
     <div class="card-footer text-muted">
         <div class="row">
+            <div class="col-6">
+                <div class="alert alert-dark" role="alert">
+                    <strong>Resultados: </strong><span id="ctr_count" class="text-primary"></span>
+                </div>
+            </div>
+            <div class="col-6"></div>
             <div class="col-md-6">
                 <a href="" target="_blanck" id="btnExportarContratos" class="btn btn-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i>
                     Descargar
@@ -395,8 +401,10 @@
 
                 $(".d-load").addClass("d-none")
                 var tbodyContratos = "";
+                var ctr_count = 0;
 
                 res.forEach(ctr => {
+                    ctr_count ++;
 
                     var bg_color = "#FFF";
 
@@ -445,6 +453,7 @@
 
                 $("#btnExportarContratos").attr("href", urlExport)
                 $("#tbodyContratos").html(tbodyContratos);
+                $("#ctr_count").html(ctr_count)
             }
         })
 
