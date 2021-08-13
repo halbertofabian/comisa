@@ -100,6 +100,11 @@ class ContratosAjax
         $respuesta = ContratosModelo::mdlAsignarCuenta($_POST);
         echo json_encode($respuesta, true);
     }
+    public function ajaxRegistrarClienteMal(){
+        $respuesta = ContratosControlador::ctrClientesMalH();
+        echo json_encode($respuesta, true);
+    }
+    
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -152,7 +157,7 @@ if (isset($_POST['btnImportarContratos'])) {
     $impotarProductos->ajaxImportarContratos();
 }
 
-if(isset($_POST['btnAsignarRuta'])){
+if(isset($_POST['btnConsultarContrato'])){
     $mostrarContratoId = new ContratosAjax();
     $mostrarContratoId -> ajaxConsultarContratoById();
 }
@@ -166,4 +171,8 @@ if(isset($_POST['btnAsignarRutaCuenta'])){
     $asignarRutaCuenta = new ContratosAjax();
     $asignarRutaCuenta -> ajaxAsignarCuenta();
 
+}
+if(isset($_POST['btnRegistrarClienteMalH'])){
+    $registrarClienteH = new ContratosAjax();
+    $registrarClienteH -> ajaxRegistrarClienteMal();
 }

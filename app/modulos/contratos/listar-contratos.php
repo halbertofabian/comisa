@@ -188,6 +188,94 @@
     </div>
 </div>
 
+<div class="modal fade" id="mdlClientesMal" tabindex="-1" role="dialog" aria-labelledby="mdlClientesMalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Clientes con mal historial</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-load-c d-node">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <form id="formRegistroClienteMalH" method="post" class="d-none">
+                <input type="hidden" name="ctr_id" id="ctr_id_c">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="clts_ruta">Ruta</label>
+                            <input type="text" name="clts_ruta" id="clts_ruta" class="form-control" placeholder="" aria-describedby="helpId">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="clts_cuenta">Cuenta</label>
+                            <input type="text" name="clts_cuenta" id="clts_cuenta" class="form-control" placeholder="">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="clts_fecha_venta">Fecha de venta</label>
+                            <input type="text" name="clts_fecha_venta" id="clts_fecha_venta" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <label for="clts_nombre">Nombre del cliente *</label>
+                            <input type="text" name="clts_nombre" id="clts_nombre" class="form-control" placeholder="Ingresa el nombre del cliente" required>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="clts_curp">CURP</label>
+                            <input type="text" name="clts_curp" id="clts_curp" class="form-control" placeholder="Ingresa la curp del cliente">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="clts_telefono">Número de telefono</label>
+                            <input type="text" name="clts_telefono" id="clts_telefono" class="form-control phone_mx" placeholder="Ingresa el número del cliente">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="clts_domicilio">Domicilio *</label>
+                            <input type="text" name="clts_domicilio" id="clts_domicilio" class="form-control" placeholder="Ingrese el domicilio" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="clts_col">Colonia</label>
+                            <input type="text" name="clts_col" id="clts_col" class="form-control" placeholder="Ingrese la colonia">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="clts_ubicacion">Ubicación</label>
+                            <input type="text" name="clts_ubicacion" id="clts_ubicacion" class="form-control" placeholder="Ingrese la ubicación">
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <label for="clts_tipo_cliente">Status *</label>
+                            <input type="text" name="clts_tipo_cliente" id="clts_tipo_cliente" class="form-control" placeholder="" required>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="clts_articulo">Mercancía</label>
+                            <input type="text" name="clts_articulo" id="clts_articulo" class="form-control" placeholder="" required>
+                        </div>
+
+
+                        <div class="form-group col-12">
+                            <label for="clts_observaciones"></label>
+                            <textarea name="clts_observaciones" id="clts_observaciones" cols="30" rows="5" class="form-control" placeholder="Escriba aquí las observaciones"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-load">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     $(document).ready(function() {
@@ -271,6 +359,50 @@
 
     })
 
+    $("#formRegistroClienteMalH").on("submit", function(e) {
+
+
+        e.preventDefault();
+
+        swal({
+                title: "¿Desea continuar?",
+                text: "Este cliente se alacenará en la base de datos de clientes con mal historial",
+                icon: "warning",
+                buttons: ["Cancelar", "Si, se lo merece"],
+                dangerMode: true,
+                closeOnClickOutside: false,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    var datos = new FormData(this);
+                    datos.append("btnRegistrarClienteMalH", true);
+                    $.ajax({
+                        type: "POST",
+                        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                        data: datos,
+                        cache: false,
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function() {
+                            startLoadButton()
+                        },
+                        success: function(res) {
+
+                            console.log(res)
+
+                        }
+                    })
+
+                } else {
+                    window.location.reload();
+                }
+            });
+
+
+
+    })
 
     $(".tblContratos tbody").on("click", "button.btnAsignarRuta", function() {
 
@@ -288,7 +420,7 @@
 
         var ctr_id = $(this).attr("ctr_id");
         datos.append("ctr_id", ctr_id)
-        datos.append("btnAsignarRuta", true)
+        datos.append("btnConsultarContrato", true)
 
         $.ajax({
             type: "POST",
@@ -350,6 +482,59 @@
 
     })
 
+    $(".tblContratos tbody").on("click", "button.btnClientesMal", function() {
+        var datos = new FormData();
+
+        var ctr_id = $(this).attr("ctr_id");
+        datos.append("ctr_id", ctr_id)
+        datos.append("btnConsultarContrato", true)
+
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                //startLoadButton()
+
+                $(".d-load-c").removeClass("d-none")
+
+            },
+            success: function(res) {
+                $("#formRegistroClienteMalH").removeClass("d-none")
+                $(".d-load-c").addClass("d-none")
+
+                var productos = JSON.parse(res.ctr_productos);
+
+                console.log(productos);
+
+                var mercancia = "";
+
+                productos.forEach(pds => {
+                    mercancia += pds.cantidad + " " + pds.nombreProducto + ","
+                });
+
+                $("#clts_ruta").val(res.ctr_ruta)
+                $("#clts_cuenta").val(res.ctr_numero_cuenta)
+                $("#clts_fecha_venta").val(res.ctr_fecha_contrato)
+                $("#clts_nombre").val(res.ctr_cliente)
+                $("#clts_curp").val(res.clts_curp)
+                $("#clts_telefono").val(res.clts_telefono)
+                $("#clts_domicilio").val(res.clts_domicilio)
+                $("#clts_col").val(res.clts_col)
+                $("#clts_ubicacion").val(res.clts_coordenadas)
+                $("#clts_tipo_cliente").val(res.ctr_status_cuenta)
+                $("#clts_articulo").val(mercancia)
+                $("#clts_observaciones").html(res.ctr_nota)
+                $("#ctr_id_c").val(res.ctr_id)
+
+            }
+        })
+    })
+
 
     $("#ctr_folio").on("keyup", function() {
         var ctr_folio = $("#ctr_folio").val();
@@ -404,7 +589,7 @@
                 var ctr_count = 0;
 
                 res.forEach(ctr => {
-                    ctr_count ++;
+                    ctr_count++;
 
                     var bg_color = "#FFF";
 
@@ -419,16 +604,16 @@
 
                             <td>
                                <div class="btn-group">
-                                <a href="${urlApp+'contratos/buscar/'+ctr.ctr_id}" target="_blacnk"   class="btn btn-warning text-center">
+                                <a href="${urlApp+'contratos/buscar/'+ctr.ctr_id}" target="_blacnk"   class="btn btn-warning text-center btn-sm">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
-                                <a href="${urlApp+'app/report/contrato-ventas.php?ctr_id='+ctr.ctr_id}" target="_blacnk"  class="btn btn-secondary text-center btnImprimirContrato" ctr_id="${ctr.ctr_id}" >
+                                <a href="${urlApp+'app/report/contrato-ventas.php?ctr_id='+ctr.ctr_id}" target="_blacnk"  class="btn btn-secondary text-center btnImprimirContrato btn-sm" ctr_id="${ctr.ctr_id}" >
                                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                                 </a>
-                                <button   class="btn btn-primary text-center btnAsignarRuta" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#exampleModal" >
+                                <button   class="btn btn-primary text-center btnAsignarRuta btn-sm" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#exampleModal" >
                                 <i class="fa fa-map" aria-hidden="true"></i>
-
                                 </button>
+                                <button class="btn btn-danger btn-sm btnClientesMal" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#mdlClientesMal"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                                </div>
                             </td>
                             <td>${ctr.ctr_folio}</td>

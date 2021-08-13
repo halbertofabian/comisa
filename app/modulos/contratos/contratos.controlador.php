@@ -1117,4 +1117,21 @@ class ContratosControlador
             );
         }
     }
+
+    public static function ctrClientesMalH()
+    {
+        preArray($_POST);
+
+        // Registrar en clientes con mal historial
+
+        
+
+
+
+
+
+
+
+
+    }
 }

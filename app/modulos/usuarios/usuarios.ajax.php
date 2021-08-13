@@ -83,6 +83,7 @@ class UsuariosAjax
                 'url_suc' => HTTP_HOST,
                 'scl_direccion' => $_SESSION['session_suc']['scl_direccion'],
                 'scl_horario' => $_SESSION['session_suc']['scl_horario'],
+                'scl_rfc' => $_SESSION['session_suc']['scl_rfc'],
                 'infovendedor' => array(
                     'idusr' => $respuesta['usr_id'],
                     'nombre' => $respuesta['usr_nombre'],
