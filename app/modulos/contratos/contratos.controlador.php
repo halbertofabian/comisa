@@ -608,11 +608,14 @@ class ContratosControlador
                 'ctr_pago_credito' => dnum($cts["ctr_pago_credito"]),
                 'ctr_aprovado_ventas' => 0,
 
-                //Nuevos atributos 
+                
                 'clts_fachada_color' => "",
                 'clts_puerta_color' => "",
                 'ctr_status_cuenta' => "VIGENTE",
-                'ctr_saldo_actual' => $cts["ctr_saldo"]
+                'ctr_saldo_actual' => $cts["ctr_saldo"],
+                
+                //Nuevos atributos 
+                'ctr_moroso' => ""
 
             );
 
@@ -1052,7 +1055,8 @@ class ContratosControlador
                     'clts_fachada_color' => dstring($clts_fachada_color),
                     'clts_puerta_color' => dstring($clts_puerta_color),
                     'ctr_status_cuenta' => dstring($ctr_status_cuenta),
-                    'ctr_saldo_actual' => dnum($ctr_saldo_actual)
+                    'ctr_saldo_actual' => dnum($ctr_saldo_actual),
+                    'ctr_moroso' => ''
                 );
 
 

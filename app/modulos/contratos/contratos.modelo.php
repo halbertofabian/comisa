@@ -356,6 +356,7 @@ class ContratosModelo
             $pps->bindValue(78, $ctr['clts_puerta_color']);
             $pps->bindValue(79, $ctr['ctr_status_cuenta']);
             $pps->bindValue(80, $ctr['ctr_saldo_actual']);
+            $pps->bindValue(81,$ctr['ctr_moroso']);
 
 
 
