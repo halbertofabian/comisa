@@ -151,7 +151,7 @@ $app->post('/login', function (Request $request, Response $response) {
     echo "Aqui toy";
 });
 
-$app->post('/comisa-datos', function (Request $request, Response $response) {
+$app->post('/comisa-datos2', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $datosVendedor = json_decode($json, true);
@@ -165,18 +165,16 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
     # code...
 
 });
-$app->post('/comisa-datos2', function (Request $request, Response $response) {
+$app->post('/comisa-datos', function (Request $request, Response $response) {
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
     try {
 
-        $sql = "INSERT INTO tbl_contratos_2 (cts_todo, vdr_id,fecha,caja_id) VALUES(?,?,?,?)";
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
         $con = ConexionAPI::conectarAPI();
         $pps = $con->prepare($sql);
-        $pps->bindValue(1, $json);
-        $pps->bindValue(2, $datosVendedor[0]['vendedor']['id']);
-        $pps->bindValue(3, FECHA);
-        $pps->bindValue(4, $datosVendedor[0]['vendedor']['caja_abierta']);
+        $pps->bindValue(1, $datosVendedor);
+        $pps->bindValue(2, FECHA);
 
         $pps->execute();
     } catch (PDOException $th) {
