@@ -605,8 +605,8 @@ class ContratosControlador
                     'ctr_aprovado_ventas' => 0,
 
 
-                    'clts_fachada_color' => "",
-                    'clts_puerta_color' => "",
+                    'clts_fachada_color' => dstring($cts["clts_fachada_color"]),
+                    'clts_puerta_color' => dstring($cts["clts_puerta_color"]),
                     'ctr_status_cuenta' => "VIGENTE",
                     'ctr_saldo_actual' => $cts["ctr_saldo"],
 
