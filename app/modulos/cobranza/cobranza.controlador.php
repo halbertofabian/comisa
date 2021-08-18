@@ -41,8 +41,8 @@ class CobranzaControlador
             return array(
                 'status' => true,
                 'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', bienvenido a la app de comisa cobranza!',
-                'usr' => json_encode($usrLogin, true),
-                'scl' => json_encode($sucursal, true),
+                'usr' => $usrLogin,
+                'scl' => $sucursal,
                 'scl_url_access' => HTTP_HOST
             );
         }
