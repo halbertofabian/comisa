@@ -482,146 +482,276 @@ class ContratosControlador
 
         $ultimoDato = end($data);
 
-        if (isset($data[0]['vendedor']['caja_abierta'])) {
-            $caja_abierta = $data[0]['vendedor']['caja_abierta'];
+        if (isset($data[0]['caja_abierta'])) {
+            $caja_abierta = $data[0]['caja_abierta'];
             $countArray = $countArray;
         } else {
             $caja_abierta = $ultimoDato['caja_abierta'];
             $countArray = $countArray - 1;
         }
 
+        if (isset($data[0]['caja_abierta'])) {
+            
+            foreach ($data[1] as $key => $cts) {
+
+                $contratos_aux = array(
+
+                    'ctr_id' => NULL,
+                    'ctr_folio' =>  $cts["ctr_folio"],
+                    'ctr_fecha_contrato' =>  $cts["fecha_contrato"],
+                    'ctr_id_vendedor' => $data[0]['idVendedor'],
+                    'ctr_cliente' =>  dstring($cts["clts_nombre"]),
+                    'ctr_numero_cuenta' => "-",
+                    'ctr_ruta' => "-",
+                    'ctr_forma_pago' =>  dstring($cts["ctrs_forma_pago"]),
+                    'ctr_dia_pago' =>  dstring($cts["ctrs_dia_pago"]),
+                    'ctr_proximo_pago' =>  $cts["ctrs_fecha_pp"],
+
+                    // Número 
+                    'ctr_plazo_credito' =>  $cts["ctrs_plazo_credito"],
+
+                    // No sé de que es esto
+                    'ctr_tipo_pago' => '',
+
+                    'ctr_productos' => $cts["productos"],
+                    'ctr_total' =>  dnum($cts["total_venta"]),
+                    'ctr_enganche' => dnum($cts["enganche"]),
+                    'ctr_pago_adicional' => dnum($cts["sobre_enganche"]),
+
+                    // Pendiente 
+                    'ctr_saldo' => $cts["ctr_saldo"],
 
 
-        for ($i = 1; $i < $countArray; $i++) {
+                    'ctr_elaboro' => dstring($data[0]['nombreVendedor']),
+
+                    'ctr_nota' => "",
+                    'ctr_fotos' => json_encode(array(
+                        // Fotos  cliente
+                        'img_cliente' =>  $cts["fotoCliente"],
+                        'img_cred_fro' =>  $cts["fotoCredencialFrontal"],
+                        'img_cred_tra' =>  $cts["fotoCredencialTrasera"],
+                        'img_pagare' =>  $cts["fotoPagare"],
+                        'img_fachada' =>  $cts["fotoFachada"],
+                        'img_comprobante' =>  $cts["comprobanteDomicilio"]
+                    ), true),
+
+                    'ctr_nombre_ref_1' =>  dstring($cts["clts_nom_ref1"]),
+                    'ctr_parentesco_ref_1' =>  dstring($cts["clts_parentesco_ref1"]),
+                    'ctr_direccion_ref_1' =>  dstring($cts["clts_dir_ref1"]),
+                    'ctr_colonia_ref_1' =>  dstring($cts["clts_col_ref1"]),
+                    'ctr_telefono_ref_1' =>  dstring($cts["clts_tel_ref1"]),
+
+                    'clts_curp' =>  dstring($cts["clts_curp"]),
+                    'clts_telefono' =>  dstring($cts["clts_telefono"]),
+                    'clts_domicilio' =>  dstring($cts["clts_domicilio"]),
+                    'clts_col' =>  dstring($cts["clts_col"]),
+                    'clts_entre_calles' =>  dstring($cts["clts_entre_calles"]),
+                    'clts_trabajo' =>  dstring($cts["clts_trabajo"]),
+                    'clts_puesto' =>  dstring($cts["clts_puesto"]),
+                    'clts_direccion_tbj' =>  dstring($cts["clts_direccion_tbj"]),
+                    'clts_col_tbj' =>  dstring($cts["clts_col_tbj"]),
+                    'clts_tel_tbj' =>  dstring($cts["clts_tel_tbj"]),
+                    'clts_antiguedad_tbj' =>  dstring($cts["clts_antiguedad_tbj"]),
+                    'clts_igs_mensual_tbj' =>  dnum($cts["clts_igs_mensual_tbj"]),
+                    'clts_tipo_vivienda' =>  dstring($cts["clts_tipo_vivienda"]),
+                    'clts_vivienda_anomde' =>  dstring($cts["clts_vivienda_anomde"]),
+                    'clts_antiguedad_viviendo' =>  dstring($cts["clts_antiguedad_viviendo"]),
+                    'clts_coordenadas' =>  $cts["clts_coordenadas"],
+
+                    'clts_nom_conyuge' =>  dstring($cts["clts_nom_conyuge"]),
+                    'clts_tbj_conyuge' =>  dstring($cts["clts_tbj_conyuge"]),
+                    'clts_tbj_puesto_conyuge' =>  dstring($cts["clts_tbj_puesto_conyuge"]),
+                    'clts_tbj_dir_conyuge' =>  dstring($cts["clts_tbj_dir_conyuge"]),
+                    'clts_tbj_col_conyuge' =>  dstring($cts["clts_tbj_col_conyuge"]),
+                    'clts_tbj_tel_conyuge' =>  dstring($cts["clts_tbj_tel_conyuge"]),
+                    'clts_tbj_ant_conyuge' =>  dstring($cts["clts_tbj_ant_conyuge"]),
+                    'clts_tbj_ing_conyuge' =>  dnum($cts["clts_tbj_ing_conyuge"]),
+                    'clts_nom_fiador' =>  dstring($cts["clts_nom_fiador"]),
+                    'clts_parentesco_fiador' =>  dstring($cts["clts_parentesco_fiador"]),
+                    'clts_tel_fiador' =>  dstring($cts["clts_tel_fiador"]),
+                    'clts_dir_fiador' =>  dstring($cts["clts_dir_fiador"]),
+                    'clts_col_fiador' =>  dstring($cts["clts_col_fiador"]),
+                    'clts_tbj_fiador' =>  dstring($cts["clts_tbj_fiador"]),
+                    'clts_tbj_dir_fiador' =>  dstring($cts["clts_tbj_dir_fiador"]),
+                    'clts_tbj_tel_fiador' =>  dstring($cts["clts_tbj_tel_fiador"]),
+                    'clts_tbj_col_fiador' =>  dstring($cts["clts_tbj_col_fiador"]),
+                    'clts_tbj_ant_fiador' =>  dstring($cts["clts_tbj_ant_fiador"]),
+
+                    //fotos fiador
+                    'clts_fotos_fiador' => json_encode(array(
+                        'img_cred_fro' =>  dstring($cts["clts_fc_elector_fiador"]),
+                        'img_cred_tra' =>  dstring($cts["clts_tc_elector_fiador"]),
+                        'img_comprobante' =>  dstring($cts["clts_comprobante_fiador"]),
+                        'img_pagare' =>  dstring($cts["clts_pagare_fiador"])
+                    ), true),
+
+                    'clts_nom_ref2' =>  dstring($cts["clts_nom_ref2"]),
+                    'clts_parentesco_ref2' =>  dstring($cts["clts_parentesco_ref2"]),
+                    'clts_dir_ref2' =>  dstring($cts["clts_dir_ref2"]),
+                    'clts_col_ref2' =>  dstring($cts["clts_col_ref2"]),
+                    'clts_tel_ref2' =>  dstring($cts["clts_tel_ref2"]),
+                    'clts_nom_ref3' =>  dstring($cts["clts_nom_ref3"]),
+                    'clts_parentesco_ref3' =>  dstring($cts["clts_parentesco_ref3"]),
+                    'clts_dir_ref3' =>  dstring($cts["clts_dir_ref3"]),
+                    'clts_col_ref3' =>  dstring($cts["clts_col_ref3"]),
+                    'clts_tel_ref3' =>  dstring($cts["clts_tel_ref3"]),
+                    'sobre_enganche_pendiente' =>  $cts["sobre_enganche_pendiente"],
 
 
-            $cts = $data[$i]['contrato'][0];
+                    'clts_registro_venta' => '0',
+                    'clts_caja' => $caja_abierta,
+                    'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
+                    'ctr_pago_credito' => dnum($cts["ctr_pago_credito"]),
+                    'ctr_aprovado_ventas' => 0,
 
 
-            $contratos_aux = array(
+                    'clts_fachada_color' => "",
+                    'clts_puerta_color' => "",
+                    'ctr_status_cuenta' => "VIGENTE",
+                    'ctr_saldo_actual' => $cts["ctr_saldo"],
 
-                'ctr_id' => NULL,
-                'ctr_folio' =>  $cts["ctr_folio"],
-                'ctr_fecha_contrato' =>  $cts["fecha"],
-                'ctr_id_vendedor' => $data[0]['vendedor']['id'],
-                'ctr_cliente' =>  dstring($cts["clts_nombre"]),
-                'ctr_numero_cuenta' => "-",
-                'ctr_ruta' => "-",
-                'ctr_forma_pago' =>  dstring($cts["ctrs_forma_pago"]),
-                'ctr_dia_pago' =>  dstring($cts["ctrs_dia_pago"]),
-                'ctr_proximo_pago' =>  $cts["ctrs_fecha_pp"],
+                    //Nuevos atributos 
+                    'ctr_moroso' => 0
 
-                // Número 
-                'ctr_plazo_credito' =>  $cts["ctrs_plazo_credito"],
-
-                // No sé de que es esto
-                'ctr_tipo_pago' => '',
-
-                'ctr_productos' => json_encode($cts["productos"], 2),
-                'ctr_total' =>  dnum($cts["total_venta"]),
-                'ctr_enganche' => dnum($cts["enganche"]),
-                'ctr_pago_adicional' => dnum($cts["sobre_enganche"]),
-
-                // Pendiente 
-                'ctr_saldo' => $cts["ctr_saldo"],
+                );
 
 
-                'ctr_elaboro' => dstring($data[0]['vendedor']['nombre']),
-
-                'ctr_nota' => "",
-                'ctr_fotos' => json_encode(array(
-                    // Fotos  cliente
-                    'img_cliente' =>  $cts["fotoCliente"],
-                    'img_cred_fro' =>  $cts["fotoCredencialFrontal"],
-                    'img_cred_tra' =>  $cts["fotoCredencialTrasera"],
-                    'img_pagare' =>  $cts["fotoPagare"],
-                    'img_fachada' =>  $cts["fotoFachada"],
-                    'img_comprobante' =>  $cts["comprobanteDomicilio"]
-                ), true),
-
-                'ctr_nombre_ref_1' =>  dstring($cts["clts_nom_ref1"]),
-                'ctr_parentesco_ref_1' =>  dstring($cts["clts_parentesco_ref1"]),
-                'ctr_direccion_ref_1' =>  dstring($cts["clts_dir_ref1"]),
-                'ctr_colonia_ref_1' =>  dstring($cts["clts_col_ref1"]),
-                'ctr_telefono_ref_1' =>  dstring($cts["clts_tel_ref1"]),
-
-                'clts_curp' =>  dstring($cts["clts_curp"]),
-                'clts_telefono' =>  dstring($cts["clts_telefono"]),
-                'clts_domicilio' =>  dstring($cts["clts_domicilio"]),
-                'clts_col' =>  dstring($cts["clts_col"]),
-                'clts_entre_calles' =>  dstring($cts["clts_entre_calles"]),
-                'clts_trabajo' =>  dstring($cts["clts_trabajo"]),
-                'clts_puesto' =>  dstring($cts["clts_puesto"]),
-                'clts_direccion_tbj' =>  dstring($cts["clts_direccion_tbj"]),
-                'clts_col_tbj' =>  dstring($cts["clts_col_tbj"]),
-                'clts_tel_tbj' =>  dstring($cts["clts_tel_tbj"]),
-                'clts_antiguedad_tbj' =>  dstring($cts["clts_antiguedad_tbj"]),
-                'clts_igs_mensual_tbj' =>  dnum($cts["clts_igs_mensual_tbj"]),
-                'clts_tipo_vivienda' =>  dstring($cts["clts_tipo_vivienda"]),
-                'clts_vivienda_anomde' =>  dstring($cts["clts_vivienda_anomde"]),
-                'clts_antiguedad_viviendo' =>  dstring($cts["clts_antiguedad_viviendo"]),
-                'clts_coordenadas' =>  $cts["clts_coordenadas"],
-
-                'clts_nom_conyuge' =>  dstring($cts["clts_nom_conyuge"]),
-                'clts_tbj_conyuge' =>  dstring($cts["clts_tbj_conyuge"]),
-                'clts_tbj_puesto_conyuge' =>  dstring($cts["clts_tbj_puesto_conyuge"]),
-                'clts_tbj_dir_conyuge' =>  dstring($cts["clts_tbj_dir_conyuge"]),
-                'clts_tbj_col_conyuge' =>  dstring($cts["clts_tbj_col_conyuge"]),
-                'clts_tbj_tel_conyuge' =>  dstring($cts["clts_tbj_tel_conyuge"]),
-                'clts_tbj_ant_conyuge' =>  dstring($cts["clts_tbj_ant_conyuge"]),
-                'clts_tbj_ing_conyuge' =>  dnum($cts["clts_tbj_ing_conyuge"]),
-                'clts_nom_fiador' =>  dstring($cts["clts_nom_fiador"]),
-                'clts_parentesco_fiador' =>  dstring($cts["clts_parentesco_fiador"]),
-                'clts_tel_fiador' =>  dstring($cts["clts_tel_fiador"]),
-                'clts_dir_fiador' =>  dstring($cts["clts_dir_fiador"]),
-                'clts_col_fiador' =>  dstring($cts["clts_col_fiador"]),
-                'clts_tbj_fiador' =>  dstring($cts["clts_tbj_fiador"]),
-                'clts_tbj_dir_fiador' =>  dstring($cts["clts_tbj_dir_fiador"]),
-                'clts_tbj_tel_fiador' =>  dstring($cts["clts_tbj_tel_fiador"]),
-                'clts_tbj_col_fiador' =>  dstring($cts["clts_tbj_col_fiador"]),
-                'clts_tbj_ant_fiador' =>  dstring($cts["clts_tbj_ant_fiador"]),
-
-                //fotos fiador
-                'clts_fotos_fiador' => json_encode(array(
-                    'img_cred_fro' =>  dstring($cts["clts_fc_elector_fiador"]),
-                    'img_cred_tra' =>  dstring($cts["clts_tc_elector_fiador"]),
-                    'img_comprobante' =>  dstring($cts["clts_comprobante_fiador"]),
-                    'img_pagare' =>  dstring($cts["clts_pagare_fiador"])
-                ), true),
-
-                'clts_nom_ref2' =>  dstring($cts["clts_nom_ref2"]),
-                'clts_parentesco_ref2' =>  dstring($cts["clts_parentesco_ref2"]),
-                'clts_dir_ref2' =>  dstring($cts["clts_dir_ref2"]),
-                'clts_col_ref2' =>  dstring($cts["clts_col_ref2"]),
-                'clts_tel_ref2' =>  dstring($cts["clts_tel_ref2"]),
-                'clts_nom_ref3' =>  dstring($cts["clts_nom_ref3"]),
-                'clts_parentesco_ref3' =>  dstring($cts["clts_parentesco_ref3"]),
-                'clts_dir_ref3' =>  dstring($cts["clts_dir_ref3"]),
-                'clts_col_ref3' =>  dstring($cts["clts_col_ref3"]),
-                'clts_tel_ref3' =>  dstring($cts["clts_tel_ref3"]),
-                'sobre_enganche_pendiente' =>  $cts["sobre_enganche_pendiente"],
+                array_push($contratos_validos, $contratos_aux);
+            }
+        } else {
+            for ($i = 1; $i < $countArray; $i++) {
 
 
-                'clts_registro_venta' => '0',
-                'clts_caja' => $caja_abierta,
-                'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
-                'ctr_pago_credito' => dnum($cts["ctr_pago_credito"]),
-                'ctr_aprovado_ventas' => 0,
-
-                
-                'clts_fachada_color' => "",
-                'clts_puerta_color' => "",
-                'ctr_status_cuenta' => "VIGENTE",
-                'ctr_saldo_actual' => $cts["ctr_saldo"],
-                
-                //Nuevos atributos 
-                'ctr_moroso' => ""
-
-            );
+                $cts = $data[$i]['contrato'][0];
 
 
-            array_push($contratos_validos, $contratos_aux);
+                $contratos_aux = array(
+
+                    'ctr_id' => NULL,
+                    'ctr_folio' =>  $cts["ctr_folio"],
+                    'ctr_fecha_contrato' =>  $cts["fecha"],
+                    'ctr_id_vendedor' => $data[0]['vendedor']['id'],
+                    'ctr_cliente' =>  dstring($cts["clts_nombre"]),
+                    'ctr_numero_cuenta' => "-",
+                    'ctr_ruta' => "-",
+                    'ctr_forma_pago' =>  dstring($cts["ctrs_forma_pago"]),
+                    'ctr_dia_pago' =>  dstring($cts["ctrs_dia_pago"]),
+                    'ctr_proximo_pago' =>  $cts["ctrs_fecha_pp"],
+
+                    // Número 
+                    'ctr_plazo_credito' =>  $cts["ctrs_plazo_credito"],
+
+                    // No sé de que es esto
+                    'ctr_tipo_pago' => '',
+
+                    'ctr_productos' => json_encode($cts["productos"], 2),
+                    'ctr_total' =>  dnum($cts["total_venta"]),
+                    'ctr_enganche' => dnum($cts["enganche"]),
+                    'ctr_pago_adicional' => dnum($cts["sobre_enganche"]),
+
+                    // Pendiente 
+                    'ctr_saldo' => $cts["ctr_saldo"],
+
+
+                    'ctr_elaboro' => dstring($data[0]['vendedor']['nombre']),
+
+                    'ctr_nota' => "",
+                    'ctr_fotos' => json_encode(array(
+                        // Fotos  cliente
+                        'img_cliente' =>  $cts["fotoCliente"],
+                        'img_cred_fro' =>  $cts["fotoCredencialFrontal"],
+                        'img_cred_tra' =>  $cts["fotoCredencialTrasera"],
+                        'img_pagare' =>  $cts["fotoPagare"],
+                        'img_fachada' =>  $cts["fotoFachada"],
+                        'img_comprobante' =>  $cts["comprobanteDomicilio"]
+                    ), true),
+
+                    'ctr_nombre_ref_1' =>  dstring($cts["clts_nom_ref1"]),
+                    'ctr_parentesco_ref_1' =>  dstring($cts["clts_parentesco_ref1"]),
+                    'ctr_direccion_ref_1' =>  dstring($cts["clts_dir_ref1"]),
+                    'ctr_colonia_ref_1' =>  dstring($cts["clts_col_ref1"]),
+                    'ctr_telefono_ref_1' =>  dstring($cts["clts_tel_ref1"]),
+
+                    'clts_curp' =>  dstring($cts["clts_curp"]),
+                    'clts_telefono' =>  dstring($cts["clts_telefono"]),
+                    'clts_domicilio' =>  dstring($cts["clts_domicilio"]),
+                    'clts_col' =>  dstring($cts["clts_col"]),
+                    'clts_entre_calles' =>  dstring($cts["clts_entre_calles"]),
+                    'clts_trabajo' =>  dstring($cts["clts_trabajo"]),
+                    'clts_puesto' =>  dstring($cts["clts_puesto"]),
+                    'clts_direccion_tbj' =>  dstring($cts["clts_direccion_tbj"]),
+                    'clts_col_tbj' =>  dstring($cts["clts_col_tbj"]),
+                    'clts_tel_tbj' =>  dstring($cts["clts_tel_tbj"]),
+                    'clts_antiguedad_tbj' =>  dstring($cts["clts_antiguedad_tbj"]),
+                    'clts_igs_mensual_tbj' =>  dnum($cts["clts_igs_mensual_tbj"]),
+                    'clts_tipo_vivienda' =>  dstring($cts["clts_tipo_vivienda"]),
+                    'clts_vivienda_anomde' =>  dstring($cts["clts_vivienda_anomde"]),
+                    'clts_antiguedad_viviendo' =>  dstring($cts["clts_antiguedad_viviendo"]),
+                    'clts_coordenadas' =>  $cts["clts_coordenadas"],
+
+                    'clts_nom_conyuge' =>  dstring($cts["clts_nom_conyuge"]),
+                    'clts_tbj_conyuge' =>  dstring($cts["clts_tbj_conyuge"]),
+                    'clts_tbj_puesto_conyuge' =>  dstring($cts["clts_tbj_puesto_conyuge"]),
+                    'clts_tbj_dir_conyuge' =>  dstring($cts["clts_tbj_dir_conyuge"]),
+                    'clts_tbj_col_conyuge' =>  dstring($cts["clts_tbj_col_conyuge"]),
+                    'clts_tbj_tel_conyuge' =>  dstring($cts["clts_tbj_tel_conyuge"]),
+                    'clts_tbj_ant_conyuge' =>  dstring($cts["clts_tbj_ant_conyuge"]),
+                    'clts_tbj_ing_conyuge' =>  dnum($cts["clts_tbj_ing_conyuge"]),
+                    'clts_nom_fiador' =>  dstring($cts["clts_nom_fiador"]),
+                    'clts_parentesco_fiador' =>  dstring($cts["clts_parentesco_fiador"]),
+                    'clts_tel_fiador' =>  dstring($cts["clts_tel_fiador"]),
+                    'clts_dir_fiador' =>  dstring($cts["clts_dir_fiador"]),
+                    'clts_col_fiador' =>  dstring($cts["clts_col_fiador"]),
+                    'clts_tbj_fiador' =>  dstring($cts["clts_tbj_fiador"]),
+                    'clts_tbj_dir_fiador' =>  dstring($cts["clts_tbj_dir_fiador"]),
+                    'clts_tbj_tel_fiador' =>  dstring($cts["clts_tbj_tel_fiador"]),
+                    'clts_tbj_col_fiador' =>  dstring($cts["clts_tbj_col_fiador"]),
+                    'clts_tbj_ant_fiador' =>  dstring($cts["clts_tbj_ant_fiador"]),
+
+                    //fotos fiador
+                    'clts_fotos_fiador' => json_encode(array(
+                        'img_cred_fro' =>  dstring($cts["clts_fc_elector_fiador"]),
+                        'img_cred_tra' =>  dstring($cts["clts_tc_elector_fiador"]),
+                        'img_comprobante' =>  dstring($cts["clts_comprobante_fiador"]),
+                        'img_pagare' =>  dstring($cts["clts_pagare_fiador"])
+                    ), true),
+
+                    'clts_nom_ref2' =>  dstring($cts["clts_nom_ref2"]),
+                    'clts_parentesco_ref2' =>  dstring($cts["clts_parentesco_ref2"]),
+                    'clts_dir_ref2' =>  dstring($cts["clts_dir_ref2"]),
+                    'clts_col_ref2' =>  dstring($cts["clts_col_ref2"]),
+                    'clts_tel_ref2' =>  dstring($cts["clts_tel_ref2"]),
+                    'clts_nom_ref3' =>  dstring($cts["clts_nom_ref3"]),
+                    'clts_parentesco_ref3' =>  dstring($cts["clts_parentesco_ref3"]),
+                    'clts_dir_ref3' =>  dstring($cts["clts_dir_ref3"]),
+                    'clts_col_ref3' =>  dstring($cts["clts_col_ref3"]),
+                    'clts_tel_ref3' =>  dstring($cts["clts_tel_ref3"]),
+                    'sobre_enganche_pendiente' =>  $cts["sobre_enganche_pendiente"],
+
+
+                    'clts_registro_venta' => '0',
+                    'clts_caja' => $caja_abierta,
+                    'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
+                    'ctr_pago_credito' => dnum($cts["ctr_pago_credito"]),
+                    'ctr_aprovado_ventas' => 0,
+
+
+                    'clts_fachada_color' => "",
+                    'clts_puerta_color' => "",
+                    'ctr_status_cuenta' => "VIGENTE",
+                    'ctr_saldo_actual' => $cts["ctr_saldo"],
+
+                    //Nuevos atributos 
+                    'ctr_moroso' => ""
+
+                );
+
+
+                array_push($contratos_validos, $contratos_aux);
+            }
         }
+
+
 
         return $contratos_validos;
     }
@@ -1128,7 +1258,7 @@ class ContratosControlador
 
         // Registrar en clientes con mal historial
 
-        
+
 
 
 
