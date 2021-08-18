@@ -9,8 +9,16 @@ require '../src/config/db.php';
 
 // Requerir controlador y modelo de contratos 
 
+
+require_once '../../app/modulos/usuarios/usuarios.modelo.php';
+require_once '../../app/modulos/sucursales/sucursales.modelo.php';
+
 require_once '../../app/modulos/contratos/contratos.controlador.php';
 require_once '../../app/modulos/contratos/contratos.modelo.php';
+
+require_once '../../app/modulos/cobranza/cobranza.controlador.php';
+require_once '../../app/modulos/cobranza/cobranza.modelo.php';
+
 
 
 
@@ -282,5 +290,20 @@ $app->get('/prueba2', function (Request $request, Response $response, array $arg
 
     $json = json_decode($datosTraspasos, true);
     preArray($json[0]['tps_num']);
+});
+
+
+$app->post('/loginCobranza', function (Request $request, Response $response) {
+    $json = $request->getBody();
+
+    $usr = json_decode($json, true);
+
+    $login_msj =  CobranzaControlador::ctrLoginCobrador($usr);
+
+
+    return json_encode($login_msj, true);
+
+    # code...
+
 });
 $app->run();
