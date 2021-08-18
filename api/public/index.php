@@ -173,7 +173,7 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
         $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
         $con = ConexionAPI::conectarAPI();
         $pps = $con->prepare($sql);
-        $pps->bindValue(1, $datosVendedor);
+        $pps->bindValue(1, $json);
         $pps->bindValue(2, FECHA);
 
         $pps->execute();
