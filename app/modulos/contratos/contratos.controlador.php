@@ -491,7 +491,7 @@ class ContratosControlador
         }
 
         if (isset($data[0]['caja_abierta'])) {
-            
+
             foreach ($data[1] as $key => $cts) {
 
                 $contratos_aux = array(
@@ -579,10 +579,10 @@ class ContratosControlador
 
                     //fotos fiador
                     'clts_fotos_fiador' => json_encode(array(
-                        'img_cred_fro' =>  dstring($cts["clts_fc_elector_fiador"]),
-                        'img_cred_tra' =>  dstring($cts["clts_tc_elector_fiador"]),
-                        'img_comprobante' =>  dstring($cts["clts_comprobante_fiador"]),
-                        'img_pagare' =>  dstring($cts["clts_pagare_fiador"])
+                        'img_cred_fro' =>  $cts["clts_fc_elector_fiador"],
+                        'img_cred_tra' =>  $cts["clts_tc_elector_fiador"],
+                        'img_comprobante' =>  $cts["clts_comprobante_fiador"],
+                        'img_pagare' =>  $cts["clts_pagare_fiador"]
                     ), true),
 
                     'clts_nom_ref2' =>  dstring($cts["clts_nom_ref2"]),
