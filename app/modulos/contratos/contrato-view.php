@@ -707,3 +707,42 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
         </div>
     </div>
 </div>
+
+<div class="card">
+
+    <div class="card-body">
+        <h5 class="card-title">Fotos fiador</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <?php
+                $fiador_fotos = $ctr['clts_fotos_fiador'];
+                $fiador_fotos = json_decode($fiador_fotos, true);
+                // preArray($fiador_fotos);
+                ?>
+                
+            </div>
+            <div class="col-md-6">
+                <label for="">Comprobante de domicilio</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_comprobante'] ?>" alt="">
+            </div>
+
+            <div class="col-md-6">
+                <label for="">Credencial frontal</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_cred_fro'] ?>" alt="">
+            </div>
+            <div class="col-md-6">
+                <label for="">Credencial trasera</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_cred_tra'] ?>" alt="">
+            </div>
+            <div class="col-md-6">
+                <label for="">Pagaré</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_pagare'] ?>" alt="">
+            </div>
+           
+        </div>
+    </div>
+</div>
