@@ -526,4 +526,26 @@ class ClientesControlador
 
 
     }
+    public static function ctrlEditarClienteMal()
+    {
+        $registrarClienteMal = ClientesModelo::mdlActualizarClientes($_POST);
+
+        if($registrarClienteMal){
+            return array(
+                'status' => true,
+                'mensaje' => 'Se actualizó correctamente el registro',
+                'pagina' => HTTP_HOST . 'clientes-mal-historial'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => '¡Ups! Ocurrio un error, intenta de nuevo',
+                'pagina' => HTTP_HOST . ''
+            );
+        }
+
+        
+
+
+    }
 }

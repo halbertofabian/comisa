@@ -494,34 +494,52 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             <strong style="color:aliceblue">6.- MERCANCIA </strong>
         </div>
         <div class="card-body">
-
+            <div class="row">
+                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                    <div class="form-group">
+                        <label for="autocomplete_pdt">Seleccionar producto</label>
+                        <input type="hidden" id="productos_contratos" value='<?= $ctr['ctr_productos'] ?>'>
+                        <input type="hidden" id="ctrs_id" value='<?= $rutas[2] ?>'>
+                        <input type="text" class="form-control" name="autocomplete_pdt" id="autocomplete_pdt" placeholder="Escriba el nombre del producto y seleccione...">
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" id="tbl_mercancia">
                         <thead>
                             <tr>
                                 <th style="width:20%; text-align:center">SKU</th>
-
                                 <th style="width:20%; text-align:center">CANTIDAD</th>
-                                <th style="width:60%; text-align:center">DESCRIPCION</th>
+                                <th style="width:50%; text-align:center">DESCRIPCION</th>
+                                <th style="width:10%; text-align:center"></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbodyProductos">
                             <?php
                             $productos = $ctr['ctr_productos'];
                             // preArray($productos);
                             $productos = json_decode($productos, true);
                             foreach ($productos as $key => $pds) :
                             ?>
-                                <tr>
+                                <tr id="<?= $pds['sku'] ?>">
 
                                     <td style="width:20%; text-align:center"><?= $pds['sku'] ?></td>
                                     <td style="width:20%; text-align:center"><?= $pds['cantidad'] ?></td>
-                                    <td style="width:60%; text-align:center"><?= $pds['nombreProducto'] ?></td>
-
+                                    <td class="nombreProducto" style="width:50%; text-align:center"><?= $pds['nombreProducto'] ?></td>
+                                    <td tyle="width:10%; text-align:center">
+                                        <button type="button" class="btn btn-danger btnQuitarProducto" sku="<?= $pds['sku'] ?>"><i class="fa fa-trash"></i> Borrar</button>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" align="right">
+                                    <button type="button" class="btn btn-primary btnGuardarProductos">GUARDAR PRODUCTOS</button>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
 
@@ -576,7 +594,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                     </div>
                 </div>
 
-                
+
                 <input type="hidden" name="ctr_id" id="ctr_id" value="<?= $ctr['ctr_id'] ?>">
 
 
@@ -719,7 +737,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 $fiador_fotos = json_decode($fiador_fotos, true);
                 // preArray($fiador_fotos);
                 ?>
-                
+
             </div>
             <div class="col-md-6">
                 <label for="">Comprobante de domicilio</label>
@@ -742,7 +760,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 
                 <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_pagare'] ?>" alt="">
             </div>
-           
+
         </div>
     </div>
 </div>

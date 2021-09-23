@@ -44,24 +44,38 @@ cargarComponente('breadcrumb', '', 'Listado de clientes con mal historial');
                 <table class="table table-striped table-bordered tablas dt-responsive">
                     <thead>
                         <tr>
+                            <th>Ruta</th>
                             <th>Nombre</th>
                             <th>Teléfono</th>
                             <th>Domicilio</th>
                             <th>Ubicación</th>
                             <th>Estado</th>
+                            <th>Curp</th>
                             <th>Observaciones</th>
+                            <th>Cuenta</th>
+                            <th>Articulo</th>
+                            <th>Fecha venta</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($clientes_mal as $key => $cts_mal) : ?>
                             <tr>
 
+                                <td><?= $cts_mal['clts_ruta'] ?></td>
                                 <td><?= $cts_mal['clts_nombre'] ?></td>
                                 <td><?= $cts_mal['clts_telefono'] ?></td>
-                                <td><?= $cts_mal['clts_domicilio'].' '.$cts_mal['clts_col'] ?></td>
+                                <td><?= $cts_mal['clts_domicilio'] . ' ' . $cts_mal['clts_col'] ?></td>
                                 <td><?= $cts_mal['clts_ubicacion'] ?></td>
                                 <td><?= '<strong class="text-danger">' . $cts_mal['clts_tipo_cliente'] . '</strong>' ?></td>
+                                <td><?= $cts_mal['clts_curp'] ?></td>
                                 <td><?= $cts_mal['clts_observaciones'] ?></td>
+                                <td><?= $cts_mal['clts_cuenta'] ?></td>
+                                <td><?= $cts_mal['clts_articulo'] ?></td>
+                                <td><?= $cts_mal['clts_fecha_venta'] ?></td>
+                                <td>
+                                    <a href="<?= HTTP_HOST . 'edit-cliente-mal-historial/' . $cts_mal['clts_id']  ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                                </td>
 
 
                             </tr>

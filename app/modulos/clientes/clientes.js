@@ -189,6 +189,49 @@ $("#formRegistrarClienteMal").on("submit", function (e) {
         }
     })
 })
+$("#formEditClienteMal").on("submit", function (e) {
+    e.preventDefault();
+    var datos = new FormData(this);
+    datos.append("btnEditClienteMal", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/clientes/clientes.ajax.php',
+        data: datos,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            startLoadButton()
+        },
+        success: function (res) {
+            console.log(res)
+
+            if (res.status) {
+                stopLoadButton('GUARDAR')
+
+                swal({
+                    title: "¡Muy bien!",
+                    text: res.mensaje,
+                    icon: "success",
+                    buttons: [false, "Continuar"],
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            location.href = res.pagina
+                        } else {
+                            location.href = res.pagina
+                        }
+                    });
+            } else {
+                toastr.error(res.mensaje, 'Error')
+                stopLoadButton('INTENTAR DE NUEVO')
+            }
+        }
+    })
+})
 
 
 function buscarCliente(cts_id) {

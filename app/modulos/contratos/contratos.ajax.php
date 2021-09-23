@@ -28,6 +28,8 @@ require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
 class ContratosAjax
 {
+    public $producto;
+    public $ctr_id;
     public function ajaxConsultarCliente()
     {
         $res = ClientesModelo::mdlMostrarClientes($_POST['clts_id']);
@@ -76,7 +78,8 @@ class ContratosAjax
         $res = ContratosControlador::ctrActualizarContrato();
         echo json_encode($res, true);
     }
-    public function ajaxListarContrato(){
+    public function ajaxListarContrato()
+    {
         $res = ContratosControlador::ctrListarContrato();
         echo json_encode($res, true);
     }
@@ -87,24 +90,42 @@ class ContratosAjax
         echo json_encode($respuesta, true);
     }
 
-    public function ajaxConsultarContratoById(){
+    public function ajaxConsultarContratoById()
+    {
         $respuesta = ContratosModelo::mdlMostrarContratosById($_POST['ctr_id']);
         echo json_encode($respuesta, true);
     }
 
-    public function ajaxConsultarUltimoCuentaRuta(){
+    public function ajaxConsultarUltimoCuentaRuta()
+    {
         $respuesta = ContratosModelo::mdlMostrarUltimaCuenta($_POST['ctr_ruta']);
         echo json_encode($respuesta, true);
     }
-    public function ajaxAsignarCuenta(){
+    public function ajaxAsignarCuenta()
+    {
         $respuesta = ContratosModelo::mdlAsignarCuenta($_POST);
         echo json_encode($respuesta, true);
     }
-    public function ajaxRegistrarClienteMal(){
+    public function ajaxRegistrarClienteMal()
+    {
         $respuesta = ContratosControlador::ctrClientesMalH();
         echo json_encode($respuesta, true);
     }
-    
+    public function ajaxGuardarProductos()
+    {
+        $respuesta = ContratosControlador::ctrGuardarProductos();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxBuscarProductos()
+    {
+        $res = ContratosModelo::mdlAutocompleteProductos($this->producto);
+        echo json_encode($res, true);
+    }
+    public function ajaxMostrarProductos()
+    {
+        $respuesta = ContratosModelo::mdlMostrarProductosPorID($this->ctr_id);
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -147,9 +168,9 @@ if (isset($_POST['btnGuadarDatosContrato'])) {
     $actualizarContrato->ajaxActualizarContrato();
 }
 
-if(isset($_POST['btnListarContratos'])){
+if (isset($_POST['btnListarContratos'])) {
     $listarContrato = new ContratosAjax();
-    $listarContrato -> ajaxListarContrato();
+    $listarContrato->ajaxListarContrato();
 }
 
 if (isset($_POST['btnImportarContratos'])) {
@@ -157,22 +178,35 @@ if (isset($_POST['btnImportarContratos'])) {
     $impotarProductos->ajaxImportarContratos();
 }
 
-if(isset($_POST['btnConsultarContrato'])){
+if (isset($_POST['btnConsultarContrato'])) {
     $mostrarContratoId = new ContratosAjax();
-    $mostrarContratoId -> ajaxConsultarContratoById();
+    $mostrarContratoId->ajaxConsultarContratoById();
 }
 
-if(isset($_POST['btnBuscarRuta'])){
+if (isset($_POST['btnBuscarRuta'])) {
     $mostrarUltimaCuenta = new ContratosAjax();
-    $mostrarUltimaCuenta -> ajaxConsultarUltimoCuentaRuta();
+    $mostrarUltimaCuenta->ajaxConsultarUltimoCuentaRuta();
 }
 
-if(isset($_POST['btnAsignarRutaCuenta'])){
+if (isset($_POST['btnAsignarRutaCuenta'])) {
     $asignarRutaCuenta = new ContratosAjax();
-    $asignarRutaCuenta -> ajaxAsignarCuenta();
-
+    $asignarRutaCuenta->ajaxAsignarCuenta();
 }
-if(isset($_POST['btnRegistrarClienteMalH'])){
+if (isset($_POST['btnRegistrarClienteMalH'])) {
     $registrarClienteH = new ContratosAjax();
-    $registrarClienteH -> ajaxRegistrarClienteMal();
+    $registrarClienteH->ajaxRegistrarClienteMal();
+}
+if (isset($_POST['btnGuardarProductos'])) {
+    $guardarProductos = new ContratosAjax();
+    $guardarProductos->ajaxGuardarProductos();
+}
+if (isset($_GET['term'])) {
+    $buscarProductos = new ContratosAjax();
+    $buscarProductos->producto = $_GET['term'];
+    $buscarProductos->ajaxBuscarProductos();
+}
+if (isset($_POST['btnMostrarProductos'])) {
+    $mostrarProductos = new ContratosAjax();
+    $mostrarProductos->ctr_id = $_POST['ctrs_id'];
+    $mostrarProductos->ajaxMostrarProductos();
 }

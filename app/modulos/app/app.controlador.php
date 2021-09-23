@@ -52,6 +52,7 @@ class AppControlador
             'clientes',
             'importar-clientes-mal-historial',
             'new-mal-historial',
+            'edit-cliente-mal-historial',
 
 
         );
@@ -90,6 +91,7 @@ class AppControlador
             'clientes',
             'importar-clientes-mal-historial',
             'new-mal-historial',
+            'edit-cliente-mal-historial',
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -125,7 +127,8 @@ class AppControlador
             'traspasos',
             'productos',
             'compras',
-            'listar-contratos'
+            'listar-contratos',
+            'edit-cliente-mal-historial',
 
         );
     }
@@ -161,6 +164,7 @@ class AppControlador
             'clientes',
             'importar-clientes-mal-historial',
             'new-mal-historial',
+            'edit-cliente-mal-historial',
         );
     }
 

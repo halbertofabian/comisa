@@ -276,6 +276,38 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="modalProductos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-light"><i class="fa fa-dropbox fa-lg text-light"></i> Productos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-light">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>CANTIDAD</th>
+                            <th>DESCRIPCION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_productos">
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     $(document).ready(function() {
@@ -614,6 +646,7 @@
                                 <i class="fa fa-map" aria-hidden="true"></i>
                                 </button>
                                 <button class="btn btn-danger btn-sm btnClientesMal" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#mdlClientesMal"><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                                <button class="btn btn-dark btn-sm btnProductos" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#modalProductos"><i class="fa fa-dropbox"></i></button>
                                </div>
                             </td>
                             <td>${ctr.ctr_folio}</td>

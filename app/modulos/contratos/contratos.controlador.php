@@ -1268,4 +1268,25 @@ class ContratosControlador
 
 
     }
+    public static function ctrGuardarProductos()
+    {
+        if(isset($_POST['btnGuardarProductos'])){
+            $ctr_productos = $_POST['ctr_productos'];
+            $ctrs_id = $_POST['ctrs_id'];
+
+            $res = ContratosModelo::mdlActualizarProductos($ctr_productos, $ctrs_id);
+            if($res){
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Los productos se guardaron correctamente!'
+                );
+            }else{
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Hubo un error alguardar los poductos!'
+                );
+            }
+        }
+
+    }
 }

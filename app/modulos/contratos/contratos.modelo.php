@@ -83,9 +83,9 @@ class ContratosModelo
             $sql = "UPDATE tbl_contrato_crt_1 SET ctr_numero_cuenta =?,ctr_ruta = ? WHERE ctr_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps -> bindValue(1,$ctr['ctr_numero_cuenta']);
-            $pps -> bindValue(2,$ctr['ctr_ruta']);
-            $pps -> bindValue(3,$ctr['ctr_id']);
+            $pps->bindValue(1, $ctr['ctr_numero_cuenta']);
+            $pps->bindValue(2, $ctr['ctr_ruta']);
+            $pps->bindValue(3, $ctr['ctr_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -95,7 +95,7 @@ class ContratosModelo
             $con = null;
         }
     }
-    
+
     public static function mdlMostrarContratos($clts_nom, $id_ctr)
     {
         try {
@@ -356,7 +356,7 @@ class ContratosModelo
             $pps->bindValue(78, $ctr['clts_puerta_color']);
             $pps->bindValue(79, $ctr['ctr_status_cuenta']);
             $pps->bindValue(80, $ctr['ctr_saldo_actual']);
-            $pps->bindValue(81,$ctr['ctr_moroso']);
+            $pps->bindValue(81, $ctr['ctr_moroso']);
 
 
 
@@ -746,6 +746,59 @@ class ContratosModelo
         } catch (PdoException $th) {
             //throw $th;
             return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAutocompleteProductos($pds_nombre)
+    {
+        try {
+            //code...
+            $sql = "SELECT pds_sku, pds_nombre as label FROM tbl_productos_pds WHERE pds_nombre LIKE '%$pds_nombre%' OR pds_sku LIKE '%$pds_nombre%'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarProductos($ctr_productos, $ctrs_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_productos = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_productos);
+            $pps->bindValue(2, $ctrs_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarProductosPorID($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_productos FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
         } finally {
             $pps = null;
             $con = null;
