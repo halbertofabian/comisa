@@ -1,7 +1,7 @@
 <?php
 
 $contratos = ContratosModelo::mdlConsultarContratosAll();
-//preArray($contratos);
+preArray($contratos);
 
 ?>
 
