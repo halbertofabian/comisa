@@ -480,15 +480,20 @@ $(document).ready(function () {
         source: urlApp + 'app/modulos/contratos/contratos.ajax.php',
         select: function (event, ui) {
             var nomProducrto = "";
-            $('#tbl_mercancia > tbody  > tr').each(function () {
+            var bandera;
+            $('#tbodyProductos tr').each(function () {
                 nomProducrto = $(this).find("td").eq(2).html();
+                if (nomProducrto.toUpperCase() === ui.item.label) {
+                    toastr.warning(`¡El producto <strong>${ui.item.label}</strong> ya fue agregado a la lista!`, 'ADVETENCIA')
+                    bandera = "existe";
+                    $(this).val("");
+                    return false;
+                } else {
+                    bandera = "no existe";
+                }
             });
 
-            if (nomProducrto === ui.item.label) {
-                toastr.warning(`¡El producto <strong>${ui.item.label}</strong> ya fue agregado a la lista!`, 'ADVETENCIA')
-                $(this).val("");
-                return false;
-            } else {
+            if (bandera == "no existe") {
                 var cadena = ui.item.pds_sku;
                 var sku = cadena.split("/")[0];
                 if (sku == undefined) {
@@ -498,10 +503,18 @@ $(document).ready(function () {
                 tbodyProductos =
                     `
                 <tr id="${sku}">
-                    <td style="width:20%; text-align:center">${sku}</td>
-                    <td style="width:20%; text-align:center">1</td>
-                    <td style="width:50%; text-align:center">${ui.item.label}</td>
-                    <td style="width:10%; text-align:center">
+                    <td>${sku}</td>
+                    <td style="display:flex; justify-content: center">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default menos" btn_menos="${sku}" type="button">-</button>
+                        </span>
+                        <input type="text" class="form-control" style="width:50px;text-align: center;" id="contador${sku}" cps_id="${sku}" value="1" min="1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default mas" btn_mas="${sku}" type="button">+</button>
+                        </span>
+                    </td>
+                    <td>${ui.item.label}</td>
+                    <td>
                         <button type="button" class="btn btn-danger btnQuitarProducto" sku="${sku}"><i class="fa fa-trash"></i> Borrar</button>
                     </td>
                 </tr>
@@ -527,8 +540,9 @@ $(document).ready(function () {
 
                 $(this).val("");
                 return false;
-
             }
+
+
         }
     });
     $("#tbodyProductos").on("click", ".btnQuitarProducto", function (e) {
@@ -654,5 +668,118 @@ $(document).ready(function () {
             }
         })
     });
+
+    $("#tbodyProductos").on("click", ".mas", function (e) {
+        var id = $(this).attr("btn_mas");
+        $("#contador" + id).val(Number($("#contador" + id).val()) + 1);
+
+        var products = $("#productos_contratos").val();
+        var productos = JSON.parse(products);
+        for (var i = productos.length; i--;) {
+            if (productos[i].sku == id) {
+                productos[i].cantidad = Number($("#contador" + id).val());
+            }
+        }
+        $("#productos_contratos").val(JSON.stringify(productos));
+
+    });
+
+    $("#tbodyProductos").on("click", ".menos", function (e) {
+        var id = $(this).attr("btn_menos");
+        $("#contador" + id).val(Number($("#contador" + id).val()) - 1);
+        if ($("#contador" + id).val() == "0") {
+            $("#contador" + id).val("1");
+        }
+        var products = $("#productos_contratos").val();
+        var productos = JSON.parse(products);
+        for (var i = productos.length; i--;) {
+            if (productos[i].sku == id) {
+                productos[i].cantidad = Number($("#contador" + id).val());
+            }
+        }
+        $("#productos_contratos").val(JSON.stringify(productos));
+    });
+
+    $("#formActualizarStatus").on("submit", function (e) {
+        e.preventDefault();
+        var input_file = $("#input_file").val();
+        if (input_file == "") {
+            toastr.warning("Por favor seleccione un archivo!", "ADVERTENCIA");
+            return false;
+        }
+
+        swal({
+            title: "¿Estas seguro de querer importar la lista para cambio de status?",
+            text: "Asegurate de tener el archivo con los requerimientos solicitados",
+            icon: "info",
+            buttons: ["Calcelar", "Si, importar lista"],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var datos = new FormData()
+                    var files = $("#input_file")[0].files[0]
+                    datos.append("btnImportarStatus", true)
+                    datos.append("archivoExcel", files)
+
+                    $.ajax({
+
+                        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                        method: "POST",
+                        data: datos,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        beforeSend: function () {
+                            startLoadButton()
+                        },
+                        success: function (respuesta) {
+                            stopLoadButton('Redirigiendo...')
+
+                            if (respuesta.status) {
+
+                                swal({
+                                    title: respuesta.mensaje,
+                                    text: "Se actualizaron " + respuesta.update + " contratos ",
+                                    icon: "success",
+                                    buttons: [false, "Ver lista"],
+                                    dangerMode: true,
+                                })
+                                    .then((willDelete) => {
+                                        if (willDelete) {
+                                            window.location.reload();
+                                        } else {
+                                            window.location.reload();
+
+                                        }
+                                    })
+
+                            } else {
+
+                                swal({
+                                    title: "Error",
+                                    text: respuesta.mensaje,
+                                    icon: "error",
+                                    buttons: [false, "Intentar de nuevo"],
+                                    dangerMode: true,
+                                })
+                                    .then((willDelete) => {
+                                        if (willDelete) {
+                                            window.location.reload();
+                                        } else {
+                                            window.location.reload();
+
+                                        }
+                                    })
+
+                            }
+
+                        }
+                    })
+                }
+            });
+    });
+
 
 });

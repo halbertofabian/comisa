@@ -126,6 +126,11 @@ class ContratosAjax
         $respuesta = ContratosModelo::mdlMostrarProductosPorID($this->ctr_id);
         echo json_encode($respuesta, true);
     }
+    public function ajaxImportarStatus()
+    {
+        $respuesta = ContratosControlador::ctrImportarStatusExcel();
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -209,4 +214,8 @@ if (isset($_POST['btnMostrarProductos'])) {
     $mostrarProductos = new ContratosAjax();
     $mostrarProductos->ctr_id = $_POST['ctrs_id'];
     $mostrarProductos->ajaxMostrarProductos();
+}
+if (isset($_POST['btnImportarStatus'])) {
+    $impotarStatus = new ContratosAjax();
+    $impotarStatus->ajaxImportarStatus();
 }

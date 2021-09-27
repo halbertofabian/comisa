@@ -1270,23 +1270,72 @@ class ContratosControlador
     }
     public static function ctrGuardarProductos()
     {
-        if(isset($_POST['btnGuardarProductos'])){
+        if (isset($_POST['btnGuardarProductos'])) {
             $ctr_productos = $_POST['ctr_productos'];
             $ctrs_id = $_POST['ctrs_id'];
 
             $res = ContratosModelo::mdlActualizarProductos($ctr_productos, $ctrs_id);
-            if($res){
+            if ($res) {
                 return array(
                     'status' => true,
                     'mensaje' => 'Los productos se guardaron correctamente!'
                 );
-            }else{
+            } else {
                 return array(
                     'status' => false,
                     'mensaje' => 'Hubo un error alguardar los poductos!'
                 );
             }
         }
+    }
+    public static function ctrImportarStatusExcel()
+    {
+        try {
+            //$nombreArchivo = $_SERVER['DOCUMENT_ROOT'] . '/dupont/exportxlsx/tbl_productos_dupont.xls';
+            $nombreArchivo = $_FILES['archivoExcel']['tmp_name'];
+            //var_dump($nombreArchivo);
+            // Cargar hoja de calculo
+            $leerExcel = PHPExcel_IOFactory::createReaderForFile($nombreArchivo);
+            $objPHPExcel = $leerExcel->load($nombreArchivo);
+            //var_dump($objPHPExcel);
+            $objPHPExcel->setActiveSheetIndex(0);
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $countUpdate = 0;
+            //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
 
+
+            for ($i = 2; $i <= $numRows; $i++) {
+                $codigo = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $numero = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $ruta = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $status = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+
+
+                $data = array(
+                    "codigo" => $codigo,
+                    "numero" => $numero,
+                    "ruta" => $ruta,
+                    "status" => $status
+                );
+
+                
+                $actualizar = ContratosModelo::mdlActualizarStatusImport($data);
+                if ($actualizar) {
+                    $countUpdate += 1;
+                }
+            }
+            return array(
+                'status' => true,
+                'mensaje' => "Carga de productos con éxito",
+                'update' => $countUpdate
+            );
+        } catch (Exception $th) {
+            $th->getMessage();
+            return array(
+                'status' => false,
+                'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
+                'update' => ""
+            );
+        }
     }
 }

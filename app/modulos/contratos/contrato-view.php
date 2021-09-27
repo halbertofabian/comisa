@@ -506,13 +506,13 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-striped table-hover" id="tbl_mercancia">
+                    <table class="table table-striped table-hover nowrap text-center" id="tbl_mercancia">
                         <thead>
                             <tr>
-                                <th style="width:20%; text-align:center">SKU</th>
-                                <th style="width:20%; text-align:center">CANTIDAD</th>
-                                <th style="width:50%; text-align:center">DESCRIPCION</th>
-                                <th style="width:10%; text-align:center"></th>
+                                <th>SKU</th>
+                                <th>CANTIDAD</th>
+                                <th>DESCRIPCION</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="tbodyProductos">
@@ -524,10 +524,18 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                             ?>
                                 <tr id="<?= $pds['sku'] ?>">
 
-                                    <td style="width:20%; text-align:center"><?= $pds['sku'] ?></td>
-                                    <td style="width:20%; text-align:center"><?= $pds['cantidad'] ?></td>
+                                    <td><?= $pds['sku'] ?></td>
+                                    <td style="display:flex; justify-content: center">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default menos" btn_menos="<?= $pds['sku'] ?>" type="button">-</button>
+                                        </span>
+                                        <input type="text" class="form-control" style="width:50px;text-align: center;" id="contador<?= $pds['sku'] ?>" cps_id="<?= $pds['sku'] ?>" value=" <?= $pds['cantidad'] ?>" min="1">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default mas" btn_mas="<?= $pds['sku'] ?>" type="button">+</button>
+                                        </span>
+                                    </td>
                                     <td class="nombreProducto" style="width:50%; text-align:center"><?= $pds['nombreProducto'] ?></td>
-                                    <td tyle="width:10%; text-align:center">
+                                    <td>
                                         <button type="button" class="btn btn-danger btnQuitarProducto" sku="<?= $pds['sku'] ?>"><i class="fa fa-trash"></i> Borrar</button>
                                     </td>
                                 </tr>
