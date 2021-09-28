@@ -46,6 +46,12 @@ elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "todos") :
 ?>
 
 <?php
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "enrutar-cuentas") :
+    cargarComponente('breadcrumb', '', 'Enrutar contratos');
+    include_once 'app/modulos/contratos/enrutar-cuentas.php';
+?>
+
+<?php
 else :
     cargarComponente('breadcrumb', '', 'Nuevo contrato');
 ?>

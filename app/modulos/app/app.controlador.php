@@ -663,6 +663,11 @@ class AppControlador
                             'label' => 'Listar todos los contratos',
                             'href' => 'contratos/todos'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Enrutar cuentas',
+                            'href' => 'contratos/enrutar-cuentas'
+                        ],
                         //Aqui más item de menu
                     ),
                 ]
@@ -830,6 +835,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Listar todos los contratos',
                             'href' => 'contratos/todos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Enrutar cuentas',
+                            'href' => 'contratos/enrutar-cuentas'
                         ],
                         //Aqui más item de menu
                     ),
@@ -1064,6 +1074,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Listar todos los contratos',
                             'href' => 'contratos/todos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Enrutar cuentas',
+                            'href' => 'contratos/enrutar-cuentas'
                         ],
                         //Aqui más item de menu
                     ),

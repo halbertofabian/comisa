@@ -823,4 +823,22 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlFiltrarContratoPorRuta($ctr_ruta, $metodo_pgo)
+    {
+        try {
+            //c4ode...
+
+            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta LIKE '%$ctr_ruta%' AND (ctr_forma_pago = ?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $metodo_pgo);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

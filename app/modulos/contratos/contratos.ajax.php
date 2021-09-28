@@ -30,6 +30,8 @@ class ContratosAjax
 {
     public $producto;
     public $ctr_id;
+    public $ruta;
+    public $metodo_pgo;
     public function ajaxConsultarCliente()
     {
         $res = ClientesModelo::mdlMostrarClientes($_POST['clts_id']);
@@ -131,6 +133,11 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrImportarStatusExcel();
         echo json_encode($respuesta, true);
     }
+    public function ajaxFiltrarContratosPorRuta()
+    {
+        $respuesta = ContratosModelo::mdlFiltrarContratoPorRuta($this->ruta, $this->metodo_pgo);
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -218,4 +225,10 @@ if (isset($_POST['btnMostrarProductos'])) {
 if (isset($_POST['btnImportarStatus'])) {
     $impotarStatus = new ContratosAjax();
     $impotarStatus->ajaxImportarStatus();
+}
+if (isset($_POST['btnSelectedRuta'])) {
+    $filtrarContratosPorRuta = new ContratosAjax();
+    $filtrarContratosPorRuta->ruta = $_POST['crt_ruta'];
+    $filtrarContratosPorRuta->metodo_pgo = $_POST['metodo_pgo'];
+    $filtrarContratosPorRuta->ajaxFiltrarContratosPorRuta();
 }

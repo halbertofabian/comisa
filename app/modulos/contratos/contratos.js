@@ -781,5 +781,99 @@ $(document).ready(function () {
             });
     });
 
+    //ENRUTAR CONTRATOS
+
+    const listaPrincipal = document.getElementById("listaPrincipal");
+    const lista1 = document.getElementById("lista1");
+    const lista2 = document.getElementById("lista2");
+    const lista3 = document.getElementById("lista3");
+    const lista4 = document.getElementById("lista4");
+    const lista5 = document.getElementById("lista5");
+    const lista6 = document.getElementById("lista6");
+    const lista7 = document.getElementById("lista7");
+    Sortable.create(listaPrincipal, {
+        group: {
+            name: 'shared',
+            put: false // Do not allow items to be put into this list
+        },
+        animation: 150,
+        sort: false
+    });
+    Sortable.create(lista1, {
+        animation: 150,
+        group: 'shared',
+        
+    });
+    Sortable.create(lista2, {
+        animation: 150,
+        group: 'shared',
+        
+    });
+    Sortable.create(lista3, {
+        animation: 150,
+        group: 'shared',
+    });
+    Sortable.create(lista4, {
+        animation: 150,
+        group: 'shared',
+    });
+    Sortable.create(lista5, {
+        animation: 150,
+        group: 'shared',
+    });
+    Sortable.create(lista6, {
+        animation: 150,
+        group: 'shared',
+    });
+    Sortable.create(lista7, {
+        animation: 150,
+        group: 'shared',
+    });
+
+    $("#crt_ruta").on("change", function (e) {
+        e.preventDefault();
+        var crt_ruta = $(this).val();
+        var metodo_pgo = $("#metodo_pgo").val();
+        var datos = new FormData()
+        datos.append("crt_ruta", crt_ruta)
+        datos.append("metodo_pgo", metodo_pgo)
+        datos.append("btnSelectedRuta", true)
+        $.ajax({
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            // beforeSend: function () {
+            //     startLoadButton()
+            // },
+            success: function (res) {
+                var listaPrincipal = "";
+                res.forEach(element => {
+                    listaPrincipal += 
+                    `
+                    <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                $("#listaPrincipal").html(listaPrincipal);
+
+            }
+        });
+    });
+
 
 });
