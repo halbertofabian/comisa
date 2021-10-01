@@ -74,7 +74,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Buscador" aria-label="Buscador" aria-describedby="basic-addon1">
+                                <input type="text" class="form-control" placeholder="Buscador" aria-label="Buscador" id="Buscador" aria-describedby="basic-addon1">
                             </div>
                         </div>
                     </div>

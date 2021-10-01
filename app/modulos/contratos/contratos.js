@@ -875,5 +875,13 @@ $(document).ready(function () {
         });
     });
 
+    $("#Buscador").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#listaPrincipal .col-xl-12").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+    });
+
+
 
 });
