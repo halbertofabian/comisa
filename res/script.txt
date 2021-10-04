@@ -1,0 +1,1 @@
+ALTER TABLE `tbl_contrato_crt_1` ADD `ctr_enrutar` CHAR(1) NOT NULL DEFAULT 'N' AFTER `ctr_moroso`;
