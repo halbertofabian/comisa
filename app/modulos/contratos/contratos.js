@@ -837,6 +837,7 @@ $(document).ready(function () {
             //     startLoadButton()
             // },
             success: function (res) {
+                consultarCartelera();
                 var listaPrincipal = "";
                 res.forEach(element => {
                     listaPrincipal +=
@@ -988,9 +989,11 @@ $(document).ready(function () {
             }
         });
     }
-    consultarCartelera()
+    consultarCartelera();
     function consultarCartelera() {
+        var crt_ruta = $("#crt_ruta").val();
         var datos = new FormData();
+        datos.append("crt_ruta", crt_ruta);
         datos.append("btnConsultarCartelera", true);
         $.ajax({
             url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
