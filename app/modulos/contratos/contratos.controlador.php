@@ -1318,7 +1318,7 @@ class ContratosControlador
                     "status" => $status
                 );
 
-                
+
                 $actualizar = ContratosModelo::mdlActualizarStatusImport($data);
                 if ($actualizar) {
                     $countUpdate += 1;
@@ -1336,6 +1336,39 @@ class ContratosControlador
                 'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
                 'update' => ""
             );
+        }
+    }
+
+    public static function ctrInsertEnrutamiento()
+    {
+        if (isset($_POST['btnInsertContrato'])) {
+
+            $ctr_id = $_POST['ctr_id'];
+            $ctr_fecha = $_POST['ctr_fecha'];
+
+            $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id);
+            if ($res) {
+                $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha);
+                if($res2){
+                    return true;
+                }
+            }
+        }
+    }
+
+    public static function ctrEliminarCartelera()
+    {
+        if (isset($_POST['btnEliminarCartelera'])) {
+            $cra_id = $_POST['cra_id'];
+            $ctr_id = $_POST['ctr_id'];
+
+            $res = ContratosModelo::mdlEliminarCartelera($cra_id);
+            if ($res) {
+                $res2 = ContratosModelo::mdlActualizarStatusEnrutamientoN($ctr_id);
+                if($res2){
+                    return true;
+                }
+            }
         }
     }
 }

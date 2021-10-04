@@ -138,6 +138,21 @@ class ContratosAjax
         $respuesta = ContratosModelo::mdlFiltrarContratoPorRuta($this->ruta, $this->metodo_pgo);
         echo json_encode($respuesta, true);
     }
+    public function ajaxInsertEnrutamiento()
+    {
+        $respuesta = ContratosControlador::ctrInsertEnrutamiento();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxConsultarCartelera()
+    {
+        $respuesta = ContratosModelo::mdlConsultarCartelera();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxEliminarCartelera()
+    {
+        $respuesta = ContratosControlador::ctrEliminarCartelera();
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -231,4 +246,16 @@ if (isset($_POST['btnSelectedRuta'])) {
     $filtrarContratosPorRuta->ruta = $_POST['crt_ruta'];
     $filtrarContratosPorRuta->metodo_pgo = $_POST['metodo_pgo'];
     $filtrarContratosPorRuta->ajaxFiltrarContratosPorRuta();
+}
+if (isset($_POST['btnInsertContrato'])) {
+    $insertarCartelera = new ContratosAjax();
+    $insertarCartelera->ajaxInsertEnrutamiento();
+}
+if (isset($_POST['btnConsultarCartelera'])) {
+    $consultarCartelera = new ContratosAjax();
+    $consultarCartelera->ajaxConsultarCartelera();
+}
+if (isset($_POST['btnEliminarCartelera'])) {
+    $eliminarCartelera = new ContratosAjax();
+    $eliminarCartelera->ajaxEliminarCartelera();
 }

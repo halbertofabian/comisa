@@ -828,12 +828,117 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta LIKE '%$ctr_ruta%' AND (ctr_forma_pago = ?)";
+            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta LIKE '%$ctr_ruta%' AND (ctr_forma_pago = ?) AND ctr_enrutar = 'N'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $metodo_pgo);
             $pps->execute();
             return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarStatusEnrutamientoS($ctrs_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_enrutar = 'S' WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctrs_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarStatusEnrutamientoN($ctrs_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_enrutar = 'N' WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctrs_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlInsertarEnrutamiento($ctr_id, $ctr_fecha)
+    {
+        try {
+            //code...
+            $res = ContratosModelo::mdlAutoincrement0();
+            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro) VALUES(?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->bindValue(2, $ctr_fecha);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAutoincrement0()
+    {
+        try {
+            //code...
+            $sql = "ALTER TABLE tbl_cartelera_cra AUTO_INCREMENT = 1;";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarCartelera()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_cartelera_cra JOIN tbl_contrato_crt_1 ON tbl_cartelera_cra.cra_contrato = tbl_contrato_crt_1.ctr_id";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlEliminarCartelera($cra_id)
+    {
+        try {
+            $res = ContratosModelo::mdlAutoincrement0();
+            //code...
+            $sql = "DELETE FROM tbl_cartelera_cra WHERE cra_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {

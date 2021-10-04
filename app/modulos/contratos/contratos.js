@@ -784,34 +784,24 @@ $(document).ready(function () {
     //ENRUTAR CONTRATOS
 
     const listaPrincipal = document.getElementById("listaPrincipal");
-    const lista1 = document.getElementById("lista1");
-    const lista2 = document.getElementById("lista2");
-    const lista3 = document.getElementById("lista3");
-    const lista4 = document.getElementById("lista4");
-    const lista5 = document.getElementById("lista5");
-    const lista6 = document.getElementById("lista6");
-    const lista7 = document.getElementById("lista7");
-    Sortable.create(listaPrincipal, {
-        group: {
-            name: 'shared',
-            put: false // Do not allow items to be put into this list
-        },
-        animation: 150,
-        sort: false
-    });
+    const lista1 = document.getElementById("lunes");
+    const lista2 = document.getElementById("martes");
+    const lista3 = document.getElementById("miercoles");
+    const lista4 = document.getElementById("jueves");
+    const lista5 = document.getElementById("viernes");
+    const lista6 = document.getElementById("sabado");
+    const lista7 = document.getElementById("domingo");
+
     Sortable.create(lista1, {
         animation: 150,
-        group: 'shared',
-        
+
     });
     Sortable.create(lista2, {
         animation: 150,
-        group: 'shared',
-        
+
     });
     Sortable.create(lista3, {
         animation: 150,
-        group: 'shared',
     });
     Sortable.create(lista4, {
         animation: 150,
@@ -819,15 +809,12 @@ $(document).ready(function () {
     });
     Sortable.create(lista5, {
         animation: 150,
-        group: 'shared',
     });
     Sortable.create(lista6, {
         animation: 150,
-        group: 'shared',
     });
     Sortable.create(lista7, {
         animation: 150,
-        group: 'shared',
     });
 
     $("#crt_ruta").on("change", function (e) {
@@ -852,11 +839,12 @@ $(document).ready(function () {
             success: function (res) {
                 var listaPrincipal = "";
                 res.forEach(element => {
-                    listaPrincipal += 
-                    `
+                    listaPrincipal +=
+                        `
                     <div class="col-xl-12">
-                            <div class="card">
+                            <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
@@ -864,6 +852,21 @@ $(document).ready(function () {
                                     <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                     <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
                                     <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p>
+                                        <div class="form-group">
+                                            <label for="dia_semanal">Seleccionar día</label>
+                                            <select class="form-control" name="dia_semanal" id="dia_semanal" ctr_id="${element.ctr_id}">
+                                                <option value="">--Seleccionar--</option>
+                                                <option value="LUNES">LUNES</option>
+                                                <option value="MARTES">MARTES</option>
+                                                <option value="MIERCOLES">MIERCOLES</option>
+                                                <option value="JUEVES">JUEVES</option>
+                                                <option value="VIERNES">VIERNES</option>
+                                                <option value="SABADO">SABADO</option>
+                                                <option value="DOMINGO">DOMINGO</option>
+                                            </select>
+                                        </div>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -883,5 +886,337 @@ $(document).ready(function () {
     });
 
 
+    $(document).on("change", "#dia_semanal", function (e) {
+        e.preventDefault();
+        var dia;
+        var ctr_dia = $(this).val();
+        var ctr_id = $(this).attr("ctr_id");
 
+        if (ctr_dia == "LUNES") {
+            dia = $("#ctr_lunes").val();
+        } else if (ctr_dia == "MARTES") {
+            dia = $("#ctr_martes").val();
+        } else if (ctr_dia == "MIERCOLES") {
+            dia = $("#ctr_miercoles").val();
+        } else if (ctr_dia == "JUEVES") {
+            dia = $("#ctr_jueves").val();
+        } else if (ctr_dia == "VIERNES") {
+            dia = $("#ctr_viernes").val();
+        } else if (ctr_dia == "SABADO") {
+            dia = $("#ctr_sabado").val();
+        } else if (ctr_dia == "DOMINGO") {
+            dia = $("#ctr_domingo").val();
+        }
+        var datos = new FormData();
+        datos.append("ctr_id", ctr_id);
+        datos.append("ctr_fecha", dia);
+        datos.append("btnInsertContrato", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (res) {
+                if (res) {
+                    imprimirContratos();
+                    consultarCartelera();
+                }
+
+            }
+        });
+    });
+
+    function imprimirContratos() {
+        var crt_ruta = $("#crt_ruta").val();
+        var metodo_pgo = $("#metodo_pgo").val();
+        var datos = new FormData()
+        datos.append("crt_ruta", crt_ruta)
+        datos.append("metodo_pgo", metodo_pgo)
+        datos.append("btnSelectedRuta", true)
+        $.ajax({
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            // beforeSend: function () {
+            //     startLoadButton()
+            // },
+            success: function (res) {
+                var listaPrincipal = "";
+                res.forEach(element => {
+                    listaPrincipal +=
+                        `
+                    <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p>
+                                        <div class="form-group">
+                                            <label for="dia_semanal">Seleccionar día</label>
+                                            <select class="form-control" name="dia_semanal" id="dia_semanal" ctr_id="${element.ctr_id}">
+                                                <option value="">--Seleccionar--</option>
+                                                <option value="LUNES">LUNES</option>
+                                                <option value="MARTES">MARTES</option>
+                                                <option value="MIERCOLES">MIERCOLES</option>
+                                                <option value="JUEVES">JUEVES</option>
+                                                <option value="VIERNES">VIERNES</option>
+                                                <option value="SABADO">SABADO</option>
+                                                <option value="DOMINGO">DOMINGO</option>
+                                            </select>
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                $("#listaPrincipal").html(listaPrincipal);
+
+            }
+        });
+    }
+    consultarCartelera()
+    function consultarCartelera() {
+        var datos = new FormData();
+        datos.append("btnConsultarCartelera", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (res) {
+                var listar_lunes = "";
+                var listar_martes = "";
+                var listar_miercoles = "";
+                var listar_jueves = "";
+                var listar_viernes = "";
+                var listar_sabado = "";
+                var listar_domingo = "";
+                res.forEach(element => {
+                    const fechaComoCadena = element.cra_fecha_cobro;
+                    const dias = [
+                        'LUNES',
+                        'MARTES',
+                        'MIERCOLES',
+                        'JUEVES',
+                        'VIERNES',
+                        'SABADO',
+                        'DOMINGO',
+                    ];
+                    const numeroDia = new Date(fechaComoCadena).getDay();
+                    const nombreDia = dias[numeroDia];
+                    if (nombreDia == "LUNES") {
+                        listar_lunes +=
+                            `
+                    <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p class="text-right">
+                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    } else if (nombreDia == "MARTES") {
+                        listar_martes +=
+                            `
+                    <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p class="text-right">
+                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    } else if (nombreDia == "MIERCOLES") {
+                        listar_miercoles +=
+                            `
+                    <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p class="text-right">
+                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    } else if (nombreDia == "JUEVES") {
+                        listar_jueves +=
+                            `
+                         <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p class="text-right">
+                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    } else if (nombreDia == "VIERNES") {
+                        listar_viernes +=
+                            `
+                         <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p class="text-right">
+                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    } else if (nombreDia == "SABADO") {
+                        listar_sabado +=
+                            `
+                         <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p class="text-right">
+                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    } else if (nombreDia == "DOMINGO") {
+                        listar_domingo +=
+                            `
+                         <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p class="text-right">
+                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    }
+                });
+                $("#lunes").html(listar_lunes);
+                $("#martes").html(listar_martes);
+                $("#miercoles").html(listar_miercoles);
+                $("#jueves").html(listar_jueves);
+                $("#viernes").html(listar_viernes);
+                $("#sabado").html(listar_sabado);
+                $("#domingo").html(listar_domingo);
+            }
+        });
+    }
+
+    $(document).on("click", ".btnEliminarCartelera", function () {
+        var cra_id = $(this).attr("cra_id");
+        var ctr_id = $(this).attr("ctr_id");
+        var crt_ruta = $("#crt_ruta").val();
+        swal({
+            title: "¿Estas seguro de eliminar el contrato enrutado?",
+            icon: "warning",
+            buttons: ["Calcelar", "Si, eliminar"],
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var datos = new FormData()
+                    datos.append("cra_id", cra_id)
+                    datos.append("ctr_id", ctr_id)
+                    datos.append("btnEliminarCartelera", true)
+                    $.ajax({
+                        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                        method: "POST",
+                        data: datos,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        success: function (res) {
+                            if (res) {
+                                toastr.success("El contrato se ha eliminado correctamente!", "CORRECTO!");
+                                if (crt_ruta) {
+                                    imprimirContratos();
+                                }
+                                consultarCartelera();
+                            }
+                        }
+                    });
+                }
+
+            });
+    });
 });

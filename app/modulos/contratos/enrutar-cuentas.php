@@ -8,41 +8,37 @@
         vertical-align: text-top;
     }
 
-    #listaPrincipal .card {
-        cursor: move;
-    }
-
-    #lista1 .card {
+    #lunes .card {
         background-color: #0275d8;
         color: #fff;
     }
 
-    #lista2 .card {
+    #martes .card {
         background-color: #292b2c;
         color: #fff;
     }
 
-    #lista3 .card {
+    #miercoles .card {
         background-color: #5cb85c;
         color: #fff;
     }
 
-    #lista4 .card {
+    #jueves .card {
         background-color: #d9534f;
         color: #fff;
     }
 
-    #lista5 .card {
+    #viernes .card {
         background-color: #f0ad4e;
         color: #fff;
     }
 
-    #lista6 .card {
+    #sabado .card {
         background-color: #5bc0de;
         color: #fff;
     }
 
-    #lista7 .card {
+    #domingo .card {
         background-color: #f7f7f7;
     }
 </style>
@@ -58,6 +54,13 @@
                                 <select class="form-control" name="crt_ruta" id="crt_ruta">
                                     <option value="">--Seleccionar ruta--</option>
                                     <?php
+                                    $monday = date('Y-m-d', strtotime('monday this week'));
+                                    $tuesday = date('Y-m-d', strtotime('tuesday this week'));
+                                    $wednesday = date('Y-m-d', strtotime('wednesday this week'));
+                                    $thursday  = date('Y-m-d', strtotime('thursday this week'));
+                                    $friday = date('Y-m-d', strtotime('friday this week'));
+                                    $saturday  = date('Y-m-d', strtotime('saturday this week'));
+                                    $sunday = date('Y-m-d', strtotime('sunday this week'));
                                     for ($i = 1; $i <= 20; $i++) :
                                         $ruta = $i <= 9 ? "0" . $i : $i;
 
@@ -66,6 +69,13 @@
                                     <?php endfor; ?>
                                 </select>
                             </div>
+                            <input type="hidden" id="ctr_lunes" value="<?= $monday ?>">
+                            <input type="hidden" id="ctr_martes" value="<?= $tuesday ?>">
+                            <input type="hidden" id="ctr_miercoles" value="<?= $wednesday ?>">
+                            <input type="hidden" id="ctr_jueves" value="<?= $thursday ?>">
+                            <input type="hidden" id="ctr_viernes" value="<?= $friday ?>">
+                            <input type="hidden" id="ctr_sabado" value="<?= $saturday ?>">
+                            <input type="hidden" id="ctr_domingo" value="<?= $sunday ?>">
                         </div>
                     </div>
                     <div class="row">
@@ -88,7 +98,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-xl-8"></div>
+                        <div class="col-xl-8">
+                        </div>
                         <div class="col-xl-4">
                             <div class="form-group">
                                 <label for="metodo_pgo">Forma de pago</label>
@@ -105,56 +116,56 @@
                         <tr>
                             <td>
                                 <div class="card days border border-primary">
-                                    <h3 class="card-title text-center">Lunes</h3>
-                                    <div class="card-body" id="lista1">
+                                    <h3 class="card-title text-center">Lunes <?= $monday ?></h3>
+                                    <div class="card-body" id="lunes">
 
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="card days border border-secondary">
-                                    <h3 class="card-title text-center">Martes</h3>
-                                    <div class="card-body" id="lista2">
+                                    <h3 class="card-title text-center">Martes <?= $tuesday ?></h3>
+                                    <div class="card-body" id="martes">
 
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="card days border border-success">
-                                    <h3 class="card-title text-center">Miercoles</h3>
-                                    <div class="card-body" id="lista3">
+                                    <h3 class="card-title text-center">Miercoles <?= $wednesday ?></h3>
+                                    <div class="card-body" id="miercoles">
 
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="card days border border-danger">
-                                    <h3 class="card-title text-center">Jueves</h3>
-                                    <div class="card-body" id="lista4">
+                                    <h3 class="card-title text-center">Jueves <?= $thursday ?></h3>
+                                    <div class="card-body" id="jueves">
 
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="card days border border-warning">
-                                    <h3 class="card-title text-center">Viernes</h3>
-                                    <div class="card-body" id="lista5">
+                                    <h3 class="card-title text-center">Viernes <?= $friday ?></h3>
+                                    <div class="card-body" id="viernes">
 
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="card days border border-info">
-                                    <h3 class="card-title text-center">Sábado</h3>
-                                    <div class="card-body" id="lista6">
+                                    <h3 class="card-title text-center">Sábado <?= $saturday ?></h3>
+                                    <div class="card-body" id="sabado">
 
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 <div class="card days border border-light">
-                                    <h3 class="card-title text-center">Domingo</h3>
-                                    <div class="card-body" id="lista7">
+                                    <h3 class="card-title text-center">Domingo <?= $sunday ?></h3>
+                                    <div class="card-body" id="domingo">
 
                                     </div>
                                 </div>
