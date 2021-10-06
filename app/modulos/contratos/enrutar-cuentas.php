@@ -112,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table table-responsive" width="100%">
+                    <table class="table table-responsive" width="100%" style="overflow-y: scroll; max-height: 550px;">
                         <tr>
                             <td>
                                 <div class="card days border border-primary">

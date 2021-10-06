@@ -783,39 +783,104 @@ $(document).ready(function () {
 
     //ENRUTAR CONTRATOS
 
-    const listaPrincipal = document.getElementById("listaPrincipal");
-    const lista1 = document.getElementById("lunes");
-    const lista2 = document.getElementById("martes");
-    const lista3 = document.getElementById("miercoles");
-    const lista4 = document.getElementById("jueves");
-    const lista5 = document.getElementById("viernes");
-    const lista6 = document.getElementById("sabado");
-    const lista7 = document.getElementById("domingo");
+    $("#lunes").sortable({
+        update: function (event, iu) {
+            $(this).children().each(function (index) {
+                if ($(this).attr("data-position") != (index + 1)) {
+                    $(this).attr("data-position", (index + 1)).addClass("updated");
+                }
+            });
+            guardandoPosiciones();
+        }
+    })
+    $("#martes").sortable({
+        update: function (event, iu) {
+            $(this).children().each(function (index) {
+                if ($(this).attr("data-position") != (index + 1)) {
+                    $(this).attr("data-position", (index + 1)).addClass("updated");
+                }
+            });
+            guardandoPosiciones();
+        }
+    })
+    $("#miercoles").sortable({
+        update: function (event, iu) {
+            $(this).children().each(function (index) {
+                if ($(this).attr("data-position") != (index + 1)) {
+                    $(this).attr("data-position", (index + 1)).addClass("updated");
+                }
+            });
+            guardandoPosiciones();
+        }
+    })
+    $("#jueves").sortable({
+        update: function (event, iu) {
+            $(this).children().each(function (index) {
+                if ($(this).attr("data-position") != (index + 1)) {
+                    $(this).attr("data-position", (index + 1)).addClass("updated");
+                }
+            });
+            guardandoPosiciones();
+        }
+    })
+    $("#viernes").sortable({
+        update: function (event, iu) {
+            $(this).children().each(function (index) {
+                if ($(this).attr("data-position") != (index + 1)) {
+                    $(this).attr("data-position", (index + 1)).addClass("updated");
+                }
+            });
+            guardandoPosiciones();
+        }
+    })
+    $("#sabado").sortable({
+        update: function (event, iu) {
+            $(this).children().each(function (index) {
+                if ($(this).attr("data-position") != (index + 1)) {
+                    $(this).attr("data-position", (index + 1)).addClass("updated");
+                }
+            });
+            guardandoPosiciones();
+        }
+    })
+    $("#domingo").sortable({
+        update: function (event, iu) {
+            $(this).children().each(function (index) {
+                if ($(this).attr("data-position") != (index + 1)) {
+                    $(this).attr("data-position", (index + 1)).addClass("updated");
+                }
+            });
+            guardandoPosiciones();
+        }
+    })
 
-    Sortable.create(lista1, {
-        animation: 150,
+    
 
-    });
-    Sortable.create(lista2, {
-        animation: 150,
+    function guardandoPosiciones() {
+        var pocisiones = [];
+        $(".updated").each(function () {
+            pocisiones.push([$(this).attr("data-index"), $(this).attr("data-position")]);
+            $(this).removeClass("updated");
+        })
 
-    });
-    Sortable.create(lista3, {
-        animation: 150,
-    });
-    Sortable.create(lista4, {
-        animation: 150,
-        group: 'shared',
-    });
-    Sortable.create(lista5, {
-        animation: 150,
-    });
-    Sortable.create(lista6, {
-        animation: 150,
-    });
-    Sortable.create(lista7, {
-        animation: 150,
-    });
+        var datos = new FormData();
+        datos.append("posiciones", JSON.stringify(pocisiones));
+        datos.append("btnCambiarPosiciones", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (res) { 
+                if(res){
+                    consultarCartelera();
+                }
+            }
+        });
+    }
 
     $("#crt_ruta").on("change", function (e) {
         e.preventDefault();
@@ -992,7 +1057,7 @@ $(document).ready(function () {
     consultarCartelera();
     function consultarCartelera() {
         var crt_ruta = $("#crt_ruta").val();
-        if(crt_ruta == ""){
+        if (crt_ruta == "") {
             return;
         }
         var datos = new FormData();
@@ -1016,6 +1081,12 @@ $(document).ready(function () {
                 var listar_domingo = "";
                 res.forEach(element => {
                     const fechaComoCadena = element.cra_fecha_cobro;
+                    var orden = element.cra_orden;
+                    if(orden == null || orden == ""){
+                        orden = "";
+                    }else{
+                        orden = element.cra_orden;
+                    }
                     const dias = [
                         'LUNES',
                         'MARTES',
@@ -1030,10 +1101,11 @@ $(document).ready(function () {
                     if (nombreDia == "LUNES") {
                         listar_lunes +=
                             `
-                    <div class="col-xl-12">
+                        <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
@@ -1051,10 +1123,11 @@ $(document).ready(function () {
                     } else if (nombreDia == "MARTES") {
                         listar_martes +=
                             `
-                    <div class="col-xl-12">
+                    <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
@@ -1072,10 +1145,11 @@ $(document).ready(function () {
                     } else if (nombreDia == "MIERCOLES") {
                         listar_miercoles +=
                             `
-                    <div class="col-xl-12">
+                    <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
@@ -1093,10 +1167,11 @@ $(document).ready(function () {
                     } else if (nombreDia == "JUEVES") {
                         listar_jueves +=
                             `
-                         <div class="col-xl-12">
+                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
@@ -1114,10 +1189,11 @@ $(document).ready(function () {
                     } else if (nombreDia == "VIERNES") {
                         listar_viernes +=
                             `
-                         <div class="col-xl-12">
+                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
@@ -1135,10 +1211,11 @@ $(document).ready(function () {
                     } else if (nombreDia == "SABADO") {
                         listar_sabado +=
                             `
-                         <div class="col-xl-12">
+                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
@@ -1156,10 +1233,11 @@ $(document).ready(function () {
                     } else if (nombreDia == "DOMINGO") {
                         listar_domingo +=
                             `
-                         <div class="col-xl-12">
+                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>

@@ -1349,7 +1349,7 @@ class ContratosControlador
             $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id);
             if ($res) {
                 $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha);
-                if($res2){
+                if ($res2) {
                     return true;
                 }
             }
@@ -1365,10 +1365,23 @@ class ContratosControlador
             $res = ContratosModelo::mdlEliminarCartelera($cra_id);
             if ($res) {
                 $res2 = ContratosModelo::mdlActualizarStatusEnrutamientoN($ctr_id);
-                if($res2){
+                if ($res2) {
                     return true;
                 }
             }
+        }
+    }
+    public static function ctrCambiarPosiciones()
+    {
+        if (isset($_POST['btnCambiarPosiciones'])) {
+            $datos = $_POST['posiciones'];
+
+            $posiciones = json_decode($datos, true);
+
+            foreach ($posiciones as $posicion) {
+                $res = ContratosModelo::mdlActualizarOrdenCartelera($posicion[0], $posicion[1]);
+            }
+            return true;
         }
     }
 }

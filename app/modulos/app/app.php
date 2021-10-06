@@ -92,6 +92,8 @@
 
     <script src="<?= HTTP_HOST . 'app/' ?>assets/js/code_bar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
 
 
 </head>

@@ -153,6 +153,11 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrEliminarCartelera();
         echo json_encode($respuesta, true);
     }
+    public function ajaxCambiarPocisiones()
+    {
+        $respuesta = ContratosControlador::ctrCambiarPosiciones();
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -258,4 +263,8 @@ if (isset($_POST['btnConsultarCartelera'])) {
 if (isset($_POST['btnEliminarCartelera'])) {
     $eliminarCartelera = new ContratosAjax();
     $eliminarCartelera->ajaxEliminarCartelera();
+}
+if (isset($_POST['btnCambiarPosiciones'])) {
+    $pocisiones = new ContratosAjax();
+    $pocisiones->ajaxCambiarPocisiones();
 }

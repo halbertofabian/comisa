@@ -828,7 +828,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta LIKE '%$ctr_ruta%' AND (ctr_forma_pago = ?) AND ctr_enrutar = 'N'";
+            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta LIKE '$ctr_ruta%' AND (ctr_forma_pago = ?) AND ctr_enrutar = 'N'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $metodo_pgo);
@@ -880,14 +880,45 @@ class ContratosModelo
     {
         try {
             //code...
-            $res = ContratosModelo::mdlAutoincrement0();
-            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro) VALUES(?,?)";
+            $res2 = ContratosModelo::mdlAutoincrement0();
+            $res = ContratosModelo::mdlConsultarOrdenPorFecha($ctr_fecha);
+            if ($res['orden'] != null) {
+                $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,?)";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $ctr_id);
+                $pps->bindValue(2, $ctr_fecha);
+                $pps->bindValue(3, $res['orden']);
+                $pps->execute();
+                return $pps->rowCount() > 0;
+            } else {
+                
+                $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,1)";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $ctr_id);
+                $pps->bindValue(2, $ctr_fecha);
+                // $pps->bindValue(3, $orden);
+                $pps->execute();
+                return $pps->rowCount() > 0;
+            }
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarOrdenPorFecha($ctr_fecha)
+    {
+        try {
+            //code...
+            $sql = "SELECT MAX(cra_orden)+1 AS orden FROM tbl_cartelera_cra WHERE cra_fecha_cobro = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ctr_id);
-            $pps->bindValue(2, $ctr_fecha);
+            $pps->bindValue(1, $ctr_fecha);
             $pps->execute();
-            return $pps->rowCount() > 0;
+            return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -915,8 +946,8 @@ class ContratosModelo
     {
         try {
             //code...
-           
-            $sql = "SELECT * FROM tbl_cartelera_cra JOIN tbl_contrato_crt_1 ON tbl_cartelera_cra.cra_contrato = tbl_contrato_crt_1.ctr_id WHERE tbl_contrato_crt_1.ctr_ruta LIKE '%".$_POST['crt_ruta']."%' ";
+
+            $sql = "SELECT * FROM tbl_cartelera_cra JOIN tbl_contrato_crt_1 ON tbl_cartelera_cra.cra_contrato = tbl_contrato_crt_1.ctr_id WHERE tbl_contrato_crt_1.ctr_ruta LIKE '" . $_POST['crt_ruta'] . "%' ORDER BY tbl_cartelera_cra.cra_orden ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
@@ -939,6 +970,24 @@ class ContratosModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cra_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarOrdenCartelera($cra_id, $cra_orden)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_orden = ? WHERE cra_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra_orden);
+            $pps->bindValue(2, $cra_id);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
