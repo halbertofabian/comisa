@@ -992,6 +992,9 @@ $(document).ready(function () {
     consultarCartelera();
     function consultarCartelera() {
         var crt_ruta = $("#crt_ruta").val();
+        if(crt_ruta == ""){
+            return;
+        }
         var datos = new FormData();
         datos.append("crt_ruta", crt_ruta);
         datos.append("btnConsultarCartelera", true);

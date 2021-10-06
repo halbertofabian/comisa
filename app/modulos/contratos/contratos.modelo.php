@@ -915,7 +915,8 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_cartelera_cra JOIN tbl_contrato_crt_1 ON tbl_cartelera_cra.cra_contrato = tbl_contrato_crt_1.ctr_id WHERE tbl_contrato_crt_1.ctr_ruta LIKE '%$_POST[crt_ruta]%'";
+           
+            $sql = "SELECT * FROM tbl_cartelera_cra JOIN tbl_contrato_crt_1 ON tbl_cartelera_cra.cra_contrato = tbl_contrato_crt_1.ctr_id WHERE tbl_contrato_crt_1.ctr_ruta LIKE '%".$_POST['crt_ruta']."%' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
