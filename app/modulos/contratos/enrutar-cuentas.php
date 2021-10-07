@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label for="crt_ruta">Número de ruta</label>
                                 <select class="form-control" name="crt_ruta" id="crt_ruta">
-                                    <option value="">--Seleccionar ruta--</option>
+                                    <option value="0">--Seleccionar ruta--</option>
                                     <?php
                                     $monday = date('Y-m-d', strtotime('monday this week'));
                                     $tuesday = date('Y-m-d', strtotime('tuesday this week'));

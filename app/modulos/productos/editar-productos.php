@@ -15,7 +15,7 @@ $pds = ProductosModelo::mdlMostrarProductoById($rutas[2]);
                         <!-- <h4 class="card-title text-primary">Nuevo producto <strong class="text-primary" data-toggle="tooltip" data-placement="right" title="Campos obligatorios, por favor llenelos">*</strong> </h4> -->
                         <div class="form-group">
                             <label for="">Elije un almacén</label>
-                            <select class="form-control" name="pds_ams_id" id="pds_ams_id" disabled >
+                            <select class="form-control" name="pds_ams_id" id="pds_ams_id" disabled>
                                 <?php
 
 
@@ -228,27 +228,34 @@ $pds = ProductosModelo::mdlMostrarProductoById($rutas[2]);
 
                             <div class="col-12">
                                 <h4 class="card-title">Categoría</h4>
+                                <input type="hidden" class="form-control" name="pds_id_producto" id="pds_id_producto" value="<?= $pds['pds_id_producto'] ?>">
+                                <input type="hidden" class="form-control" name="categorias" id="categorias" value="<?= $pds['pds_categoria'] ?>">
+                                <div class="col-12">
+                                    <!-- <input type="text" class="form-control" id="ctg_buscar_categoria" placeholder="Buscar categoría" style=" border:none; border-bottom:1px solid #EA4D56;"> -->
+                                    <div class="mt-2 text-center" id="pds_categoria-content-edit" data-toggle="" style="overflow-y: scroll; height: 200px; border: 1px dashed #000; ">
+                                    </div>
+                                </div>
 
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for=""></label>
                                             <input type="text" name="" id="" class="form-control">
                                         </div>
-                                    </div>
-                                    <!-- <div class="col-12">
+                                    </div> -->
+                                <!-- <div class="col-12">
                                         <div class="form-group">
                                             <input type="hidden" class="form-control" name="pds_categoria_text" id="pds_categoria_text">
                                             <button type="button" class="btn btn-link btnClickAgregarCategoria float-right d-none">Crear categoría</button>
                                         </div>
                                     </div> -->
 
-                                    <!-- <div class="col-12">
+                                <!-- <div class="col-12">
                                         
                                         <div class="mt-2 text-center" id="pds_categoria-content" data-toggle="" style="overflow-y: scroll; height: 200px; border: 1px dashed #000; ">
                                         </div>
                                     </div> -->
-                                </div>
+                                <!-- </div> -->
                                 <!-- <button type="button" class="btn btn-link" id="btnClickAgregarCategoria">+Añadir nueva categoría</button> -->
 
                                 <!-- <p class="card-text text-primary">Etiqueta</p>
@@ -277,7 +284,7 @@ $pds = ProductosModelo::mdlMostrarProductoById($rutas[2]);
                                     <button class="btn btn-link">Imágenes a la galería del producto</button>
                                 </div> -->
 
-                                <button type="submit" class="btn btn-primary float-right mt-5" name="btnAgregarProductos">Guardar producto</button>
+                                <button type="submit" class="btn btn-primary float-right mt-5" name="btnEditarProductos">Guardar producto</button>
                             </div>
                         </div>
                     </div>
@@ -286,8 +293,8 @@ $pds = ProductosModelo::mdlMostrarProductoById($rutas[2]);
             </div>
         </div>
         <?php
-        $agregarProducto = new ProductosControlador();
-        $agregarProducto->ctrAgregarProductos();
+        $editarProducto = new ProductosControlador();
+        $editarProducto->ctrActualizarProductos();
 
         ?>
     </form>

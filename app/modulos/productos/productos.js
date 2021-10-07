@@ -164,26 +164,26 @@ $("#pds_ams_id").on("change", function () {
                 var pds_sku = pds.pds_sku;
                 var pds_sku = pds_sku.split("/");
 
-                if (pds.pds_stok <= pds.pds_stok_min || pds.pds_stok == 0){
-                    color="danger";
+                if (pds.pds_stok <= pds.pds_stok_min || pds.pds_stok == 0) {
+                    color = "danger";
 
-                }else{
-                    color="success";
+                } else {
+                    color = "success";
                 }
 
                 if (pds.pds_fecha_modificacion == '0000-00-00 00:00:00') {
-                textin="Creado el "+pds.pds_fecha_creacion;
-                tipousr=pds.pds_usaurio_registro;
+                    textin = "Creado el " + pds.pds_fecha_creacion;
+                    tipousr = pds.pds_usaurio_registro;
 
-                }else {
-                textin="Ultima modificación el:"+pds.pds_fecha_modificacion; 
-                tipousr=pds.pds_usuario_modifico;
+                } else {
+                    textin = "Ultima modificación el:" + pds.pds_fecha_modificacion;
+                    tipousr = pds.pds_usuario_modifico;
                 }
 
                 tblDatos +=
                     `
                         <tr  class="pds_content text-center" pds_id="${pds.pds_id_producto}" style="height: 110px;">
-                        <td><input type="checkbox" class="pds_action_product" name="pds_action_product[]" value="${pds.pds_id_producto }"></td>
+                        <td><input type="checkbox" class="pds_action_product" name="pds_action_product[]" value="${pds.pds_id_producto}"></td>
                         <td><img src="${pds.pds_imagen_portada}" width="50" height="50" alt="no fount"></td>
                         <td>
                             <a href="" class="bt btn-link">${pds.pds_nombre}</a>
@@ -222,4 +222,56 @@ $("#pds_ams_id").on("change", function () {
         }
 
     })
+})
+$("#bodyviewProd").on("click", ".btnEliminarProducto", function () {
+    var pds_id_producto = $(this).attr("pds_id_producto");
+    swal({
+        title: "ADVERTENCIA",
+        text: "¿Esta seguro de eliminar el producto?",
+        icon: "warning",
+        buttons: ["Calcelar", "Si, eliminar"],
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+                datos.append("btnEliminarProducto", true);
+                datos.append("pds_id_producto", pds_id_producto);
+
+                $.ajax({
+                    url: urlApp + 'app/modulos/productos/productos.ajax.php',
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    beforeSend: function () {
+
+                    },
+                    success: function (res) {
+                        if (res) {
+                            swal({
+                                title: "ELIMINADO",
+                                text: "El producto se a eliminado correctamente!",
+                                icon: "success",
+                                buttons: [false, "OK"],
+                                dangerMode: true,
+                            })
+                                .then((willDelete) => {
+                                    if (willDelete) {
+                                        window.location.reload();
+                                    } else {
+                                        window.location.reload();
+
+                                    }
+                                })
+
+                        }
+                    }
+
+                })
+            }
+        })
+
 })

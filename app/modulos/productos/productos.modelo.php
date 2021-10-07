@@ -55,6 +55,40 @@ class ProductosModelo
             $con = null;
         }
     }
+    public static function mdlEditarProductos($pds)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_productos_pds SET pds_nombre=?,pds_categoria=?,pds_stok=?,pds_stok_min=?,pds_precio_credito=?,pds_enganche=?,pds_pago_semanal=?,pds_precio_contado=?,pds_precio_compra_mes_1=?,pds_precio_compra_mes_2=?,pds_fecha_modificacion=?,pds_usuario_modifico=? WHERE pds_id_producto = ?";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pds['pds_nombre']);
+            $pps->bindValue(2, $pds['pds_categoria']);
+            $pps->bindValue(3, $pds['pds_stok']);
+            $pps->bindValue(4, $pds['pds_stok_min']);
+
+            $pps->bindValue(5, $pds['pds_precio_credito']);
+            $pps->bindValue(6, $pds['pds_enganche']);
+            $pps->bindValue(7, $pds['pds_pago_semanal']);
+            $pps->bindValue(8, $pds['pds_precio_contado']);
+            $pps->bindValue(9, $pds['pds_precio_compra_mes_1']);
+
+            $pps->bindValue(10, $pds['pds_precio_compra_mes_2']);
+            $pps->bindValue(11, $pds['pds_fecha_modificacion']);
+
+            $pps->bindValue(12, $pds['pds_usuario_modifico']);
+            $pps->bindValue(13, $pds['pds_id_producto']);
+
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlActualizarProductosExcelInventario($data)
     {
         try {
@@ -143,14 +177,14 @@ class ProductosModelo
             $con = null;
         }
     }
-    public static function mdlEliminarProductos()
+    public static function mdlEliminarProductos($pds)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "UPDATE tbl_productos_pds SET pds_estado = 'Eliminado' WHERE pds_id_producto = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
+            $pps->bindValue(1, $pds['pds_id_producto']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

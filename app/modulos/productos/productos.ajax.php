@@ -32,6 +32,12 @@ class ProductosAjax
         $respuesta = ProductosModelo::mdlMostrarProductosAlmId($_POST);
         echo json_encode($respuesta, true);
     }
+    public function ajaxEliminarProducto()
+    {
+
+        $respuesta = ProductosModelo::mdlEliminarProductos($_POST);
+        echo json_encode($respuesta, true);
+    }
 }
 
 
@@ -42,4 +48,8 @@ if (isset($_POST['btnImportarProductos'])) {
 if (isset($_POST['selectAlmacen'])) {
     $mostrarProductos = new ProductosAjax();
     $mostrarProductos->ajaxmostrarProductosAlmacenid();
+}
+if (isset($_POST['btnEliminarProducto'])) {
+    $eliminarProducto = new ProductosAjax();
+    $eliminarProducto->ajaxEliminarProducto();
 }

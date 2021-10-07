@@ -103,6 +103,7 @@ $productos = ProductosModelo::mdlMostrarProductosActivos();
                                 <th>Inventario</th>
                                 <th>Categorías</th>
                                 <th>Fecha</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id="bodyviewProd">
@@ -146,16 +147,12 @@ $productos = ProductosModelo::mdlMostrarProductosActivos();
                                         ?>
 
                                     </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm btnEliminarProducto" pds_id_producto="<?= $pds['pds_id_producto']?>"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    </td>
 
                                 </tr>
                             <?php endforeach; ?>
-
-                            <div class="row">
-                                <div class="col-12">
-                                    <button class="btn btn-primary   mt-1" type="submit"><i class="fa fa-trash"></i> Borrar elementos</button>
-                                </div>
-                            </div>
-                            <hr>
 
                         </tbody>
                     </table>

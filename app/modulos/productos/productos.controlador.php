@@ -77,14 +77,70 @@ class ProductosControlador
             // preArray($agregarProductos);
             // return;
             if ($agregarProductos) {
-                AppControlador::msj('success', 'Muy bien', 'Producto registrado con éxito', HTTP_HOST . 'productos/new');
+                AppControlador::msj('success', 'Muy bien', 'Producto registrado con éxito', HTTP_HOST . 'productos/listar-productos');
             } else {
                 AppControlador::msj('error', 'Error', 'Ocurrio un error, inetnte de nuevo, es probable que este producto ya exista, verifique e intente de nuevo');
             }
         }
     }
-    public function ctrActualizarProductos()
+    public static function ctrActualizarProductos()
     {
+        
+        if (isset($_POST['btnEditarProductos'])) {
+            $_POST['pds_etiquetas'] = "SOFTMOR";
+            $_POST['pds_fecha_modificacion'] = FECHA;
+            $_POST['pds_usuario_modifico'] = $_SESSION['session_usr']['usr_nombre'];
+
+            // Validaciones 
+
+            $ctg_text = "";
+            if (isset($_POST['pds_categoria'])) {
+                for ($i = 0; $i < sizeof($_POST['pds_categoria']); $i++) {
+                    $ctg_text .=  $_POST['pds_categoria'][$i] . ',';
+                }
+                $ctg_text = substr($ctg_text, 0, -1);
+            }
+            $_POST['pds_categoria'] = $ctg_text;
+
+            if (empty($_POST['pds_stok_min'])) {
+                $_POST['pds_stok_min'] = 0.00;
+            }
+            if (empty($_POST['pds_precio_mayoreo'])) {
+                $_POST['pds_precio_mayoreo'] = 0.00;
+            }
+            if (empty($_POST['pds_precio_mayoreo'])) {
+                $_POST['pds_precio_mayoreo'] = 0.00;
+            }
+            if (empty($_POST['pds_precio_promocion'])) {
+                $_POST['pds_precio_promocion'] = 0.00;
+            }
+
+            if (empty($_POST['pds_fecha_inicio_promocion'])) {
+                $_POST['pds_fecha_inicio_promocion'] = "0000-00-00 00:00:00";
+            }
+            if (empty($_POST['pds_fecha_fin_promocion'])) {
+                $_POST['pds_fecha_fin_promocion'] = "0000-00-00 00:00:00";
+            }
+
+            $_POST['pds_precio_credito'] = str_replace(",", "", $_POST['pds_precio_credito']);
+            $_POST['pds_enganche'] = str_replace(",", "", $_POST['pds_enganche']);
+            $_POST['pds_pago_semanal'] = str_replace(",", "", $_POST['pds_pago_semanal']);
+            $_POST['pds_precio_contado'] = str_replace(",", "", $_POST['pds_precio_contado']);
+            $_POST['pds_precio_compra_mes_1'] = str_replace(",", "", $_POST['pds_precio_compra_mes_1']);
+            $_POST['pds_precio_compra_mes_2'] = str_replace(",", "", $_POST['pds_precio_compra_mes_2']);
+
+
+            $editarProductos = ProductosModelo::mdlEditarProductos($_POST);
+
+            // preArray($editarProductos);
+            // return;
+            if ($editarProductos) {
+                AppControlador::msj('success', 'Muy bien', 'El producto se a actualizado con éxito', HTTP_HOST . 'productos/listar-productos');
+            } else {
+                AppControlador::msj('error', 'Error', 'Ocurrio un error, inetnte de nuevo, es probable que este producto ya exista, verifique e intente de nuevo');
+            }
+        }
+
     }
     public function ctrMostrarProductos()
     {

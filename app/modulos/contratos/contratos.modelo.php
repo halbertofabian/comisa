@@ -283,7 +283,21 @@ class ContratosModelo
     public static function mdlSubirPreContratos($ctr)
     {
         try {
-            $sql = " INSERT INTO tbl_contrato_crt_1 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
+            $sql = " INSERT INTO tbl_contrato_crt_1 
+            (ctr_id, ctr_folio, ctr_fecha_contrato, ctr_id_vendedor, ctr_cliente, ctr_numero_cuenta, ctr_ruta, ctr_forma_pago,
+            ctr_dia_pago, ctr_proximo_pago, ctr_plazo_credito, ctr_tipo_pago, ctr_productos, ctr_total, ctr_enganche, ctr_pago_adicional,
+            ctr_saldo, ctr_elaboro, ctr_nota, ctr_fotos, ctr_nombre_ref_1, ctr_parentesco_ref_1, ctr_direccion_ref_1, ctr_colonia_ref_1,
+            ctr_telefono_ref_1, clts_curp, clts_telefono, clts_domicilio, clts_col, clts_entre_calles, clts_trabajo, clts_puesto, 
+            clts_direccion_tbj, clts_col_tbj, clts_tel_tbj, clts_antiguedad_tbj, clts_igs_mensual_tbj, clts_tipo_vivienda, 
+            clts_vivienda_anomde, clts_antiguedad_viviendo, clts_coordenadas, clts_nom_conyuge, clts_tbj_conyuge, 
+            clts_tbj_puesto_conyuge, clts_tbj_dir_conyuge, clts_tbj_col_conyuge, clts_tbj_tel_conyuge, clts_tbj_ant_conyuge, 
+            clts_tbj_ing_conyuge, clts_nom_fiador, clts_parentesco_fiador, clts_tel_fiador, clts_dir_fiador, clts_col_fiador,
+            clts_tbj_fiador, clts_tbj_dir_fiador, clts_tbj_tel_fiador, clts_tbj_col_fiador, clts_tbj_ant_fiador, clts_fotos_fiador,
+            clts_nom_ref2, clts_parentesco_ref2, clts_dir_ref2, clts_col_ref2, clts_tel_ref2, clts_nom_ref3, clts_parentesco_ref3,
+            clts_dir_ref3, clts_col_ref3, clts_tel_ref3, sobre_enganche_pendiente, clts_registro_venta, clts_caja, clts_folio_nuevo,
+            ctr_pago_credito, ctr_aprovado_ventas, clts_fachada_color, clts_puerta_color, clts_puerta_color, ctr_status_cuenta,
+            ctr_saldo_actual, ctr_moroso) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
