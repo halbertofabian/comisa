@@ -74,6 +74,14 @@ class ProductosControlador
 
             $agregarProductos = ProductosModelo::mdlAgregarProductos($_POST);
 
+            if (!empty($_POST['pds_series_array'])) {
+                $pds_series = $_POST['pds_series_array'];
+                $series = json_decode($pds_series, true);
+                foreach ($series as $serie) {
+                    $res = ProductosModelo::mdlAgregarSeries($agregarProductos, $serie['pds_serie']);
+                }
+            }
+
             // preArray($agregarProductos);
             // return;
             if ($agregarProductos) {
@@ -391,6 +399,23 @@ class ProductosControlador
                 'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
                 'insert' =>  "",
                 'update' => ""
+            );
+        }
+    }
+    public static function ctrAgregarSeries()
+    {
+        if (isset($_POST['btnGuardarSeries'])) {
+            $spds_producto = $_POST['spds_producto'];
+
+            $productos = json_decode($spds_producto, true);
+
+            foreach ($productos as $producto) {
+                $res = ProductosModelo::mdlAgregarSeries($producto['id'], $producto['serie']);
+            }
+
+            return array(
+                'status' => true,
+                'mensaje' => 'Las series se guardarón correctamente!',
             );
         }
     }

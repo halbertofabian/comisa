@@ -19,6 +19,7 @@ require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
 class ProductosAjax
 {
+    public $pdt_nombre;
 
     public function ajaxImportarProductos()
     {
@@ -38,6 +39,16 @@ class ProductosAjax
         $respuesta = ProductosModelo::mdlEliminarProductos($_POST);
         echo json_encode($respuesta, true);
     }
+    public function ajaxBuscarProductos()
+    {
+        $res = ProductosModelo::mdlAutocompleteProductos($this->pdt_nombre);
+        echo json_encode($res, true);
+    }
+    public function ajaxGuardarSeries()
+    {
+        $res = ProductosControlador::ctrAgregarSeries();
+        echo json_encode($res, true);
+    }
 }
 
 
@@ -52,4 +63,13 @@ if (isset($_POST['selectAlmacen'])) {
 if (isset($_POST['btnEliminarProducto'])) {
     $eliminarProducto = new ProductosAjax();
     $eliminarProducto->ajaxEliminarProducto();
+}
+if (isset($_GET['term'])) {
+    $buscarProductos = new ProductosAjax();
+    $buscarProductos->pdt_nombre = $_GET['term'];
+    $buscarProductos->ajaxBuscarProductos();
+}
+if (isset($_POST['btnGuardarSeries'])) {
+    $generarSeries = new ProductosAjax();
+    $generarSeries->ajaxGuardarSeries();
 }

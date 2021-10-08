@@ -275,3 +275,199 @@ $("#bodyviewProd").on("click", ".btnEliminarProducto", function () {
         })
 
 })
+
+//AGREGAR SERIES
+
+$("#autocomplete_pdt_serie").autocomplete({
+    source: urlApp + 'app/modulos/productos/productos.ajax.php',
+    select: function (event, ui) {
+        $("#sr_id").val(ui.item.pds_id_producto);
+        $("#sr_codigo").val(ui.item.pds_sku);
+        $("#sr_producto").val(ui.item.label);
+    },
+
+});
+
+var datos = [];
+
+$("#formAddSerie").on("submit", function (e) {
+    e.preventDefault();
+    var autocomplete_pdt_serie = $("#autocomplete_pdt_serie").val();
+    var pdt_serie = $("#pdt_serie").val();
+    var sr_id = $("#sr_id").val();
+    var sr_codigo = $("#sr_codigo").val();
+    var sr_producto = $("#sr_producto").val();
+    var tbodySeries = "";
+
+    if (autocomplete_pdt_serie == "" || pdt_serie == "") {
+        toastr.warning("Por favor llene los campos para agregar la serie", "¡ADVERTENCIA!");
+        return false;
+    } else if (checkId(pdt_serie)) {
+        toastr.error("El numero de serie <b>" + pdt_serie + "</b> ya fue agregada!", "¡ERROR!");
+        return false;
+    }
+    var sku = sr_codigo.split("/")[0];
+    if (sku == undefined) {
+        sku = "";
+    }
+
+    tbodySeries =
+        `
+        <tr>
+            <td>${sku}</td>
+            <td>${sr_producto}</td>
+            <td for="serie">${pdt_serie}</td>
+            <td>
+                <button class="btn btn-danger btnQuitarProductoSerie" pdt_serie="${pdt_serie}"><i class="fa fa-trash-alt"></i> Borrar</button>
+            </td>
+        </tr>
+
+        `;
+    var data =
+    {
+        "id": sr_id,
+        "codigo": sr_codigo,
+        "producto": sr_producto,
+        "serie": pdt_serie,
+
+    }
+    if (datos == "") {
+        datos.push(data);
+        $("#productos_series").val(JSON.stringify(datos));
+    } else {
+        var productos = $("#productos_series").val();
+        datos = JSON.parse(productos);
+        datos.push(data);
+        $("#productos_series").val(JSON.stringify(datos));
+    }
+    $("#tbodySeries").append(tbodySeries);
+
+    // $("#autocomplete_pdt_serie").val("");
+    $("#pdt_serie").val("");
+
+});
+
+function checkId(serie) {
+    let ids = document.querySelectorAll('#tbodySeries td[for="serie"]');
+    return [].filter.call(ids, td => td.textContent === serie).length === 1;
+}
+function checkId2(serie) {
+    let ids = document.querySelectorAll('#lista_series td[for="serie"]');
+    return [].filter.call(ids, td => td.textContent === serie).length === 1;
+}
+$("#tbodySeries").on("click", ".btnQuitarProductoSerie", function (e) {
+    e.preventDefault();
+    var pdt_serie = $(this).attr("pdt_serie");
+    var products = $("#productos_series").val();
+    var productos = JSON.parse(products);
+    for (var i = productos.length; i--;) {
+        if (productos[i].serie === pdt_serie) {
+            productos.splice(i, 1);
+        }
+    }
+    $("#productos_series").val(JSON.stringify(productos));
+    $(this).closest('tr').remove();
+
+    if (productos == "") {
+        datos = [];
+    }
+});
+$(document).on("click", ".btnGuardarSeries", function (e) {
+    e.preventDefault();
+    var productos = $("#productos_series").val();
+    if (productos == "[]" || productos == "") {
+        toastr.error("Por favor, agrega datos a la lista!", "ERROR");
+        return false;
+    }
+    var data = new FormData();
+    data.append("spds_producto", productos);
+    data.append("btnGuardarSeries", true);
+    $.ajax({
+        type: "POST",
+        url: urlApp + 'app/modulos/productos/productos.ajax.php',
+        data: data,
+        cache: false,
+        dataType: "json",
+        processData: false,
+        contentType: false,
+        /*beforeSend: function () {
+            startLoadButton()
+        },*/
+        success: function (res) {
+            if (res.status) {
+                toastr.success(res.mensaje, "Correcto!");
+                $("#tbodySeries").html("");
+                $("#productos_series").val("");
+                datos = [];
+            }
+
+        }
+    })
+});
+
+//AGREGAR SERIES DESDE NEW PRODUCTO
+var series_array = [];
+$(".btnGenerarSeriePds").on("click", function (e) {
+    e.preventDefault();
+    var lista_series = "";
+    var pds_serie = $("#pds_serie").val();
+
+    if (pds_serie == "") {
+        toastr.warning("El número de serie es requerido!", "¡ADVERTENCIA!");
+        return false;
+    } else if (checkId2(pds_serie)) {
+        toastr.error("El numero de serie <b>" + pds_serie + "</b> ya fue agregada!", "¡ERROR!");
+        return false;
+    }
+
+    lista_series =
+        `
+        <tr>
+            <td for="serie">${pds_serie}</td>
+            <td>
+                <button class="btn btn-danger btn-sm btnQuitarSerie" pds_serie="${pds_serie}"><i class="fa fa-trash"></i></button>
+            </td>
+        </tr>
+        `;
+    var data =
+    {
+        "pds_serie": pds_serie,
+    }
+    if (series_array == "") {
+        series_array.push(data);
+        $("#pds_series_array").val(JSON.stringify(series_array));
+    } else {
+        var productos = $("#pds_series_array").val();
+        series_array = JSON.parse(productos);
+        series_array.push(data);
+        $("#pds_series_array").val(JSON.stringify(series_array));
+    }
+    $("#lista_series").append(lista_series);
+    $("#pds_serie").val("");
+});
+
+$('#pds_serie').keypress(function (e) {
+    if (e.which == 13) {
+        return false;
+    }
+});
+
+$("#lista_series").on("click", ".btnQuitarSerie", function (e) {
+    e.preventDefault();
+
+    var pds_serie = $(this).attr("pds_serie");
+    var datos = $("#pds_series_array").val();
+    var series = JSON.parse(datos);
+    for (var i = series.length; i--;) {
+        if (series[i].pds_serie === pds_serie) {
+            series.splice(i, 1);
+        }
+    }
+    $("#pds_series_array").val(JSON.stringify(series));
+    $(this).closest('tr').remove();
+
+    if (series == "") {
+        $("#pds_series_array").val("");
+        series_array = [];
+    }
+});

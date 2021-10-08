@@ -1036,6 +1036,11 @@ class AppControlador
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Agregar series',
+                            'href' => 'productos/agregar_series'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Importar productos',
                             'href' => 'productos/importar'
                         ],
@@ -1257,6 +1262,11 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Listar productos',
                             'href' => 'productos'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Agregar series',
+                            'href' => 'productos/agregar_series'
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',

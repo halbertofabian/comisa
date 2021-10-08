@@ -11,7 +11,7 @@
                             <select class="form-control" name="pds_ams_id" id="pds_ams_id">
                                 <?php
                                 $almacenes = AlmacenesModelo::mdlMostrarAlmacenes($_SESSION['session_suc']['scl_id']);
-                                foreach ($almacenes as $key => $ams):
+                                foreach ($almacenes as $key => $ams) :
                                 ?>
                                     <option value="<?php echo $ams['ams_id'] ?>"><?php echo $ams['ams_nombre'] ?></option>
 
@@ -191,7 +191,35 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-link" id="btnClickAgregarCategoria">+Añadir nueva categoría</button>
+                                <button type="button" class="btn btn-link" id="btnClickAgregarCategoria">+Añadir nueva categoría</button><br>
+                                <a class="btn btn-link" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    + Agregar series
+                                </a>
+                                <div class="row collapse" id="collapseExample">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="pds_serie">Escriba aqui el número de serie</label>
+                                            <input type="hidden" id="pds_series_array" name="pds_series_array">
+                                            <input type="text" name="pds_serie" id="pds_serie" class="form-control" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-light btnGenerarSeriePds">Generar</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <table class="table table-sm">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th># Serie</th>
+                                                    <th>Borrar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="lista_series">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
                                 <!-- <p class="card-text text-primary">Etiqueta</p>
                                 <input type="hidden" class="form-control" name="pds_etiquetas_text" id="pds_etiquetas_text">

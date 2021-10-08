@@ -47,7 +47,7 @@ class ProductosModelo
             $pps->bindValue(20, $pds['pds_ams_id']);
 
             $pps->execute();
-            return $pps->rowCount() > 0;
+            return $con->lastInsertId();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -317,6 +317,41 @@ class ProductosModelo
             $pps->bindValue(3, $data['vpds_cantidad']);
             $pps->bindValue(4, $data['vpds_fecha_venta']);
 
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAutocompleteProductos($pdts_nombre)
+    {
+        try {
+            //code...
+            $sql = "SELECT pds_id_producto, pds_stok, pds_sku, pds_nombre as label FROM tbl_productos_pds WHERE pds_sku LIKE '%$pdts_nombre%' OR pds_nombre LIKE '%$pdts_nombre%' and pds_stok > 0";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAgregarSeries($spds_producto, $spds_serie )
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_serie_producto_spds(spds_producto, spds_serie) VALUES(?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_producto);
+            $pps->bindValue(2, $spds_serie);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

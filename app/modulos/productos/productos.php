@@ -28,6 +28,14 @@ if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "update") :
 
 
 ?>
+<?php elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "agregar_series") :
+    cargarComponente('breadcrumb', '', 'Agregar Series');
+
+    include_once 'app/modulos/productos/agregar_series.php';
+
+
+
+?>
 
   
 
