@@ -1057,10 +1057,14 @@ $(document).ready(function () {
     consultarCartelera();
     function consultarCartelera() {
         var crt_ruta = $("#crt_ruta").val();
+        var lunes = $("#ctr_lunes").val();
+        var domingo = $("#ctr_domingo").val();
         if (crt_ruta == "") {
             return;
         }
         var datos = new FormData();
+        datos.append("lunes", lunes);
+        datos.append("domingo", domingo);
         datos.append("crt_ruta", crt_ruta);
         datos.append("btnConsultarCartelera", true);
         $.ajax({
