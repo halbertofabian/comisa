@@ -854,7 +854,7 @@ $(document).ready(function () {
         }
     })
 
-    
+
 
     function guardandoPosiciones() {
         var pocisiones = [];
@@ -874,8 +874,8 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             dataType: "json",
-            success: function (res) { 
-                if(res){
+            success: function (res) {
+                if (res) {
                     consultarCartelera();
                 }
             }
@@ -1086,9 +1086,9 @@ $(document).ready(function () {
                 res.forEach(element => {
                     const fechaComoCadena = element.cra_fecha_cobro;
                     var orden = element.cra_orden;
-                    if(orden == null || orden == ""){
+                    if (orden == null || orden == "") {
                         orden = "";
-                    }else{
+                    } else {
                         orden = element.cra_orden;
                     }
                     const dias = [
@@ -1307,4 +1307,200 @@ $(document).ready(function () {
 
             });
     });
+
+
+    //REGISTRAR CONTRATO
+
+    var tbodyProductosContrato = "";
+    var array = [];
+
+    $("#buscar_productos").autocomplete({
+        source: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+        select: function (event, ui) {
+            var nombreProducto = ui.item.label;
+            if (checkId(nombreProducto)) {
+                toastr.error("El producto <b>" + nombreProducto + "</b> ya fue agregado a la lista!", "¡ERROR!");
+                $(this).val("");
+                return false;
+            }
+            var cadena = ui.item.pds_sku;
+            var sku = cadena.split("/")[0];
+            if (sku == undefined) {
+                sku = "";
+            }
+
+            tbodyProductosContrato =
+                `
+                <tr id="${ui.item.pds_id_producto}">
+                    <td>${sku}</td>
+                    <td for="nombreProducto">${nombreProducto}</td>
+                    <td style="display:flex; justify-content: center">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn_min" min="${ui.item.pds_id_producto}" type="button">-</button>
+                        </span>
+                        <input type="text" class="form-control" disabled style="width:50px;text-align: center;" id="contadorContrato${ui.item.pds_id_producto}" cps_id="${ui.item.pds_id_producto}" value="1" min="1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn_max" max="${ui.item.pds_id_producto}" type="button">+</button>
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger eliminarProductoContrato" pds_id_producto="${ui.item.pds_id_producto}"><i class="fa fa-trash"></i> Borrar</button>
+                    </td>
+                </tr>
+                `;
+
+            var datos = {
+                "pds_id_producto": ui.item.pds_id_producto,
+                "sku": sku,
+                "nombreProducto": ui.item.label,
+                "cantidad": 1,
+            };
+
+            if (array == "") {
+                array.push(datos);
+                $("#productos_contrato").val(JSON.stringify(array));
+            } else {
+                var productos = $("#productos_contrato").val();
+                array = JSON.parse(productos);
+                array.push(datos);
+                $("#productos_contrato").val(JSON.stringify(array));
+            }
+            $("#tbodyProductosContrato").append(tbodyProductosContrato);
+
+            $(this).val("");
+            return false;
+        }
+
+    });
+    function checkId(nombreProducto) {
+        let ids = document.querySelectorAll('#tbodyProductosContrato td[for="nombreProducto"]');
+        return [].filter.call(ids, td => td.textContent === nombreProducto).length === 1;
+    }
+
+    $("#tbodyProductosContrato").on("click", ".btn_max", function (e) {
+        var id = $(this).attr("max");
+        $("#contadorContrato" + id).val(Number($("#contadorContrato" + id).val()) + 1);
+
+        var products = $("#productos_contrato").val();
+        var productos = JSON.parse(products);
+        for (var i = productos.length; i--;) {
+            if (productos[i].pds_id_producto == id) {
+                productos[i].cantidad = Number($("#contadorContrato" + id).val());
+            }
+        }
+        $("#productos_contrato").val(JSON.stringify(productos));
+
+    });
+
+    $("#tbodyProductosContrato").on("click", ".btn_min", function (e) {
+        var id = $(this).attr("min");
+        $("#contadorContrato" + id).val(Number($("#contadorContrato" + id).val()) - 1);
+        if ($("#contadorContrato" + id).val() == "0") {
+            $("#contadorContrato" + id).val("1");
+        }
+        var products = $("#productos_contrato").val();
+        var productos = JSON.parse(products);
+        for (var i = productos.length; i--;) {
+            if (productos[i].pds_id_producto == id) {
+                productos[i].cantidad = Number($("#contadorContrato" + id).val());
+            }
+        }
+        $("#productos_contrato").val(JSON.stringify(productos));
+    });
+
+    $("#tbodyProductosContrato").on("click", ".eliminarProductoContrato", function (e) {
+        e.preventDefault()
+        var pds_id_producto = $(this).attr("pds_id_producto");
+        var products = $("#productos_contrato").val();
+        var productos = JSON.parse(products);
+        for (var i = productos.length; i--;) {
+            if (productos[i].pds_id_producto === pds_id_producto) {
+                productos.splice(i, 1);
+            }
+        }
+
+
+        // $("#" + sku).remove();
+        $(this).closest('tr').remove();
+        $("#productos_contrato").val(JSON.stringify(productos));
+
+
+        if (productos == "") {
+            array = [];
+            $("#productos_contrato").val("");
+        }
+
+    });
+
+    //OBTENER VALORES
+    $(document).on("change", "#ctr_pago_credito", function (e) {
+        var ctr_pago_credito = $(this).val();
+        var ctr_saldo = $("#ctr_saldo").val();
+
+        $("#ctrs_plazo_credito").val(Number(ctr_saldo / ctr_pago_credito));
+    });
+
+    $(".grupo").keyup(function () {
+        sumarSaldo();
+    });
+
+    function sumarSaldo() {
+        var suma = 0;
+        $('.grupo').each(function () {
+            suma += Number($(this).val());
+        });
+        $("#ctr_saldo").val(Number(suma));
+
+        var ctr_saldo = $("#ctr_saldo").val();
+        var ctr_pago_credito = $("#ctr_pago_credito").val();
+        $("#ctrs_plazo_credito").val(Math.ceil(Number(ctr_saldo / ctr_pago_credito)));
+    }
+
+    $("#ctr_folio").val(Date.now());
+
+    $("#formNewContratoAdd").on("submit", function (e) {
+        e.preventDefault();
+        var datos = new FormData(this);
+        datos.append("btnNewContratoAdd", true);
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                startLoadButton()
+            },
+            success: function (res) {
+                console.log(res)
+
+                if (res.status) {
+                    stopLoadButton('GUARDAR')
+
+                    swal({
+                        title: "¡Muy bien!",
+                        text: res.mensaje,
+                        icon: "success",
+                        buttons: [false, "Continuar"],
+                        dangerMode: true,
+                        closeOnClickOutside: false,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                location.href = res.pagina
+                            } else {
+                                location.href = res.pagina
+                            }
+                        });
+                } else {
+                    toastr.error(res.mensaje, 'Error')
+                    stopLoadButton('INTENTAR DE NUEVO')
+                }
+            }
+        })
+    })
+
+
 });

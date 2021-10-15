@@ -652,7 +652,11 @@ class AppControlador
                     'href' => '#home',
                     'modulos' =>
                     array(
-
+                        [
+                            'icon' => '',
+                            'label' => 'Registrar contrato',
+                            'href' => 'contratos/registrar-contrato'
+                        ],
                         [
                             'icon' => '',
                             'label' => 'Gestión de contratos',
@@ -825,7 +829,11 @@ class AppControlador
                     'href' => '#home',
                     'modulos' =>
                     array(
-
+                        [
+                            'icon' => '',
+                            'label' => 'Registrar contrato',
+                            'href' => 'contratos/registrar-contrato'
+                        ],
                         [
                             'icon' => '',
                             'label' => 'Gestión de contratos',
@@ -1069,7 +1077,11 @@ class AppControlador
                     'href' => '#home',
                     'modulos' =>
                     array(
-
+                        [
+                            'icon' => '',
+                            'label' => 'Registrar contrato',
+                            'href' => 'contratos/registrar-contrato'
+                        ],
                         [
                             'icon' => '',
                             'label' => 'Gestión de contratos',

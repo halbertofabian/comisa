@@ -158,6 +158,11 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrCambiarPosiciones();
         echo json_encode($respuesta, true);
     }
+    public function ajaxAgregarContrato()
+    {
+        // $respuesta = ContratosControlador::ctrSubirPreContrato();
+        // echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();

@@ -792,7 +792,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "SELECT pds_sku, pds_nombre as label FROM tbl_productos_pds WHERE pds_nombre LIKE '%$pds_nombre%' OR pds_sku LIKE '%$pds_nombre%'";
+            $sql = "SELECT 	pds_id_producto, pds_sku, pds_nombre as label FROM tbl_productos_pds WHERE pds_nombre LIKE '%$pds_nombre%' OR pds_sku LIKE '%$pds_nombre%'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
