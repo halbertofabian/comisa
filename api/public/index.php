@@ -159,10 +159,13 @@ $app->post('/login', function (Request $request, Response $response) {
     echo "Aqui toy";
 });
 
-$app->post('/comisa-datos2', function (Request $request, Response $response) {
+$app->post('/comisa-datos', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $datosVendedor = json_decode($json, true);
+
+    // preArray($datosVendedor);
+    // return;
 
     $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
 
@@ -171,7 +174,7 @@ $app->post('/comisa-datos2', function (Request $request, Response $response) {
     # code...
 
 });
-$app->post('/comisa-datos', function (Request $request, Response $response) {
+$app->post('/comisa-datos2', function (Request $request, Response $response) {
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
     try {

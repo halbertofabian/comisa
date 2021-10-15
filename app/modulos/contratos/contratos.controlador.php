@@ -766,6 +766,7 @@ class ContratosControlador
             // Guardar en base de datos contratos
 
             $subir = ContratosModelo::mdlSubirPreContratos($cts);
+            
             if ($subir) {
                 $contSubir++;
             }
