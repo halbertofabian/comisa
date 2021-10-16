@@ -1460,8 +1460,13 @@ $(document).ready(function () {
 
     $("#formNewContratoAdd").on("submit", function (e) {
         e.preventDefault();
+        var productos_contrato = $("#productos_contrato").val();
+        if(productos_contrato == ""){
+            toastr.warning("Agregar productos a la lista", "¡ADVERTENCIA!");
+            return false;
+        }
         var datos = new FormData(this);
-        datos.append("btnNewContratoAdd", true);
+        datos.append("btnContratoAdd", true);
         $.ajax({
             type: "POST",
             url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
@@ -1470,15 +1475,8 @@ $(document).ready(function () {
             dataType: "json",
             processData: false,
             contentType: false,
-            beforeSend: function () {
-                startLoadButton()
-            },
             success: function (res) {
-                console.log(res)
-
                 if (res.status) {
-                    stopLoadButton('GUARDAR')
-
                     swal({
                         title: "¡Muy bien!",
                         text: res.mensaje,
@@ -1489,14 +1487,13 @@ $(document).ready(function () {
                     })
                         .then((willDelete) => {
                             if (willDelete) {
-                                location.href = res.pagina
+                                window.location.reload();
                             } else {
-                                location.href = res.pagina
+                                window.location.reload();
                             }
                         });
                 } else {
-                    toastr.error(res.mensaje, 'Error')
-                    stopLoadButton('INTENTAR DE NUEVO')
+                    toastr.error(res.mensaje, 'Error');
                 }
             }
         })

@@ -158,10 +158,10 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrCambiarPosiciones();
         echo json_encode($respuesta, true);
     }
-    public function ajaxAgregarContrato()
+    public function ajaxRegistrarContrato()
     {
-        // $respuesta = ContratosControlador::ctrSubirPreContrato();
-        // echo json_encode($respuesta, true);
+        $respuesta = ContratosControlador::ctrRegistrarContrato();
+        echo json_encode($respuesta, true);
     }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
@@ -272,4 +272,8 @@ if (isset($_POST['btnEliminarCartelera'])) {
 if (isset($_POST['btnCambiarPosiciones'])) {
     $pocisiones = new ContratosAjax();
     $pocisiones->ajaxCambiarPocisiones();
+}
+if (isset($_POST['btnContratoAdd'])) {
+    $registrarContrato = new ContratosAjax();
+    $registrarContrato->ajaxRegistrarContrato();
 }

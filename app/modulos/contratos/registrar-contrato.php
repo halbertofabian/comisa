@@ -1,93 +1,65 @@
 <div class="containeir">
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">DATOS DEL VENDEDOR</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="ctr_vendedor">VENDEDOR</label>
-                                <select name="ctr_vendedor" id="ctr_vendedor" class="form-control select2">
-                                    <option value="">--SELECCIONAR--</option>
-                                    <?php
-                                    $usuarios = UsuariosModelo::mdlMostrarUsuarios();
-                                    foreach ($usuarios as $key => $usr) :
-                                    ?>
-                                        <option value="<?= $usr['usr_id'] ?>"> <?= $usr['usr_nombre']  ?> </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="ctr_fecha_inicio">CAMIONETA </label>
-                                <input type="text" name="ctr_fecha_inicio" id="ctr_fecha_inicio" class="form-control" disabled>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="ctr_fecha_inicio">CAJA </label>
-                                <input type="text" name="ctr_fecha_inicio" id="ctr_fecha_inicio" class="form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">PRODUCTOS</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-5 col-md-5 col-sm-12">
-                            <label for="">BUSCAR PRODUCTO</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+    <form id="formNewContratoAdd">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-5 col-md-5 col-sm-12">
+                                <label for="">BUSCAR PRODUCTO</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                                    </div>
+                                    <input type="hidden" name="productos_contrato" id="productos_contrato">
+                                    <input type="text" class="form-control" name="buscar_productos" id="buscar_productos" placeholder="Busque el producto y seleccione" aria-describedby="basic-addon1">
                                 </div>
-                                <input type="hidden" name="productos_contrato" id="productos_contrato">
-                                <input type="text" class="form-control" name="buscar_productos" id="buscar_productos" placeholder="Busque el producto y seleccione" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="ctr_id_vendedor">VENDEDOR</label>
+                                    <select name="ctr_id_vendedor" id="ctr_id_vendedor" class="form-control select2" required>
+                                        <option value="">--SELECCIONAR--</option>
+                                        <?php
+                                        $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+                                        foreach ($usuarios as $key => $usr) :
+                                        ?>
+                                            <option value="<?= $usr['usr_id'] ?>"> <?= $usr['usr_nombre']  ?> </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12 col-md-12 col-sm-12">
-                            <table class="table table-hover table-bordered">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th># SKU</th>
-                                        <th>NOMBRE</th>
-                                        <th class="text-center">CANTIDAD</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbodyProductosContrato">
+                        <div class="row">
+                            <div class="col-xl-12 col-md-12 col-sm-12">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th># SKU</th>
+                                            <th>NOMBRE</th>
+                                            <th class="text-center">CANTIDAD</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbodyProductosContrato">
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-body">
-                    <form id="formNewContratoAdd">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="ctr_folio">FOLIO:</label>
-                                    <input type="text" name="ctr_folio" id="ctr_folio" class="form-control" disabled>
+                                    <input type="text" name="ctr_folio" id="ctr_folio" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -278,13 +250,13 @@
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="clts_tbj_tel_conyuge">TELEFONO:</label>
-                                    <input type="text" name="clts_tbj_tel_conyuge" id="clts_tbj_tel_conyuge" class="form-control text-uppercase" placeholder="TELEFONO">
+                                    <input type="number" name="clts_tbj_tel_conyuge" id="clts_tbj_tel_conyuge" class="form-control text-uppercase" placeholder="TELEFONO">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
-                                    <label for="clts_anttrabajo_conyuge">TIEMPO TRABAJANDO ALLÍ:</label>
-                                    <input type="text" name="clts_anttrabajo_conyuge" id="clts_anttrabajo_conyuge" class="form-control text-uppercase" placeholder="TIEMPO">
+                                    <label for="clts_tbj_ant_conyuge">TIEMPO TRABAJANDO ALLÍ:</label>
+                                    <input type="text" name="clts_tbj_ant_conyuge" id="clts_tbj_ant_conyuge" class="form-control text-uppercase" placeholder="TIEMPO">
                                 </div>
                             </div>
                             <div class="col-md-4 col-12">
@@ -314,7 +286,7 @@
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="clts_tel_fiador">TEL:</label>
-                                    <input type="text" name="clts_tel_fiador" id="clts_tel_fiador" class="form-control text-uppercase" placeholder="TEL">
+                                    <input type="number" name="clts_tel_fiador" id="clts_tel_fiador" class="form-control text-uppercase" placeholder="TEL">
                                 </div>
                             </div>
                             <div class="col-md-8 col-12">
@@ -345,7 +317,7 @@
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
                                     <label for="clts_tbj_tel_fiador">TEL. DE SU TRABAJO:</label>
-                                    <input type="text" name="clts_tbj_tel_fiador" id="clts_tbj_tel_fiador" class="form-control text-uppercase" placeholder="TELEFONO">
+                                    <input type="number" name="clts_tbj_tel_fiador" id="clts_tbj_tel_fiador" class="form-control text-uppercase" placeholder="TELEFONO">
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -357,8 +329,8 @@
 
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <label for="clts_anttrabajo_fiador">TIEMPO TRABAJANDO ALLÍ:</label>
-                                    <input type="text" name="clts_anttrabajo_fiador" id="clts_anttrabajo_fiador" class="form-control text-uppercase" placeholder="TIEMPO">
+                                    <label for="clts_tbj_ant_fiador">TIEMPO TRABAJANDO ALLÍ:</label>
+                                    <input type="text" name="clts_tbj_ant_fiador" id="clts_tbj_ant_fiador" class="form-control text-uppercase" placeholder="TIEMPO">
                                 </div>
                             </div>
 
@@ -397,7 +369,7 @@
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="clts_tel_ref1"><strong class="text-danger">*</strong> TEL:</label>
-                                    <input type="text" name="clts_tel_ref1" id="clts_tel_ref1" class="form-control text-uppercase" required placeholder="TELEFONO">
+                                    <input type="number" name="clts_tel_ref1" id="clts_tel_ref1" class="form-control text-uppercase" required placeholder="TELEFONO">
                                 </div>
                             </div>
                             <div class="col-md-12 col-12">
@@ -430,7 +402,7 @@
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="clts_tel_ref2"><strong class="text-danger">*</strong> TEL:</label>
-                                    <input type="text" name="clts_tel_ref2" id="clts_tel_ref2" class="form-control text-uppercase" required placeholder="TELEFONO">
+                                    <input type="number" name="clts_tel_ref2" id="clts_tel_ref2" class="form-control text-uppercase" required placeholder="TELEFONO">
                                 </div>
                             </div>
                             <div class="col-md-12 col-12">
@@ -463,7 +435,7 @@
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <label for="clts_tel_ref3">TEL:</label>
-                                    <input type="text" name="clts_tel_ref3" id="clts_tel_ref3" class="form-control text-uppercase" placeholder="TELEFONO">
+                                    <input type="number" name="clts_tel_ref3" id="clts_tel_ref3" class="form-control text-uppercase" placeholder="TELEFONO">
                                 </div>
                             </div>
 
@@ -506,7 +478,7 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <input type="date" name="cts_fecha_pp" id="" class="form-control text-uppercase" required>
+                                    <input type="date" name="ctrs_fecha_pp" id="ctrs_fecha_pp" class="form-control text-uppercase" required>
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -516,7 +488,7 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <select name="cts_dia_pago" id="cts_dia_pago" class="form-control text-uppercase">
+                                    <select name="cts_dia_pago" id="cts_dia_pago" class="form-control" required>
                                         <option value="">SELECCIONE DIA</option>
                                         <option value="LUNES">LUNES</option>
                                         <option value="MARTES">MARTES</option>
@@ -526,7 +498,7 @@
                                         <option value="SABADO">SABADO</option>
                                         <option value="DOMINGO">DOMINGO</option>
                                     </select>
-                                    <input type="time" name="cts_horario_pago" id="cts_horario_pago" class="form-control text-uppercase">
+                                    <input type="time" name="cts_horario_pago" id="cts_horario_pago" class="form-control text-uppercase" required>
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
@@ -536,7 +508,7 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <input type="text" disabled name="ctrs_plazo_credito" id="ctrs_plazo_credito" class="form-control">
+                                    <input type="text" readonly name="ctrs_plazo_credito" id="ctrs_plazo_credito" class="form-control">
                                 </div>
                             </div>
 
@@ -595,7 +567,7 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <input type="number" disabled name="ctr_saldo" id="ctr_saldo" class="form-control">
+                                    <input type="number" readonly name="ctr_saldo" id="ctr_saldo" class="form-control">
                                 </div>
                             </div>
 
@@ -603,10 +575,10 @@
                                 <button type="submit" class="btn btn-primary btn-sm-block float-right btn-load">GUARDAR</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
 </div>

@@ -471,6 +471,131 @@ class ContratosControlador
         }
         return $ctr_id['ctr_id'];
     }
+    public static function ctrRegistrarContrato()
+    {
+        if (isset($_POST['btnContratoAdd'])) {
+            $cts_dia_pago = $_POST['cts_dia_pago']." ".$_POST['cts_horario_pago'];
+            $contratos = array(
+                'ctr_folio' =>  $_POST["ctr_folio"],
+                'ctr_fecha_contrato' =>  $_POST["clts_fecha_registro"],
+                'ctr_id_vendedor' => $_POST['ctr_id_vendedor'],
+                'ctr_cliente' =>  dstring($_POST["clts_nombre"]),
+                'ctr_numero_cuenta' => 0,
+                'ctr_ruta' => "-",
+                'ctr_forma_pago' =>  dstring($_POST["ctrs_forma_pago"]),
+                'ctr_dia_pago' =>  $cts_dia_pago,
+                'ctr_proximo_pago' =>  $_POST["ctrs_fecha_pp"],
+
+                // Número 
+                'ctr_plazo_credito' =>  $_POST["ctrs_plazo_credito"],
+
+                // No sé de que es esto
+                'ctr_tipo_pago' => '',
+
+                'ctr_productos' => $_POST["productos_contrato"],
+                'ctr_total' =>  dnum($_POST["total_venta"]),
+                'ctr_enganche' => dnum($_POST["enganche"]),
+                'ctr_pago_adicional' => dnum($_POST["sobre_enganche"]),
+
+                // Pendiente 
+                'ctr_saldo' => $_POST["ctr_saldo"],
+
+
+                'ctr_elaboro' => $_SESSION['session_usr']['usr_nombre'],
+
+                'ctr_nota' => "",
+                'ctr_fotos' => "",
+
+                'ctr_nombre_ref_1' =>  dstring($_POST["clts_nom_ref1"]),
+                'ctr_parentesco_ref_1' =>  dstring($_POST["clts_parentesco_ref1"]),
+                'ctr_direccion_ref_1' =>  dstring($_POST["clts_dir_ref1"]),
+                'ctr_colonia_ref_1' =>  dstring($_POST["clts_col_ref1"]),
+                'ctr_telefono_ref_1' =>  dstring($_POST["clts_tel_ref1"]),
+
+                'clts_curp' =>  dstring($_POST["clts_curp"]),
+                'clts_telefono' =>  dstring($_POST["clts_telefono"]),
+                'clts_domicilio' =>  dstring($_POST["clts_domicilio"]),
+                'clts_col' =>  dstring($_POST["clts_col"]),
+                'clts_entre_calles' =>  dstring($_POST["clts_entre_calles"]),
+                'clts_trabajo' =>  dstring($_POST["clts_trabajo"]),
+                'clts_puesto' =>  dstring($_POST["clts_puesto"]),
+                'clts_direccion_tbj' =>  dstring($_POST["clts_direccion_tbj"]),
+                'clts_col_tbj' =>  dstring($_POST["clts_col_tbj"]),
+                'clts_tel_tbj' =>  dstring($_POST["clts_tel_tbj"]),
+                'clts_antiguedad_tbj' =>  dstring($_POST["clts_antiguedad_tbj"]),
+                'clts_igs_mensual_tbj' =>  dnum($_POST["clts_igs_mensual_tbj"]),
+                'clts_tipo_vivienda' =>  dstring($_POST["clts_tipo_vivienda"]),
+                'clts_vivienda_anomde' =>  dstring($_POST["clts_vivienda_anomde"]),
+                'clts_antiguedad_viviendo' =>  dstring($_POST["clts_antiguedad_viviendo"]),
+                'clts_coordenadas' =>  $_POST["clts_coordenadas"],
+
+                'clts_nom_conyuge' =>  dstring($_POST["clts_nom_conyuge"]),
+                'clts_tbj_conyuge' =>  dstring($_POST["clts_tbj_conyuge"]),
+                'clts_tbj_puesto_conyuge' =>  dstring($_POST["clts_tbj_puesto_conyuge"]),
+                'clts_tbj_dir_conyuge' =>  dstring($_POST["clts_tbj_dir_conyuge"]),
+                'clts_tbj_col_conyuge' =>  dstring($_POST["clts_tbj_col_conyuge"]),
+                'clts_tbj_tel_conyuge' =>  dstring($_POST["clts_tbj_tel_conyuge"]),
+                'clts_tbj_ant_conyuge' =>  dstring($_POST["clts_tbj_ant_conyuge"]),
+                'clts_tbj_ing_conyuge' =>  dnum($_POST["clts_tbj_ing_conyuge"]),
+                'clts_nom_fiador' =>  dstring($_POST["clts_nom_fiador"]),
+                'clts_parentesco_fiador' =>  dstring($_POST["clts_parentesco_fiador"]),
+                'clts_tel_fiador' =>  dstring($_POST["clts_tel_fiador"]),
+                'clts_dir_fiador' =>  dstring($_POST["clts_dir_fiador"]),
+                'clts_col_fiador' =>  dstring($_POST["clts_col_fiador"]),
+                'clts_tbj_fiador' =>  dstring($_POST["clts_tbj_fiador"]),
+                'clts_tbj_dir_fiador' =>  dstring($_POST["clts_tbj_dir_fiador"]),
+                'clts_tbj_tel_fiador' =>  dstring($_POST["clts_tbj_tel_fiador"]),
+                'clts_tbj_col_fiador' =>  dstring($_POST["clts_tbj_col_fiador"]),
+                'clts_tbj_ant_fiador' =>  dstring($_POST["clts_tbj_ant_fiador"]),
+
+                //fotos fiador
+                'clts_fotos_fiador' => "",
+
+                'clts_nom_ref2' =>  dstring($_POST["clts_nom_ref2"]),
+                'clts_parentesco_ref2' =>  dstring($_POST["clts_parentesco_ref2"]),
+                'clts_dir_ref2' =>  dstring($_POST["clts_dir_ref2"]),
+                'clts_col_ref2' =>  dstring($_POST["clts_col_ref2"]),
+                'clts_tel_ref2' =>  dstring($_POST["clts_tel_ref2"]),
+                'clts_nom_ref3' =>  dstring($_POST["clts_nom_ref3"]),
+                'clts_parentesco_ref3' =>  dstring($_POST["clts_parentesco_ref3"]),
+                'clts_dir_ref3' =>  dstring($_POST["clts_dir_ref3"]),
+                'clts_col_ref3' =>  dstring($_POST["clts_col_ref3"]),
+                'clts_tel_ref3' =>  dstring($_POST["clts_tel_ref3"]),
+                'sobre_enganche_pendiente' =>  $_POST["sobre_enganche_pendiente"],
+
+
+                'clts_registro_venta' => '0',
+                'clts_caja' => "",
+                'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
+                'ctr_pago_credito' => dnum($_POST["ctr_pago_credito"]),
+                'ctr_aprovado_ventas' => 0,
+
+
+                'clts_fachada_color' => $_POST["clts_fachada_color"],
+                'clts_puerta_color' => $_POST["clts_puerta_color"],
+                'ctr_status_cuenta' => "VIGENTE",
+                'ctr_saldo_actual' => $_POST["ctr_saldo"],
+
+                //Nuevos atributos 
+                'ctr_moroso' => ""
+
+            );
+
+            $subir = ContratosModelo::mdlSubirPreContratos($contratos);
+
+            if ($subir) {
+                return  array(
+                    'status' => true,
+                    'mensaje' => 'El contrato se agrego correctamente!'
+                );
+            }else{
+                return  array(
+                    'status' => false,
+                    'mensaje' => 'Hubo un error al guardar el contrato!'
+                );
+            }
+        }
+    }
 
     public static function ctrSetearDatos($data)
     {
@@ -766,7 +891,7 @@ class ContratosControlador
             // Guardar en base de datos contratos
 
             $subir = ContratosModelo::mdlSubirPreContratos($cts);
-            
+
             if ($subir) {
                 $contSubir++;
             }
