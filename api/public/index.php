@@ -309,4 +309,11 @@ $app->post('/loginCobranza', function (Request $request, Response $response) {
     # code...
 
 });
+$app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $response, array $args) {
+    $ruta =  $args['ruta'];
+    $getAllCtra = CobranzaModelo::mdlMostrarCarteleraCobranza($ruta);
+
+    return json_encode($getAllCtra, true);
+
+});
 $app->run();

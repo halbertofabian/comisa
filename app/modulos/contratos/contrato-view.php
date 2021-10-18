@@ -534,7 +534,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                                             <button class="btn btn-default mas" btn_mas="<?= $pds['sku'] ?>" type="button">+</button>
                                         </span>
                                     </td>
-                                    <td class="nombreProducto" style="width:50%; text-align:center"><?= $pds['nombreProducto'] ?></td>
+                                    <td class="nombreProducto" style="width:50%; text-align:center" for="nombreProducto"><?= $pds['nombreProducto'] ?></td>
                                     <td>
                                         <button type="button" class="btn btn-danger btnQuitarProducto" sku="<?= $pds['sku'] ?>"><i class="fa fa-trash"></i> Borrar</button>
                                     </td>

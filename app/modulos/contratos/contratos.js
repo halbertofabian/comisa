@@ -473,35 +473,32 @@ $(document).ready(function () {
             });
     })
 
+    function checkNombre(nombreProducto) {
+        let ids = document.querySelectorAll('#tbodyProductos td[for="nombreProducto"]');
+        return [].filter.call(ids, td => td.textContent === nombreProducto).length === 1;
+    }
+
     var tbodyProductos = "";
     var data = [];
 
     $("#autocomplete_pdt").autocomplete({
         source: urlApp + 'app/modulos/contratos/contratos.ajax.php',
         select: function (event, ui) {
-            var nomProducrto = "";
-            var bandera;
-            $('#tbodyProductos tr').each(function () {
-                nomProducrto = $(this).find("td").eq(2).html();
-                if (nomProducrto.toUpperCase() === ui.item.label) {
-                    toastr.warning(`¡El producto <strong>${ui.item.label}</strong> ya fue agregado a la lista!`, 'ADVETENCIA')
-                    bandera = "existe";
-                    $(this).val("");
-                    return false;
-                } else {
-                    bandera = "no existe";
-                }
-            });
+            var nombreProducto = ui.item.label;
+            if (checkNombre(nombreProducto)) {
+                toastr.error("El producto <b>" + nombreProducto + "</b> ya fue agregado a la lista!", "¡ERROR!");
+                $(this).val("");
+                return false;
+            }
 
-            if (bandera == "no existe") {
-                var cadena = ui.item.pds_sku;
-                var sku = cadena.split("/")[0];
-                if (sku == undefined) {
-                    sku = "";
-                }
+            var cadena = ui.item.pds_sku;
+            var sku = cadena.split("/")[0];
+            if (sku == undefined) {
+                sku = "";
+            }
 
-                tbodyProductos =
-                    `
+            tbodyProductos =
+                `
                 <tr id="${sku}">
                     <td>${sku}</td>
                     <td style="display:flex; justify-content: center">
@@ -513,36 +510,33 @@ $(document).ready(function () {
                             <button class="btn btn-default mas" btn_mas="${sku}" type="button">+</button>
                         </span>
                     </td>
-                    <td>${ui.item.label}</td>
+                    <td for="nombreProducto">${nombreProducto}</td>
                     <td>
                         <button type="button" class="btn btn-danger btnQuitarProducto" sku="${sku}"><i class="fa fa-trash"></i> Borrar</button>
                     </td>
                 </tr>
                 `;
-                var datos = {
-                    "sku": sku,
-                    "nombreProducto": ui.item.label,
-                    "cantidad": 1,
-                };
+            var datos = {
+                "sku": sku,
+                "nombreProducto": ui.item.label,
+                "cantidad": 1,
+            };
+            var productos = $("#productos_contratos").val();
+            
+            if (productos == "") {
+                data.push(datos);
+                $("#productos_contratos").val(JSON.stringify(data));
+            } else {
                 var productos = $("#productos_contratos").val();
                 data = JSON.parse(productos);
-                if (data == "") {
-                    data.push(datos);
-                    $("#productos_contratos").val(JSON.stringify(data));
-                } else {
-                    var productos = $("#productos_contratos").val();
-                    data = JSON.parse(productos);
-                    data.push(datos);
-                    $("#productos_contratos").val(JSON.stringify(data));
-                }
-
-                $("#tbodyProductos").append(tbodyProductos);
-
-                $(this).val("");
-                return false;
+                data.push(datos);
+                $("#productos_contratos").val(JSON.stringify(data));
             }
 
+            $("#tbodyProductos").append(tbodyProductos);
 
+            $(this).val("");
+            return false;
         }
     });
     $("#tbodyProductos").on("click", ".btnQuitarProducto", function (e) {
@@ -564,11 +558,17 @@ $(document).ready(function () {
 
         if (productos == "") {
             data = [];
+            $("#productos_contratos").val("");
         }
 
     });
     $("tfoot").on("click", ".btnGuardarProductos", function (e) {
-        e.preventDefault()
+        e.preventDefault();
+        var productos_contratos = $("#productos_contratos").val();
+        if (productos_contratos == "") {
+            toastr.warning("Agregar productos a la lista", "¡ADVERTENCIA!");
+            return false;
+        }
         swal({
             title: "¿Estas seguro de querer guardar estos productos para este contrato?",
             icon: "warning",
@@ -976,6 +976,7 @@ $(document).ready(function () {
         var datos = new FormData();
         datos.append("ctr_id", ctr_id);
         datos.append("ctr_fecha", dia);
+        datos.append("ctr_dia_pago", ctr_dia);
         datos.append("btnInsertContrato", true);
         $.ajax({
             url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
@@ -1461,7 +1462,7 @@ $(document).ready(function () {
     $("#formNewContratoAdd").on("submit", function (e) {
         e.preventDefault();
         var productos_contrato = $("#productos_contrato").val();
-        if(productos_contrato == ""){
+        if (productos_contrato == "") {
             toastr.warning("Agregar productos a la lista", "¡ADVERTENCIA!");
             return false;
         }

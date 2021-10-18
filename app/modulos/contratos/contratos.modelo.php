@@ -860,14 +860,15 @@ class ContratosModelo
         }
     }
 
-    public static function mdlActualizarStatusEnrutamientoS($ctrs_id)
+    public static function mdlActualizarStatusEnrutamientoS($ctrs_id, $ctr_dia_pago)
     {
         try {
             //code...
-            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_enrutar = 'S' WHERE ctr_id = ?";
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_enrutar = 'S', ctr_dia_pago = ? WHERE ctr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ctrs_id);
+            $pps->bindValue(1, $ctr_dia_pago);
+            $pps->bindValue(2, $ctrs_id);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
