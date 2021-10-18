@@ -3,7 +3,7 @@ cargarComponente('breadcrumb_nivel_1', '', 'Contrato', array(['ruta' => 'contrat
 
 
 $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
-// preArray($ctr);
+
 ?>
 
 <form id="" method="post">
@@ -690,7 +690,8 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
     ?>
 </form>
 
-<div class="card">
+
+<!-- <div class="card">
 
     <div class="card-body">
         <h5 class="card-title">Fotos cliente</h5>
@@ -771,4 +772,4 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 
         </div>
     </div>
-</div>
+</div> -->

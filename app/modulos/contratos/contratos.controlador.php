@@ -474,8 +474,20 @@ class ContratosControlador
     public static function ctrRegistrarContrato()
     {
         if (isset($_POST['btnContratoAdd'])) {
+            
             // $cts_dia_pago = $_POST['cts_dia_pago']." ".$_POST['cts_horario_pago'];
-            $cts_dia_pago = $_POST['cts_dia_pago'];
+            $cts_dia_pago = "";
+
+            if ($_POST['ctrs_forma_pago'] == "SEMANALES") {
+                $cts_dia_pago = $_POST['cts_dia_pago_semanal'];
+            } else if ($_POST['ctrs_forma_pago'] == "CATORCENALES") {
+                $cts_dia_pago = $_POST['cts_dia_pago_qc_1'] . '-' . $_POST['cts_dia_pago_qc_2'];
+            } else if ($_POST['ctrs_forma_pago'] == "QUINCENALES") {
+                $cts_dia_pago = $_POST['cts_dia_pago_qc_1'] . '-' . $_POST['cts_dia_pago_qc_2'];
+            } else if ($_POST['ctrs_forma_pago'] == "MENSUALES") {
+                $cts_dia_pago = $_POST['cts_dia_pago_m'];
+            }
+
             $contratos = array(
                 'ctr_folio' =>  $_POST["ctr_folio"],
                 'ctr_fecha_contrato' =>  $_POST["clts_fecha_registro"],
@@ -589,7 +601,7 @@ class ContratosControlador
                     'status' => true,
                     'mensaje' => 'El contrato se agrego correctamente!'
                 );
-            }else{
+            } else {
                 return  array(
                     'status' => false,
                     'mensaje' => 'Hubo un error al guardar el contrato!'

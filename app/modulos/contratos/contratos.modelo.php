@@ -667,6 +667,31 @@ class ContratosModelo
         }
     }
 
+    public static function mdlMostrarContratosByIdSinFotos($ctr_id)
+    {
+        try {
+            //c4ode...
+            // $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id  WHERE ctr.ctr_id  = ?";
+            $sql = " SELECT * FROM tbl_contrato_crt_1_temp;";
+            $con = Conexion::conectar();
+            $con->beginTransaction();
+            $pps = $con->exec("DROP TABLE IF EXISTS tbl_contrato_crt_1_temp;");
+            $pps = $con->exec("CREATE TEMPORARY TABLE tbl_contrato_crt_1_temp SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id  WHERE ctr.ctr_id  = '$ctr_id' ;");
+            $pps = $con->exec("ALTER TABLE tbl_contrato_crt_1_temp DROP ctr_fotos;");
+            $pps = $con->exec("ALTER TABLE tbl_contrato_crt_1_temp DROP clts_fotos_fiador;");
+            $con->commit();
+            $pps1 = $con->prepare($sql);
+            // $pps->bindValue(1, $ctr_id);
+            return $pps1->fetch();
+            
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
     // filtros
 
     public static function mdlMostrarContratosLimit()

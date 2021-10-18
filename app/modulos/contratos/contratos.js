@@ -1457,7 +1457,7 @@ $(document).ready(function () {
         $("#ctrs_plazo_credito").val(Math.ceil(Number(ctr_saldo / ctr_pago_credito)));
     }
 
-    $("#ctr_folio").val(Date.now());
+    
 
     $("#formNewContratoAdd").on("submit", function (e) {
         e.preventDefault();

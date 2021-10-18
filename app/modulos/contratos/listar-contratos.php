@@ -101,7 +101,7 @@
                             <th>RUTA</th>
                             <th>CLIENTE</th>
                             <th>DOMICILIO</th>
-                            <th>VENDEDOR</th>
+                            <th>ELABORO</th>
                             <th>FECHA DE VENTA</th>
                         </tr>
                     </thead>
