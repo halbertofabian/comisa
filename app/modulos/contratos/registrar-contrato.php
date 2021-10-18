@@ -483,12 +483,13 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="alert alert-secondary" role="alert">
-                                    <strong><strong class="text-danger">*</strong> DIA Y HORARIO DE PAGO DEL CLIENTE</strong>
+                                    <strong><strong class="text-danger">*</strong> DIA(S) DE PAGO DEL CLIENTE</strong>
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <select name="cts_dia_pago" id="cts_dia_pago" class="form-control" required>
+                                    <!-- <input type="text" name="cts_dia_pago" id="cts_dia_pago" class="form-control" required> -->
+                                    <select name="cts_dia_pago_semanal" id="cts_dia_pago_semanal" class="form-control  d-none" required>
                                         <option value="">SELECCIONE DIA</option>
                                         <option value="LUNES">LUNES</option>
                                         <option value="MARTES">MARTES</option>
@@ -498,9 +499,51 @@
                                         <option value="SABADO">SABADO</option>
                                         <option value="DOMINGO">DOMINGO</option>
                                     </select>
-                                    <input type="time" name="cts_horario_pago" id="cts_horario_pago" class="form-control text-uppercase" required>
+                                    <select name="cts_dia_pago_qc_1" id="cts_dia_pago_qc_1" class="form-control  mt-1 d-none cts_dia_pago_qc" required>
+                                        <option value="">SELECCIONE DIA 1</option>
+                                        <?php 
+                                            for ($i=1; $i <= 31 ; $i++):
+                                        ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                    <select name="cts_dia_pago_qc_2" id="cts_dia_pago_qc_2" class="form-control  mt-1 d-none cts_dia_pago_qc" required>
+                                        <option value="">SELECCIONE DIA 2</option>
+                                        <?php 
+                                            for ($i=1; $i <= 31 ; $i++):
+                                        ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                    <select name="cts_dia_pago_m" id="cts_dia_pago_m" class="form-control  mt-1 d-none cts_dia_pago_m" required>
+                                        <option value="">SELECCIONE DIA </option>
+                                        <?php 
+                                            for ($i=1; $i <= 31 ; $i++):
+                                        ?>
+                                        <option value="<?= $i ?>"><?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                    <!-- <input type="time" name="cts_horario_pago" id="cts_horario_pago" class="form-control text-uppercase" required> -->
                                 </div>
                             </div>
+                            <script>
+                                $("#ctrs_forma_pago").on("change", function() {
+                                    var ctrs_forma_pago = $(this).val();
+                                    if (ctrs_forma_pago == "SEMANALES") {
+                                        $("#cts_dia_pago_semanal").removeClass("d-none")
+                                        $(".cts_dia_pago_qc").addClass("d-none")
+                                        $("#cts_dia_pago_m").addClass("d-none")
+                                    } else if (ctrs_forma_pago == "CATORCENALES" || ctrs_forma_pago == "QUINCENALES" ) {
+                                        $("#cts_dia_pago_semanal").addClass("d-none")
+                                        $(".cts_dia_pago_qc").removeClass("d-none")
+                                        $("#cts_dia_pago_m").addClass("d-none")
+                                    } else if (ctrs_forma_pago == "MENSUALES"  ) {
+                                        $("#cts_dia_pago_semanal").addClass("d-none")
+                                        $(".cts_dia_pago_qc").addClass("d-none")
+                                        $("#cts_dia_pago_m").removeClass("d-none")
+                                    }
+                                })
+                            </script>
                             <div class="col-md-3 col-12">
                                 <div class="alert alert-secondary" role="alert">
                                     <strong>PLAZO DE CREDITO</strong>

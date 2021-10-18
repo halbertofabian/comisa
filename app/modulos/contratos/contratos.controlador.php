@@ -474,7 +474,8 @@ class ContratosControlador
     public static function ctrRegistrarContrato()
     {
         if (isset($_POST['btnContratoAdd'])) {
-            $cts_dia_pago = $_POST['cts_dia_pago']." ".$_POST['cts_horario_pago'];
+            // $cts_dia_pago = $_POST['cts_dia_pago']." ".$_POST['cts_horario_pago'];
+            $cts_dia_pago = $_POST['cts_dia_pago'];
             $contratos = array(
                 'ctr_folio' =>  $_POST["ctr_folio"],
                 'ctr_fecha_contrato' =>  $_POST["clts_fecha_registro"],
