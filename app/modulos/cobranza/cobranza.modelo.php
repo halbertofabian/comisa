@@ -22,8 +22,8 @@ class CobranzaModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -39,8 +39,8 @@ class CobranzaModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -56,8 +56,8 @@ class CobranzaModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps ->fetchAll();
+            $pps->execute();
+            return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -73,8 +73,25 @@ class CobranzaModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
-            $pps -> execute();
-            return $pps -> rowCount()>0;
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarCarteleraCobranza($ruta)
+    {
+        try {
+            //code...
+            $sql = "SELECT cra.*,crt.ctr_id,crt.ctr_folio,crt.ctr_cliente, crt.clts_telefono, crt.clts_curp, crt.clts_domicilio, crt.clts_col, crt.clts_entre_calles, crt.clts_coordenadas, crt.clts_fachada_color, crt.clts_puerta_color, crt.ctr_numero_cuenta, crt.ctr_ruta, crt.ctr_productos, crt.ctr_forma_pago, crt.ctr_dia_pago, crt.ctr_plazo_credito, crt.ctr_pago_credito, crt.ctr_total, crt.ctr_enganche, crt.ctr_pago_adicional, crt.ctr_saldo_actual, crt.ctr_fecha_contrato,crt.ctr_proximo_pago FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 crt ON crt.ctr_id = cra.cra_contrato WHERE cra.cra_fecha_cobro = CURDATE() OR cra.cra_fecha_reagenda = CURDATE() AND crt.ctr_ruta = ? ORDER BY cra.cra_orden ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ruta);
+            $pps->execute();
+            return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -83,5 +100,3 @@ class CobranzaModelo
         }
     }
 }
-
-

@@ -1471,8 +1471,9 @@ class ContratosControlador
 
             $ctr_id = $_POST['ctr_id'];
             $ctr_fecha = $_POST['ctr_fecha'];
+            $ctr_dia_pago = $_POST['ctr_dia_pago'];
 
-            $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id);
+            $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id, $ctr_dia_pago);
             if ($res) {
                 $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha);
                 if ($res2) {

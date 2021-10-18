@@ -976,6 +976,7 @@ $(document).ready(function () {
         var datos = new FormData();
         datos.append("ctr_id", ctr_id);
         datos.append("ctr_fecha", dia);
+        datos.append("ctr_dia_pago", ctr_dia);
         datos.append("btnInsertContrato", true);
         $.ajax({
             url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
