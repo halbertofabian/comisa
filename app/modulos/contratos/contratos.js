@@ -1447,10 +1447,12 @@ $(document).ready(function () {
 
     function sumarSaldo() {
         var suma = 0;
+        var total_venta = $("#total_venta").val();
         $('.grupo').each(function () {
             suma += Number($(this).val());
         });
-        $("#ctr_saldo").val(Number(suma));
+        var saldo = total_venta - suma;
+        $("#ctr_saldo").val(Number(saldo));
 
         var ctr_saldo = $("#ctr_saldo").val();
         var ctr_pago_credito = $("#ctr_pago_credito").val();

@@ -552,7 +552,7 @@
                             </div>
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
-                                    <input type="number" name="total_venta" id="total_venta" class="form-control grupo" required>
+                                    <input type="number" name="total_venta" id="total_venta" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-3 col-12">
