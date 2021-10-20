@@ -163,6 +163,10 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrRegistrarContrato();
         echo json_encode($respuesta, true);
     }
+    public function ajaxMostrarFotos(){
+        $respuesta = ContratosModelo::mdlMostrarFotosCliente($_POST['ctrs_id']);
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -276,4 +280,9 @@ if (isset($_POST['btnCambiarPosiciones'])) {
 if (isset($_POST['btnContratoAdd'])) {
     $registrarContrato = new ContratosAjax();
     $registrarContrato->ajaxRegistrarContrato();
+}
+
+if(isset($_POST['btnshowFotos'])){
+    $mostrarFotos = new ContratosAjax();
+    $mostrarFotos -> ajaxMostrarFotos();
 }

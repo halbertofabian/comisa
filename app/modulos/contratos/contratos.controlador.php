@@ -474,7 +474,7 @@ class ContratosControlador
     public static function ctrRegistrarContrato()
     {
         if (isset($_POST['btnContratoAdd'])) {
-            
+
             // $cts_dia_pago = $_POST['cts_dia_pago']." ".$_POST['cts_horario_pago'];
             $cts_dia_pago = "";
 
@@ -517,7 +517,7 @@ class ContratosControlador
                 'ctr_elaboro' => $_SESSION['session_usr']['usr_nombre'],
 
                 'ctr_nota' => "",
-                'ctr_fotos' => "",
+                'ctr_fotos' => '{"img_cliente":"","img_cred_fro":"","img_cred_tra":"","img_pagare":"","img_fachada":"","img_comprobante":""}',
 
                 'ctr_nombre_ref_1' =>  dstring($_POST["clts_nom_ref1"]),
                 'ctr_parentesco_ref_1' =>  dstring($_POST["clts_parentesco_ref1"]),
@@ -562,7 +562,7 @@ class ContratosControlador
                 'clts_tbj_ant_fiador' =>  dstring($_POST["clts_tbj_ant_fiador"]),
 
                 //fotos fiador
-                'clts_fotos_fiador' => "",
+                'clts_fotos_fiador' => '{"img_cred_fro":"","img_cred_tra":"","img_comprobante":"","img_pagare":""}',
 
                 'clts_nom_ref2' =>  dstring($_POST["clts_nom_ref2"]),
                 'clts_parentesco_ref2' =>  dstring($_POST["clts_parentesco_ref2"]),

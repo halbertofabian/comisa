@@ -691,85 +691,120 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 </form>
 
 
-<!-- <div class="card">
-
-    <div class="card-body">
-        <h5 class="card-title">Fotos cliente</h5>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Fotos
+            <button class="btn btn-primary float-right btnshowFotos"><i class="fa fa-plus"></i></button>
+        </h5>
+    </div>
+    <div class="card-body d-none card-fotos">
         <div class="row">
             <div class="col-md-6">
-                <?php
-                $cliente_fotos = $ctr['ctr_fotos'];
-                $cliente_fotos = json_decode($cliente_fotos, true);
-                // preArray($cliente_fotos);
-                ?>
                 <label for="">Cliente con el producto</label>
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_cliente'] ?>" alt="">
+                <img class="img-fluid img-responsive" id="img_clt_cliente" style="width:100%" src="" alt="">
             </div>
             <div class="col-md-6">
                 <label for="">Comprobante de domicilio</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_comprobante'] ?>" alt="">
+                <img class="img-fluid img-responsive" id="img_clt_comprobante" style="width:100%" src="" alt="">
             </div>
 
             <div class="col-md-6">
                 <label for="">Credencial frontal</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_cred_fro'] ?>" alt="">
+                <img class="img-fluid img-responsive" id="img_clt_cred_fro" style="width:100%" src="" alt="">
             </div>
             <div class="col-md-6">
                 <label for="">Credencial trasera</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_cred_tra'] ?>" alt="">
+                <img class="img-fluid img-responsive" id="img_clt_cred_tra" style="width:100%" src="" alt="">
             </div>
             <div class="col-md-6">
                 <label for="">Pagaré</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_pagare'] ?>" alt="">
+                <img class="img-fluid img-responsive" id="img_clt_pagare" style="width:100%" src="" alt="">
             </div>
             <div class="col-md-6">
                 <label for="">Fachada</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $cliente_fotos['img_fachada'] ?>" alt="">
+                <img class="img-fluid img-responsive" id="img_clt_fachada" style="width:100%" src="" alt="">
             </div>
         </div>
-    </div>
-</div>
-
-<div class="card">
-
-    <div class="card-body">
-        <h5 class="card-title">Fotos fiador</h5>
+        <hr>
         <div class="row">
-            <div class="col-md-6">
-                <?php
-                $fiador_fotos = $ctr['clts_fotos_fiador'];
-                $fiador_fotos = json_decode($fiador_fotos, true);
-                // preArray($fiador_fotos);
-                ?>
 
+            <div class="col-md-6">
             </div>
             <div class="col-md-6">
                 <label for="">Comprobante de domicilio</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_comprobante'] ?>" alt="">
+                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_comprobante" src="" alt="">
             </div>
 
             <div class="col-md-6">
                 <label for="">Credencial frontal</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_cred_fro'] ?>" alt="">
+                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_cred_fro" src="" alt="">
             </div>
             <div class="col-md-6">
                 <label for="">Credencial trasera</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_cred_tra'] ?>" alt="">
+                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_cred_tra" src="" alt="">
             </div>
             <div class="col-md-6">
                 <label for="">Pagaré</label>
 
-                <img class="img-fluid img-responsive" style="width:100%" src="<?= $fiador_fotos['img_pagare'] ?>" alt="">
+                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_pagare" src="" alt="">
             </div>
 
         </div>
     </div>
-</div> -->
+
+
+    <script>
+        $(".btnshowFotos").on("click", function() {
+            var ctrs_id = $("#ctrs_id").val();
+            // Ocultar el boton de mostrar fotos
+            var datos = new FormData();
+            datos.append("btnshowFotos", true);
+            datos.append("ctrs_id", ctrs_id);
+
+            $.ajax({
+                type: "POST",
+                url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                data: datos,
+                cache: false,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                                $(".btnshowFotos").attr("disabled", false);
+                                $(".btnshowFotos").html(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    <span class="visually-hidden">Cargando...</span>`);
+                },
+                success: function(res) {
+                    $(".card-fotos").removeClass("d-none")
+                    $(".btnshowFotos").addClass("d-none")
+                    
+                    
+                    var fotos_clt = JSON.parse(res.ctr_fotos)
+                    $("#img_clt_cliente").attr("src", fotos_clt.img_cliente)
+                    $("#img_clt_comprobante").attr("src", fotos_clt.img_comprobante)
+                    $("#img_clt_cred_fro").attr("src", fotos_clt.img_cred_fro)
+                    $("#img_clt_cred_tra").attr("src", fotos_clt.img_cred_tra)
+                    $("#img_clt_pagare").attr("src", fotos_clt.img_pagare)
+                    $("#img_clt_fachada").attr("src", fotos_clt.img_fachada)
+
+                    var fotos_fdr = JSON.parse(res.clts_fotos_fiador)
+                   
+                    $("#img_comprobante").attr("src", fotos_fdr.img_comprobante)
+                    $("#img_cred_fro").attr("src", fotos_clt.img_cred_fro)
+                    $("#img_cred_tra").attr("src", fotos_clt.img_cred_tra)
+                    $("#img_pagare").attr("src", fotos_clt.img_pagare)
+                }
+            })
+        })
+    </script>
+</div>
+
+

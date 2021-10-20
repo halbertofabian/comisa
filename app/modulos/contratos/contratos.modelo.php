@@ -1041,4 +1041,21 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlMostrarFotosCliente($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_fotos,clts_fotos_fiador FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps ->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
