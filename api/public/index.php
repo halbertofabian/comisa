@@ -314,20 +314,38 @@ $app->post('/loginCobranza', function (Request $request, Response $response) {
 
 $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $response, array $args) {
     $ruta =  $args['ruta'];
-    
+
     $getAllCtra = CobranzaModelo::mdlMostrarCarteleraCobranza($ruta);
 
     return json_encode($getAllCtra, true);
-
 });
 $app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
+    // $json = $request->getBody();
+
+    // $datosVendedor = json_decode($json, true);
+
+    // preArray($datosVendedor);
+    // return;
     $json = $request->getBody();
-
     $datosVendedor = json_decode($json, true);
+    try {
 
-    preArray($datosVendedor);
-    return;
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
+        $con = ConexionAPI::conectarAPI();
+        $pps = $con->prepare($sql);
+        $pps->bindValue(1, $json);
+        $pps->bindValue(2, FECHA);
 
+        $pps->execute();
+    } catch (PDOException $th) {
+        //throw $th;
+    } finally {
+        $pps = null;
+        $con = null;
+    }
+    $datos = array('mensaje' => 'Los datos se agregaron correctamente');
+
+    return json_encode($datos);
     // $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
 
     // return json_encode($subirctr, true);
