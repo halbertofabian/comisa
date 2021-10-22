@@ -309,12 +309,30 @@ $app->post('/loginCobranza', function (Request $request, Response $response) {
     # code...
 
 });
+
+//API'S PARA LA APP DE COMISA COBRNZA
+
 $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $response, array $args) {
     $ruta =  $args['ruta'];
     
     $getAllCtra = CobranzaModelo::mdlMostrarCarteleraCobranza($ruta);
 
     return json_encode($getAllCtra, true);
+
+});
+$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
+    $json = $request->getBody();
+
+    $datosVendedor = json_decode($json, true);
+
+    preArray($datosVendedor);
+    return;
+
+    // $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
+
+    // return json_encode($subirctr, true);
+
+    # code...
 
 });
 $app->run();
