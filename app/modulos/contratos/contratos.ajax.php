@@ -163,9 +163,20 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrRegistrarContrato();
         echo json_encode($respuesta, true);
     }
-    public function ajaxMostrarFotos(){
+    public function ajaxMostrarFotos()
+    {
         $respuesta = ContratosModelo::mdlMostrarFotosCliente($_POST['ctrs_id']);
         echo json_encode($respuesta, true);
+    }
+    public function ajaxGuardarImagenesCliente()
+    {
+        $res = ContratosControlador::ctrGuardarFotosCliente();
+        echo json_encode($res, true);
+    }
+    public function ajaxGuardarImagenesFiador()
+    {
+        $res = ContratosControlador::ctrGuardarFotosFiador();
+        echo json_encode($res, true);
     }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
@@ -282,7 +293,15 @@ if (isset($_POST['btnContratoAdd'])) {
     $registrarContrato->ajaxRegistrarContrato();
 }
 
-if(isset($_POST['btnshowFotos'])){
+if (isset($_POST['btnshowFotos'])) {
     $mostrarFotos = new ContratosAjax();
-    $mostrarFotos -> ajaxMostrarFotos();
+    $mostrarFotos->ajaxMostrarFotos();
+}
+if (isset($_POST['btnAgregarFotosCliente'])) {
+    $guardarImagenesCliente = new ContratosAjax();
+    $guardarImagenesCliente->ajaxGuardarImagenesCliente();
+}
+if (isset($_POST['btnAgregarFotosFiador'])) {
+    $guardarImagenesFiador = new ContratosAjax();
+    $guardarImagenesFiador->ajaxGuardarImagenesFiador();
 }

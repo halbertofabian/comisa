@@ -730,17 +730,13 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <img class="img-fluid img-responsive" id="img_clt_fachada" style="width:100%" src="" alt="">
             </div>
         </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#agregarFotosCliente"><i class="fa fa-plus"></i> Agregar fotos</button>
+            </div>
+        </div>
         <hr>
         <div class="row">
-
-            <div class="col-md-6">
-            </div>
-            <div class="col-md-6">
-                <label for="">Comprobante de domicilio</label>
-
-                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_comprobante" src="" alt="">
-            </div>
-
             <div class="col-md-6">
                 <label for="">Credencial frontal</label>
 
@@ -752,11 +748,139 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_cred_tra" src="" alt="">
             </div>
             <div class="col-md-6">
+                <label for="">Comprobante de domicilio</label>
+
+                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_comprobante" src="" alt="">
+            </div>
+            <div class="col-md-6">
                 <label for="">Pagaré</label>
 
                 <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_pagare" src="" alt="">
             </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#agregarFotosFiador"><i class="fa fa-plus"></i> Agregar fotos</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Modal Fotos Cliente -->
+    <div class="modal fade" id="agregarFotosCliente" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Fotos del cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formFotosCliente" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="containeir">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_cliente">Foto cliente/producto</label>
+                                        <input type="file" class="form-control" name="img_cliente" id="img_cliente" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_cred_fro">Foto credencial frontal</label>
+                                        <input type="file" class="form-control" name="img_cred_fro" id="img_cred_fro" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_cred_tra">Foto credencial trasera</label>
+                                        <input type="file" class="form-control" name="img_cred_tra" id="img_cred_tra" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_pagare">Foto pagaré</label>
+                                        <input type="file" class="form-control" name="img_pagare" id="img_pagare" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_fachada">Foto fachada</label>
+                                        <input type="file" class="form-control" name="img_fachada" id="img_fachada" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_comprobante">Foto comprobante domicilio</label>
+                                        <input type="file" class="form-control" name="img_comprobante" id="img_comprobante" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Fotos Fiador -->
+    <div class="modal fade" id="agregarFotosFiador" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Fotos del fiador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formFotosFiador" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="containeir">
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_cred_fro">Foto credencial frontal</label>
+                                        <input type="file" class="form-control" name="img_cred_fro" id="img_cred_fro" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_cred_tra">Foto credencial trasera</label>
+                                        <input type="file" class="form-control" name="img_cred_tra" id="img_cred_tra" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_comprobante">Foto comprobante domicilio</label>
+                                        <input type="file" class="form-control" name="img_comprobante" id="img_comprobante" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="img_pagare">Foto pagaré</label>
+                                        <input type="file" class="form-control" name="img_pagare" id="img_pagare" aria-describedby="helpId" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -778,15 +902,15 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 processData: false,
                 contentType: false,
                 beforeSend: function() {
-                                $(".btnshowFotos").attr("disabled", false);
-                                $(".btnshowFotos").html(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    $(".btnshowFotos").attr("disabled", false);
+                    $(".btnshowFotos").html(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     <span class="visually-hidden">Cargando...</span>`);
                 },
                 success: function(res) {
                     $(".card-fotos").removeClass("d-none")
                     $(".btnshowFotos").addClass("d-none")
-                    
-                    
+
+
                     var fotos_clt = JSON.parse(res.ctr_fotos)
                     $("#img_clt_cliente").attr("src", fotos_clt.img_cliente)
                     $("#img_clt_comprobante").attr("src", fotos_clt.img_comprobante)
@@ -796,15 +920,13 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                     $("#img_clt_fachada").attr("src", fotos_clt.img_fachada)
 
                     var fotos_fdr = JSON.parse(res.clts_fotos_fiador)
-                   
-                    $("#img_comprobante").attr("src", fotos_fdr.img_comprobante)
-                    $("#img_cred_fro").attr("src", fotos_clt.img_cred_fro)
-                    $("#img_cred_tra").attr("src", fotos_clt.img_cred_tra)
-                    $("#img_pagare").attr("src", fotos_clt.img_pagare)
+
+                    $("#img_fdr_comprobante").attr("src", fotos_fdr.img_comprobante)
+                    $("#img_fdr_cred_fro").attr("src", fotos_fdr.img_cred_fro)
+                    $("#img_fdr_cred_tra").attr("src", fotos_fdr.img_cred_tra)
+                    $("#img_fdr_pagare").attr("src", fotos_fdr.img_pagare)
                 }
             })
         })
     </script>
 </div>
-
-

@@ -1524,4 +1524,259 @@ class ContratosControlador
             return true;
         }
     }
+    public static function ctrGuardarFotosCliente()
+    {
+        if (isset($_POST["btnAgregarFotosCliente"])) {
+            $ctrs_id = $_POST['ctrs_id'];
+
+            $img_cliente_guardado = $_FILES['img_cliente']['tmp_name'];
+            $img_cliente = $_FILES['img_cliente']['name'];
+
+            $img_cred_fro_guardado = $_FILES['img_cred_fro']['tmp_name'];
+            $img_cred_fro = $_FILES['img_cred_fro']['name'];
+
+            $img_cred_tra_guardado = $_FILES['img_cred_tra']['tmp_name'];
+            $img_cred_tra = $_FILES['img_cred_tra']['name'];
+
+            $img_pagare_guardado = $_FILES['img_pagare']['tmp_name'];
+            $img_pagare = $_FILES['img_pagare']['name'];
+
+            $img_fachada_guardado = $_FILES['img_fachada']['tmp_name'];
+            $img_fachada = $_FILES['img_fachada']['name'];
+
+            $img_comprobante_guardado = $_FILES['img_comprobante']['tmp_name'];
+            $img_comprobante = $_FILES['img_comprobante']['name'];
+
+            $directorio = DOCUMENT_ROOT  . "media/fotosContratos/" . $ctrs_id;
+            if (!file_exists($directorio)) {
+
+                mkdir($directorio, 0777, true);
+            }
+
+            if (!file_exists($directorio . "/" . $img_cliente)) {
+                $img_cliente_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cliente;
+                move_uploaded_file($img_cliente_guardado, $directorio . "/" . $img_cliente);
+            } else {
+                if (!empty($img_cliente_guardado)) {
+                    $img_cliente_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cliente;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_cliente = json_decode($respuesta['ctr_fotos'], true);
+                    // preArray($json_cliente);
+                    $img_cliente_ruta = $json_cliente['img_cliente'];
+                }
+            }
+
+
+
+            if (!file_exists($directorio . "/" . $img_cred_fro)) {
+                $img_cred_fro_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_fro;
+                move_uploaded_file($img_cred_fro_guardado, $directorio . "/" . $img_cred_fro);
+            } else {
+                if (!empty($img_cred_fro_guardado)) {
+                    $img_cred_fro_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_fro;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_cred_fro_ruta = json_decode($respuesta['ctr_fotos'], true);
+                    // preArray($json_img_cred_fro_ruta);
+                    $img_cred_fro_ruta = $json_img_cred_fro_ruta['img_cred_fro'];
+                }
+            }
+
+
+            if (!file_exists($directorio . "/" . $img_cred_tra)) {
+                $img_cred_tra_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_tra;
+                move_uploaded_file($img_cred_tra_guardado, $directorio . "/" . $img_cred_tra);
+            } else {
+                if (!empty($img_cred_tra_guardado)) {
+                    $img_cred_tra_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_tra;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_cred_tra = json_decode($respuesta['ctr_fotos'], true);
+                    // preArray($json_img_cred_tra);
+                    $img_cred_tra_ruta = $json_img_cred_tra['img_cred_tra'];
+                }
+            }
+
+
+            if (!file_exists($directorio . "/" . $img_pagare)) {
+                $img_pagare_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_pagare;
+                move_uploaded_file($img_pagare_guardado, $directorio . "/" . $img_pagare);
+            } else {
+                if (!empty($img_pagare_guardado)) {
+                    $img_pagare_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_pagare;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_pagare = json_decode($respuesta['ctr_fotos'], true);
+                    // preArray($json_img_pagare);
+                    $img_pagare_ruta = $json_img_pagare['img_pagare'];
+                }
+            }
+
+
+            if (!file_exists($directorio . "/" . $img_fachada)) {
+                $img_fachada_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_fachada;
+                move_uploaded_file($img_fachada_guardado, $directorio . "/" . $img_fachada);
+            } else {
+                if (!empty($img_fachada_guardado)) {
+                    $img_fachada_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_fachada;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_fachada = json_decode($respuesta['ctr_fotos'], true);
+                    // preArray($json_img_fachada);
+                    $img_fachada_ruta = $json_img_fachada['img_fachada'];
+                }
+            }
+
+
+            if (!file_exists($directorio . "/" . $img_comprobante)) {
+                $img_comprobante_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_comprobante;
+                move_uploaded_file($img_comprobante_guardado, $directorio . "/" . $img_comprobante);
+            } else {
+                if (!empty($img_comprobante_guardado)) {
+                    $img_comprobante_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_comprobante;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_comprobante = json_decode($respuesta['ctr_fotos'], true);
+                    // preArray($json_img_comprobante);
+                    $img_comprobante_ruta = $json_img_comprobante['img_comprobante'];
+                }
+            }
+
+
+            $data = array(
+                "img_cliente" => $img_cliente_ruta,
+                "img_cred_fro" => $img_cred_fro_ruta,
+                "img_cred_tra" => $img_cred_tra_ruta,
+                "img_pagare" => $img_pagare_ruta,
+                "img_fachada" => $img_fachada_ruta,
+                "img_comprobante" => $img_comprobante_ruta
+            );
+            $arrayFotos = json_encode($data, true);
+            $res = ContratosModelo::mdlActualizarFotosCliente($ctrs_id, $arrayFotos);
+
+            if ($res) {
+                return array(
+                    "status" => true,
+                    "mensaje" => "Las fotos se actualizaron correctamente!"
+                );
+            } else {
+                return array(
+                    "status" => false,
+                    "mensaje" => "Hubo un error al actualizar las fotos!"
+                );
+            }
+        }
+    }
+
+
+    public static function ctrGuardarFotosFiador()
+    {
+        if (isset($_POST["btnAgregarFotosFiador"])) {
+            $ctrs_id = $_POST['ctrs_id'];
+
+
+            $img_cred_fro_guardado = $_FILES['img_cred_fro']['tmp_name'];
+            $img_cred_fro = $_FILES['img_cred_fro']['name'];
+
+            $img_cred_tra_guardado = $_FILES['img_cred_tra']['tmp_name'];
+            $img_cred_tra = $_FILES['img_cred_tra']['name'];
+
+            $img_comprobante_guardado = $_FILES['img_comprobante']['tmp_name'];
+            $img_comprobante = $_FILES['img_comprobante']['name'];
+
+            $img_pagare_guardado = $_FILES['img_pagare']['tmp_name'];
+            $img_pagare = $_FILES['img_pagare']['name'];
+
+            
+            $directorio = DOCUMENT_ROOT  . "media/fotosContratos/" . $ctrs_id;
+            if (!file_exists($directorio)) {
+
+                mkdir($directorio, 0777, true);
+            }
+
+
+            if (!file_exists($directorio . "/" . $img_cred_fro)) {
+                $img_cred_fro_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_fro;
+                move_uploaded_file($img_cred_fro_guardado, $directorio . "/" . $img_cred_fro);
+            } else {
+                if (!empty($img_cred_fro_guardado)) {
+                    $img_cred_fro_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_fro;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_cred_fro_ruta = json_decode($respuesta['clts_fotos_fiador'], true);
+                    // preArray($json_img_cred_fro_ruta);
+                    $img_cred_fro_ruta = $json_img_cred_fro_ruta['img_cred_fro'];
+                }
+            }
+
+
+            if (!file_exists($directorio . "/" . $img_cred_tra)) {
+                $img_cred_tra_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_tra;
+                move_uploaded_file($img_cred_tra_guardado, $directorio . "/" . $img_cred_tra);
+            } else {
+                if (!empty($img_cred_tra_guardado)) {
+                    $img_cred_tra_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_cred_tra;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_cred_tra = json_decode($respuesta['clts_fotos_fiador'], true);
+                    // preArray($json_img_cred_tra);
+                    $img_cred_tra_ruta = $json_img_cred_tra['img_cred_tra'];
+                }
+            }
+
+
+            if (!file_exists($directorio . "/" . $img_pagare)) {
+                $img_pagare_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_pagare;
+                move_uploaded_file($img_pagare_guardado, $directorio . "/" . $img_pagare);
+            } else {
+                if (!empty($img_pagare_guardado)) {
+                    $img_pagare_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_pagare;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_pagare = json_decode($respuesta['clts_fotos_fiador'], true);
+                    // preArray($json_img_pagare);
+                    $img_pagare_ruta = $json_img_pagare['img_pagare'];
+                }
+            }
+
+
+
+            if (!file_exists($directorio . "/" . $img_comprobante)) {
+                $img_comprobante_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_comprobante;
+                move_uploaded_file($img_comprobante_guardado, $directorio . "/" . $img_comprobante);
+            } else {
+                if (!empty($img_comprobante_guardado)) {
+                    $img_comprobante_ruta = HTTP_HOST . "media/fotosContratos/" . $ctrs_id . "/" . $img_comprobante;
+                } else {
+                    $respuesta = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+                    $json_img_comprobante = json_decode($respuesta['clts_fotos_fiador'], true);
+                    // preArray($json_img_comprobante);
+                    $img_comprobante_ruta = $json_img_comprobante['img_comprobante'];
+                }
+            }
+
+
+            $data = array(
+                "img_cred_fro" => $img_cred_fro_ruta,
+                "img_cred_tra" => $img_cred_tra_ruta,
+                "img_comprobante" => $img_comprobante_ruta,
+                "img_pagare" => $img_pagare_ruta,
+            );
+            $arrayFotos = json_encode($data, true);
+            $res = ContratosModelo::mdlActualizarFotosFiador($ctrs_id, $arrayFotos);
+
+            if ($res) {
+                return array(
+                    "status" => true,
+                    "mensaje" => "Las fotos se actualizaron correctamente!"
+                );
+            } else {
+                return array(
+                    "status" => false,
+                    "mensaje" => "Hubo un error al actualizar las fotos!"
+                );
+            }
+        }
+    }
 }

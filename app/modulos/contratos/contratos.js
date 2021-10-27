@@ -522,7 +522,7 @@ $(document).ready(function () {
                 "cantidad": 1,
             };
             var productos = $("#productos_contratos").val();
-            
+
             if (productos == "") {
                 data.push(datos);
                 $("#productos_contratos").val(JSON.stringify(data));
@@ -1459,7 +1459,7 @@ $(document).ready(function () {
         $("#ctrs_plazo_credito").val(Math.ceil(Number(ctr_saldo / ctr_pago_credito)));
     }
 
-    
+
 
     $("#formNewContratoAdd").on("submit", function (e) {
         e.preventDefault();
@@ -1500,7 +1500,69 @@ $(document).ready(function () {
                 }
             }
         })
-    })
+    });
+
+
+    //Fomularios para subir las imagenes del contrato
+    $("#formFotosCliente").on("submit", function (e) {
+        e.preventDefault();
+        var ctrs_id = $("#ctrs_id").val();
+        var datos = new FormData(this);
+        datos.append("ctrs_id", ctrs_id);
+        datos.append("btnAgregarFotosCliente", true);
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if (res.status) {
+                    toastr.success(res.mensaje, "Muy bien");
+                    $("#agregarFotosCliente").modal("hide");
+                    $(".btnshowFotos").trigger("click");
+                    $("#formFotosCliente")[0].reset();
+                } else {
+                    toastr.error(res.mensaje, 'Error');
+                    $("#agregarFotosCliente").modal("hide");
+                    $(".btnshowFotos").trigger("click");
+                }
+            }
+        })
+
+    });
+
+    $("#formFotosFiador").on("submit", function (e) {
+        e.preventDefault();
+        var ctrs_id = $("#ctrs_id").val();
+        var datos = new FormData(this);
+        datos.append("ctrs_id", ctrs_id);
+        datos.append("btnAgregarFotosFiador", true);
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (res) {
+                if (res.status) {
+                    toastr.success(res.mensaje, "Muy bien");
+                    $("#agregarFotosFiador").modal("hide");
+                    $(".btnshowFotos").trigger("click");
+                    $("#formFotosFiador")[0].reset();
+                } else {
+                    toastr.error(res.mensaje, 'Error');
+                    $("#agregarFotosFiador").modal("hide");
+                    $(".btnshowFotos").trigger("click");
+                }
+            }
+        })
+
+    });
 
 
 });
