@@ -181,6 +181,13 @@ class AppControlador
             'Jefe administrativo'
         );
     }
+    public static function obtenerListaBlancaCobrador()
+    {
+        return array(
+            'contratos',
+            'salir'
+        );
+    }
 
 
 
@@ -1294,6 +1301,26 @@ class AppControlador
 
                         // Aqui más item de menu
                     ),
+                ]
+            ),
+        );
+    }
+    public static function obtnerMenuCobrador()
+    {
+        return array(
+            '1' => array(
+                [
+
+                    'label' => 'Contratos',
+                    'icon' => '<i class="fa fa-file-text-o "></i>',
+                    'href' => 'contratos/enrutar-cuentas',
+                    'modulos' =>  array(
+                        [
+                            'icon' => '',
+                            'label' => 'Enrutar cuentas',
+                            'href' => 'contratos/enrutar-cuentas'
+                        ],
+                    )
                 ]
             ),
         );

@@ -27,6 +27,26 @@
                                 <input type="hidden" name="usr_id" id="usr_id" class="form-control" placeholder="Escribe el nombre completo del alumno" value="<?php echo $usr['usr_id'] ?>" readonly required>
                             </div>
                         </div>
+                        <div class="col-md-2 col-12">
+                            <div class="form-group">
+                                <label for="usr_ruta">Número de ruta</label>
+                                <select class="form-control" name="usr_ruta" id="usr_ruta">
+                                    <option value="0">--Seleccionar ruta--</option>
+                                    <?php
+                                    for ($i = 1; $i <= 20; $i++) :
+                                        $ruta = $i <= 9 ? "0" . $i : $i;
+                                        if($usr['usr_ruta'] == "R".$i){
+                                            $selected = "selected";
+                                        }else{
+                                            $selected = "";
+                                        }
+
+                                    ?>
+                                        <option <?= $selected ?> value="R<?= $i ?>"><?= $ruta ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="usr_nombre">Nombre</label>
@@ -189,6 +209,21 @@
                                 <input type="text" name="usr_matricula" id="usr_matricula" class="form-control" placeholder="Escribe el nombre completo del alumno" value="<?php echo $usr_id ?>" readonly required>
                             </div>
                         </div>
+                        <div class="col-md-2 col-12">
+                            <div class="form-group">
+                                <label for="usr_ruta">Número de ruta</label>
+                                <select class="form-control" name="usr_ruta" id="usr_ruta">
+                                    <option value="0">--Seleccionar ruta--</option>
+                                    <?php
+                                    for ($i = 1; $i <= 20; $i++) :
+                                        $ruta = $i <= 9 ? "0" . $i : $i;
+
+                                    ?>
+                                        <option value="R<?= $i ?>"><?= $ruta ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="usr_nombre">Nombre</label>
@@ -298,7 +333,7 @@
                                     ?>
                                         <tr>
                                             <td><?php echo $usr['usr_nombre'] ?></td>
-                                            
+
                                             <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
                                             <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
                                             <td><?php echo $usr['usr_telefono'] ?></td>

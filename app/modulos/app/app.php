@@ -156,6 +156,8 @@
                                 $listaBlanca = AppControlador::ObtenerListaBlancaGefeVentas();
                             } elseif ($_SESSION['session_usr']['usr_rol'] == 'Jefe administrativo') {
                                 $listaBlanca = AppControlador::ObtenerListaBlancaAdministración();
+                            } elseif ($_SESSION['session_usr']['usr_rol'] == 'Cobrador') {
+                                $listaBlanca = AppControlador::obtenerListaBlancaCobrador();
                             }
 
 

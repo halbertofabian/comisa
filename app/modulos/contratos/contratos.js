@@ -883,6 +883,67 @@ $(document).ready(function () {
         });
     }
 
+    if ($("#crt_ruta").val() != "") {
+        var crt_ruta = $("#crt_ruta").val();
+        var metodo_pgo = $("#metodo_pgo").val();
+        var datos = new FormData()
+        datos.append("crt_ruta", crt_ruta)
+        datos.append("metodo_pgo", metodo_pgo)
+        datos.append("btnSelectedRuta", true)
+        $.ajax({
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            // beforeSend: function () {
+            //     startLoadButton()
+            // },
+            success: function (res) {
+                consultarCartelera();
+                var listaPrincipal = "";
+                res.forEach(element => {
+                    listaPrincipal +=
+                        `
+                    <div class="col-xl-12">
+                            <div class="card" style="border-style: dotted;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${element.ctr_folio}</h5>
+                                    <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                    <p class="card-text"><strong>Clave:</strong> </p>
+                                    <p>
+                                        <div class="form-group">
+                                            <label for="dia_semanal">Seleccionar día</label>
+                                            <select class="form-control" name="dia_semanal" id="dia_semanal" ctr_id="${element.ctr_id}">
+                                                <option value="">--Seleccionar--</option>
+                                                <option value="LUNES">LUNES</option>
+                                                <option value="MARTES">MARTES</option>
+                                                <option value="MIERCOLES">MIERCOLES</option>
+                                                <option value="JUEVES">JUEVES</option>
+                                                <option value="VIERNES">VIERNES</option>
+                                                <option value="SABADO">SABADO</option>
+                                                <option value="DOMINGO">DOMINGO</option>
+                                            </select>
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                $("#listaPrincipal").html(listaPrincipal);
+
+            }
+        });
+    }
+
     $("#crt_ruta").on("change", function (e) {
         e.preventDefault();
         var crt_ruta = $(this).val();

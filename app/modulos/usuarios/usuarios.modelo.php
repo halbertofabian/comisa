@@ -53,23 +53,24 @@ class UsuariosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_usuarios_usr (usr_matricula,usr_nombre,usr_telefono,usr_correo,usr_clave,usr_rol,usr_usuario_registro,usr_fecha_registro,usr_firma,usr_id_sucursal,usr_deuda_ext,usr_sueldo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_usuarios_usr (usr_matricula,usr_ruta,usr_nombre,usr_telefono,usr_correo,usr_clave,usr_rol,usr_usuario_registro,usr_fecha_registro,usr_firma,usr_id_sucursal,usr_deuda_ext,usr_sueldo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr['usr_matricula']);
-            $pps->bindValue(2, $usr['usr_nombre']);
-            $pps->bindValue(3, $usr['usr_telefono']);
-            $pps->bindValue(4, $usr['usr_correo']);
-            $pps->bindValue(5, $usr['usr_clave']);
-            $pps->bindValue(6, $usr['usr_rol']);
-            $pps->bindValue(7, $usr['usr_usuario_registro']);
-            $pps->bindValue(8, $usr['usr_fecha_registro']);
-            $pps->bindValue(9, $usr['usr_firma']);
-            $pps->bindValue(10, SUCURSAL_ID);
+            $pps->bindValue(2, $usr['usr_ruta']);
+            $pps->bindValue(3, $usr['usr_nombre']);
+            $pps->bindValue(4, $usr['usr_telefono']);
+            $pps->bindValue(5, $usr['usr_correo']);
+            $pps->bindValue(6, $usr['usr_clave']);
+            $pps->bindValue(7, $usr['usr_rol']);
+            $pps->bindValue(8, $usr['usr_usuario_registro']);
+            $pps->bindValue(9, $usr['usr_fecha_registro']);
+            $pps->bindValue(10, $usr['usr_firma']);
+            $pps->bindValue(11, SUCURSAL_ID);
 
-            $pps->bindValue(11, $usr['usr_deuda_ext']);
+            $pps->bindValue(12, $usr['usr_deuda_ext']);
 
-            $pps->bindValue(12, $usr['usr_sueldo']);
+            $pps->bindValue(13, $usr['usr_sueldo']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -144,21 +145,22 @@ class UsuariosModelo
     public static function mdlActualizarUsuarios2($usr)
     {
         try {
-            $sql = "UPDATE  tbl_usuarios_usr SET usr_nombre =?,usr_telefono = ?,usr_correo = ?,usr_clave = ?, usr_rol = ?, usr_firma = ?, usr_deuda_ext = ?, usr_sueldo = ?, usr_vehiculo = ?, usr_imss = ?,usr_acceso_concentradora = ? WHERE usr_id = ?";
+            $sql = "UPDATE  tbl_usuarios_usr SET usr_ruta = ?,usr_nombre =?,usr_telefono = ?,usr_correo = ?,usr_clave = ?, usr_rol = ?, usr_firma = ?, usr_deuda_ext = ?, usr_sueldo = ?, usr_vehiculo = ?, usr_imss = ?,usr_acceso_concentradora = ? WHERE usr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $usr['usr_nombre']);
-            $pps->bindValue(2, $usr['usr_telefono']);
-            $pps->bindValue(3, $usr['usr_correo']);
-            $pps->bindValue(4, $usr['usr_clave']);
-            $pps->bindValue(5, $usr['usr_rol']);
-            $pps->bindValue(6, $usr['usr_firma']);
-            $pps->bindValue(7, $usr['usr_deuda_ext']);
-            $pps->bindValue(8, $usr['usr_sueldo']);
-            $pps->bindValue(9, $usr['usr_vehiculo']);
-            $pps->bindValue(10, $usr['usr_imss']);
-            $pps->bindValue(11, $usr['usr_acceso_concentradora']);
-            $pps->bindValue(12, $usr['usr_id']);
+            $pps->bindValue(1, $usr['usr_ruta']);
+            $pps->bindValue(2, $usr['usr_nombre']);
+            $pps->bindValue(3, $usr['usr_telefono']);
+            $pps->bindValue(4, $usr['usr_correo']);
+            $pps->bindValue(5, $usr['usr_clave']);
+            $pps->bindValue(6, $usr['usr_rol']);
+            $pps->bindValue(7, $usr['usr_firma']);
+            $pps->bindValue(8, $usr['usr_deuda_ext']);
+            $pps->bindValue(9, $usr['usr_sueldo']);
+            $pps->bindValue(10, $usr['usr_vehiculo']);
+            $pps->bindValue(11, $usr['usr_imss']);
+            $pps->bindValue(12, $usr['usr_acceso_concentradora']);
+            $pps->bindValue(13, $usr['usr_id']);
 
             $pps->execute();
             return $pps->rowCount() > 0;
@@ -538,7 +540,7 @@ class UsuariosModelo
 
     public static function mdlLoginCobranza($usr){
         try {
-            $sql = "SELECT usr_id,usr_matricula,usr_nombre,usr_app,usr_apm,usr_telefono,usr_correo,usr_clave,usr_rol,usr_firma,usr_caja FROM tbl_usuarios_usr WHERE usr_id = ? OR usr_matricula = ? OR usr_telefono = ? OR  usr_correo = ? ";
+            $sql = "SELECT usr_id,usr_matricula,usr_ruta,usr_nombre,usr_app,usr_apm,usr_telefono,usr_correo,usr_clave,usr_rol,usr_firma,usr_caja FROM tbl_usuarios_usr WHERE usr_id = ? OR usr_matricula = ? OR usr_telefono = ? OR  usr_correo = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1,$usr['usr_id']);

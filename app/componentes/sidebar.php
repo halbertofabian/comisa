@@ -16,7 +16,7 @@
                         <a href="<?php echo HTTP_HOST . 'kardex' ?>" class="waves-effect">
                             <i class="fa fa-book"></i> <span> Kardex </span>
                         </a>
-                        </li>
+                    </li>
 
                 <?php elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe de ventas") : ?>
                     <li>
@@ -28,7 +28,7 @@
                         <a href="<?php echo HTTP_HOST . 'kardex' ?>" class="waves-effect">
                             <i class="fa fa-book"></i> <span> Kardex </span>
                         </a>
-                        </li>
+                    </li>
                 <?php elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") : ?>
                     <li>
                         <a href="<?php echo HTTP_HOST . 'mi-caja' ?>" class="waves-effect">
@@ -49,7 +49,7 @@
                         <a href="<?php echo HTTP_HOST . 'kardex' ?>" class="waves-effect">
                             <i class="fa fa-book"></i> <span> Kardex </span>
                         </a>
-                        </li>
+                    </li>
                 <?php else : ?>
                     <li>
                         <a href="<?php echo HTTP_HOST ?>" class="waves-effect">
@@ -67,6 +67,8 @@
                     $menu = AppControlador::obtnerMenuGefeVentas();
                 } elseif ($_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") {
                     $menu = AppControlador::obtnerMenuGefeAdministracion();
+                } elseif ($_SESSION['session_usr']['usr_rol'] == "Cobrador") {
+                    $menu = AppControlador::obtnerMenuCobrador();
                 }
 
                 //preArray($menu);

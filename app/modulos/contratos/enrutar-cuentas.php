@@ -100,12 +100,18 @@
             /* optional */
         }
 
-        td:not(.align-start)>span {
-            vertical-align: middle;
-            /* optional */
-        }
+
     }
 </style>
+<?php
+$monday = date('Y-m-d', strtotime('monday this week'));
+$tuesday = date('Y-m-d', strtotime('tuesday this week'));
+$wednesday = date('Y-m-d', strtotime('wednesday this week'));
+$thursday  = date('Y-m-d', strtotime('thursday this week'));
+$friday = date('Y-m-d', strtotime('friday this week'));
+$saturday  = date('Y-m-d', strtotime('saturday this week'));
+$sunday = date('Y-m-d', strtotime('sunday this week'));
+?>
 <div class="containeir">
     <div class="row">
         <div class="col-xl-4">
@@ -115,23 +121,19 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="crt_ruta">Número de ruta</label>
-                                <select class="form-control" name="crt_ruta" id="crt_ruta">
-                                    <option value="0">--Seleccionar ruta--</option>
-                                    <?php
-                                    $monday = date('Y-m-d', strtotime('monday this week'));
-                                    $tuesday = date('Y-m-d', strtotime('tuesday this week'));
-                                    $wednesday = date('Y-m-d', strtotime('wednesday this week'));
-                                    $thursday  = date('Y-m-d', strtotime('thursday this week'));
-                                    $friday = date('Y-m-d', strtotime('friday this week'));
-                                    $saturday  = date('Y-m-d', strtotime('saturday this week'));
-                                    $sunday = date('Y-m-d', strtotime('sunday this week'));
-                                    for ($i = 1; $i <= 20; $i++) :
-                                        $ruta = $i <= 9 ? "0" . $i : $i;
-
-                                    ?>
-                                        <option value="R<?= $i ?>"><?= $ruta ?></option>
-                                    <?php endfor; ?>
-                                </select>
+                                <?php if ($_SESSION['session_usr']['usr_rol'] == "Cobrador") : ?>
+                                    <input type="text" class="form-control" name="crt_ruta" id="crt_ruta" readonly value="<?= $_SESSION['session_usr']['usr_ruta'] ?>">
+                                <?php else : ?>
+                                    <select class="form-control" name="crt_ruta" id="crt_ruta">
+                                        <option value="">--Seleccionar ruta--</option>
+                                        <?php
+                                        for ($i = 1; $i <= 20; $i++) :
+                                            $ruta = $i <= 9 ? "0" . $i : $i;
+                                        ?>
+                                            <option value="R<?= $i ?>"><?= $ruta ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                <?php endif; ?>
                             </div>
                             <input type="hidden" id="ctr_lunes" value="<?= $monday ?>">
                             <input type="hidden" id="ctr_martes" value="<?= $tuesday ?>">
