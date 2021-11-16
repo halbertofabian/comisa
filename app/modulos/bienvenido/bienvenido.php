@@ -1,6 +1,8 @@
 <?php
-if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza' || $_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas' ) :
+if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza' || $_SESSION['session_usr']['usr_rol'] == 'Jefe de ventas') :
     cargarPagina('mi-caja', $rutas);
+elseif ($_SESSION['session_usr']['usr_rol'] == 'Cobrador') :
+    header('Location:' . HTTP_HOST . "contratos/enrutar-cuentas");
 ?>
 
 <?php else : ?>
