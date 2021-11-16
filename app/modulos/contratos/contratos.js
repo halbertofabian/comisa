@@ -1109,7 +1109,7 @@ $(document).ready(function () {
                     if (nombreDia == "LUNES") {
                         listar_lunes +=
                             `
-                        <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                        <div data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
@@ -1131,7 +1131,7 @@ $(document).ready(function () {
                     } else if (nombreDia == "MARTES") {
                         listar_martes +=
                             `
-                    <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                    <div data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
@@ -1153,7 +1153,7 @@ $(document).ready(function () {
                     } else if (nombreDia == "MIERCOLES") {
                         listar_miercoles +=
                             `
-                    <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                    <div data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
@@ -1175,7 +1175,7 @@ $(document).ready(function () {
                     } else if (nombreDia == "JUEVES") {
                         listar_jueves +=
                             `
-                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
@@ -1197,7 +1197,7 @@ $(document).ready(function () {
                     } else if (nombreDia == "VIERNES") {
                         listar_viernes +=
                             `
-                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
@@ -1219,7 +1219,7 @@ $(document).ready(function () {
                     } else if (nombreDia == "SABADO") {
                         listar_sabado +=
                             `
-                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>
@@ -1241,7 +1241,7 @@ $(document).ready(function () {
                     } else if (nombreDia == "DOMINGO") {
                         listar_domingo +=
                             `
-                         <div class="col-xl-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
                                     <h5 class="card-title">${element.ctr_folio}</h5>

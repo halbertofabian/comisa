@@ -54,6 +54,57 @@
         width: 50px;
         height: 50px;
     }
+
+    @media (max-width: 855px) {
+        .card.days {
+            width: 100%;
+        }
+
+        table {
+            display: block;
+        }
+
+        thead {
+            display: none;
+        }
+
+        tbody {
+            display: table;
+        }
+
+        tr {
+            display: table-row-group;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
+            /* optional */
+        }
+
+        td {
+            display: table-row;
+        }
+
+        td:before,
+        td>span {
+            display: table-cell;
+            padding: 7px 13px;
+            /* optional */
+            border: 1px solid #e8e8e8;
+            /* optional */
+        }
+
+        td:before {
+            content: attr(data-label);
+            font-weight: 600;
+            /* optional */
+        }
+
+        td:not(.align-start)>span {
+            vertical-align: middle;
+            /* optional */
+        }
+    }
 </style>
 <div class="containeir">
     <div class="row">
