@@ -803,6 +803,7 @@ $(document).ready(function () {
             guardandoPosiciones();
         }
     })
+    // $('#martes').disableSelection();
     $("#miercoles").sortable({
         update: function (event, iu) {
             $(this).children().each(function (index) {
@@ -954,6 +955,7 @@ $(document).ready(function () {
 
     $(document).on("change", "#dia_semanal", function (e) {
         e.preventDefault();
+        $("#loader").removeClass("d-none");
         var dia;
         var ctr_dia = $(this).val();
         var ctr_id = $(this).attr("ctr_id");
@@ -988,6 +990,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (res) {
                 if (res) {
+                    $("#loader").html('<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="sr-only">Loading...</span></div>');
                     imprimirContratos();
                     consultarCartelera();
                 }
@@ -1266,6 +1269,7 @@ $(document).ready(function () {
                 $("#viernes").html(listar_viernes);
                 $("#sabado").html(listar_sabado);
                 $("#domingo").html(listar_domingo);
+                $("#loader").addClass("d-none");
             }
         });
     }
