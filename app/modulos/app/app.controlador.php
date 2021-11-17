@@ -92,6 +92,7 @@ class AppControlador
             'importar-clientes-mal-historial',
             'new-mal-historial',
             'edit-cliente-mal-historial',
+            'cobranza'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -686,7 +687,7 @@ class AppControlador
             '1' => array(
                 [
                     'label' => 'Cobranza',
-                    'icon' => '<i class="fas fa-funnel-dollar "></i>',
+                    'icon' => '<i class="fa fa-dollar"></i>',
                     'href' => '#home',
                     'modulos' =>
                     array(
@@ -700,6 +701,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Lista de cajas / Nueva caja',
                             'href' => 'cajas'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Actualizar saldos de cuenta',
+                            'href' => 'cobranza/actualizar-saldos'
                         ],
 
                         //Aqui más item de menu

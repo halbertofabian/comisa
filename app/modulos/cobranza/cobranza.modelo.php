@@ -99,4 +99,29 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlActualizarSaldos($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado=? WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_total']);
+            $pps->bindValue(2, $ctr['ctr_enganche']);
+            $pps->bindValue(3, $ctr['ctr_pago_adicional']);
+            $pps->bindValue(4, $ctr['ctr_saldo']);
+            $pps->bindValue(5, $ctr['ctr_saldo_actual']);
+            $pps->bindValue(6, $ctr['ctr_ultima_fecha_abono']);
+            $pps->bindValue(7, $ctr['ctr_total_pagado']);
+            $pps->bindValue(8, $ctr['ctr_numero_cuenta']);
+            $pps->bindValue(9, $ctr['ctr_ruta']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

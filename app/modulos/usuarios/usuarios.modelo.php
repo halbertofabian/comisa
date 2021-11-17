@@ -53,7 +53,7 @@ class UsuariosModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_usuarios_usr (usr_matricula,usr_ruta,usr_nombre,usr_telefono,usr_correo,usr_clave,usr_rol,usr_usuario_registro,usr_fecha_registro,usr_firma,usr_id_sucursal,usr_deuda_ext,usr_sueldo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_usuarios_usr (usr_matricula,usr_ruta,usr_nombre,usr_telefono,usr_correo,usr_clave,usr_rol,usr_usuario_registro,usr_fecha_registro,usr_firma,usr_id_sucursal,usr_deuda_ext,usr_sueldo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr['usr_matricula']);

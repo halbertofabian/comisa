@@ -18,3 +18,4 @@
 <script src="<?php echo HTTP_HOST . 'app/modulos/clientes/clientes.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/contratos/contratos.js' ?>"></script>
 <script src="<?php echo HTTP_HOST . 'app/modulos/almacenes/almacenes.js' ?>"></script>
+<script src="<?php echo HTTP_HOST . 'app/modulos/cobranza/cobranza.js' ?>"></script>
