@@ -21,4 +21,22 @@ class LoginModelo
             $con = null;
         }
     }
+    public static function mdlIniciarSesionAuto($usr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps -> bindValue(1,$usr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $e) {
+            throw $e;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
+
