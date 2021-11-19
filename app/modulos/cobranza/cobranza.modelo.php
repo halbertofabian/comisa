@@ -189,4 +189,22 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlMostrarAbonosPorAutorizarByCobrador($abs_id_cobrador)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr.ctr_cliente,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE abs_id_cobrador = ? AND  abs_estado_abono =  'POR AUTORIZAR' ORDER BY cra.cra_orden ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id_cobrador);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

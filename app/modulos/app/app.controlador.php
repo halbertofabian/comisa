@@ -92,7 +92,8 @@ class AppControlador
             'importar-clientes-mal-historial',
             'new-mal-historial',
             'edit-cliente-mal-historial',
-            'cobranza'
+            'cobranza',
+            'autorizar-abonos'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -692,6 +693,11 @@ class AppControlador
                     'modulos' =>
                     array(
 
+                        [
+                            'icon' => '',
+                            'label' => 'Abonos por autorizar',
+                            'href' => 'autorizar-abonos'
+                        ],
                         [
                             'icon' => '',
                             'label' => 'Flujo de caja',
