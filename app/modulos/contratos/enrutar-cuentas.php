@@ -1,9 +1,4 @@
 <style>
-    .days {
-        width: 30rem;
-        min-height: 300px;
-    }
-
     .table tr td {
         vertical-align: text-top;
     }
@@ -53,54 +48,6 @@
         right: 0;
         width: 50px;
         height: 50px;
-    }
-
-    @media (max-width: 855px) {
-        .card.days {
-            width: 100%;
-        }
-
-        table {
-            display: block;
-        }
-
-        thead {
-            display: none;
-        }
-
-        tbody {
-            display: table;
-        }
-
-        tr {
-            display: table-row-group;
-        }
-
-        tr:nth-child(odd) {
-            background-color: #f9f9f9;
-            /* optional */
-        }
-
-        td {
-            display: table-row;
-        }
-
-        td:before,
-        td>span {
-            display: table-cell;
-            padding: 7px 13px;
-            /* optional */
-            border: 1px solid #e8e8e8;
-            /* optional */
-        }
-
-        td:before {
-            content: attr(data-label);
-            font-weight: 600;
-            /* optional */
-        }
-
-
     }
 </style>
 <?php
@@ -178,66 +125,145 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                             </div>
                         </div>
                     </div>
-                    <table class="table table-responsive" width="100%" style="overflow-y: scroll; max-height: 550px;">
-                        <tr>
-                            <td>
-                                <div class="card days border border-primary">
-                                    <h3 class="card-title text-center">Lunes <?= $monday ?></h3>
-                                    <div class="card-body" id="lunes">
+                    <div class="row">
+                        <div class="col-xl-12 col-12">
+                            <div id="accordion" style="overflow-y: scroll; max-height: 550px;">
+                                <div class="card">
+                                    <div class="card-header" id="uno">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link" data-toggle="collapse" data-target="#Lunes" aria-expanded="false" aria-controls="Lunes">
+                                                Lunes
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Lunes" class="collapse" aria-labelledby="uno" data-parent="#accordion">
+                                        <div class="card days border border-primary">
+                                            <h3 class="card-title text-center">Lunes <?= $monday ?></h3>
+                                            <div class="card-body">
+                                                <div class="row" id="lunes">
 
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="card days border border-secondary">
-                                    <h3 class="card-title text-center">Martes <?= $tuesday ?></h3>
-                                    <div class="card-body" id="martes">
+                                <div class="card">
+                                    <div class="card-header" id="dos">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Martes" aria-expanded="false" aria-controls="Martes">
+                                                Martes
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Martes" class="collapse" aria-labelledby="dos" data-parent="#accordion">
+                                        <div class="card days border border-secondary">
+                                            <h3 class="card-title text-center">Martes <?= $tuesday ?></h3>
+                                            <div class="card-body">
+                                                <div class="row" id="martes">
 
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="card days border border-success">
-                                    <h3 class="card-title text-center">Miercoles <?= $wednesday ?></h3>
-                                    <div class="card-body" id="miercoles">
+                                <div class="card">
+                                    <div class="card-header" id="tres">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Miercoles" aria-expanded="false" aria-controls="Miercoles">
+                                                Miercoles
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Miercoles" class="collapse" aria-labelledby="tres" data-parent="#accordion">
+                                        <div class="card days border border-success">
+                                            <h3 class="card-title text-center">Miercoles <?= $wednesday ?></h3>
+                                            <div class="card-body">
+                                                <div class="row" id="miercoles">
 
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="card days border border-danger">
-                                    <h3 class="card-title text-center">Jueves <?= $thursday ?></h3>
-                                    <div class="card-body" id="jueves">
+                                <div class="card">
+                                    <div class="card-header" id="cuatro">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Jueves" aria-expanded="false" aria-controls="Jueves">
+                                                Jueves
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Jueves" class="collapse" aria-labelledby="cuatro" data-parent="#accordion">
+                                        <div class="card days border border-danger">
+                                            <h3 class="card-title text-center">Jueves <?= $thursday ?></h3>
+                                            <div class="card-body">
+                                                <div class="row" id="jueves">
 
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="card days border border-warning">
-                                    <h3 class="card-title text-center">Viernes <?= $friday ?></h3>
-                                    <div class="card-body" id="viernes">
-
+                                <div class="card">
+                                    <div class="card-header" id="cinco">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Viernes" aria-expanded="false" aria-controls="Viernes">
+                                                Viernes
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Viernes" class="collapse" aria-labelledby="cinco" data-parent="#accordion">
+                                        <div class="card days border border-warning">
+                                            <h3 class="card-title text-center">Viernes <?= $friday ?></h3>
+                                            <div class="card-body">
+                                                <div class="row" id="viernes">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="card days border border-info">
-                                    <h3 class="card-title text-center">Sábado <?= $saturday ?></h3>
-                                    <div class="card-body" id="sabado">
-
+                                <div class="card">
+                                    <div class="card-header" id="seis">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Sabado" aria-expanded="false" aria-controls="Sabado">
+                                                Sabado
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Sabado" class="collapse" aria-labelledby="seis" data-parent="#accordion">
+                                        <div class="card days border border-info">
+                                            <h3 class="card-title text-center">Sábado <?= $saturday ?></h3>
+                                            <div class="card-body">
+                                                <div class="row" id="sabado">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="card days border border-light">
-                                    <h3 class="card-title text-center">Domingo <?= $sunday ?></h3>
-                                    <div class="card-body" id="domingo">
-
+                                <div class="card">
+                                    <div class="card-header" id="siete">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Domingo" aria-expanded="false" aria-controls="Domingo">
+                                                Domingo
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="Domingo" class="collapse" aria-labelledby="siete" data-parent="#accordion">
+                                        <div class="card days border border-light">
+                                            <h3 class="card-title text-center">Domingo <?= $sunday ?></h3>
+                                            <div class="card-body">
+                                                <div class="row" id="domingo">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                    </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
