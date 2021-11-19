@@ -1176,15 +1176,22 @@ $(document).ready(function () {
                                     <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
-                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
-                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
-                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
-                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
-                                    <p class="text-right">
-                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    <p>
+                                        <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#lunes${element.cra_id}" role="button" aria-expanded="false" aria-controls="lunes">
+                                            <i class="fa fa-eye"> Ver más </i>
+                                        </a>
                                     </p>
+                                    <div class="collapse" id="lunes${element.cra_id}">
+                                        <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                        <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                        <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                        <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                        <p class="card-text"><strong>Clave:</strong> </p>
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1198,15 +1205,22 @@ $(document).ready(function () {
                                     <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
-                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
-                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
-                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
-                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
-                                    <p class="text-right">
-                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    <p>
+                                        <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#martes${element.cra_id}" role="button" aria-expanded="false" aria-controls="martes">
+                                            <i class="fa fa-eye"> Ver más </i>
+                                        </a>
                                     </p>
+                                    <div class="collapse" id="martes${element.cra_id}">
+                                        <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                        <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                        <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                        <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                        <p class="card-text"><strong>Clave:</strong> </p>
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1220,15 +1234,22 @@ $(document).ready(function () {
                                     <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
-                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
-                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
-                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
-                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
-                                    <p class="text-right">
-                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    <p>
+                                        <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#miercoles${element.cra_id}" role="button" aria-expanded="false" aria-controls="miercoles">
+                                            <i class="fa fa-eye"> Ver más </i>
+                                        </a>
                                     </p>
+                                    <div class="collapse" id="miercoles${element.cra_id}">
+                                        <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                        <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                        <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                        <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                        <p class="card-text"><strong>Clave:</strong> </p>
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1242,15 +1263,22 @@ $(document).ready(function () {
                                     <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
-                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
-                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
-                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
-                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
-                                    <p class="text-right">
-                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    <p>
+                                        <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#jueves${element.cra_id}" role="button" aria-expanded="false" aria-controls="jueves">
+                                            <i class="fa fa-eye"> Ver más </i>
+                                        </a>
                                     </p>
+                                    <div class="collapse" id="jueves${element.cra_id}">
+                                        <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                        <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                        <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                        <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                        <p class="card-text"><strong>Clave:</strong> </p>
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1264,15 +1292,22 @@ $(document).ready(function () {
                                     <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
-                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
-                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
-                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
-                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
-                                    <p class="text-right">
-                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    <p>
+                                        <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#viernes${element.cra_id}" role="button" aria-expanded="false" aria-controls="viernes">
+                                            <i class="fa fa-eye"> Ver más </i>
+                                        </a>
                                     </p>
+                                    <div class="collapse" id="viernes${element.cra_id}">
+                                        <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                        <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                        <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                        <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                        <p class="card-text"><strong>Clave:</strong> </p>
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1286,15 +1321,22 @@ $(document).ready(function () {
                                     <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
-                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
-                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
-                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
-                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
-                                    <p class="text-right">
-                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    <p>
+                                        <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#sabado${element.cra_id}" role="button" aria-expanded="false" aria-controls="sabado">
+                                            <i class="fa fa-eye"> Ver más </i>
+                                        </a>
                                     </p>
+                                    <div class="collapse" id="sabado${element.cra_id}">
+                                        <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                        <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                        <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                        <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                        <p class="card-text"><strong>Clave:</strong> </p>
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1308,15 +1350,22 @@ $(document).ready(function () {
                                     <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
-                                    <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
-                                    <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
-                                    <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
-                                    <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
-                                    <p class="text-right">
-                                        <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                    <p>
+                                        <a class="btn btn-outline-dark btn-sm" data-toggle="collapse" href="#domingo${element.cra_id}" role="button" aria-expanded="false" aria-controls="domingo">
+                                            <i class="fa fa-eye"> Ver más </i>
+                                        </a>
                                     </p>
+                                    <div class="collapse" id="domingo${element.cra_id}">
+                                        <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                        <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                        <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                        <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                        <p class="card-text"><strong>Clave:</strong> </p>
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
