@@ -124,4 +124,69 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public  static function mdlCambiarEstadoCarteleraCompletado($cra_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_estado = 'COMPLETADO' WHERE cra_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            throw $th;
+            return null;
+        } finally {
+            $con = null;
+            $pps = null;
+        }
+    }
+
+    public  static function mdlInsertarSiguienteEnrutamiento($cra)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra['cra_contrato']);
+            $pps->bindValue(2, $cra['cra_fecha_cobro']);
+            $pps->bindValue(3, $cra['cra_orden']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            throw $th;
+            return null;
+        } finally {
+            $con = null;
+            $pps = null;
+        }
+    }
+
+    public  static function mdlRegistrarAbono($abs)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_abonos_cobranza_abs (abs_folio,abs_id_cobrador,abs_id_contrato,abs_monto,abs_mp,abs_referancia,abs_nota,abs_fecha_cobro) VALUES(?,?,?,?,?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs['abs_folio']);
+            $pps->bindValue(2, $abs['abs_id_cobrador']);
+            $pps->bindValue(3, $abs['abs_id_contrato']);
+            $pps->bindValue(4, dnum($abs['abs_monto']));
+            $pps->bindValue(5, $abs['abs_mp']);
+            $pps->bindValue(6, $abs['abs_referancia']);
+            $pps->bindValue(7, $abs['abs_nota']);
+            $pps->bindValue(8, $abs['abs_fecha_cobro']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

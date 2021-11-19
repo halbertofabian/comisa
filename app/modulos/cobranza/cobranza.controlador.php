@@ -88,7 +88,7 @@ class CobranzaControlador
                 $ctr_ultima_fecha_abono =  $ctr_ultima_fecha_abono == ""  ? $ctr['ctr_ultima_fecha_abono']   :   $ctr_ultima_fecha_abono;
                 $ctr_total_pagado =  $ctr_total_pagado == ""  ? $ctr['ctr_total_pagado']   :   $ctr_total_pagado;
 
-               
+
 
 
                 $data = array(
@@ -124,5 +124,71 @@ class CobranzaControlador
                 'update' => ""
             );
         }
+    }
+
+    public static function ctrReEnrutarCuentasCompletadas($cts_completadas)
+    {
+        $cts_completadas = json_decode($cts_completadas, true);
+        //preArray($cts_completadas);
+        // return;
+
+        foreach ($cts_completadas as  $cts_c) {
+
+            // Saber la forma de pago
+            switch ($cts_c['ctr_forma_pago']) {
+                case 'SEMANALES':
+                    // Calcular  el día en fecha de la siguiente semana por default es lunes
+                    $next_day =  date('Y-m-d', strtotime('Monday next week'));
+                    if ($cts_c['ctr_dia_pago'] == 'LUNES') {
+                        $next_day =  date('Y-m-d', strtotime('Monday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'MARTES') {
+                        $next_day =  date('Y-m-d', strtotime('Tuesday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'MIERCOLES') {
+                        $next_day =  date('Y-m-d', strtotime('Wednesday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'JUEVES') {
+                        $next_day =  date('Y-m-d', strtotime('Thursday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'VIERENES') {
+                        $next_day =  date('Y-m-d', strtotime('Friday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'SABADO') {
+                        $next_day =  date('Y-m-d', strtotime('Saturday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'DOMINGO') {
+                        $next_day =  date('Y-m-d', strtotime('Sunday next week'));
+                    }
+
+                    break;
+                    // QUINCENALES
+                    // CATROCELAES
+                    // MENSUALES   
+                default:
+                    # code...
+                    break;
+            }
+            // Actualizar el estado a COMPLETADO
+            CobranzaModelo::mdlCambiarEstadoCarteleraCompletado($cts_c['cra_id']);
+            //Enrutar el siguiente cobro
+            CobranzaModelo::mdlInsertarSiguienteEnrutamiento(array(
+                'cra_contrato' => $cts_c['cra_contrato'],
+                'cra_fecha_cobro' => $next_day,
+                'cra_orden' => $cts_c['cra_orden'],
+            ));
+            # code...
+        }
+    }
+    public static function ctrRegistrarAbonosCobranzaApp($abs_completos)
+    {
+        $abs_completos = json_decode($abs_completos, true);
+        
+        foreach ($abs_completos as  $abs_c) {
+            CobranzaModelo::mdlRegistrarAbono($abs_c);
+        }
+    }
+
+    public static function ctrSubirDatosCobranzaApp($datos)
+    {
+        // var_dump($datos[0]['completados']);
+        $cts_c = json_encode($datos[0]['completados'], true);
+        $abs_c = json_encode($datos[1]['abonos'], true);
+         CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
+         CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
     }
 }
