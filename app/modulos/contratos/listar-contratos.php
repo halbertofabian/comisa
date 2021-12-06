@@ -164,7 +164,7 @@
                                 <label for="ctr_ruta">RUTA</label>
                                 <select name="ctr_ruta" id="ctr_ruta" class="form-control">
                                     <option value="-">Selecione una ruta</option>
-                                    <?php for ($i = 1; $i <= 16; $i++) : ?>
+                                    <?php for ($i = 1; $i <= 50; $i++) : ?>
                                         <option value="<?= 'R' . $i ?>"> <?= 'R' . $i ?></option>
                                     <?php endfor; ?>
                                 </select>

@@ -33,7 +33,7 @@
                                 <select class="form-control" name="usr_ruta" id="usr_ruta">
                                     <option value="0">--Seleccionar ruta--</option>
                                     <?php
-                                    for ($i = 1; $i <= 20; $i++) :
+                                    for ($i = 1; $i <= 50; $i++) :
                                         $ruta = $i <= 9 ? "0" . $i : $i;
                                         if($usr['usr_ruta'] == "R".$i){
                                             $selected = "selected";
