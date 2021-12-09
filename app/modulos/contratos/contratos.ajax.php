@@ -178,6 +178,21 @@ class ContratosAjax
         $res = ContratosControlador::ctrGuardarFotosFiador();
         echo json_encode($res, true);
     }
+    public function ajaxConsultarPendienteContrato()
+    {
+        $res = ContratosModelo::mdlConsultarPendienteContrato($_POST['ctr_id']);
+        echo json_encode($res, true);
+    }
+    public function ajaxActualizarStatusPendiente1()
+    {
+        $res = ContratosModelo::mdlActualizarStatusPendiente1($_POST);
+        echo json_encode($res, true);
+    }
+    public function ajaxActualizarStatusPendiente2()
+    {
+        $res = ContratosModelo::mdlActualizarStatusPendienteRealizados($_POST);
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -304,4 +319,16 @@ if (isset($_POST['btnAgregarFotosCliente'])) {
 if (isset($_POST['btnAgregarFotosFiador'])) {
     $guardarImagenesFiador = new ContratosAjax();
     $guardarImagenesFiador->ajaxGuardarImagenesFiador();
+}
+if (isset($_POST['btnPendiente'])) {
+    $mostrarPendiente = new ContratosAjax();
+    $mostrarPendiente->ajaxConsultarPendienteContrato();
+}
+if (isset($_POST['cambiarPendiente'])) {
+    $cambiarPendiente = new ContratosAjax();
+    $cambiarPendiente->ajaxActualizarStatusPendiente1();
+}
+if (isset($_POST['cambiarPendienteRealizado'])) {
+    $cambiarPendienteRealizado = new ContratosAjax();
+    $cambiarPendienteRealizado->ajaxActualizarStatusPendiente2();
 }

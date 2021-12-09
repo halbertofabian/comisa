@@ -1142,12 +1142,65 @@ class ContratosModelo
     {
         try {
             //code...
-                $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono,ctr_status_cuenta,ctr_nota FROM tbl_contrato_crt_1 WHERE ctr_id_vendedor = ? AND ctr_status_pendiente = 1 ORDER BY ctr_id ASC";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->bindValue(1, $ctr_id_vendedor);
-                $pps->execute();
-                return $pps->fetchAll();
+            $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono,ctr_status_cuenta,ctr_nota FROM tbl_contrato_crt_1 WHERE ctr_id_vendedor = ? AND ctr_status_pendiente = 1 ORDER BY ctr_id ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id_vendedor);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarPendienteContrato($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono,ctr_status_cuenta,ctr_nota,ctr_status_pendiente FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarStatusPendiente1($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_status_pendiente = 1, ctr_nota = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['nota']);
+            $pps->bindValue(2, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarStatusPendienteRealizados($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_status_pendiente = 0, ctr_nota = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['nota']);
+            $pps->bindValue(2, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
