@@ -102,6 +102,7 @@
                             <th>CLIENTE</th>
                             <th>DOMICILIO</th>
                             <th>ELABORO</th>
+                            <th>STATUS</th>
                             <th>FECHA DE VENTA</th>
                         </tr>
                     </thead>
@@ -312,13 +313,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5 class="modal-title">Pendientes</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input type="hidden" id="ctr_id_contrato">
                 <div class="row">
                     <div class="col-xl-12 col-12">
                         <strong>No. de cuenta: </strong><span id="ctr_cta"></span></br>
@@ -832,6 +832,7 @@
                             <td>${ctr.ctr_cliente}</td>
                             <td>${ctr.clts_domicilio+" "+ctr.clts_col}</td>
                             <td>${ctr.ctr_elaboro}</td>
+                            <td><strong>${ctr.ctr_status_cuenta}</strong></td>
                             <td>${ctr.ctr_fecha_contrato}</td>
                         
                         </tr>
