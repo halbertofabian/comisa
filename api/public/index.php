@@ -309,6 +309,14 @@ $app->post('/loginCobranza', function (Request $request, Response $response) {
     # code...
 
 });
+$app->get('/obtener_ventas/{ctr_id_vendedor}/{filtro}', function (Request $request, Response $response, array $args) {
+    $ctr_id_vendedor =  $args['ctr_id_vendedor'];
+    $filtro =  $args['filtro'];
+
+    $getAllCtra = ContratosModelo::mdlConsultarVentasVendedor($ctr_id_vendedor, $filtro);
+
+    return json_encode($getAllCtra, true);
+});
 
 //API'S PARA LA APP DE COMISA COBRNZA
 
