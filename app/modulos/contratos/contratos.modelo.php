@@ -1123,8 +1123,13 @@ class ContratosModelo
                 $pps->bindValue(1, $ctr_id_vendedor);
                 $pps->execute();
                 return $pps->fetchAll();
-            }else{
-
+            } else {
+                $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono FROM tbl_contrato_crt_1 WHERE ctr_cliente LIKE '%$filtro%' OR clts_curp LIKE '%$filtro%' AND ctr_id_vendedor = ? ORDER BY ctr_id ASC";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $ctr_id_vendedor);
+                $pps->execute();
+                return $pps->fetchAll();
             }
         } catch (PDOException $th) {
             //throw $th;
