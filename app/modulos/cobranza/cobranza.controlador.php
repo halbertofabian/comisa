@@ -177,7 +177,7 @@ class CobranzaControlador
     public static function ctrRegistrarAbonosCobranzaApp($abs_completos)
     {
         $abs_completos = json_decode($abs_completos, true);
-        
+
         foreach ($abs_completos as  $abs_c) {
             CobranzaModelo::mdlRegistrarAbono($abs_c);
         }
@@ -185,10 +185,10 @@ class CobranzaControlador
 
     public static function ctrSubirDatosCobranzaApp($datos)
     {
-        // var_dump($datos[0]['completados']);
-        $cts_c = json_encode($datos[0]['completados'], true);
-        $abs_c = json_encode($datos[1]['abonos'], true);
-         CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
-         CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
+        //  var_dump($datos[0]['Completados']);
+        $cts_c = json_encode($datos[0]['Completados'], true);
+        $abs_c = json_encode($datos[1]['Abonos'], true);
+        CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
+        CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
     }
 }
