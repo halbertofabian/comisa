@@ -185,10 +185,10 @@ class CobranzaControlador
 
     public static function ctrSubirDatosCobranzaApp($datos)
     {
-        //  var_dump($datos[0]['Completados']);
-        $cts_c = json_encode($datos[0]['Completados'], true);
-        $abs_c = json_encode($datos[1]['Abonos'], true);
-        CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
-        CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
+         var_dump($datos[0]['Completados']);
+        // $cts_c = json_encode($datos[0]['Completados'], true);
+        // $abs_c = json_encode($datos[1]['Abonos'], true);
+        // CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
+        // CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
     }
 }
