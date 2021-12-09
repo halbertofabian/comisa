@@ -102,6 +102,7 @@
                             <th>CLIENTE</th>
                             <th>DOMICILIO</th>
                             <th>ELABORO</th>
+                            <th>STATUS</th>
                             <th>FECHA DE VENTA</th>
                         </tr>
                     </thead>
@@ -296,12 +297,49 @@
                         </tr>
                     </thead>
                     <tbody id="tbody_productos">
-                        
+
                     </tbody>
                 </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="mdlPendientes" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Pendientes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-12">
+                        <strong>No. de cuenta: </strong><span id="ctr_cta"></span></br>
+                        <strong>Ruta: </strong><span id="ctr_rta"></span></br>
+                        <strong>Cliente: </strong><span id="ctr_nom"></span></br>
+                        <strong>Domicilio: </strong><span id="ctr_dom"></span><span id="clts_colnia"></span></br>
+                        <strong>Curp: </strong><span id="ctr_cp"></span></br>
+                        <strong>Telefono: </strong><span id="ctr_tel"></span></br>
+                        <strong>Status: </strong><span id="status_cuenta"></span></br>
+                        <div class="form-group">
+                            <label for="ctr_not"><strong>Observaciones:</strong></label>
+                            <textarea class="form-control" name="ctr_not" id="ctr_not" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <div id="buttons">
+
+                </div>
             </div>
         </div>
     </div>
@@ -585,6 +623,143 @@
         listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin);
     })
 
+    $(".tblContratos tbody").on("click", "button.btnPendiente", function() {
+
+        var datos = new FormData();
+
+        var ctr_id = $(this).attr("ctr_id");
+        datos.append("ctr_id", ctr_id)
+        datos.append("btnPendiente", true)
+
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                //startLoadButton()
+
+            },
+            success: function(res) {
+                $("#ctr_cta").html(res.ctr_numero_cuenta)
+                $("#ctr_rta").html(res.ctr_ruta)
+                $("#ctr_nom").html(res.ctr_cliente);
+                $("#ctr_dom").html(res.clts_domicilio);
+                $("#ctr_colnia").html(res.clts_col);
+                $("#ctr_cp").html(res.clts_curp);
+                $("#ctr_tel").html(res.clts_telefono);
+                $("#status_cuenta").html(res.ctr_status_cuenta);
+                $("#ctr_not").html(res.ctr_nota);
+                $("#ctr_not").val(res.ctr_nota);
+                var buttons = "";
+                if (res.ctr_status_pendiente == '0') {
+                    buttons = `<button type="button" class="btn btn-primary cambiarPendiente" ctr_id="${res.ctr_id}">Mandar a pendiente</button>`;
+                } else {
+                    buttons = `<button type="button" class="btn btn-success cambiarPendienteRealizado" ctr_id="${res.ctr_id}">Pendiente realizado</button>`;
+                }
+
+                $("#buttons").html(buttons);
+
+
+            }
+        })
+
+
+    })
+    $("#buttons").on("click", "button.cambiarPendiente", function() {
+
+        var datos = new FormData();
+
+        var ctr_id = $(this).attr("ctr_id");
+        var nota = $("#ctr_not").val();
+        datos.append("ctr_id", ctr_id)
+        datos.append("nota", nota)
+        datos.append("cambiarPendiente", true)
+
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                //startLoadButton()
+
+            },
+            success: function(res) {
+                if (res) {
+                    swal({
+                            title: "Muy bien",
+                            text: "El contrato se cambio a pendientes correctamente!",
+                            icon: "success",
+                            buttons: "OK",
+                            dangerMode: true,
+                            closeOnClickOutside: false,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                window.location.reload();
+                            } else {
+                                window.location.reload();
+                            }
+                        });
+                }
+            }
+        })
+
+
+    })
+    $("#buttons").on("click", "button.cambiarPendienteRealizado", function() {
+
+        var datos = new FormData();
+
+        var ctr_id = $(this).attr("ctr_id");
+        var nota = $("#ctr_not").val();
+        datos.append("ctr_id", ctr_id)
+        datos.append("nota", nota)
+        datos.append("cambiarPendienteRealizado", true)
+
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                //startLoadButton()
+
+            },
+            success: function(res) {
+                if (res) {
+                    swal({
+                            title: "Muy bien",
+                            text: "El contrato se quito de la lista de pendientes correctamente!",
+                            icon: "success",
+                            buttons: "OK",
+                            dangerMode: true,
+                            closeOnClickOutside: false,
+                        })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                window.location.reload();
+                            } else {
+                                window.location.reload();
+                            }
+                        });
+                }
+            }
+        })
+
+
+    })
+
     function listarContrato(ctr_folio = "",
         ctr_vendedor = "",
         ctr_fecha_inicio = "",
@@ -647,6 +822,7 @@
                                 </button>
                                 <button class="btn btn-danger btn-sm btnClientesMal" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#mdlClientesMal"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                                 <button class="btn btn-dark btn-sm btnProductos" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#modalProductos"><i class="fa fa-dropbox"></i></button>
+                                <button class="btn btn-light btn-sm btnPendiente" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#mdlPendientes" title="Agregar a pendientes"><i class="fa fa-hourglass"></i></button>
                                </div>
                             </td>
                             <td>${ctr.ctr_folio}</td>
@@ -656,6 +832,7 @@
                             <td>${ctr.ctr_cliente}</td>
                             <td>${ctr.clts_domicilio+" "+ctr.clts_col}</td>
                             <td>${ctr.ctr_elaboro}</td>
+                            <td><strong>${ctr.ctr_status_cuenta}</strong></td>
                             <td>${ctr.ctr_fecha_contrato}</td>
                         
                         </tr>
