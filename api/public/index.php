@@ -317,6 +317,13 @@ $app->get('/obtener_ventas/{ctr_id_vendedor}/{filtro}', function (Request $reque
 
     return json_encode($getAllCtra, true);
 });
+$app->get('/obtener_pendientes/{ctr_id_vendedor}', function (Request $request, Response $response, array $args) {
+    $ctr_id_vendedor =  $args['ctr_id_vendedor'];
+
+    $getAllCtra = ContratosModelo::mdlConsultarPendientesVendedor($ctr_id_vendedor);
+
+    return json_encode($getAllCtra, true);
+});
 
 //API'S PARA LA APP DE COMISA COBRNZA
 
