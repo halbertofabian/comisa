@@ -1117,14 +1117,14 @@ class ContratosModelo
         try {
             //code...
             if ($filtro == '0') {
-                $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono FROM tbl_contrato_crt_1 WHERE ctr_id_vendedor = ? ORDER BY ctr_id ASC";
+                $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono,ctr_status_cuenta FROM tbl_contrato_crt_1 WHERE ctr_id_vendedor = ? ORDER BY ctr_id ASC";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $ctr_id_vendedor);
                 $pps->execute();
                 return $pps->fetchAll();
             } else {
-                $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono FROM tbl_contrato_crt_1 WHERE ctr_id_vendedor = ? AND ctr_cliente LIKE '%$filtro%' OR clts_curp LIKE '%$filtro%' ORDER BY ctr_id ASC";
+                $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono,ctr_status_cuenta FROM tbl_contrato_crt_1 WHERE ctr_id_vendedor = ? AND ctr_cliente LIKE '%$filtro%' OR clts_curp LIKE '%$filtro%' ORDER BY ctr_id ASC";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $ctr_id_vendedor);
