@@ -1102,7 +1102,7 @@ class ContratosControlador
             //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
 
             $leyenda = "";
-            for ($i = 2; $i <= $numRows; $i++) {
+            for ($i = 4; $i <= $numRows; $i++) {
 
 
                 $ctr_numero_cuenta = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
@@ -1163,11 +1163,11 @@ class ContratosControlador
                 $clts_col_ref2 = $objPHPExcel->getActiveSheet()->getCell('BE' . $i)->getCalculatedValue();
                 $clts_tel_ref2 = $objPHPExcel->getActiveSheet()->getCell('BF' . $i)->getCalculatedValue();
 
-                // $ctr_pago_t = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
-                // $ctr_pago_credito = (int) filter_var($ctr_pago_t, FILTER_SANITIZE_NUMBER_INT);
-                // $ctr_forma_pago =  (string) filter_var($ctr_pago_t, FILTER_SANITIZE_STRING);
+                $ctr_pago_t = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
+                $ctr_pago_credito = (int) filter_var($ctr_pago_t, FILTER_SANITIZE_NUMBER_INT);
+                $ctr_forma_pago =  (string) filter_var($ctr_pago_t, FILTER_SANITIZE_STRING);
 
-                $ctr_forma_pago = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
+                // $ctr_forma_pago = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
 
 
                 // $cell = $excel->getActiveSheet()->getCell('B' . $i);
@@ -1204,7 +1204,7 @@ class ContratosControlador
                 $clts_curp = $objPHPExcel->getActiveSheet()->getCell('BX' . $i)->getCalculatedValue();
                 $ctr_saldo_actual =  $objPHPExcel->getActiveSheet()->getCell('BY' . $i)->getCalculatedValue();
                 $clts_tbj_ing_conyuge =  $objPHPExcel->getActiveSheet()->getCell('BZ' . $i)->getCalculatedValue();
-                $ctr_pago_credito = $objPHPExcel->getActiveSheet()->getCell('CA' . $i)->getCalculatedValue();
+                // $ctr_pago_credito = $objPHPExcel->getActiveSheet()->getCell('CA' . $i)->getCalculatedValue();
 
 
                 $ctr_productos = json_encode(array(array(
