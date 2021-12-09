@@ -683,7 +683,6 @@ class ContratosModelo
             $pps1 = $con->prepare($sql);
             // $pps->bindValue(1, $ctr_id);
             return $pps1->fetch();
-            
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -955,7 +954,7 @@ class ContratosModelo
                 $pps->execute();
                 return $pps->rowCount() > 0;
             } else {
-                
+
                 $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,1)";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
@@ -1067,7 +1066,7 @@ class ContratosModelo
             $sql = "SELECT ctr_fotos,clts_fotos_fiador FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps ->bindValue(1, $ctr_id);
+            $pps->bindValue(1, $ctr_id);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
@@ -1106,6 +1105,27 @@ class ContratosModelo
             $pps->bindValue(2, $ctr_id);
             $pps->execute();
             return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarVentasVendedor($ctr_id_vendedor, $filtro)
+    {
+        try {
+            //code...
+            if ($filtro == 0) {
+                $sql = "SELECT ctr_id,ctr_numero_cuenta,ctr_ruta,ctr_cliente,clts_domicilio,clts_col,clts_curp,clts_telefono FROM tbl_contrato_crt_1 WHERE ctr_id_vendedor = ? ORDER BY ctr_id ASC";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $ctr_id_vendedor);
+                $pps->execute();
+                return $pps->fetchAll();
+            }else{
+
+            }
         } catch (PDOException $th) {
             //throw $th;
         } finally {
