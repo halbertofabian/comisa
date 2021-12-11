@@ -1167,6 +1167,8 @@ class ContratosControlador
                 $ctr_pago_credito = (int) filter_var($ctr_pago_t, FILTER_SANITIZE_NUMBER_INT);
                 $ctr_forma_pago =  (string) filter_var($ctr_pago_t, FILTER_SANITIZE_STRING);
 
+                
+
                 // $ctr_forma_pago = $objPHPExcel->getActiveSheet()->getCell('BG' . $i)->getCalculatedValue();
 
 

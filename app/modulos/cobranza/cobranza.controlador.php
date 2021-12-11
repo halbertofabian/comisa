@@ -76,7 +76,10 @@ class CobranzaControlador
                 $ctr_saldo_actual = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
                 $ctr_ultima_fecha_abono = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
                 $ctr_total_pagado = $objPHPExcel->getActiveSheet()->getCell('I' . $i)->getCalculatedValue();
-
+                $ctr_forma_pago = $objPHPExcel->getActiveSheet()->getCell('J' . $i)->getCalculatedValue();
+                $ctr_dia_pago = $objPHPExcel->getActiveSheet()->getCell('K' . $i)->getCalculatedValue();
+                $ctr_pago_credito = $objPHPExcel->getActiveSheet()->getCell('L' . $i)->getCalculatedValue();
+                $ctr_status_cuenta = $objPHPExcel->getActiveSheet()->getCell('M' . $i)->getCalculatedValue();
 
                 $ctr = ContratosModelo::mdlMostrarSaldosContratos($ctr_numero_cuenta, $ctr_ruta);
                 //En caso de que la cuenta exista
@@ -87,6 +90,10 @@ class CobranzaControlador
                 $ctr_saldo_actual =  $ctr_saldo_actual == ""  ? $ctr['ctr_saldo_actual']   :   $ctr_saldo_actual;
                 $ctr_ultima_fecha_abono =  $ctr_ultima_fecha_abono == ""  ? $ctr['ctr_ultima_fecha_abono']   :   $ctr_ultima_fecha_abono;
                 $ctr_total_pagado =  $ctr_total_pagado == ""  ? $ctr['ctr_total_pagado']   :   $ctr_total_pagado;
+                $ctr_forma_pago =  $ctr_forma_pago == ""  ? $ctr['ctr_forma_pago']   :   $ctr_forma_pago;
+                $ctr_dia_pago =  $ctr_dia_pago == ""  ? $ctr['ctr_dia_pago']   :   $ctr_dia_pago;
+                $ctr_pago_credito =  $ctr_pago_credito == ""  ? $ctr['ctr_pago_credito']   :   $ctr_pago_credito;
+                $ctr_status_cuenta =  $ctr_status_cuenta == ""  ? $ctr['ctr_status_cuenta']   :   $ctr_status_cuenta;
 
 
 
@@ -101,6 +108,10 @@ class CobranzaControlador
                     "ctr_saldo_actual" => $ctr_saldo_actual,
                     "ctr_ultima_fecha_abono" => $ctr_ultima_fecha_abono,
                     "ctr_total_pagado" => $ctr_total_pagado,
+                    "ctr_forma_pago" => $ctr_forma_pago,
+                    "ctr_dia_pago" => $ctr_dia_pago,
+                    "ctr_pago_credito" => $ctr_pago_credito,
+                    "ctr_status_cuenta" => $ctr_status_cuenta
                 );
 
                 $res = CobranzaModelo::mdlActualizarSaldos($data);
@@ -147,7 +158,7 @@ class CobranzaControlador
                         $next_day =  date('Y-m-d', strtotime('Wednesday next week'));
                     } else if ($cts_c['ctr_dia_pago'] == 'JUEVES') {
                         $next_day =  date('Y-m-d', strtotime('Thursday next week'));
-                    } else if ($cts_c['ctr_dia_pago'] == 'VIERENES') {
+                    } else if ($cts_c['ctr_dia_pago'] == 'VIERNES') {
                         $next_day =  date('Y-m-d', strtotime('Friday next week'));
                     } else if ($cts_c['ctr_dia_pago'] == 'SABADO') {
                         $next_day =  date('Y-m-d', strtotime('Saturday next week'));
@@ -186,6 +197,8 @@ class CobranzaControlador
     public static function ctrSubirDatosCobranzaApp($datos)
     {
         //  var_dump($datos[0]['Completados']);
+        // preArray(date('Y-m-d', strtotime('Friday next week')));
+        // return;
         $cts_c = json_encode($datos[0]['Completados'], true);
         $abs_c = json_encode($datos[1]['Abonos'], true);
         CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);

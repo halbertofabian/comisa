@@ -103,9 +103,10 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado=? WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado = ?, ctr_forma_pago = ?, ctr_dia_pago = ?, ctr_pago_credito = ?, ctr_status_cuenta = ?WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+
             $pps->bindValue(1, $ctr['ctr_total']);
             $pps->bindValue(2, $ctr['ctr_enganche']);
             $pps->bindValue(3, $ctr['ctr_pago_adicional']);
@@ -113,8 +114,13 @@ class CobranzaModelo
             $pps->bindValue(5, $ctr['ctr_saldo_actual']);
             $pps->bindValue(6, $ctr['ctr_ultima_fecha_abono']);
             $pps->bindValue(7, $ctr['ctr_total_pagado']);
-            $pps->bindValue(8, $ctr['ctr_numero_cuenta']);
-            $pps->bindValue(9, $ctr['ctr_ruta']);
+            $pps->bindValue(8, $ctr['ctr_forma_pago']);
+            $pps->bindValue(9, $ctr['ctr_dia_pago']);
+            $pps->bindValue(10, $ctr['ctr_pago_credito']);
+            $pps->bindValue(11, $ctr['ctr_status_cuenta']);
+            $pps->bindValue(12, $ctr['ctr_numero_cuenta']);
+            $pps->bindValue(13, $ctr['ctr_ruta']);
+
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
