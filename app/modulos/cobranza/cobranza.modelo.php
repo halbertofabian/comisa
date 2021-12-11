@@ -103,7 +103,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado = ?, ctr_forma_pago = ?, ctr_dia_pago = ?, ctr_pago_credito = ?, ctr_status_cuenta = ?WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado = ?, ctr_forma_pago = ?, ctr_dia_pago = ?, ctr_pago_credito = ?, ctr_status_cuenta = ? WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
