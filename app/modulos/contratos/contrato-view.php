@@ -544,7 +544,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                         <tfoot>
                             <tr>
                                 <td colspan="4" align="right">
-                                    <button type="button" class="btn btn-primary btnGuardarProductos">GUARDAR PRODUCTOS</button>
+                                    <button type="button" class="btn btn-success btnGuardarProductos">GUARDAR PRODUCTOS</button>
                                 </td>
                             </tr>
                         </tfoot>
