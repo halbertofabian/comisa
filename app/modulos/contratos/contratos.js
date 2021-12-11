@@ -917,7 +917,6 @@ $(document).ready(function () {
                                     <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                     <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                     <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                    <p class="card-text"><strong>Clave:</strong> </p>
                                     <p>
                                         <div class="form-group">
                                             <label for="dia_semanal">Seleccionar día</label>
@@ -978,7 +977,6 @@ $(document).ready(function () {
                                 <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                 <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                 <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                <p class="card-text"><strong>Clave:</strong> </p>
                                 <p>
                                     <div class="form-group">
                                         <label for="dia_semanal">Seleccionar día</label>
@@ -1046,7 +1044,6 @@ $(document).ready(function () {
                                 <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                 <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                 <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                <p class="card-text"><strong>Clave:</strong> </p>
                                 <p>
                                     <div class="row">
                                         <div class="col-xl-6 col-6">
@@ -1123,7 +1120,6 @@ $(document).ready(function () {
                                 <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                 <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                 <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                <p class="card-text"><strong>Clave:</strong> </p>
                                 <p>
                                     <div class="row">
                                         <div class="col-xl-12 col-12">
@@ -1423,7 +1419,6 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        <p class="card-text"><strong>Clave:</strong> </p>
                                         ${button}
                                     </div>
                                 </div>
@@ -1457,7 +1452,6 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        <p class="card-text"><strong>Clave:</strong> </p>
                                         ${button}
                                     </div>
                                 </div>
@@ -1491,7 +1485,6 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        <p class="card-text"><strong>Clave:</strong> </p>
                                         ${button}
                                     </div>
                                 </div>
@@ -1525,7 +1518,6 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        <p class="card-text"><strong>Clave:</strong> </p>
                                         ${button}
                                     </div>
                                 </div>
@@ -1559,7 +1551,6 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        <p class="card-text"><strong>Clave:</strong> </p>
                                         ${button}
                                     </div>
                                 </div>
@@ -1593,7 +1584,6 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        <p class="card-text"><strong>Clave:</strong> </p>
                                         ${button}
                                     </div>
                                 </div>
@@ -1627,7 +1617,6 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        <p class="card-text"><strong>Clave:</strong> </p>
                                         ${button}
                                     </div>
                                 </div>
