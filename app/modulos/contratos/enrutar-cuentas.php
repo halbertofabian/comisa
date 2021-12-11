@@ -232,7 +232,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Sabado" class="collapse" aria-labelledby="seis" data-parent="#accordion">
-                                        <div class="card days border border-info">
+                                        <div class="card days border border-info pl-5 pr-5">
                                             <h3 class="card-title text-center">Sábado <?= $saturday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="sabado">
