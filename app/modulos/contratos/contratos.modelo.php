@@ -971,6 +971,7 @@ class ContratosModelo
             $con = null;
         }
     }
+    
     public static function mdlConsultarOrdenPorFecha($ctr_fecha)
     {
         try {

@@ -143,6 +143,16 @@ class ContratosAjax
         $respuesta = ContratosControlador::ctrInsertEnrutamiento();
         echo json_encode($respuesta, true);
     }
+    public function ajaxInsertEnrutamiento2()
+    {
+        $respuesta = ContratosControlador::ctrInsertEnrutamiento2();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxInsertEnrutamiento3()
+    {
+        $respuesta = ContratosControlador::ctrInsertEnrutamiento3();
+        echo json_encode($respuesta, true);
+    }
     public function ajaxConsultarCartelera()
     {
         $respuesta = ContratosModelo::mdlConsultarCartelera();
@@ -290,6 +300,14 @@ if (isset($_POST['btnSelectedRuta'])) {
 if (isset($_POST['btnInsertContrato'])) {
     $insertarCartelera = new ContratosAjax();
     $insertarCartelera->ajaxInsertEnrutamiento();
+}
+if (isset($_POST['btnInsertContrato2'])) {
+    $insertarCartelera = new ContratosAjax();
+    $insertarCartelera->ajaxInsertEnrutamiento2();
+}
+if (isset($_POST['btnInsertContrato3'])) {
+    $insertarCartelera = new ContratosAjax();
+    $insertarCartelera->ajaxInsertEnrutamiento3();
 }
 if (isset($_POST['btnConsultarCartelera'])) {
     $consultarCartelera = new ContratosAjax();

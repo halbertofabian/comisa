@@ -51,6 +51,7 @@
     }
 </style>
 <?php
+$fecha_hoy = date("Y-m-d");
 $monday = date('Y-m-d', strtotime('monday this week'));
 $tuesday = date('Y-m-d', strtotime('tuesday this week'));
 $wednesday = date('Y-m-d', strtotime('wednesday this week'));
@@ -58,6 +59,12 @@ $thursday  = date('Y-m-d', strtotime('thursday this week'));
 $friday = date('Y-m-d', strtotime('friday this week'));
 $saturday  = date('Y-m-d', strtotime('saturday this week'));
 $sunday = date('Y-m-d', strtotime('sunday this week'));
+
+
+$mes_actual = date('Y-m', strtotime('this month'));
+$mes_siguiente = date('Y-m', strtotime('+1 month'));
+$dia_actual = date('d', strtotime('this month'));
+
 ?>
 <div class="containeir">
     <div class="row">
@@ -65,7 +72,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="crt_ruta">Número de ruta</label>
                                 <?php if ($_SESSION['session_usr']['usr_rol'] == "Cobrador") : ?>
@@ -89,6 +96,21 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                             <input type="hidden" id="ctr_viernes" value="<?= $friday ?>">
                             <input type="hidden" id="ctr_sabado" value="<?= $saturday ?>">
                             <input type="hidden" id="ctr_domingo" value="<?= $sunday ?>">
+                            <input type="hidden" id="fecha_hoy" value="<?= $fecha_hoy ?>">
+                            <input type="hidden" id="mes_actual" value="<?= $mes_actual ?>">
+                            <input type="hidden" id="mes_siguiente" value="<?= $mes_siguiente ?>">
+                            <input type="hidden" id="dia_actual" value="<?= $dia_actual ?>">
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="metodo_pgo">Forma de pago</label>
+                                <select class="form-control" name="metodo_pgo" id="metodo_pgo">
+                                    <option value="SEMANALES" selected>SEMANALES</option>
+                                    <option value="CATORCENALES">CATORCENALES</option>
+                                    <option value="QUINCENALES">QUINCENALES</option>
+                                    <option value="MENSUALES">MENSUALES</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -111,21 +133,6 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-xl-8">
-                        </div>
-                        <div class="col-xl-4">
-                            <div class="form-group">
-                                <label for="metodo_pgo">Forma de pago</label>
-                                <select class="form-control" name="metodo_pgo" id="metodo_pgo">
-                                    <option value="SEMANALES" selected>SEMANALES</option>
-                                    <option value="CATORCENALES">CATORCENALES</option>
-                                    <option value="QUINCENALES">QUINCENALES</option>
-                                    <option value="MENSUALES">MENSUALES</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-xl-12 col-12">
                             <div id="accordion" style="overflow-y: scroll; max-height: 550px;">
                                 <div class="card">
@@ -137,7 +144,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Lunes" class="collapse" aria-labelledby="uno" data-parent="#accordion">
-                                        <div class="card days border border-primary">
+                                        <div class="card days border pl-5 pr-5 border-primary">
                                             <h3 class="card-title text-center">Lunes <?= $monday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="lunes">
@@ -156,7 +163,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Martes" class="collapse" aria-labelledby="dos" data-parent="#accordion">
-                                        <div class="card days border border-secondary">
+                                        <div class="card days border pl-5 pr-5 border-secondary">
                                             <h3 class="card-title text-center">Martes <?= $tuesday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="martes">
@@ -175,7 +182,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Miercoles" class="collapse" aria-labelledby="tres" data-parent="#accordion">
-                                        <div class="card days border border-success">
+                                        <div class="card days border pl-5 pr-5 border-success">
                                             <h3 class="card-title text-center">Miercoles <?= $wednesday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="miercoles">
@@ -194,7 +201,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Jueves" class="collapse" aria-labelledby="cuatro" data-parent="#accordion">
-                                        <div class="card days border border-danger">
+                                        <div class="card days border pl-5 pr-5 border-danger">
                                             <h3 class="card-title text-center">Jueves <?= $thursday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="jueves">
@@ -213,7 +220,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Viernes" class="collapse" aria-labelledby="cinco" data-parent="#accordion">
-                                        <div class="card days border border-warning">
+                                        <div class="card days border pl-5 pr-5 border-warning">
                                             <h3 class="card-title text-center">Viernes <?= $friday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="viernes">
@@ -232,7 +239,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Sabado" class="collapse" aria-labelledby="seis" data-parent="#accordion">
-                                        <div class="card days border border-info pl-5 pr-5">
+                                        <div class="card days border pl-5 pr-5 border-info">
                                             <h3 class="card-title text-center">Sábado <?= $saturday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="sabado">
@@ -251,7 +258,7 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
                                         </h5>
                                     </div>
                                     <div id="Domingo" class="collapse" aria-labelledby="siete" data-parent="#accordion">
-                                        <div class="card days border border-light">
+                                        <div class="card days border pl-5 pr-5 border-light">
                                             <h3 class="card-title text-center">Domingo <?= $sunday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="domingo">
