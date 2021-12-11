@@ -1170,11 +1170,12 @@ $(document).ready(function () {
                     if (nombreDia == "LUNES") {
                         listar_lunes +=
                             `
+                            
                         <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
                                         <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#lunes${element.cra_id}" role="button" aria-expanded="false" aria-controls="lunes">
@@ -1183,7 +1184,6 @@ $(document).ready(function () {
                                     </p>
                                     <div class="collapse" id="lunes${element.cra_id}">
                                         <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
@@ -1202,8 +1202,8 @@ $(document).ready(function () {
                     <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
                                         <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#martes${element.cra_id}" role="button" aria-expanded="false" aria-controls="martes">
@@ -1212,7 +1212,6 @@ $(document).ready(function () {
                                     </p>
                                     <div class="collapse" id="martes${element.cra_id}">
                                         <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
@@ -1231,8 +1230,8 @@ $(document).ready(function () {
                     <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
                                         <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#miercoles${element.cra_id}" role="button" aria-expanded="false" aria-controls="miercoles">
@@ -1241,7 +1240,6 @@ $(document).ready(function () {
                                     </p>
                                     <div class="collapse" id="miercoles${element.cra_id}">
                                         <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
@@ -1260,8 +1258,8 @@ $(document).ready(function () {
                          <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
                                         <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#jueves${element.cra_id}" role="button" aria-expanded="false" aria-controls="jueves">
@@ -1270,7 +1268,6 @@ $(document).ready(function () {
                                     </p>
                                     <div class="collapse" id="jueves${element.cra_id}">
                                         <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
@@ -1289,8 +1286,8 @@ $(document).ready(function () {
                          <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
                                         <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#viernes${element.cra_id}" role="button" aria-expanded="false" aria-controls="viernes">
@@ -1299,7 +1296,6 @@ $(document).ready(function () {
                                     </p>
                                     <div class="collapse" id="viernes${element.cra_id}">
                                         <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
@@ -1318,8 +1314,8 @@ $(document).ready(function () {
                          <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
                                         <a class="btn btn-outline-light btn-sm" data-toggle="collapse" href="#sabado${element.cra_id}" role="button" aria-expanded="false" aria-controls="sabado">
@@ -1328,7 +1324,6 @@ $(document).ready(function () {
                                     </p>
                                     <div class="collapse" id="sabado${element.cra_id}">
                                         <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
@@ -1347,8 +1342,8 @@ $(document).ready(function () {
                          <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <h5 class="card-title">${element.ctr_folio}</h5>
                                     <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
                                         <a class="btn btn-outline-dark btn-sm" data-toggle="collapse" href="#domingo${element.cra_id}" role="button" aria-expanded="false" aria-controls="domingo">
@@ -1357,7 +1352,6 @@ $(document).ready(function () {
                                     </p>
                                     <div class="collapse" id="domingo${element.cra_id}">
                                         <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
-                                        <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
