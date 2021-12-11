@@ -1495,6 +1495,42 @@ class ContratosControlador
             }
         }
     }
+    public static function ctrInsertEnrutamiento2()
+    {
+        if (isset($_POST['btnInsertContrato2'])) {
+
+            $ctr_id = $_POST['ctr_id'];
+            $ctr_fecha1 = $_POST['ctr_fecha1'];
+            $ctr_fecha2 = $_POST['ctr_fecha2'];
+            $ctr_dia_pago = $_POST['ctr_dia_pago'];
+
+            $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id, $ctr_dia_pago);
+            if ($res) {
+                $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha1);
+                $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha2);
+                if ($res2) {
+                    return true;
+                }
+            }
+        }
+    }
+    public static function ctrInsertEnrutamiento3()
+    {
+        if (isset($_POST['btnInsertContrato3'])) {
+
+            $ctr_id = $_POST['ctr_id'];
+            $ctr_fecha = $_POST['ctr_fecha'];
+            $ctr_dia_pago = $_POST['ctr_dia_pago'];
+
+            $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id, $ctr_dia_pago);
+            if ($res) {
+                $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha);
+                if ($res2) {
+                    return true;
+                }
+            }
+        }
+    }
 
     public static function ctrEliminarCartelera()
     {
