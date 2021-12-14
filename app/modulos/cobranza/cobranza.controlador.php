@@ -175,7 +175,7 @@ class CobranzaControlador
                     break;
             }
             // Actualizar el estado a COMPLETADO
-            CobranzaModelo::mdlCambiarEstadoCarteleraCompletado($cts_c['cra_id']);
+            CobranzaModelo::mdlCambiarEstadoCarteleraCompletado($cts_c['cra_id'],$next_day);
             //Enrutar el siguiente cobro
             CobranzaModelo::mdlInsertarSiguienteEnrutamiento(array(
                 'cra_contrato' => $cts_c['cra_contrato'],

@@ -93,7 +93,7 @@ class AppControlador
             'new-mal-historial',
             'edit-cliente-mal-historial',
             'cobranza',
-            'autorizar-abonos'
+            'autorizar-pagos'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
