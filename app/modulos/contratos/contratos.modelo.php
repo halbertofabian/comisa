@@ -889,7 +889,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta LIKE '$ctr_ruta%' AND (ctr_forma_pago = ?) AND ctr_enrutar = 'N'";
+            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta = '$ctr_ruta' AND (ctr_forma_pago = ?) AND ctr_enrutar = 'N'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $metodo_pgo);
@@ -938,32 +938,32 @@ class ContratosModelo
             $con = null;
         }
     }
-    public static function mdlInsertarEnrutamiento($ctr_id, $ctr_fecha)
+    public static function mdlInsertarEnrutamiento($ctr_id, $ctr_fecha, $cra_orden, $crt_ruta)
     {
         try {
             //code...
             $res2 = ContratosModelo::mdlAutoincrement0();
-            $res = ContratosModelo::mdlConsultarOrdenPorFecha($ctr_fecha);
-            if ($res['orden'] != null) {
+            // $res = ContratosModelo::mdlConsultarOrdenPorRuta($crt_ruta);
+            // if ($res['orden'] != null) {
+            //     $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,?)";
+            //     $con = Conexion::conectar();
+            //     $pps = $con->prepare($sql);
+            //     $pps->bindValue(1, $ctr_id);
+            //     $pps->bindValue(2, $ctr_fecha);
+            //     $pps->bindValue(3, $res['orden']);
+            //     $pps->execute();
+            //     return $pps->rowCount() > 0;
+            // } else {
+
                 $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,?)";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $ctr_id);
                 $pps->bindValue(2, $ctr_fecha);
-                $pps->bindValue(3, $res['orden']);
+                $pps->bindValue(3, $cra_orden);
                 $pps->execute();
                 return $pps->rowCount() > 0;
-            } else {
-
-                $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,1)";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->bindValue(1, $ctr_id);
-                $pps->bindValue(2, $ctr_fecha);
-                // $pps->bindValue(3, $orden);
-                $pps->execute();
-                return $pps->rowCount() > 0;
-            }
+            // }
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -972,14 +972,14 @@ class ContratosModelo
         }
     }
     
-    public static function mdlConsultarOrdenPorFecha($ctr_fecha)
+    public static function mdlConsultarOrdenPorRuta($crt_ruta)
     {
         try {
             //code...
-            $sql = "SELECT MAX(cra_orden)+1 AS orden FROM tbl_cartelera_cra WHERE cra_fecha_cobro = ?";
+            $sql = "SELECT MAX(tbl_cartelera_cra.cra_orden)+1 AS orden FROM tbl_cartelera_cra JOIN tbl_contrato_crt_1 ON  tbl_cartelera_cra.cra_contrato = tbl_contrato_crt_1.ctr_id WHERE tbl_contrato_crt_1.ctr_ruta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ctr_fecha);
+            $pps->bindValue(1, $crt_ruta);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
