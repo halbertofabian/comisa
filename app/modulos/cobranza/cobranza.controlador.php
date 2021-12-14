@@ -175,13 +175,17 @@ class CobranzaControlador
                     break;
             }
             // Actualizar el estado a COMPLETADO
-            CobranzaModelo::mdlCambiarEstadoCarteleraCompletado($cts_c['cra_id'],$next_day);
+            $status_cobranza = CobranzaModelo::mdlCambiarEstadoCarteleraCompletado($cts_c['cra_id'], $next_day);
+
             //Enrutar el siguiente cobro
-            CobranzaModelo::mdlInsertarSiguienteEnrutamiento(array(
-                'cra_contrato' => $cts_c['cra_contrato'],
-                'cra_fecha_cobro' => $next_day,
-                'cra_orden' => $cts_c['cra_orden'],
-            ));
+            if ($status_cobranza) {
+                CobranzaModelo::mdlInsertarSiguienteEnrutamiento(array(
+                    'cra_contrato' => $cts_c['cra_contrato'],
+                    'cra_fecha_cobro' => $next_day,
+                    'cra_orden' => $cts_c['cra_orden'],
+                ));
+            }
+
             # code...
         }
     }
@@ -194,14 +198,82 @@ class CobranzaControlador
         }
     }
 
+    public static function ctrRegistrarReagendados($cts_reagendado)
+    {
+    }
+    public static function ctrRegistrarPorLocalizar($cts_por_localizar)
+    {
+        $cts_por_localizar = json_decode($cts_por_localizar, true);
+        foreach ($cts_por_localizar as  $cts_l) {
+            CobranzaModelo::mdlCambiarEstadoCartelera(array(
+                'cra_fecha_reagenda' => date('Y-m-d', strtotime('+ 1 days')),
+                'cra_id' =>  $cts_l['cra_id'],
+                'cra_estado' => 'POR LOCALIZAR'
+            ));
+        }
+    }
+    public static function ctrRegistrarPendientes($cts_pendientes)
+    {
+        $cts_pendientes = json_decode($cts_pendientes, true);
+        foreach ($cts_pendientes as  $cts_p) {
+            CobranzaModelo::mdlCambiarEstadoCartelera(array(
+                'cra_fecha_reagenda' => date('Y-m-d', strtotime('+ 1 days')),
+                'cra_id' =>  $cts_p['cra_id'],
+                'cra_estado' => 'PENDIENTE'
+            ));
+        }
+    }
+
+    public static function ctrRegistrarReagendado($cts_reagendado)
+    {
+        $cts_reagendado = json_decode($cts_reagendado, true);
+        foreach ($cts_reagendado as  $cts_r) {
+            $status_r =  CobranzaModelo::mdlCambiarEstadoCarteleraReagendado(array(
+                'cra_fecha_reagenda' => $cts_r['cra_fecha_reagenda'],
+                'cra_id' => $cts_r['cra_id']
+            ));
+            if ($status_r) {
+                CobranzaModelo::mdlInsertarSiguienteEnrutamientoReagendado(array(
+                    'cra_contrato' => $cts_r['cra_contrato'],
+                    'cra_fecha_cobro' => $cts_r['cra_fecha_cobro'],
+                    'cra_orden' => $cts_r['cra_orden'],
+                    'cra_fecha_reagenda' => $cts_r['cra_fecha_reagenda'],
+                ));
+            }
+        }
+    }
+
     public static function ctrSubirDatosCobranzaApp($datos)
     {
-        //  var_dump($datos[0]['Completados']);
-        // preArray(date('Y-m-d', strtotime('Friday next week')));
-        // return;
-        $cts_c = json_encode($datos[0]['Completados'], true);
-        $abs_c = json_encode($datos[1]['Abonos'], true);
-        CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
-        CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
+        //Registrar pagos completados
+        if (isset($datos[0]['Completados'])) {
+            $cts_c = json_encode($datos[0]['Completados'], true);
+            CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
+        }
+        if (isset($datos[1]['Abonos'])) {
+            $abs_c = json_encode($datos[1]['Abonos'], true);
+            CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
+        }
+
+        // Reagendar pagos 
+        if (isset($datos[0]['Reagendados'])) {
+            $cts_r = json_encode($datos[0]['Reagendados'], true);
+            CobranzaControlador::ctrRegistrarReagendado($cts_r);
+        }
+
+
+        // CAMBIO DE ESTADO
+        if (isset($datos[1]['Por_localizar'])) {
+            $cts_l = json_encode($datos[1]['Por_localizar'], true);
+            CobranzaControlador::ctrRegistrarPorLocalizar($cts_l);
+        }
+        if (isset($datos[2]['Pendientes'])) {
+            $cts_p = json_encode($datos[2]['Pendientes'], true);
+            CobranzaControlador::ctrRegistrarPendientes($cts_p);
+        }
+        if (isset($datos[3]['Mas_tarde'])) {
+            $cts_p = json_encode($datos[3]['Mas_tarde'], true);
+            CobranzaControlador::ctrRegistrarPendientes($cts_p);
+        }
     }
 }
