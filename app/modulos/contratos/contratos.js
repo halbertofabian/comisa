@@ -11,6 +11,32 @@
  *  Twitter: https://twitter.com/softmormx
  */
 $(document).ready(function () {
+    // obtenerUltimoOrden();
+    function obtenerUltimoOrden() {
+        var crt_ruta = $("#crt_ruta").val();
+        var datos = new FormData();
+        datos.append("crt_ruta", crt_ruta);
+        datos.append("btnObtenerUltimaOrden", true);
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                //startLoadButton()
+            },
+            success: function (res) {
+                if (res.orden == null) {
+                    $("#cra_posicion").val(1);
+                } else {
+                    $("#cra_posicion").val(res.orden);
+                }
+            }
+        });
+    }
 
 
     $("#cts_buscar_cliente").on("change", function () {
@@ -89,7 +115,7 @@ $(document).ready(function () {
                 $("#clts_tbj_dir_conyuge").val(res.clts_tbj_dir_conyuge)
                 $("#clts_tbj_col_conyuge").val(res.clts_tbj_col_conyuge)
                 $("#clts_tbj_tel_conyuge").val(res.clts_tbj_tel_conyuge)
-                textseparado3 = res.clts_tbj_ant_conyuge.split(separador)
+                textseparado5 = res.clts_tbj_ant_conyuge.split(separador)
                 $("#clts_anttrabajo_conyuge").val(textseparado3[0])//
                 $("#clts_tiempo_trabajo_conyuge").val(textseparado3[1])
 
@@ -783,77 +809,77 @@ $(document).ready(function () {
 
     //ENRUTAR CONTRATOS
 
-    $("#lunes").sortable({
-        update: function (event, iu) {
-            $(this).children().each(function (index) {
-                if ($(this).attr("data-position") != (index + 1)) {
-                    $(this).attr("data-position", (index + 1)).addClass("updated");
-                }
-            });
-            guardandoPosiciones();
-        }
-    })
-    $("#martes").sortable({
-        update: function (event, iu) {
-            $(this).children().each(function (index) {
-                if ($(this).attr("data-position") != (index + 1)) {
-                    $(this).attr("data-position", (index + 1)).addClass("updated");
-                }
-            });
-            guardandoPosiciones();
-        }
-    })
-    // $('#martes').disableSelection();
-    $("#miercoles").sortable({
-        update: function (event, iu) {
-            $(this).children().each(function (index) {
-                if ($(this).attr("data-position") != (index + 1)) {
-                    $(this).attr("data-position", (index + 1)).addClass("updated");
-                }
-            });
-            guardandoPosiciones();
-        }
-    })
-    $("#jueves").sortable({
-        update: function (event, iu) {
-            $(this).children().each(function (index) {
-                if ($(this).attr("data-position") != (index + 1)) {
-                    $(this).attr("data-position", (index + 1)).addClass("updated");
-                }
-            });
-            guardandoPosiciones();
-        }
-    })
-    $("#viernes").sortable({
-        update: function (event, iu) {
-            $(this).children().each(function (index) {
-                if ($(this).attr("data-position") != (index + 1)) {
-                    $(this).attr("data-position", (index + 1)).addClass("updated");
-                }
-            });
-            guardandoPosiciones();
-        }
-    })
-    $("#sabado").sortable({
-        update: function (event, iu) {
-            $(this).children().each(function (index) {
-                if ($(this).attr("data-position") != (index + 1)) {
-                    $(this).attr("data-position", (index + 1)).addClass("updated");
-                }
-            });
-            guardandoPosiciones();
-        }
-    })
-    $("#domingo").sortable({
-        update: function (event, iu) {
-            $(this).children().each(function (index) {
-                if ($(this).attr("data-position") != (index + 1)) {
-                    $(this).attr("data-position", (index + 1)).addClass("updated");
-                }
-            });
-            guardandoPosiciones();
-        }
-    })
+    // function asignarPosiciones() {
+    //     $("#accordion .posicion").each(function (index) {
+    //         if ($(this).attr("data-position") != (index + 1)) {
+    //             $(this).attr("data-position", (index + 1)).addClass("updated");
+    //         }
+    //     });
+    //     guardandoPosiciones();
+    // }
+
+
+    // $("#martes").sortable({
+    //     update: function (event, iu) {
+    //         $(this).children().each(function (index) {
+    //             if ($(this).attr("data-position") != (index + 1)) {
+    //                 $(this).attr("data-position", (index + 1)).addClass("updated");
+    //             }
+    //         });
+    //         guardandoPosiciones();
+    //     }
+    // })
+    // // $('#martes').disableSelection();
+    // $("#miercoles").sortable({
+    //     update: function (event, iu) {
+    //         $(this).children().each(function (index) {
+    //             if ($(this).attr("data-position") != (index + 1)) {
+    //                 $(this).attr("data-position", (index + 1)).addClass("updated");
+    //             }
+    //         });
+    //         guardandoPosiciones();
+    //     }
+    // })
+    // $("#jueves").sortable({
+    //     update: function (event, iu) {
+    //         $(this).children().each(function (index) {
+    //             if ($(this).attr("data-position") != (index + 1)) {
+    //                 $(this).attr("data-position", (index + 1)).addClass("updated");
+    //             }
+    //         });
+    //         guardandoPosiciones();
+    //     }
+    // })
+    // $("#viernes").sortable({
+    //     update: function (event, iu) {
+    //         $(this).children().each(function (index) {
+    //             if ($(this).attr("data-position") != (index + 1)) {
+    //                 $(this).attr("data-position", (index + 1)).addClass("updated");
+    //             }
+    //         });
+    //         guardandoPosiciones();
+    //     }
+    // })
+    // $("#sabado").sortable({
+    //     update: function (event, iu) {
+    //         $(this).children().each(function (index) {
+    //             if ($(this).attr("data-position") != (index + 1)) {
+    //                 $(this).attr("data-position", (index + 1)).addClass("updated");
+    //             }
+    //         });
+    //         guardandoPosiciones();
+    //     }
+    // })
+    // $("#domingo").sortable({
+    //     update: function (event, iu) {
+    //         $(this).children().each(function (index) {
+    //             if ($(this).attr("data-position") != (index + 1)) {
+    //                 $(this).attr("data-position", (index + 1)).addClass("updated");
+    //             }
+    //         });
+    //         guardandoPosiciones();
+    //     }
+    // })
 
 
 
@@ -884,6 +910,7 @@ $(document).ready(function () {
     }
 
     if ($("#crt_ruta").val() != "") {
+        obtenerUltimoOrden();
         var crt_ruta = $("#crt_ruta").val();
         var metodo_pgo = $("#metodo_pgo").val();
         var datos = new FormData()
@@ -919,8 +946,14 @@ $(document).ready(function () {
                                     <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
                                     <p>
                                         <div class="form-group">
+                                            <label for="cra_orden"># Orden</label>
+                                            <input type="number" class="form-control cra_orden" name="" id="cra_orden${element.ctr_id}" ctr_id="${element.ctr_id}">
+                                        </div>
+                                    </p>
+                                    <p>
+                                        <div class="form-group">
                                             <label for="dia_semanal">Seleccionar día</label>
-                                            <select class="form-control" name="dia_semanal" id="dia_semanal" ctr_id="${element.ctr_id}">
+                                            <select class="form-control dia_semanal" name="dia_semanal" id="dia_semanal${element.ctr_id}" ctr_id="${element.ctr_id}">
                                                 <option value="">--Seleccionar--</option>
                                                 <option value="LUNES">LUNES</option>
                                                 <option value="MARTES">MARTES</option>
@@ -979,8 +1012,14 @@ $(document).ready(function () {
                                 <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
                                 <p>
                                     <div class="form-group">
+                                        <label for="cra_orden"># Orden</label>
+                                        <input type="number" class="form-control cra_orden" name="" id="cra_orden${element.ctr_id}" ctr_id="${element.ctr_id}">
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="form-group">
                                         <label for="dia_semanal">Seleccionar día</label>
-                                        <select class="form-control" name="dia_semanal" id="dia_semanal" ctr_id="${element.ctr_id}">
+                                        <select class="form-control dia_semanal" name="dia_semanal" id="dia_semanal${element.ctr_id}" ctr_id="${element.ctr_id}">
                                             <option value="">--Seleccionar--</option>
                                             <option value="LUNES">LUNES</option>
                                             <option value="MARTES">MARTES</option>
@@ -1044,6 +1083,12 @@ $(document).ready(function () {
                                 <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                 <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                 <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                <p>
+                                    <div class="form-group">
+                                        <label for="cra_orden"># Orden</label>
+                                        <input type="number" class="form-control" name="" id="cra_orden${element.ctr_id}" ctr_id="${element.ctr_id}">
+                                    </div>
+                                </p>
                                 <p>
                                     <div class="row">
                                         <div class="col-xl-6 col-6">
@@ -1121,6 +1166,12 @@ $(document).ready(function () {
                                 <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                 <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
                                 <p>
+                                    <div class="form-group">
+                                        <label for="cra_orden"># Orden</label>
+                                        <input type="number" class="form-control" name="" id="cra_orden${element.ctr_id}" ctr_id="${element.ctr_id}">
+                                    </div>
+                                </p>
+                                <p>
                                     <div class="row">
                                         <div class="col-xl-12 col-12">
                                             <div class="form-group">
@@ -1159,9 +1210,11 @@ $(document).ready(function () {
 
     $(document).on("change", "#crt_ruta", function (e) {
         consultarSemanales();
+        obtenerUltimoOrden();
     });
     $(document).on("change", "#metodo_pgo", function (e) {
         consultarCatocenalesYQuincenales();
+        obtenerUltimoOrden();
     });
 
     $("#Buscador").on("keyup", function () {
@@ -1170,13 +1223,29 @@ $(document).ready(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
     });
-
-
-    $(document).on("change", "#dia_semanal", function (e) {
-        $("#loader").removeClass("d-none");
-        var dia;
-        var ctr_dia = $(this).val();
+    $(document).on("change", ".dia_semanal", function (e) {
         var ctr_id = $(this).attr("ctr_id");
+        agregarDiaSemanal(ctr_id);
+    });
+    $(document).on("change", ".cra_orden", function (e) {
+        var ctr_id = $(this).attr("ctr_id");
+        agregarDiaSemanal(ctr_id);
+    });
+
+    function agregarDiaSemanal(ctr_id) {
+        $("#loader").addClass("d-none");
+        var dia;
+        var ctr_dia = $("#dia_semanal" + ctr_id).val();
+        var cra_orden = $("#cra_orden" + ctr_id).val();
+        var crt_ruta = $("#crt_ruta").val();
+        if (ctr_dia == "") {
+            toastr.warning("El dia es obligatorio", "¡ADVERTENCIA!");
+            return false;
+        }
+        else if (cra_orden == "") {
+            toastr.warning("El numero de orden es obligatorio", "¡ADVERTENCIA!");
+            return false;
+        }
 
         if (ctr_dia == "LUNES") {
             dia = $("#ctr_lunes").val();
@@ -1197,6 +1266,8 @@ $(document).ready(function () {
         datos.append("ctr_id", ctr_id);
         datos.append("ctr_fecha", dia);
         datos.append("ctr_dia_pago", ctr_dia);
+        datos.append("cra_orden", cra_orden);
+        datos.append("crt_ruta", crt_ruta);
         datos.append("btnInsertContrato", true);
         $.ajax({
             url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
@@ -1208,23 +1279,33 @@ $(document).ready(function () {
             dataType: "json",
             success: function (res) {
                 if (res) {
+                    $("#loader").removeClass("d-none");
                     $("#loader").html('<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="sr-only">Loading...</span></div>');
                     imprimirContratos();
                     consultarCartelera();
+                    obtenerUltimoOrden();
+
                 }
 
             }
         });
-    });
+    }
 
     $(document).on("click", ".btnGuardarCts", function () {
-        $("#loader").removeClass("d-none");
+        $("#loader").addClass("d-none");
         var ctr_id = $(this).attr("ctr_id");
+        var cra_orden = $("#cra_orden" + ctr_id).val();
+        var crt_ruta = $("#crt_ruta").val();
         var ctr_dia1 = Number($("#ctr_dia1" + ctr_id).val());
         var ctr_dia2 = Number($("#ctr_dia2" + ctr_id).val());
         var dia_actual = Number($("#dia_actual").val());
         var mes_actual = $("#mes_actual").val();
         var mes_siguiente = $("#mes_siguiente").val();
+
+        if (cra_orden == "") {
+            toastr.warning("El numero de orden es obligatorio", "¡ADVERTENCIA!");
+            return false;
+        }
 
         if (ctr_dia1 == "" || ctr_dia2 == "") {
             toastr.warning("Los campos dia 1 y dia 2 son obligatorios", "¡ADVERTENCIA!");
@@ -1258,6 +1339,8 @@ $(document).ready(function () {
 
         var datos = new FormData();
         datos.append("ctr_id", ctr_id);
+        datos.append("cra_orden", cra_orden);
+        datos.append("crt_ruta", crt_ruta);
         datos.append("ctr_fecha1", dia1);
         datos.append("ctr_fecha2", dia2);
         datos.append("ctr_dia_pago", ctr_dia);
@@ -1272,23 +1355,33 @@ $(document).ready(function () {
             dataType: "json",
             success: function (res) {
                 if (res) {
+                    $("#loader").removeClass("d-none");
                     $("#loader").html('<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="sr-only">Loading...</span></div>');
                     imprimirContratos();
                     consultarCartelera();
+                    obtenerUltimoOrden();
                 }
 
             }
         });
     });
     $(document).on("click", ".btnGuardarCtsMensual", function () {
-        $("#loader").removeClass("d-none");
+        $("#loader").addClass("d-none");
         var ctr_id = $(this).attr("ctr_id");
+        var cra_orden = $("#cra_orden" + ctr_id).val();
+        var crt_ruta = $("#crt_ruta").val();
         var ctr_fecha = Number($("#ctr_fecha" + ctr_id).val());
         var mes_actual = $("#mes_actual").val();
         var mes_siguiente = $("#mes_siguiente").val();
         var dia_actual = Number($("#dia_actual").val());
+
+        if (cra_orden == "") {
+            toastr.warning("El numero de orden es obligatorio", "¡ADVERTENCIA!");
+            return false;
+        }
+
         if (ctr_fecha == "") {
-            toastr.warning("La fecha es obligatoria", "¡ADVERTENCIA!");
+            toastr.warning("La dia del mes es obligatoria", "¡ADVERTENCIA!");
             return false;
         }
         if (ctr_fecha < 0 || ctr_fecha > 31) {
@@ -1296,7 +1389,7 @@ $(document).ready(function () {
             return false;
         }
 
-        
+
         var dia_fecha = "";
         if (ctr_fecha >= dia_actual) {
             dia_fecha = ctr_fecha <= 9 ? mes_actual + "-0" + ctr_fecha : mes_actual + "-" + ctr_fecha;
@@ -1309,6 +1402,8 @@ $(document).ready(function () {
         datos.append("ctr_id", ctr_id);
         datos.append("ctr_fecha", dia_fecha);
         datos.append("ctr_dia_pago", ctr_fecha);
+        datos.append("cra_orden", cra_orden);
+        datos.append("crt_ruta", crt_ruta);
         datos.append("btnInsertContrato3", true);
         $.ajax({
             url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
@@ -1320,9 +1415,11 @@ $(document).ready(function () {
             dataType: "json",
             success: function (res) {
                 if (res) {
+                    $("#loader").removeClass("d-none");
                     $("#loader").html('<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="sr-only">Loading...</span></div>');
                     imprimirContratos();
                     consultarCartelera();
+                    obtenerUltimoOrden();
                 }
 
             }
@@ -1402,11 +1499,10 @@ $(document).ready(function () {
                         }
                         listar_lunes +=
                             `
-                            
-                        <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                        <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                    <p class="card-text" data-toggle="modal"><h5>Orden: <span class="badge badge-primary">${orden}</span></h5></p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
@@ -1436,10 +1532,10 @@ $(document).ready(function () {
                         }
                         listar_martes +=
                             `
-                    <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                    <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                   <p class="card-text" data-toggle="modal"><h5>Orden: <span class="badge badge-primary">${orden}</span></h5></p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
@@ -1469,10 +1565,10 @@ $(document).ready(function () {
                         }
                         listar_miercoles +=
                             `
-                    <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                    <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                   <p class="card-text" data-toggle="modal"><h5>Orden: <span class="badge badge-primary">${orden}</span></h5></p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
@@ -1502,10 +1598,10 @@ $(document).ready(function () {
                         }
                         listar_jueves +=
                             `
-                         <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                   <p class="card-text" data-toggle="modal"><h5>Orden: <span class="badge badge-primary">${orden}</span></h5></p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
@@ -1535,10 +1631,10 @@ $(document).ready(function () {
                         }
                         listar_viernes +=
                             `
-                         <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                   <p class="card-text" data-toggle="modal"><h5>Orden: <span class="badge badge-primary">${orden}</span></h5></p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
@@ -1568,10 +1664,10 @@ $(document).ready(function () {
                         }
                         listar_sabado +=
                             `
-                         <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                   <p class="card-text" data-toggle="modal"><h5>Orden: <span class="badge badge-primary">${orden}</span></h5></p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
@@ -1601,10 +1697,10 @@ $(document).ready(function () {
                         }
                         listar_domingo +=
                             `
-                         <div class="col-xl-6 col-12" data-index="${element.cra_id}" data-position="${element.cra_orden}">
+                         <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
                             <div class="card" style="border-style: dotted;">
                                 <div class="card-body">
-                                    <p class="card-text" data-toggle="modal">Orden: <span class="badge badge-primary">${orden}</span></p>
+                                   <p class="card-text" data-toggle="modal"><h5>Orden: <span class="badge badge-primary">${orden}</span></h5></p>
                                     <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
                                     <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
                                     <p>
@@ -1633,6 +1729,8 @@ $(document).ready(function () {
                 $("#sabado").html(listar_sabado);
                 $("#domingo").html(listar_domingo);
                 $("#loader").addClass("d-none");
+                // asignarPosiciones();
+                obtenerUltimoOrden();
             }
         });
     }

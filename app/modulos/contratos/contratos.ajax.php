@@ -203,6 +203,11 @@ class ContratosAjax
         $res = ContratosModelo::mdlActualizarStatusPendienteRealizados($_POST);
         echo json_encode($res, true);
     }
+    public function ajaxObtenerUltimaOrden()
+    {
+        $res = ContratosModelo::mdlConsultarOrdenPorRuta($_POST['crt_ruta']);
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -349,4 +354,8 @@ if (isset($_POST['cambiarPendiente'])) {
 if (isset($_POST['cambiarPendienteRealizado'])) {
     $cambiarPendienteRealizado = new ContratosAjax();
     $cambiarPendienteRealizado->ajaxActualizarStatusPendiente2();
+}
+if (isset($_POST['btnObtenerUltimaOrden'])) {
+    $ObtenerUltimaOrden = new ContratosAjax();
+    $ObtenerUltimaOrden->ajaxObtenerUltimaOrden();
 }

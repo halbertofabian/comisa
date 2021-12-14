@@ -65,6 +65,8 @@ $mes_actual = date('Y-m', strtotime('this month'));
 $mes_siguiente = date('Y-m', strtotime('+1 month'));
 $dia_actual = date('d', strtotime('this month'));
 
+// $orden = ContratosModelo::mdlConsultarOrdenPorRuta();
+
 ?>
 <div class="containeir">
     <div class="row">
@@ -110,6 +112,14 @@ $dia_actual = date('d', strtotime('this month'));
                                     <option value="QUINCENALES">QUINCENALES</option>
                                     <option value="MENSUALES">MENSUALES</option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-12">
+                            <div class="form-group">
+                                <label for="cra_posicion">Siguiente # Orden</label>
+                                <input type="text" class="form-control" name="cra_posicion" id="cra_posicion" readonly>
                             </div>
                         </div>
                     </div>
@@ -224,7 +234,7 @@ $dia_actual = date('d', strtotime('this month'));
                                             <h3 class="card-title text-center">Viernes <?= $friday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="viernes">
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -243,7 +253,7 @@ $dia_actual = date('d', strtotime('this month'));
                                             <h3 class="card-title text-center">Sábado <?= $saturday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="sabado">
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -262,7 +272,7 @@ $dia_actual = date('d', strtotime('this month'));
                                             <h3 class="card-title text-center">Domingo <?= $sunday ?></h3>
                                             <div class="card-body">
                                                 <div class="row" id="domingo">
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
