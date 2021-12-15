@@ -149,23 +149,23 @@ class CobranzaControlador
             switch ($cts_c['ctr_forma_pago']) {
                 case 'SEMANALES':
                     // Calcular  el día en fecha de la siguiente semana por default es lunes
-                    // $next_day =  date('Y-m-d', strtotime('Monday next week'));
-                    // if ($cts_c['ctr_dia_pago'] == 'LUNES') {
-                    //     $next_day =  date('Y-m-d', strtotime('Monday next week'));
-                    // } else if ($cts_c['ctr_dia_pago'] == 'MARTES') {
-                    //     $next_day =  date('Y-m-d', strtotime('Tuesday next week'));
-                    // } else if ($cts_c['ctr_dia_pago'] == 'MIERCOLES') {
-                    //     $next_day =  date('Y-m-d', strtotime('Wednesday next week'));
-                    // } else if ($cts_c['ctr_dia_pago'] == 'JUEVES') {
-                    //     $next_day =  date('Y-m-d', strtotime('Thursday next week'));
-                    // } else if ($cts_c['ctr_dia_pago'] == 'VIERNES') {
-                    //     $next_day =  date('Y-m-d', strtotime('Friday next week'));
-                    // } else if ($cts_c['ctr_dia_pago'] == 'SABADO') {
-                    //     $next_day =  date('Y-m-d', strtotime('Saturday next week'));
-                    // } else if ($cts_c['ctr_dia_pago'] == 'DOMINGO') {
-                    //     $next_day =  date('Y-m-d', strtotime('Sunday next week'));
-                    // }
-                    $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 7 days'));
+                    $next_day =  date('Y-m-d', strtotime('Monday next week'));
+                    if ($cts_c['ctr_dia_pago'] == 'LUNES') {
+                        $next_day =  date('Y-m-d', strtotime('Monday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'MARTES') {
+                        $next_day =  date('Y-m-d', strtotime('Tuesday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'MIERCOLES') {
+                        $next_day =  date('Y-m-d', strtotime('Wednesday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'JUEVES') {
+                        $next_day =  date('Y-m-d', strtotime('Thursday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'VIERNES') {
+                        $next_day =  date('Y-m-d', strtotime('Friday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'SABADO') {
+                        $next_day =  date('Y-m-d', strtotime('Saturday next week'));
+                    } else if ($cts_c['ctr_dia_pago'] == 'DOMINGO') {
+                        $next_day =  date('Y-m-d', strtotime('Sunday next week'));
+                    }
+                    //$next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 7 days'));
                     break;
                     // CATORCENALES
                 case 'CATORCENALES':
@@ -179,6 +179,7 @@ class CobranzaControlador
 
                     // MENSUALES  
                 case 'MENSUALES':
+                    $ctr_dia_pago = $cts_c['ctr_dia_pago'];
                     $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 1 month'));
                     break;
 
