@@ -889,7 +889,7 @@ class ContratosModelo
         try {
             //c4ode...
 
-            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta = '$ctr_ruta' AND (ctr_forma_pago = ?) AND ctr_enrutar = 'N'";
+            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_ruta = '$ctr_ruta' AND (ctr_forma_pago = ?) AND ctr_enrutar = 'N'  AND ctr_status_cuenta = 'VIGENTE' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $metodo_pgo);
