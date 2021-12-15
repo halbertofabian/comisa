@@ -1103,7 +1103,7 @@ $(document).ready(function () {
                                 </p>
                                 <p>
                                     <div class="row">
-                                        <div class="col-xl-12 col-12">
+                                        <div class="col-12">
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-success btn-block btnGuardarCtsCatorcenal" ctr_id="${element.ctr_id}">Guardar</button>
                                             </div>
@@ -1187,7 +1187,7 @@ $(document).ready(function () {
                                 </p>
                                 <p>
                                     <div class="row">
-                                        <div class="col-xl-12 col-12">
+                                        <div class="col-12">
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-success btn-block btnGuardarCts" ctr_id="${element.ctr_id}">Guardar</button>
                                             </div>
@@ -1265,7 +1265,7 @@ $(document).ready(function () {
                                 </p>
                                 <p>
                                     <div class="row">
-                                        <div class="col-xl-12 col-12">
+                                        <div class="col-12">
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-success btn-block btnGuardarCtsMensual" ctr_id="${element.ctr_id}">Guardar</button>
                                             </div>
