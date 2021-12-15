@@ -1031,6 +1031,15 @@ $(document).ready(function () {
                                         </select>
                                     </div>
                                 </p>
+                                <p>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success btn-block btnGuardarCtsSemanal" ctr_id="${element.ctr_id}">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -1307,18 +1316,12 @@ $(document).ready(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
     });
-    $(document).on("change", ".dia_semanal", function (e) {
-        var ctr_id = $(this).attr("ctr_id");
-        agregarDiaSemanal(ctr_id);
-    });
-    $(document).on("change", ".cra_orden", function (e) {
-        var ctr_id = $(this).attr("ctr_id");
-        agregarDiaSemanal(ctr_id);
-    });
+    
 
-    function agregarDiaSemanal(ctr_id) {
+    $(document).on("click", ".btnGuardarCtsSemanal", function() {
         $("#loader").addClass("d-none");
         var dia;
+        var ctr_id = $(this).attr("ctr_id");
         var ctr_dia = $("#dia_semanal" + ctr_id).val();
         var cra_orden = $("#cra_orden" + ctr_id).val();
         var crt_ruta = $("#crt_ruta").val();
@@ -1373,7 +1376,7 @@ $(document).ready(function () {
 
             }
         });
-    }
+    });
 
     $(document).on("click", ".btnGuardarCts", function () {
         $("#loader").addClass("d-none");
@@ -1635,14 +1638,7 @@ $(document).ready(function () {
                     const numeroDia = new Date(fechaComoCadena).getDay();
                     const nombreDia = dias[numeroDia];
                     if (nombreDia == "LUNES") {
-                        var button = "";
-                        if (fecha_hoy == lunes) {
-                            button = `<p class="text-right">
-                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
-                        </p>`;
-                        } else {
-                            button = "";
-                        }
+                        
                         listar_lunes +=
                             `
                         <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1661,21 +1657,16 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        ${button}
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
                     } else if (nombreDia == "MARTES") {
-                        var button = "";
-                        if (fecha_hoy == martes) {
-                            button = `<p class="text-right">
-                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
-                        </p>`;
-                        } else {
-                            button = "";
-                        }
+                        
                         listar_martes +=
                             `
                     <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1694,21 +1685,16 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        ${button}
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
                     } else if (nombreDia == "MIERCOLES") {
-                        var button = "";
-                        if (fecha_hoy == miercoles) {
-                            button = `<p class="text-right">
-                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
-                        </p>`;
-                        } else {
-                            button = "";
-                        }
+                        
                         listar_miercoles +=
                             `
                     <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1727,21 +1713,16 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        ${button}
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
                     } else if (nombreDia == "JUEVES") {
-                        var button = "";
-                        if (fecha_hoy == jueves) {
-                            button = `<p class="text-right">
-                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
-                        </p>`;
-                        } else {
-                            button = "";
-                        }
+                        
                         listar_jueves +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1760,21 +1741,16 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        ${button}
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
                     } else if (nombreDia == "VIERNES") {
-                        var button = "";
-                        if (fecha_hoy == viernes) {
-                            button = `<p class="text-right">
-                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
-                        </p>`;
-                        } else {
-                            button = "";
-                        }
+                        
                         listar_viernes +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1793,21 +1769,16 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        ${button}
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
                     } else if (nombreDia == "SABADO") {
-                        var button = "";
-                        if (fecha_hoy == sabado) {
-                            button = `<p class="text-right">
-                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
-                        </p>`;
-                        } else {
-                            button = "";
-                        }
+                        
                         listar_sabado +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1826,21 +1797,16 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        ${button}
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     `;
                     } else if (nombreDia == "DOMINGO") {
-                        var button = "";
-                        if (fecha_hoy == domingo) {
-                            button = `<p class="text-right">
-                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
-                        </p>`;
-                        } else {
-                            button = "";
-                        }
+                        
                         listar_domingo +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1859,7 +1825,9 @@ $(document).ready(function () {
                                         <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
                                         <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
                                         <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
-                                        ${button}
+                                        <p class="text-right">
+                                            <button class="btn btn-danger btnEliminarCartelera" cra_id="${element.cra_id}" ctr_id="${element.ctr_id}"><i class="fa fa-trash"></i></button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
