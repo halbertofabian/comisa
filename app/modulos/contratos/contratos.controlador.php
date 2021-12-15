@@ -237,6 +237,7 @@ class ContratosControlador
 
             //*-Actualiza informacion cliente
             $actualizarCliente = ClientesModelo::actualizarInfIdClient($_POST);
+            
             //*-Insertar info de contrato a la BD
             $editarContrato = ContratosModelo::mdlActualizarContratos($_POST);
 
@@ -587,7 +588,7 @@ class ContratosControlador
                 'clts_fachada_color' => $_POST["clts_fachada_color"],
                 'clts_puerta_color' => $_POST["clts_puerta_color"],
                 'ctr_status_cuenta' => "VIGENTE",
-                'ctr_saldo_actual' => $_POST["ctr_saldo"],
+                'ctr_saldo_actual' => dnum($_POST["ctr_saldo"]),
 
                 //Nuevos atributos 
                 'ctr_moroso' => ""
@@ -746,7 +747,7 @@ class ContratosControlador
                     'clts_fachada_color' => dstring($cts["clts_fachada_color"]),
                     'clts_puerta_color' => dstring($cts["clts_puerta_color"]),
                     'ctr_status_cuenta' => "VIGENTE",
-                    'ctr_saldo_actual' => $cts["ctr_saldo"],
+                    'ctr_saldo_actual' => dnum($cts["ctr_saldo"]),
 
                     //Nuevos atributos 
                     'ctr_moroso' => 0
@@ -877,7 +878,7 @@ class ContratosControlador
                     'clts_fachada_color' => "",
                     'clts_puerta_color' => "",
                     'ctr_status_cuenta' => "VIGENTE",
-                    'ctr_saldo_actual' => $cts["ctr_saldo"],
+                    'ctr_saldo_actual' => dnum($cts["ctr_saldo"]),
 
                     //Nuevos atributos 
                     'ctr_moroso' => ""
@@ -1013,7 +1014,7 @@ class ContratosControlador
                 'clts_fachada_color' => dstring($_POST['clts_fachada_color']),
                 'clts_puerta_color' => dstring($_POST['clts_puerta_color']),
                 'ctr_status_cuenta' => dstring($_POST['ctr_status_cuenta']),
-                'ctr_saldo_actual' => $_POST['ctr_saldo_actual']
+                'ctr_saldo_actual' => dnum($_POST['ctr_saldo_actual'])
             );
             $actualizarContrato = ContratosModelo::mdlActualizarPreContratos($datos);
             if ($actualizarContrato) {
