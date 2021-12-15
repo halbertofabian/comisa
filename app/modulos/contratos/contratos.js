@@ -1040,18 +1040,98 @@ $(document).ready(function () {
 
                 }
             });
-        } else if (metodo_pgo == "SEMANALES") {
-            consultarSemanales();
+        } else if (metodo_pgo == "CATORCENALES") {
+            consultarCatorcenales();
+        } else if (metodo_pgo == "QUINCENALES") {
+            consultarQuincenales();
         } else {
             consultarMensuales();
         }
 
     }
 
-    function consultarCatocenalesYQuincenales() {
+    function consultarCatorcenales() {
         var metodo_pgo = $("#metodo_pgo").val();
         var crt_ruta = $("#crt_ruta").val();
-        if (metodo_pgo == "CATORCENALES" || metodo_pgo == "QUINCENALES") {
+        if (metodo_pgo == "CATORCENALES") {
+            var datos = new FormData()
+            datos.append("crt_ruta", crt_ruta)
+            datos.append("metodo_pgo", metodo_pgo)
+            datos.append("btnSelectedRuta", true)
+            $.ajax({
+                url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                method: "POST",
+                data: datos,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                // beforeSend: function () {
+                //     startLoadButton()
+                // },
+                success: function (res) {
+                    consultarCartelera();
+                    var listaPrincipal = "";
+                    res.forEach(element => {
+                        listaPrincipal +=
+                            `
+                <div class="col-xl-12">
+                        <div class="card" style="border-style: dotted;">
+                            <div class="card-body">
+                                <h5 class="card-title">${element.ctr_folio}</h5>
+                                <p class="card-text" data-toggle="modal"><strong>No. de cuenta y ruta:</strong> ${element.ctr_numero_cuenta} ${element.ctr_ruta}</p>
+                                <p class="card-text"><strong>Nombre del cliente:</strong> ${element.ctr_cliente}</p>
+                                <p class="card-text"><strong>Domiclio:</strong> ${element.clts_domicilio}, ${element.clts_col}</p>
+                                <p class="card-text"><strong>Forma de pago:</strong> ${element.ctr_forma_pago}</p>
+                                <p class="card-text"><strong>Día de pago:</strong> ${element.ctr_dia_pago}</p>
+                                <p class="card-text"><strong>Día asignado por el cobrador:</strong> </p>
+                                <p>
+                                    <div class="form-group">
+                                        <label for="cra_orden"># Orden</label>
+                                        <input type="number" class="form-control" name="" id="cra_orden${element.ctr_id}" ctr_id="${element.ctr_id}">
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-12">
+                                            <div class="form-group">
+                                                <label for="ctr_fecha${element.ctr_id}">Dia del mes</label>
+                                                <input type="date" class="form-control" name="" id="ctr_catorcenal${element.ctr_id}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                                <p>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-12">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-success btn-block btnGuardarCtsCatorcenal" ctr_id="${element.ctr_id}">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    });
+                    $("#listaPrincipal").html(listaPrincipal);
+
+                }
+            });
+        } else if (metodo_pgo == "SEMANALES") {
+            consultarSemanales();
+        } else if (metodo_pgo == "CATORCENALES") {
+            consultarCatorcenales();
+        } else {
+            consultarQuincenales();
+        }
+    }
+
+    function consultarQuincenales() {
+        var metodo_pgo = $("#metodo_pgo").val();
+        var crt_ruta = $("#crt_ruta").val();
+        if (metodo_pgo == "QUINCENALES") {
             var datos = new FormData()
             datos.append("crt_ruta", crt_ruta)
             datos.append("metodo_pgo", metodo_pgo)
@@ -1125,6 +1205,8 @@ $(document).ready(function () {
             });
         } else if (metodo_pgo == "SEMANALES") {
             consultarSemanales();
+        } else if (metodo_pgo == "CATORCENALES") {
+            consultarCatorcenales();
         } else {
             consultarMensuales();
         }
@@ -1201,8 +1283,10 @@ $(document).ready(function () {
             });
         } else if (metodo_pgo == "SEMANALES") {
             consultarSemanales();
+        } else if (metodo_pgo == "CATORCENALES") {
+            consultarCatorcenales();
         } else {
-            consultarCatocenalesYQuincenales();
+            consultarQuincenales();
         }
 
     }
@@ -1213,7 +1297,7 @@ $(document).ready(function () {
         obtenerUltimoOrden();
     });
     $(document).on("change", "#metodo_pgo", function (e) {
-        consultarCatocenalesYQuincenales();
+        consultarCatorcenales();
         obtenerUltimoOrden();
     });
 
@@ -1365,6 +1449,64 @@ $(document).ready(function () {
             }
         });
     });
+    $(document).on("click", ".btnGuardarCtsCatorcenal", function () {
+        $("#loader").addClass("d-none");
+        var ctr_id = $(this).attr("ctr_id");
+        var cra_orden = $("#cra_orden" + ctr_id).val();
+        var crt_ruta = $("#crt_ruta").val();
+        var ctr_fecha = $("#ctr_catorcenal" + ctr_id).val();
+
+        const dias = [
+            'LUNES',
+            'MARTES',
+            'MIERCOLES',
+            'JUEVES',
+            'VIERNES',
+            'SABADO',
+            'DOMINGO',
+        ];
+        var fecha = new Date(ctr_fecha).getDay();
+        var ctr_dia_catorcenal = dias[fecha];
+
+
+        if (cra_orden == "") {
+            toastr.warning("El numero de orden es obligatorio", "¡ADVERTENCIA!");
+            return false;
+        }
+
+        if (ctr_fecha == "") {
+            toastr.warning("La fecha es obligatoria", "¡ADVERTENCIA!");
+            return false;
+        }
+
+
+        var datos = new FormData();
+        datos.append("ctr_id", ctr_id);
+        datos.append("ctr_fecha", ctr_fecha);
+        datos.append("ctr_dia_pago", ctr_dia_catorcenal);
+        datos.append("cra_orden", cra_orden);
+        datos.append("crt_ruta", crt_ruta);
+        datos.append("btnInsertContrato4", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (res) {
+                if (res) {
+                    $("#loader").removeClass("d-none");
+                    $("#loader").html('<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="sr-only">Loading...</span></div>');
+                    imprimirContratos();
+                    consultarCartelera();
+                    obtenerUltimoOrden();
+                }
+
+            }
+        });
+    });
     $(document).on("click", ".btnGuardarCtsMensual", function () {
         $("#loader").addClass("d-none");
         var ctr_id = $(this).attr("ctr_id");
@@ -1428,8 +1570,12 @@ $(document).ready(function () {
 
     function imprimirContratos() {
         var metodo_pgo = $("#metodo_pgo").val();
-        if (metodo_pgo == "CATORCENALES" || metodo_pgo == "QUINCENALES") {
-            consultarCatocenalesYQuincenales();
+        if (metodo_pgo == "CATORCENALES") {
+            consultarCatorcenales();
+        } else if (metodo_pgo == "QUINCENALES") {
+            consultarQuincenales();
+        } else if (metodo_pgo == "MENSUALES") {
+            consultarMensuales();
         } else {
             consultarSemanales();
         }
