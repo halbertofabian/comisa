@@ -965,6 +965,15 @@ $(document).ready(function () {
                                             </select>
                                         </div>
                                     </p>
+                                    <p>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-success btn-block btnGuardarCtsSemanal" ctr_id="${element.ctr_id}">Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </p>
                                 </div>
                             </div>
                         </div>
