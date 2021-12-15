@@ -1102,7 +1102,7 @@ $(document).ready(function () {
                                 </p>
                                 <p>
                                     <div class="row">
-                                        <div class="col-xl-12 col-12">
+                                        <div class="col-12">
                                             <div class="form-group">
                                                 <label for="ctr_fecha${element.ctr_id}">Dia del mes</label>
                                                 <input type="date" class="form-control" name="" id="ctr_catorcenal${element.ctr_id}">
@@ -1264,7 +1264,7 @@ $(document).ready(function () {
                                 </p>
                                 <p>
                                     <div class="row">
-                                        <div class="col-xl-12 col-12">
+                                        <div class="col-12">
                                             <div class="form-group">
                                                 <label for="ctr_fecha${element.ctr_id}">Dia del mes</label>
                                                 <input type="number" class="form-control" name="" id="ctr_fecha${element.ctr_id}">
