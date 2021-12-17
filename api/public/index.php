@@ -337,40 +337,35 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
 
     return json_encode($getAllCtra, true);
 });
-// $app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
-//     // $json = $request->getBody();
+$app->get('/prueba_cron', function (Request $request, Response $response) {
 
-//     // $datosVendedor = json_decode($json, true);
+    // $json = $request->getBody();
+    // $datosVendedor = json_decode($json, true);
+    try {
 
-//     // preArray($datosVendedor);
-//     // return;
-//     $json = $request->getBody();
-//     $datosVendedor = json_decode($json, true);
-//     try {
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
+        $con = ConexionAPI::conectarAPI();
+        $pps = $con->prepare($sql);
+        $pps->bindValue(1, "Prueba cron");
+        $pps->bindValue(2, FECHA);
 
-//         $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
-//         $con = ConexionAPI::conectarAPI();
-//         $pps = $con->prepare($sql);
-//         $pps->bindValue(1, $json);
-//         $pps->bindValue(2, FECHA);
+        $pps->execute();
+    } catch (PDOException $th) {
+        //throw $th;
+    } finally {
+        $pps = null;
+        $con = null;
+    }
+    $datos = array('mensaje' => 'Los datos se agregaron correctamente');
 
-//         $pps->execute();
-//     } catch (PDOException $th) {
-//         //throw $th;
-//     } finally {
-//         $pps = null;
-//         $con = null;
-//     }
-//     $datos = array('mensaje' => 'Los datos se agregaron correctamente');
+    return json_encode($datos);
+    // $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
 
-//     return json_encode($datos);
-//     // $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
+    // return json_encode($subirctr, true);
 
-//     // return json_encode($subirctr, true);
+    # code...
 
-//     # code...
-
-// });
+});
 
 $app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
     $json = $request->getBody();

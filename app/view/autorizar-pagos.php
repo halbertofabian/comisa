@@ -1,7 +1,7 @@
 <div class="container-fluid table-responsive">
     <?php
     cargarComponente('breadcrumb', '', 'Pagos por autorizar');
-    $abonos = CobranzaModelo::mdlMostrarAbonosPorAutorizarByCobrador(83);
+    $abonos = CobranzaModelo::mdlMostrarAbonosPorAutorizarByCobrador(88);
     ?>
     <table class="table table-bordered table-striped table-hover ">
         <thead>
