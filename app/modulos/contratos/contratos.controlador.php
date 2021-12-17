@@ -1493,6 +1493,7 @@ class ContratosControlador
 
             $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id, $ctr_dia_pago);
             if ($res) {
+                $val = ContratosModelo::mdlActualizarOrdenContrato($ctr_id, $cra_orden);
                 $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha, $cra_orden, $crt_ruta);
                 if ($res2) {
                     return true;
@@ -1513,6 +1514,7 @@ class ContratosControlador
 
             $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id, $ctr_dia_pago);
             if ($res) {
+                $val = ContratosModelo::mdlActualizarOrdenContrato($ctr_id, $cra_orden);
                 $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha1, $cra_orden, $crt_ruta);
                 $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha2, $cra_orden, $crt_ruta);
                 if ($res2) {
@@ -1533,6 +1535,7 @@ class ContratosControlador
 
             $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id, $ctr_dia_pago);
             if ($res) {
+                $val = ContratosModelo::mdlActualizarOrdenContrato($ctr_id, $cra_orden);
                 $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha, $cra_orden, $crt_ruta);
                 if ($res2) {
                     return true;
@@ -1552,6 +1555,7 @@ class ContratosControlador
 
             $res = ContratosModelo::mdlActualizarStatusEnrutamientoS($ctr_id, $ctr_dia_pago);
             if ($res) {
+                $val = ContratosModelo::mdlActualizarOrdenContrato($ctr_id, $cra_orden);
                 $res2 = ContratosModelo::mdlInsertarEnrutamiento($ctr_id, $ctr_fecha, $cra_orden, $crt_ruta);
                 if ($res2) {
                     return true;
