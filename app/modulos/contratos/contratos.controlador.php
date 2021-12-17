@@ -1573,6 +1573,7 @@ class ContratosControlador
             $res = ContratosModelo::mdlEliminarCartelera($cra_id);
             if ($res) {
                 $res2 = ContratosModelo::mdlActualizarStatusEnrutamientoN($ctr_id);
+                $val = ContratosModelo::mdlEliminarOrdenContrato($ctr_id);
                 if ($res2) {
                     return true;
                 }

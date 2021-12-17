@@ -1041,6 +1041,23 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlEliminarOrdenContrato($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_orden = 0 WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlInsertarEnrutamiento($ctr_id, $ctr_fecha, $cra_orden, $crt_ruta)
     {
         try {
