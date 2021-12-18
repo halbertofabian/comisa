@@ -165,22 +165,34 @@ class CobranzaControlador
                     } else if ($cts_c['ctr_dia_pago'] == 'DOMINGO') {
                         $next_day =  date('Y-m-d', strtotime('Sunday next week'));
                     }
+                    $cra_fecha_reagenda = '00:00:00';
                     //$next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 7 days'));
                     break;
                     // CATORCENALES
                 case 'CATORCENALES':
                     $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 14 days'));
+                    if (FECHA_ACTUAL >= $next_day) {
+                        $next_day =  date('Y-m-d', strtotime($next_day . '+ 14 days'));
+                        $cra_fecha_reagenda = date('Y-m-d', strtotime('+ 1 days'));
+                    }
                     break;
 
                     // QUINCENALES
                 case 'QUINCENALES':
                     $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 1 month'));
+                    if (FECHA_ACTUAL >= $next_day) {
+                        $next_day =  date('Y-m-d', strtotime($next_day . '+ 1 month'));
+                        $cra_fecha_reagenda = date('Y-m-d', strtotime('+ 1 days'));
+                    }
                     break;
 
                     // MENSUALES  
                 case 'MENSUALES':
-                    $ctr_dia_pago = $cts_c['ctr_dia_pago'];
                     $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 1 month'));
+                    if (FECHA_ACTUAL >= $next_day) {
+                        $next_day =  date('Y-m-d', strtotime($next_day . '+ 1 month'));
+                        $cra_fecha_reagenda = date('Y-m-d', strtotime('+ 1 days'));
+                    }
                     break;
 
                 default:
@@ -192,10 +204,11 @@ class CobranzaControlador
 
             //Enrutar el siguiente cobro
             if ($status_cobranza) {
-                CobranzaModelo::mdlInsertarSiguienteEnrutamiento(array(
+                CobranzaModelo::mdlInsertarSiguienteEnrutamientoReagendado(array(
                     'cra_contrato' => $cts_c['cra_contrato'],
                     'cra_fecha_cobro' => $next_day,
                     'cra_orden' => $cts_c['cra_orden'],
+                    'cra_fecha_reagenda' => $cra_fecha_reagenda
                 ));
             }
 
@@ -289,4 +302,7 @@ class CobranzaControlador
             CobranzaControlador::ctrRegistrarPendientes($cts_p);
         }
     }
+
+
+    
 }
