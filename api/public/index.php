@@ -337,6 +337,13 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
 
     return json_encode($getAllCtra, true);
 });
+$app->get('/ordenar', function (Request $request, Response $response, array $args) {
+
+
+    // $getAllCtra = CobranzaModelo::mdlMostrarCarteleraCobranza();
+
+    // return json_encode($getAllCtra, true);
+});
 $app->get('/prueba_cron', function (Request $request, Response $response) {
 
     // $json = $request->getBody();
@@ -382,5 +389,6 @@ $app->post('/comisa-datos-cobranza', function (Request $request, Response $respo
     // return json_encode($login_msj, true);
     # code...
 
-});
+})
+;
 $app->run();
