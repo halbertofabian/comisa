@@ -15,15 +15,16 @@
                 <th>NUEVO SALDO</th>
                 <th>PAGO</th>
                 <th>MP</th>
-                <th>COBRADOR</th>
+                <th>REFERENCIA</th>
                 <th>NOTA</th>
+                <th>COBRADOR</th>
                 <th>FECHA DE PAGO</th>
                 <th>FECHA PROGRAMADA DE COBRO</th>
                 <th>FECHA REAGENDADA</th>
                 <th>FECHA PROXIMA DE COBRO</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="text-center">
             <?php
             $total_pago = 0;
             $total_efectivo = 0;
@@ -53,8 +54,9 @@
                     <td><?= number_format($abs['ctr_saldo_actual'] - $abs['abs_monto'], 2) ?></td>
                     <td class="bg-success"><?= number_format($abs['abs_monto'], 2) ?></td>
                     <td><?= $abs['abs_mp'] ?></td>
-                    <td><?= $abs['usr_nombre'] ?></td>
+                    <td><?= $abs['abs_referancia'] ?></td>
                     <td><?= $abs['abs_nota'] ?></td>
+                    <td><?= $abs['usr_nombre'] ?></td>
                     <td><?= $abs['abs_fecha_cobro'] ?></td>
                     <td><?= $abs['cra_fecha_cobro'] ?></td>
                     <td><?= $abs['cra_fecha_reagenda'] ?></td>
@@ -63,8 +65,8 @@
                 
             <?php endforeach; ?>
             <tr>
-                    <td></td>
-                    <td></td>
+                    <td>CUENTAS COBRADAS</td>
+                    <td>(<?= $key+1 ?>)</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -75,6 +77,7 @@
                     <td><?= number_format($total_efectivo) ?></td>
                     <td>BANCO:</td>
                     <td><?= number_format($total_banco) ?></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
