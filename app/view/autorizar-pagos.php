@@ -72,9 +72,9 @@
                     <td>TOTAL:</td>
                     <td><?= number_format($total_pago,2) ?></td>
                     <td>EFECTIVO:</td>
-                    <td><?= $total_efectivo ?></td>
+                    <td><?= number_format($total_efectivo) ?></td>
                     <td>BANCO:</td>
-                    <td><?= $total_banco ?></td>
+                    <td><?= number_format($total_banco) ?></td>
                     <td></td>
                     <td></td>
                     <td></td>
