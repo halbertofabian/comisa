@@ -26,8 +26,16 @@
         <tbody>
             <?php
             $total_pago = 0;
+            $total_efectivo = 0;
+            $total_banco = 0;
             foreach ($abonos as $key => $abs) :
                 $total_pago += $abs['abs_monto'];
+                if($abs['abs_mp'] == "EFECTIVO" ){
+                    $total_efectivo += $abs['abs_monto'] ;
+                }else{
+                    $total_banco += $abs['abs_monto'] ;
+
+                }
             ?>
                 <tr class="text-center">
                     <td>
@@ -63,10 +71,10 @@
                     <td></td>
                     <td>TOTAL:</td>
                     <td><?= number_format($total_pago,2) ?></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>EFECTIVO:</td>
+                    <td><?= $total_efectivo ?></td>
+                    <td>BANCO:</td>
+                    <td><?= $total_banco ?></td>
                     <td></td>
                     <td></td>
                     <td></td>
