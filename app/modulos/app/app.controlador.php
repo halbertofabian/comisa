@@ -695,8 +695,8 @@ class AppControlador
 
                         [
                             'icon' => '',
-                            'label' => 'Abonos por autorizar',
-                            'href' => 'autorizar-abonos'
+                            'label' => 'Pagos por autorizar',
+                            'href' => 'autorizar-pagos'
                         ],
                         [
                             'icon' => '',

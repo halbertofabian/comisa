@@ -25,7 +25,10 @@
         </thead>
         <tbody>
             <?php
-            foreach ($abonos as $key => $abs) : ?>
+            $total_pago = 0;
+            foreach ($abonos as $key => $abs) :
+                $total_pago += $abs['abs_monto'];
+            ?>
                 <tr class="text-center">
                     <td>
                         <div class="form-check">
@@ -37,7 +40,7 @@
                     <td><?= $abs['abs_id'] ?></td>
                     <td><?= $abs['ctr_cliente'] ?></td>
                     <td class="bg-success"><?= $abs['ctr_numero_cuenta'] ?></td>
-                    <td class="bg-success"><?= $abs['ctr_ruta'] ?></td>
+                    <td class=""><?= $abs['ctr_ruta'] ?></td>
                     <td><?= number_format($abs['ctr_saldo_actual'], 2) ?></td>
                     <td><?= number_format($abs['ctr_saldo_actual'] - $abs['abs_monto'], 2) ?></td>
                     <td class="bg-success"><?= number_format($abs['abs_monto'], 2) ?></td>
@@ -49,7 +52,25 @@
                     <td><?= $abs['cra_fecha_reagenda'] ?></td>
                     <td><?= $abs['cra_fecha_proxima_pago'] ?></td>
                 </tr>
+                
             <?php endforeach; ?>
+            <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>TOTAL:</td>
+                    <td><?= number_format($total_pago,2) ?></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
         </tbody>
     </table>
 </div>
