@@ -303,6 +303,11 @@ class CobranzaControlador
         }
     }
 
-
-    
+    public static function ctrOrdenarP()
+    {
+        $orden = CobranzaModelo::mdlMostrarCarteleraOrden();
+        foreach ($orden as $key => $ctr) {
+            CobranzaModelo::mdlOrdenarP($ctr);
+        }
+    }
 }
