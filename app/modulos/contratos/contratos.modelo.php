@@ -816,7 +816,7 @@ class ContratosModelo
     {
         try {
             //code..
-            $sql = "SELECT ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado FROM tbl_contrato_crt_1 WHERE ctr_numero_cuenta =? AND ctr_ruta = ?";
+            $sql = "SELECT ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado,ctr_dia_pago,ctr_forma_pago,ctr_pago_credito,ctr_status_cuenta,ctr_proximo_pago FROM tbl_contrato_crt_1 WHERE ctr_numero_cuenta =? AND ctr_ruta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr_numero_cuenta);
@@ -1040,14 +1040,14 @@ class ContratosModelo
             //     return $pps->rowCount() > 0;
             // } else {
 
-                $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,?)";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->bindValue(1, $ctr_id);
-                $pps->bindValue(2, $ctr_fecha);
-                $pps->bindValue(3, $cra_orden);
-                $pps->execute();
-                return $pps->rowCount() > 0;
+            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato, cra_fecha_cobro, cra_orden) VALUES(?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->bindValue(2, $ctr_fecha);
+            $pps->bindValue(3, $cra_orden);
+            $pps->execute();
+            return $pps->rowCount() > 0;
             // }
         } catch (PDOException $th) {
             //throw $th;
@@ -1056,7 +1056,7 @@ class ContratosModelo
             $con = null;
         }
     }
-    
+
     public static function mdlConsultarOrdenPorRuta($crt_ruta)
     {
         try {

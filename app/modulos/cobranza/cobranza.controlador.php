@@ -80,6 +80,7 @@ class CobranzaControlador
                 $ctr_dia_pago = $objPHPExcel->getActiveSheet()->getCell('K' . $i)->getCalculatedValue();
                 $ctr_pago_credito = $objPHPExcel->getActiveSheet()->getCell('L' . $i)->getCalculatedValue();
                 $ctr_status_cuenta = $objPHPExcel->getActiveSheet()->getCell('M' . $i)->getCalculatedValue();
+                $ctr_proximo_pago = $objPHPExcel->getActiveSheet()->getCell('N' . $i)->getCalculatedValue();
 
                 $ctr = ContratosModelo::mdlMostrarSaldosContratos($ctr_numero_cuenta, $ctr_ruta);
                 //En caso de que la cuenta exista
@@ -94,6 +95,7 @@ class CobranzaControlador
                 $ctr_dia_pago =  $ctr_dia_pago == ""  ? $ctr['ctr_dia_pago']   :   $ctr_dia_pago;
                 $ctr_pago_credito =  $ctr_pago_credito == ""  ? $ctr['ctr_pago_credito']   :   $ctr_pago_credito;
                 $ctr_status_cuenta =  $ctr_status_cuenta == ""  ? $ctr['ctr_status_cuenta']   :   $ctr_status_cuenta;
+                $ctr_proximo_pago =  $ctr_proximo_pago == ""  ? $ctr['ctr_proximo_pago']   :   $ctr_proximo_pago;
 
 
 
@@ -111,7 +113,8 @@ class CobranzaControlador
                     "ctr_forma_pago" => $ctr_forma_pago,
                     "ctr_dia_pago" => $ctr_dia_pago,
                     "ctr_pago_credito" => $ctr_pago_credito,
-                    "ctr_status_cuenta" => $ctr_status_cuenta
+                    "ctr_status_cuenta" => $ctr_status_cuenta,
+                    'ctr_proximo_pago' => $ctr_proximo_pago
                 );
 
                 $res = CobranzaModelo::mdlActualizarSaldos($data);
