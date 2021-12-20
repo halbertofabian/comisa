@@ -173,29 +173,17 @@ class CobranzaControlador
                     break;
                     // CATORCENALES
                 case 'CATORCENALES':
-                    $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 14 days'));
-                    if (FECHA_ACTUAL >= $next_day) {
-                        $next_day =  date('Y-m-d', strtotime($next_day . '+ 14 days'));
-                        $cra_fecha_reagenda = date('Y-m-d', strtotime('+ 1 days'));
-                    }
+                    
                     break;
 
                     // QUINCENALES
                 case 'QUINCENALES':
-                    $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 1 month'));
-                    if (FECHA_ACTUAL >= $next_day) {
-                        $next_day =  date('Y-m-d', strtotime($next_day . '+ 1 month'));
-                        $cra_fecha_reagenda = date('Y-m-d', strtotime('+ 1 days'));
-                    }
+                    
                     break;
 
                     // MENSUALES  
                 case 'MENSUALES':
-                    $next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 1 month'));
-                    if (FECHA_ACTUAL >= $next_day) {
-                        $next_day =  date('Y-m-d', strtotime($next_day . '+ 1 month'));
-                        $cra_fecha_reagenda = date('Y-m-d', strtotime('+ 1 days'));
-                    }
+                   
                     break;
 
                 default:
