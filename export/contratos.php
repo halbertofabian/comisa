@@ -4,7 +4,7 @@ header('Content-Encoding: UTF-8');
 
 header('Content-type: text/csv; charset=UTF-8');
 
-header("Content-Disposition: attachment; filename=exportar_contratos.csv");
+header("Content-Disposition: attachment; filename=exportar_cuentas.csv");
 
 header("Pragma: no-cache");
 
