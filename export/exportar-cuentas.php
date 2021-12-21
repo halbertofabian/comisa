@@ -33,7 +33,8 @@ echo "PAGO,";
 echo "STATUS CUENTA,";
 echo "FECHA PRIMER PAGO,";
 echo "FECHA PROXIMO PAGO,";
-echo "ORDEN \n";
+echo "ORDEN,";
+echo "ENRUTE \n";
 
 //http://localhost/comisa.com/export/exportar-cuentas.php
 
@@ -42,7 +43,7 @@ foreach ($cuentas as $key => $ctr) {
     // $fecha_abono = date($ctr['ctr_ultima_fecha_abono'], "Y-m-d");
     $fecha_abono = date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
     $proximo_pago = date('Y-m-d', strtotime($ctr['ctr_proximo_pago']));
-    
+
     echo $ctr['ctr_ruta'] . ",";
     echo $ctr['ctr_numero_cuenta'] . ",";
     echo $ctr['ctr_total'] . ",";
@@ -53,10 +54,11 @@ foreach ($cuentas as $key => $ctr) {
     echo $fecha_abono . ",";
     echo $ctr['ctr_total_pagado'] . ",";
     echo $ctr['ctr_forma_pago'] . ",";
-    echo "D:".$ctr['ctr_dia_pago'] . ",";
+    echo "D:" . $ctr['ctr_dia_pago'] . ",";
     echo $ctr['ctr_pago_credito'] . ",";
     echo $ctr['ctr_status_cuenta'] . ",";
     echo $proximo_pago . ",";
     echo ",";
-    echo $ctr['ctr_orden'] . "\n";
+    echo $ctr['ctr_orden'] . ",";
+    echo $ctr['ctr_enrutar'] . "\n";
 }
