@@ -18,9 +18,6 @@ include_once '../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 
-
-
-
 echo "RUTA,";
 echo "CUENTA,";
 echo "TOTAL,";
@@ -42,11 +39,10 @@ echo "ORDEN \n";
 
 $cuentas = ContratosModelo::mdlMostrarSaldosRuta('R3');
 foreach ($cuentas as $key => $ctr) {
-
     // $fecha_abono = date($ctr['ctr_ultima_fecha_abono'], "Y-m-d");
     $fecha_abono = date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
     $proximo_pago = date('Y-m-d', strtotime($ctr['ctr_proximo_pago']));
-
+    
     echo $ctr['ctr_ruta'] . ",";
     echo $ctr['ctr_numero_cuenta'] . ",";
     echo $ctr['ctr_total'] . ",";
