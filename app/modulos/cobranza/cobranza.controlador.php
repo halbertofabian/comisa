@@ -101,9 +101,6 @@ class CobranzaControlador
                 $ctr_status_cuenta =  $ctr_status_cuenta == ""  ? $ctr['ctr_status_cuenta']   :   $ctr_status_cuenta;
                 $ctr_proximo_pago =  $ctr_proximo_pago == ""  ? $ctr['ctr_proximo_pago']   :   $ctr_proximo_pago;
 
-
-
-
                 $data = array(
                     "ctr_ruta" => $ctr_ruta,
                     "ctr_numero_cuenta" => $ctr_numero_cuenta,
@@ -128,25 +125,25 @@ class CobranzaControlador
                 }
 
 
-                $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
-                    array(
-                        'ctr_forma_pago' =>  $ctr_forma_pago,
-                        'ctr_dia_pago' =>  $ctr_dia_pago,
-                        'ctr_siguiente_fecha_pago' =>  $ctr_siguiente_fecha_pago,
-                        'cra_contrato' =>  $ctr['ctr_id'],
-                        'ctr_orden' =>  $ctr_orden,
-                        'ctr_reagendado' =>  $ctr_reagendado,
-                    )
-                );
-                if ($enrurar_cta) {
-                    $counEnrutar += 1;
-                }
+                // $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
+                //     array(
+                //         'ctr_forma_pago' =>  $ctr_forma_pago,
+                //         'ctr_dia_pago' =>  $ctr_dia_pago,
+                //         'ctr_siguiente_fecha_pago' =>  $ctr_siguiente_fecha_pago,
+                //         'cra_contrato' =>  $ctr['ctr_id'],
+                //         'ctr_orden' =>  $ctr_orden,
+                //         'ctr_reagendado' =>  $ctr_reagendado,
+                //     )
+                // );
+                // if ($enrurar_cta) {
+                //     $counEnrutar += 1;
+                // }
             }
 
             return array(
                 'status' => true,
-                'mensaje' => "Cuentas enrutadas",
-                'update' => $counEnrutar
+                'mensaje' => "Saldos actualizados",
+                'update' => $countUpdate
             );
         } catch (Exception $th) {
             $th->getMessage();
@@ -362,20 +359,19 @@ class CobranzaControlador
             CobranzaControlador::ctrRegistrarReagendado($cts_r);
         }
 
-
         // CAMBIO DE ESTADO
         if (isset($datos[1]['Por_localizar'])) {
             $cts_l = json_encode($datos[1]['Por_localizar'], true);
             CobranzaControlador::ctrRegistrarPorLocalizar($cts_l);
         }
-        if (isset($datos[2]['Pendientes'])) {
-            $cts_p = json_encode($datos[2]['Pendientes'], true);
-            CobranzaControlador::ctrRegistrarPendientes($cts_p);
-        }
-        if (isset($datos[3]['Mas_tarde'])) {
-            $cts_p = json_encode($datos[3]['Mas_tarde'], true);
-            CobranzaControlador::ctrRegistrarPendientes($cts_p);
-        }
+        // if (isset($datos[2]['Pendientes'])) {
+        //     $cts_p = json_encode($datos[2]['Pendientes'], true);
+        //     CobranzaControlador::ctrRegistrarPendientes($cts_p);
+        // }
+        // if (isset($datos[3]['Mas_tarde'])) {
+        //     $cts_p = json_encode($datos[3]['Mas_tarde'], true);
+        //     CobranzaControlador::ctrRegistrarPendientes($cts_p);
+        // }
     }
 
     public static function ctrOrdenarP()
