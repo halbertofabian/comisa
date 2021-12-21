@@ -309,10 +309,11 @@ class CobranzaControlador
     {
         $cts_por_localizar = json_decode($cts_por_localizar, true);
         foreach ($cts_por_localizar as  $cts_l) {
-            CobranzaModelo::mdlCambiarEstadoCartelera(array(
+            CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
+                'cra_fecha_cobro' => $cts_l['cra_fecha_cobro'],
                 'cra_fecha_reagenda' => date('Y-m-d', strtotime('+ 1 days')),
-                'cra_id' =>  $cts_l['cra_id'],
-                'cra_estado' => 'POR LOCALIZAR'
+                'cra_estado' => 'POR LOCALIZAR',
+                'cra_id' => $cts_l['cra_id']
             ));
         }
     }
@@ -320,10 +321,11 @@ class CobranzaControlador
     {
         $cts_pendientes = json_decode($cts_pendientes, true);
         foreach ($cts_pendientes as  $cts_p) {
-            CobranzaModelo::mdlCambiarEstadoCartelera(array(
+            CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
+                'cra_fecha_cobro' => $cts_p['cra_fecha_cobro'],
                 'cra_fecha_reagenda' => date('Y-m-d', strtotime('+ 1 days')),
-                'cra_id' =>  $cts_p['cra_id'],
-                'cra_estado' => 'PENDIENTE'
+                'cra_estado' => 'PENDIENTE',
+                'cra_id' => $cts_p['cra_id']
             ));
         }
     }
@@ -332,18 +334,12 @@ class CobranzaControlador
     {
         $cts_reagendado = json_decode($cts_reagendado, true);
         foreach ($cts_reagendado as  $cts_r) {
-            $status_r =  CobranzaModelo::mdlCambiarEstadoCarteleraReagendado(array(
+            CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
+                'cra_fecha_cobro' => $cts_r['cra_fecha_cobro'],
                 'cra_fecha_reagenda' => $cts_r['cra_fecha_reagenda'],
+                'cra_estado' => 'PENDIENTE',
                 'cra_id' => $cts_r['cra_id']
             ));
-            if ($status_r) {
-                CobranzaModelo::mdlInsertarSiguienteEnrutamientoReagendado(array(
-                    'cra_contrato' => $cts_r['cra_contrato'],
-                    'cra_fecha_cobro' => $cts_r['cra_fecha_cobro'],
-                    'cra_orden' => $cts_r['cra_orden'],
-                    'cra_fecha_reagenda' => $cts_r['cra_fecha_reagenda'],
-                ));
-            }
         }
     }
 
