@@ -338,16 +338,16 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
     return json_encode($getAllCtra, true);
 });
 
-$app->get('/prueba_cron', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
 
-    // $json = $request->getBody();
-    // $datosVendedor = json_decode($json, true);
+    $json = $request->getBody();
+    $datosVendedor = json_decode($json, true);
     try {
 
         $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
         $con = ConexionAPI::conectarAPI();
         $pps = $con->prepare($sql);
-        $pps->bindValue(1, "Prueba cron");
+        $pps->bindValue(1, $json);
         $pps->bindValue(2, FECHA);
 
         $pps->execute();
@@ -368,22 +368,22 @@ $app->get('/prueba_cron', function (Request $request, Response $response) {
 
 });
 
-$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
-    $json = $request->getBody();
+// $app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
+//     $json = $request->getBody();
 
-    $data = json_decode($json, true);
+//     $data = json_decode($json, true);
 
-    $cobranza =  CobranzaControlador::ctrSubirDatosCobranzaApp($data);
-    $datos = array(
-        'status' => true,
-        'mensaje' => 'Registros sincronizados'
-    );
+//     $cobranza =  CobranzaControlador::ctrSubirDatosCobranzaApp($data);
+//     $datos = array(
+//         'status' => true,
+//         'mensaje' => 'Registros sincronizados'
+//     );
 
-    return json_encode($datos, true);
-    // return json_encode($login_msj, true);
-    # code...
+//     return json_encode($datos, true);
+//     // return json_encode($login_msj, true);
+//     # code...
 
-});
+// });
 $app->get('/ordenar', function (Request $request, Response $response) {
     
 
