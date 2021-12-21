@@ -53,7 +53,7 @@ foreach ($cuentas as $key => $ctr) {
     echo $fecha_abono . ",";
     echo $ctr['ctr_total_pagado'] . ",";
     echo $ctr['ctr_forma_pago'] . ",";
-    echo $ctr['ctr_dia_pago'] . ",";
+    echo "D:".$ctr['ctr_dia_pago'] . ",";
     echo $ctr['ctr_pago_credito'] . ",";
     echo $ctr['ctr_status_cuenta'] . ",";
     echo $proximo_pago . ",";
