@@ -1,5 +1,5 @@
 <?php
-// wget -O /dev/null https://pruebas-comisa.softmor.com/api/public/prueba_cron
+// wget -O /dev/null https://pruebas-comisa.softmor.com/api/public/finalizar_cobranza
 include_once 'config.php';
 
 
@@ -24,6 +24,6 @@ include_once 'config.php';
 //     $next_day = $next_mes . '-' . $dia1;
 // }
 
-$next_day =  date('Y-m-d', strtotime('next Monday'));
+$next_day =  date('Y-m-d', strtotime('+ 1 days'));
 
 echo $next_day;

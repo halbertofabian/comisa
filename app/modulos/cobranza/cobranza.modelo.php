@@ -359,4 +359,23 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlFizalizarCobranza($next_day, $now_day)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = ?, cra_estado = 'PENDIENTE' WHERE cra_fecha_cobro = ? OR cra_fecha_reagenda = ?  ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $next_day);
+            $pps->bindValue(2, $now_day);
+            $pps->bindValue(3, $now_day);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

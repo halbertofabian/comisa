@@ -338,7 +338,7 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
     return json_encode($getAllCtra, true);
 });
 
-$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
 
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
@@ -368,7 +368,7 @@ $app->post('/comisa-datos-cobranza', function (Request $request, Response $respo
 
 });
 
-$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $data = json_decode($json, true);
@@ -394,6 +394,14 @@ $app->get('/ordenar', function (Request $request, Response $response) {
     );
 
     return json_encode($datos, true);
+    // return json_encode($login_msj, true);
+    # code...
+
+});
+
+$app->get('/finalizar_cobranza', function (Request $request, Response $response) {
+    
+     CobranzaControlador::ejecutarFinalizarCobranza();
     // return json_encode($login_msj, true);
     # code...
 

@@ -308,6 +308,7 @@ class CobranzaControlador
     public static function ctrRegistrarPorLocalizar($cts_por_localizar)
     {
         $cts_por_localizar = json_decode($cts_por_localizar, true);
+
         foreach ($cts_por_localizar as  $cts_l) {
             CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
                 'cra_fecha_cobro' => $cts_l['cra_fecha_cobro'],
@@ -383,5 +384,11 @@ class CobranzaControlador
         foreach ($orden as $key => $ctr) {
             CobranzaModelo::mdlOrdenarP($ctr);
         }
+    }
+    public static function ejecutarFinalizarCobranza()
+    {
+        $next_day = date('Y-m-d', strtotime('+ 1 days'));
+        $now_day = FECHA_ACTUAL;
+        CobranzaModelo::mdlFizalizarCobranza($next_day, $now_day);
     }
 }
