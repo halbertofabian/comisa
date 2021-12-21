@@ -64,6 +64,7 @@ class CobranzaControlador
 
             $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
             $countUpdate = 0;
+            $counEnrutar = 0;
 
             for ($i = 2; $i <= $numRows; $i++) {
 
@@ -81,6 +82,9 @@ class CobranzaControlador
                 $ctr_pago_credito = $objPHPExcel->getActiveSheet()->getCell('L' . $i)->getCalculatedValue();
                 $ctr_status_cuenta = $objPHPExcel->getActiveSheet()->getCell('M' . $i)->getCalculatedValue();
                 $ctr_proximo_pago = $objPHPExcel->getActiveSheet()->getCell('N' . $i)->getCalculatedValue();
+                $ctr_siguiente_fecha_pago = $objPHPExcel->getActiveSheet()->getCell('O' . $i)->getCalculatedValue();
+                $ctr_orden = $objPHPExcel->getActiveSheet()->getCell('P' . $i)->getCalculatedValue();
+                $ctr_reagendado = $objPHPExcel->getActiveSheet()->getCell('Q' . $i)->getCalculatedValue();
 
                 $ctr = ContratosModelo::mdlMostrarSaldosContratos($ctr_numero_cuenta, $ctr_ruta);
                 //En caso de que la cuenta exista
@@ -122,12 +126,27 @@ class CobranzaControlador
                 if ($res) {
                     $countUpdate += 1;
                 }
+
+
+                $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
+                    array(
+                        'ctr_forma_pago' =>  $ctr_forma_pago,
+                        'ctr_dia_pago' =>  $ctr_dia_pago,
+                        'ctr_siguiente_fecha_pago' =>  $ctr_siguiente_fecha_pago,
+                        'cra_contrato' =>  $ctr['ctr_id'],
+                        'ctr_orden' =>  $ctr_orden,
+                        'ctr_reagendado' =>  $ctr_reagendado,
+                    )
+                );
+                if ($enrurar_cta) {
+                    $counEnrutar += 1;
+                }
             }
 
             return array(
                 'status' => true,
-                'mensaje' => "Carga de saldos con éxito",
-                'update' => $countUpdate
+                'mensaje' => "Cuentas enrutadas",
+                'update' => $counEnrutar
             );
         } catch (Exception $th) {
             $th->getMessage();
@@ -138,6 +157,72 @@ class CobranzaControlador
                 'update' => ""
             );
         }
+    }
+
+    public static function ctrEnrrutarCuenta($cta)
+    {
+        if ($cta['ctr_forma_pago'] == 'SEMANALES') {
+            $next_day =  date('Y-m-d', strtotime('next Monday'));
+            if ($cta['ctr_dia_pago'] == 'LUNES') {
+                $next_day =  date('Y-m-d', strtotime('next Monday'));
+            } else if ($cta['ctr_dia_pago'] == 'MARTES') {
+                $next_day =  date('Y-m-d', strtotime('next Tuesday'));
+            } else if ($cta['ctr_dia_pago'] == 'MIERCOLES') {
+                $next_day =  date('Y-m-d', strtotime('next Wednesday'));
+            } else if ($cta['ctr_dia_pago'] == 'JUEVES') {
+                $next_day =  date('Y-m-d', strtotime('next Thursday'));
+            } else if ($cta['ctr_dia_pago'] == 'VIERNES') {
+                $next_day =  date('Y-m-d', strtotime('next Friday'));
+            } else if ($cta['ctr_dia_pago'] == 'SABADO') {
+                $next_day =  date('Y-m-d', strtotime('next Saturday'));
+            } else if ($cta['ctr_dia_pago'] == 'DOMINGO') {
+                $next_day =  date('Y-m-d', strtotime('next Sunday'));
+            }
+        } else if ($cta['ctr_forma_pago'] == 'CATORCENALES') {
+            $next_day = $cta['ctr_siguiente_fecha_pago'];
+        } else if ($cta['ctr_forma_pago'] == 'QUINCENALES') {
+            $dias = $cta['ctr_dia_pago'];
+            $dias = explode('-', $dias);
+            $dia1 = $dias[0];
+            $dia2 = $dias[1];
+            $fecha_mes = date('Y-m', strtotime('this month'));
+            $dia1 = $dia1 < 10 ? "0" . $dia1 : $dia1;
+            $dia2 = $dia2 < 10 ? "0" . $dia2 : $dia2;
+
+            $fecha_mes_1 = $fecha_mes . '-' . $dia1;
+            $fecha_mes_2 = $fecha_mes . '-' . $dia2;
+            if ($fecha_mes_1 > FECHA_ACTUAL) {
+                $next_day = $fecha_mes_1;
+            } else if ($fecha_mes_2 > FECHA_ACTUAL) {
+                $next_day = $fecha_mes_2;
+            } else {
+                $next_mes = date('Y-m', strtotime('next month'));
+                $next_day = $next_mes . '-' . $dia1;
+            }
+        } else if ($cta['ctr_forma_pago'] == 'MENSUALES') {
+            $dia = $cta['ctr_dia_pago'];
+            $fecha_mes = date('Y-m', strtotime('this month'));
+            $dia = $dia < 10 ? "0" . $dia : $dia;
+            $fecha_mes = $fecha_mes . '-' . $dia;
+
+            if ($fecha_mes > FECHA_ACTUAL) {
+                $next_day = $fecha_mes;
+            } else {
+                $next_mes = date('Y-m', strtotime('next month'));
+                $next_day = $next_mes . '-' . $dia;
+            }
+        }
+
+        $datos_e = array(
+            'cra_contrato' => $cta['cra_contrato'],
+            'cra_fecha_cobro' => $next_day,
+            'cra_fecha_reagenda' => $cta['ctr_reagendado'] == "" ? "0000-00-00" : $cta['ctr_reagendado'],
+            'cra_orden' => $cta['ctr_orden'],
+
+
+        );
+        $enrutar = CobranzaModelo::mdlRegistrarSigienteEnrutamiento($datos_e);
+        return $enrutar;
     }
 
     public static function ctrReEnrutarCuentasCompletadas($cts_completadas)
@@ -173,17 +258,17 @@ class CobranzaControlador
                     break;
                     // CATORCENALES
                 case 'CATORCENALES':
-                    
+
                     break;
 
                     // QUINCENALES
                 case 'QUINCENALES':
-                    
+
                     break;
 
                     // MENSUALES  
                 case 'MENSUALES':
-                   
+
                     break;
 
                 default:
