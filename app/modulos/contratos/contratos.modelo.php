@@ -835,8 +835,8 @@ class ContratosModelo
     {
         try {
             //code..
-            $sql = "SELECT ctr_ruta,ctr_numero_cuenta,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado,ctr_dia_pago,ctr_forma_pago,ctr_pago_credito,ctr_status_cuenta,ctr_proximo_pago,ctr_orden FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_enrutar = 'S' ORDER BY ctr_orden ASC ";
-            // $sql = "SELECT ctr_ruta,ctr_numero_cuenta,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado,ctr_dia_pago,ctr_forma_pago,ctr_pago_credito,ctr_status_cuenta,ctr_proximo_pago,ctr_orden FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? ORDER BY ctr_orden ASC ";
+            // $sql = "SELECT ctr_ruta,ctr_numero_cuenta,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado,ctr_dia_pago,ctr_forma_pago,ctr_pago_credito,ctr_status_cuenta,ctr_proximo_pago,ctr_orden FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_enrutar = 'S' ORDER BY ctr_orden ASC ";
+            $sql = "SELECT ctr_ruta,ctr_numero_cuenta,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado,ctr_dia_pago,ctr_forma_pago,ctr_pago_credito,ctr_status_cuenta,ctr_proximo_pago,ctr_orden FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? ORDER BY ctr_orden ASC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr_ruta);
