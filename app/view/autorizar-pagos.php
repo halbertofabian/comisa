@@ -1,7 +1,33 @@
 <div class="container-fluid table-responsive">
+
     <?php
     cargarComponente('breadcrumb', '', 'Pagos por autorizar');
-    $abonos = CobranzaModelo::mdlMostrarAbonosPorAutorizarByCobrador(88);
+
+    ?>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="">COBRADOR</label>
+                    <select name="" id="" class="form-control select2" placeholder="">
+                        <option value=""></option>
+                        <?php
+                        $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+                        foreach ($usuarios as $key => $usr) :
+                        ?>
+                            <option value="<?= $usr['usr_id'] ?>"> <?= $usr['usr_nombre']  ?> </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <button></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <?php
+    if (!isset($_POST['btnMostrarAbonos'])) {
+        $abonos = CobranzaModelo::mdlMostrarAbonosPorAutorizarByCobrador();
+    }
+
     ?>
     <table class="table table-bordered table-striped table-hover ">
         <thead>
@@ -13,8 +39,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
+
             </tr>
             <tr class="text-center">
                 <th>CHK</th>

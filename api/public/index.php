@@ -401,9 +401,16 @@ $app->get('/ordenar', function (Request $request, Response $response) {
 
 $app->get('/finalizar_cobranza', function (Request $request, Response $response) {
     
-     CobranzaControlador::ejecutarFinalizarCobranza();
+     
     // return json_encode($login_msj, true);
     # code...
 
+});
+$app->get('/finalizar_cobranza/{ruta}', function (Request $request, Response $response, array $args) {
+    $ruta =  $args['ruta'];
+
+    $getAllCtra = CobranzaControlador::ejecutarFinalizarCobranza();
+
+    return json_encode($getAllCtra, true);
 });
 $app->run();
