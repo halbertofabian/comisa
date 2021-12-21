@@ -338,7 +338,7 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
     return json_encode($getAllCtra, true);
 });
 
-$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
 
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
@@ -368,7 +368,7 @@ $app->post('/comisa-datos-cobranza2', function (Request $request, Response $resp
 
 });
 
-$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $data = json_decode($json, true);
