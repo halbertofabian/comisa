@@ -4,7 +4,7 @@
     cargarComponente('breadcrumb', '', 'Pagos por autorizar');
 
     ?>
-    <form method="post">
+    <form method="post" action="">
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
@@ -18,7 +18,7 @@
                             <option value="<?= $usr['usr_id'] ?>"> <?= $usr['usr_nombre']  ?> </option>
                         <?php endforeach; ?>
                     </select>
-                    <button></button>
+                    <button type="submit" name="" class="btn btn-dark mt-1 float-right mb-1">Buscar</button>
                 </div>
             </div>
         </div>
@@ -39,6 +39,9 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
 
             </tr>
             <tr class="text-center">
@@ -55,6 +58,10 @@
                 <th>NOTA</th>
                 <!-- <th>COBRADOR</th> -->
                 <th>FECHA DE PAGO</th>
+
+                <th>FORMA PAGO</th>
+                <th>DÍA PAGO</th>
+                <th>PROXIMA FECHA PAGO</th>
 
             </tr>
         </thead>
@@ -92,6 +99,9 @@
                     <td><?= $abs['abs_nota'] ?></td>
                     <!-- <td><?= $abs['usr_nombre'] ?></td> -->
                     <td><?= $abs['abs_fecha_cobro'] ?></td>
+                    <th><?= $abs['ctr_forma_pago'] ?></th>
+                    <th><?= $abs['ctr_dia_pago'] ?></th>
+                    <th><?= $abs['cra_fecha_cobro'] ?></th>
 
                 </tr>
 
@@ -108,6 +118,9 @@
                 <td><?= number_format($total_efectivo) ?></td>
                 <td>BANCO:</td>
                 <td><?= number_format($total_banco) ?></td>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </tbody>
     </table>
