@@ -338,4 +338,25 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public static function mdlActualizarSiguienteEnrrute($cra)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_cobro = ?,cra_fecha_reagenda = ?, cra_estado = ? WHERE cra_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra['cra_fecha_cobro']);
+            $pps->bindValue(2, $cra['cra_fecha_reagenda']);
+            $pps->bindValue(3, $cra['cra_estado']);
+            $pps->bindValue(4, $cra['cra_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

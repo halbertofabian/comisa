@@ -228,66 +228,67 @@ class CobranzaControlador
     public static function ctrReEnrutarCuentasCompletadas($cts_completadas)
     {
         $cts_completadas = json_decode($cts_completadas, true);
-        //preArray($cts_completadas);
-        // return;
 
-        foreach ($cts_completadas as  $cts_c) {
+        foreach ($cts_completadas as  $cta) {
 
             // Saber la forma de pago
-            switch ($cts_c['ctr_forma_pago']) {
-                case 'SEMANALES':
-                    // Calcular  el día en fecha de la siguiente semana por default es lunes
-                    $next_day =  date('Y-m-d', strtotime('Monday next week'));
-                    if ($cts_c['ctr_dia_pago'] == 'LUNES') {
-                        $next_day =  date('Y-m-d', strtotime('Monday next week'));
-                    } else if ($cts_c['ctr_dia_pago'] == 'MARTES') {
-                        $next_day =  date('Y-m-d', strtotime('Tuesday next week'));
-                    } else if ($cts_c['ctr_dia_pago'] == 'MIERCOLES') {
-                        $next_day =  date('Y-m-d', strtotime('Wednesday next week'));
-                    } else if ($cts_c['ctr_dia_pago'] == 'JUEVES') {
-                        $next_day =  date('Y-m-d', strtotime('Thursday next week'));
-                    } else if ($cts_c['ctr_dia_pago'] == 'VIERNES') {
-                        $next_day =  date('Y-m-d', strtotime('Friday next week'));
-                    } else if ($cts_c['ctr_dia_pago'] == 'SABADO') {
-                        $next_day =  date('Y-m-d', strtotime('Saturday next week'));
-                    } else if ($cts_c['ctr_dia_pago'] == 'DOMINGO') {
-                        $next_day =  date('Y-m-d', strtotime('Sunday next week'));
-                    }
-                    $cra_fecha_reagenda = '00:00:00';
-                    //$next_day =  date('Y-m-d', strtotime($cts_c['cra_fecha_cobro'] . '+ 7 days'));
-                    break;
-                    // CATORCENALES
-                case 'CATORCENALES':
+            if ($cta['ctr_forma_pago'] == 'SEMANALES') {
+                $next_day =  date('Y-m-d', strtotime('next Monday'));
+                if ($cta['ctr_dia_pago'] == 'LUNES') {
+                    $next_day =  date('Y-m-d', strtotime('next Monday'));
+                } else if ($cta['ctr_dia_pago'] == 'MARTES') {
+                    $next_day =  date('Y-m-d', strtotime('next Tuesday'));
+                } else if ($cta['ctr_dia_pago'] == 'MIERCOLES') {
+                    $next_day =  date('Y-m-d', strtotime('next Wednesday'));
+                } else if ($cta['ctr_dia_pago'] == 'JUEVES') {
+                    $next_day =  date('Y-m-d', strtotime('next Thursday'));
+                } else if ($cta['ctr_dia_pago'] == 'VIERNES') {
+                    $next_day =  date('Y-m-d', strtotime('next Friday'));
+                } else if ($cta['ctr_dia_pago'] == 'SABADO') {
+                    $next_day =  date('Y-m-d', strtotime('next Saturday'));
+                } else if ($cta['ctr_dia_pago'] == 'DOMINGO') {
+                    $next_day =  date('Y-m-d', strtotime('next Sunday'));
+                }
+            } else if ($cta['ctr_forma_pago'] == 'CATORCENALES') {
+                $next_day = $cta['cra_fecha_sig_pago'];
+            } else if ($cta['ctr_forma_pago'] == 'QUINCENALES') {
+                $dias = $cta['ctr_dia_pago'];
+                $dias = explode('-', $dias);
+                $dia1 = $dias[0];
+                $dia2 = $dias[1];
+                $fecha_mes = date('Y-m', strtotime('this month'));
+                $dia1 = $dia1 < 10 ? "0" . $dia1 : $dia1;
+                $dia2 = $dia2 < 10 ? "0" . $dia2 : $dia2;
 
-                    break;
+                $fecha_mes_1 = $fecha_mes . '-' . $dia1;
+                $fecha_mes_2 = $fecha_mes . '-' . $dia2;
+                if ($fecha_mes_1 > FECHA_ACTUAL) {
+                    $next_day = $fecha_mes_1;
+                } else if ($fecha_mes_2 > FECHA_ACTUAL) {
+                    $next_day = $fecha_mes_2;
+                } else {
+                    $next_mes = date('Y-m', strtotime('next month'));
+                    $next_day = $next_mes . '-' . $dia1;
+                }
+            } else if ($cta['ctr_forma_pago'] == 'MENSUALES') {
+                $dia = $cta['ctr_dia_pago'];
+                $fecha_mes = date('Y-m', strtotime('this month'));
+                $dia = $dia < 10 ? "0" . $dia : $dia;
+                $fecha_mes = $fecha_mes . '-' . $dia;
 
-                    // QUINCENALES
-                case 'QUINCENALES':
-
-                    break;
-
-                    // MENSUALES  
-                case 'MENSUALES':
-
-                    break;
-
-                default:
-                    # code...
-                    break;
-            }
-            // Actualizar el estado a COMPLETADO
-            $status_cobranza = CobranzaModelo::mdlCambiarEstadoCarteleraCompletado($cts_c['cra_id'], $next_day);
-
-            //Enrutar el siguiente cobro
-            if ($status_cobranza) {
-                CobranzaModelo::mdlInsertarSiguienteEnrutamientoReagendado(array(
-                    'cra_contrato' => $cts_c['cra_contrato'],
-                    'cra_fecha_cobro' => $next_day,
-                    'cra_orden' => $cts_c['cra_orden'],
-                    'cra_fecha_reagenda' => $cra_fecha_reagenda
-                ));
+                if ($fecha_mes > FECHA_ACTUAL) {
+                    $next_day = $fecha_mes;
+                } else {
+                    $next_mes = date('Y-m', strtotime('next month'));
+                    $next_day = $next_mes . '-' . $dia;
+                }
             }
 
+            CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
+                'cra_fecha_cobro' => $next_day,
+                'cra_fecha_reagenda' => "0000-00-00",
+                'cra_estado' => 'PENDIENTE'
+            ));
             # code...
         }
     }
