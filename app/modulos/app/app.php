@@ -29,6 +29,9 @@
     <!-- Responsive datatable examples -->
     <link href="<?= HTTP_HOST . 'app/' ?>plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
+
+
+
     <link href="<?= HTTP_HOST . 'app/' ?>plugins/toastr/build/toastr.min.css" rel="stylesheet" />
 
 
@@ -74,12 +77,20 @@
 
 
 
-    <script src="<?= HTTP_HOST . 'app/' ?>plugins/datatables/jquery.dataTables.min.js"></script>
+    <!-- <script src="<?= HTTP_HOST . 'app/' ?>plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="<?= HTTP_HOST . 'app/' ?>plugins/datatables/dataTables.bootstrap4.min.js"></script>
 
 
     <script src="<?= HTTP_HOST . 'app/' ?>plugins/datatables/dataTables.responsive.min.js"></script>
-    <script src="<?= HTTP_HOST . 'app/' ?>plugins/datatables/responsive.bootstrap4.min.js"></script>
+    <script src="<?= HTTP_HOST . 'app/' ?>plugins/datatables/responsive.bootstrap4.min.js"></script> -->
+
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/datatable/pdfmake.min.js"></script>
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/datatable/vfs_fonts.js"></script>
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/datatable/datatables.min.js"></script>
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/datatable/datatables.buttons.min.js"></script>
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/datatable/buttons.html5.min.js"></script>
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/datatable/buttons.bootstrap.min.js"></script>
+    <script src="<?php echo  HTTP_HOST . 'app/' ?>plugins/datatable/datatables.bootstrap4.min.js"></script>
 
 
     <script src="<?= HTTP_HOST . 'app/' ?>plugins/summernote/summernote-bs4.min.js"></script>
@@ -121,7 +132,6 @@
             LoginControlador::ctrIniciarSesionAutomatica($rutas[1]);
             return;
         }
-        
     }
 
 

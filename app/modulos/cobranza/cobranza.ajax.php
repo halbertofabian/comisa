@@ -27,9 +27,18 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrActualizarSaldosByExcel();
         echo json_encode($respuesta, true);
     }
+    public function ajaxCancelarPago()
+    {
+        $respuesta = CobranzaControlador::ctrCancelarPagos();
+        echo json_encode($respuesta, true);
+    }
 }
-if(isset($_POST['btnImportarSaldos'])){
+if (isset($_POST['btnImportarSaldos'])) {
     $importarSaldos = new CobranzaAjax();
     $importarSaldos->ajaxImportarSaldos();
 }
 
+if (isset($_POST['btnCancelarPago'])) {
+    $cancelarPago = new CobranzaAjax();
+    $cancelarPago->ajaxCancelarPago();
+}
