@@ -38,7 +38,7 @@ echo "ENRUTE \n";
 
 //http://localhost/comisa.com/export/exportar-cuentas.php
 
-$cuentas = ContratosModelo::mdlMostrarSaldosRuta('R3');
+$cuentas = ContratosModelo::mdlMostrarSaldosRuta('R2');
 foreach ($cuentas as $key => $ctr) {
     // $fecha_abono = date($ctr['ctr_ultima_fecha_abono'], "Y-m-d");
     $fecha_abono = date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
