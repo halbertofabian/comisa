@@ -128,20 +128,22 @@ class CobranzaControlador
                     $countUpdate += 1;
                 }
 
+                if ($ctr_enrutar == 'S') {
 
-                $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
-                    array(
-                        'ctr_forma_pago' =>  $ctr_forma_pago,
-                        'ctr_dia_pago' =>  $ctr_dia_pago,
-                        'ctr_siguiente_fecha_pago' =>  $ctr_siguiente_fecha_pago,
-                        'cra_contrato' =>  $ctr['ctr_id'],
-                        'ctr_orden' =>  $ctr_orden,
-                        'ctr_reagendado' =>  $ctr_reagendado,
-                        'cra_estado' => $ctr_estado
-                    )
-                );
-                if ($enrurar_cta) {
-                    $counEnrutar += 1;
+                    $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
+                        array(
+                            'ctr_forma_pago' =>  $ctr_forma_pago,
+                            'ctr_dia_pago' =>  $ctr_dia_pago,
+                            'ctr_siguiente_fecha_pago' =>  $ctr_siguiente_fecha_pago,
+                            'cra_contrato' =>  $ctr['ctr_id'],
+                            'ctr_orden' =>  $ctr_orden,
+                            'ctr_reagendado' =>  $ctr_reagendado,
+                            'cra_estado' => $ctr_estado
+                        )
+                    );
+                    if ($enrurar_cta) {
+                        $counEnrutar += 1;
+                    }
                 }
             }
 
@@ -218,7 +220,7 @@ class CobranzaControlador
         $datos_e = array(
             'cra_contrato' => $cta['cra_contrato'],
             'cra_fecha_cobro' => $next_day,
-            'cra_fecha_reagenda' => $cta['ctr_reagendado'] == "" ? "0000-00-00" : $cta['ctr_reagendado'],
+            'cra_fecha_reagenda' =>  $cta['ctr_reagendado'],
             'cra_orden' => $cta['ctr_orden'],
             'cra_estado' => $cta['cra_estado'] == "" ? "PENDIENTE" : $cta['cra_estado']
         );
