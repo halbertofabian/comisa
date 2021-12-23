@@ -128,7 +128,6 @@ class CobranzaModelo
             $pps->bindValue(16, $ctr['ctr_ruta']);
             $pps->execute();
             return $pps->rowCount() > 0;
-
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -375,12 +374,12 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = ?, cra_estado = 'PENDIENTE' WHERE cra_fecha_cobro = ? OR cra_fecha_reagenda = ?  ";
+            // $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-23' WHERE cra_fecha_cobro <= '2021-12-22' AND cra_fecha_reagenda <= '2021-12-22'
+            // UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-23' WHERE cra_fecha_reagenda = '2021-12-22';";
+            $sql = " UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_cobro <= '{$now_day}' AND cra_fecha_reagenda <= '{$now_day}'
+            UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_reagenda = '{$now_day}';";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $next_day);
-            $pps->bindValue(2, $now_day);
-            $pps->bindValue(3, $now_day);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
