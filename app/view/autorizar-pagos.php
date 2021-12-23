@@ -39,134 +39,153 @@
     } else {
         $abonos = CobranzaModelo::mdlMostrarAbonosPorAutorizarByCobrador($_POST['urs_id']);
     }
+    if ($abonos) :
     ?>
-    <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover-animation " id="descarga-tbl">
+        <?php if (isset($_POST['urs_id'])) : ?>
+            <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="">Guardar Ficha de <?= $abonos[0]['usr_nombre'] ?> como... </label>
+                        <input type="text" name="" id="" class="form-control" placeholder="" value="<?= fechaCastellano(FECHA_ACTUAL) ?> DE <?= $abonos[0]['usr_nombre'] ?>">
+                        <button class="btn btn-primary float-right mt-1">Guardar y autorizar</button>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover-animation " id="descarga-tbl">
 
-            <thead>
-                <?php
-                if (isset($_POST['btnMostrarAbonos'])) :
-                ?>
+                <thead>
+                    <?php
+                    if (isset($_POST['btnMostrarAbonos'])) :
+                    ?>
+                        <tr class="text-center">
+                            <th colspan="3">NOMBRE DEL COBRADOR:</th>
+                            <th colspan="3" class="text-danger"><?= $abonos[0]['usr_nombre'] ?></th>
+                            <th>RUTA</th>
+                            <th><?= $abonos[0]['ctr_ruta'] ?></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    <?php else : ?>
+                        <tr class="text-center">
+                            <th colspan="3">NOMBRE DEL COBRADOR:</th>
+                            <th colspan="3">TODOS</th>
+                            <th>RUTA</th>
+                            <th>TODAS</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    <?php endif; ?>
                     <tr class="text-center">
-                        <th colspan="3">NOMBRE DEL COBRADOR:</th>
-                        <th colspan="3" class="text-danger"><?= $abonos[0]['usr_nombre'] ?></th>
-                        <th>RUTA</th>
-                        <th><?= $abonos[0]['ctr_ruta'] ?></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th>CHK</th>
+                        <th># PAGO</th>
+                        <th>CLIENTE</th>
+                        <th>NÚMERO DE CUENTA</th>
+                        <th>SALDO ANTERIOR</th>
+                        <th>NUEVO SALDO</th>
+                        <th>PAGO</th>
+                        <th>MP</th>
+                        <th>REFERENCIA</th>
+                        <th>NOTA</th>
+                        <th>FECHA DE PAGO</th>
+                        <th>FORMA PAGO</th>
+                        <th>DÍA PAGO</th>
+                        <th>PROXIMA FECHA PAGO</th>
+                        <th>ESTADO</th>
+
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+
+                    <?php
+                    $total_pago = 0;
+                    $total_efectivo = 0;
+                    $total_banco = 0;
+
+                    foreach ($abonos as $key => $abs) :
+                        if ($abs['abs_estado_abono'] == "POR AUTORIZAR") {
+                            $total_pago += $abs['abs_monto'];
+                        }
+
+                        if ($abs['abs_mp'] == "EFECTIVO" && $abs['abs_estado_abono'] == "POR AUTORIZAR") {
+                            $total_efectivo += $abs['abs_monto'];
+                        } else if ($abs['abs_mp'] == "BANCO" && $abs['abs_estado_abono'] == "POR AUTORIZAR") {
+                            $total_banco += $abs['abs_monto'];
+                        }
+                    ?>
+                        <tr class="text-center">
+
+                            <td>
+
+                                <?php if (isset($_POST['btnMostrarAbonos'])) :
+                                    if ($abs['abs_estado_abono'] == "POR AUTORIZAR") :
+                                ?>
+                                        <button class="btn btn-link text-danger btnCancelarPago" usr_nombre=<?= $abonos[0]['usr_nombre']  ?> abs_id="<?= $abs['abs_id'] ?>" usr_id="<?= $_POST['urs_id'] ?>">CANCELAR</button>
+                                    <?php else : ?>
+                                        <strong class="text-dnger">CANCELADO</strong>
+                                <?php endif;
+                                endif; ?>
+                            </td>
+                            <td><?= $abs['abs_id'] ?></td>
+                            <td><?= $abs['ctr_cliente'] ?></td>
+                            <td class="bg-success"><?= $abs['ctr_numero_cuenta'] ?></td>
+
+                            <td><?= number_format($abs['ctr_saldo_actual'], 2) ?></td>
+                            <td><?= number_format($abs['ctr_saldo_actual'] - $abs['abs_monto'], 2) ?></td>
+                            <td class="bg-success"><?= number_format($abs['abs_monto'], 2) ?></td>
+                            <td><?= $abs['abs_mp'] ?></td>
+                            <td><?= $abs['abs_referancia'] ?></td>
+                            <td><?= $abs['abs_nota'] ?></td>
+
+                            <td><?= $abs['abs_fecha_cobro'] ?></td>
+                            <th><?= $abs['ctr_forma_pago'] ?></th>
+                            <th><?= $abs['ctr_dia_pago'] ?></th>
+                            <th><?= $abs['cra_fecha_cobro'] ?></th>
+                            <th>
+                                <?= $abs['abs_estado_abono'] == 'CANCELADO' ? 'CANCELADO' : '' ?>
+                            </th>
+
+                        </tr>
+
+                    <?php endforeach; ?>
+                    <tr>
+                        <td>CUENTAS COBRADAS</td>
+                        <td>(<?= $key + 1 ?>)</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>TOTAL:</td>
+                        <td><?= number_format($total_pago, 2) ?></td>
+                        <td>EFECTIVO:</td>
+                        <td><?= number_format($total_efectivo, 2) ?></td>
+                        <td>BANCO:</td>
+                        <td><?= number_format($total_banco, 2) ?></td>
                         <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
                     </tr>
-                <?php else : ?>
-                    <tr class="text-center">
-                        <th colspan="3">NOMBRE DEL COBRADOR:</th>
-                        <th colspan="3">TODOS</th>
-                        <th>RUTA</th>
-                        <th>TODAS</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                <?php endif; ?>
-                <tr class="text-center">
-                    <th>CHK</th>
-                    <th># PAGO</th>
-                    <th>CLIENTE</th>
-                    <th>NÚMERO DE CUENTA</th>
-                    <th>SALDO ANTERIOR</th>
-                    <th>NUEVO SALDO</th>
-                    <th>PAGO</th>
-                    <th>MP</th>
-                    <th>REFERENCIA</th>
-                    <th>NOTA</th>
-                    <th>FECHA DE PAGO</th>
-                    <th>FORMA PAGO</th>
-                    <th>DÍA PAGO</th>
-                    <th>PROXIMA FECHA PAGO</th>
-                    <th>ESTADO</th>
+                </tbody>
+            </table>
+        </div>
+    <?php else : ?>
+        <div class="alert alert-danger text-center" role="alert">
+            <strong>Este cobrador aún no reporta pagos</strong>
+        </div>
+    <?php endif; ?>
 
-                </tr>
-            </thead>
-            <tbody class="text-center">
-
-                <?php
-                $total_pago = 0;
-                $total_efectivo = 0;
-                $total_banco = 0;
-
-                foreach ($abonos as $key => $abs) :
-                    if ($abs['abs_estado_abono'] == "POR AUTORIZAR") {
-                        $total_pago += $abs['abs_monto'];
-                    }
-
-                    if ($abs['abs_mp'] == "EFECTIVO" && $abs['abs_estado_abono'] == "POR AUTORIZAR") {
-                        $total_efectivo += $abs['abs_monto'];
-                    } else if ($abs['abs_mp'] == "BANCO" && $abs['abs_estado_abono'] == "POR AUTORIZAR") {
-                        $total_banco += $abs['abs_monto'];
-                    }
-                ?>
-                    <tr class="text-center">
-
-                        <td>
-
-                            <?php if (isset($_POST['btnMostrarAbonos'])) :
-                                if ($abs['abs_estado_abono'] == "POR AUTORIZAR") :
-                            ?>
-                                    <button class="btn btn-link text-danger btnCancelarPago" usr_nombre=<?= $abonos[0]['usr_nombre']  ?> abs_id="<?= $abs['abs_id'] ?>" usr_id="<?= $_POST['urs_id'] ?>">CANCELAR</button>
-                                <?php else : ?>
-                                    <strong class="text-dnger">CANCELADO</strong>
-                            <?php endif;
-                            endif; ?>
-                        </td>
-                        <td><?= $abs['abs_id'] ?></td>
-                        <td><?= $abs['ctr_cliente'] ?></td>
-                        <td class="bg-success"><?= $abs['ctr_numero_cuenta'] ?></td>
-
-                        <td><?= number_format($abs['ctr_saldo_actual'], 2) ?></td>
-                        <td><?= number_format($abs['ctr_saldo_actual'] - $abs['abs_monto'], 2) ?></td>
-                        <td class="bg-success"><?= number_format($abs['abs_monto'], 2) ?></td>
-                        <td><?= $abs['abs_mp'] ?></td>
-                        <td><?= $abs['abs_referancia'] ?></td>
-                        <td><?= $abs['abs_nota'] ?></td>
-
-                        <td><?= $abs['abs_fecha_cobro'] ?></td>
-                        <th><?= $abs['ctr_forma_pago'] ?></th>
-                        <th><?= $abs['ctr_dia_pago'] ?></th>
-                        <th><?= $abs['cra_fecha_cobro'] ?></th>
-                        <th>
-                            <?= $abs['abs_estado_abono'] == 'CANCELADO' ? 'CANCELADO' : '' ?>
-                        </th>
-
-                    </tr>
-
-                <?php endforeach; ?>
-                <tr>
-                    <td>CUENTAS COBRADAS</td>
-                    <td>(<?= $key + 1 ?>)</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>TOTAL:</td>
-                    <td><?= number_format($total_pago, 2) ?></td>
-                    <td>EFECTIVO:</td>
-                    <td><?= number_format($total_efectivo, 2) ?></td>
-                    <td>BANCO:</td>
-                    <td><?= number_format($total_banco, 2) ?></td>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
 
 

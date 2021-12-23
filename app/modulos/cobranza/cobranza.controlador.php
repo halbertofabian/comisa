@@ -85,6 +85,8 @@ class CobranzaControlador
                 $ctr_siguiente_fecha_pago = $objPHPExcel->getActiveSheet()->getCell('O' . $i)->getCalculatedValue();
                 $ctr_orden = $objPHPExcel->getActiveSheet()->getCell('P' . $i)->getCalculatedValue();
                 $ctr_reagendado = $objPHPExcel->getActiveSheet()->getCell('Q' . $i)->getCalculatedValue();
+                $ctr_enrutar = $objPHPExcel->getActiveSheet()->getCell('R' . $i)->getCalculatedValue();
+                $ctr_estado = $objPHPExcel->getActiveSheet()->getCell('S' . $i)->getCalculatedValue();
 
                 $ctr = ContratosModelo::mdlMostrarSaldosContratos($ctr_numero_cuenta, $ctr_ruta);
                 //En caso de que la cuenta exista
@@ -99,7 +101,7 @@ class CobranzaControlador
                 $ctr_dia_pago =  $ctr_dia_pago == ""  ? $ctr['ctr_dia_pago']   :   $ctr_dia_pago;
                 $ctr_pago_credito =  $ctr_pago_credito == ""  ? $ctr['ctr_pago_credito']   :   $ctr_pago_credito;
                 $ctr_status_cuenta =  $ctr_status_cuenta == ""  ? $ctr['ctr_status_cuenta']   :   $ctr_status_cuenta;
-                $ctr_proximo_pago =  $ctr_proximo_pago == ""  ? $ctr['ctr_proximo_pago']   :   $ctr_proximo_pago;
+
 
                 $data = array(
                     "ctr_ruta" => $ctr_ruta,
@@ -115,7 +117,9 @@ class CobranzaControlador
                     "ctr_dia_pago" => $ctr_dia_pago,
                     "ctr_pago_credito" => $ctr_pago_credito,
                     "ctr_status_cuenta" => $ctr_status_cuenta,
-                    'ctr_proximo_pago' => $ctr_proximo_pago
+                    'ctr_proximo_pago' => $ctr_proximo_pago,
+                    'ctr_enrutar' => $ctr_enrutar,
+                    'ctr_orden' => $ctr_orden,
                 );
 
                 $res = CobranzaModelo::mdlActualizarSaldos($data);
@@ -125,25 +129,26 @@ class CobranzaControlador
                 }
 
 
-                // $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
-                //     array(
-                //         'ctr_forma_pago' =>  $ctr_forma_pago,
-                //         'ctr_dia_pago' =>  $ctr_dia_pago,
-                //         'ctr_siguiente_fecha_pago' =>  $ctr_siguiente_fecha_pago,
-                //         'cra_contrato' =>  $ctr['ctr_id'],
-                //         'ctr_orden' =>  $ctr_orden,
-                //         'ctr_reagendado' =>  $ctr_reagendado,
-                //     )
-                // );
-                // if ($enrurar_cta) {
-                //     $counEnrutar += 1;
-                // }
+                $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
+                    array(
+                        'ctr_forma_pago' =>  $ctr_forma_pago,
+                        'ctr_dia_pago' =>  $ctr_dia_pago,
+                        'ctr_siguiente_fecha_pago' =>  $ctr_siguiente_fecha_pago,
+                        'cra_contrato' =>  $ctr['ctr_id'],
+                        'ctr_orden' =>  $ctr_orden,
+                        'ctr_reagendado' =>  $ctr_reagendado,
+                        'cra_estado' => $ctr_estado
+                    )
+                );
+                if ($enrurar_cta) {
+                    $counEnrutar += 1;
+                }
             }
 
             return array(
                 'status' => true,
-                'mensaje' => "Saldos actualizados",
-                'update' => $countUpdate
+                'mensaje' => "Cuentas enrutadas",
+                'update' => $counEnrutar
             );
         } catch (Exception $th) {
             $th->getMessage();
@@ -215,8 +220,7 @@ class CobranzaControlador
             'cra_fecha_cobro' => $next_day,
             'cra_fecha_reagenda' => $cta['ctr_reagendado'] == "" ? "0000-00-00" : $cta['ctr_reagendado'],
             'cra_orden' => $cta['ctr_orden'],
-
-
+            'cra_estado' => $cta['cra_estado'] == "" ? "PENDIENTE" : $cta['cra_estado']
         );
         $enrutar = CobranzaModelo::mdlRegistrarSigienteEnrutamiento($datos_e);
         return $enrutar;

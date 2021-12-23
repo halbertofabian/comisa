@@ -105,10 +105,11 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado = ?, ctr_forma_pago = ?, ctr_dia_pago = ?, ctr_pago_credito = ?, ctr_status_cuenta = ?, ctr_proximo_pago = ? WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado = ?, ctr_forma_pago = ?, ctr_dia_pago = ?, ctr_pago_credito = ?, ctr_status_cuenta = ?, ctr_proximo_pago = ?, ctr_enrutar = ?, ctr_orden = ? WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
+
+
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
             $pps->bindValue(1, $ctr['ctr_total']);
             $pps->bindValue(2, $ctr['ctr_enganche']);
             $pps->bindValue(3, $ctr['ctr_pago_adicional']);
@@ -121,10 +122,13 @@ class CobranzaModelo
             $pps->bindValue(10, $ctr['ctr_pago_credito']);
             $pps->bindValue(11, $ctr['ctr_status_cuenta']);
             $pps->bindValue(12, $ctr['ctr_proximo_pago']);
-            $pps->bindValue(13, $ctr['ctr_numero_cuenta']);
-            $pps->bindValue(14, $ctr['ctr_ruta']);
+            $pps->bindValue(13, $ctr['ctr_enrutar']);
+            $pps->bindValue(14, $ctr['ctr_orden']);
+            $pps->bindValue(15, $ctr['ctr_numero_cuenta']);
+            $pps->bindValue(16, $ctr['ctr_ruta']);
             $pps->execute();
             return $pps->rowCount() > 0;
+
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -265,13 +269,13 @@ class CobranzaModelo
         try {
             //code...
             if ($abs_id_cobrador == "") {
-                $sql = "SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO' ORDER BY abs_c.abs_id ASC ";
+                $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO' ORDER BY abs_c.abs_id ASC ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->execute();
                 return $pps->fetchAll();
             } else {
-                $sql = "SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE abs_id_cobrador = ? AND  abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO' ORDER BY abs_c.abs_id ASC ";
+                $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE ( abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO') AND abs_id_cobrador = ? ORDER BY abs_c.abs_id ASC ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $abs_id_cobrador);
@@ -328,13 +332,14 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato,cra_fecha_cobro,cra_fecha_reagenda,cra_orden) VALUES(?,?,?,?) ";
+            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato,cra_fecha_cobro,cra_fecha_reagenda,cra_estado,cra_orden) VALUES(?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cra['cra_contrato']);
             $pps->bindValue(2, $cra['cra_fecha_cobro']);
             $pps->bindValue(3, $cra['cra_fecha_reagenda']);
-            $pps->bindValue(4, $cra['cra_orden']);
+            $pps->bindValue(4, $cra['cra_estado']);
+            $pps->bindValue(5, $cra['cra_orden']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

@@ -816,7 +816,7 @@ class ContratosModelo
     {
         try {
             //code..
-            $sql = "SELECT ctr_id,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado,ctr_dia_pago,ctr_forma_pago,ctr_pago_credito,ctr_status_cuenta,ctr_proximo_pago,ctr_orden FROM tbl_contrato_crt_1 WHERE ctr_numero_cuenta =? AND ctr_ruta = ? ";
+            $sql = "SELECT ctr_id,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_saldo_actual,ctr_ultima_fecha_abono,ctr_total_pagado,ctr_dia_pago,ctr_forma_pago,ctr_pago_credito,ctr_status_cuenta,ctr_proximo_pago,ctr_orden,ctr_enrutar FROM tbl_contrato_crt_1 WHERE ctr_numero_cuenta =? AND ctr_ruta = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr_numero_cuenta);
