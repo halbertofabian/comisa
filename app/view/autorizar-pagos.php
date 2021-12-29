@@ -72,6 +72,7 @@
                             <th></th>
                             <th></th>
                             <th></th>
+                            <th></th>
                         </tr>
                     <?php else : ?>
                         <tr class="text-center">
@@ -79,6 +80,7 @@
                             <th colspan="3">TODOS</th>
                             <th>RUTA</th>
                             <th>TODAS</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -104,6 +106,7 @@
                         <th>DÍA PAGO</th>
                         <th>PROXIMA FECHA PAGO</th>
                         <th>ESTADO</th>
+                        <th>MOTIVO</th>
 
                     </tr>
                 </thead>
@@ -131,9 +134,10 @@
 
                                 <?php if (isset($_POST['btnMostrarAbonos'])) :
                                     if ($abs['abs_estado_abono'] == "POR AUTORIZAR") :
+                                        
                                 ?>
                                         <button class="btn btn-link text-danger btnCancelarPago" usr_nombre=<?= $abonos[0]['usr_nombre']  ?> abs_id="<?= $abs['abs_id'] ?>" usr_id="<?= $_POST['urs_id'] ?>">CANCELAR</button>
-                                    <?php else : ?>
+                                    <?php elseif ($abs['abs_estado_abono'] == "CANCELADO-A") : ?>
                                         <strong class="text-dnger">CANCELADO</strong>
                                 <?php endif;
                                 endif; ?>
@@ -154,7 +158,10 @@
                             <th><?= $abs['ctr_dia_pago'] ?></th>
                             <th><?= $abs['cra_fecha_cobro'] ?></th>
                             <th>
-                                <?= $abs['abs_estado_abono'] == 'CANCELADO' ? 'CANCELADO' : '' ?>
+                                <?= $abs['abs_estado_abono'] == 'CANCELADO-A' ? 'CANCELADO' : '' ?>
+                            </th>
+                            <th>
+
                             </th>
 
                         </tr>
@@ -172,6 +179,7 @@
                         <td><?= number_format($total_efectivo, 2) ?></td>
                         <td>BANCO:</td>
                         <td><?= number_format($total_banco, 2) ?></td>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>

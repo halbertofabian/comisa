@@ -268,13 +268,13 @@ class CobranzaModelo
         try {
             //code...
             if ($abs_id_cobrador == "") {
-                $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO' ORDER BY abs_c.abs_id ASC ";
+                $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO-A' ORDER BY abs_c.abs_id ASC ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->execute();
                 return $pps->fetchAll();
             } else {
-                $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE ( abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO') AND abs_id_cobrador = ? ORDER BY abs_c.abs_id ASC ";
+                $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE ( abs_estado_abono =  'POR AUTORIZAR' OR abs_estado_abono = 'CANCELADO-A') AND abs_id_cobrador = ? ORDER BY abs_c.abs_id ASC ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $abs_id_cobrador);
@@ -374,10 +374,14 @@ class CobranzaModelo
     {
         try {
             //code...
-            // $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-23' WHERE cra_fecha_cobro <= '2021-12-22' AND cra_fecha_reagenda <= '2021-12-22'
-            // UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-23' WHERE cra_fecha_reagenda = '2021-12-22';";
-            $sql = " UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_cobro <= '{$now_day}' AND cra_fecha_reagenda <= '{$now_day}'
-            UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_reagenda = '{$now_day}';";
+
+            // $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-28' WHERE cra_fecha_cobro <= '2021-12-27' 
+
+            //  UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-28' WHERE cra_fecha_reagenda <= '2021-12-27' AND cra_fecha_reagenda != '0000-00-00'
+
+
+
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_cobro <= '{$now_day}'; UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_reagenda <= '{$now_day}' AND cra_fecha_reagenda != '0000-00-00' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
@@ -394,7 +398,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_estado_abono = 'CANCELADO', abs_motivo_cancelacion  = ? WHERE abs_id = ?";
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_estado_abono = 'CANCELADO-A', abs_motivo_cancelacion  = ? WHERE abs_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $abs['abs_motivo_cancelacion']);
@@ -404,6 +408,83 @@ class CobranzaModelo
         } catch (PDOException $th) {
             //throw $th;
             return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlListarPagosPendientes($abs_id_cobrador)
+    {
+        try {
+            $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_cobrador = ? AND abs_estado_abono = 'POR AUTORIZAR' ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id_cobrador);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlObtenerContratoCobrado($cra_id)
+    {
+        try {
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_ruta,ctr.ctr_numero_cuenta ,ctr.ctr_saldo_actual,ctr.ctr_total_pagado,ctr.ctr_ultima_fecha_abono FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE cra_id = ? ";
+            $con = Conexion::conectar();
+            $pps  = $con->prepare($sql);
+            $pps->bindValue(1, $cra_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarSaldosContrato($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ? , ctr_total_pagado = ? , ctr_ultima_fecha_abono = ? WHERE ctr_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_saldo_actual']);
+            $pps->bindValue(2, $ctr['ctr_total_pagado']);
+            $pps->bindValue(3, $ctr['ctr_ultima_fecha_abono']);
+            $pps->bindValue(4, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarEstadoPago($abs_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_estado_abono = 'AUTORIZADO'  WHERE abs_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return;
         } finally {
             $pps = null;
             $con = null;

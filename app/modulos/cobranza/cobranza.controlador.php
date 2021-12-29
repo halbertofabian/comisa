@@ -415,4 +415,75 @@ class CobranzaControlador
             );
         }
     }
+
+    public static function ctrProcesarPago()
+    {
+        $listarAbonos = CobranzaModelo::mdlListarPagosPendientes($_POST['usr_id']);
+        $array_contratos = array();
+        foreach ($listarAbonos as  $abs) {
+            $cts = CobranzaModelo::mdlObtenerContratoCobrado($abs['abs_id_contrato']);
+            $contratos = array(
+                'abono' => $abs,
+                'contrato' => $cts,
+            );
+            array_push($array_contratos, $contratos);
+        }
+        // ACTUALIZAR  SALDOS
+        foreach ($array_contratos as  $cts) {
+            # code...
+            $nuevo_saldo = dnum($cts['contrato']['ctr_saldo_actual']) - dnum($cts['abono']['abs_monto']);
+            $total_pagado = dnum($cts['contrato']['ctr_total_pagado']) + dnum($cts['abono']['abs_monto']);
+
+            $saldo_act = CobranzaModelo::mdlActualizarSaldosContrato(array(
+                'ctr_saldo_actual' => $nuevo_saldo,
+                'ctr_total_pagado' => $total_pagado,
+                'ctr_ultima_fecha_abono' => $cts['abono']['abs_fecha_cobro'],
+                'ctr_id' => $cts['contrato']['ctr_id']
+            ));
+
+            if ($saldo_act) {
+                CobranzaModelo::mdlActualizarEstadoPago($cts['abono']['abs_id']);
+            }
+        }
+
+        // GUARDAR LA UBICACIÓN DE LOS REPORTE
+
+    }
+    public static function ctrProcesarPagoAPI($usr_id)
+    {
+        $listarAbonos = CobranzaModelo::mdlListarPagosPendientes($usr_id);
+        $array_contratos = array();
+        foreach ($listarAbonos as  $abs) {
+            $cts = CobranzaModelo::mdlObtenerContratoCobrado($abs['abs_id_contrato']);
+            $contratos = array(
+                'abono' => $abs,
+                'contrato' => $cts,
+            );
+            array_push($array_contratos, $contratos);
+        }
+        // ACTUALIZAR  SALDOS
+        $countAct = 0;
+        foreach ($array_contratos as  $cts) {
+            # code...
+            $nuevo_saldo = dnum($cts['contrato']['ctr_saldo_actual']) - dnum($cts['abono']['abs_monto']);
+            $total_pagado = dnum($cts['contrato']['ctr_total_pagado']) + dnum($cts['abono']['abs_monto']);
+
+            $saldo_act = CobranzaModelo::mdlActualizarSaldosContrato(array(
+                'ctr_saldo_actual' => $nuevo_saldo,
+                'ctr_total_pagado' => $total_pagado,
+                'ctr_ultima_fecha_abono' => $cts['abono']['abs_fecha_cobro'],
+                'ctr_id' => $cts['contrato']['ctr_id']
+            ));
+
+            if ($saldo_act) {
+                CobranzaModelo::mdlActualizarEstadoPago($cts['abono']['abs_id']);
+                $countAct++;
+            }
+        }
+
+        return array('Cuentas actualizas' => $countAct);
+
+        // GUARDAR LA UBICACIÓN DE LOS REPORTE
+
+    }
 }
