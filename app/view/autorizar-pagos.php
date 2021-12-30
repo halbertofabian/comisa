@@ -45,11 +45,14 @@
             <div class="row">
                 <div class="col-md-8"></div>
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="">Guardar Ficha de <?= $abonos[0]['usr_nombre'] ?> como... </label>
-                        <input type="text" name="" id="" class="form-control" placeholder="" value="<?= fechaCastellano(FECHA_ACTUAL) ?> DE <?= $abonos[0]['usr_nombre'] ?>">
-                        <button class="btn btn-primary float-right mt-1">Guardar y autorizar</button>
-                    </div>
+                    <form id="formAutorizarPagos" method="post">
+                        <div class="form-group">
+                            <label for="">Guardar Ficha de <?= $abonos[0]['usr_nombre'] ?> como... </label>
+                            <input type="text" name="usr_nombre" id="usr_nombre" class="form-control" placeholder="" value="<?= fechaCastellano(FECHA_ACTUAL) ?> DE <?= $abonos[0]['usr_nombre'] ?>">
+                            <input type="text" name="usr_id" id="usr_id" value="<?= $_POST['urs_id'] ?>">
+                            <button class="btn btn-primary float-right mt-1">Guardar y autorizar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         <?php endif; ?>
@@ -134,7 +137,7 @@
 
                                 <?php if (isset($_POST['btnMostrarAbonos'])) :
                                     if ($abs['abs_estado_abono'] == "POR AUTORIZAR") :
-                                        
+
                                 ?>
                                         <button class="btn btn-link text-danger btnCancelarPago" usr_nombre=<?= $abonos[0]['usr_nombre']  ?> abs_id="<?= $abs['abs_id'] ?>" usr_id="<?= $_POST['urs_id'] ?>">CANCELAR</button>
                                     <?php elseif ($abs['abs_estado_abono'] == "CANCELADO-A") : ?>
@@ -198,6 +201,31 @@
 
 
 <script>
+    $("#formAutorizarPagos").on("click", function(e) {
+        e.preventDefault();
+
+        var datos = new FormData(this);
+        datos.append("btnAutorizarPagos", true);
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            data: datos,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+
+            },
+            success: function(res) {
+                toastr.success(res.mensaje, '¡Muy bien!');
+                setTimeout(function() {
+                    window.location.href = res.pagina;
+                }, 200)
+            }
+        });
+    })
+
+
     $(".btnCancelarPago").on("click", function() {
         var abs_id = $(this).attr("abs_id");
         var usr_id = $(this).attr("usr_id");

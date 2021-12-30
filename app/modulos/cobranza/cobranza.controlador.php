@@ -442,15 +442,16 @@ class CobranzaControlador
             ));
 
             if ($saldo_act) {
-                CobranzaModelo::mdlActualizarEstadoPago($cts['abono']['abs_id']);
+                // CobranzaModelo::mdlActualizarEstadoPago($cts['abono']['abs_id']);
             }
         }
 
         // GUARDAR LA UBICACIÓN DE LOS REPORTE
 
     }
-    public static function ctrProcesarPagoAPI($usr_id)
+    public static function ctrProcesarPagoAPI($usr_id, $pago_name)
     {
+        $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
         $listarAbonos = CobranzaModelo::mdlListarPagosPendientes($usr_id);
         $array_contratos = array();
         foreach ($listarAbonos as  $abs) {
@@ -476,12 +477,17 @@ class CobranzaControlador
             ));
 
             if ($saldo_act) {
-                CobranzaModelo::mdlActualizarEstadoPago($cts['abono']['abs_id']);
+                CobranzaModelo::mdlActualizarEstadoPago($cts['abono']['abs_id'], $id_pago);
                 $countAct++;
             }
         }
 
-        return array('Cuentas actualizas' => $countAct);
+        return array(
+            'status' => true,
+            'mensaje' => 'Saldos actualizados con éxito',
+            'contador' => $countAct,
+            'pagina' => HTTP_HOST . 'autorizar-pagos/'
+        );
 
         // GUARDAR LA UBICACIÓN DE LOS REPORTE
 

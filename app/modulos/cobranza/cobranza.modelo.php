@@ -472,16 +472,36 @@ class CobranzaModelo
         }
     }
 
-    public static function mdlActualizarEstadoPago($abs_id)
+    public static function mdlActualizarEstadoPago($abs_id,$abs_save)
     {
         try {
             //code...
-            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_estado_abono = 'AUTORIZADO'  WHERE abs_id = ? ";
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_estado_abono = 'AUTORIZADO' , abs_save = ? WHERE abs_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $abs_id);
+            $pps->bindValue(1, $abs_save);
+            $pps->bindValue(2, $abs_id);
             $pps->execute();
             return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlInsertPagos($gds_nombre)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_pagos_gds (gds_nombre) VALUES(?) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $gds_nombre);
+            $pps->execute();
+            return $con->lastInsertId();
         } catch (PDOException $th) {
             //throw $th;
             return;

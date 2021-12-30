@@ -340,7 +340,7 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
 $app->get('/actualizar_saldos/{usr_id}', function (Request $request, Response $response, array $args) {
     $usr_id =  $args['usr_id'];
 
-    $getAllCtra = CobranzaControlador::ctrProcesarPagoAPI($usr_id);
+    $getAllCtra = CobranzaControlador::ctrProcesarPagoAPI($usr_id,'');
     return json_encode($getAllCtra, true);
 
 });

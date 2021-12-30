@@ -32,6 +32,12 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrCancelarPagos();
         echo json_encode($respuesta, true);
     }
+
+    public function ajaxAutorizarPagos()
+    {
+        $respuesta = CobranzaControlador::ctrProcesarPagoAPI($_POST['usr_id'], $_POST['usr_nombre']);
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnImportarSaldos'])) {
     $importarSaldos = new CobranzaAjax();
@@ -41,4 +47,9 @@ if (isset($_POST['btnImportarSaldos'])) {
 if (isset($_POST['btnCancelarPago'])) {
     $cancelarPago = new CobranzaAjax();
     $cancelarPago->ajaxCancelarPago();
+}
+
+if (isset($_POST['btnAutorizarPagos'])) {
+    $btnAutorizar = new CobranzaAjax();
+    $btnAutorizar->ajaxAutorizarPagos();
 }
