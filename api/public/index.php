@@ -340,9 +340,8 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
 $app->get('/actualizar_saldos/{usr_id}', function (Request $request, Response $response, array $args) {
     $usr_id =  $args['usr_id'];
 
-    $getAllCtra = CobranzaControlador::ctrProcesarPagoAPI($usr_id,'');
+    $getAllCtra = CobranzaControlador::ctrProcesarPagoAPI($usr_id, '');
     return json_encode($getAllCtra, true);
-
 });
 
 
@@ -393,8 +392,34 @@ $app->post('/comisa-datos-cobranza', function (Request $request, Response $respo
     # code...
 
 });
-$app->get('/ordenar', function (Request $request, Response $response) {
+
+
+$app->post('/cobranza-ref', function (Request $request, Response $response) {
+    $json = $request->getBody();
+
+    $data = json_decode($json, true);    
+
+    $ref = CobranzaModelo::mdlActualiarRef($data);
     
+    $datos = array(
+        'status' => true,
+        'mensaje' => 'Referencias actualizadas'
+    );
+
+    return  json_encode($datos, true);
+    // $cobranza =  CobranzaControlador::ctrSubirDatosCobranzaApp($data);
+    // $datos = array(
+    //     'status' => true,
+    //     'mensaje' => 'Registros sincronizados'
+    // );
+
+    // return json_encode($datos, true);
+    // return json_encode($login_msj, true);
+    # code...
+
+});
+$app->get('/ordenar', function (Request $request, Response $response) {
+
 
     $cobranza =  CobranzaControlador::ctrOrdenarP();
     $datos = array(
@@ -409,8 +434,8 @@ $app->get('/ordenar', function (Request $request, Response $response) {
 });
 
 $app->get('/finalizar_cobranza', function (Request $request, Response $response) {
-    
-     
+
+
     // return json_encode($login_msj, true);
     # code...
 

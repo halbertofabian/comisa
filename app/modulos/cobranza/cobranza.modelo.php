@@ -472,7 +472,7 @@ class CobranzaModelo
         }
     }
 
-    public static function mdlActualizarEstadoPago($abs_id,$abs_save)
+    public static function mdlActualizarEstadoPago($abs_id, $abs_save)
     {
         try {
             //code...
@@ -506,6 +506,27 @@ class CobranzaModelo
             //throw $th;
             return;
         } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualiarRef($cra)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_referencias = ? WHERE cra_contrato = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, json_encode($cra['cra_ref'], true));
+            $pps->bindValue(2, $cra['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+
             $pps = null;
             $con = null;
         }
