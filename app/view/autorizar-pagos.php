@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label for="">Guardar Ficha de <?= $abonos[0]['usr_nombre'] ?> como... </label>
                             <input type="text" name="usr_nombre" id="usr_nombre" class="form-control" placeholder="" value="<?= fechaCastellano(FECHA_ACTUAL) ?> DE <?= $abonos[0]['usr_nombre'] ?>">
-                            <input type="text" name="usr_id" id="usr_id" value="<?= $_POST['urs_id'] ?>">
+                            <input type="hidden" name="usr_id" id="usr_id" value="<?= $_POST['urs_id'] ?>">
                             <button class="btn btn-primary float-right mt-1">Guardar y autorizar</button>
                         </div>
                     </form>
@@ -201,7 +201,7 @@
 
 
 <script>
-    $("#formAutorizarPagos").on("click", function(e) {
+    $("#formAutorizarPagos").on("submit", function(e) {
         e.preventDefault();
 
         var datos = new FormData(this);
