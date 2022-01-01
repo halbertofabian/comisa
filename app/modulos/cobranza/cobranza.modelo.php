@@ -375,13 +375,10 @@ class CobranzaModelo
         try {
             //code...
 
-            // $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-28' WHERE cra_fecha_cobro <= '2021-12-27' 
+            // $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2022-01-01' WHERE cra_fecha_cobro <= '2021-12-31' 
 
             //  UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '2021-12-28' WHERE cra_fecha_reagenda <= '2021-12-27' AND cra_fecha_reagenda != '0000-00-00'
-
-
-
-            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_cobro <= '{$now_day}'; UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_reagenda <= '{$now_day}' AND cra_fecha_reagenda != '0000-00-00' ";
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_cobro <= '{$now_day}'; UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = '{$next_day}' WHERE cra_fecha_reagenda <= '{$now_day}' AND cra_fecha_reagenda != '0000-00-00'; ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
