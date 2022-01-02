@@ -710,8 +710,13 @@ class AppControlador
                         ],
                         [
                             'icon' => '',
-                            'label' => 'Actualizar saldos de cuenta',
+                            'label' => 'Enrutar cuentas',
                             'href' => 'cobranza/actualizar-saldos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Descargar ruta',
+                            'href' => 'cobranza/ruta'
                         ],
 
                         //Aqui más item de menu

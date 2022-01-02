@@ -263,6 +263,8 @@ class CobranzaControlador
                 $dia1 = $dia1 < 10 ? "0" . $dia1 : $dia1;
                 $dia2 = $dia2 < 10 ? "0" . $dia2 : $dia2;
 
+                // $dia = $dia1 < 10 ? "0" . $dia1 : $dia1;
+
                 $fecha_mes_1 = $fecha_mes . '-' . $dia1;
                 $fecha_mes_2 = $fecha_mes . '-' . $dia2;
                 if ($fecha_mes_1 > FECHA_ACTUAL) {

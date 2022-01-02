@@ -3,7 +3,7 @@ header('Content-Encoding: UTF-8');
 
 header('Content-type: text/csv; charset=UTF-8');
 
-header("Content-Disposition: attachment; filename=enrutar_cuentas.csv");
+header("Content-Disposition: attachment; filename=exportar_ruta_" . $_GET['usr_ruta'] . ".csv");
 
 header("Pragma: no-cache");
 
@@ -38,7 +38,7 @@ echo "ENRUTE \n";
 
 //http://localhost/comisa.com/export/exportar-cuentas.php
 
-$cuentas = ContratosModelo::mdlMostrarSaldosRuta('R2');
+$cuentas = ContratosModelo::mdlMostrarSaldosRuta($_GET['usr_ruta']);
 foreach ($cuentas as $key => $ctr) {
     // $fecha_abono = date($ctr['ctr_ultima_fecha_abono'], "Y-m-d");
     $fecha_abono = date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
