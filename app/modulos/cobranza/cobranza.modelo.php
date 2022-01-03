@@ -552,7 +552,7 @@ class CobranzaModelo
     public static function mdlMostrarFichas(){
         try {
             //code...
-            $sql = "SELECT * FROM tbl_pagos_gds ";
+            $sql = "SELECT * FROM tbl_pagos_gds  GROUP BY  gds_id DESC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps ->execute();
