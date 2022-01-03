@@ -94,7 +94,8 @@ class AppControlador
             'edit-cliente-mal-historial',
             'cobranza',
             'autorizar-pagos',
-            'historial-ficha'
+            'historial-ficha',
+            'autorizar-cobranza'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -694,6 +695,11 @@ class AppControlador
                     'modulos' =>
                     array(
 
+                        [
+                            'icon' => '',
+                            'label' => 'Autorizar cobranza',
+                            'href' => 'autorizar-cobranza'
+                        ],
                         [
                             'icon' => '',
                             'label' => 'Pagos por autorizar',

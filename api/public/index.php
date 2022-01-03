@@ -337,6 +337,24 @@ $app->get('/sincronizar_cra/{ruta}', function (Request $request, Response $respo
 
     return json_encode($getAllCtra, true);
 });
+
+$app->get('/autorizar_cobranza/{usr_id}', function (Request $request, Response $response, array $args) {
+    $usr_id =  $args['usr_id'];
+
+    $autorizar = CobranzaModelo::mdlCobranzaAutizo($usr_id);
+
+    if ($autorizar['usr_autorizar_cobranza'] == 1) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Cobranza autorizada'
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Tu cobranza no fue autorizada, llama a oficina'
+        ), true);
+    }
+});
 $app->get('/actualizar_saldos/{usr_id}', function (Request $request, Response $response, array $args) {
     $usr_id =  $args['usr_id'];
 
@@ -397,10 +415,10 @@ $app->post('/comisa-datos-cobranza', function (Request $request, Response $respo
 $app->post('/cobranza-ref', function (Request $request, Response $response) {
     $json = $request->getBody();
 
-    $data = json_decode($json, true);    
+    $data = json_decode($json, true);
 
     $ref = CobranzaModelo::mdlActualiarRef($data);
-    
+
     $datos = array(
         'status' => true,
         'mensaje' => 'Referencias actualizadas'
