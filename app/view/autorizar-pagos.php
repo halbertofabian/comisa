@@ -1,5 +1,6 @@
 <div class="container-fluid table-responsive">
 
+    <?php  ?>
     <?php
     cargarComponente('breadcrumb', '', 'Pagos por autorizar');
     if (isset($rutas[1])) {

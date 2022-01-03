@@ -93,7 +93,8 @@ class AppControlador
             'new-mal-historial',
             'edit-cliente-mal-historial',
             'cobranza',
-            'autorizar-pagos'
+            'autorizar-pagos',
+            'historial-ficha'
         );
     }
     public static function ObtenerListaBlancaGefeVentas()
@@ -698,6 +699,12 @@ class AppControlador
                             'label' => 'Pagos por autorizar',
                             'href' => 'autorizar-pagos'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Historial de fichas',
+                            'href' => 'historial-ficha/'
+                        ],
+
                         [
                             'icon' => '',
                             'label' => 'Flujo de caja',
