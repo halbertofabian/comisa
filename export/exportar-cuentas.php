@@ -20,6 +20,7 @@ require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 
 echo "RUTA,";
 echo "CUENTA,";
+echo "CLIENTE,";
 echo "TOTAL,";
 echo "ENGANCHE,";
 echo "PAGO ADICIONAL,";
@@ -46,6 +47,7 @@ foreach ($cuentas as $key => $ctr) {
 
     echo $ctr['ctr_ruta'] . ",";
     echo $ctr['ctr_numero_cuenta'] . ",";
+    echo $ctr['ctr_cliente'] . ",";
     echo $ctr['ctr_total'] . ",";
     echo $ctr['ctr_enganche'] . ",";
     echo $ctr['ctr_pago_adicional'] . ",";
