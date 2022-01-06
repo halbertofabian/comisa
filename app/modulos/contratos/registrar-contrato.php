@@ -62,9 +62,28 @@
                                     <input type="text" name="ctr_folio" id="ctr_folio_n" class="form-control" readonly>
                                 </div>
                             </div>
+                            
+                            <div class="col-md-2 col-12">
+                                <div class="form-group">
+                                    <label for="">RUTA:</label>
+                                    <select name="ctr_ruta" id="ctr_ruta" class="form-control select2">
+                                        <?php
+                                        for ($i = 1; $i < 100; $i++) :
+                                        ?>
+                                            <option value="R<?= $i ?>">R<?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-12">
+                                <div class="form-group">
+                                    <label for="">Nº CUENTA:</label>
+                                    <input type="text" class="form-control" name="ctr_numero_cuenta" id="ctr_numero_cuenta">
+                                </div>
+                            </div>
                             <div class="col-md-4 col-12">
                                 <div class="form-group">
-                                    <label for="">FECHA:</label>
+                                    <label for="">FECHA DE VENTA:</label>
                                     <input type="date" name="clts_fecha_registro" id="clts_fecha_registro" class="form-control theDate">
                                 </div>
                             </div>
@@ -489,7 +508,7 @@
                             <div class="col-md-3 col-12">
                                 <div class="form-group">
                                     <!-- <input type="text" name="cts_dia_pago" id="cts_dia_pago" class="form-control" required> -->
-                                    <select name="cts_dia_pago_semanal" id="cts_dia_pago_semanal" class="form-control  d-none" >
+                                    <select name="cts_dia_pago_semanal" id="cts_dia_pago_semanal" class="form-control  d-none">
                                         <option value="">SELECCIONE DIA</option>
                                         <option value="LUNES">LUNES</option>
                                         <option value="MARTES">MARTES</option>
@@ -499,7 +518,7 @@
                                         <option value="SABADO">SABADO</option>
                                         <option value="DOMINGO">DOMINGO</option>
                                     </select>
-                                    <select name="cts_dia_pago_qc_1" id="cts_dia_pago_qc_1" class="form-control  mt-1 d-none cts_dia_pago_qc" >
+                                    <select name="cts_dia_pago_qc_1" id="cts_dia_pago_qc_1" class="form-control  mt-1 d-none cts_dia_pago_qc">
                                         <option value="">SELECCIONE DIA 1</option>
                                         <?php
                                         for ($i = 1; $i <= 31; $i++) :
@@ -507,7 +526,7 @@
                                             <option value="<?= $i ?>"><?= $i ?></option>
                                         <?php endfor; ?>
                                     </select>
-                                    <select name="cts_dia_pago_qc_2" id="cts_dia_pago_qc_2" class="form-control  mt-1 d-none cts_dia_pago_qc" >
+                                    <select name="cts_dia_pago_qc_2" id="cts_dia_pago_qc_2" class="form-control  mt-1 d-none cts_dia_pago_qc">
                                         <option value="">SELECCIONE DIA 2</option>
                                         <?php
                                         for ($i = 1; $i <= 31; $i++) :
@@ -515,7 +534,7 @@
                                             <option value="<?= $i ?>"><?= $i ?></option>
                                         <?php endfor; ?>
                                     </select>
-                                    <select name="cts_dia_pago_m" id="cts_dia_pago_m" class="form-control  mt-1 d-none cts_dia_pago_m" >
+                                    <select name="cts_dia_pago_m" id="cts_dia_pago_m" class="form-control  mt-1 d-none cts_dia_pago_m">
                                         <option value="">SELECCIONE DIA </option>
                                         <?php
                                         for ($i = 1; $i <= 31; $i++) :
