@@ -298,7 +298,6 @@ class ContratosModelo
             clts_tbj_ing_conyuge, clts_nom_fiador, 
             clts_parentesco_fiador, clts_tel_fiador, clts_dir_fiador, clts_col_fiador,
             clts_tbj_fiador, clts_tbj_dir_fiador, clts_tbj_tel_fiador, clts_tbj_col_fiador, clts_tbj_ant_fiador, clts_fotos_fiador,
-
             clts_nom_ref2, clts_parentesco_ref2, clts_dir_ref2, clts_col_ref2, clts_tel_ref2, clts_nom_ref3, clts_parentesco_ref3,
             clts_dir_ref3, clts_col_ref3, clts_tel_ref3, sobre_enganche_pendiente, clts_registro_venta, clts_caja, clts_folio_nuevo,
             ctr_pago_credito, 
@@ -394,11 +393,6 @@ class ContratosModelo
             $pps->bindValue(78, $ctr['ctr_status_cuenta']);
             $pps->bindValue(79, $ctr['ctr_saldo_actual']);
             $pps->bindValue(80, $ctr['ctr_moroso']);
-
-
-
-
-
             $pps->execute();
             return $pps->errorInfo();
         } catch (PDOException $th) {

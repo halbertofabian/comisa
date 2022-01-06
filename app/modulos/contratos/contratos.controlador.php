@@ -1333,7 +1333,7 @@ class ContratosControlador
 
 
 
-                preArray($ctr);
+                // preArray($ctr);
 
 
 
