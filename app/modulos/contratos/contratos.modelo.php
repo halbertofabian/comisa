@@ -390,7 +390,7 @@ class ContratosModelo
             $pps->bindValue(79, $ctr['ctr_saldo_actual']);
             $pps->bindValue(80, $ctr['ctr_moroso']);
             $pps->execute();
-            return $pps->errorInfo();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
