@@ -1345,8 +1345,8 @@ class ContratosControlador
                     // REGISTRAR CONTRATO 
                     $registrarContrato = ContratosModelo::mdlSubirPreContratos($ctr);
 
-                    // preArray($registrarContrato);
-                    // return;
+                    preArray($registrarContrato);
+                    return;
 
                     if ($registrarContrato) {
                         $countInsert += 1;
