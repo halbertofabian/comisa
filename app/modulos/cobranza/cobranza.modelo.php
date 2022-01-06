@@ -465,6 +465,24 @@ class CobranzaModelo
         }
     }
 
+    public static function mdlObtenerContratoCobrado2($ctr_id)
+    {
+        try {
+            $sql = "SELECT ctr_saldo_actual,ctr_total_pagado,ctr_ultima_fecha_abono FROM tbl_contrato_crt_1  WHERE ctr_id = ? ";
+            $con = Conexion::conectar();
+            $pps  = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
     public static function mdlActualizarSaldosContrato($ctr)
     {
         try {

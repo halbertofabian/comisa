@@ -457,10 +457,10 @@ class CobranzaControlador
         $listarAbonos = CobranzaModelo::mdlListarPagosPendientes($usr_id);
         $array_contratos = array();
         foreach ($listarAbonos as  $abs) {
-            $cts = CobranzaModelo::mdlObtenerContratoCobrado($abs['abs_id_contrato']);
+            $contrato = CobranzaModelo::mdlObtenerContratoCobrado($abs['abs_id_contrato']);
             $contratos = array(
                 'abono' => $abs,
-                'contrato' => $cts,
+                'contrato' => $contrato,
             );
             array_push($array_contratos, $contratos);
         }
@@ -468,9 +468,14 @@ class CobranzaControlador
         $countAct = 0;
         foreach ($array_contratos as  $cts) {
             # code...
-            $nuevo_saldo = dnum($cts['contrato']['ctr_saldo_actual']) - dnum($cts['abono']['abs_monto']);
-            $total_pagado = dnum($cts['contrato']['ctr_total_pagado']) + dnum($cts['abono']['abs_monto']);
 
+            $ctr_solo = CobranzaModelo::mdlObtenerContratoCobrado2($cts['contrato']['ctr_id']);
+            $abono = dnum($cts['abono']['abs_monto']);
+            $nuevo_saldo = dnum($ctr_solo['ctr_saldo_actual']);
+            $total_pagado = dnum($ctr_solo['ctr_total_pagado']);
+
+            $nuevo_saldo =  $nuevo_saldo - $abono;
+            $total_pagado = $total_pagado  + $abono;
             $saldo_act = CobranzaModelo::mdlActualizarSaldosContrato(array(
                 'ctr_saldo_actual' => $nuevo_saldo,
                 'ctr_total_pagado' => $total_pagado,
