@@ -1345,15 +1345,12 @@ class ContratosControlador
                     // REGISTRAR CONTRATO 
                     $registrarContrato = ContratosModelo::mdlSubirPreContratos($ctr);
 
-                
-
                     if ($registrarContrato) {
                         $countInsert += 1;
                     } else {
                     }
                 } else {
                     // ACTUALIZAR CONTRATO
-
 
                     $actualizarContrato = ContratosModelo::mdlActualizarPreContratosExcel($ctr);
                     if ($actualizarContrato) {
