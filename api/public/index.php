@@ -459,4 +459,12 @@ $app->get('/finalizar_cobranza', function (Request $request, Response $response,
 
     return json_encode($getAllCtra, true);
 });
+
+$app->get('/consultar_contratos_new/{ruta}', function (Request $request, Response $response, array $args) {
+    $ruta =  $args['ruta'];
+
+    $getAllCtra = ContratosModelo::mdlFiltrarContratoPorRuta2($ruta);
+
+    return json_encode($getAllCtra, true);
+});
 $app->run();

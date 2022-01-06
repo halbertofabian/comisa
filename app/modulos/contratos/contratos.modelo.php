@@ -996,6 +996,41 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlFiltrarContratoPorRuta2($ctr_ruta)
+    {
+        try {
+            //c4ode...
+
+            $sql = "SELECT	
+            ctr_id,
+            ctr_folio,
+            ctr_cliente,
+            ctr_numero_cuenta,
+            ctr_ruta,
+            ctr_forma_pago,
+            ctr_dia_pago,
+            ctr_proximo_pago,
+            ctr_plazo_credito,
+            ctr_total,
+            ctr_enganche,
+            ctr_pago_adicional,
+            ctr_saldo,
+            ctr_pago_credito,
+            clts_domicilio,
+            clts_col
+            FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_enrutar = 'N' AND ctr_status_cuenta = 'NUEVA' ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_ruta);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlActualizarStatusEnrutamientoS($ctrs_id, $ctr_dia_pago)
     {
