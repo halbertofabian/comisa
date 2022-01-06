@@ -400,7 +400,7 @@ class ContratosModelo
 
 
             $pps->execute();
-            return $pps->rowCount() > 0;
+            return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
         } finally {

@@ -1103,7 +1103,7 @@ class ContratosControlador
             //echo "NumRows => ",$objPHPExcel->getActiveSheet()->getCell('B' . 2)->getCalculatedValue();
 
             $leyenda = "";
-            for ($i = 4; $i <= $numRows; $i++) {
+            for ($i = 1; $i <= $numRows; $i++) {
 
 
                 $ctr_numero_cuenta = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
@@ -1343,6 +1343,9 @@ class ContratosControlador
                 if (!$ctr_isset) {
                     // REGISTRAR CONTRATO 
                     $registrarContrato = ContratosModelo::mdlSubirPreContratos($ctr);
+
+                    preArray($registrarContrato);
+                    return;
 
                     if ($registrarContrato) {
                         $countInsert += 1;
