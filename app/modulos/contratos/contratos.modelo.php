@@ -283,11 +283,7 @@ class ContratosModelo
     public static function mdlSubirPreContratos($ctr)
     {
         try {
-            $sql = "INSERT INTO tbl_contrato_crt_1 
-            (ctr_folio, ctr_fecha_contrato, ctr_id_vendedor, ctr_cliente, ctr_numero_cuenta, ctr_ruta, ctr_forma_pago,
-            ctr_dia_pago, ctr_proximo_pago,
-            ctr_plazo_credito, ctr_tipo_pago, ctr_productos, ctr_total, ctr_enganche, ctr_pago_adicional,
-            ctr_saldo, ctr_elaboro, ctr_nota, ctr_fotos, 
+            $sql = "INSERT INTO tbl_contrato_crt_1 (ctr_folio, ctr_fecha_contrato, ctr_id_vendedor, ctr_cliente,ctr_numero_cuenta, ctr_ruta, ctr_forma_pago,ctr_dia_pago, ctr_proximo_pago,ctr_plazo_credito, ctr_tipo_pago, ctr_productos, ctr_total, ctr_enganche, ctr_pago_adicional,ctr_saldo, ctr_elaboro, ctr_nota, ctr_fotos, 
             ctr_nombre_ref_1, ctr_parentesco_ref_1, ctr_direccion_ref_1, ctr_colonia_ref_1,
             ctr_telefono_ref_1, clts_curp, clts_telefono, clts_domicilio, clts_col, clts_entre_calles, 
             clts_trabajo, clts_puesto, 
