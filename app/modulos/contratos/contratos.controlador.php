@@ -1158,8 +1158,8 @@ class ContratosControlador
                 $ctr_direccion_ref_1 = $objPHPExcel->getActiveSheet()->getCell('AY' . $i)->getCalculatedValue();
                 $ctr_colonia_ref_1 = $objPHPExcel->getActiveSheet()->getCell('AZ' . $i)->getCalculatedValue();
                 $ctr_telefono_ref_1 = $objPHPExcel->getActiveSheet()->getCell('BA' . $i)->getCalculatedValue();
-                $clts_nom_ref2 = $objPHPExcel->getActiveSheet()->getCell('AB' . $i)->getCalculatedValue();
-                $clts_parentesco_ref2 = $objPHPExcel->getActiveSheet()->getCell('AC' . $i)->getCalculatedValue();
+                $clts_nom_ref2 = $objPHPExcel->getActiveSheet()->getCell('BB' . $i)->getCalculatedValue();
+                $clts_parentesco_ref2 = $objPHPExcel->getActiveSheet()->getCell('BC' . $i)->getCalculatedValue();
                 $clts_dir_ref2 = $objPHPExcel->getActiveSheet()->getCell('BD' . $i)->getCalculatedValue();
                 $clts_col_ref2 = $objPHPExcel->getActiveSheet()->getCell('BE' . $i)->getCalculatedValue();
                 $clts_tel_ref2 = $objPHPExcel->getActiveSheet()->getCell('BF' . $i)->getCalculatedValue();
