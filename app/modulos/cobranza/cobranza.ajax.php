@@ -54,11 +54,40 @@ class CobranzaAjax
             'cra' => $cra,
         ), true);
     }
-    
+
     public function ajaxEnrutarCuenta()
     {
         $respuesta = CobranzaControlador::ctrEnrutarCuenta();
         echo json_encode($respuesta, true);
+    }
+
+    public function ajaxMostrarEnrute()
+    {
+        $respuesta = CobranzaModelo::mdlMostrarCartelera();
+        $tabla = ' <table class="table table-striped table-hover tablas" >
+        <thead>
+            <tr>
+                <th>RUTA</th>
+                <th># CUENTA</th>
+                <th> FECHA PROXIMO DE PAGO</th>
+                <th> FECHA  REAGENDADA</th>
+                <th> ORDEN </th>
+            </tr>
+        </thead>
+        <tbody>';
+        foreach ($respuesta as $key => $cra) {
+
+            $tabla .= '<tr>';
+            $tabla .= '<td>' . $cra['ctr_ruta'] . '</td>';
+            $tabla .= '<td>' . $cra['ctr_numero_cuenta'] . '</td>';
+            $tabla .= '<td>' . fechaCastellano($cra['cra_fecha_cobro']) . '</td>';
+            $tabla .= '<td>' . $cra['cra_fecha_reagenda'] . '</td>';
+            $tabla .= '<td>' . $cra['cra_orden'] . '</td>';
+            $tabla .= '</tr>';
+        }
+        $tabla .= '</tbody>
+        </table>';
+        echo $tabla;
     }
 }
 if (isset($_POST['btnImportarSaldos'])) {
@@ -90,3 +119,7 @@ if (isset($_POST['formEnrutarCuenta'])) {
     $btnEnrutarCuenta->ajaxEnrutarCuenta();
 }
 
+if (isset($_POST['btnMostrarEnrute'])) {
+    $btnBuscarEnrute = new CobranzaAjax();
+    $btnBuscarEnrute->ajaxMostrarEnrute();
+}

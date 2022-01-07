@@ -146,39 +146,20 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <table class="table table-striped tablas">
-                    <thead>
-                        <tr>
-                            <th>RUTA</th>
-                            <th># CUENTA</th>
-                            <th>FECHA PROXIMO COBRO</th>
-                            <th>FECHA REAGENDA</th>
-                            <th>ORDEN</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $enrute = CobranzaModelo::mdlMostrarCartelera();
+            <div class="col-md-6" height="300px" style="overflow-y:scroll">
+                <div id="tbodyEnrute">
 
-                        foreach ($enrute as $key => $cra) :
-                        ?>
-                        <tr>
-                            <td><?= $cra['ctr_ruta'] ?></td>
-                            <td><?=  $cra['ctr_numero_cuenta'] ?></td>
-                            <td><?= fechaCastellano($cra['cra_fecha_cobro']) ?></td>
-                            <td><?= $cra['cra_fecha_reagenda'] ?></td>
-                            <td><?= $cra['cra_orden'] ?></td>
-                        </tr>
-
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </form>
 </div>
 <script>
+    $(document).ready(function() {
+        mostrarEnrute()
+    })
+
+
     $("#formBuscarEnrute").on("submit", function(e) {
         e.preventDefault();
         var datos = new FormData(this)
@@ -267,10 +248,12 @@
                 $("#ctr_cuenta").val("");
                 $("#ctr_cliente").val("");
                 $("#ctr_cuenta").focus();
+                mostrarEnrute()
 
             }
         })
     })
+
 
 
 
@@ -319,4 +302,29 @@
     $(".inputN").on("keyup", function() {
         saldo()
     })
+
+
+    function mostrarEnrute() {
+        // e.preventDefault();
+        var datos = new FormData()
+        datos.append("btnMostrarEnrute", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "html",
+            beforeSend: function() {
+                // startLoadButton()
+            },
+            success: function(res) {
+                console.log(res)
+                $("#tbodyEnrute").html(res);
+            }
+        })
+
+    }
+   
 </script>

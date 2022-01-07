@@ -723,7 +723,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT cra.*,ctr.ctr_ruta,ctr.ctr_numero_cuenta FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr  ON ctr.ctr_id = cra.cra_contrato ORDER BY cra.cra_id DESC ";
+            $sql = "SELECT cra.*,ctr.ctr_ruta,ctr.ctr_numero_cuenta FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr  ON ctr.ctr_id = cra.cra_contrato ORDER BY cra.cra_id DESC LIMIT 10";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
