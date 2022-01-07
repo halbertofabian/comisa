@@ -624,5 +624,42 @@ class CobranzaModelo
         }
     }
 
-    
+    public static function mdlMostrardatosEnrute($ctr)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_id,ctr_ruta,ctr_cliente,ctr_numero_cuenta,ctr_forma_pago,ctr_dia_pago,ctr_proximo_pago,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_pago_credito,ctr_status_cuenta,ctr_saldo_actual,DATE(ctr_ultima_fecha_abono) AS ctr_ultima_fecha_abono,ctr_total_pagado,ctr_orden,ctr_saldo_base FROM tbl_contrato_crt_1 WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_cuenta']);
+            $pps->bindValue(2, $ctr['ctr_ruta']);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarEnture($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_cartelera_cra WHERE cra_contrato= ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

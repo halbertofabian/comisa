@@ -43,6 +43,17 @@ class CobranzaAjax
         $respuesta = CobranzaModelo::mdlActualizarCobranzaAutizo($_POST['usr_id'], $_POST['usr_autorizar_cobranza']);
         echo json_encode($respuesta, true);
     }
+    public function ajaxBuscarEnrute()
+    {
+        $ctr = CobranzaModelo::mdlMostrardatosEnrute($_POST);
+        // preArray($ctr);
+        // return;
+        $cra = CobranzaModelo::mdlMostrarEnture($ctr['ctr_id']);
+        echo json_encode(array(
+            'ctr' => $ctr,
+            'cra' => $cra,
+        ), true);
+    }
 }
 if (isset($_POST['btnImportarSaldos'])) {
     $importarSaldos = new CobranzaAjax();
@@ -62,4 +73,9 @@ if (isset($_POST['btnAutorizarPagos'])) {
 if (isset($_POST['btnDenegarCobro'])) {
     $btnAutorizarCobranza = new CobranzaAjax();
     $btnAutorizarCobranza->ajaxAutorizarCobranza();
+}
+
+if (isset($_POST['btnBuscarEnrute'])) {
+    $btnBuscarEnruta = new CobranzaAjax();
+    $btnBuscarEnruta->ajaxBuscarEnrute();
 }

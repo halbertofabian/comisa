@@ -2,6 +2,7 @@ var urlApp = $(".urlApp").attr("urlApp")
 
 
 $('.phone_mx').mask('(000) 000 0000');
+$('.date').mask('0000-00-00');
 
 
 
