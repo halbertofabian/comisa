@@ -163,6 +163,86 @@ class CobranzaControlador
         }
     }
 
+
+    public static function ctrEnrutarCuenta()
+    {
+
+        $ctr_proximo_pago = explode('-', $_POST['ctr_proximo_pago']);
+        $_POST['ctr_proximo_pago'] = $ctr_proximo_pago[2] . '-' . $ctr_proximo_pago[1] . '-' . $ctr_proximo_pago[0];
+
+        $ctr_ultima_fecha_abono = explode('-', $_POST['ctr_ultima_fecha_abono']);
+        $_POST['ctr_ultima_fecha_abono'] = $ctr_ultima_fecha_abono[2] . '-' . $ctr_ultima_fecha_abono[1] . '-' . $ctr_ultima_fecha_abono[0];
+
+
+        $dia_pago = "";
+        if ($_POST['ctr_forma_pago'] == 'SEMANALES') {
+            $dia_pago = $_POST['ctr_dia_pago'];
+        } else if ($_POST['ctr_forma_pago'] == 'CATORCENALES') {
+            $dia_pago = $_POST['ctr_dia_pago'];
+            // FECHA PROXIMO COBRO
+        } else if ($_POST['ctr_forma_pago'] == 'QUINCENALES') {
+            $dia_pago = $_POST['ctr_dia_pago_2'];
+        } else if ($_POST['ctr_forma_pago'] == 'MENSUALES') {
+            $dia_pago = $_POST['ctr_dia_pago_2'];
+        }
+
+        $_POST['ctr_dia_pago'] = $dia_pago;
+
+        $data = array(
+            "ctr_id" => $_POST['ctr_id'],
+            "ctr_total" => dnum($_POST['ctr_total']),
+            "ctr_enganche" => dnum($_POST['ctr_enganche']),
+            "ctr_pago_adicional" => dnum($_POST['ctr_pago_adicional']),
+            "ctr_saldo" => dnum($_POST['ctr_saldo']),
+            "ctr_saldo_actual" => dnum($_POST['ctr_saldo_actual']),
+            "ctr_ultima_fecha_abono" => $_POST['ctr_ultima_fecha_abono'],
+            "ctr_total_pagado" => dnum($_POST['ctr_total_pagado']),
+            "ctr_forma_pago" => $_POST['ctr_forma_pago'],
+            "ctr_dia_pago" => $_POST['ctr_dia_pago'],
+            "ctr_pago_credito" => dnum($_POST['ctr_pago_credito']),
+            "ctr_status_cuenta" => $_POST['ctr_status_cuenta'],
+            'ctr_proximo_pago' => $_POST['ctr_proximo_pago'],
+            'ctr_enrutar' => 'S',
+            'ctr_orden' => $_POST['ctr_orden'],
+            'ctr_saldo_base' => $_POST['ctr_saldo_base']
+        );
+
+
+        if (!isset($_POST['cra_estado'])) {
+            $_POST['cra_estado'] = 'PENDIENTE';
+        }
+        if ($_POST['cra_fecha_reagenda'] == "") {
+            $_POST['cra_fecha_reagenda'] = '0000-00-00';
+        }
+        $res = CobranzaModelo::mdlActualizarSaldos2($data);
+
+
+
+        $enrurar_cta = CobranzaControlador::ctrEnrrutarCuenta(
+            array(
+                'ctr_forma_pago' =>  $_POST['ctr_forma_pago'],
+                'ctr_dia_pago' =>  $_POST['ctr_dia_pago'],
+                'ctr_siguiente_fecha_pago' =>  $_POST['cra_fecha_cobro'],
+                'cra_contrato' =>  $_POST['ctr_id'],
+                'ctr_orden' =>  $_POST['ctr_orden'],
+                'ctr_reagendado' =>  $_POST['cra_fecha_reagenda'],
+                'cra_estado' => $_POST['cra_estado']
+            )
+        );
+
+        if ($enrurar_cta) {
+            return  array(
+                'status' => true,
+                'mensaje' => 'Cuenta enrutada'
+            );
+        } else {
+            return  array(
+                'status' => false,
+                'mensaje' => 'No se realizaron cambios'
+            );
+        }
+    }
+
     public static function ctrEnrrutarCuenta($cta)
     {
         if ($cta['ctr_forma_pago'] == 'SEMANALES') {
@@ -224,7 +304,16 @@ class CobranzaControlador
             'cra_orden' => $cta['ctr_orden'],
             'cra_estado' => $cta['cra_estado'] == "" ? "PENDIENTE" : $cta['cra_estado']
         );
-        $enrutar = CobranzaModelo::mdlRegistrarSigienteEnrutamiento($datos_e);
+
+
+        $isexit = CobranzaModelo::mdlConsultarEnrute($cta['cra_contrato']);
+
+        if ($isexit) {
+            // ACTUALIZAR
+            $enrutar = CobranzaModelo::mdlActualizarSigienteEnrutamiento($datos_e, $isexit['cra_id']);
+        } else {
+            $enrutar = CobranzaModelo::mdlRegistrarSigienteEnrutamiento($datos_e);
+        }
         return $enrutar;
     }
 

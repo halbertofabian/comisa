@@ -54,6 +54,12 @@ class CobranzaAjax
             'cra' => $cra,
         ), true);
     }
+    
+    public function ajaxEnrutarCuenta()
+    {
+        $respuesta = CobranzaControlador::ctrEnrutarCuenta();
+        echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnImportarSaldos'])) {
     $importarSaldos = new CobranzaAjax();
@@ -79,3 +85,8 @@ if (isset($_POST['btnBuscarEnrute'])) {
     $btnBuscarEnruta = new CobranzaAjax();
     $btnBuscarEnruta->ajaxBuscarEnrute();
 }
+if (isset($_POST['formEnrutarCuenta'])) {
+    $btnEnrutarCuenta = new CobranzaAjax();
+    $btnEnrutarCuenta->ajaxEnrutarCuenta();
+}
+

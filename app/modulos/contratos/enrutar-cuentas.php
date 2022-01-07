@@ -34,138 +34,150 @@
         </div>
     </form>
     <hr>
-    <div class="row">
-        <div class="col-md-6">
-            <input type="text" id="ctr_id" name="ctr_id">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="ctr_orden">Nº ORDEN</label>
-                        <input type="numer" step="0.1" name="ctr_orden" id="ctr_orden" class="form-control" placeholder="">
+    <form id="formEnrutarCuenta" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" id="ctr_id" name="ctr_id">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="ctr_orden">Nº ORDEN</label>
+                            <input type="numer" step="0.1" name="ctr_orden" id="ctr_orden" class="form-control" placeholder="">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="ctr_forma_pago">FORMA DE PAGO</label>
-                    <select name="ctr_forma_pago" id="ctr_forma_pago" class="form-control forma_pago">
-                        <option value=""></option>
-                        <option value="SEMANALES">SEMANALES</option>
-                        <option value="CATORCENALES">CATORCENALES</option>
-                        <option value="QUINCENALES">QUINCENALES</option>
-                        <option value="MENSUALES">MENSUALES</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="">DIA PAGO</label>
-                    <div class="d-dia_1 d-none">
-                        <select name="ctr_dia_pago" id="ctr_dia_pago" class="form-control">
+                    <div class="form-group col-md-4">
+                        <label for="ctr_forma_pago">FORMA DE PAGO</label>
+                        <select name="ctr_forma_pago" id="ctr_forma_pago" class="form-control forma_pago">
                             <option value=""></option>
-                            <option value="LUNES">LUNES</option>
-                            <option value="MARTES">MARTES</option>
-                            <option value="MIERCOLES">MIERCOLES</option>
-                            <option value="JUEVES">JUEVES</option>
-                            <option value="VIERNES">VIERNES</option>
-                            <option value="SABADO">SABADO</option>
-                            <option value="DOMINGO">DOMINGO</option>
+                            <option value="SEMANALES">SEMANALES</option>
+                            <option value="CATORCENALES">CATORCENALES</option>
+                            <option value="QUINCENALES">QUINCENALES</option>
+                            <option value="MENSUALES">MENSUALES</option>
                         </select>
                     </div>
-                    <div class="d-dia_2 d-none">
+                    <div class="form-group col-md-4">
+                        <label for="">DIA PAGO</label>
+                        <div class="d-dia_1 d-none">
+                            <select name="ctr_dia_pago" id="ctr_dia_pago" class="form-control">
+                                <option value=""></option>
+                                <option value="LUNES">LUNES</option>
+                                <option value="MARTES">MARTES</option>
+                                <option value="MIERCOLES">MIERCOLES</option>
+                                <option value="JUEVES">JUEVES</option>
+                                <option value="VIERNES">VIERNES</option>
+                                <option value="SABADO">SABADO</option>
+                                <option value="DOMINGO">DOMINGO</option>
+                            </select>
+                        </div>
+                        <div class="d-dia_2 d-none">
+                            <div class="form-group">
+                                <input type="text" name="ctr_dia_pago_2" id="ctr_dia_pago_2" class="form-control" placeholder="" aria-describedby="helpId">
+                            </div>
+                        </div>
+                        <div class="d-dia-p d-none">
+                            <div class="form-group">
+                                <label for="cra_fecha_cobro">PROXIMO DIA DE PAGO</label>
+                                <input type="date" name="cra_fecha_cobro" id="cra_fecha_cobro" class="form-control" placeholder="">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ctr_pago_credito">PAGO</label>
+                        <input type="text" id="ctr_pago_credito" name="ctr_pago_credito" class="form-control inputN">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">FECHA INICIO PAGO</label>
+                        <input type="text" class="form-control date" id="ctr_proximo_pago" name="ctr_proximo_pago">
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="">TOTAL</label>
+                        <input type="text" class="form-control inputN" id="ctr_total" name="ctr_total">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">ENG</label>
+                        <input type="text" class="form-control inputN" id="ctr_enganche" name="ctr_enganche">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">PAGO ADICIONAL</label>
+                        <input type="text" class="form-control inputN" id="ctr_pago_adicional" name="ctr_pago_adicional">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">SALDO</label>
+                        <input type="text" class="form-control inputN" id="ctr_saldo" name="ctr_saldo">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">SALDO ACUAL</label>
+                        <input type="text" class="form-control inputN" id="ctr_saldo_actual" name="ctr_saldo_actual">
+                        <input type="hidden" id="ctr_saldo_base" name="ctr_saldo_base">
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <label for="">FECHA ULTIMO PAGO</label>
+                        <input type="text" class="form-control date" id="ctr_ultima_fecha_abono" name="ctr_ultima_fecha_abono">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="">TOTAL PAGADO</label>
+                        <input type="text" class="form-control inputN" readonly id="ctr_total_pagado" name="ctr_total_pagado">
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <input type="text" name="ctr_dia_pago_2" id="ctr_dia_pago_2" class="form-control" placeholder="" aria-describedby="helpId">
+                            <label for="">STATUS</label>
+                            <input type="text" class="form-control" id="ctr_status_cuenta" name="ctr_status_cuenta">
                         </div>
                     </div>
-                    <div class="d-dia-p d-none">
-                        <div class="form-group">
-                            <label for="">PROXIMO DIA DE PAGO</label>
-                            <input type="date" name="" id="" class="form-control" placeholder="">
+
+                    <div class="form-group col-md-4">
+                        <label for="">FECHA REAGENDA</label>
+                        <input type="date" class="form-control" id="cra_fecha_reagenda" name="cra_fecha_reagenda">
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <label class="form-check-label mt-4">
+                                <input type="checkbox" class="form-check-input" value="POR LOCALIZAR" id="cra_estado" name="cra_estado">
+                                POR LOCALIZAR
+                            </label>
                         </div>
                     </div>
-
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="ctr_pago_credito">PAGO</label>
-                    <input type="text" id="ctr_pago_credito" name="ctr_pago_credito" class="form-control inputN">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="">FECHA INICIO PAGO</label>
-                    <input type="text" class="form-control date" id="ctr_proximo_pago" name="ctr_proximo_pago">
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="">TOTAL</label>
-                    <input type="text" class="form-control inputN" id="ctr_total" name="ctr_total">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="">ENG</label>
-                    <input type="text" class="form-control inputN" id="ctr_enganche" name="ctr_enganche">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="">PAGO ADICIONAL</label>
-                    <input type="text" class="form-control inputN" id="ctr_pago_adicional" name="ctr_pago_adicional">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="">SALDO</label>
-                    <input type="text" class="form-control inputN" id="ctr_saldo" name="ctr_saldo">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="">SALDO ACUAL</label>
-                    <input type="text" class="form-control inputN" id="ctr_saldo_actual" name="ctr_saldo_actual">
-                    <input type="text" id="ctr_saldo_base" name="ctr_saldo_base">
-                </div>
-
-
-                <div class="form-group col-md-4">
-                    <label for="">FECHA ULTIMO PAGO</label>
-                    <input type="text" class="form-control date" id="ctr_ultima_fecha_abono" name="ctr_ultima_fecha_abono">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="">TOTAL PAGADO</label>
-                    <input type="text" class="form-control inputN" readonly id="ctr_total_pagado" name="ctr_total_pagado">
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="">STATUS</label>
-                        <input type="text" class="form-control" id="ctr_status_cuenta" name="ctr_status_cuenta">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary float-right">GUARDAR ENRUTAMIENTO</button>
                     </div>
-                </div>
-
-                <div class="form-group col-md-4">
-                    <label for="">FECHA REAGENDA</label>
-                    <input type="date" class="form-control" id="cra_fecha_reagenda" name="cra_fecha_reagenda">
-                </div>
-                <div class="col-md-4">
-                    <div class="form-check">
-                        <label class="form-check-label mt-4">
-                            <input type="checkbox" class="form-check-input" value="POR LOCALIZAR" id="cra_estado" name="cra_estado">
-                            POR LOCALIZAR
-                        </label>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary float-right">GUARDAR ENRUTAMIENTO</button>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>RUTA</th>
-                        <th># CUENTA</th>
-                        <th>FECHA PROXIMO COBRO</th>
-                        <th>FECHA REAGENDA</th>
-                        <th>ORDEN</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div class="col-md-6">
+                <table class="table table-striped tablas">
+                    <thead>
+                        <tr>
+                            <th>RUTA</th>
+                            <th># CUENTA</th>
+                            <th>FECHA PROXIMO COBRO</th>
+                            <th>FECHA REAGENDA</th>
+                            <th>ORDEN</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $enrute = CobranzaModelo::mdlMostrarCartelera();
 
-                </tbody>
-            </table>
-        </div>
-    </div>
+                        foreach ($enrute as $key => $cra) :
+                        ?>
+                        <tr>
+                            <td><?= $cra['ctr_ruta'] ?></td>
+                            <td><?=  $cra['ctr_numero_cuenta'] ?></td>
+                            <td><?= fechaCastellano($cra['cra_fecha_cobro']) ?></td>
+                            <td><?= $cra['cra_fecha_reagenda'] ?></td>
+                            <td><?= $cra['cra_orden'] ?></td>
+                        </tr>
 
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
 </div>
-
-
 <script>
     $("#formBuscarEnrute").on("submit", function(e) {
         e.preventDefault();
@@ -183,7 +195,7 @@
                 // startLoadButton()
             },
             success: function(res) {
-                console.log(res)
+                // console.log(res)
 
                 if (res.ctr) {
                     $("#ctr_cliente").val(res.ctr.ctr_cliente)
@@ -221,6 +233,41 @@
                 } else {
                     toastr.error("Esta cuenta no exiete en esta ruta", 'ADVERTENCIA')
                 }
+            }
+        })
+    })
+
+    $("#formEnrutarCuenta").on("submit", function(e) {
+        e.preventDefault();
+        var datos = new FormData(this)
+        datos.append("formEnrutarCuenta", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                // startLoadButton()
+            },
+            success: function(res) {
+                console.log(res)
+                if (res.status) {
+                    toastr.success(res.mensaje, 'MUY BIEN')
+
+                } else {
+                    // toastr.error("Esta cuenta no exiete en esta ruta", 'ADVERTENCIA')
+                    toastr.warning(res.mensaje, 'ADVERTENCIA')
+
+                }
+                // window.location.reload();
+                document.getElementById('formEnrutarCuenta').reset();
+                $("#ctr_cuenta").val("");
+                $("#ctr_cliente").val("");
+                $("#ctr_cuenta").focus();
+
             }
         })
     })

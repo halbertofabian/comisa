@@ -135,6 +135,40 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlActualizarSaldos2($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_total=?,ctr_enganche=?,ctr_pago_adicional=?,ctr_saldo=?,ctr_saldo_actual=?,ctr_ultima_fecha_abono=?,ctr_total_pagado = ?, ctr_forma_pago = ?, ctr_dia_pago = ?, ctr_pago_credito = ?, ctr_status_cuenta = ?, ctr_proximo_pago = ?, ctr_enrutar = ?, ctr_orden = ?, ctr_saldo_base = ? WHERE ctr_id = ?";
+
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_total']);
+            $pps->bindValue(2, $ctr['ctr_enganche']);
+            $pps->bindValue(3, $ctr['ctr_pago_adicional']);
+            $pps->bindValue(4, $ctr['ctr_saldo']);
+            $pps->bindValue(5, $ctr['ctr_saldo_actual']);
+            $pps->bindValue(6, $ctr['ctr_ultima_fecha_abono']);
+            $pps->bindValue(7, $ctr['ctr_total_pagado']);
+            $pps->bindValue(8, $ctr['ctr_forma_pago']);
+            $pps->bindValue(9, $ctr['ctr_dia_pago']);
+            $pps->bindValue(10, $ctr['ctr_pago_credito']);
+            $pps->bindValue(11, $ctr['ctr_status_cuenta']);
+            $pps->bindValue(12, $ctr['ctr_proximo_pago']);
+            $pps->bindValue(13, $ctr['ctr_enrutar']);
+            $pps->bindValue(14, $ctr['ctr_orden']);
+            $pps->bindValue(15, $ctr['ctr_saldo_base']);
+            $pps->bindValue(16, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public  static function mdlCambiarEstadoCarteleraCompletado($cra_id, $cra_fecha_proxima_pago)
     {
@@ -359,6 +393,28 @@ class CobranzaModelo
             $pps->bindValue(3, $cra['cra_fecha_reagenda']);
             $pps->bindValue(4, $cra['cra_estado']);
             $pps->bindValue(5, $cra['cra_orden']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarSigienteEnrutamiento($cra, $cra_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_cobro = ?,cra_fecha_reagenda = ?,cra_estado = ?,cra_orden = ? WHERE cra_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra['cra_fecha_cobro']);
+            $pps->bindValue(2, $cra['cra_fecha_reagenda']);
+            $pps->bindValue(3, $cra['cra_estado']);
+            $pps->bindValue(4, $cra['cra_orden']);
+            $pps->bindValue(5, $cra_id);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -628,7 +684,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr_id,ctr_ruta,ctr_cliente,ctr_numero_cuenta,ctr_forma_pago,ctr_dia_pago,ctr_proximo_pago,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_pago_credito,ctr_status_cuenta,ctr_saldo_actual,DATE(ctr_ultima_fecha_abono) AS ctr_ultima_fecha_abono,ctr_total_pagado,ctr_orden,ctr_saldo_base FROM tbl_contrato_crt_1 WHERE ctr_numero_cuenta = ? AND ctr_ruta = ?";
+            $sql = "SELECT ctr_id,ctr_ruta,ctr_cliente,ctr_numero_cuenta,ctr_forma_pago,ctr_dia_pago,ctr_proximo_pago,ctr_total,ctr_enganche,ctr_pago_adicional,ctr_saldo,ctr_pago_credito,ctr_status_cuenta,ctr_saldo_actual,DATE(ctr_ultima_fecha_abono) AS ctr_ultima_fecha_abono,ctr_total_pagado,ctr_orden,ctr_saldo_base FROM tbl_contrato_crt_1 WHERE ctr_numero_cuenta = ? AND ctr_ruta =  ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr['ctr_cuenta']);
@@ -652,6 +708,43 @@ class CobranzaModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarCartelera()
+    {
+        try {
+            //code...
+            $sql = "SELECT cra.*,ctr.ctr_ruta,ctr.ctr_numero_cuenta FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr  ON ctr.ctr_id = cra.cra_contrato ORDER BY cra.cra_id DESC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlConsultarEnrute($cra_contrato)
+    {
+        try {
+            //code...
+            $sql = "SELECT cra_id FROM tbl_cartelera_cra WHERE cra_contrato= ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra_contrato);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
