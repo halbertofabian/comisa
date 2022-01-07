@@ -2,7 +2,7 @@ var urlApp = $(".urlApp").attr("urlApp")
 
 
 $('.phone_mx').mask('(000) 000 0000');
-$('.date').mask('0000-00-00');
+$('.date').mask('00-00-0000');
 
 
 
@@ -67,10 +67,10 @@ $(".tablas").DataTable({
 
 });
 
- $('.select2').select2();
+$('.select2').select2();
 
 
- $('.area_corto').summernote({
+$('.area_corto').summernote({
     placeholder: 'Descripción corta del producto',
     fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
     tabsize: 2,

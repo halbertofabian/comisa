@@ -73,7 +73,7 @@
                             <input type="text" name="ctr_dia_pago_2" id="ctr_dia_pago_2" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
                     </div>
-                    <div class="d-dia_P d-none">
+                    <div class="d-dia-p d-none">
                         <div class="form-group">
                             <label for="">PROXIMO DIA DE PAGO</label>
                             <input type="date" name="" id="" class="form-control" placeholder="">
@@ -187,24 +187,89 @@
 
                 if (res.ctr) {
                     $("#ctr_cliente").val(res.ctr.ctr_cliente)
-                    $("#ctr_orden").val(res.ctr.ctr_orden)
-                    $("#ctr_forma_pago").val(res.ctr.ctr_forma_pago)
-                    $("#ctr_dia_pago").val(res.ctr.ctr_dia_pago)
+                    if (res.ctr.ctr_orden <= 0) {
+                        $("#ctr_orden").val("")
+                    } else {
+                        $("#ctr_orden").val(res.ctr.ctr_orden)
+                    }
+                    // $("#ctr_forma_pago").val(res.ctr.ctr_forma_pago)
+
+                    $("#ctr_dia_pago").val(res.ctr.ctr_dia_pago);
+                    $("#ctr_dia_pago_2").val(res.ctr.ctr_dia_pago);
                     $("#ctr_pago_credito").val(res.ctr.ctr_pago_credito)
                     $("#ctr_proximo_pago").val(res.ctr.ctr_proximo_pago)
                     $("#ctr_total").val(res.ctr.ctr_total)
                     $("#ctr_enganche").val(res.ctr.ctr_enganche)
                     $("#ctr_pago_adicional").val(res.ctr.ctr_pago_adicional)
+                    $("#ctr_saldo").val(res.ctr.ctr_saldo)
+
                     $("#ctr_saldo_actual").val(res.ctr.ctr_saldo_actual)
                     $("#ctr_ultima_fecha_abono").val(res.ctr.ctr_ultima_fecha_abono)
                     $("#ctr_total_pagado").val(res.ctr.ctr_total_pagado)
                     $("#ctr_status_cuenta").val(res.ctr.ctr_status_cuenta)
                     $("#ctr_saldo_base").val(res.ctr.ctr_saldo_base)
                     $("#ctr_id").val(res.ctr.ctr_id)
+
+                    $('#ctr_forma_pago').val(res.ctr.ctr_forma_pago).trigger('change');
+
+                    $("#ctr_orden").focus()
+
+
+                    saldo();
+
+
                 } else {
                     toastr.error("Esta cuenta no exiete en esta ruta", 'ADVERTENCIA')
                 }
             }
         })
+    })
+
+
+
+    $("#ctr_forma_pago").on("change", function() {
+        var forma_pago = $(this).val();
+        // if()
+        if (forma_pago == 'SEMANALES') {
+            $(".d-dia_1").removeClass('d-none')
+            $(".d-dia-p").addClass('d-none')
+            $(".d-dia_2").addClass('d-none')
+        } else if (forma_pago == 'CATORCENALES') {
+            $(".d-dia_1").removeClass('d-none')
+            $(".d-dia-p").removeClass('d-none')
+            // $(".d-dia-p").addClass('d-none')
+            $(".d-dia_2").addClass('d-none')
+
+        } else if (forma_pago == 'QUINCENALES' || forma_pago == 'MENSUALES') {
+            $(".d-dia_2").removeClass('d-none')
+
+            $(".d-dia-p").addClass('d-none')
+            $(".d-dia_1").addClass('d-none')
+        } else {
+            $(".d-dia_1").addClass('d-none')
+            $(".d-dia-p").addClass('d-none')
+            $(".d-dia_2").addClass('d-none')
+        }
+    })
+
+    function saldo() {
+        var ctr_total = Number($("#ctr_total").val().replace(/,/g, ""));
+        var ctr_enganche = Number($("#ctr_enganche").val().replace(/,/g, ""));
+        var ctr_pago_adicional = Number($("#ctr_pago_adicional").val().replace(/,/g, ""));
+        var saldo = ctr_total - ctr_enganche - ctr_pago_adicional;
+        $("#ctr_saldo").val(saldo)
+        $("#ctr_saldo_base").val(saldo)
+        var ctr_saldo = Number($("#ctr_saldo").val().replace(/,/g, ""));
+
+        var ctr_saldo_actual = Number($("#ctr_saldo_actual").val().replace(/,/g, ""));
+
+        var ctr_total_pagado = ctr_saldo - ctr_saldo_actual;
+
+        $("#ctr_total_pagado").val(ctr_total_pagado)
+
+
+    }
+    $(".inputN").on("keyup", function() {
+        saldo()
     })
 </script>
