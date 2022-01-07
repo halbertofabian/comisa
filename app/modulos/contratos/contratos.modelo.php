@@ -1006,19 +1006,11 @@ class ContratosModelo
             ctr_folio,
             ctr_cliente,
             ctr_numero_cuenta,
-            ctr_ruta,
-            ctr_forma_pago,
-            ctr_dia_pago,
-            ctr_proximo_pago,
-            ctr_plazo_credito,
-            ctr_total,
-            ctr_enganche,
-            ctr_pago_adicional,
-            ctr_saldo,
             ctr_pago_credito,
             clts_domicilio,
             clts_col,
-            ctr_status_cuenta
+            ctr_status_cuenta,
+            clts_coordenadas,
             FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_status_cuenta = 'NUEVA' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
