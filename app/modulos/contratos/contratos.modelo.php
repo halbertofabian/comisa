@@ -1010,7 +1010,7 @@ class ContratosModelo
             clts_domicilio,
             clts_col,
             ctr_status_cuenta,
-            clts_coordenadas,
+            clts_coordenadas
             FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_status_cuenta = 'NUEVA' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
