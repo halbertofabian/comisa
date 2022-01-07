@@ -1017,7 +1017,8 @@ class ContratosModelo
             ctr_saldo,
             ctr_pago_credito,
             clts_domicilio,
-            clts_col
+            clts_col,
+            ctr_status_cuenta
             FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_status_cuenta = 'NUEVA' ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
