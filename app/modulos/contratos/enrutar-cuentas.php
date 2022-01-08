@@ -190,14 +190,22 @@
                     $("#ctr_dia_pago").val(res.ctr.ctr_dia_pago);
                     $("#ctr_dia_pago_2").val(res.ctr.ctr_dia_pago);
                     $("#ctr_pago_credito").val(res.ctr.ctr_pago_credito)
-                    $("#ctr_proximo_pago").val(res.ctr.ctr_proximo_pago)
+
+                    var ctr_proximo_pago = res.ctr.ctr_proximo_pago;
+                    ctr_proximo_pago = ctr_proximo_pago.split('-');
+                    $("#ctr_proximo_pago").val(ctr_proximo_pago[2]+'-'+ctr_proximo_pago[1]+'-'+ctr_proximo_pago[0])
+
                     $("#ctr_total").val(res.ctr.ctr_total)
                     $("#ctr_enganche").val(res.ctr.ctr_enganche)
                     $("#ctr_pago_adicional").val(res.ctr.ctr_pago_adicional)
                     $("#ctr_saldo").val(res.ctr.ctr_saldo)
 
                     $("#ctr_saldo_actual").val(res.ctr.ctr_saldo_actual)
-                    $("#ctr_ultima_fecha_abono").val(res.ctr.ctr_ultima_fecha_abono)
+
+                    var ctr_ultima_fecha_abono = res.ctr.ctr_ultima_fecha_abono;
+                    ctr_ultima_fecha_abono = ctr_ultima_fecha_abono.split('-');
+                    $("#ctr_ultima_fecha_abono").val(ctr_ultima_fecha_abono[2]+'-'+ctr_ultima_fecha_abono[1]+'-'+ctr_ultima_fecha_abono[0])
+
                     $("#ctr_total_pagado").val(res.ctr.ctr_total_pagado)
                     $("#ctr_status_cuenta").val(res.ctr.ctr_status_cuenta)
                     $("#ctr_saldo_base").val(res.ctr.ctr_saldo_base)
