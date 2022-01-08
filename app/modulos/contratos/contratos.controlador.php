@@ -1209,7 +1209,6 @@ class ContratosControlador
                 $clts_tbj_ing_conyuge =  $objPHPExcel->getActiveSheet()->getCell('BZ' . $i)->getCalculatedValue();
                 // $ctr_pago_credito = $objPHPExcel->getActiveSheet()->getCell('CA' . $i)->getCalculatedValue();
 
-
                 $ctr_productos = json_encode(array(array(
                     'sku' => '',
                     'nombreProducto' => $clts_des_pds,
