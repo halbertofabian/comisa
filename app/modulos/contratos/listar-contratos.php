@@ -606,13 +606,13 @@
     })
 
 
-    $("#ctr_folio").on("keyup", function() {
-        var ctr_folio = $("#ctr_folio").val();
-        var ctr_vendedor = $("#ctr_vendedor").val();
-        var ctr_fecha_inicio = $("#ctr_fecha_inicio").val();
-        var ctr_fecha_fin = $("#ctr_fecha_fin").val();
-        listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin);
-    })
+    // $("#ctr_folio").on("keyup", function() {
+    //     var ctr_folio = $("#ctr_folio").val();
+    //     var ctr_vendedor = $("#ctr_vendedor").val();
+    //     var ctr_fecha_inicio = $("#ctr_fecha_inicio").val();
+    //     var ctr_fecha_fin = $("#ctr_fecha_fin").val();
+    //     listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin);
+    // })
 
     $("#btnListarContratos").on("click", function() {
 
