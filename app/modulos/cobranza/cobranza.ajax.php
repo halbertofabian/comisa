@@ -89,7 +89,23 @@ class CobranzaAjax
         </table>';
         echo $tabla;
     }
+    public function ajaxEstadoCuenta()
+    {
+        $respuesta = CobranzaModelo::mdlConsultarEstadoCuenta($_POST);
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxEstadoCuenta2()
+    {
+        $respuesta = CobranzaModelo::mdlConsultarEstadoCuenta2($_POST['ctr_id']);
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxEstadoCuenta3()
+    {
+        $respuesta = CobranzaModelo::mdlConsultarEstadoCuenta3($_POST['cra_id']);
+        echo json_encode($respuesta, true);
+    }
 }
+
 if (isset($_POST['btnImportarSaldos'])) {
     $importarSaldos = new CobranzaAjax();
     $importarSaldos->ajaxImportarSaldos();
@@ -122,4 +138,16 @@ if (isset($_POST['formEnrutarCuenta'])) {
 if (isset($_POST['btnMostrarEnrute'])) {
     $btnBuscarEnrute = new CobranzaAjax();
     $btnBuscarEnrute->ajaxMostrarEnrute();
+}
+if (isset($_POST['btn_consultar_cuenta'])) {
+    $btnBuscarEstadoCuenta = new CobranzaAjax();
+    $btnBuscarEstadoCuenta->ajaxEstadoCuenta();
+}
+if (isset($_POST['btn_consultar_cuenta2'])) {
+    $btnBuscarEstadoCuenta2 = new CobranzaAjax();
+    $btnBuscarEstadoCuenta2->ajaxEstadoCuenta2();
+}
+if (isset($_POST['btn_consultar_cuenta3'])) {
+    $btnBuscarEstadoCuenta3 = new CobranzaAjax();
+    $btnBuscarEstadoCuenta3->ajaxEstadoCuenta3();
 }

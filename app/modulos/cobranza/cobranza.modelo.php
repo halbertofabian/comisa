@@ -755,4 +755,59 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlConsultarEstadoCuenta($ec)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ec['ec_ruta']);
+            $pps->bindValue(2, $ec['ec_cuenta']);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarEstadoCuenta2($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_cartelera_cra WHERE cra_contrato = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlConsultarEstadoCuenta3($cra_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra_id);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

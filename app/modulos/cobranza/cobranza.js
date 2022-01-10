@@ -97,3 +97,96 @@ $(document).ready(function () {
     })
 });
 
+$("#btn_consultar_cuenta").on("click", function () {
+    var ec_ruta = $("#ec_ruta").val();
+    var ec_cuenta = $("#ec_cuenta").val();
+
+    if (ec_cuenta == "") {
+        toastr.warning("La cuenta es obligatoria", "¡ADVERTENCIA!");
+        return false;
+    }
+
+    var datos = new FormData();
+    datos.append("ec_ruta", ec_ruta);
+    datos.append("ec_cuenta", ec_cuenta);
+    datos.append("btn_consultar_cuenta", true);
+    $.ajax({
+        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+            // startLoadButton()
+
+        },
+        success: function (res) {
+            $("#ec_cliente").val(res.ctr_cliente);
+            $("#ec_fecha_inicio").val(res.ctr_proximo_pago);
+
+
+            $("#ec_precio").val(res.ctr_total);
+            $("#ec_enganche").val(res.ctr_enganche);
+            $("#ec_pago_adicional").val(res.ctr_pago_adicional);
+            $("#ec_pago").val(res.ctr_pago_credito);
+            $("#ec_saldo").val(res.ctr_saldo);
+            $("#ec_saldo_base").val(res.ctr_saldo_base);
+            $("#ec_saldo_actual").val(res.ctr_saldo_actual);
+            $("#ec_ultima_fecha").val(res.ctr_ultima_fecha_abono);
+
+            var datos2 = new FormData();
+            datos2.append("ctr_id", res.ctr_id);
+            datos2.append("btn_consultar_cuenta2", true);
+            $.ajax({
+                url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                method: "POST",
+                data: datos2,
+                cache: false,
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                beforeSend: function () {
+                    // startLoadButton()
+
+                },
+                success: function (res) {
+                    var datos3 = new FormData();
+                    datos3.append("cra_id", res.cra_id);
+                    datos3.append("btn_consultar_cuenta3", true);
+                    $.ajax({
+                        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                        method: "POST",
+                        data: datos3,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        beforeSend: function () {
+                            // startLoadButton()
+
+                        },
+                        success: function (res) {
+                            var tbody_estado_cuenta = "";
+                            res.forEach(element => {
+                                tbody_estado_cuenta +=
+                                    `
+                                    <tr>
+                                        <td>${element.abs_fecha_cobro}</td>
+                                        <td>${element.abs_monto}</td>
+                                        <td></td>
+                                    </tr>
+                            `;
+                            });
+                            $("#tbody_estado_cuenta").html(tbody_estado_cuenta);
+
+                        }
+                    })
+
+                }
+            })
+        }
+    });
+});
+

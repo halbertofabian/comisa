@@ -731,6 +731,11 @@ class AppControlador
                             'label' => 'Descargar ruta',
                             'href' => 'cobranza/ruta'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Estado de cuenta',
+                            'href' => 'cobranza/estado-cuenta'
+                        ],
 
                         //Aqui más item de menu
                     ),
