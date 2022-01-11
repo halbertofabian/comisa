@@ -66,6 +66,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-12" id="btn-export-pdf">
+                            
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="ec_precio">Precio</label>
