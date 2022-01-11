@@ -364,7 +364,7 @@ $app->get('/actualizar_saldos/{usr_id}', function (Request $request, Response $r
 
 
 
-$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
+$app->post('/subir_contratos_new', function (Request $request, Response $response) {
 
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
