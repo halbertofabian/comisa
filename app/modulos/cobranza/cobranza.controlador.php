@@ -367,6 +367,81 @@ class CobranzaControlador
         }
         return $enrutar;
     }
+    public static function ctrEnrrutarCuentasNuevas($cta)
+    {
+        if ($cta['ctr_forma_pago'] == 'SEMANALES') {
+            $next_day =  date('Y-m-d', strtotime('next Monday'));
+            if ($cta['ctr_dia_pago'] == 'LUNES') {
+                $next_day =  date('Y-m-d', strtotime('next Monday'));
+            } else if ($cta['ctr_dia_pago'] == 'MARTES') {
+                $next_day =  date('Y-m-d', strtotime('next Tuesday'));
+            } else if ($cta['ctr_dia_pago'] == 'MIERCOLES') {
+                $next_day =  date('Y-m-d', strtotime('next Wednesday'));
+            } else if ($cta['ctr_dia_pago'] == 'JUEVES') {
+                $next_day =  date('Y-m-d', strtotime('next Thursday'));
+            } else if ($cta['ctr_dia_pago'] == 'VIERNES') {
+                $next_day =  date('Y-m-d', strtotime('next Friday'));
+            } else if ($cta['ctr_dia_pago'] == 'SABADO') {
+                $next_day =  date('Y-m-d', strtotime('next Saturday'));
+            } else if ($cta['ctr_dia_pago'] == 'DOMINGO') {
+                $next_day =  date('Y-m-d', strtotime('next Sunday'));
+            }
+        } else if ($cta['ctr_forma_pago'] == 'CATORCENALES') {
+            $next_day = $cta['ctr_fecha_reagendada'];
+        } else if ($cta['ctr_forma_pago'] == 'QUINCENALES') {
+            $dias = $cta['ctr_dia_pago'];
+            $dias = explode('-', $dias);
+            $dia1 = $dias[0];
+            $dia2 = $dias[1];
+            $fecha_mes = date('Y-m', strtotime('this month'));
+            $dia1 = $dia1 < 10 ? "0" . $dia1 : $dia1;
+            $dia2 = $dia2 < 10 ? "0" . $dia2 : $dia2;
+
+            $fecha_mes_1 = $fecha_mes . '-' . $dia1;
+            $fecha_mes_2 = $fecha_mes . '-' . $dia2;
+            if ($fecha_mes_1 > FECHA_ACTUAL) {
+                $next_day = $fecha_mes_1;
+            } else if ($fecha_mes_2 > FECHA_ACTUAL) {
+                $next_day = $fecha_mes_2;
+            } else {
+                $next_mes = date('Y-m', strtotime('next month'));
+                $next_day = $next_mes . '-' . $dia1;
+            }
+        } else if ($cta['ctr_forma_pago'] == 'MENSUALES') {
+            $dia = $cta['ctr_dia_pago'];
+            $fecha_mes = date('Y-m', strtotime('this month'));
+            $dia = $dia < 10 ? "0" . $dia : $dia;
+            $fecha_mes = $fecha_mes . '-' . $dia;
+
+            if ($fecha_mes > FECHA_ACTUAL) {
+                $next_day = $fecha_mes;
+            } else {
+                $next_mes = date('Y-m', strtotime('next month'));
+                $next_day = $next_mes . '-' . $dia;
+            }
+        }
+
+        $datos_e = array(
+            'cra_contrato' => $cta['ctr_id'],
+            'cra_fecha_cobro' => $next_day,
+            'cra_fecha_reagenda' =>  $cta['ctr_fecha_reagendada'] == "" ? '0000-00-00' : $cta['ctr_fecha_reagendada'],
+            'cra_orden' => $cta['ctr_orden'],
+            'cra_estado' =>  "PENDIENTE",
+            'cra_referencias' =>  json_encode($cta['ctr_referencias'], 2),
+
+        );
+
+
+        $isexit = CobranzaModelo::mdlConsultarEnrute($cta['ctr_id']);
+
+        if ($isexit) {
+            // ACTUALIZAR
+            $enrutar = CobranzaModelo::mdlActualizarNuevoEnrutamiento($datos_e, $isexit['cra_id']);
+        } else {
+            $enrutar = CobranzaModelo::mdlRegistrarNuevoEnrutamiento($datos_e);
+        }
+        return $enrutar;
+    }
 
     public static function ctrReEnrutarCuentasCompletadas($cts_completadas)
     {
@@ -638,5 +713,30 @@ class CobranzaControlador
 
         // GUARDAR LA UBICACIÓN DE LOS REPORTE
 
+    }
+
+    public static function ctrEnrutarCuentasNuevas($cuentas)
+    {
+
+        $cts_act = 0;
+        $cts_cra = 0;
+        foreach ($cuentas as $key => $cts) {
+            // CAMBIAR DATOS  NECESARIOS PARA EL CONTRATO
+            $act_datos = CobranzaModelo::mdlEditarCuentas($cts);
+            if ($act_datos) {
+                $cts_act += 1;
+            }
+
+            //ENRRUTAR CUENTA 
+            $enrutar_cts = CobranzaControlador::ctrEnrrutarCuentasNuevas($cts);
+            if ($enrutar_cts) {
+                $cts_cra += 1;
+            }
+        }
+
+        return array(
+            'status' => true,
+            'mensaje' =>  'Se enrutaron ' . $cts_cra . ' cuentas'
+        );
     }
 }

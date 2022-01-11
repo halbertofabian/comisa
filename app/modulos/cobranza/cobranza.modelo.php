@@ -403,6 +403,30 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public static function mdlRegistrarNuevoEnrutamiento($cra)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato,cra_fecha_cobro,cra_fecha_reagenda,cra_estado,cra_orden,cra_referencias) VALUES(?,?,?,?,?,?) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra['cra_contrato']);
+            $pps->bindValue(2, $cra['cra_fecha_cobro']);
+            $pps->bindValue(3, $cra['cra_fecha_reagenda']);
+            $pps->bindValue(4, $cra['cra_estado']);
+            $pps->bindValue(5, $cra['cra_orden']);
+            $pps->bindValue(6, $cra['cra_referencias']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlActualizarSigienteEnrutamiento($cra, $cra_id)
     {
         try {
@@ -425,6 +449,32 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public static function mdlActualizarNuevoEnrutamiento($cra, $cra_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_cobro = ?,cra_fecha_reagenda = ?,cra_estado = ?,cra_orden = ?,cra_referencias = ?  WHERE cra_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra['cra_fecha_cobro']);
+            $pps->bindValue(2, $cra['cra_fecha_reagenda']);
+            $pps->bindValue(3, $cra['cra_estado']);
+            $pps->bindValue(4, $cra['cra_orden']);
+            $pps->bindValue(5, $cra['cra_referencias']);
+            $pps->bindValue(6, $cra_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+
     public static function mdlActualizarEnruteReagendado($cra_contrato, $cra_fecha_reagenda)
     {
         try {
@@ -821,6 +871,30 @@ class CobranzaModelo
             $pps->bindValue(1, $cra_id);
             $pps->execute();
             return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlEditarCuentas($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_forma_pago = ?, ctr_dia_pago = ? , ctr_pago_credito = ? , ctr_status_cuenta =  'VIGENTE' , clts_coordenadas = ? , ctr_orden = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_forma_pago']);
+            $pps->bindValue(2, $ctr['ctr_dia_pago']);
+            $pps->bindValue(3, $ctr['ctr_pago_credito']);
+            $pps->bindValue(4, $ctr['clts_coordenadas']);
+            $pps->bindValue(5, $ctr['ctr_orden']);
+            $pps->bindValue(6, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
             return false;
