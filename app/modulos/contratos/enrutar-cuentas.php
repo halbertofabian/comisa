@@ -108,7 +108,7 @@
                         <input type="text" class="form-control inputN" id="ctr_saldo" name="ctr_saldo">
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="">SALDO ACUAL</label>
+                        <label for="">SALDO ACTUAL</label>
                         <input type="text" class="form-control inputN" id="ctr_saldo_actual" name="ctr_saldo_actual">
                         <input type="hidden" id="ctr_saldo_base" name="ctr_saldo_base">
                     </div>
