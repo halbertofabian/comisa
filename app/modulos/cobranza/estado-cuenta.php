@@ -105,7 +105,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="ec_saldo">Saldo</label>
+                                <label for="ec_saldo">Saldo inicial</label>
                                 <input type="text" class="form-control" name="ec_saldo" id="ec_saldo" placeholder="" readonly>
                             </div>
                         </div>

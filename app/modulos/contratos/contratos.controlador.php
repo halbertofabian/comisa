@@ -587,7 +587,7 @@ class ContratosControlador
 
                 'clts_fachada_color' => $_POST["clts_fachada_color"],
                 'clts_puerta_color' => $_POST["clts_puerta_color"],
-                'ctr_status_cuenta' => "VIGENTE",
+                'ctr_status_cuenta' => "NUEVA",
                 'ctr_saldo_actual' => dnum($_POST["ctr_saldo"]),
 
                 //Nuevos atributos 
@@ -746,7 +746,7 @@ class ContratosControlador
 
                     'clts_fachada_color' => dstring($cts["clts_fachada_color"]),
                     'clts_puerta_color' => dstring($cts["clts_puerta_color"]),
-                    'ctr_status_cuenta' => "VIGENTE",
+                    'ctr_status_cuenta' => "NUEVA",
                     'ctr_saldo_actual' => dnum($cts["ctr_saldo"]),
 
                     //Nuevos atributos 
@@ -877,7 +877,7 @@ class ContratosControlador
 
                     'clts_fachada_color' => "",
                     'clts_puerta_color' => "",
-                    'ctr_status_cuenta' => "VIGENTE",
+                    'ctr_status_cuenta' => "NUEVA",
                     'ctr_saldo_actual' => dnum($cts["ctr_saldo"]),
 
                     //Nuevos atributos 
