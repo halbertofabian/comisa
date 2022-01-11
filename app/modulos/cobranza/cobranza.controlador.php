@@ -427,7 +427,7 @@ class CobranzaControlador
             'cra_fecha_reagenda' =>  $cta['ctr_fecha_reagendada'] == "" ? '0000-00-00' : $cta['ctr_fecha_reagendada'],
             'cra_orden' => $cta['ctr_orden'],
             'cra_estado' =>  "PENDIENTE",
-            'cra_referencias' =>  json_encode($cta['ctr_referencias'], 2),
+            'cra_referencias' =>  $cta['ctr_referencias'],
 
         );
 
