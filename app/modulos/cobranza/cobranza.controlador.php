@@ -163,6 +163,57 @@ class CobranzaControlador
         }
     }
 
+    public static function ctrActualizarFechaR()
+    {
+        try {
+
+            $nombreArchivo = $_FILES['archivoExcel']['tmp_name'];
+
+            // Cargar hoja de calculo
+            $leerExcel = PHPExcel_IOFactory::createReaderForFile($nombreArchivo);
+
+            $objPHPExcel = $leerExcel->load($nombreArchivo);
+
+            //var_dump($objPHPExcel);
+
+            $objPHPExcel->setActiveSheetIndex(0);
+
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $countUpdate = 0;
+            $counEnrutar = 0;
+
+            for ($i = 2; $i <= $numRows; $i++) {
+
+                $ctr_ruta = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $ctr_numero_cuenta = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $ctr_reagendado = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+
+                $ctr = ContratosModelo::mdlMostrarSaldosContratos($ctr_numero_cuenta, $ctr_ruta);
+
+
+                $act_r = CobranzaModelo::mdlActualizarEnruteReagendado($ctr['ctr_id'], $ctr_reagendado);
+
+                if ($act_r) {
+                    $countUpdate += 1;
+                }
+            }
+
+            return array(
+                'status' => true,
+                'mensaje' => "Cuentas Reagendas",
+                'update' => $countUpdate
+            );
+        } catch (Exception $th) {
+            $th->getMessage();
+            return array(
+                'status' => false,
+                'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
+                'insert' =>  "",
+                'update' => ""
+            );
+        }
+    }
+
 
     public static function ctrEnrutarCuenta()
     {

@@ -425,6 +425,25 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlActualizarEnruteReagendado($cra_contrato, $cra_fecha_reagenda)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_reagenda = ? WHERE cra_contrato = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra_fecha_reagenda);
+            $pps->bindValue(2, $cra_contrato);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlActualizarSiguienteEnrrute($cra)
     {

@@ -24,7 +24,7 @@ class CobranzaAjax
 {
     public function ajaxImportarSaldos()
     {
-        $respuesta = CobranzaControlador::ctrActualizarSaldosByExcel();
+        $respuesta = CobranzaControlador::ctrActualizarFechaR();
         echo json_encode($respuesta, true);
     }
     public function ajaxCancelarPago()
