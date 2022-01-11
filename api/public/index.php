@@ -364,7 +364,7 @@ $app->get('/actualizar_saldos/{usr_id}', function (Request $request, Response $r
 
 
 
-$app->post('/subir_contratos_new', function (Request $request, Response $response) {
+$app->post('/subir_contratos_new_2', function (Request $request, Response $response) {
 
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
@@ -393,6 +393,23 @@ $app->post('/subir_contratos_new', function (Request $request, Response $respons
     # code...
 
 });
+
+
+$app->post('/subir_contratos_new', function (Request $request, Response $response) {
+    $json = $request->getBody();
+
+    $data = json_decode($json, true);
+
+    $cobranza =  CobranzaControlador::ctrEnrutarCuentasNuevas($data);
+    // $datos = array(
+    //     'status' => true,
+    //     'mensaje' => 'Registros sincronizados'
+    // );
+    return json_encode($cobranza, true);
+    // return json_encode($login_msj, true);
+    # code...
+});
+
 
 $app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
     $json = $request->getBody();
