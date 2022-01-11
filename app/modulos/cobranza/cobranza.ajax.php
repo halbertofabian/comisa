@@ -91,7 +91,7 @@ class CobranzaAjax
     }
     public function ajaxEstadoCuenta()
     {
-        $respuesta = CobranzaModelo::mdlConsultarEstadoCuenta($_POST);
+        $respuesta = CobranzaModelo::mdlConsultarEstadoCuenta($_POST['ec_ruta'], $_POST['ec_cuenta']);
         echo json_encode($respuesta, true);
     }
     public function ajaxEstadoCuenta2()

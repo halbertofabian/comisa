@@ -123,17 +123,20 @@ $("#btn_consultar_cuenta").on("click", function () {
 
         },
         success: function (res) {
+            $("#btn-export-pdf").html(`<a target="_blank" href="${urlApp}app/report/reporte-estado-cuenta.php?ec_ruta=${ec_ruta}&ec_cuenta=${ec_cuenta}" class="btn btn-success btn-block">
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Descargar
+        </a>`);
             $("#ec_cliente").val(res.ctr_cliente);
             $("#ec_fecha_inicio").val(res.ctr_proximo_pago);
 
 
-            $("#ec_precio").val(res.ctr_total);
-            $("#ec_enganche").val(res.ctr_enganche);
-            $("#ec_pago_adicional").val(res.ctr_pago_adicional);
-            $("#ec_pago").val(res.ctr_pago_credito);
-            $("#ec_saldo").val(res.ctr_saldo);
-            $("#ec_saldo_base").val(res.ctr_saldo_base);
-            $("#ec_saldo_actual").val(res.ctr_saldo_actual);
+            $("#ec_precio").val($.number(res.ctr_total));
+            $("#ec_enganche").val($.number(res.ctr_enganche));
+            $("#ec_pago_adicional").val($.number(res.ctr_pago_adicional));
+            $("#ec_pago").val($.number(res.ctr_pago_credito));
+            $("#ec_saldo").val($.number(res.ctr_saldo));
+            $("#ec_saldo_base").val($.number(res.ctr_saldo_base));
+            $("#ec_saldo_actual").val($.number(res.ctr_saldo_actual));
             $("#ec_ultima_fecha").val(res.ctr_ultima_fecha_abono);
 
             var datos2 = new FormData();
@@ -174,7 +177,7 @@ $("#btn_consultar_cuenta").on("click", function () {
                                     `
                                     <tr>
                                         <td>${element.abs_fecha_cobro}</td>
-                                        <td>${element.abs_monto}</td>
+                                        <td>${$.number(element.abs_monto)}</td>
                                         <td></td>
                                     </tr>
                             `;

@@ -755,15 +755,15 @@ class CobranzaModelo
             $con = null;
         }
     }
-    public static function mdlConsultarEstadoCuenta($ec)
+    public static function mdlConsultarEstadoCuenta($ec_ruta, $ec_cuenta)
     {
         try {
             //code...
             $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ec['ec_ruta']);
-            $pps->bindValue(2, $ec['ec_cuenta']);
+            $pps->bindValue(1, $ec_ruta);
+            $pps->bindValue(2, $ec_cuenta);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
