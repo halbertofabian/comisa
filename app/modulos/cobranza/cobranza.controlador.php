@@ -708,7 +708,7 @@ class CobranzaControlador
             'status' => true,
             'mensaje' => 'Saldos actualizados con éxito',
             'contador' => $countAct,
-            'pagina' => HTTP_HOST . 'autorizar-pagos/'
+            'pagina' => HTTP_HOST . 'autorizar-pagos'
         );
 
         // GUARDAR LA UBICACIÓN DE LOS REPORTE
