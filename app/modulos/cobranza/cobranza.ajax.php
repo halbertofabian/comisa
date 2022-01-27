@@ -104,6 +104,11 @@ class CobranzaAjax
         $respuesta = CobranzaModelo::mdlConsultarEstadoCuenta3($_POST['cra_id']);
         echo json_encode($respuesta, true);
     }
+    public function ajaxActualizarSaldos()
+    {
+        $respuesta = CobranzaControlador::ctrActualizarSaldos();
+        echo json_encode($respuesta, true);
+    }
 }
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -150,4 +155,8 @@ if (isset($_POST['btn_consultar_cuenta2'])) {
 if (isset($_POST['btn_consultar_cuenta3'])) {
     $btnBuscarEstadoCuenta3 = new CobranzaAjax();
     $btnBuscarEstadoCuenta3->ajaxEstadoCuenta3();
+}
+if (isset($_POST['btnActualizarSaldos'])) {
+    $actualizarSaldos = new CobranzaAjax();
+    $actualizarSaldos->ajaxActualizarSaldos();
 }

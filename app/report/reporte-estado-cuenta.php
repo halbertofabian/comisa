@@ -77,6 +77,111 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
     $fecha = date("d-m-Y H:i:s");
     //preArray($listp);
 
+    if ($infoContrato['ctr_forma_pago'] == "SEMANALES") {
+        $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
+        $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
+
+        $fecha_hoy = date("Y-m-d");
+        $fecha = date($infoContrato['ctr_proximo_pago']);
+
+        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
+        $dias = round($diasdif);
+
+
+        //semanas del primer dia de pago hasta la fecha
+        $semanas = ceil($dias / 7);
+
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+
+        $adeudo_aux = $adeudo;
+        if ($semanas <= $semanas_credito) {
+            $ec_adeudo_corriente = $adeudo_aux;
+        } else {
+            $ec_adeudo_corriente = 0;
+        }
+        $semanas_atrasadas = ceil($adeudo_aux / $infoContrato['ctr_pago_credito']);
+        $ec_total_pagado = $ctr_saldo - $infoContrato['ctr_saldo_actual'];
+        $label = "Semanas atrasadas";
+    }
+    else if ($infoContrato['ctr_forma_pago'] == "CATORCENALES") {
+        $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
+        $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
+
+        $fecha_hoy = date("Y-m-d");
+        $fecha = date($infoContrato['ctr_proximo_pago']);
+
+        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
+        $dias = round($diasdif);
+
+
+        //semanas del primer dia de pago hasta la fecha
+        $semanas = ceil($dias / 14);
+
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+
+        $adeudo_aux = $adeudo;
+        if ($semanas <= $semanas_credito) {
+            $ec_adeudo_corriente = $adeudo_aux;
+        } else {
+            $ec_adeudo_corriente = 0;
+        }
+        $semanas_atrasadas = ceil($adeudo_aux / $infoContrato['ctr_pago_credito']);
+        $ec_total_pagado = $ctr_saldo - $infoContrato['ctr_saldo_actual'];
+        $label = "Catorcenas atrasadas";
+    }
+    else if ($infoContrato['ctr_forma_pago'] == "QUINCENALES") {
+        $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
+        $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
+
+        $fecha_hoy = date("Y-m-d");
+        $fecha = date($infoContrato['ctr_proximo_pago']);
+
+        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
+        $dias = round($diasdif);
+
+
+        //semanas del primer dia de pago hasta la fecha
+        $semanas = ceil($dias / 15);
+
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+
+        $adeudo_aux = $adeudo;
+        if ($semanas <= $semanas_credito) {
+            $ec_adeudo_corriente = $adeudo_aux;
+        } else {
+            $ec_adeudo_corriente = 0;
+        }
+        $semanas_atrasadas = ceil($adeudo_aux / $infoContrato['ctr_pago_credito']);
+        $ec_total_pagado = $ctr_saldo - $infoContrato['ctr_saldo_actual'];
+        $label = "Quincenas atrasadas";
+    }
+    else {
+        $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
+        $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
+
+        $fecha_hoy = date("Y-m-d");
+        $fecha = date($infoContrato['ctr_proximo_pago']);
+
+        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
+        $dias = round($diasdif);
+
+
+        //semanas del primer dia de pago hasta la fecha
+        $semanas = ceil($dias / 30);
+
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+
+        $adeudo_aux = $adeudo;
+        if ($semanas <= $semanas_credito) {
+            $ec_adeudo_corriente = $adeudo_aux;
+        } else {
+            $ec_adeudo_corriente = 0;
+        }
+        $semanas_atrasadas = ceil($adeudo_aux / $infoContrato['ctr_pago_credito']);
+        $ec_total_pagado = $ctr_saldo - $infoContrato['ctr_saldo_actual'];
+        $label = "Meses atrasados";
+    }
+
 
 
     // Set some content to print
@@ -84,15 +189,14 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
     <table>
         <thead>
             <tr style="width:100%;">
-                <td style="text-align: left;">
+                <td style="text-align: left; width:150px;">
                     <img src="{$rutaImg}" width="100" />
-                    
                 </td>
                 <td style="text-align:center ;">
                         SUCURSAL: $scl_nombre <br>
                         DIRECCION: $scl_direccion <br>
                 </td>
-                <td>
+                <td style="text-align:center ;">
                     FECHA:<strong>$fecha</strong><br>
                     RUTA:<strong> $_GET[ec_ruta]</strong><br>
                     CUENTA:<strong> $_GET[ec_cuenta]</strong><br>
@@ -161,6 +265,15 @@ $header = <<<EOF
                 </tr>
                 <tr>
                     <td><b>Ultima fecha abono:</b> $infoContrato[ctr_ultima_fecha_abono]</td>
+                </tr>
+                <tr>
+                    <td><b>Total pagado:</b> $ec_total_pagado</td>
+                </tr>
+                <tr>
+                    <td><b>Adeudo corriente:</b> $ec_adeudo_corriente</td>
+                </tr>
+                <tr>
+                    <td><b>$label:</b> $semanas_atrasadas</td>
                 </tr>
             </table>
         </td>

@@ -739,4 +739,23 @@ class CobranzaControlador
             'mensaje' =>  'Se enrutaron ' . $cts_cra . ' cuentas'
         );
     }
+    public static function ctrActualizarSaldos()
+    {
+
+        if (isset($_POST['btnActualizarSaldos'])) {
+            $res = CobranzaModelo::mdlUpdateSaldos($_POST);
+
+            if ($res) {
+                return array(
+                    'status' => true,
+                    'mensaje' =>  'Se actualizaron los saldos correctamente!'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' =>  'Hubo un error al actualizar los saldos!'
+                );
+            }
+        }
+    }
 }

@@ -828,7 +828,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono,ctr.ctr_total_pagado  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ec_ruta);
@@ -893,6 +893,26 @@ class CobranzaModelo
             $pps->bindValue(4, $ctr['clts_coordenadas']);
             $pps->bindValue(5, $ctr['ctr_orden']);
             $pps->bindValue(6, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlUpdateSaldos($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_base = ?, ctr_saldo_actual = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, str_replace (',', '', $ctr['ec_saldo_base']));
+            $pps->bindValue(2, str_replace (',', '', $ctr['ec_saldo_actual']));
+            $pps->bindValue(3, $ctr['ctr_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

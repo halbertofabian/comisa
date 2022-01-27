@@ -1,6 +1,6 @@
 <div class="containeir">
     <div class="row">
-        <div class="col-xl-9 col-md-9 col-8">
+        <div class="col-xl-9 col-md-9 col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -19,7 +19,7 @@
                         <div class="col-xl-4 col-md-4 col-sm-12">
                             <div class="form-group">
                                 <label for="ec_cuenta">Cuenta</label>
-                                <input type="text" class="form-control" name="ec_cuenta" id="ec_cuenta" placeholder="">
+                                <input type="number" class="form-control" name="ec_cuenta" id="ec_cuenta" placeholder="">
                             </div>
                         </div>
                         <div class="col-xl-4 col-md-4 col-sm-12">
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-md-3 col-4">
+        <div class="col-xl-3 col-md-3 col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -74,6 +74,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="ec_precio">Precio</label>
+                                <input type="hidden" id="ctr_id">
                                 <input type="text" class="form-control" name="ec_precio" id="ec_precio" placeholder="" readonly>
                             </div>
                         </div>
@@ -114,7 +115,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="ec_saldo_base">Saldo base</label>
-                                <input type="text" class="form-control" name="ec_saldo_base" id="ec_saldo_base" placeholder="" readonly>
+                                <input type="text" class="form-control inputN" name="ec_saldo_base" id="ec_saldo_base" placeholder="">
                             </div>
                         </div>
                     </div>
@@ -122,7 +123,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="ec_saldo_actual">Saldo actual</label>
-                                <input type="text" class="form-control" name="ec_saldo_actual" id="ec_saldo_actual" placeholder="" readonly>
+                                <input type="text" class="form-control inputN" name="ec_saldo_actual" id="ec_saldo_actual" placeholder="">
                             </div>
                         </div>
                     </div>
@@ -132,6 +133,33 @@
                                 <label for="ec_ultima_fecha">Ultima fecha</label>
                                 <input type="date-time" class="form-control" name="ec_ultima_fecha" id="ec_ultima_fecha" placeholder="" readonly>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="ec_total_pagado">Total pagado</label>
+                                <input type="date-time" class="form-control" name="ec_total_pagado" id="ec_total_pagado" placeholder="" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="ec_adeudo_corriente">Adeudo <br> corriente</label>
+                                <input type="text" class="form-control bg-warning" name="ec_adeudo_corriente" id="ec_adeudo_corriente" placeholder="" readonly>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="ec_atraso" id="label"><br><br></label>
+                                <input type="text" class="form-control bg-warning" name="ec_atraso" id="ec_atraso" placeholder="" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12" id="btn-actualizar-saldos">
+                            
                         </div>
                     </div>
                 </div>
