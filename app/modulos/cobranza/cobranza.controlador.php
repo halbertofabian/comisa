@@ -670,6 +670,7 @@ class CobranzaControlador
     {
         $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
         $listarAbonos = CobranzaModelo::mdlListarPagosPendientes($usr_id);
+
         $array_contratos = array();
         foreach ($listarAbonos as  $abs) {
             $contrato = CobranzaModelo::mdlObtenerContratoCobrado($abs['abs_id_contrato']);
@@ -713,6 +714,47 @@ class CobranzaControlador
 
         // GUARDAR LA UBICACIÓN DE LOS REPORTE
 
+    }
+
+    public static function ctrProcesarPagoAPIV2($usr_id, $pago_name)
+    {
+        $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
+        $listarAbonos = CobranzaModelo::mdlListarPagosPendientesV2($usr_id);
+
+        foreach ($listarAbonos as  $abs) {
+
+            $totalPagdoTmp = dnum($abs['ctr_total_pagado']);
+            $saldoActualTmp = $abs['ctr_saldo_actual'];
+
+            // ADEUDO CALCULADO
+            $nuevoSaldo = $saldoActualTmp - dnum($abs['abs_monto']);
+
+            // TOTAL PAGADO
+            $nuevoPagdo = $totalPagdoTmp + dnum($abs['abs_monto']);
+
+
+            CobranzaModelo::mdlActualizarSaldoV2(array(
+                'ctr_saldo_actual' => $nuevoSaldo,
+                'ctr_ultima_fecha_abono' => $abs['abs_fecha_cobro'],
+                'ctr_total_pagado' => $nuevoPagdo,
+                'ctr_id' => $abs['ctr_id']
+            ));
+            $ctr_saldo_actualizado = CobranzaModelo::mdlConsultarSaldoBaseV2($abs['ctr_id']);
+
+            $verificacionSaldo = dnum($ctr_saldo_actualizado['ctr_saldo_actual']) == $nuevoSaldo ? 1 : 0;
+
+            CobranzaModelo::mdlVerificacionSaldo(array(
+                'abs_verificacion' => $verificacionSaldo,
+                'abs_save' =>  $id_pago,
+                'abs_id' => $abs['abs_id']
+            ));
+            # code...
+        }
+        return array(
+            'status' => true,
+            'mensaje' => 'Cobranza autorizada',
+            'pagina' => ''
+        );
     }
 
     public static function ctrEnrutarCuentasNuevas($cuentas)

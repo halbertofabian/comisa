@@ -35,7 +35,7 @@ class CobranzaAjax
 
     public function ajaxAutorizarPagos()
     {
-        $respuesta = CobranzaControlador::ctrProcesarPagoAPI($_POST['usr_id'], $_POST['usr_nombre']);
+        $respuesta = CobranzaControlador::ctrProcesarPagoAPIV2($_POST['usr_id'], $_POST['usr_nombre']);
         echo json_encode($respuesta, true);
     }
     public function ajaxAutorizarCobranza()
@@ -109,6 +109,14 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrActualizarSaldos();
         echo json_encode($respuesta, true);
     }
+
+    public function ajaxBuscarPagos()
+    {
+       
+        $respuesta = CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
+        echo json_encode($respuesta, true);
+        
+    }
 }
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -159,4 +167,9 @@ if (isset($_POST['btn_consultar_cuenta3'])) {
 if (isset($_POST['btnActualizarSaldos'])) {
     $actualizarSaldos = new CobranzaAjax();
     $actualizarSaldos->ajaxActualizarSaldos();
+}
+
+if (isset($_POST['btnConsultarPagos'])) {
+    $consultarPagos = new CobranzaAjax();
+    $consultarPagos->ajaxBuscarPagos();
 }

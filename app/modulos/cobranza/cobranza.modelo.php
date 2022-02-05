@@ -571,6 +571,93 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlListarPagosPendientesV2($abs_id_cobrador)
+    {
+        try {
+            $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,ctr_total_pagado,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_estado_abono =  'POR AUTORIZAR' AND abs_c.abs_id_cobrador = ?  ORDER BY ctr.ctr_numero_cuenta ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id_cobrador);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    // ACTUALIZAR SALDO 
+    public static  function mdlActualizarSaldoV2($datos)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ?, ctr_ultima_fecha_abono = ?,ctr_total_pagado = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datos['ctr_saldo_actual']);
+            $pps->bindValue(2, $datos['ctr_ultima_fecha_abono']);
+            $pps->bindValue(3, $datos['ctr_total_pagado']);
+            $pps->bindValue(4, $datos['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    // CONSULTAR SALDO ACTUAL BASE
+    public static function mdlConsultarSaldoBaseV2($ctr_id)
+    {
+        try {
+            $sql = "SELECT ctr_saldo_actual FROM tbl_contrato_crt_1 WHERE ctr_id =? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindParam(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+            //code...
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    // VERIFICACION SALDO
+
+    public static function mdlVerificacionSaldo($datos)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_verificacion = ?, abs_save = ? WHERE abs_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datos['abs_verificacion']);
+            $pps->bindValue(2, $datos['abs_save']);
+            $pps->bindValue(3, $datos['abs_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+
+
+
 
     public static function mdlObtenerContratoCobrado($cra_id)
     {
@@ -910,13 +997,40 @@ class CobranzaModelo
             $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_base = ?, ctr_saldo_actual = ? WHERE ctr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, str_replace (',', '', $ctr['ec_saldo_base']));
-            $pps->bindValue(2, str_replace (',', '', $ctr['ec_saldo_actual']));
+            $pps->bindValue(1, str_replace(',', '', $ctr['ec_saldo_base']));
+            $pps->bindValue(2, str_replace(',', '', $ctr['ec_saldo_actual']));
             $pps->bindValue(3, $ctr['ctr_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlBuscarPagosUsr($usr_id)
+    {
+        try {
+            //code...
+            if ($usr_id == "") {
+
+                $sql = "SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_estado_abono =  'POR AUTORIZAR' ORDER BY ctr.ctr_numero_cuenta ASC ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->execute();
+                return $pps->fetchAll();
+            } else {
+                $sql = "SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,usr.usr_nombre FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_estado_abono =  'POR AUTORIZAR' AND abs_c.abs_id_cobrador = ?  ORDER BY ctr.ctr_numero_cuenta ASC ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $usr_id);
+                $pps->execute();
+                return $pps->fetchAll();
+            }
+        } catch (PDOException $th) {
             return false;
         } finally {
             $pps = null;
