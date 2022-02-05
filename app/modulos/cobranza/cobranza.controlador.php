@@ -622,13 +622,13 @@ class CobranzaControlador
             return array(
                 'status' => true,
                 'mensaje' => 'Pago cancelado',
-                'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
+                // 'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
             );
         } else {
             return array(
                 'status' => false,
                 'mensaje' => 'No se pudo cancelar el pago, intente de nuevo',
-                'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
+                // 'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
             );
         }
     }
@@ -720,6 +720,13 @@ class CobranzaControlador
     {
         $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
         $listarAbonos = CobranzaModelo::mdlListarPagosPendientesV2($usr_id);
+        if(!$listarAbonos){
+            return array(
+                'status' => false,
+                'mensaje' => 'No hay cobros por autorizar',
+                
+            );
+        }
 
         foreach ($listarAbonos as  $abs) {
 
@@ -753,7 +760,7 @@ class CobranzaControlador
         return array(
             'status' => true,
             'mensaje' => 'Cobranza autorizada',
-            'pagina' => ''
+            'pagina' => HTTP_HOST . 'app/report/reporte-cobranza-autorizada.php?abs_save=' . $id_pago
         );
     }
 

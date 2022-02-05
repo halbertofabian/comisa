@@ -145,7 +145,7 @@ if (isset($rutas) && $rutas['1'] != "") :
                         <td><?= $fch['gds_id'] ?></td>
                         <td><?= $fch['gds_nombre'] ?></td>
                         <td>
-                            <a href="<?= HTTP_HOST . 'historial-ficha/' . $fch['gds_id']  ?>" class="btn btn-primary">Ver reporte</a>
+                            <a href="<?= HTTP_HOST . 'app/report/reporte-cobranza-autorizada.php?abs_save=' . $fch['gds_id']  ?>" target="_blank" class="btn btn-primary">Ver reporte</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

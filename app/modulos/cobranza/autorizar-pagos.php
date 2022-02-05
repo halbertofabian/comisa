@@ -24,9 +24,10 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered tablePagos">
                 <thead>
                     <tr class="text-center">
+                        <th></th>
                         <th># OPERACIÓN </th>
                         <th>COBRADOR</th>
                         <th>CLIENTE</th>
@@ -74,15 +75,15 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row d-none savePago">
         <div class="col-md-8"></div>
         <div class="col-md-4">
             <form id="formAutorizarPagos" method="post">
                 <div class="form-group">
                     <label for="">Guardar como... </label>
                     <input type="text" name="usr_nombre" id="usr_nombre" class="form-control" value="<?= fechaCastellano(FECHA_ACTUAL) ?>">
-                    <input type="text" name="usr_id" id="usr_id_save" value="">
-                    <input type="text" id="fecha_text" value="<?= fechaCastellano(FECHA_ACTUAL) ?>">
+                    <input type="hidden" name="usr_id" id="usr_id_save" value="">
+                    <input type="hidden" id="fecha_text" value="<?= fechaCastellano(FECHA_ACTUAL) ?>">
                     <button class="btn btn-primary float-right mt-1">Guardar y autorizar</button>
                 </div>
             </form>
@@ -108,31 +109,132 @@
     $("#formAutorizarPagos").on("submit", function(e) {
         e.preventDefault();
 
-        var datos = new FormData(this);
-        datos.append("btnAutorizarPagos", true);
-        $.ajax({
-            type: "POST",
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-            data: datos,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
+        swal({
+                title: "¿Estas seguro de autorizar estos cobros?",
+                text: "Esta acción no es revercible",
+                icon: "warning",
+                buttons: ['No', 'Si, autorizo'],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var datos = new FormData(this);
+                    datos.append("btnAutorizarPagos", true);
+                    $.ajax({
+                        type: "POST",
+                        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                        data: datos,
+                        dataType: "json",
+                        processData: false,
+                        contentType: false,
+                        beforeSend: function() {
 
-            },
-            success: function(res) {
-                toastr.success(res.mensaje, '¡Muy bien!');
-                setTimeout(function() {
-                    // window.location.href = res.pagina;
-                }, 200)
-            }
-        });
+                        },
+                        success: function(res) {
+                            if (res.status) {
+                                toastr.success(res.mensaje, '¡Muy bien!');
+                                setTimeout(function() {
+                                    window.open(res.pagina, '_blank');
+                                }, 200)
+                                $('#urs_id').val("").trigger('change');
+                                buscarPagos("");
+                            } else {
+                                toastr.error(res.mensaje, '¡Error!');
+
+                            }
+
+                        }
+                    });
+                }
+            });
+
+
     })
+
+
+    $(".tablePagos tbody").on("click", "button.btnCancelarPago", function() {
+        var abs_id = $(this).attr("abs_id");
+        // var usr_id = $(this).attr("usr_id");
+        // var usr_nombre = $(this).attr("usr_nombre");
+        swal({
+                title: "¿Estás seguro de cancelar este pago?",
+                text: "Esta accion no es reversible",
+                icon: "warning",
+                buttons: ["No, cancelar", "Si, confirmar "],
+                dangerMode: false,
+                closeOnClickOutside: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    swal("Esctibe el motivo por el cúal estas cancelado este pago", {
+                            content: {
+                                element: "input",
+                                attributes: {
+                                    type: "text",
+                                    value: "",
+                                },
+                            },
+                        })
+                        .then((abs_motivo_cancelacion) => {
+                            if (abs_motivo_cancelacion == "") {
+                                toastr.error('Error', 'Escribe el motivo...')
+                            } else {
+                                var datos = new FormData();
+
+                                datos.append("btnCancelarPago", true);
+                                datos.append("abs_motivo_cancelacion", abs_motivo_cancelacion)
+                                datos.append("abs_id", abs_id)
+                                // datos.append("usr_id", usr_id)
+
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                                    data: datos,
+                                    dataType: "json",
+                                    processData: false,
+                                    contentType: false,
+                                    beforeSend: function() {
+
+                                    },
+                                    success: function(res) {
+
+                                        if (res.status) {
+
+                                            toastr.success(res.mensaje, '¡Muy bien!');
+                                            setTimeout(function() {
+                                                buscarPagos($("#urs_id").val());
+                                            }, 200)
+
+
+                                        } else {
+
+                                            toastr.error(res.mensaje, '¡Error!');
+                                            setTimeout(function() {
+                                                buscarPagos($("#urs_id").val());
+                                            }, 200)
+
+                                        }
+
+                                    }
+                                })
+                            }
+                        });
+
+                }
+            })
+    })
+
+
 
     function buscarPagos(urs_id) {
 
         if (urs_id != "") {
             $("#usr_id_save").val(urs_id)
+            $(".savePago").removeClass("d-none");
+        } else {
+            $(".savePago").addClass("d-none");
         }
 
         var datos = new FormData()
@@ -158,8 +260,10 @@
                 var cobrador = "";
                 res.forEach(pgs => {
 
+                    var buttonCancelar = "";
                     if (urs_id != "") {
                         cobrador = pgs.usr_nombre;
+                        buttonCancelar = `<button type="button" class="btn btn-outline-danger btnCancelarPago" abs_id="${pgs.abs_id}">CANCELAR</button>`;
                     }
 
                     pgs_total += Number(pgs.abs_monto);
@@ -175,6 +279,7 @@
                         `
                         <tr>
                         
+                            <td>${buttonCancelar}</td>
                             <td>${pgs.abs_id}</td>
                             <td>${pgs.usr_nombre}</td>
                             <td>${pgs.ctr_cliente}</td>

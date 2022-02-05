@@ -703,7 +703,7 @@ class AppControlador
                         [
                             'icon' => '',
                             'label' => 'Pagos por autorizar',
-                            'href' => 'autorizar-pagos'
+                            'href' => 'cobranza/autorizar-pagos'
                         ],
                         [
                             'icon' => '',

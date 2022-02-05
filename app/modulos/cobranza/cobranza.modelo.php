@@ -588,6 +588,41 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlListarPagosAutorizadosByAbsSave($abs_save)
+    {
+        try {
+            $sql = " SELECT ctr.ctr_cliente,ctr.ctr_forma_pago,ctr.ctr_dia_pago,abs_c.*,cra.cra_fecha_cobro,cra.cra_fecha_reagenda,cra.cra_fecha_proxima_pago,ctr.ctr_id,ctr.ctr_folio,ctr.ctr_ruta,ctr.ctr_numero_cuenta,ctr.ctr_status_cuenta,ctr.ctr_saldo_actual,ctr_total_pagado,usr.usr_nombre,usr.usr_ruta FROM tbl_abonos_cobranza_abs abs_c JOIN tbl_cartelera_cra cra ON abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id JOIN tbl_usuarios_usr usr ON abs_c.abs_id_cobrador = usr.usr_id WHERE  abs_c.abs_save =?  ORDER BY ctr.ctr_numero_cuenta ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_save);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlListarFichasByGdsId($gds_id)
+    {
+        try {
+            $sql = " SELECT * FROM tbl_pagos_gds WHERE gds_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $gds_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
 
     // ACTUALIZAR SALDO 
     public static  function mdlActualizarSaldoV2($datos)
@@ -638,7 +673,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_verificacion = ?, abs_save = ? WHERE abs_id = ?";
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_verificacion = ?, abs_save = ?, abs_estado_abono = 'AUTORIZADO' WHERE abs_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $datos['abs_verificacion']);
