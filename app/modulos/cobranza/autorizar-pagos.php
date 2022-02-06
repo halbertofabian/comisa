@@ -84,7 +84,7 @@
                     <input type="text" name="usr_nombre" id="usr_nombre" class="form-control" value="<?= fechaCastellano(FECHA_ACTUAL) ?>">
                     <input type="hidden" name="usr_id" id="usr_id_save" value="">
                     <input type="hidden" id="fecha_text" value="<?= fechaCastellano(FECHA_ACTUAL) ?>">
-                    <button class="btn btn-primary float-right mt-1">Guardar y autorizar</button>
+                    <button class="btn btn-primary float-right mt-1 btnAutorizarPagos">Guardar y autorizar</button>
                 </div>
             </form>
         </div>
@@ -129,6 +129,9 @@
                         contentType: false,
                         beforeSend: function() {
 
+                            $(".btnAutorizarPagos").html(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Cargando...`);
+                            $(".btnAutorizarPagos").attr('disabled', true)
+
                         },
                         success: function(res) {
                             if (res.status) {
@@ -142,7 +145,8 @@
                                 toastr.error(res.mensaje, '¡Error!');
 
                             }
-
+                            $(".btnAutorizarPagos").attr('disabled', false)
+                            $(".btnAutorizarPagos").html(`Guardar y autorizar`);
                         }
                     });
                 }
