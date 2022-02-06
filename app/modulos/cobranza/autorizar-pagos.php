@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" style="overflow:scroll-y">
             <table class="table table-striped table-bordered tablePagos">
                 <thead>
                     <tr class="text-center">
