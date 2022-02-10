@@ -125,7 +125,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">STATUS</label>
-                            <input type="text" class="form-control" id="ctr_status_cuenta" name="ctr_status_cuenta">
+                            <input type="text" class="form-control" id="ctr_status_cuenta" name="ctr_status_cuenta" style="color:red">
                         </div>
                     </div>
 

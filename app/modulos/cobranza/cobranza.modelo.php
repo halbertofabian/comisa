@@ -950,7 +950,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono,ctr.ctr_total_pagado  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono,ctr.ctr_total_pagado,ctr_elaboro  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ec_ruta);
@@ -1066,6 +1066,138 @@ class CobranzaModelo
                 return $pps->fetchAll();
             }
         } catch (PDOException $th) {
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlCrearFicha($fcbz)
+    {
+        try {
+            $sql = "INSERT INTO tbl_ficha_fcbz  (fcbz_numero,fcbz_fecha_inicio,fcbz_fecha_termino,fcbz_ano) VALUES (?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $fcbz['fcbz_numero']);
+            $pps->bindValue(2, $fcbz['fcbz_fecha_inicio']);
+            $pps->bindValue(3, $fcbz['fcbz_fecha_termino']);
+            $pps->bindValue(4, $fcbz['fcbz_ano']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarUltimaFicha()
+    {
+        try {
+            $sql = " SELECT * FROM tbl_ficha_fcbz ORDER BY fcbz_id DESC LIMIT 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarCobradoresActvos()
+    {
+        try {
+            //code...
+            $sql = "SELECT usr_id, usr_ruta FROM tbl_usuarios_usr WHERE usr_rol = 'Cobrador' AND usr_ruta != '' ORDER BY CAST( REPLACE(usr_ruta,'R','') AS INT) ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarSeguimientoCobranza($ctr_ruta, $ctr_etiqueta)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_numero_cuenta FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_etiqueta = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_ruta);
+            $pps->bindValue(2, $ctr_etiqueta);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarCarteraActiva($ctr_ruta)
+    {
+        try {
+            //code...
+            $sql = "SELECT COUNT(cra_id) AS scbz_inicio FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON ctr.ctr_id = cra.cra_contrato WHERE ctr.ctr_ruta = ?  ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_ruta);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarCobroSemana($ctr_ruta, $fecha_inicio, $fecha_fin)
+    {
+        try {
+            //code...
+            $sql = "SELECT COUNT(cra_id) AS scbz_cuentas_semana  FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON ctr.ctr_id = cra.cra_contrato WHERE ctr.ctr_ruta = ? AND (cra_fecha_cobro BETWEEN ? AND ?  OR cra_fecha_reagenda BETWEEN ? AND ? ) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_ruta);
+            $pps->bindValue(2, $fecha_inicio);
+            $pps->bindValue(3, $fecha_fin);
+            $pps->bindValue(4, $fecha_inicio);
+            $pps->bindValue(5, $fecha_fin);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarSeguimientoAnterior($ctr_ruta)
+    {
+        try {
+            //code...
+            $sql = "SELECT * tbl_seguimiento_scbz WHERE scbz_ruta = ? ORDER BY scbz_id DESC LIMIT 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_ruta);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
             return false;
         } finally {
             $pps = null;

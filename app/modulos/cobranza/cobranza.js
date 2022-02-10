@@ -97,7 +97,7 @@ $(document).ready(function () {
     })
 });
 
-$("#btn_consultar_cuenta").on("click", function () {
+function mostrarEstado() {
     var ec_ruta = $("#ec_ruta").val();
     var ec_cuenta = $("#ec_cuenta").val();
 
@@ -130,7 +130,7 @@ $("#btn_consultar_cuenta").on("click", function () {
                 $("#btn-export-pdf").html("");
                 $("#btn-actualizar-saldos").html("");
             } else {
-                $("#btn-export-pdf").html(`<a target="_blank" href="${urlApp}app/report/reporte-estado-cuenta.php?ec_ruta=${ec_ruta}&ec_cuenta=${ec_cuenta}" class="btn btn-success btn-block">
+                $("#btn-export-pdf").html(`<a target="_blank" href="${urlApp}app/report/reporte-estado-cuenta.php?ec_ruta=${ec_ruta}&ec_cuenta=${ec_cuenta}" class="btn btn-success btn-block mb-2">
             <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Descargar
         </a>`);
                 $("#btn-actualizar-saldos").html(`<button type="button" class="btn btn-primary btn-block" id="btnActualizarSaldos">Actualizar</button>`);
@@ -138,6 +138,7 @@ $("#btn_consultar_cuenta").on("click", function () {
                 $("#ec_fecha_inicio").val(res.ctr_proximo_pago);
 
 
+                $("#ctr_elaboro").val(res.ctr_elaboro);
                 $("#ctr_id").val(res.ctr_id);
                 $("#ec_precio").val($.number(res.ctr_total));
                 $("#ec_enganche").val($.number(res.ctr_enganche));
@@ -306,6 +307,12 @@ $("#btn_consultar_cuenta").on("click", function () {
             }
         }
     });
+}
+
+$("#form_consultar_cuenta").on("submit", function (e) {
+    e.preventDefault();
+    mostrarEstado();
+
 });
 
 $(document).on("click", "#btnActualizarSaldos", function () {

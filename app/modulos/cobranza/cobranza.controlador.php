@@ -720,11 +720,11 @@ class CobranzaControlador
     {
         $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
         $listarAbonos = CobranzaModelo::mdlListarPagosPendientesV2($usr_id);
-        if(!$listarAbonos){
+        if (!$listarAbonos) {
             return array(
                 'status' => false,
                 'mensaje' => 'No hay cobros por autorizar',
-                
+
             );
         }
 
@@ -805,6 +805,160 @@ class CobranzaControlador
                     'mensaje' =>  'Hubo un error al actualizar los saldos!'
                 );
             }
+        }
+    }
+
+    public static function ctrCrearFicha()
+    {
+        if (date('Y-m-d') == date('Y-m-d', strtotime('this Thursday'))) {
+            $fcbz = CobranzaModelo::mdlMostrarUltimaFicha();
+
+            // $fechaHoy = date('Y-m-d');
+            // Datos de la base
+            $fcbz_numero_base = $fcbz['fcbz_numero'];
+            $fcbz_ano_base = $fcbz['fcbz_ano'];
+
+            $fcbz_fecha_termino_base = $fcbz['fcbz_fecha_termino'];
+
+            $fcbz_ano_atual = date('Y', strtotime('This year'));
+
+            $fcbz_numero_siguiente = $fcbz_ano_base == $fcbz_ano_atual ? $fcbz_numero_base + 1 : 1;
+
+
+            $fecha_inicio =  date('Y-m-d', strtotime($fcbz_fecha_termino_base . '+ 1 days'));
+            $fecha_termino =  date('Y-m-d', strtotime($fcbz_fecha_termino_base . '+ 7 days'));
+
+            $res = CobranzaModelo::mdlCrearFicha(array(
+                'fcbz_numero' => $fcbz_numero_siguiente,
+                'fcbz_fecha_inicio' => $fecha_inicio,
+                'fcbz_fecha_termino' => $fecha_termino,
+                'fcbz_ano' => $fcbz_ano_atual,
+            ));
+        }
+    }
+
+
+
+    public static function ctrIniciarSeguimientoCobranza()
+    {
+
+
+        $cobradores = CobranzaModelo::mdlMostrarCobradoresActvos();
+
+        foreach ($cobradores as $key => $cbr) {
+
+            # code...
+            $datos_ficha = CobranzaModelo::mdlMostrarUltimaFicha();
+
+            $scbz_inicio = CobranzaModelo::mdlMostrarCarteraActiva($cbr['usr_ruta']);
+
+            $scbz_cuentas_semana = CobranzaModelo::mdlMostrarCobroSemana($cbr['usr_ruta'], $datos_ficha['fcbz_fecha_inicio'], $datos_ficha['fcbz_fecha_termino']);
+
+
+            $scbz_cuentas_descontar = dnum($scbz_inicio['scbz_inicio']) - dnum($scbz_cuentas_semana['scbz_cuentas_semana']);
+
+            $seg_anterior = CobranzaModelo::mdlMostrarSeguimientoAnterior($cbr['usr_ruta']);
+
+            if (!$seg_anterior) {
+                $scbz_meta_porcentaje = 50;
+            } else {
+                $scbz_meta_porcentaje =  dnum($seg_anterior['scbz_meta_porcentaje']) + 5;
+            }
+
+            $scbz_meta_cobro = dnum($scbz_cuentas_semana['scbz_cuentas_semana']) *  $scbz_meta_porcentaje / 100;
+
+            //
+            $cct_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'CCT');
+            $lzr_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'LZR');
+            $srv_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'SRV');
+            $rcg_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'RCG');
+            $spr_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'SPR');
+            $trt_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'TRT');
+            $sls_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'SLS');
+            $cvs_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'CVS');
+            $fls_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'FLS');
+            $jdc_cuentas = CobranzaModelo::mdlMostrarSeguimientoCobranza($cbr['usr_ruta'], 'JDC');
+
+            $scbz_seguimiento_array = array(
+                'scbz_cct' => array(
+                    'cct_total' => count($cct_cuentas),
+                    'cct_cuentas' => json_encode($cct_cuentas, true),
+                    'cct_objetivo' => '',
+                    'cct_alcance' => ''
+                ),
+
+                'scbz_lzr' => array(
+                    'lzr_total' => count($lzr_cuentas),
+                    'lzr_cuentas' => json_encode($lzr_cuentas, true),
+                    'lzr_objetivo' => '',
+                    'lzr_alcance' => ''
+                ),
+                'scbz_srv' => array(
+                    'srv_total' => count($srv_cuentas),
+                    'srv_cuentas' => json_encode($srv_cuentas, true),
+                    'srv_objetivo' => '',
+                    'srv_alcance' => ''
+                ),
+                'scbz_rcg' => array(
+                    'rcg_total' => count($rcg_cuentas),
+                    'rcg_cuentas' => json_encode($rcg_cuentas, true),
+                    'rcg_objetivo' => '',
+                    'rcg_alcance' => ''
+                ),
+                'scbz_spr' => array(
+                    'spr_total' => count($spr_cuentas),
+                    'spr_cuentas' => json_encode($spr_cuentas, true),
+                    'spr_objetivo' => '',
+                    'spr_alcance' => ''
+                ),
+                'scbz_trt' => array(
+                    'trt_total' => count($trt_cuentas),
+                    'trt_cuentas' => json_encode($trt_cuentas, true),
+                    'trt_objetivo' => '',
+                    'trt_alcance' => ''
+                ),
+                'scbz_sls' => array(
+                    'sls_total' => count($sls_cuentas),
+                    'sls_cuentas' => json_encode($sls_cuentas, true),
+                    'sls_objetivo' => '',
+                    'sls_alcance' => ''
+                ),
+                'scbz_cvs' => array(
+                    'cvs_total' => count($cvs_cuentas),
+                    'cvs_cuentas' => json_encode($cvs_cuentas, 2),
+                    'cvs_objetivo' => '',
+                    'cvs_alcance' => ''
+                ),
+                'scbz_fls' => array(
+                    'fls_total' => count($fls_cuentas),
+                    'fls_cuentas' => json_encode($fls_cuentas, 2),
+                    'fls_objetivo' => '',
+                    'fls_alcance' => ''
+                ),
+                'scbz_jdc' => array(
+                    'jdc_total' => count($jdc_cuentas),
+                    'jdc_cuentas' => json_encode($jdc_cuentas, 2),
+                    'jdc_objetivo' => '',
+                    'jdc_alcance' => ''
+                )
+            );
+
+            $scbz_seguimiento = json_encode($scbz_seguimiento_array, true);
+
+
+            $scbz_meta_array = array(
+                'scbz_inicio' => dnum($scbz_inicio['scbz_inicio']),
+                'scbz_cuentas_semana' => dnum($scbz_cuentas_semana['scbz_cuentas_semana']),
+                'scbz_cuentas_descontar' => $scbz_cuentas_descontar,
+                'scbz_meta_porcentaje' => $scbz_meta_porcentaje,
+                'scbz_meta_cobro' => $scbz_meta_cobro,
+                // 'scbz_alcance_anterior' => '',
+                'scbz_porcentaje_alcanzado' => '',
+                'scbz_total_pagadas' => '',
+                'scbz_ficha' => $datos_ficha['fcbz_id'],
+                'scbz_seguimiento' => $scbz_seguimiento,
+                'scbz_ruta' => $cbr['usr_ruta']
+            );
         }
     }
 }

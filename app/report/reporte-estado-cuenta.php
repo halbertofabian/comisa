@@ -243,6 +243,9 @@ $header = <<<EOF
         <td style="background-color: #e9ecef; width:30%;">
             <table>
                 <tr>
+                    <td><b>Vendedor:</b> $infoContrato[ctr_elaboro]</td>
+                </tr>
+                <tr>
                     <td><b>Precio:</b> $infoContrato[ctr_total]</td>
                 </tr>
                 <tr>

@@ -169,6 +169,8 @@ class AppControlador
             'importar-clientes-mal-historial',
             'new-mal-historial',
             'edit-cliente-mal-historial',
+            'cobranza',
+            'historial-ficha'
         );
     }
 
@@ -1139,6 +1141,60 @@ class AppControlador
                             'label' => 'Enrutar cuentas',
                             'href' => 'contratos/enrutar-cuentas'
                         ],
+                        //Aqui más item de menu
+                    ),
+                ]
+            ),
+            '1' => array(
+                [
+                    'label' => 'Cobranza',
+                    'icon' => '<i class="fa fa-dollar"></i>',
+                    'href' => '#home',
+                    'modulos' =>
+                    array(
+
+                        [
+                            'icon' => '',
+                            'label' => 'Autorizar cobranza',
+                            'href' => 'autorizar-cobranza'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Pagos por autorizar',
+                            'href' => 'cobranza/autorizar-pagos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Historial de fichas',
+                            'href' => 'historial-ficha/'
+                        ],
+
+                        // [
+                        //     'icon' => '',
+                        //     'label' => 'Flujo de caja',
+                        //     'href' => 'flujo-caja'
+                        // ],
+                        [
+                            'icon' => '',
+                            'label' => 'Lista de cajas / Nueva caja',
+                            'href' => 'cajas'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Enrutar cuentas',
+                            'href' => 'cobranza/actualizar-saldos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Descargar ruta',
+                            'href' => 'cobranza/ruta'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Estado de cuenta',
+                            'href' => 'cobranza/estado-cuenta'
+                        ],
+
                         //Aqui más item de menu
                     ),
                 ]

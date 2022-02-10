@@ -3,32 +3,34 @@
         <div class="col-xl-9 col-md-9 col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-4 col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <label for="ec_ruta">Ruta</label>
-                                <select name="ec_ruta" id="ec_ruta" class="form-control select2">
-                                    <?php
-                                    for ($i = 1; $i <= 100; $i++) :
-                                    ?>
-                                        <option value="R<?= $i ?>">R<?= $i ?></option>
-                                    <?php endfor; ?>
-                                </select>
+                    <form id="form_consultar_cuenta" method="post">
+                        <div class="row">
+                            <div class="col-xl-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label for="ec_ruta">Ruta</label>
+                                    <select name="ec_ruta" id="ec_ruta" class="form-control select2">
+                                        <?php
+                                        for ($i = 1; $i <= 100; $i++) :
+                                        ?>
+                                            <option value="R<?= $i ?>">R<?= $i ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label for="ec_cuenta">Cuenta</label>
+                                    <input type="number" class="form-control" name="ec_cuenta" id="ec_cuenta" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-md-4 col-sm-12">
+                                <div class="form-group">
+                                    <label for="btn_consultar_cuenta"></label><br>
+                                    <input name="" id="btn_consultar_cuenta" class="btn btn-primary " type="submit" value="Buscar">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <label for="ec_cuenta">Cuenta</label>
-                                <input type="number" class="form-control" name="ec_cuenta" id="ec_cuenta" placeholder="">
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-4 col-sm-12">
-                            <div class="form-group">
-                                <label for="btn_consultar_cuenta"></label><br>
-                                <input name="" id="btn_consultar_cuenta" class="btn btn-primary" type="button" value="Buscar">
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                     <div class="row">
                         <div class="col-xl-8">
                             <div class="form-group">
@@ -67,10 +69,18 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12" id="btn-export-pdf">
-                            
+
                         </div>
                     </div>
                     <div class="row">
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="ctr_elaboro">Vendedor</label>
+                                <input type="text" class="form-control" name="ctr_elaboro" id="ctr_elaboro" placeholder="" readonly>
+                            </div>
+                        </div>
+
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="ec_precio">Precio</label>
@@ -159,7 +169,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12" id="btn-actualizar-saldos">
-                            
+
                         </div>
                     </div>
                 </div>
