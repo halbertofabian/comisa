@@ -477,6 +477,16 @@ $app->get('/finalizar_cobranza', function (Request $request, Response $response,
     return json_encode($getAllCtra, true);
 });
 
+
+
+$app->get('/crear_nueva_ficha', function (Request $request, Response $response, array $args) {
+    // $ruta =  $args['ruta'];
+
+    $getAllCtra = CobranzaControlador::ctrCrearFicha();
+
+    return json_encode($getAllCtra, true);
+});
+
 $app->get('/consultar_contratos_new/{ruta}', function (Request $request, Response $response, array $args) {
     $ruta =  $args['ruta'];
 
@@ -484,4 +494,12 @@ $app->get('/consultar_contratos_new/{ruta}', function (Request $request, Respons
 
     return json_encode($getAllCtra, true);
 });
+
+$app->get('/conexion_api', function (Request $request, Response $response, array $args) {
+    // $ruta =  $args['ruta'];
+   
+});
+
+
+
 $app->run();
