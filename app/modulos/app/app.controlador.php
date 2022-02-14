@@ -738,6 +738,11 @@ class AppControlador
                             'label' => 'Estado de cuenta',
                             'href' => 'cobranza/estado-cuenta'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Ingresos',
+                            'href' => 'cobranza/ingresos'
+                        ],
 
                         //Aqui más item de menu
                     ),

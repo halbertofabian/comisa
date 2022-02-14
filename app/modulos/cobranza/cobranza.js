@@ -361,3 +361,41 @@ $(document).on("click", "#btnActualizarSaldos", function () {
             }
         });
 });
+
+$(document).on("click", ".btnEliminarIngreso", function () {
+    var igs_id = $(this).attr("igs_id");
+    swal({
+        title: `¿Esta seguro de eliminar el ingreso #${igs_id}?`,
+        icon: "warning",
+        buttons: ['No', 'Si, eliminar'],
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+                datos.append("igs_id", igs_id);
+                datos.append("btnEliminarIngreso", true);
+                $.ajax({
+                    url: urlApp + 'app/modulos/ingresos/ingresos.ajax.php',
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.status) {
+                            swal({
+                                title: "¡Bien!", text: res.mensaje, type: "success", icon: "success"
+                            }).then(function () {
+                                window.location.reload();
+                            });
+
+                        } else {
+                            swal("¡Error!", res.mensaje, "error");
+                        }
+                    }
+                })
+            }
+        });
+});
