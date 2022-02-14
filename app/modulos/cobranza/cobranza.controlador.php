@@ -521,6 +521,7 @@ class CobranzaControlador
             CobranzaModelo::mdlRegistrarAbono($abs_c);
         }
     }
+    
 
     public static function ctrRegistrarReagendados($cts_reagendado)
     {
@@ -587,6 +588,13 @@ class CobranzaControlador
             $cts_l = json_encode($datos[1]['Por_localizar'], true);
             CobranzaControlador::ctrRegistrarPorLocalizar($cts_l);
         }
+
+
+
+
+
+
+        
         // if (isset($datos[2]['Pendientes'])) {
         //     $cts_p = json_encode($datos[2]['Pendientes'], true);
         //     CobranzaControlador::ctrRegistrarPendientes($cts_p);

@@ -417,9 +417,12 @@ $app->post('/comisa-datos-cobranza', function (Request $request, Response $respo
     $data = json_decode($json, true);
 
     $cobranza =  CobranzaControlador::ctrSubirDatosCobranzaApp($data);
+
+    $abonos = CobranzaModelo::mdlObtenerAbonosCobranza($data['usr_id']);
     $datos = array(
         'status' => true,
-        'mensaje' => 'Registros sincronizados'
+        'mensaje' => 'Registros sincronizados',
+        'abonos' => $abonos['abs_id']
     );
 
     return json_encode($datos, true);

@@ -1204,4 +1204,23 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public static function mdlObtenerAbonosCobranza($abs_id_cobrador)
+    {
+        try {
+            //code...
+            $sql = "SELECT COUNT(abs_id) as abs_id FROM tbl_abonos_cobranza_abs WHERE abs_id_cobrador = ? AND abs_estado_abono = 'POR AUTORIZAR'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id_cobrador);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
