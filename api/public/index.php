@@ -418,7 +418,7 @@ $app->post('/comisa-datos-cobranza', function (Request $request, Response $respo
 
     $cobranza =  CobranzaControlador::ctrSubirDatosCobranzaApp($data);
 
-    $abonos = CobranzaModelo::mdlObtenerAbonosCobranza($data['usr_id']);
+    $abonos = CobranzaModelo::mdlObtenerAbonosCobranza($data[2]['usr_id']);
     $datos = array(
         'status' => true,
         'mensaje' => 'Registros sincronizados',
