@@ -721,10 +721,10 @@ class ContratosControlador
 
                         //fotos fiador
                         'clts_fotos_fiador' => json_encode(array(
-                            'img_cred_fro' =>  $cts["clts_fc_elector_fiador"],
-                            'img_cred_tra' =>  $cts["clts_tc_elector_fiador"],
-                            'img_comprobante' =>  $cts["clts_comprobante_fiador"],
-                            'img_pagare' =>  $cts["clts_pagare_fiador"]
+                            'img_cred_fro' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_fc_elector_fiador"], $cts["ctr_folio"], 'img_cred_fro_fiador'),
+                            'img_cred_tra' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_tc_elector_fiador"], $cts["ctr_folio"], 'img_cred_tra_fiador'),
+                            'img_comprobante' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_comprobante_fiador"], $cts["ctr_folio"], 'img_comprobante_fiador'),
+                            'img_pagare' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_pagare_fiador"], $cts["ctr_folio"], 'img_pagare_fiador'),
                         ), true),
 
                         'clts_nom_ref2' =>  dstring($cts["clts_nom_ref2"]),
@@ -910,50 +910,55 @@ class ContratosControlador
 
     public static function ctrGuardarImagenesContrato($ctr_img, $ctr_folio, $img_name)
     {
-        // En este caso, con PHP plano podriamos obtenerla usando :
-        // $baseFromJavascript = $_POST['base64'];
-        // $baseFromJavascript = "data:image/png;base64,BBBFBfj42Pj4....";
 
-        // Nuestro base64 contiene un esquema Data URI (data:image/png;base64,)
-        // que necesitamos remover para poder guardar nuestra imagen
-        // Usa explode para dividir la cadena de texto en la , (coma)
-        $base_to_php = explode(',', $ctr_img);
-        // El segundo item del array base_to_php contiene la información que necesitamos (base64 plano)
-        // y usar base64_decode para obtener la información binaria de la imagen
-        $data = base64_decode($base_to_php[1]); // BBBFBfj42Pj4....
+        $ruta_url = HTTP_HOST . 'media/image_no.png';
 
-        // Proporciona una locación a la nueva imagen (con el nombre y formato especifico)
-        $filepath =  DOCUMENT_ROOT . "img_temp_contrato.jpeg"; // or image.jpg
+        if ($ctr_img != "") {
+            // En este caso, con PHP plano podriamos obtenerla usando :
+            // $baseFromJavascript = $_POST['base64'];
+            // $baseFromJavascript = "data:image/png;base64,BBBFBfj42Pj4....";
 
-        // Finalmente guarda la imágen en el directorio especificado y con la informacion dada
-        file_put_contents($filepath, $data);
+            // Nuestro base64 contiene un esquema Data URI (data:image/png;base64,)
+            // que necesitamos remover para poder guardar nuestra imagen
+            // Usa explode para dividir la cadena de texto en la , (coma)
+            $base_to_php = explode(',', $ctr_img);
+            // El segundo item del array base_to_php contiene la información que necesitamos (base64 plano)
+            // y usar base64_decode para obtener la información binaria de la imagen
+            $data = base64_decode($base_to_php[1]); // BBBFBfj42Pj4....
 
-        //-----------------------------------------------------------------
+            // Proporciona una locación a la nueva imagen (con el nombre y formato especifico)
+            $filepath =  DOCUMENT_ROOT . "img_temp_contrato.jpeg"; // or image.jpg
 
-        list($ancho, $alto) = getimagesize($filepath);
+            // Finalmente guarda la imágen en el directorio especificado y con la informacion dada
+            file_put_contents($filepath, $data);
 
-        $nuevoAncho = 1200;
-        $nuevoAlto = 1000;
+            //-----------------------------------------------------------------
 
-        /*=============================================
+            list($ancho, $alto) = getimagesize($filepath);
+
+            $nuevoAncho = 1200;
+            $nuevoAlto = 1000;
+
+            /*=============================================
                     CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL Producto
                     =============================================*/
-        $fileimg = $ctr_folio;
+            $fileimg = $ctr_folio;
 
-        $directorio = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg;
+            $directorio = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg;
 
-        mkdir($directorio, 0755);
+            mkdir($directorio, 0755);
 
-        $ruta = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
-        $ruta_url = HTTP_HOST . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
+            $ruta = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
+            $ruta_url = HTTP_HOST . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
 
-        $origen = imagecreatefromjpeg($filepath);
+            $origen = imagecreatefromjpeg($filepath);
 
-        $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+            $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
-        imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+            imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
-        imagejpeg($destino, $ruta);
+            imagejpeg($destino, $ruta);
+        }
 
         return $ruta_url;
     }
