@@ -743,6 +743,11 @@ class AppControlador
                             'label' => 'Ingresos',
                             'href' => 'cobranza/ingresos'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Gastos',
+                            'href' => 'cobranza/gastos'
+                        ],
 
                         //Aqui más item de menu
                     ),

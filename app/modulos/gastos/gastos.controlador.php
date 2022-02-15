@@ -219,4 +219,18 @@ class GastosControlador
             }
         }
     }
+    public static function ctrMostrarGastos()
+    {
+        if (!empty($_POST['fecha_inicio']) && !empty($_POST['fecha_fin'])) {
+            $fecha_inicio = $_POST['fecha_inicio'];
+            $fecha_fin = $_POST['fecha_fin'];
+            $res = GastosModelo::mdlMostrarGastosFechas($fecha_inicio, $fecha_fin);
+            return $res;
+        } else {
+            $fecha_inicio = date('Y-m-d');
+            $fecha_fin = date('Y-m-d');
+            $res = GastosModelo::mdlMostrarGastosFechas($fecha_inicio, $fecha_fin);
+            return $res;
+        }
+    }
 }

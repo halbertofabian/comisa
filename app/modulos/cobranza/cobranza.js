@@ -399,3 +399,40 @@ $(document).on("click", ".btnEliminarIngreso", function () {
             }
         });
 });
+$(document).on("click", ".btnEliminarGasto", function () {
+    var tgts_id = $(this).attr("tgts_id");
+    swal({
+        title: `¿Esta seguro de eliminar el ingreso #${tgts_id}?`,
+        icon: "warning",
+        buttons: ['No', 'Si, eliminar'],
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+                datos.append("tgts_id", tgts_id);
+                datos.append("btnEliminarGasto", true);
+                $.ajax({
+                    url: urlApp + 'app/modulos/gastos/gastos.ajax.php',
+                    method: "POST",
+                    data: datos,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.status) {
+                            swal({
+                                title: "¡Bien!", text: res.mensaje, type: "success", icon: "success"
+                            }).then(function () {
+                                window.location.reload();
+                            });
+
+                        } else {
+                            swal("¡Error!", res.mensaje, "error");
+                        }
+                    }
+                })
+            }
+        });
+});
