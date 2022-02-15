@@ -923,7 +923,7 @@ class ContratosControlador
         $data = base64_decode($base_to_php[1]); // BBBFBfj42Pj4....
 
         // Proporciona una locación a la nueva imagen (con el nombre y formato especifico)
-        $filepath =  __DIR__ . "/media/fotosContratos/img_temp_contrato.jpg"; // or image.jpg
+        $filepath =  DOCUMENT_ROOT . "img_temp_contrato.jpeg"; // or image.jpg
 
         // Finalmente guarda la imágen en el directorio especificado y con la informacion dada
         file_put_contents($filepath, $data);
@@ -940,12 +940,12 @@ class ContratosControlador
                     =============================================*/
         $fileimg = $ctr_folio;
 
-        $directorio = __DIR__ . '/media/fotosContratos/' . $fileimg;
+        $directorio = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg;
 
         mkdir($directorio, 0755);
 
-        $ruta = __DIR__ . '/media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpg";
-        $ruta_url = HTTP_HOST . '/media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpg";
+        $ruta = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
+        $ruta_url = HTTP_HOST . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
 
         $origen = imagecreatefromjpeg($filepath);
 
