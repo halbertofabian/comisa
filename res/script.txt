@@ -1,1 +1,23 @@
 ALTER TABLE `tbl_contrato_crt_1` ADD `ctr_enrutar` CHAR(1) NOT NULL DEFAULT 'N' AFTER `ctr_moroso`;
+
+
+ALTER TABLE `tbl_contrato_crt_1` ADD `ctr_status_pendiente` VARCHAR(100) NOT NULL DEFAULT '0' AFTER `ctr_total_pagado`;
+
+
+
+
+ALTER TABLE `tbl_contrato_crt_1` ADD `ctr_orden` DOUBLE(10,2) NOT NULL AFTER `ctr_status_pendiente`;
+
+
+
+
+ALTER TABLE `tbl_abonos_cobranza_abs` ADD `abs_motivo_cancelacion` VARCHAR(100) NOT NULL DEFAULT '-' AFTER `abs_estado_base`;
+
+
+
+ALTER TABLE `tbl_abonos_cobranza_abs` ADD `abs_save` INT NOT NULL AFTER `abs_motivo_cancelacion`;
+
+
+
+
+CREATE TABLE `db_comisa`.`tbl_pagos_gds` ( `gds_id` INT NOT NULL AUTO_INCREMENT , `gds_nombre` VARCHAR(100) NOT NULL , PRIMARY KEY (`gds_id`)) ENGINE = InnoDB;

@@ -1378,4 +1378,41 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlObtenerFotosContrato($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_folio,ctr_fotos,clts_fotos_fiador FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarFotosContrato($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_fotos = ? ,clts_fotos_fiador = ?  WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_fotos']);
+            $pps->bindValue(2, $ctr['clts_fotos_fiador']);
+            $pps->bindValue(3, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

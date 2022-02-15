@@ -1,14 +1,17 @@
 <?php
-$lifetime=1209600;
+$lifetime = 1209600;
 @session_start();
-setcookie(session_name(),session_id(),time()+$lifetime);
+setcookie(session_name(), session_id(), time() + $lifetime);
 
 
 date_default_timezone_set('America/Mexico_city');
 $fecha = date('Y-m-d h:i:s');
 define('FECHA', $fecha);
 // Nueva linea
-define('HORA',date('h:i:s'));
+define('HORA', date('h:i:s'));
+
+$fecha_actual = date('Y-m-d');
+define('FECHA_ACTUAL', $fecha_actual);
 
 /**
 
@@ -41,15 +44,15 @@ define('VERSION_APP', '1.0.0');
 
 
 // Logo blanco y negro
-define('LOGO_BN',  HTTP_HOST . 'app/assets/images/sistema/'.$fileDir.'logo_n'.$fileType);
+define('LOGO_BN',  HTTP_HOST . 'app/assets/images/sistema/' . $fileDir . 'logo_n' . $fileType);
 
 
 
 // Logo de color
-define('LOGO_C', HTTP_HOST . 'app/assets/images/sistema/'.$fileDir.'logo'.$fileType);
+define('LOGO_C', HTTP_HOST . 'app/assets/images/sistema/' . $fileDir . 'logo' . $fileType);
 
 // Icono de aplicación 
-define('ICON_APP', HTTP_HOST . 'app/assets/images/sistema/'.$fileDir.'icono'.$fileType);
+define('ICON_APP', HTTP_HOST . 'app/assets/images/sistema/' . $fileDir . 'icono' . $fileType);
 
 define('DESAROLLADOR', 'Softmor Studios');
 
@@ -57,12 +60,14 @@ define('SITIO_WEB', 'https://www.softmor.com/');
 
 define("CLIENTE_ID", 'sus_000001');
 define("SUCURSAL_ID", 'c456153babf04c97a490ac8dd6630550');
+
 define('SUB_FIJO', 'ST-');
 
 
 // VARIABLES 
 
-define("CATEGORIA_GASTOS_GASOLINA",35);
+define("CATEGORIA_GASTOS_GASOLINA", 35);
+define("VENDEDOR_P",120);
 
 
 
@@ -227,7 +232,7 @@ function fechaCastellano($fecha)
 {
     $hora = substr($fecha, 10, 10);
     $fecha = substr($fecha, 0, 10);
-    
+
     $numeroDia = date('d', strtotime($fecha));
     $dia = date('l', strtotime($fecha));
     $mes = date('F', strtotime($fecha));
@@ -238,5 +243,33 @@ function fechaCastellano($fecha)
     $meses_ES = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
     $meses_EN = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
     $nombreMes = str_replace($meses_EN, $meses_ES, $mes);
-    return $nombredia . " " . $numeroDia . " de " . $nombreMes . " de " . $anio.' - '.$hora;
+    return $nombredia . " " . $numeroDia . " de " . $nombreMes . " de " . $anio . ' - ' . $hora;
+}
+
+
+
+// Nuevo
+
+
+function dstring($cadena)
+{
+    $originales = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðòóôõöøùúûýýþÿ';
+    $modificadas = 'aaaaaaaceeeeiiiidnoooooouuuuybsaaaaaaaceeeeiiiidnoooooouuuyyby';
+    $cadena = utf8_decode($cadena);
+    $cadena = strtr($cadena, utf8_decode($originales), $modificadas);
+    $cadena = utf8_encode($cadena);
+
+    // Quitar espacios 
+    $cadena = trim($cadena);
+
+    // Mayusculas
+    $cadena = strtoupper($cadena);
+
+    return $cadena;
+}
+function dnum($numero)
+{
+    $numero = str_replace(',', '', $numero);
+    $numero = str_replace('$', '', $numero);
+    return $numero;
 }
