@@ -861,11 +861,17 @@ class ContratosControlador
                     'clts_tbj_ant_fiador' =>  dstring($cts["clts_tbj_ant_fiador"]),
 
                     //fotos fiador
+                    // 'clts_fotos_fiador' => json_encode(array(
+                    //     'img_cred_fro' =>  dstring($cts["clts_fc_elector_fiador"]),
+                    //     'img_cred_tra' =>  dstring($cts["clts_tc_elector_fiador"]),
+                    //     'img_comprobante' =>  dstring($cts["clts_comprobante_fiador"]),
+                    //     'img_pagare' =>  dstring($cts["clts_pagare_fiador"])
+                    // ), true),
                     'clts_fotos_fiador' => json_encode(array(
-                        'img_cred_fro' =>  dstring($cts["clts_fc_elector_fiador"]),
-                        'img_cred_tra' =>  dstring($cts["clts_tc_elector_fiador"]),
-                        'img_comprobante' =>  dstring($cts["clts_comprobante_fiador"]),
-                        'img_pagare' =>  dstring($cts["clts_pagare_fiador"])
+                        'img_cred_fro' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_fc_elector_fiador"], $cts["ctr_folio"], 'img_cred_fro_fiador'),
+                        'img_cred_tra' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_tc_elector_fiador"], $cts["ctr_folio"], 'img_cred_tra_fiador'),
+                        'img_comprobante' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_comprobante_fiador"], $cts["ctr_folio"], 'img_comprobante_fiador'),
+                        'img_pagare' =>  ContratosControlador::ctrGuardarImagenesContrato($cts["clts_pagare_fiador"], $cts["ctr_folio"], 'img_pagare_fiador'),
                     ), true),
 
                     'clts_nom_ref2' =>  dstring($cts["clts_nom_ref2"]),
