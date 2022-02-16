@@ -174,7 +174,7 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
     # code...
 
 });
-$app->post('/comisa-datos2', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
     try {
@@ -411,7 +411,7 @@ $app->post('/subir_contratos_new', function (Request $request, Response $respons
 });
 
 
-$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $data = json_decode($json, true);
