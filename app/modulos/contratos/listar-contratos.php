@@ -79,6 +79,9 @@
 
         </div>
 
+   
+        <input type="hidden" value="<?= $_SESSION['session_usr']['usr_rol'] ?>" id="session_usr_rol">
+
     </div>
     <div class="d-load d-none">
         <div class="d-flex justify-content-center mt-5">
@@ -126,12 +129,14 @@
                     Descargar
                 </a>
             </div>
-            <div class="col-md-6">
-                <form id="formImportarContratos" method="post">
-                    <input type="file" id="input_file" class="form-control">
-                    <button type="submit" class="btn btn-primary mt-1 float-right btnImportarContratos btn-load">Importar contratos</button>
-                </form>
-            </div>
+            <?php if ($_SESSION['session_usr']['usr_rol'] != 'Agente de llamadas') : ?>
+                <div class="col-md-6">
+                    <form id="formImportarContratos" method="post">
+                        <input type="file" id="input_file" class="form-control">
+                        <button type="submit" class="btn btn-primary mt-1 float-right btnImportarContratos btn-load">Importar contratos</button>
+                    </form>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -765,6 +770,7 @@
         ctr_fecha_inicio = "",
         ctr_fecha_fin = "") {
 
+        var session_usr_rol = $("#session_usr_rol").val();
         $("#tbodyContratos").html("");
         var datos = new FormData();
 
@@ -795,6 +801,7 @@
                 var tbodyContratos = "";
                 var ctr_count = 0;
 
+
                 res.forEach(ctr => {
                     ctr_count++;
 
@@ -805,12 +812,11 @@
                         bg_color = "#46CD93";
                     }
 
-                    tbodyContratos +=
-                        `
-                        <tr class="text-center" style="background-color:${bg_color}">
+                    var accesos = "";
 
-                            <td>
-                               <div class="btn-group">
+                    if (session_usr_rol != 'Agente de llamadas') {
+
+                        accesos = `<div class="btn-group">
                                 <a href="${urlApp+'contratos/buscar/'+ctr.ctr_id}" target="_blacnk"   class="btn btn-warning text-center btn-sm">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
@@ -823,7 +829,28 @@
                                 <button class="btn btn-danger btn-sm btnClientesMal" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#mdlClientesMal"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                                 <button class="btn btn-dark btn-sm btnProductos" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#modalProductos"><i class="fa fa-dropbox"></i></button>
                                 <button class="btn btn-light btn-sm btnPendiente" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#mdlPendientes" title="Agregar a pendientes"><i class="fa fa-hourglass"></i></button>
-                               </div>
+                                <a href="${urlApp+'app/report/reporte-estado-cuenta.php?ec_ruta='+ctr.ctr_ruta+'&ec_cuenta='+ctr.ctr_numero_cuenta}" target="_blank"  class="btn btn-sm  btn-warning"><i class="fa fa-download" aria-hidden="true"></i></a>
+                               </div>`;
+                    } else {
+                        accesos = `<div class="btn-group">
+                                
+                                <a href="${urlApp+'app/report/contrato-ventas.php?ctr_id='+ctr.ctr_id}" target="_blacnk"  class="btn btn-secondary text-center btnImprimirContrato btn-sm" ctr_id="${ctr.ctr_id}" >
+                                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                                </a>
+                               
+                                
+                                <button class="btn btn-dark btn-sm btnProductos" ctr_id="${ctr.ctr_id}" data-toggle="modal" data-target="#modalProductos"><i class="fa fa-dropbox"></i></button>
+                               
+                                <a href="${urlApp+'app/report/reporte-estado-cuenta.php?ec_ruta='+ctr.ctr_ruta+'&ec_cuenta='+ctr.ctr_numero_cuenta}" target="_blank"  class="btn btn-sm  btn-warning"><i class="fa fa-download" aria-hidden="true"></i></a>
+                               </div>`;
+                    }
+
+                    tbodyContratos +=
+                        `
+                        <tr class="text-center" style="background-color:${bg_color}">
+
+                            <td>
+                               ${accesos}
                             </td>
                             <td>${ctr.ctr_folio}</td>
                             <td>${ctr.ctr_numero_cuenta+""+ctr.ctr_ruta}</td>

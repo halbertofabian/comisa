@@ -1382,7 +1382,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr_folio,ctr_fotos,clts_fotos_fiador FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
+            $sql = " SELECT ctr_folio,ctr_fotos,clts_fotos_fiador FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr_id);

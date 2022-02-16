@@ -69,6 +69,8 @@
                     $menu = AppControlador::obtnerMenuGefeAdministracion();
                 } elseif ($_SESSION['session_usr']['usr_rol'] == "Cobrador") {
                     $menu = AppControlador::obtnerMenuCobrador();
+                } elseif ($_SESSION['session_usr']['usr_rol'] == "Agente de llamadas") {
+                    $menu = AppControlador::obtnerMenuAgenteLLamadas();
                 }
 
                 //preArray($menu);

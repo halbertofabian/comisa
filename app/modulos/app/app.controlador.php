@@ -66,6 +66,12 @@ class AppControlador
             'mi-perfil'
         );
     }
+    public static function obtenerListaBlancaAgenteLLamadas()
+    {
+        return array(
+            'contratos',
+        );
+    }
     public static function ObtenerListaBlancaGefeCobranza()
     {
         return array(
@@ -184,7 +190,8 @@ class AppControlador
             'Cobrador',
             'Jefe de cobranza',
             'Jefe de ventas',
-            'Jefe administrativo'
+            'Jefe administrativo',
+            'Agente de llamadas'
         );
     }
     public static function obtenerListaBlancaCobrador()
@@ -1420,6 +1427,26 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Enrutar cuentas',
                             'href' => 'contratos/enrutar-cuentas'
+                        ],
+                    )
+                ]
+            ),
+        );
+    }
+    public static function obtnerMenuAgenteLLamadas()
+    {
+        return array(
+            '1' => array(
+                [
+
+                    'label' => 'Centro de llamadas',
+                    'icon' => '<i class="fa fa-file-text-o "></i>',
+                    'href' => '#',
+                    'modulos' =>  array(
+                        [
+                            'icon' => '',
+                            'label' => 'Listar contratos',
+                            'href' => 'contratos/listar'
                         ],
                     )
                 ]

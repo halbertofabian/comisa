@@ -184,6 +184,8 @@
                                 $listaBlanca = AppControlador::ObtenerListaBlancaAdministración();
                             } elseif ($_SESSION['session_usr']['usr_rol'] == 'Cobrador') {
                                 $listaBlanca = AppControlador::obtenerListaBlancaCobrador();
+                            } elseif ($_SESSION['session_usr']['usr_rol'] == 'Agente de llamadas') {
+                                $listaBlanca = AppControlador::obtenerListaBlancaAgenteLLamadas();
                             }
 
 
