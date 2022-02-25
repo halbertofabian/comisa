@@ -568,6 +568,24 @@ class CobranzaControlador
     public static function ctrSubirDatosCobranzaApp($datos)
     {
 
+        // PARA SUBIR PAGOS 
+        //Registrar pagos completados
+        if (isset($datos[0]['Completados'])) {
+            $cts_c = json_encode($datos[0]['Completados'], true);
+            CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
+        }
+        if (isset($datos[1]['Abonos'])) {
+            $abs_c = json_encode($datos[1]['Abonos'], true);
+            CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
+        }
+
+
+        // PARA FINZALIZAR COBRANZA
+        if (isset($datos[0]['Reagendados'])) {
+            $cts_r = json_encode($datos[0]['Reagendados'], true);
+            CobranzaControlador::ctrRegistrarReagendado($cts_r);
+        }
+
         if (isset($datos[4]['LZR'])) {
             $data = json_decode(json_encode($datos[4]['LZR'], true), true);
             foreach ($data as $key => $etq) {
@@ -653,47 +671,6 @@ class CobranzaControlador
                 );
             }
         }
-        return;
-        // PARA SUBIR PAGOS 
-        //Registrar pagos completados
-        if (isset($datos[0]['Completados'])) {
-            $cts_c = json_encode($datos[0]['Completados'], true);
-            CobranzaControlador::ctrReEnrutarCuentasCompletadas($cts_c);
-        }
-        if (isset($datos[1]['Abonos'])) {
-            $abs_c = json_encode($datos[1]['Abonos'], true);
-            CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
-        }
-
-
-        // PARA FINZALIZAR COBRANZA
-        // Reagendar pagos 
-        if (isset($datos[0]['Reagendados'])) {
-            $cts_r = json_encode($datos[0]['Reagendados'], true);
-            CobranzaControlador::ctrRegistrarReagendado($cts_r);
-        }
-
-        // // CAMBIO DE ESTADO
-        // // if (isset($datos[1]['Por_localizar'])) {
-        // //     $cts_l = json_encode($datos[1]['Por_localizar'], true);
-        //     CobranzaControlador::ctrRegistrarPorLocalizar($cts_l);
-        // // }
-
-
-
-
-
-
-
-
-        // if (isset($datos[2]['Pendientes'])) {
-        //     $cts_p = json_encode($datos[2]['Pendientes'], true);
-        //     CobranzaControlador::ctrRegistrarPendientes($cts_p);
-        // }
-        // if (isset($datos[3]['Mas_tarde'])) {
-        //     $cts_p = json_encode($datos[3]['Mas_tarde'], true);
-        //     CobranzaControlador::ctrRegistrarPendientes($cts_p);
-        // }
     }
 
     public static function ctrActualizarEtiquetas($cra, $ctr)
