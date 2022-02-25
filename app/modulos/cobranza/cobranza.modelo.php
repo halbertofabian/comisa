@@ -629,13 +629,14 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ?, ctr_ultima_fecha_abono = ?,ctr_total_pagado = ? WHERE ctr_id = ?";
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ?, ctr_ultima_fecha_abono = ?,ctr_total_pagado = ?, ctr_status_cuenta = ? WHERE ctr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $datos['ctr_saldo_actual']);
             $pps->bindValue(2, $datos['ctr_ultima_fecha_abono']);
             $pps->bindValue(3, $datos['ctr_total_pagado']);
-            $pps->bindValue(4, $datos['ctr_id']);
+            $pps->bindValue(4, $datos['ctr_status_cuenta']);
+            $pps->bindValue(5, $datos['ctr_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -1221,6 +1222,39 @@ class CobranzaModelo
         } finally {
             $pps = null;
             $con = null;
+        }
+    }
+
+    public static function  ctrActualizarEtiquetasDirectosCra($cra)
+    {
+
+        try {
+            //code..
+            $sql = "UPDATE tbl_cartelera_cra  SET cra_estado = ?, cra_etiqueta = ? WHERE cra_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra['cra_estado']);
+            $pps->bindValue(2, $cra['cra_etiqueta']);
+            $pps->bindValue(3, $cra['cra_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        }
+    }
+    public static function ctrActualizarEtiquetasDirectosCtr($ctr)
+    {
+        try {
+            //code..
+            $sql = "UPDATE tbl_contrato_crt_1  SET ctr_etiqueta = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_etiqueta']);
+            $pps->bindValue(2, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
         }
     }
 }

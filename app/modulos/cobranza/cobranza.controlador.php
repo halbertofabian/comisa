@@ -521,7 +521,7 @@ class CobranzaControlador
             CobranzaModelo::mdlRegistrarAbono($abs_c);
         }
     }
-    
+
 
     public static function ctrRegistrarReagendados($cts_reagendado)
     {
@@ -567,6 +567,13 @@ class CobranzaControlador
 
     public static function ctrSubirDatosCobranzaApp($datos)
     {
+
+        if (isset($datos[4]['LZR'])) {
+            $lzr = json_encode($datos[4]['LZR'], true);
+            preArray($lzr);
+        }
+        return;
+        // PARA SUBIR PAGOS 
         //Registrar pagos completados
         if (isset($datos[0]['Completados'])) {
             $cts_c = json_encode($datos[0]['Completados'], true);
@@ -577,24 +584,27 @@ class CobranzaControlador
             CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
         }
 
+
+        // PARA FINZALIZAR COBRANZA
         // Reagendar pagos 
         if (isset($datos[0]['Reagendados'])) {
             $cts_r = json_encode($datos[0]['Reagendados'], true);
             CobranzaControlador::ctrRegistrarReagendado($cts_r);
         }
 
-        // CAMBIO DE ESTADO
-        if (isset($datos[1]['Por_localizar'])) {
-            $cts_l = json_encode($datos[1]['Por_localizar'], true);
-            CobranzaControlador::ctrRegistrarPorLocalizar($cts_l);
-        }
+        // // CAMBIO DE ESTADO
+        // // if (isset($datos[1]['Por_localizar'])) {
+        // //     $cts_l = json_encode($datos[1]['Por_localizar'], true);
+        //     CobranzaControlador::ctrRegistrarPorLocalizar($cts_l);
+        // // }
 
 
 
 
 
 
-        
+
+
         // if (isset($datos[2]['Pendientes'])) {
         //     $cts_p = json_encode($datos[2]['Pendientes'], true);
         //     CobranzaControlador::ctrRegistrarPendientes($cts_p);
@@ -747,12 +757,14 @@ class CobranzaControlador
             // TOTAL PAGADO
             $nuevoPagdo = $totalPagdoTmp + dnum($abs['abs_monto']);
 
+            $status_cuenta = $nuevoSaldo <=  0 ? 'PAGADA' : 'VIGENTE';
 
             CobranzaModelo::mdlActualizarSaldoV2(array(
                 'ctr_saldo_actual' => $nuevoSaldo,
                 'ctr_ultima_fecha_abono' => $abs['abs_fecha_cobro'],
                 'ctr_total_pagado' => $nuevoPagdo,
-                'ctr_id' => $abs['ctr_id']
+                'ctr_id' => $abs['ctr_id'],
+                'ctr_status_cuenta' => $status_cuenta
             ));
             $ctr_saldo_actualizado = CobranzaModelo::mdlConsultarSaldoBaseV2($abs['ctr_id']);
 

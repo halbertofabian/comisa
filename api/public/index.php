@@ -390,18 +390,18 @@ $app->post('/subir_contratos_new', function (Request $request, Response $respons
 });
 
 
-$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $data = json_decode($json, true);
 
     $cobranza =  CobranzaControlador::ctrSubirDatosCobranzaApp($data);
 
-    $abonos = CobranzaModelo::mdlObtenerAbonosCobranza($data[2]['usr_id']);
+    // $abonos = CobranzaModelo::mdlObtenerAbonosCobranza($data[2]['usr_id']);
     $datos = array(
         'status' => true,
         'mensaje' => 'Registros sincronizados',
-        'abonos' => $abonos['abs_id']
+        // 'abonos' => $abonos['abs_id']
     );
 
     return json_encode($datos, true);
@@ -409,7 +409,7 @@ $app->post('/comisa-datos-cobranza', function (Request $request, Response $respo
     # code...
 
 });
-$app->post('/comisa-datos-cobranza2', function (Request $request, Response $response) {
+$app->post('/comisa-datos-cobranza', function (Request $request, Response $response) {
     $json = $request->getBody();
     $datosVendedor = json_decode($json, true);
     try {
