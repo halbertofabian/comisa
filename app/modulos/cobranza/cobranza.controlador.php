@@ -569,8 +569,89 @@ class CobranzaControlador
     {
 
         if (isset($datos[4]['LZR'])) {
-            $lzr = json_encode($datos[4]['LZR'], true);
-            preArray($lzr);
+            $data = json_decode(json_encode($datos[4]['LZR'], true), true);
+            foreach ($data as $key => $etq) {
+
+                CobranzaControlador::ctrActualizarEtiquetas(
+                    array(
+                        'cra_estado' => $etq['cra_estado'],
+                        'cra_etiqueta' => $etq['cra_etiqueta'],
+                        'cra_id' => $etq['cra_id']
+                    ),
+                    array(
+                        'ctr_etiqueta' => $etq['cra_etiqueta'],
+                        'ctr_id' => $etq['cra_contrato']
+                    )
+                );
+            }
+        }
+        if (isset($datos[5]['CCT'])) {
+            $data = json_decode(json_encode($datos[5]['CCT'], true), true);
+            foreach ($data as $key => $etq) {
+
+                CobranzaControlador::ctrActualizarEtiquetas(
+                    array(
+                        'cra_estado' => $etq['cra_estado'],
+                        'cra_etiqueta' => $etq['cra_etiqueta'],
+                        'cra_id' => $etq['cra_id']
+                    ),
+                    array(
+                        'ctr_etiqueta' => $etq['cra_etiqueta'],
+                        'ctr_id' => $etq['cra_contrato']
+                    )
+                );
+            }
+        }
+        if (isset($datos[8]['SPR'])) {
+            $data = json_decode(json_encode($datos[8]['SPR'], true), true);
+            foreach ($data as $key => $etq) {
+
+                CobranzaControlador::ctrActualizarEtiquetas(
+                    array(
+                        'cra_estado' => $etq['cra_estado'],
+                        'cra_etiqueta' => $etq['cra_etiqueta'],
+                        'cra_id' => $etq['cra_id']
+                    ),
+                    array(
+                        'ctr_etiqueta' => $etq['cra_etiqueta'],
+                        'ctr_id' => $etq['cra_contrato']
+                    )
+                );
+            }
+        }
+        if (isset($datos[10]['SLS'])) {
+            $data = json_decode(json_encode($datos[10]['SLS'], true), true);
+            foreach ($data as $key => $etq) {
+
+                CobranzaControlador::ctrActualizarEtiquetas(
+                    array(
+                        'cra_estado' => $etq['cra_estado'],
+                        'cra_etiqueta' => $etq['cra_etiqueta'],
+                        'cra_id' => $etq['cra_id']
+                    ),
+                    array(
+                        'ctr_etiqueta' => $etq['cra_etiqueta'],
+                        'ctr_id' => $etq['cra_contrato']
+                    )
+                );
+            }
+        }
+        if (isset($datos[13]['JDC'])) {
+            $data = json_decode(json_encode($datos[13]['JDC'], true), true);
+            foreach ($data as $key => $etq) {
+
+                CobranzaControlador::ctrActualizarEtiquetas(
+                    array(
+                        'cra_estado' => $etq['cra_estado'],
+                        'cra_etiqueta' => $etq['cra_etiqueta'],
+                        'cra_id' => $etq['cra_id']
+                    ),
+                    array(
+                        'ctr_etiqueta' => $etq['cra_etiqueta'],
+                        'ctr_id' => $etq['cra_contrato']
+                    )
+                );
+            }
         }
         return;
         // PARA SUBIR PAGOS 
@@ -614,6 +695,13 @@ class CobranzaControlador
         //     CobranzaControlador::ctrRegistrarPendientes($cts_p);
         // }
     }
+
+    public static function ctrActualizarEtiquetas($cra, $ctr)
+    {
+        CobranzaModelo::ctrActualizarEtiquetasDirectosCra($cra);
+        CobranzaModelo::ctrActualizarEtiquetasDirectosCtr($ctr);
+    }
+
 
     public static function ctrOrdenarP()
     {
