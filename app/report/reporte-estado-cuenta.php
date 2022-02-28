@@ -184,6 +184,7 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
 
 
 
+    $ec_total_pagado  = $ec_total_pagado + $infoContrato['ctr_enganche'] + $infoContrato['ctr_pago_adicional'];
     // Set some content to print
     $encabezado = <<<EOF
     <table>

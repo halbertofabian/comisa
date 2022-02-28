@@ -149,6 +149,8 @@ function mostrarEstado() {
                 $("#ec_saldo_actual").val(res.ctr_saldo_actual);
                 $("#ec_ultima_fecha").val(res.ctr_ultima_fecha_abono);
 
+                var total_aux_pagado = Number(res.ctr_enganche) + Number(res.ctr_pago_adicional)
+
                 if (res.ctr_forma_pago == "SEMANALES") {
                     var ctr_saldo = Number(res.ctr_total - res.ctr_enganche - res.ctr_pago_adicional);
                     var semanas_credito = Number(Math.ceil(ctr_saldo / res.ctr_pago_credito));
@@ -173,7 +175,7 @@ function mostrarEstado() {
                     var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Semanas <br> atrasadas");
-                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual)));
+                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
                 }
                 else if (res.ctr_forma_pago == "CATORCENALES") {
                     var ctr_saldo = Number(res.ctr_total - res.ctr_enganche - res.ctr_pago_adicional);
@@ -199,7 +201,7 @@ function mostrarEstado() {
                     var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Catorcenas <br> atrasadas");
-                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual)));
+                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
                 }
                 else if (res.ctr_forma_pago == "QUINCENALES") {
                     var ctr_saldo = Number(res.ctr_total - res.ctr_enganche - res.ctr_pago_adicional);
@@ -225,7 +227,7 @@ function mostrarEstado() {
                     var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Quincenas <br> atrasadas");
-                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual)));
+                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
                 }
                 else {
                     var ctr_saldo = Number(res.ctr_total - res.ctr_enganche - res.ctr_pago_adicional);
@@ -251,7 +253,7 @@ function mostrarEstado() {
                     var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Meses <br> atrasados");
-                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual)));
+                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
                 }
 
                 var datos2 = new FormData();
