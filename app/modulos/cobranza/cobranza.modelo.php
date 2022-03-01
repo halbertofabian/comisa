@@ -1230,12 +1230,13 @@ class CobranzaModelo
 
         try {
             //code..
-            $sql = "UPDATE tbl_cartelera_cra  SET cra_estado = ?, cra_etiqueta = ? WHERE cra_id = ?";
+            $sql = "UPDATE tbl_cartelera_cra  SET cra_estado = ?, cra_etiqueta = ?, cra_gestion = ? WHERE cra_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cra['cra_estado']);
             $pps->bindValue(2, $cra['cra_etiqueta']);
-            $pps->bindValue(3, $cra['cra_id']);
+            $pps->bindValue(3, $cra['cra_gestion']);
+            $pps->bindValue(4, $cra['cra_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -1246,11 +1247,12 @@ class CobranzaModelo
     {
         try {
             //code..
-            $sql = "UPDATE tbl_contrato_crt_1  SET ctr_etiqueta = ? WHERE ctr_id = ?";
+            $sql = "UPDATE tbl_contrato_crt_1  SET ctr_etiqueta = ?, ctr_gestion = ? WHERE ctr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ctr['ctr_etiqueta']);
-            $pps->bindValue(2, $ctr['ctr_id']);
+            $pps->bindValue(2, $ctr['ctr_gestion']);
+            $pps->bindValue(3, $ctr['ctr_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
