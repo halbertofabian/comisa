@@ -1259,4 +1259,21 @@ class CobranzaModelo
             //throw $th;
         }
     }
+
+    public static function mdlMostrarContratos2()
+    {
+        try {
+            $sql = " SELECT * FROM `tbl_contratos_2`";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
