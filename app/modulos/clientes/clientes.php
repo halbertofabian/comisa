@@ -477,7 +477,7 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
                     <li> Guardalo con extensión .xls o .csv </li>
                     <li> De click en seleccionar archivo </li>
                     <li> Cargue el archivo excel permitido </li>
-                    <li> Una vez realizado estos pasos, da click en el botón Importar productos </li>
+                    <li> Una vez realizado estos pasos, da click en el botón Importar clientes </li>
 
                 </ol>
             </div>
