@@ -14,8 +14,7 @@ $fecha_actual = date('Y-m-d');
 define('FECHA_ACTUAL', $fecha_actual);
 
 /**
-
-
+ * 
  */
 //M*mRyGK5^Hiw
 $fileDir = "comisa/";
@@ -33,8 +32,8 @@ define('DOCUMENT_ROOT', $_SERVER['DOCUMENT_ROOT'] . '/' . $folder[1] . '/');
 
 define('DB_NAME', 'db_comisa');
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
+define('DB_USER', 'lokodev');
+define('DB_PASSWORD', 'root');
 
 
 // Titulo de la aplicación
@@ -163,7 +162,7 @@ function FileSizeConvert($bytes)
             break;
         }
     }
-    return $result;
+    // return $result;
 }
 function format_folder_size($size)
 {
