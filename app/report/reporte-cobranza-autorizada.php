@@ -129,27 +129,29 @@ EOF;
 
 EOF;
 
-$pdf->writeHTMLCell(0, 0, '', '', $tablehead, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $tablehead, 0, 1, 0, true, '', true);
 
-$total = 0;
-$total_efectivo = 0;
-$total_banco = 0;
+    $total = 0;
+    $total_efectivo = 0;
+    $total_banco = 0;
+    $tota_cuentas_cobradas = 0;
 
-foreach ($abonos as $key => $abs) {
+    foreach ($abonos as $key => $abs) {
 
-    $total += $abs['abs_monto'];
-    if($abs['abs_mp'] == "EFECTIVO"){
-        $total_efectivo += $abs['abs_monto'];
-    }else{
-        $total_banco += $abs['abs_monto'];
-    }
+        $tota_cuentas_cobrada++;
+        $total += $abs['abs_monto'];
+        if ($abs['abs_mp'] == "EFECTIVO") {
+            $total_efectivo += $abs['abs_monto'];
+        } else {
+            $total_banco += $abs['abs_monto'];
+        }
 
-    # code...
-$verificacion = $abs['abs_verificacion'] == 1 || $abs['abs_verificacion'] == "" ? '<img src="'.$ruta.'app/report/icon_report/v_1.png" width="20" />' : '<img src="'.$ruta.'app/report/icon_report/v_0.png" width="20" />';
-$abs_monto = number_format($abs['abs_monto'],3);
-$ctr_saldo_actual = number_format($abs['ctr_saldo_actual'],2);
+        # code...
+        $verificacion = $abs['abs_verificacion'] == 1 || $abs['abs_verificacion'] == "" ? '<img src="' . $ruta . 'app/report/icon_report/v_1.png" width="20" />' : '<img src="' . $ruta . 'app/report/icon_report/v_0.png" width="20" />';
+        $abs_monto = number_format($abs['abs_monto'], 3);
+        $ctr_saldo_actual = number_format($abs['ctr_saldo_actual'], 2);
 
-$tablebody = <<<EOF
+        $tablebody = <<<EOF
 
 <table>
 
@@ -171,36 +173,46 @@ $tablebody = <<<EOF
 </table>
 
 EOF;
-$pdf->writeHTMLCell(0, 0, '', '', $tablebody, 0, 1, 0, true, '', true);
+        $pdf->writeHTMLCell(0, 0, '', '', $tablebody, 0, 1, 0, true, '', true);
+    }
 
-}
+    $total = number_format($total, 2);
+    $total_efectivo = number_format($total_efectivo, 2);
+    $total_banco = number_format($total_banco, 2);
 
-$total = number_format($total,2);
-$total_efectivo = number_format($total_efectivo,2);
-$total_banco = number_format($total_banco,2);
-
-$pdf->writeHTMLCell(0, 0, '', '', '<hr>', 0, 1, 0, true, '', true);
-$totales = <<<EOF
+    $pdf->writeHTMLCell(0, 0, '', '', '<hr>', 0, 1, 0, true, '', true);
+    $totales = <<<EOF
 
 <table>
 
     <thead>
         <tr>
+            <th>Total de cuentas cobradas <strong>({$tota_cuentas_cobrada})</strong></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
         <th style="text-align: center;" >TOTAL <br> <strong>{$total}</strong> </th>
         <th style="text-align: center;" >TOTAL EFECTIVO <br> <strong>{$total_efectivo}</strong> </th>
         <th style="text-align: center;" >TOTAL BANCO <br> <strong>{$total_banco}</strong> </th>
         </tr>
+        
     </thead>
 
 </table>
 
 EOF;
 
-$pdf->writeHTMLCell(0, 0, '', '', $totales, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $totales, 0, 1, 0, true, '', true);
 
-ob_end_clean();
+    ob_end_clean();
 
 
-   
+
     $pdf->Output('ficha.pdf', 'I');
 }

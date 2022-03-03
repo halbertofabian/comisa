@@ -191,7 +191,8 @@ class AppControlador
             'Jefe de cobranza',
             'Jefe de ventas',
             'Jefe administrativo',
-            'Agente de llamadas'
+            'Agente de llamadas',
+            'Baja de usuario'
         );
     }
     public static function obtenerListaBlancaCobrador()
@@ -1458,13 +1459,14 @@ class AppControlador
             ),
         );
     }
-    public static function listarEtiquetas(){
+    public static function listarEtiquetas()
+    {
         return array(
             1 => array(
                 'status' => 'LOCALIZAR',
                 'etiqueta' => 'LZR',
                 'actividad' => 'INACTIVA',
-                'color' => '', 
+                'color' => '',
                 'icono' => HTTP_HOST . 'app/assets/iconos/location.png',
             ),
             2 => array(

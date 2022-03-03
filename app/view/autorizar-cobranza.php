@@ -11,7 +11,7 @@
         </thead>
         <tbody>
             <?php
-            $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+            $usuarios = UsuariosModelo::mdlMostrarUsuarios("",'Cobrador');
             foreach ($usuarios as $key => $usr) :
             ?>
                 <tr>
