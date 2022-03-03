@@ -382,6 +382,23 @@ class CobranzaModelo
             $pps = null;
         }
     }
+    public static function mdlMostrarCarteleraOrden()
+    {
+        try {
+            //code...
+            $sql = "SELECT cra_contrato,cra_orden FROM tbl_cartelera_cra ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function ContratosOrden()
     {
         try {

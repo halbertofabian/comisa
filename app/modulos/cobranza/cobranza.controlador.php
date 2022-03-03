@@ -625,7 +625,7 @@ class CobranzaControlador
             }
         }
         if (isset($datos[6]['SRV'])) {
-            $data = json_decode(json_encode($datos[5]['SRV'], true), true);
+            $data = json_decode(json_encode($datos[6]['SRV'], true), true);
             foreach ($data as $key => $etq) {
 
                 CobranzaControlador::ctrActualizarEtiquetas(
@@ -682,7 +682,7 @@ class CobranzaControlador
             }
         }
         if (isset($datos[9]['TRT'])) {
-            $data = json_decode(json_encode($datos[8]['TRT'], true), true);
+            $data = json_decode(json_encode($datos[9]['TRT'], true), true);
             foreach ($data as $key => $etq) {
 
                 CobranzaControlador::ctrActualizarEtiquetas(
@@ -720,7 +720,7 @@ class CobranzaControlador
             }
         }
         if (isset($datos[11]['CVS'])) {
-            $data = json_decode(json_encode($datos[10]['CVS'], true), true);
+            $data = json_decode(json_encode($datos[11]['CVS'], true), true);
             foreach ($data as $key => $etq) {
 
                 CobranzaControlador::ctrActualizarEtiquetas(
@@ -739,7 +739,7 @@ class CobranzaControlador
             }
         }
         if (isset($datos[12]['FLS'])) {
-            $data = json_decode(json_encode($datos[10]['FLS'], true), true);
+            $data = json_decode(json_encode($datos[12]['FLS'], true), true);
             foreach ($data as $key => $etq) {
 
                 CobranzaControlador::ctrActualizarEtiquetas(
