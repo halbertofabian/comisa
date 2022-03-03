@@ -38,13 +38,23 @@ class CobranzaControlador
         } else {
 
             $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID);
-            return array(
-                'status' => true,
-                'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', bienvenido a la app de comisa cobranza!',
-                'usr' => $usrLogin,
-                'scl' => $sucursal,
-                'scl_url_access' => HTTP_HOST
-            );
+            if ($usrLogin['usr_rol'] == 'Baja de usuario') {
+                return array(
+                    'status' => false,
+                    'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', no tienes acceso a la aplicación !',
+                    'usr' => $usrLogin,
+                    'scl' => $sucursal,
+                    'scl_url_access' => HTTP_HOST
+                );
+            } else {
+                return array(
+                    'status' => true,
+                    'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', bienvenido a la app de comisa cobranza!',
+                    'usr' => $usrLogin,
+                    'scl' => $sucursal,
+                    'scl_url_access' => HTTP_HOST
+                );
+            }
         }
     }
     public static function ctrActualizarSaldosByExcel()
