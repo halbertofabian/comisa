@@ -1354,7 +1354,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT COUNT(cra.ctr_ruta) AS contador  FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_status_cuenta = 'VIGENTE' AND cra.cra_etiqueta = ? AND ctr.ctr_ruta = ? ";
+            $sql = "SELECT COUNT(ctr.ctr_ruta) AS contador  FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_status_cuenta = 'VIGENTE' AND cra.cra_etiqueta = ? AND ctr.ctr_ruta = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cra_etiqueta);
