@@ -112,12 +112,32 @@ class CobranzaAjax
 
     public function ajaxBuscarPagos()
     {
-       
+
         $respuesta = CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
         echo json_encode($respuesta, true);
-        
     }
-}
+
+    public function ajaxListarStatusClientes()
+    {
+        $etiquetas = AppControlador::listarEtiquetas();
+        // preArray($etiquetas);
+        $res = array();
+        foreach ($etiquetas as $key => $etq) {
+            $contador = CobranzaModelo::mdlContarEtiqueta($etq['etiqueta'], $_POST['ctr_ruta']);
+            array_push($res, array(
+                'data' => $etq,
+                'count' => $contador['contador']
+            ));
+        }
+        echo json_encode($res, true);
+    }
+
+    public function ajaxMostrarCuentasStatus()
+    {
+        $respuesta = CobranzaModelo::mdlMostrarCarteleraContratos($_POST['cra_status'], $_POST['ctr_ruta']);
+        echo json_encode($respuesta, true);
+    }
+} //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
     $importarSaldos = new CobranzaAjax();
@@ -172,4 +192,14 @@ if (isset($_POST['btnActualizarSaldos'])) {
 if (isset($_POST['btnConsultarPagos'])) {
     $consultarPagos = new CobranzaAjax();
     $consultarPagos->ajaxBuscarPagos();
+}
+
+if (isset($_POST['btnListarStatus'])) {
+    $btnListarStatus = new CobranzaAjax();
+    $btnListarStatus->ajaxListarStatusClientes();
+}
+
+if (isset($_POST['btnMostrarCuentasStatus'])) {
+    $btnMostrarCuentasStatus = new CobranzaAjax();
+    $btnMostrarCuentasStatus->ajaxMostrarCuentasStatus();
 }

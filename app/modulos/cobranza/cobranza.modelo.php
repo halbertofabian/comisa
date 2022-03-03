@@ -82,6 +82,25 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function ContratosCobranza($ruta)
+    {
+        try {
+            //code...
+            // $sql = "SELECT cra.*,crt.ctr_id,crt.ctr_folio,crt.ctr_cliente, crt.clts_telefono, crt.clts_curp, crt.clts_domicilio, crt.clts_col, crt.clts_entre_calles, crt.clts_coordenadas, crt.clts_fachada_color, crt.clts_puerta_color, crt.ctr_numero_cuenta, crt.ctr_ruta, crt.ctr_productos, crt.ctr_forma_pago, crt.ctr_dia_pago, crt.ctr_plazo_credito, crt.ctr_pago_credito, crt.ctr_total, crt.ctr_enganche, crt.sobre_enganche_pendiente, crt.ctr_pago_adicional, crt.ctr_saldo_actual, crt.ctr_fecha_contrato,crt.ctr_proximo_pago, crt.ctr_total_pagado FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 crt ON crt.ctr_id = cra.cra_contrato WHERE  crt.ctr_status_cuenta = 'VIGENTE' AND crt.ctr_enrutar = 'S' AND  cra.cra_cobranza_status = '1' AND crt.ctr_ruta = ?  ORDER BY cra.cra_orden ASC";
+            $sql = "SELECT cra.*,crt.ctr_id,crt.ctr_folio,crt.ctr_cliente, crt.clts_telefono, crt.clts_curp, crt.clts_domicilio, crt.clts_col, crt.clts_entre_calles, crt.clts_coordenadas, crt.clts_fachada_color, crt.clts_puerta_color, crt.ctr_numero_cuenta, crt.ctr_ruta, crt.ctr_productos, crt.ctr_forma_pago, crt.ctr_dia_pago, crt.ctr_plazo_credito, crt.ctr_pago_credito, crt.ctr_total, crt.ctr_enganche, crt.sobre_enganche_pendiente, crt.ctr_pago_adicional, crt.ctr_saldo_actual, crt.ctr_fecha_contrato,crt.ctr_proximo_pago, crt.ctr_total_pagado, crt.ctr_ultima_fecha_abono, crt.ctr_elaboro FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 crt ON crt.ctr_id = cra.cra_contrato WHERE  crt.ctr_status_cuenta = 'VIGENTE'  AND  cra.cra_cobranza_status = '1' AND crt.ctr_ruta = ?  ORDER BY cra.cra_orden ASC";
+
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ruta);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarCarteleraCobranza($ruta)
     {
         try {
@@ -363,7 +382,7 @@ class CobranzaModelo
             $pps = null;
         }
     }
-    public static function mdlMostrarCarteleraOrden()
+    public static function ContratosOrden()
     {
         try {
             //code...
@@ -911,6 +930,23 @@ class CobranzaModelo
         }
     }
 
+    public static function Contratos()
+    {
+        try {
+            //code...
+            $sql = "SELECT cra.*,ctr.ctr_ruta,ctr.ctr_numero_cuenta FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr  ON ctr.ctr_id = cra.cra_contrato ORDER BY cra.cra_id DESC LIMIT 10";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarCartelera()
     {
         try {
@@ -1268,6 +1304,45 @@ class CobranzaModelo
             $pps = $con->prepare($sql);
             $pps->execute();
             return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarCarteleraContratos($cra_etiqueta = "", $ctr_ruta = "")
+    {
+        try {
+
+            $sql = "SELECT cra.*,ctr.ctr_id,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_saldo_actual,ctr.ctr_ultima_fecha_abono,ctr.ctr_status_cuenta,ctr.ctr_cliente FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_ruta = ? AND cra.cra_etiqueta = ? ORDER BY cra_orden ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_ruta);
+            $pps->bindValue(2, $cra_etiqueta);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlContarEtiqueta($cra_etiqueta, $ctr_ruta)
+    {
+        try {
+            //code...
+            $sql = "SELECT COUNT(cra.cra_id) AS contador  FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_status_cuenta = 'VIGENTE' AND cra.cra_etiqueta = ? AND ctr.ctr_ruta LIKE '%$ctr_ruta%' ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cra_etiqueta);
+            $pps->execute();
+            return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
             return false;

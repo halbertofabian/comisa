@@ -747,6 +747,11 @@ class AppControlador
                         ],
                         [
                             'icon' => '',
+                            'label' => 'Status / Rendimiento',
+                            'href' => 'cobranza/status'
+                        ],
+                        [
+                            'icon' => '',
                             'label' => 'Ingresos',
                             'href' => 'cobranza/ingresos'
                         ],
@@ -1451,6 +1456,81 @@ class AppControlador
                     )
                 ]
             ),
+        );
+    }
+    public static function listarEtiquetas(){
+        return array(
+            1 => array(
+                'status' => 'LOCALIZAR',
+                'etiqueta' => 'LZR',
+                'actividad' => 'INACTIVA',
+                'color' => '', 
+                'icono' => HTTP_HOST . 'app/assets/iconos/location.png',
+            ),
+            2 => array(
+                'status' => 'CHECAR CONTRATO',
+                'etiqueta' => 'CCT',
+                'actividad' => 'PENDIENTE',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/checar-contrato.png',
+            ),
+            3 => array(
+                'status' => 'SERVICIOS',
+                'etiqueta' => 'SRV',
+                'actividad' => 'PENDIENTE',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/servicios.png',
+            ),
+            4 => array(
+                'status' => 'RECOGER',
+                'etiqueta' => 'RCG',
+                'actividad' => 'INACTIVA',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/recoger.png',
+            ),
+            5 => array(
+                'status' => 'SUPERVISAR',
+                'etiqueta' => 'SPR',
+                'actividad' => 'INACTIVA',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/supervisar.png',
+            ),
+            6 => array(
+                'status' => 'TRASPASO A OTRA RUTA',
+                'etiqueta' => 'TRT',
+                'actividad' => 'INACTIVA',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/traspasos.png',
+            ),
+            7 => array(
+                'status' => 'SEG. EN LLAMADAS',
+                'etiqueta' => 'SLS',
+                'actividad' => 'PENDIENTE',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/llamadas.png',
+            ),
+            8 => array(
+                'status' => 'CONVENIOS',
+                'etiqueta' => 'CVS',
+                'actividad' => 'PENDIENTE',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/convenio.png',
+            ),
+            9 => array(
+                'status' => 'FALLECIDAS',
+                'etiqueta' => 'FLS',
+                'actividad' => 'INACTIVA',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/fallecidas.png',
+            ),
+            10 => array(
+                'status' => 'JURIDICO',
+                'etiqueta' => 'JDC',
+                'actividad' => 'INACTIVA',
+                'color' => '',
+                'icono' => HTTP_HOST . 'app/assets/iconos/juridico.png',
+            ),
+
         );
     }
 }

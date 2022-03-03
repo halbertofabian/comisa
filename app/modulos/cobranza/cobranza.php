@@ -17,4 +17,7 @@ elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "ingresos") :
 elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "gastos") :
     cargarComponente('breadcrumb', '', 'Gatos');
     include_once 'app/modulos/cobranza/gastos.php';
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "status") :
+    cargarComponente('breadcrumb', '', 'Cartera');
+    include_once 'app/modulos/cobranza/estado-cartera.php';
 endif;
