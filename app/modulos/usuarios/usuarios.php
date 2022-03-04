@@ -74,7 +74,7 @@
 
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-3 col-12">
                             <div class="form-group">
                                 <label for="usr_rol">Perfil</label>
                                 <select name="usr_rol" id="usr_rol" class="form-control">
@@ -97,6 +97,19 @@
                                     // administrador 
                                     ?>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                              <label for=""></label>
+                              <select name="" id="" class="form-control">
+                                  <?php 
+                                  
+                                  
+                                  
+                                  
+                                  ?>
+                              </select>
                             </div>
                         </div>
                         <div class="col-md-3 col-12">

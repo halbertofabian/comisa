@@ -265,7 +265,7 @@ class UsuariosModelo
         try {
             $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_rol = 'Vendedor' OR usr_rol = 'Cobrador' AND usr_caja != 0 ";
             $con = Conexion::conectar();
-            $pps = $con -> prepare($sql);
+            $pps = $con->prepare($sql);
             // $pps->bindValue(2, SUCURSAL_ID);
             $pps->execute();
             return $pps->fetchAll();
@@ -538,19 +538,38 @@ class UsuariosModelo
         }
     }
 
-    public static function mdlLoginCobranza($usr){
+    public static function mdlLoginCobranza($usr)
+    {
         try {
             $sql = "SELECT usr_id,usr_matricula,usr_ruta,usr_nombre,usr_app,usr_apm,usr_telefono,usr_correo,usr_clave,usr_rol,usr_firma,usr_caja FROM tbl_usuarios_usr WHERE usr_id = ? OR usr_matricula = ? OR usr_telefono = ? OR  usr_correo = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1,$usr['usr_id']);
-            $pps->bindValue(2,$usr['usr_id']);
-            $pps->bindValue(3,$usr['usr_id']);
-            $pps->bindValue(4,$usr['usr_id']);
+            $pps->bindValue(1, $usr['usr_id']);
+            $pps->bindValue(2, $usr['usr_id']);
+            $pps->bindValue(3, $usr['usr_id']);
+            $pps->bindValue(4, $usr['usr_id']);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
+        }
+    }
+
+    public static function mdlListarCajas()
+    {
+        try {
+            //code...
+            $sql = "SELECT cja_id_caja,cja_nombre FROM tbl_caja_cja ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        }finally{
+            $pps = null;
+            $con = null;
         }
     }
 }
