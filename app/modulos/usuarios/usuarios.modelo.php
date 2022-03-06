@@ -145,7 +145,7 @@ class UsuariosModelo
     public static function mdlActualizarUsuarios2($usr)
     {
         try {
-            $sql = "UPDATE  tbl_usuarios_usr SET usr_ruta = ?,usr_nombre =?,usr_telefono = ?,usr_correo = ?,usr_clave = ?, usr_rol = ?, usr_firma = ?, usr_deuda_ext = ?, usr_sueldo = ?, usr_vehiculo = ?, usr_imss = ?,usr_acceso_concentradora = ? WHERE usr_id = ?";
+            $sql = "UPDATE  tbl_usuarios_usr SET usr_ruta = ?,usr_nombre =?,usr_telefono = ?,usr_correo = ?,usr_clave = ?, usr_rol = ?, usr_firma = ?, usr_deuda_ext = ?, usr_sueldo = ?, usr_vehiculo = ?, usr_imss = ?,usr_acceso_concentradora = ?, usr_caja_asg = ? WHERE usr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr['usr_ruta']);
@@ -160,7 +160,8 @@ class UsuariosModelo
             $pps->bindValue(10, $usr['usr_vehiculo']);
             $pps->bindValue(11, $usr['usr_imss']);
             $pps->bindValue(12, $usr['usr_acceso_concentradora']);
-            $pps->bindValue(13, $usr['usr_id']);
+            $pps->bindValue(13, $usr['usr_caja_asg']);
+            $pps->bindValue(14, $usr['usr_id']);
 
             $pps->execute();
             return $pps->rowCount() > 0;

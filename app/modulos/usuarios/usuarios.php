@@ -35,9 +35,9 @@
                                     <?php
                                     for ($i = 1; $i <= 50; $i++) :
                                         $ruta = $i <= 9 ? "0" . $i : $i;
-                                        if($usr['usr_ruta'] == "R".$i){
+                                        if ($usr['usr_ruta'] == "R" . $i) {
                                             $selected = "selected";
-                                        }else{
+                                        } else {
                                             $selected = "";
                                         }
 
@@ -101,15 +101,16 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                              <label for=""></label>
-                              <select name="" id="" class="form-control">
-                                  <?php 
-                                  
-                                  
-                                  
-                                  
-                                  ?>
-                              </select>
+                                <label for="usr_caja_asg">Caja asignada</label>
+                                <select name="usr_caja_asg" id="usr_caja_asg" class="form-control select2">
+                                    <option value="">Selecione una caja a asignar</option>
+                                    <?php
+                                    $cajas = UsuariosModelo::mdlListarCajas();
+                                    foreach ($cajas as $key => $cja) :
+                                    ?>
+                                        <option value="<?= $cja['cja_id_caja'] ?>"><?= $cja['cja_nombre'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-3 col-12">
