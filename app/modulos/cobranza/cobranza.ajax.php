@@ -16,6 +16,10 @@
 include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cajas/cajas.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cajas/cajas.controlador.php';
+require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
@@ -113,7 +117,7 @@ class CobranzaAjax
     public function ajaxBuscarPagos()
     {
 
-        $respuesta = CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
+        $respuesta = CobranzaControlador::ctrBuscarCobro();
         echo json_encode($respuesta, true);
     }
 

@@ -139,69 +139,57 @@ class CajasControlador
 
 
     // TERMINAR FUNCION 
-    public  function ctrAbrirCajaAutomatico()
+    public  function ctrAbrirCajaAutomatico($datos)
     {
-        if (isset($_POST['btnAbrirCaja'])) {
+
+        $_POST['copn_fecha_abrio'] = FECHA;
+        $_POST['copn_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
+        $_POST['copn_ingreso_inicio'] = str_replace(",", "", 0);
+        $_POST['copn_id_caja'] = $datos['usr_caja_asg'];
+        $_POST['copn_usuario_abrio'] = $datos['usr_id'];
+
+        // copn_id_caja , copn_usuario_abrio , 
+
+        // copn_ingreso_inicio , copn_fecha_abrio , copn_id_sucursal
+
+        $abrirCaja = CajasModelo::mdlAbrirCaja($_POST);
+
+        if ($abrirCaja) {
+
+            $ultimaCajaAbierta = CajasModelo::mdlConsultarUltimaCajaAbierta(
+                array(
+                    'copn_usuario_abrio' => $_POST['copn_usuario_abrio'],
+                    'copn_id_caja' => $_POST['copn_id_caja'],
+                    'copn_id_sucursal' => $_SESSION['session_suc']['scl_id']
+                )
+            );
+
+            $asignarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['copn_usuario_abrio'], $ultimaCajaAbierta['copn_id']);
 
 
-            
-            $_POST['copn_fecha_abrio'] = FECHA;
-            $_POST['copn_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
-            $_POST['copn_ingreso_inicio'] = str_replace(",", "", 0);
-            
-            // copn_id_caja , copn_usuario_abrio , 
 
-            // copn_ingreso_inicio , copn_fecha_abrio , copn_id_sucursal
-           
-            $abrirCaja = CajasModelo::mdlAbrirCaja($_POST);
+            if ($asignarCajaUsuario) {
 
-            if ($abrirCaja) {
+                // Registrar ingreso en caja del saldo 
 
-                $ultimaCajaAbierta = CajasModelo::mdlConsultarUltimaCajaAbierta(
-                    array(
-                        'copn_usuario_abrio' => $_POST['copn_usuario_abrio'],
-                        'copn_id_caja' => $_POST['copn_id_caja'],
-                        'copn_id_sucursal' => $_SESSION['session_suc']['scl_id']
-                    )
-                );
+                $ingresoCaja = IngresosModelo::mdlAgregarIngresos(array(
+                    'igs_concepto' => 'INICIO DE CAJA AUTOMATICO',
+                    'igs_monto' => $_POST['copn_ingreso_inicio'],
+                    'igs_fecha_registro' => FECHA,
+                    'igs_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
+                    'igs_mp' => 'EFECTIVO',
+                    'igs_id_sucursal' => $_SESSION['session_suc']['scl_id'],
+                    'igs_id_corte' => $ultimaCajaAbierta['copn_id'],
+                    'igs_ruta' => '',
+                    'igs_usuario_responsable' => $_POST['copn_usuario_abrio'],
+                    'igs_id_corte_2' => $ultimaCajaAbierta['copn_id'],
+                    'igs_referencia' => '',
+                    'igs_tipo' => '',
+                    'igs_cuenta' => ''
+                ));
 
-                $asignarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['copn_usuario_abrio'], $ultimaCajaAbierta['copn_id']);
-
-
-
-                if ($asignarCajaUsuario) {
-
-                    // Registrar ingreso en caja del saldo 
-
-
-                    $ingresoCaja = IngresosModelo::mdlAgregarIngresos(array(
-                        'igs_concepto' => 'INICIO DE CAJA',
-                        'igs_monto' => $_POST['copn_ingreso_inicio'],
-                        'igs_fecha_registro' => FECHA,
-                        'igs_usuario_registro' => $_SESSION['session_usr']['usr_nombre'],
-                        'igs_mp' => 'EFECTIVO',
-                        'igs_id_sucursal' => $_SESSION['session_suc']['scl_id'],
-                        'igs_id_corte' => $ultimaCajaAbierta['copn_id'],
-                        'igs_ruta' => '',
-                        'igs_usuario_responsable' => $_POST['copn_usuario_abrio'],
-                        'igs_id_corte_2' => $ultimaCajaAbierta['copn_id'],
-                        'igs_referencia' => '',
-                        'igs_tipo' => '',
-                        'igs_cuenta' => ''
-
-
-                    ));
-
-                    if ($ingresoCaja) {
-                        CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'], $_POST['copn_ingreso_inicio']);
-
-
-                        //$_SESSION['session_usr']['usr_caja'] =  $ultimaCajaAbierta['copn_id'];
-                        AppControlador::msj('success', 'CAJA ABIERTA', '', HTTP_HOST . 'flujo-caja');
-                    } else {
-                        AppControlador::msj('error', 'Error no identificado', '', HTTP_HOST . 'flujo-caja');
-                    }
-                } else {
+                if ($ingresoCaja) {
+                    CajasModelo::mdlActualizarDisponibilidadCaja(1, $_POST['copn_id_caja'], $ultimaCajaAbierta['copn_id'], $_POST['copn_ingreso_inicio']);
                 }
             }
         }

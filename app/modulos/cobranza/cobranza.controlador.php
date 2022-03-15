@@ -1161,4 +1161,27 @@ class CobranzaControlador
             );
         }
     }
+
+    public static function ctrBuscarCobro()
+    {
+        if ($_POST['urs_id'] != "") {
+
+            if ($_SESSION['session_usr']['usr_caja']  > 0) {
+                // PROCEDIMINTO PARA ABRIR CAJA DEL USUARIO
+                $usr = UsuariosModelo::mdlMostrarUsuarios($_POST['urs_id']);
+
+                if ($usr['usr_caja'] == 0 || $usr['usr_caja'] == "") {
+                    // ABRIR CAJA DEL USUARIO
+
+                    $abrirCaja = new CajasControlador();
+                    $abrirCaja->ctrAbrirCajaAutomatico(array(
+                        'usr_caja_asg' => $usr['usr_caja_asg'],
+                        'usr_id' => $usr['usr_id'],
+                    ));
+                }
+            }
+        }
+
+        return CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
+    }
 }

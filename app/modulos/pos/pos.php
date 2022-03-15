@@ -149,11 +149,6 @@
 
 </div>
 
-
-
-
-
-
 <div class="modal fade" id="mdlBuscarProductos" tabindex="-1" aria-labelledby="mdlBuscarProductosLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
