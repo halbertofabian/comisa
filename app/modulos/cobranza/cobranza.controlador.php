@@ -459,6 +459,7 @@ class CobranzaControlador
 
         foreach ($cts_completadas as  $cta) {
 
+
             // Saber la forma de pago
             if ($cta['ctr_forma_pago'] == 'SEMANALES') {
                 $next_day =  date('Y-m-d', strtotime('next Monday'));
@@ -520,6 +521,20 @@ class CobranzaControlador
                 'cra_estado' => 'PENDIENTE',
                 'cra_id' => $cta['cra_id']
             ));
+
+
+            // Guardar datos
+
+            CobranzaControlador::ctrGuardarDatos(array(
+                'cra_referencias' => $cta['cra_referencias'],
+                'cra_id' => $cta['abs_id_contrato'],
+                'clts_telefono' => $cta['clts_telefono'],
+                'clts_coordenadas' => $cta['clts_coordenadas'],
+                'ctr_id' => $cta['ctr_id'],
+
+            ));
+
+
             # code...
         }
     }
@@ -572,6 +587,15 @@ class CobranzaControlador
                 'cra_estado' => 'PENDIENTE',
                 'cra_id' => $cts_r['cra_id']
             ));
+
+            CobranzaControlador::ctrGuardarDatos(array(
+                'cra_referencias' => $cts_r['cra_referencias'],
+                'cra_id' => $cts_r['cra_id'],
+                'clts_telefono' => $cts_r['clts_telefono'],
+                'clts_coordenadas' => $cts_r['clts_coordenadas'],
+                'ctr_id' => $cts_r['cra_contrato'],
+
+            ));
         }
     }
 
@@ -596,6 +620,21 @@ class CobranzaControlador
             CobranzaControlador::ctrRegistrarReagendado($cts_r);
         }
 
+        if (isset($datos[1]['Pendientes'])) {
+            // $cts_r = json_encode($datos[1]['Pendientes'], true);
+            $data = json_decode(json_encode($datos[1]['Pendientes'], true), true);
+            foreach ($data as $key => $pdt) {
+                CobranzaControlador::ctrGuardarDatos(array(
+                    'cra_referencias' => $pdt['cra_referencias'],
+                    'cra_id' => $pdt['cra_id'],
+                    'clts_telefono' => $pdt['clts_telefono'],
+                    'clts_coordenadas' => $pdt['clts_coordenadas'],
+                    'ctr_id' => $pdt['cra_contrato'],
+
+                ));
+            }
+        }
+
         if (isset($datos[4]['LZR'])) {
             $data = json_decode(json_encode($datos[4]['LZR'], true), true);
             foreach ($data as $key => $etq) {
@@ -611,7 +650,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -630,7 +670,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -649,7 +690,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -668,7 +710,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -687,7 +730,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -706,7 +750,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -725,7 +770,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -744,7 +790,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -763,7 +810,8 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
@@ -782,16 +830,26 @@ class CobranzaControlador
                         'ctr_etiqueta' => $etq['cra_etiqueta'],
                         'ctr_id' => $etq['cra_contrato'],
                         'ctr_gestion' => $etq['cra_gestion'],
-                    )
+                    ),
+                    $etq
                 );
             }
         }
     }
 
-    public static function ctrActualizarEtiquetas($cra, $ctr)
+    public static function ctrActualizarEtiquetas($cra, $ctr, $t = "")
     {
         CobranzaModelo::ctrActualizarEtiquetasDirectosCra($cra);
         CobranzaModelo::ctrActualizarEtiquetasDirectosCtr($ctr);
+
+        CobranzaControlador::ctrGuardarDatos(array(
+            'cra_referencias' => $t['cra_referencias'],
+            'cra_id' => $t['cra_id'],
+            'clts_telefono' => $t['clts_telefono'],
+            'clts_coordenadas' => $t['clts_coordenadas'],
+            'ctr_id' => $t['cra_contrato'],
+
+        ));
     }
 
 
@@ -1183,5 +1241,21 @@ class CobranzaControlador
         }
 
         return CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
+    }
+
+    public static function ctrGuardarDatos($datos)
+    {
+
+        CobranzaModelo::mdlAgregaReferencias(array(
+            'cra_referencias' => $datos['cra_referencias'],
+            'cra_id' => $datos['cra_id'],
+
+        ));
+
+        CobranzaModelo::mdlAgregaDatosTelGeo(array(
+            'clts_telefono' => $datos['clts_telefono'],
+            'clts_coordenadas' => $datos['clts_coordenadas'],
+            'ctr_id' => $datos['ctr_id'],
+        ));
     }
 }

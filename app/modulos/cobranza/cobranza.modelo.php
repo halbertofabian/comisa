@@ -1369,4 +1369,45 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+
+    public  static function mdlAgregaReferencias($datos)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_cartelera_cra SET cra_referencias = ? WHERE cra_id  =? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datos['cra_referencias']);
+            $pps->bindValue(2, $datos['cra_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlAgregaDatosTelGeo($datos)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET clts_telefono = ?, clts_coordenadas = ? WHERE ctr_id  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datos['clts_telefono']);
+            $pps->bindValue(2, $datos['clts_coordenadas']);
+            $pps->bindValue(3, $datos['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
