@@ -974,6 +974,21 @@ class CobranzaControlador
 
     public static function ctrProcesarPagoAPIV2($usr_id, $pago_name)
     {
+        $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+        if ($igs_id_corte2['usr_caja'] == 0) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo'
+            );
+        }
+
+        // if ($_SESSION['session_usr']['usr_caja'] == 0 || $_SESSION['session_usr']['usr_caja'] == "") {
+        //     return array(
+        //         'status' => false,
+        //         'mensaje' => 'Necesitas abrir caja para recibir, intente de nuevo',
+
+        //     );
+        // }
 
         // Validar que el usuario tenga caja asignada
         $usr = UsuariosModelo::mdlMostrarUsuarios($usr_id);
@@ -1302,7 +1317,10 @@ class CobranzaControlador
     {
         if ($_POST['urs_id'] != "") {
 
-            if ($_SESSION['session_usr']['usr_caja']  > 0) {
+            $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+            if ($igs_id_corte2['usr_caja'] > 0) {
+
+                // if ($_SESSION['session_usr']['usr_caja']  > 0) {
                 // PROCEDIMINTO PARA ABRIR CAJA DEL USUARIO
                 $usr = UsuariosModelo::mdlMostrarUsuarios($_POST['urs_id']);
                 if ($usr['usr_caja_asg'] > 0) {
