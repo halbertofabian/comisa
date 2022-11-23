@@ -1410,4 +1410,25 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public  static function mdlAgregarCuentaBanco($datos)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_referancia = ?, abs_cuenta = ? WHERE abs_id  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datos['abs_referencia_e']);
+            $pps->bindValue(2, $datos['abs_cuenta_e']);
+            $pps->bindValue(3, $datos['abs_id_e']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

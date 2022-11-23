@@ -31,6 +31,26 @@ class IngresosControlador
         $_POST['igs_cuenta'] = "";
         IngresosModelo::mdlAgregarIngresos($_POST);
     }
+    public  static function ctrAgregarIngresoAbonoBanco($data)
+    {
+        $igs_id_corte2 = CortesControlador::ctrConsultarUltimoCorteByUsuario($_SESSION['session_usr']['usr_id']);
+        $igs_id_corte = CortesControlador::ctrConsultarUltimoCorteByUsuario($data['igs_usuario_responsable']);
+        $_POST['igs_concepto'] = $data['igs_concepto'];
+        $_POST['igs_monto'] = str_replace(",", "", $data['igs_monto']);
+        $_POST['igs_fecha_registro'] = FECHA;
+        $_POST['igs_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+        $_POST['igs_mp'] = "DEPOSITO";
+        $_POST['igs_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
+        $_POST['igs_id_corte'] = $igs_id_corte['usr_caja'];
+        $_POST['igs_ruta'] = "";
+        $_POST['igs_usuario_responsable'] = $data['igs_usuario_responsable'];
+        $_POST['igs_id_corte_2'] = $igs_id_corte2['usr_caja'];
+        $_POST['igs_referencia'] = $data['igs_referencia'];
+        $_POST['igs_tipo'] = "COBRANZA";
+        $_POST['igs_cuenta'] = $data['igs_cuenta'];
+        IngresosModelo::mdlAgregarIngresos($_POST);
+        CuentasModelo::mdlActualizarSaldoCuenta($_POST['igs_cuenta'], $_POST['igs_monto']);
+    }
     public static function ctrAgregarIngresos()
     {
         if (isset($_POST['btnAgregarIngreso'])) {

@@ -384,7 +384,9 @@
     });
 
 
-    $("#formAsignarCuentaBanco").on("submit", function() {
+    $("#formAsignarCuentaBanco").on("submit", function(e) {
+        e.preventDefault();
+
         var datos = new FormData(this)
         datos.append("btnAsignarCuentaBanco", true);
         $.ajax({
@@ -397,7 +399,19 @@
             beforeSend: function() {
 
             },
-            success: function(res) {}
+            success: function(res) {
+                if (res) {
+
+                    toastr.success('Cuenta agregada', '¡Muy bien!');
+                    setTimeout(function() {
+                        buscarPagos($("#urs_id").val());
+                    }, 200)
+                    // buscarPagos($("#urs_id").val());
+
+                }
+                $('#mdlBanco').modal('hide')
+
+            }
         })
     })
 </script>

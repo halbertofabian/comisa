@@ -1007,6 +1007,7 @@ class CobranzaControlador
         $isEmptyBanco = 0;
         $contador_efectivo = 0;
         $contador_banco = 0;
+        $array_banco = array();
         foreach ($listarAbonos as  $abs_t) {
 
             if ($abs_t['abs_mp'] == 'EFECTIVO') {
@@ -1015,9 +1016,21 @@ class CobranzaControlador
             // Contar cuantas vinculadas a banco
             if ($abs_t['abs_mp'] == 'BANCO') {
                 $contador_banco += dnum($abs_t['abs_monto']);
+
                 if ($abs_t['abs_cuenta'] == '') {
                     $isEmptyBanco++;
                 }
+
+                // agregar datos banco 
+                $datos_banco = array(
+                    'igs_concepto' => 'Depositio / Transferencia #' . $abs_t['abs_id'],
+                    'igs_monto' => dnum($abs_t['abs_monto']),
+                    'igs_referencia' => $abs_t['abs_referancia'],
+                    'igs_cuenta' => $abs_t['abs_cuenta'],
+                    'igs_usuario_responsable' => $usr_id
+                );
+
+                array_push($array_banco, $datos_banco);
             }
         }
         if ($isEmptyBanco > 0) {
@@ -1072,6 +1085,13 @@ class CobranzaControlador
                 'igs_concepto' => 'Cobranza ' . $pago_name,
             ));
         }
+
+        if ($contador_banco > 0) {
+            foreach ($array_banco as  $dbco) {
+                IngresosControlador::ctrAgregarIngresoAbonoBanco($dbco);
+            }
+        }
+
 
         return array(
             'status' => true,
