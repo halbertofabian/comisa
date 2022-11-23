@@ -111,6 +111,11 @@
                                         <option value="<?= $cja['cja_id_caja'] ?>"><?= $cja['cja_nombre'] ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                                <script>
+                                    var usr_caja_asg = <?= $usr['usr_caja_asg'] ?>;
+
+                                    $('#usr_caja_asg').val(usr_caja_asg).trigger('change');
+                                </script>
                             </div>
                         </div>
                         <div class="col-md-3 col-12">
