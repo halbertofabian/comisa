@@ -974,7 +974,26 @@ class CobranzaControlador
 
     public static function ctrProcesarPagoAPIV2($usr_id, $pago_name)
     {
-        $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
+
+        // Validar que el usuario tenga caja asignada
+        $usr = UsuariosModelo::mdlMostrarUsuarios($usr_id);
+        if ($usr['usr_caja_asg'] == 0) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Favor de asignarle una caja a este usuario',
+
+            );
+        }
+
+        // Validar que la caja este abierta
+        if ($usr['usr_caja'] == 0) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Favor de abrir la caja de este usaurio',
+
+            );
+        }
+
         $listarAbonos = CobranzaModelo::mdlListarPagosPendientesV2($usr_id);
         if (!$listarAbonos) {
             return array(
@@ -984,6 +1003,36 @@ class CobranzaControlador
             );
         }
 
+        // Verificar cuentas de banco
+        $isEmptyBanco = 0;
+        $contador_efectivo = 0;
+        $contador_banco = 0;
+        foreach ($listarAbonos as  $abs_t) {
+
+            if ($abs_t['abs_mp'] == 'EFECTIVO') {
+                $contador_efectivo += dnum($abs_t['abs_monto']);
+            }
+            // Contar cuantas vinculadas a banco
+            if ($abs_t['abs_mp'] == 'BANCO') {
+                $contador_banco += dnum($abs_t['abs_monto']);
+                if ($abs_t['abs_cuenta'] == '') {
+                    $isEmptyBanco++;
+                }
+            }
+        }
+        if ($isEmptyBanco > 0) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Asignale una cuenta bancaría a los cobros realizados con tranferncia o deposito',
+
+            );
+        }
+
+        // preArray($listarAbonos);
+
+        // return;
+
+        $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
         foreach ($listarAbonos as  $abs) {
 
             $totalPagdoTmp = dnum($abs['ctr_total_pagado']);
@@ -1015,6 +1064,15 @@ class CobranzaControlador
             ));
             # code...
         }
+        // Registrar ingresos automaticos 
+        if ($contador_efectivo > 0) {
+            IngresosControlador::ctrAgregarIngresoAbonoEfectivo(array(
+                'igs_usuario_responsable' => $usr_id,
+                'igs_monto' => $contador_efectivo,
+                'igs_concepto' => 'Cobranza ' . $pago_name,
+            ));
+        }
+
         return array(
             'status' => true,
             'mensaje' => 'Cobranza autorizada',
@@ -1227,20 +1285,61 @@ class CobranzaControlador
             if ($_SESSION['session_usr']['usr_caja']  > 0) {
                 // PROCEDIMINTO PARA ABRIR CAJA DEL USUARIO
                 $usr = UsuariosModelo::mdlMostrarUsuarios($_POST['urs_id']);
+                if ($usr['usr_caja_asg'] > 0) {
+                    if ($usr['usr_caja'] == 0 || $usr['usr_caja'] == "") {
+                        // ABRIR CAJA DEL USUARIO
 
-                if ($usr['usr_caja'] == 0 || $usr['usr_caja'] == "") {
-                    // ABRIR CAJA DEL USUARIO
-
-                    $abrirCaja = new CajasControlador();
-                    $abrirCaja->ctrAbrirCajaAutomatico(array(
-                        'usr_caja_asg' => $usr['usr_caja_asg'],
-                        'usr_id' => $usr['usr_id'],
-                    ));
+                        $abrirCaja = new CajasControlador();
+                        $abrirCaja->ctrAbrirCajaAutomatico(array(
+                            'usr_caja_asg' => $usr['usr_caja_asg'],
+                            'usr_id' => $usr['usr_id'],
+                        ));
+                    }
                 }
             }
         }
 
         return CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
+        $pagos = CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
+        $array_pagos = array();
+        foreach ($pagos as $key => $pgs) {
+            if($pgs['abs_mp'] == 'BANCO'){
+
+
+            }
+            $array_datos = array(
+                'ctr_cliente' => $pgs['ctr_cliente'],
+                'ctr_forma_pago' => $pgs['ctr_forma_pago'],
+                'ctr_dia_pago' => $pgs['ctr_dia_pago'],
+                'abs_id' => $pgs['abs_id'],
+                'abs_folio' => $pgs['abs_folio'],
+                'abs_id_cobrador' => $pgs['abs_id_cobrador'],
+                'abs_id_contrato' => $pgs['abs_id_contrato'],
+                'abs_monto' => $pgs['abs_monto'],
+                'abs_mp' => $pgs['abs_mp'],
+                'abs_referancia' => $pgs['abs_referancia'],
+                'abs_nota' => $pgs['abs_nota'],
+                'abs_estado_abono' => $pgs['abs_estado_abono'],
+                'abs_fecha_cobro' => $pgs['abs_fecha_cobro'],
+                'abs_estado_base' => $pgs['abs_estado_base'],
+                'abs_motivo_cancelacion' => $pgs['abs_motivo_cancelacion'],
+                'abs_save' => $pgs['abs_save'],
+                'abs_verificacion' => $pgs['abs_verificacion'],
+                'abs_cuenta_id' => $pgs['abs_cuenta'],
+                'abs_cuenta_text' => '',
+                'cra_fecha_cobro' => $pgs['cra_fecha_cobro'],
+                'cra_fecha_reagenda' => $pgs['cra_fecha_reagenda'],
+                'cra_fecha_proxima_pago' => $pgs['cra_fecha_proxima_pago'],
+                'ctr_id' => $pgs['ctr_id'],
+                'ctr_folio' => $pgs['ctr_folio'],
+                'ctr_ruta' => $pgs['ctr_ruta'],
+                'ctr_numero_cuenta' => $pgs['ctr_numero_cuenta'],
+                'ctr_status_cuenta' => $pgs['ctr_status_cuenta'],
+                'ctr_saldo_actual' => $pgs['ctr_saldo_actual'],
+                'usr_nombre' => $pgs['usr_nombre'],
+            );
+        }
+        // preArray($pagos);
     }
 
     public static function ctrGuardarDatos($datos)

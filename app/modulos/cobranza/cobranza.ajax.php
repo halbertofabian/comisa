@@ -19,7 +19,15 @@ require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cajas/cajas.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cajas/cajas.controlador.php';
+
 require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.controlador.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cortes/cortes.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/cuentas/cuentas.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cuentas/cuentas.controlador.php';
+
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';

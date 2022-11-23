@@ -77,6 +77,15 @@ class CajasControlador
     {
         if (isset($_POST['btnAbrirCaja'])) {
 
+            // preArray($_POST['copn_id_caja']);
+
+            // return;
+
+            if($_POST['copn_id_caja'] == 0){
+                AppControlador::msj('error', 'Seleccione una caja para este usuario', '', HTTP_HOST . 'flujo-caja');
+                return;
+            }
+
 
             $_POST['copn_fecha_abrio'] = FECHA;
             $_POST['copn_id_sucursal'] = $_SESSION['session_suc']['scl_id'];
@@ -326,15 +335,19 @@ class CajasControlador
 
 
 
-            $monto_e =  $montos['monto_ingresos_e']['monto_total'];
+            $monto_e =  $montos['monto_ingresos_e']['monto_total'] == NULL ? 0 : $montos['monto_ingresos_e']['monto_total'];
 
-            $monto_g_e = $montos['monto_gastos_e']['monto_total'];
+            $monto_g_e = $montos['monto_gastos_e']['monto_total'] ==  NULL ? 0 : $montos['monto_ingresos_e']['monto_total'];
 
             $monto_b =  $montos['monto_ingresos_b']['monto_total'];
 
             $monto_g_b = $montos['monto_gastos_b']['monto_total'];
 
             $ingreso_caja = str_replace(",", "", $_POST['copn_ingreso_inicio']);
+            $ingreso_caja = $ingreso_caja ==  "" ? 0 : $ingreso_caja;
+            // preArray($monto_e);
+            // preArray($ingreso_caja);
+            // preArray($monto_g_e);
 
             $totalEfectivo = $monto_e +  $ingreso_caja - $monto_g_e;
             $totalBanco = $monto_b - $monto_g_b;
@@ -370,6 +383,8 @@ class CajasControlador
 
             if ($ActaulizarCajaCierre) {
                 $cerrarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['usr_id'], 0);
+               
+
                 if ($cerrarCajaUsuario) {
                     $cerrarCaja = CajasModelo::mdlActualizarDisponibilidadCaja(0, $_POST['cja_id_caja'], 0, $_POST['copn_saldo']);
                     if ($cerrarCaja) {

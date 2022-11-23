@@ -476,7 +476,7 @@
 
                 <label for="copn_id_caja">Cajas disponibles para <strong class="text-primary"><?php echo $_SESSION['session_suc']['scl_nombre'] ?> </strong> </label>
                 <select name="copn_id_caja" id="copn_id_caja" class="form-control select2">
-                    <option value="">Selecione una caja</option>
+                    <option value="0">Selecione una caja</option>
                     <?php
 
 

@@ -341,6 +341,7 @@ function buscarFlujoCaja(flujo_usr) {
 
 
             if (res.usr_caja == 0) {
+                console.log(res);
                 $(".btn-open-cash").removeClass('d-none');
                 $(".content-flujo").addClass('d-none');
 
@@ -352,6 +353,10 @@ function buscarFlujoCaja(flujo_usr) {
                 $(".content-cerrar-caja").addClass('d-none');
 
                 $(".btn-close-cash").addClass('d-none')
+
+                var copn_id_caja = res.usr_caja_asg;
+
+                $('#copn_id_caja').val(copn_id_caja).trigger('change');
 
             }
             else if (res.usr_caja != 0) {
