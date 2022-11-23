@@ -149,6 +149,9 @@ class CobranzaAjax
         $respuesta = CobranzaModelo::mdlMostrarCarteleraContratos($_POST['cra_status'], $_POST['ctr_ruta']);
         echo json_encode($respuesta, true);
     }
+    public function ajaxAsignarCuentaBanco(){
+        
+    }
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -215,3 +218,9 @@ if (isset($_POST['btnMostrarCuentasStatus'])) {
     $btnMostrarCuentasStatus = new CobranzaAjax();
     $btnMostrarCuentasStatus->ajaxMostrarCuentasStatus();
 }
+
+if (isset($_POST['btnAsignarCuentaBanco'])) {
+    $btnAsignarCuentaBanco = new CobranzaAjax();
+    $btnAsignarCuentaBanco->ajaxAsignarCuentaBanco();
+}
+

@@ -1299,13 +1299,15 @@ class CobranzaControlador
             }
         }
 
-        return CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
+        // return CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
         $pagos = CobranzaModelo::mdlBuscarPagosUsr($_POST['urs_id']);
         $array_pagos = array();
         foreach ($pagos as $key => $pgs) {
-            if($pgs['abs_mp'] == 'BANCO'){
-
-
+            $cuenta_banco = '';
+            if ($pgs['abs_mp'] == 'BANCO') {
+                $cuenta_banco = CuentasModelo::mdlMostrarNombreCTA($pgs['abs_cuenta']);
+                $cuenta_banco = $cuenta_banco['cbco_nombre'] == null ? '' : $cuenta_banco['cbco_nombre'];
+                // preArray($cuenta_banco);
             }
             $array_datos = array(
                 'ctr_cliente' => $pgs['ctr_cliente'],
@@ -1326,7 +1328,7 @@ class CobranzaControlador
                 'abs_save' => $pgs['abs_save'],
                 'abs_verificacion' => $pgs['abs_verificacion'],
                 'abs_cuenta_id' => $pgs['abs_cuenta'],
-                'abs_cuenta_text' => '',
+                'abs_cuenta_text' => $cuenta_banco,
                 'cra_fecha_cobro' => $pgs['cra_fecha_cobro'],
                 'cra_fecha_reagenda' => $pgs['cra_fecha_reagenda'],
                 'cra_fecha_proxima_pago' => $pgs['cra_fecha_proxima_pago'],
@@ -1338,7 +1340,9 @@ class CobranzaControlador
                 'ctr_saldo_actual' => $pgs['ctr_saldo_actual'],
                 'usr_nombre' => $pgs['usr_nombre'],
             );
+            array_push($array_pagos, $array_datos);
         }
+        return $array_pagos;
         // preArray($pagos);
     }
 

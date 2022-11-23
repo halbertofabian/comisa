@@ -93,6 +93,54 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="mdlBanco" tabindex="-1" role="dialog" aria-labelledby="mdlBancoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdlBancoLabel">Asignar cuenta de banco</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="formAsignarCuentaBanco" method="post">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="abs_cuenta_e">Cuenta</label>
+                                <select class="form-control " name="abs_cuenta_e" id="abs_cuenta_e" required>
+
+                                    <option value="">Seleccione una cuenta</option>
+                                    <?php
+                                    $cuentas = CuentasModelo::mdlMostrarCuentas();
+                                    foreach ($cuentas as $key => $cbco) : ?>
+
+                                        <option value="<?php echo $cbco['cbco_id'] ?>"><?php echo $cbco['cbco_nombre'] ?></option>
+
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="abs_referencia_e">Referencia</label>
+                            <input type="text" name="abs_referencia_e" id="abs_referencia_e" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="hidden" name="abs_id_e" id="abs_id_e">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary float-right">Asignar cuenta</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function() {
         buscarPagos("");
@@ -266,6 +314,7 @@
                 var cobrador = "";
                 res.forEach(pgs => {
 
+                    var buttonAgregarCuenta = "";
                     var buttonCancelar = "";
                     if (urs_id != "") {
                         cobrador = pgs.usr_nombre;
@@ -278,6 +327,8 @@
                         pgs_total_efectivo += Number(pgs.abs_monto);
                     } else {
                         pgs_total_banco += Number(pgs.abs_monto);
+
+                        buttonAgregarCuenta = `<button class="btn btn-sm btn-link text-danger btnModCuentaBanco" abs_id="${pgs.abs_id}" abs_cuenta="${pgs.abs_cuenta_id}" abs_referencia="${pgs.abs_referancia}" >Cuenta de banco</button>`;
 
                     }
                     tbodyPagos +=
@@ -292,7 +343,11 @@
                             <td>${pgs.ctr_numero_cuenta}</td>
                             <td>${$.number(pgs.ctr_saldo_actual,2)}</td>
                             <td>${$.number(pgs.abs_monto,2)}</td>
-                            <td>${pgs.abs_mp}</td>
+                            <td>
+                            ${pgs.abs_mp} <br>
+                            <strong class="text-primary"> ${pgs.abs_cuenta_text} </strong> <br>
+                            ${buttonAgregarCuenta}
+                            </td>
                             <td>${pgs.abs_referancia}</td>
                             <td>${pgs.abs_nota}</td>
                             <td>${pgs.abs_fecha_cobro}</td>
@@ -316,4 +371,33 @@
             }
         });
     }
+
+    $(".tablePagos tbody").on("click", "button.btnModCuentaBanco", function() {
+        $('#mdlBanco').modal('show')
+        var abs_id = $(this).attr('abs_id');
+        var abs_cuenta = $(this).attr('abs_cuenta');
+        var abs_referencia = $(this).attr('abs_referencia');
+        $("#abs_id_e").val(abs_id)
+        // $("#abs_cuenta_e").val(abs_cuenta)
+        $('#abs_cuenta_e').val(abs_cuenta).trigger('change');
+        $("#abs_referencia_e").val(abs_referencia)
+    });
+
+
+    $("#formAsignarCuentaBanco").on("submit", function() {
+        var datos = new FormData(this)
+        datos.append("btnAsignarCuentaBanco", true);
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            data: datos,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+
+            },
+            success: function(res) {}
+        })
+    })
 </script>
