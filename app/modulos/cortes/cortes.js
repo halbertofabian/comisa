@@ -136,7 +136,7 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
             $("#total_efectivo").html(totalEfectivo)
 
             $("#copn_ingreso_efectivo").val(totalEfectivo)
-            $("#copn_saldo").val(totalEfectivo)
+            $("#copn_saldo").val(0)
 
 
             var totalBanco = $("#igs_banco_input").val() - $("#tgts_banco_input").val()
@@ -252,7 +252,7 @@ function buscarGastosByCaja(tgts_id_corte, usr_id) {
             $("#total_efectivo_input").val(totalEfectivo.toFixed(2))
             $("#total_efectivo").html(totalEfectivo.toFixed(2))
             $("#copn_ingreso_efectivo").val(totalEfectivo)
-            $("#copn_saldo").val(totalEfectivo)
+            $("#copn_saldo").val(0)
 
 
             var totalBanco = $("#igs_banco_input").val() - $("#tgts_banco_input").val()

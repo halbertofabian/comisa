@@ -637,8 +637,8 @@
 
             <div class="col-12 col-md-4">
                 <div class="form-group">
-                    <label for="copn_ingreso_inicio">Monto inicial:</label>
-                    <input type="text" readonly name="copn_ingreso_inicio" value="<?php echo $cjs['cja_saldo'] ?>" id="copn_ingreso_inicio" class="form-control inputN">
+                    <!-- <label for="copn_ingreso_inicio">Monto inicial:</label> -->
+                    <input type="hidden" readonly name="copn_ingreso_inicio" value="<?php echo $cjs['cja_saldo'] ?>" id="copn_ingreso_inicio" class="form-control inputN">
                 </div>
             </div>
             <div class="col-12">
@@ -789,15 +789,15 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="card">
+                            <input type="hidden" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
+                            <!-- <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">RETIRO DE CAJA</h4>
                                     <div class="form-group">
                                         <label for="copn_saldo">Introduce la cantidad de retiro</label>
-                                        <input type="text" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-md-6">
                             <div class="card">
