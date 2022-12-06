@@ -236,7 +236,7 @@ class UsuariosModelo
                 $pps->execute();
                 return $pps->fetchAll();
             } else if ($usr_id == "" && $usr_rol == "") {
-                $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_rol != 'Alumno'  ORDER BY usr_id DESC ";
+                $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_rol != 'Baja de usuario'  ORDER BY usr_id DESC ";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 // $pps->bindValue(1, SUCURSAL_ID);

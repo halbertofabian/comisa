@@ -726,11 +726,11 @@ class AppControlador
                             'label' => 'Flujo de caja',
                             'href' => 'flujo-caja'
                         ],
-                        [
-                            'icon' => '',
-                            'label' => 'Lista de cajas / Nueva caja',
-                            'href' => 'cajas'
-                        ],
+                        // [
+                        //     'icon' => '',
+                        //     'label' => 'Lista de cajas / Nueva caja',
+                        //     'href' => 'cajas'
+                        // ],
                         [
                             'icon' => '',
                             'label' => 'Enrutar cuentas',
@@ -751,16 +751,16 @@ class AppControlador
                             'label' => 'Status / Rendimiento',
                             'href' => 'cobranza/status'
                         ],
-                        [
-                            'icon' => '',
-                            'label' => 'Ingresos',
-                            'href' => 'cobranza/ingresos'
-                        ],
-                        [
-                            'icon' => '',
-                            'label' => 'Gastos',
-                            'href' => 'cobranza/gastos'
-                        ],
+                        // [
+                        //     'icon' => '',
+                        //     'label' => 'Ingresos',
+                        //     'href' => 'cobranza/ingresos'
+                        // ],
+                        // [
+                        //     'icon' => '',
+                        //     'label' => 'Gastos',
+                        //     'href' => 'cobranza/gastos'
+                        // ],
 
                         //Aqui más item de menu
                     ),
@@ -1216,6 +1216,22 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Estado de cuenta',
                             'href' => 'cobranza/estado-cuenta'
+                        ],
+
+                        [
+                            'icon' => '',
+                            'label' => 'Status / Rendimiento',
+                            'href' => 'cobranza/status'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Ingresos',
+                            'href' => 'cobranza/ingresos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Gastos',
+                            'href' => 'cobranza/gastos'
                         ],
 
                         //Aqui más item de menu

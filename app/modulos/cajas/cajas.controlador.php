@@ -81,7 +81,7 @@ class CajasControlador
 
             // return;
 
-            if($_POST['copn_id_caja'] == 0){
+            if ($_POST['copn_id_caja'] == 0) {
                 AppControlador::msj('error', 'Seleccione una caja para este usuario', '', HTTP_HOST . 'flujo-caja');
                 return;
             }
@@ -208,6 +208,26 @@ class CajasControlador
     {
 
         if (isset($_POST['btnCerrarCaja'])) {
+
+            if ($_POST['copn_tipo_caja'] == "CAJA_COBRANZA_G") {
+                $listarCajasCobradoresVaidacion = CajasModelo::mdlListarCajasCobradoresValidacion();
+                $validacion_caja = true;
+                $listarCajas = "";
+                foreach ($listarCajasCobradoresVaidacion as $cja_val) {
+                    if ($cja_val['cja_uso'] == 1) {
+                        $validacion_caja  = false;
+                        $listarCajas .= $cja_val['cja_nombre'] . '<br>';
+                    }
+                }
+                if (!$validacion_caja) {
+                    return array(
+                        'mensaje' => 'Cierre todas las cajas de los cobradores <br>' . $listarCajas,
+                        'status' => false,
+                        'pagina' => HTTP_HOST
+                    );
+                }
+            }
+
 
             $crt_id = $_POST['usr_caja'];
 
@@ -383,7 +403,7 @@ class CajasControlador
 
             if ($ActaulizarCajaCierre) {
                 $cerrarCajaUsuario = UsuariosModelo::mdlActualizarCajaUsuario($_POST['usr_id'], 0);
-               
+
 
                 if ($cerrarCajaUsuario) {
                     $cerrarCaja = CajasModelo::mdlActualizarDisponibilidadCaja(0, $_POST['cja_id_caja'], 0, $_POST['copn_saldo']);

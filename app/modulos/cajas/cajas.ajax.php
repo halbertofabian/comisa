@@ -45,6 +45,16 @@ class CajasAjax
         echo json_encode($res, true);
         
     }
+
+    public function ajaxEliminarCaja (){
+        $res = CajasModelo::mdlEliminarCaja($_POST['cja_id_caja']);
+        echo json_encode($res, true);
+    }
+    public function ajaxCajaCheckCobrador (){
+        $res = CajasModelo::mdlCheckCobrador($_POST['cja_id_caja'], $_POST['cja_cobrador_check']);
+        echo json_encode($res, true);
+    }
+    
     
 }
 
@@ -67,3 +77,19 @@ if (isset($_POST['btnBuscarCajaSaldo'])) {
     $consultarCaja -> ajaxMostrarCajasOpenById();
 
 }
+
+if (isset($_POST['btnDeleteCaja'])) {
+    $btnEliminarCaja = new CajasAjax();
+    $btnEliminarCaja -> ajaxEliminarCaja();
+
+}
+
+if (isset($_POST['btncheckedCajaCobrador'])) {
+    $btnCheckCobrador = new CajasAjax();
+    $btnCheckCobrador -> ajaxCajaCheckCobrador();
+
+}
+
+
+
+

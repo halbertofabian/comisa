@@ -58,7 +58,7 @@ class CajasModelo
             //code...
             if ($scl_id != "") {
 
-                $sql = "SELECT * FROM tbl_caja_cja WHERE cja_id_sucursal = ? AND cja_uso = ?";
+                $sql = "SELECT * FROM tbl_caja_cja WHERE cja_id_sucursal = ? AND cja_uso = ? AND cja_estado_borrado = 1";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $scl_id);
@@ -79,13 +79,13 @@ class CajasModelo
         try {
             //code...
             if ($scl_id == "") {
-                $sql = "SELECT * FROM tbl_caja_cja";
+                $sql = "SELECT * FROM tbl_caja_cja WHERE cja_estado_borrado = 1";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->execute();
                 return $pps->fetchAll();
             } elseif ($scl_id != "") {
-                $sql = "SELECT * FROM tbl_caja_cja WHERE cja_id_sucursal = ? ";
+                $sql = "SELECT * FROM tbl_caja_cja WHERE cja_id_sucursal = ? AND cja_estado_borrado = 1";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $_SESSION['session_suc']['scl_id']);
@@ -155,14 +155,33 @@ class CajasModelo
             $con = null;
         }
     }
-    public static function mdlEliminarCajas()
+    public static function mdlEliminarCaja($cja_id_caja)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "UPDATE tbl_caja_cja SET cja_estado_borrado = 0 WHERE cja_id_caja = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+            $pps -> bindValue(1, $cja_id_caja);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
+    public static function mdlCheckCobrador($cja_id_caja,$cja_cobrador_check)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_caja_cja SET cja_cobrador_check = ? WHERE cja_id_caja = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps -> bindValue(1, $cja_cobrador_check);
+            $pps -> bindValue(2, $cja_id_caja);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -582,4 +601,23 @@ class CajasModelo
             $con = null;
         }
     }
+
+    public static function mdlListarCajasCobradoresValidacion()
+    {
+        try {
+            $sql = "SELECT * FROM tbl_caja_cja WHERE cja_estado_borrado = 1 AND cja_cobrador_check = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+
 }
