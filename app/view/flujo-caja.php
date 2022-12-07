@@ -2,6 +2,12 @@
     var pagina = ""
 </script>
 
+<?php
+
+// preArray($rutas[1]);
+
+?>
+
 <div class="row">
     <div class="col-12">
         <?php cargarComponente('breadcrumb', '', 'Flujo de caja por usuario'); ?>
@@ -25,6 +31,16 @@
             </select>
 
         </div>
+
+        <?php if (isset($rutas[1])) : ?>
+
+            <script>
+                var flujo_usr = <?= $rutas[1] ?>;
+
+                $('#flujo_usr').val(flujo_usr).trigger('change');
+            </script>
+
+        <?php endif; ?>
     </div>
     <div class="col-md-4  d-none">
         <button class="btn btn-success mt-4">Abrir caja para este usuario</button>

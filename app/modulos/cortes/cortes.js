@@ -11,10 +11,11 @@
  */
 
 
-// $(document).ready(function () {
-//     var flujo_usr = $("#flujo_usr").val();
-//     buscarFlujoCaja(flujo_usr)
-// })
+$(document).ready(function () {
+    var flujo_usr = $("#flujo_usr").val();
+    // alert(flujo_usr);
+    buscarFlujoCaja(flujo_usr)
+})
 
 $("#igs_mp").on("change", function () {
 

@@ -1111,7 +1111,8 @@ class CobranzaControlador
         return array(
             'status' => true,
             'mensaje' => 'Cobranza autorizada',
-            'pagina' => HTTP_HOST . 'app/report/reporte-cobranza-autorizada.php?abs_save=' . $id_pago
+            'pagina' => HTTP_HOST . 'app/report/reporte-cobranza-autorizada.php?abs_save=' . $id_pago,
+            'pagina2' => HTTP_HOST . 'flujo-caja/' . $usr_id
         );
     }
 

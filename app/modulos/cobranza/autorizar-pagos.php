@@ -188,6 +188,8 @@
                                 toastr.success(res.mensaje, '¡Muy bien!');
                                 setTimeout(function() {
                                     window.open(res.pagina, '_blank');
+                                window.location.href = res.pagina2
+
                                 }, 200)
                                 $('#urs_id').val("").trigger('change');
                                 buscarPagos("");
