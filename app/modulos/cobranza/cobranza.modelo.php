@@ -1375,7 +1375,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_cartelera_cra SET cra_referencias = ? WHERE cra_id  =? ";
+            $sql = "UPDATE tbl_cartelera_cra SET cra_estado = 'PENDIENTE', cra_referencias = ? WHERE cra_id  =? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $datos['cra_referencias']);
