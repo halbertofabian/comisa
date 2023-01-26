@@ -93,30 +93,30 @@
 
                     <div class="form-group col-md-4">
                         <label for="">TOTAL</label>
-                        <input type="text" class="form-control inputN" id="ctr_total" name="ctr_total">
+                        <input type="text" class="form-control inputN" id="ctr_total" name="ctr_total" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">ENG</label>
-                        <input type="text" class="form-control inputN" id="ctr_enganche" name="ctr_enganche">
+                        <input type="text" class="form-control inputN" id="ctr_enganche" name="ctr_enganche" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">PAGO ADICIONAL</label>
-                        <input type="text" class="form-control inputN" id="ctr_pago_adicional" name="ctr_pago_adicional">
+                        <input type="text" class="form-control inputN" id="ctr_pago_adicional" name="ctr_pago_adicional" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">SALDO</label>
-                        <input type="text" class="form-control inputN" id="ctr_saldo" name="ctr_saldo">
+                        <input type="text" class="form-control inputN" id="ctr_saldo" name="ctr_saldo" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">SALDO ACTUAL</label>
-                        <input type="text" class="form-control inputN" id="ctr_saldo_actual" name="ctr_saldo_actual">
+                        <input type="text" class="form-control inputN" id="ctr_saldo_actual" name="ctr_saldo_actual" readonly>
                         <input type="hidden" id="ctr_saldo_base" name="ctr_saldo_base">
                     </div>
 
 
                     <div class="form-group col-md-4">
                         <label for="">FECHA ULTIMO PAGO</label>
-                        <input type="text" class="form-control date" id="ctr_ultima_fecha_abono" name="ctr_ultima_fecha_abono">
+                        <input type="text" class="form-control date" id="ctr_ultima_fecha_abono" name="ctr_ultima_fecha_abono" readonly>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="">TOTAL PAGADO</label>
