@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="col-md-8 table-responsive" style="height: 420px; overflow-y: scroll; padding:4px;">
-            <table class="table table-striped table-bordered table-hover tablaStatus">
+            <table id="datatable_cuenta" class="table table-striped table-bordered table-hover tablaStatus tablas">
                 <thead>
                     <tr class="text-center">
                         <th>#RUTA</th>
@@ -59,9 +59,6 @@
                         <th>ACCIONES</th>
                     </tr>
                 </thead>
-                <tbody id="tbodyStatus">
-
-                </tbody>
             </table>
         </div>
     </div>
@@ -121,7 +118,8 @@
 
 
 
-    function mostrarStatus(cra_status) {
+    function mostrarStatus2(cra_status) {
+
         var datos = new FormData()
         datos.append("ctr_ruta", $("#ctr_ruta").val());
         datos.append("cra_status", cra_status);
@@ -166,5 +164,50 @@
 
             }
         })
+    }
+
+    function mostrarStatus(cra_status) {
+        datatable_productos = $('#datatable_cuenta').DataTable({
+            "ajax": {
+                "url": urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                "method": 'POST', //usamos el metodo POST
+                "data": {
+                    btnMostrarCuentasStatus: true,
+                    ctr_ruta: $("#ctr_ruta").val(),
+                    cra_status: cra_status
+
+                }, //enviamos opcion 4 para que haga un SELECT
+                "dataSrc": ""
+            },
+            "bDestroy": true,
+            "columns": [{
+                    "data": "ctr_ruta"
+                },
+                {
+                    "data": "ctr_numero_cuenta"
+                },
+                {
+                    "data": "ctr_cliente"
+                },
+                {
+                    "data": "ctr_saldo_actual"
+                },
+                {
+                    "data": "cra_fecha_cobro"
+                },
+                {
+                    "data": "cra_fecha_reagenda"
+                },
+                {
+                    "data": "cra_orden"
+                },
+                {
+                    "data": "cra_buttons"
+                }
+                // {
+                //     "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'>edit</i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='material-icons'>delete</i></button></div></div>"
+                // }
+            ]
+        });
     }
 </script>

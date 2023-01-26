@@ -268,9 +268,13 @@ class CobranzaControlador
             'ctr_saldo_base' => $_POST['ctr_saldo_base']
         );
 
-
+        $cra_etiqueta = '';
         if (!isset($_POST['cra_estado'])) {
             $_POST['cra_estado'] = 'PENDIENTE';
+            $cra_etiqueta = '';
+        }else{
+            $_POST['cra_estado'] = 'INACTIVA';
+            $cra_etiqueta = 'LZR';
         }
         if ($_POST['cra_fecha_reagenda'] == "") {
             $_POST['cra_fecha_reagenda'] = '0000-00-00';
@@ -287,7 +291,8 @@ class CobranzaControlador
                 'cra_contrato' =>  $_POST['ctr_id'],
                 'ctr_orden' =>  $_POST['ctr_orden'],
                 'ctr_reagendado' =>  $_POST['cra_fecha_reagenda'],
-                'cra_estado' => $_POST['cra_estado']
+                'cra_estado' => $_POST['cra_estado'],
+                'cra_etiqueta' => $cra_etiqueta
             )
         );
 
@@ -363,7 +368,8 @@ class CobranzaControlador
             'cra_fecha_cobro' => $next_day,
             'cra_fecha_reagenda' =>  $cta['ctr_reagendado'] == "" ? '0000-00-00' : $cta['ctr_reagendado'],
             'cra_orden' => $cta['ctr_orden'],
-            'cra_estado' => $cta['cra_estado'] == "" ? "PENDIENTE" : $cta['cra_estado']
+            'cra_estado' => $cta['cra_estado'] == "" ? "PENDIENTE" : $cta['cra_estado'],
+            'cra_etiqueta' => isset($cta['cra_etiqueta']) ? $cta['cra_etiqueta'] : ''
         );
 
 

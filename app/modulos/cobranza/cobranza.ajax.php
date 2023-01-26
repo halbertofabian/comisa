@@ -147,14 +147,28 @@ class CobranzaAjax
     public function ajaxMostrarCuentasStatus()
     {
         $respuesta = CobranzaModelo::mdlMostrarCarteleraContratos($_POST['cra_status'], $_POST['ctr_ruta']);
-        echo json_encode($respuesta, true);
+        $array_cuentas = array();
+        foreach ($respuesta as $cta) {
+            array_push($array_cuentas, array(
+                'ctr_ruta' => $cta['ctr_ruta'],
+                'ctr_numero_cuenta' => $cta['ctr_numero_cuenta'],
+                'ctr_cliente' => $cta['ctr_cliente'],
+                'ctr_saldo_actual' => $cta['ctr_saldo_actual'],
+                'cra_fecha_cobro' => $cta['cra_fecha_cobro'],
+                'cra_fecha_reagenda' => $cta['cra_fecha_reagenda'],
+                'cra_orden' => $cta['cra_orden'],
+                'cra_buttons' => '<button class="btn btn-primary">Agregar a cobr</button>',
+            ));
+            # code...
+        }
+        print json_encode($array_cuentas, JSON_UNESCAPED_UNICODE);
+        // echo json_encode($respuesta, true);
     }
     public function ajaxAsignarCuentaBanco()
     {
         // $respuesta = CobranzaControlador::ctrBuscarCobro();
         $respuesta = CobranzaModelo::mdlAgregarCuentaBanco($_POST);
         echo json_encode($respuesta, true);
-        
     }
 } //Aqui termina la clase
 

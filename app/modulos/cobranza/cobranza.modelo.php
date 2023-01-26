@@ -421,7 +421,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato,cra_fecha_cobro,cra_fecha_reagenda,cra_estado,cra_orden) VALUES(?,?,?,?,?) ";
+            $sql = "INSERT INTO tbl_cartelera_cra (cra_contrato,cra_fecha_cobro,cra_fecha_reagenda,cra_estado,cra_orden,cra_etiqueta) VALUES(?,?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cra['cra_contrato']);
@@ -429,6 +429,7 @@ class CobranzaModelo
             $pps->bindValue(3, $cra['cra_fecha_reagenda']);
             $pps->bindValue(4, $cra['cra_estado']);
             $pps->bindValue(5, $cra['cra_orden']);
+            $pps->bindValue(6, $cra['cra_etiqueta']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -467,14 +468,15 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_cobro = ?,cra_fecha_reagenda = ?,cra_estado = ?,cra_orden = ? WHERE cra_id = ? ";
+            $sql = "UPDATE tbl_cartelera_cra SET cra_fecha_cobro = ?,cra_fecha_reagenda = ?,cra_estado = ?,cra_orden = ?, cra_etiqueta = ? WHERE cra_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $cra['cra_fecha_cobro']);
             $pps->bindValue(2, $cra['cra_fecha_reagenda']);
             $pps->bindValue(3, $cra['cra_estado']);
             $pps->bindValue(4, $cra['cra_orden']);
-            $pps->bindValue(5, $cra_id);
+            $pps->bindValue(5, $cra['cra_etiqueta']);
+            $pps->bindValue(6, $cra_id);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

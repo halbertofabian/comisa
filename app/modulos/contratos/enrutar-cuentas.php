@@ -176,7 +176,13 @@
                 // startLoadButton()
             },
             success: function(res) {
-                // console.log(res)
+                console.log(res)
+
+                if(res.cra.cra_estado == 'INACTIVA' || res.cra.cra_estado == 'POR LOCALIZAR'  ){
+                    document.getElementById("cra_estado").checked = true;
+                }else{
+                    document.getElementById("cra_estado").checked = false;
+                }
 
                 if (res.ctr) {
                     $("#ctr_cliente").val(res.ctr.ctr_cliente)
