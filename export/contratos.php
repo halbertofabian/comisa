@@ -31,6 +31,7 @@ foreach ($contratos_set as $key => $ctr) {
     $ctls_propia = "";
     $ctls_rentada = "";
     $ctls_prestada = "";
+    
 
     if ($ctr['clts_tipo_vivienda'] == "PROPIA") {
         $ctls_propia = "PROPIA";
@@ -100,6 +101,7 @@ foreach ($contratos_set as $key => $ctr) {
         'ctr_pago_adicional' => $ctr['ctr_pago_adicional'],
         'ctr_saldo' => $ctr['ctr_saldo'],
         'ctr_elaboro' => $ctr['ctr_elaboro'],
+        'ctr_status_c' => $ctr['ctr_status_cuenta'],
         'ctr_nota' => $ctr['ctr_nota'],
         // 'ctr_fotos' => $ctr['ctr_fotos'],
         'ctr_nombre_ref_1' => $ctr['ctr_nombre_ref_1'],
@@ -326,7 +328,7 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['ctr_pago_adicional']) . ",";
     echo dnum($ctr['usr_nombre']) . ",";
     echo dnum($ctr['usr_nombre']) . ",";
-    echo "VIGENTE,";
+    echo dnum($ctr['ctr_status_c']).",";
     echo dnum($ctr['ctr_saldo']) . ",";
     echo  "-,";
     echo  "-,";
