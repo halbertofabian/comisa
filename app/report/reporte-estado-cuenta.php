@@ -68,7 +68,7 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
     //
     $infoContrato = CobranzaModelo::mdlConsultarEstadoCuenta($_GET['ec_ruta'], $_GET['ec_cuenta']);
     $infoCra = CobranzaModelo::mdlConsultarEstadoCuenta2($infoContrato['ctr_id']);
-    $infoAbonos = CobranzaModelo::mdlConsultarEstadoCuenta3($infoCra['cra_id']);
+    $infoAbonos = CobranzaModelo::mdlConsultarEstadoCuenta3($infoCra['cra_id'],'AUTORIZADO');
 
 
 
@@ -236,7 +236,6 @@ $header = <<<EOF
                 <tr style="background-color: #24008D;color:#fff">
                     <th>FECHA</th>
                     <th>PAGO</th>
-                    <th>SALDO</th>
                 </tr>
                 $tps_body
            </table>

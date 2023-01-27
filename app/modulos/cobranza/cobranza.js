@@ -295,7 +295,8 @@ function mostrarEstado() {
                                     <tr>
                                         <td>${element.abs_fecha_cobro}</td>
                                         <td>${$.number(element.abs_monto)}</td>
-                                        <td></td>
+                                        <td>${element.abs_estado_abono}</td>
+                                        <td>${element.abs_motivo_cancelacion}</td>
                                     </tr>
                             `;
                                 });

@@ -1039,16 +1039,27 @@ class CobranzaModelo
             $con = null;
         }
     }
-    public static function mdlConsultarEstadoCuenta3($cra_id)
+    public static function mdlConsultarEstadoCuenta3($cra_id,$abs_estado_abono="")
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ?";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->bindValue(1, $cra_id);
-            $pps->execute();
-            return $pps->fetchAll();
+            if($abs_estado_abono==""){
+                $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ?";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $cra_id);
+                $pps->execute();
+                return $pps->fetchAll();
+            }else{
+                $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ? AND abs_estado_abono = ?";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $cra_id);
+                $pps->bindValue(2, $abs_estado_abono);
+                $pps->execute();
+                return $pps->fetchAll();
+            }
+           
         } catch (PDOException $th) {
             //throw $th;
             return false;

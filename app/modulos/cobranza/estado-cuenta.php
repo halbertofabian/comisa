@@ -52,7 +52,9 @@
                                     <tr>
                                         <th>FECHA</th>
                                         <th>PAGO</th>
-                                        <th>SALDO</th>
+                                        <!-- <th>SALDO</th> -->
+                                        <th>STATUS</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_estado_cuenta">
