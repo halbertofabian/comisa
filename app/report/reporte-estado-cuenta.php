@@ -210,18 +210,25 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
 EOF;
 $pdf->writeHTMLCell(0, 0, '', '', $encabezado, 0, 1, 0, true, '', true);
 
+$saldo = dnum($infoContrato['ctr_saldo_actual']);
+// var saldo = Number($("#ec_saldo_actual").val());
 // Print text using writeHTMLCell()
 foreach ($infoAbonos as $abonos) {
+
+    $aux_saldo = number_format($saldo,2);
     # code...
     $tps_body .= <<<EOF
 
 <tr>
     <td>$abonos[abs_fecha_cobro]</td>
     <td>$abonos[abs_monto]</td>
-    <td></td>
+    <td>$aux_saldo</td>
 </tr>
 
 EOF;
+
+$saldo = dnum($saldo) + dnum($abonos['abs_monto']);
+// saldo = Number(saldo) + Number(element.abs_monto);
 
     // $pdf->writeHTMLCell(0, 0, '', '', $tps_body, 0, 1, 0, true, '', true);
 }
@@ -236,6 +243,7 @@ $header = <<<EOF
                 <tr style="background-color: #24008D;color:#fff">
                     <th>FECHA</th>
                     <th>PAGO</th>
+                    <th>SALDO</th>
                 </tr>
                 $tps_body
            </table>
