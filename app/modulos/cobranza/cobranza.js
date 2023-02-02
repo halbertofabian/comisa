@@ -291,22 +291,9 @@ function mostrarEstado() {
                                 var tbody_estado_cuenta = "";
 
                                 var saldo = Number($("#ec_saldo_actual").val());
-
                                 res.forEach((element, index) => {
-                                    if (index === 0) {
-                                        tbody_estado_cuenta +=
-                                            `
-                                            <tr>
-                                                <td>${element.abs_fecha_cobro}</td>
-                                                <td>${$.number(element.abs_monto, 2)}</td>
-                                                <td>${$.number(saldo,2)}</td>
-                                                <td>${element.abs_estado_abono}</td>
-                                                <td>${element.abs_motivo_cancelacion}</td>
-                                            </tr>
-                                            `;
-                                    } else {
-                                        saldo += Number(element.abs_monto);
-                                        tbody_estado_cuenta +=
+
+                                    tbody_estado_cuenta +=
                                             `
                                             <tr>
                                                 <td>${element.abs_fecha_cobro}</td>
@@ -316,8 +303,10 @@ function mostrarEstado() {
                                                 <td>${element.abs_motivo_cancelacion}</td>
                                             </tr>
                                             `;
-                                    }
+                                saldo = Number(saldo) + Number(element.abs_monto);
+
                                 });
+
 
 
 
