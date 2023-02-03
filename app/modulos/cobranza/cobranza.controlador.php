@@ -1406,7 +1406,7 @@ class CobranzaControlador
             'ctr_id' => $datos['ctr_id'],
         ));
     }
-    public static function ctrRedndimiento($ruta)
+    public static function ctrRedndimiento($ruta, $usr_id)
     {
         $total_cuentas = CobranzaModelo::mdlTotalCuentasRedimiento($ruta);
 
@@ -1417,6 +1417,7 @@ class CobranzaControlador
         $cuentas_mensuales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "MENSUALES");
 
         $ficha = CobranzaModelo::mdlFichaActual();
+        $fecha_inicio = $ficha['fcbz_fecha_inicio'];
         $fecha_fin = $ficha['fcbz_fecha_termino'];
 
         $total_cuentas_catorcenales = array();
@@ -1447,13 +1448,25 @@ class CobranzaControlador
 
         $total_cuentas_cobro = $total_semanales + $total_catorcenales + $total_quincenales + $total_mensuales;
 
+        $total_cuentas_cobradas = CobranzaModelo::mdlCuentasCobradasRendimiento($usr_id, $fecha_inicio, $fecha_fin)['total_cuentas'];
+        $total_cuentas_acumulado = CobranzaModelo::mdlCuentasCobradasRendimiento($usr_id, $fecha_inicio, $fecha_fin)['total_cobrado'];
+
+        $porcentaje_cobrado = ($total_cuentas_cobradas / $total_cuentas_cobro) * 100;
+
+        $total_ganado = $total_cuentas_acumulado * 10 / 100;
+
         $totales = array(
             'total_cuentas' => $total_cuentas['total'],
             'total_semanales' => $total_semanales,
             'total_catorcenales' => $total_catorcenales,
             'total_quincenales' => $total_quincenales,
             'total_mensuales' => $total_mensuales,
-            'total_cuentas_cobro' => $total_cuentas_cobro
+            'total_cuentas_cobro' => $total_cuentas_cobro,
+            'total_cuentas_cobradas' => $total_cuentas_cobradas,
+            'porcentaje_cobrado' => $porcentaje_cobrado,
+            'total_cuentas_acumulado' => $total_cuentas_acumulado != null ? $total_cuentas_acumulado : 0,
+            'total_ganado' => $total_ganado,
+
         );
 
         return $totales;

@@ -501,10 +501,11 @@ $app->get('/consultar_contratos_new/{ruta}', function (Request $request, Respons
     return json_encode($getAllCtra, true);
 });
 
-$app->get('/consultar_rendimiento/{ruta}', function (Request $request, Response $response, array $args) {
+$app->get('/consultar_rendimiento/{ruta}/{usr_id}', function (Request $request, Response $response, array $args) {
     $ruta =  $args['ruta'];
+    $usr_id =  $args['usr_id'];
 
-    $getRendimiento = CobranzaControlador::ctrRedndimiento($ruta);
+    $getRendimiento = CobranzaControlador::ctrRedndimiento($ruta, $usr_id);
 
     return json_encode($getRendimiento, true);
 });

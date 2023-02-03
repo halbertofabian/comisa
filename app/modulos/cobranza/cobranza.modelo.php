@@ -1517,4 +1517,24 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public  static function mdlCuentasCobradasRendimiento($usr_id, $fecha_inicio, $fecha_fin)
+    {
+        try {
+            //code...
+            $sql = "SELECT COUNT(*) AS total_cuentas, SUM(abs_monto) AS total_cobrado FROM tbl_abonos_cobranza_abs WHERE abs_estado_abono = 'AUTORIZADO' AND abs_id_cobrador = ? AND DATE(abs_fecha_cobro) BETWEEN ? AND ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->bindValue(2, $fecha_inicio);
+            $pps->bindValue(3, $fecha_fin);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
