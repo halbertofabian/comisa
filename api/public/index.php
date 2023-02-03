@@ -501,6 +501,14 @@ $app->get('/consultar_contratos_new/{ruta}', function (Request $request, Respons
     return json_encode($getAllCtra, true);
 });
 
+$app->get('/consultar_rendimiento/{ruta}', function (Request $request, Response $response, array $args) {
+    $ruta =  $args['ruta'];
+
+    $getRendimiento = CobranzaControlador::ctrRedndimiento($ruta);
+
+    return json_encode($getRendimiento, true);
+});
+
 $app->get('/conexion_api', function (Request $request, Response $response, array $args) {
     // $ruta =  $args['ruta'];
 

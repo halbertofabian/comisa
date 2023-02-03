@@ -1444,4 +1444,77 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public  static function mdlTotalCuentasRedimiento($ruta)
+    {
+        try {
+            //code...
+            $sql = "SELECT COUNT(ctr_id) AS total FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND (ctr_status_cuenta = 'VIGENTE' OR ctr_status_cuenta = 'NUEVA');";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ruta);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlTotalSemanalesRedimiento($ruta)
+    {
+        try {
+            //code...
+            $sql = "SELECT COUNT(ctr_id) AS total FROM tbl_contrato_crt_1 WHERE ctr_ruta = ? AND ctr_forma_pago = 'SEMANALES' AND (ctr_status_cuenta = 'VIGENTE' OR ctr_status_cuenta = 'NUEVA');";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ruta);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlTotalFormaPagoRedimiento($ruta, $forma_pago)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr.ctr_id, cra.cra_fecha_cobro, cra.cra_fecha_reagenda  FROM tbl_contrato_crt_1 AS ctr JOIN tbl_cartelera_cra AS cra ON cra.cra_contrato = ctr.ctr_id WHERE ctr_ruta = ? AND ctr_forma_pago = ? AND (ctr_status_cuenta = 'VIGENTE' OR ctr_status_cuenta = 'NUEVA');";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ruta);
+            $pps->bindValue(2, $forma_pago);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlFichaActual()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_ficha_fcbz ORDER BY fcbz_id DESC LIMIT 1;";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

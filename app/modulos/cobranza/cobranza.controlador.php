@@ -272,7 +272,7 @@ class CobranzaControlador
         if (!isset($_POST['cra_estado'])) {
             $_POST['cra_estado'] = 'PENDIENTE';
             $cra_etiqueta = '';
-        }else{
+        } else {
             $_POST['cra_estado'] = 'INACTIVA';
             $cra_etiqueta = 'LZR';
         }
@@ -1405,5 +1405,57 @@ class CobranzaControlador
             'clts_coordenadas' => $datos['clts_coordenadas'],
             'ctr_id' => $datos['ctr_id'],
         ));
+    }
+    public static function ctrRedndimiento($ruta)
+    {
+        $total_cuentas = CobranzaModelo::mdlTotalCuentasRedimiento($ruta);
+
+        $total_cuentas_semanales = CobranzaModelo::mdlTotalSemanalesRedimiento($ruta);
+
+        $cuentas_catorcenales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "CATORCENALES");
+        $cuentas_quincenales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "QUINCENALES");
+        $cuentas_mensuales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "MENSUALES");
+
+        $ficha = CobranzaModelo::mdlFichaActual();
+        $fecha_fin = $ficha['fcbz_fecha_termino'];
+
+        $total_cuentas_catorcenales = array();
+        foreach ($cuentas_catorcenales as $catorcenales) {
+            if ($catorcenales['cra_fecha_cobro'] <= $fecha_fin || ($catorcenales['cra_fecha_reagenda'] <= $fecha_fin && $catorcenales['cra_fecha_reagenda'] != '0000-00-00')) {
+                array_push($total_cuentas_catorcenales, $catorcenales);
+            }
+        }
+
+        $total_cuentas_quincenales = array();
+        foreach ($cuentas_quincenales as $quincenales) {
+            if ($quincenales['cra_fecha_cobro'] <= $fecha_fin || ($quincenales['cra_fecha_reagenda'] <= $fecha_fin && $quincenales['cra_fecha_reagenda'] != '0000-00-00')) {
+                array_push($total_cuentas_quincenales, $quincenales);
+            }
+        }
+
+        $total_cuentas_mensuales = array();
+        foreach ($cuentas_mensuales as $mensuales) {
+            if ($mensuales['cra_fecha_cobro'] <= $fecha_fin || ($mensuales['cra_fecha_reagenda'] <= $fecha_fin && $mensuales['cra_fecha_reagenda'] != '0000-00-00')) {
+                array_push($total_cuentas_mensuales, $mensuales);
+            }
+        }
+
+        $total_semanales = $total_cuentas_semanales['total'];
+        $total_catorcenales = sizeof($total_cuentas_catorcenales);
+        $total_quincenales = sizeof($total_cuentas_quincenales);
+        $total_mensuales = sizeof($total_cuentas_mensuales);
+
+        $total_cuentas_cobro = $total_semanales + $total_catorcenales + $total_quincenales + $total_mensuales;
+
+        $totales = array(
+            'total_cuentas' => $total_cuentas['total'],
+            'total_semanales' => $total_semanales,
+            'total_catorcenales' => $total_catorcenales,
+            'total_quincenales' => $total_quincenales,
+            'total_mensuales' => $total_mensuales,
+            'total_cuentas_cobro' => $total_cuentas_cobro
+        );
+
+        return $totales;
     }
 }
