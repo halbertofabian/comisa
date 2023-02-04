@@ -195,6 +195,12 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrVerificarCancelacionAbono();
         echo json_encode($respuesta, true);
     }
+    public function ajaxHistorialFicha(){
+        $respuesta = CobranzaControlador::ctrHistorialFichas();
+        // echo json_encode($respuesta, true);
+        print json_encode($respuesta, JSON_UNESCAPED_UNICODE); //envio el array final el formato json a AJAX
+
+    }
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -277,4 +283,9 @@ if (isset($_POST['btnBuscarCodigo'])) {
 if (isset($_POST['btnVerificar'])) {
     $btnVerificarCodigo = new CobranzaAjax();
     $btnVerificarCodigo->ajaxVerificarCancelacion();
+}
+
+if(isset($_POST['btnMostrarHistorialTable'])){
+    $btnMostrarHistorialTable = new CobranzaAjax();
+    $btnMostrarHistorialTable->ajaxHistorialFicha();
 }

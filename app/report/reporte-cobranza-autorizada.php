@@ -1,5 +1,6 @@
 <?php
 
+
 ob_start();
 include_once '../../config.php';
 if (isset($_GET['abs_save'])) {
@@ -135,6 +136,10 @@ EOF;
     $total_efectivo = 0;
     $total_banco = 0;
     $tota_cuentas_cobradas = 0;
+
+    // function  saldoActual($cra_id,$cra_estado,$cra_fecha){
+    //     $saldos = CobranzaModelo::mdlConsultarEstadoCuenta3($cra_id,$cra_estado,);
+    // }
 
     foreach ($abonos as $key => $abs) {
 
