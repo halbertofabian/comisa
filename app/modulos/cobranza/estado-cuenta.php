@@ -50,11 +50,13 @@
                             <table class="table">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th>FOLIO</th>
                                         <th>FECHA</th>
                                         <th>PAGO</th>
                                         <th>SALDO</th>
                                         <th>STATUS</th>
                                         <th></th>
+                                        <th>CANCELAR</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_estado_cuenta">
@@ -175,6 +177,44 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="mdlCancelarAbono" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title titulo"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 abs_motivo_cancelacion">
+                        <div class="form-group">
+                            <label for="abs_motivo_cancelacion">Motivo de cancelación</label>
+                            <input type="hidden" id="abs_id" name="abs_id">
+                            <input type="hidden" id="abs_monto" name="abs_monto">
+                            <textarea class="form-control text-uppercase" name="abs_motivo_cancelacion" id="abs_motivo_cancelacion" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12 abs_codigo">
+                        <div class="form-group">
+                            <label for="abs_codigo">Codigo de cancelación</label>
+                            <input type="number" class="form-control" name="abs_codigo" id="abs_codigo" placeholder="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary btnSolicitar btn-load">Solicitar</button>
+                <button type="button" class="btn btn-primary btnVerificar">Verificar</button>
             </div>
         </div>
     </div>

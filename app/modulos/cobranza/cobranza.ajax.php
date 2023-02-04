@@ -30,8 +30,15 @@ require_once DOCUMENT_ROOT . 'app/modulos/cuentas/cuentas.controlador.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/sucursales/sucursales.modelo.php';
+
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
+
+require_once  DOCUMENT_ROOT . 'app/lib/phpMailer/Exception.php';
+require_once  DOCUMENT_ROOT . 'app/lib/phpMailer/PHPMailer.php';
+require_once  DOCUMENT_ROOT . 'app/lib/phpMailer/SMTP.php';
 class CobranzaAjax
 {
     public function ajaxImportarSaldos()
@@ -170,6 +177,24 @@ class CobranzaAjax
         $respuesta = CobranzaModelo::mdlAgregarCuentaBanco($_POST);
         echo json_encode($respuesta, true);
     }
+    public function ajaxSolicitarCancelacion()
+    {
+        // $respuesta = CobranzaControlador::ctrBuscarCobro();
+        $respuesta = CobranzaControlador::ctrSolicitarCancelacionAbono();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxBuscarCodigoCancelacion()
+    {
+        // $respuesta = CobranzaControlador::ctrBuscarCobro();
+        $respuesta = CobranzaModelo::mdlObtenerAbonoByID($_POST['abs_id']);
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxVerificarCancelacion()
+    {
+        // $respuesta = CobranzaControlador::ctrBuscarCobro();
+        $respuesta = CobranzaControlador::ctrVerificarCancelacionAbono();
+        echo json_encode($respuesta, true);
+    }
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -240,4 +265,16 @@ if (isset($_POST['btnMostrarCuentasStatus'])) {
 if (isset($_POST['btnAsignarCuentaBanco'])) {
     $btnAsignarCuentaBanco = new CobranzaAjax();
     $btnAsignarCuentaBanco->ajaxAsignarCuentaBanco();
+}
+if (isset($_POST['btnSolicitar'])) {
+    $btnSolicitar = new CobranzaAjax();
+    $btnSolicitar->ajaxSolicitarCancelacion();
+}
+if (isset($_POST['btnBuscarCodigo'])) {
+    $btnBuscarCodigo = new CobranzaAjax();
+    $btnBuscarCodigo->ajaxBuscarCodigoCancelacion();
+}
+if (isset($_POST['btnVerificar'])) {
+    $btnVerificarCodigo = new CobranzaAjax();
+    $btnVerificarCodigo->ajaxVerificarCancelacion();
 }

@@ -10,6 +10,10 @@
  *  Instagram: http://instagram.com/softmormx
  *  Twitter: https://twitter.com/softmormx
  */
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class CobranzaControlador
 {
     public function ctrAgregarCobranza()
@@ -1470,5 +1474,132 @@ class CobranzaControlador
         );
 
         return $totales;
+    }
+
+    public static function ctrSolicitarCancelacionAbono()
+    {
+
+        $abs_id = $_POST['abs_id'];
+        $abs_motivo_cancelacion = strtoupper($_POST['abs_motivo_cancelacion']);
+        $abs_codigo = rand(10000, 99999);
+
+        $abs = CobranzaModelo::mdlObtenerAbonoByID($abs_id);
+        $abs_monto = number_format($abs['abs_monto'], 2);
+        // $correos = ['lf_alberto@outlook.com','alberto@softmor.com'];
+
+        $correos = explode(",", SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion']);
+
+        $res = CobranzaModelo::mdlAgregarMotivoCancelacionAbs($abs_id, $abs_motivo_cancelacion, $abs_codigo);
+        if ($res) {
+            try {
+
+
+                $mail = new PHPMailer(true);
+                $mail->CharSet = "UTF-8";
+                $mail->SMTPDebug = 0;                      // Enable verbose debug output
+                $mail->isSMTP();                                            // Send using SMTP
+                $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = 'soporte@softmorpos.com';                     // SMTP username
+                $mail->Password   = 'Halbert@97';                               // SMTP password
+                $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                $mail->Port = 587;                                    // TCP port to connect to
+
+                //Recipients
+                $mail->setFrom('soporte@softmorpos.com', "COMISA");
+                foreach ($correos as $correo) {
+                    $mail->addAddress($correo);
+                }
+                // Optional name
+
+                // Content
+                $mail->isHTML(true);                                  // Set email format to HTML
+                $mail->Subject = "SOLICITUD DE CANCELACIÓN";
+                $mail->Body  = "
+                <table>
+                    <tr>
+                        <td><strong>Monto:</strong><td>
+                        <td>$$abs_monto<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Folio:</strong><td>
+                        <td>$abs[abs_folio]<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Fecha:</strong><td>
+                        <td>" . fechaCastellano($abs['abs_fecha_cobro']) . "<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Motivo de cancelación:</strong><td>
+                        <td>$abs_motivo_cancelacion<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Código:</strong><td>
+                        <td><strong>$abs_codigo</strong><td>
+                    <tr>
+                </table>
+                ";
+
+                if ($mail->send()) {
+                    return array(
+                        'status' => true,
+                        'mensaje' => 'La solicitud de cancelación se envio correctamente.'
+                    );
+                }
+            } catch (PHPMailer $th) {
+                throw $th;
+                return false;
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al enviar la solicitud de cancelación.'
+            );
+        }
+    }
+    public static function ctrVerificarCancelacionAbono()
+    {
+
+        $abs_id = $_POST['abs_id'];
+        $abs_codigo = $_POST['abs_codigo'];
+
+        $abs = CobranzaModelo::mdlObtenerAbonoByID($abs_id);
+
+        if ($abs_codigo == $abs['abs_codigo']) {
+            $datos1 = array(
+                'abs_motivo_cancelacion' => $abs['abs_motivo_cancelacion'],
+                'abs_id' => $abs['abs_id'],
+            );
+            $cambiarEstado = CobranzaModelo::mdlCancelarPago($datos1);
+            if ($cambiarEstado) {
+                $res1 = CobranzaModelo::mdlUltimaFechaCobro($abs['abs_id_contrato']);
+                if ($res1) {
+                    $id_contrato = CobranzaModelo::mdlObtenerContratoCobrado($abs['abs_id_contrato']);
+
+                    $datos2 = array(
+                        'abs_monto' => $abs['abs_monto'],
+                        'ctr_ultima_fecha_abono' => $res1['abs_fecha_cobro'],
+                        'abs_id_contrato' => $id_contrato['ctr_id'],
+                    );
+                    $res2 = CobranzaModelo::mdlActualizarContrato($datos2);
+                    if ($res2) {
+                        return array(
+                            'status' => true,
+                            'mensaje' => 'El abono se cancelo correctamente.'
+                        );
+                    } else {
+                        return array(
+                            'status' => false,
+                            'mensaje' => 'Hubo un error al cancelar el abono.'
+                        );
+                    }
+                }
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'El código de cancelación no es correcto.'
+            );
+        }
     }
 }

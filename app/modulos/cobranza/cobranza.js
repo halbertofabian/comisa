@@ -293,17 +293,31 @@ function mostrarEstado() {
                                 var saldo = Number($("#ec_saldo_actual").val());
                                 res.forEach((element, index) => {
 
+                                    var saldo_aux = '-';
+                                    var boton = "-";
+                                    if (element.abs_estado_abono == 'AUTORIZADO') {
+                                        saldo_aux = $.number(saldo, 2);
+                                        boton = `<button class="btn btn-outline-danger btnCancelarAbono" abs_id="${element.abs_id}" abs_monto="${abs_monto}" data-toggle="tooltip" data-placement="top" title="Cancelar"><i class="fa fa-times"></i></button>`;
+                                    }
+
                                     tbody_estado_cuenta +=
-                                            `
+                                        `
                                             <tr>
+                                                <td>${element.abs_folio}</td>
                                                 <td>${element.abs_fecha_cobro}</td>
                                                 <td>${$.number(element.abs_monto, 2)}</td>
-                                                <td>${$.number(saldo, 2)}</td>
+                                                <td>${saldo_aux}</td>
                                                 <td>${element.abs_estado_abono}</td>
                                                 <td>${element.abs_motivo_cancelacion}</td>
+                                                <td>
+                                                    ${boton}
+                                                </td>
                                             </tr>
                                             `;
-                                saldo = Number(saldo) + Number(element.abs_monto);
+                                    if (element.abs_estado_abono == 'AUTORIZADO') {
+                                        saldo = Number(saldo) + Number(element.abs_monto);
+                                    }
+
 
                                 });
 
@@ -447,4 +461,120 @@ $(document).on("click", ".btnEliminarGasto", function () {
                 })
             }
         });
+});
+
+$(".abs_codigo").hide();
+$(".btnVerificar").hide();
+$(document).on("click", ".btnCancelarAbono", function () {
+    var abs_id = $(this).attr("abs_id");
+    var datos = new FormData();
+    datos.append('abs_id', abs_id);
+    datos.append('btnBuscarCodigo', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            if (res.abs_codigo != "") {
+                $(".titulo").text("Verificar");
+                $(".abs_codigo").show();
+                $(".btnVerificar").show();
+                $(".btnSolicitar").hide();
+                $(".abs_motivo_cancelacion").hide();
+
+                $("#abs_id").val(res.abs_id);
+                $("#mdlCancelarAbono").modal("show");
+            } else {
+                $("#abs_id").val(abs_id);
+                $(".titulo").text("Cancelar abono");
+
+                $(".abs_codigo").hide();
+                $(".btnVerificar").hide();
+                $(".btnSolicitar").show();
+                $(".abs_motivo_cancelacion").show();
+                $("#mdlCancelarAbono").modal("show");
+            }
+        }
+    });
+
+})
+$(document).on("click", ".btnSolicitar", function () {
+    var abs_id = $("#abs_id").val();
+    var abs_motivo_cancelacion = $("#abs_motivo_cancelacion").val();
+
+    if (abs_motivo_cancelacion == "") {
+        $("#abs_motivo_cancelacion").focus();
+        return toastr.error("El motivo de cancelación es obligatorio", '¡ERROR!');
+    }
+    var datos = new FormData();
+    datos.append('abs_id', abs_id);
+    datos.append('abs_motivo_cancelacion', abs_motivo_cancelacion);
+    datos.append('btnSolicitar', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            startLoadButton()
+        },
+        success: function (res) {
+            stopLoadButton();
+            if (res.status) {
+                toastr.success(res.mensaje, '¡Muy bien!');
+                $(".titulo").text("Verificar");
+                $(".abs_codigo").show();
+                $(".btnVerificar").show();
+                $(".btnSolicitar").hide();
+                $(".abs_motivo_cancelacion").hide();
+
+            }
+        }
+    });
+});
+
+$(document).on("click", ".btnVerificar", function () {
+    var abs_id = $("#abs_id").val();
+    var abs_codigo = $("#abs_codigo").val();
+    if (abs_codigo == "") {
+        $("#abs_codigo").focus();
+        return toastr.error("El código es obligatorio", '¡ERROR!');
+    }
+    var datos = new FormData();
+    datos.append('abs_id', abs_id);
+    datos.append('abs_codigo', abs_codigo);
+    datos.append('btnVerificar', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            if (res.status) {
+                toastr.success(res.mensaje, '¡Muy bien!');
+                $("#abs_id").val("");
+                $("#abs_codigo").val("");
+                $("#abs_motivo_cancelacion").val("");
+                $(".titulo").text("Cancelar abono");
+
+                $(".abs_codigo").hide();
+                $(".btnVerificar").hide();
+                $(".btnSolicitar").show();
+                $(".abs_motivo_cancelacion").show();
+                $("#mdlCancelarAbono").modal("hide");
+
+                mostrarEstado();
+
+            } else {
+                toastr.error(res.mensaje, '¡ERROR!');
+            }
+        }
+    });
 });

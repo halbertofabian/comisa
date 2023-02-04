@@ -1039,18 +1039,18 @@ class CobranzaModelo
             $con = null;
         }
     }
-    public static function mdlConsultarEstadoCuenta3($cra_id,$abs_estado_abono="")
+    public static function mdlConsultarEstadoCuenta3($cra_id, $abs_estado_abono = "")
     {
         try {
             //code...
-            if($abs_estado_abono==""){
+            if ($abs_estado_abono == "") {
                 $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ? ORDER BY abs_fecha_cobro DESC";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $cra_id);
                 $pps->execute();
                 return $pps->fetchAll();
-            }else{
+            } else {
                 $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ? AND abs_estado_abono = ? ORDER BY abs_fecha_cobro DESC";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
@@ -1059,7 +1059,6 @@ class CobranzaModelo
                 $pps->execute();
                 return $pps->fetchAll();
             }
-           
         } catch (PDOException $th) {
             //throw $th;
             return false;
@@ -1529,6 +1528,89 @@ class CobranzaModelo
             $pps->bindValue(3, $fecha_fin);
             $pps->execute();
             return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlAgregarMotivoCancelacionAbs($abs_id, $abs_motivo_cancelacion, $abs_codigo)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_motivo_cancelacion = ?, abs_codigo = ? WHERE abs_id  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_motivo_cancelacion);
+            $pps->bindValue(2, $abs_codigo);
+            $pps->bindValue(3, $abs_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlObtenerAbonoByID($abs_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlActualizarContrato($abs)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ctr_saldo_actual + ?, ctr_total_pagado = ctr_total_pagado - ?, ctr_ultima_fecha_abono = ?, ctr_status_cuenta = 'VIGENTE' WHERE ctr_id  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs['abs_monto']);
+            $pps->bindValue(2, $abs['abs_monto']);
+            $pps->bindValue(3, $abs['ctr_ultima_fecha_abono']);
+            $pps->bindValue(4, $abs['abs_id_contrato']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlUltimaFechaCobro($abs_id_contrato)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_estado_abono = 'AUTORIZADO' AND abs_id_contrato = ? ORDER BY abs_id DESC LIMIT 1;";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id_contrato);
+            $pps->execute();
+            return $pps->fetch();
+            // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
             return false;
