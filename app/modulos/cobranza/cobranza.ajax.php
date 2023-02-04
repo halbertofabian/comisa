@@ -170,6 +170,15 @@ class CobranzaAjax
         $respuesta = CobranzaModelo::mdlAgregarCuentaBanco($_POST);
         echo json_encode($respuesta, true);
     }
+
+
+    public function ajaxHistorialFicha(){
+        $respuesta = CobranzaControlador::ctrHistorialFichas();
+        // echo json_encode($respuesta, true);
+        print json_encode($respuesta, JSON_UNESCAPED_UNICODE); //envio el array final el formato json a AJAX
+
+    }
+
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -240,4 +249,11 @@ if (isset($_POST['btnMostrarCuentasStatus'])) {
 if (isset($_POST['btnAsignarCuentaBanco'])) {
     $btnAsignarCuentaBanco = new CobranzaAjax();
     $btnAsignarCuentaBanco->ajaxAsignarCuentaBanco();
+}
+
+
+
+if(isset($_POST['btnMostrarHistorialTable'])){
+    $btnMostrarHistorialTable = new CobranzaAjax();
+    $btnMostrarHistorialTable->ajaxHistorialFicha();
 }

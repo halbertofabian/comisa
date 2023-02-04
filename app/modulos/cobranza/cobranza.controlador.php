@@ -1471,4 +1471,27 @@ class CobranzaControlador
 
         return $totales;
     }
+
+
+
+
+
+
+
+
+
+
+    public static function ctrHistorialFichas()
+    {
+        $fichas = CobranzaModelo::mdlMostrarFichas();
+        $fichas_array = array();
+        foreach ($fichas as $key => $fch) {
+            array_push($fichas_array, array(
+                'gds_id' => $fch['gds_id'],
+                'gds_nombre' => $fch['gds_nombre'],
+                'gds_buttom' => '<a href="' . HTTP_HOST . 'app/report/reporte-cobranza-autorizada.php?abs_save=' . $fch['gds_id'] . '" target="_blank" class="btn btn-primary">Ver reporte</a>'
+            ));
+        }
+        return $fichas_array;
+    }
 }
