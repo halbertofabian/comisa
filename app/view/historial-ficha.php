@@ -36,7 +36,7 @@ if (isset($rutas) && $rutas['1'] != "") :
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    
+
 
                     <?php
                     $total_pago = 0;
@@ -126,37 +126,24 @@ if (isset($rutas) && $rutas['1'] != "") :
 <?php else : ?>
     <br>
     <div class="container-fluid">
-        <table class="table table-striped table-bordered table-hover tablas">
+        <table id="datatable_Historial" class="table table-striped table-bordered table-hover tablas ">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Ficha</th>
-                    <th>Acción</th>
+                    <th width="10%">#</th>
+                    <th width="80%">Ficha</th>
+                    <th width="10%">Acción</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php
-                $fichas = CobranzaModelo::mdlMostrarFichas();
-                // preArray($fichas);
-                foreach ($fichas as  $fch) :
-                ?>
-                    <tr>
-
-                        <td><?= $fch['gds_id'] ?></td>
-                        <td><?= $fch['gds_nombre'] ?></td>
-                        <td>
-                            <a href="<?= HTTP_HOST . 'app/report/reporte-cobranza-autorizada.php?abs_save=' . $fch['gds_id']  ?>" target="_blank" class="btn btn-primary">Ver reporte</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-
-            </tbody>
         </table>
     </div>
 
 <?php endif; ?>
 
 <script>
+    $(document).ready(function() {
+        mostrarHistorialTable();
+    })
+
     $('#descarga-tbl').DataTable({
         dom: 'Bfrtip',
         buttons: [
@@ -214,4 +201,34 @@ if (isset($rutas) && $rutas['1'] != "") :
 
         },
     });
+
+    function mostrarHistorialTable() {
+
+        // datos.append("btnMostrarCategoriaGastos", true);
+
+        // opcion = 4;
+
+        datatable_Historial = $('#datatable_Historial').DataTable({
+            "ajax": {
+                "url": urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                "method": 'POST', //usamos el metodo POST
+                "data": {
+                    btnMostrarHistorialTable: true
+                }, //enviamos opcion 4 para que haga un SELECT
+                "dataSrc": ""
+            },
+            "ordering": false,
+            "bDestroy": true,
+            "columns": [{
+                    "data": "gds_id"
+                },
+                {
+                    "data": "gds_nombre"
+                },
+                {
+                    "data": "gds_buttom"
+                },
+            ]
+        });
+    }
 </script>
