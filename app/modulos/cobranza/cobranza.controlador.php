@@ -879,22 +879,32 @@ class CobranzaControlador
 
     public static function ctrCancelarPagos()
     {
-        $cancelar  = CobranzaModelo::mdlCancelarPago(array(
-            'abs_motivo_cancelacion' => $_POST['abs_motivo_cancelacion'],
-            'abs_id' => $_POST['abs_id'],
-        ));
 
-        if ($cancelar) {
-            return array(
-                'status' => true,
-                'mensaje' => 'Pago cancelado',
-                // 'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
-            );
-        } else {
+        $abs = CobranzaModelo::mdlObtenerAbonoByID($_POST['abs_id']);
+
+        if ($_POST['abs_codigo'] == $abs['abs_codigo']) {
+            $cancelar  = CobranzaModelo::mdlCancelarPago(array(
+                'abs_motivo_cancelacion' => $abs['abs_motivo_cancelacion'],
+                'abs_id' => $_POST['abs_id'],
+            ));
+
+            if ($cancelar) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Pago cancelado',
+                    // 'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo cancelar el pago, intente de nuevo',
+                    // 'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
+                );
+            }
+        }else {
             return array(
                 'status' => false,
-                'mensaje' => 'No se pudo cancelar el pago, intente de nuevo',
-                // 'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
+                'mensaje' => 'El código de cancelación no es correcto.'
             );
         }
     }

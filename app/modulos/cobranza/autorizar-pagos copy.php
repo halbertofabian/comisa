@@ -141,44 +141,6 @@
         </div>
     </div>
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="mdlCancelarAbonos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title titulo2"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12 abs_motivo">
-                        <div class="form-group">
-                            <label for="abs_motivo_cancelacion">Motivo de cancelación</label>
-                            <input type="hidden" id="abs_id2" name="abs_id">
-                            <!-- <input type="hidden" id="abs_monto" name="abs_monto"> -->
-                            <textarea class="form-control text-uppercase" name="abs_motivo_cancelacion" id="abs_motivo_cancelacion2" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-12 codigo">
-                        <div class="form-group">
-                            <label for="abs_codigo">Codigo de cancelación</label>
-                            <input type="number" class="form-control" name="abs_codigo" id="abs_codigo2" placeholder="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary btnSolicitarCancelacion btn-load">Solicitar</button>
-                <button type="button" class="btn btn-primary btnVerificarCancelacion">Verificar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
     $(document).ready(function() {
         buscarPagos("");
@@ -226,7 +188,7 @@
                                 toastr.success(res.mensaje, '¡Muy bien!');
                                 setTimeout(function() {
                                     window.open(res.pagina, '_blank');
-                                    window.location.href = res.pagina2
+                                window.location.href = res.pagina2
 
                                 }, 200)
                                 $('#urs_id').val("").trigger('change');
@@ -246,123 +208,79 @@
     })
 
 
-    $(".codigo").hide();
-    $(".btnVerificarCancelacion").hide();
-
-    $(document).on("click", ".btnCancelarPago", function() {
+    $(".tablePagos tbody").on("click", "button.btnCancelarPago", function() {
         var abs_id = $(this).attr("abs_id");
-        var datos = new FormData();
-        datos.append('abs_id', abs_id);
-        datos.append('btnBuscarCodigo', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.abs_codigo != "") {
-                    $(".titulo2").text("Verificar");
-                    $(".codigo").show();
-                    $(".btnVerificarCancelacion").show();
-                    $(".btnSolicitarCancelacion").hide();
-                    $(".abs_motivo").hide();
+        // var usr_id = $(this).attr("usr_id");
+        // var usr_nombre = $(this).attr("usr_nombre");
+        swal({
+                title: "¿Estás seguro de cancelar este pago?",
+                text: "Esta accion no es reversible",
+                icon: "warning",
+                buttons: ["No, cancelar", "Si, confirmar "],
+                dangerMode: false,
+                closeOnClickOutside: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
 
-                    $("#abs_id2").val(res.abs_id);
-                    $("#mdlCancelarAbonos").modal("show");
-                } else {
-                    $("#abs_id2").val(abs_id);
-                    $(".titulo2").text("Cancelar abono");
+                    swal("Esctibe el motivo por el cúal estas cancelado este pago", {
+                            content: {
+                                element: "input",
+                                attributes: {
+                                    type: "text",
+                                    value: "",
+                                },
+                            },
+                        })
+                        .then((abs_motivo_cancelacion) => {
+                            if (abs_motivo_cancelacion == "") {
+                                toastr.error('Error', 'Escribe el motivo...')
+                            } else {
+                                var datos = new FormData();
 
-                    $(".codigo").hide();
-                    $(".btnVerificarCancelacion").hide();
-                    $(".btnSolicitarCancelacion").show();
-                    $(".abs_motivo").show();
-                    $("#mdlCancelarAbonos").modal("show");
+                                datos.append("btnCancelarPago", true);
+                                datos.append("abs_motivo_cancelacion", abs_motivo_cancelacion)
+                                datos.append("abs_id", abs_id)
+                                // datos.append("usr_id", usr_id)
+
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                                    data: datos,
+                                    dataType: "json",
+                                    processData: false,
+                                    contentType: false,
+                                    beforeSend: function() {
+
+                                    },
+                                    success: function(res) {
+
+                                        if (res.status) {
+
+                                            toastr.success(res.mensaje, '¡Muy bien!');
+                                            setTimeout(function() {
+                                                buscarPagos($("#urs_id").val());
+                                            }, 200)
+
+
+                                        } else {
+
+                                            toastr.error(res.mensaje, '¡Error!');
+                                            setTimeout(function() {
+                                                buscarPagos($("#urs_id").val());
+                                            }, 200)
+
+                                        }
+
+                                    }
+                                })
+                            }
+                        });
+
                 }
-            }
-        });
+            })
     })
-
-
-    $(document).on("click", ".btnSolicitarCancelacion", function() {
-        var abs_id = $("#abs_id2").val();
-        var abs_motivo_cancelacion = $("#abs_motivo_cancelacion2").val();
-
-        if (abs_motivo_cancelacion == "") {
-            $("#abs_motivo_cancelacion2").focus();
-            return toastr.error("El motivo de cancelación es obligatorio", '¡ERROR!');
-        }
-        var datos = new FormData();
-        datos.append('abs_id', abs_id);
-        datos.append('abs_motivo_cancelacion', abs_motivo_cancelacion);
-        datos.append('btnSolicitar', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
-                startLoadButton()
-            },
-            success: function(res) {
-                stopLoadButton();
-                if (res.status) {
-                    toastr.success(res.mensaje, '¡Muy bien!');
-                    $(".titulo2").text("Verificar");
-                    $(".codigo").show();
-                    $(".btnVerificarCancelacion").show();
-                    $(".btnSolicitarCancelacion").hide();
-                    $(".abs_motivo").hide();
-
-                }
-            }
-        });
-    });
-
-    $(document).on("click", ".btnVerificarCancelacion", function() {
-        var abs_id = $("#abs_id2").val();
-        var abs_codigo = $("#abs_codigo2").val();
-        if (abs_codigo == "") {
-            $("#abs_codigo2").focus();
-            return toastr.error("El código es obligatorio", '¡ERROR!');
-        }
-        var datos = new FormData();
-        datos.append('abs_id', abs_id);
-        datos.append('abs_codigo', abs_codigo);
-        datos.append('btnCancelarPago', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.status) {
-                    toastr.success(res.mensaje, '¡Muy bien!');
-                    $("#abs_id2").val("");
-                    $("#abs_codigo2").val("");
-                    $("#abs_motivo_cancelacion2").val("");
-                    $(".titulo2").text("Cancelar abono");
-
-                    $(".codigo").hide();
-                    $(".btnVerificarCancelacion").hide();
-                    $(".btnSolicitarCancelacion").show();
-                    $(".abs_motivo").show();
-                    $("#mdlCancelarAbonos").modal("hide");
-
-                    buscarPagos($("#urs_id").val());
-
-                } else {
-                    toastr.error(res.mensaje, '¡ERROR!');
-                }
-            }
-        });
-    });
 
 
 
