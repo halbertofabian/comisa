@@ -220,7 +220,9 @@ foreach ($infoAbonos as $abonos) {
     $tps_body .= <<<EOF
 
    
-<tr style="font-size:10px">
+<tr style="font-size:8px">
+    <td style="border-top:1px solid #ccc" >$abonos[abs_id]</td>
+    <td style="border-top:1px solid #ccc" >$abonos[abs_folio]</td>
     <td style="border-top:1px solid #ccc" >$abonos[abs_fecha_cobro]</td>
     <td style="border-top:1px solid #ccc" >$abonos[abs_mp] <br> <strong>$abonos[abs_referancia]</strong></td>
     <td style="border-top:1px solid #ccc" >$abonos[abs_nota]</td>
@@ -246,6 +248,8 @@ $header = <<<EOF
         <td style="width:70%;">
            <table cellpadding="2">
                 <tr style="background-color: #24008D;color:#fff">
+                    <th>#</th>
+                    <th>FOLIO</th>
                     <th>FECHA</th>
                     <th>M.P</th>
                     <th>NOTA</th>
