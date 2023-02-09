@@ -52,6 +52,8 @@
                                     <tr>
                                         <th>FOLIO</th>
                                         <th>FECHA</th>
+                                        <th>M.P</th>
+                                        <th>Nota</th>
                                         <th>PAGO</th>
                                         <th>SALDO</th>
                                         <th>STATUS</th>

@@ -305,6 +305,8 @@ function mostrarEstado() {
                                             <tr>
                                                 <td>${element.abs_folio}</td>
                                                 <td>${element.abs_fecha_cobro}</td>
+                                                <td>${element.abs_mp} <br> ${element.abs_referancia}  </td>
+                                                <td>${element.abs_nota}</td>
                                                 <td>${$.number(element.abs_monto, 2)}</td>
                                                 <td>${saldo_aux}</td>
                                                 <td>${element.abs_estado_abono}</td>
