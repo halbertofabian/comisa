@@ -74,6 +74,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#mdlDescuento">Aplicar descuento</button>
+                        </div>
                         <div class="col-12" id="btn-export-pdf">
 
                         </div>
@@ -131,7 +134,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="ec_saldo_base">Saldo base</label>
-                                <input type="text" class="form-control inputN" name="ec_saldo_base" id="ec_saldo_base" placeholder="">
+                                <input type="text" class="form-control inputN" name="ec_saldo_base" id="ec_saldo_base" placeholder="" readonly>
                             </div>
                         </div>
                     </div>
@@ -139,7 +142,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="ec_saldo_actual">Saldo actual</label>
-                                <input type="text" class="form-control inputN" name="ec_saldo_actual" id="ec_saldo_actual" placeholder="">
+                                <input type="text" class="form-control inputN" name="ec_saldo_actual" id="ec_saldo_actual" placeholder="" readonly>
                             </div>
                         </div>
                     </div>
@@ -217,6 +220,36 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary btnSolicitar btn-load">Solicitar</button>
                 <button type="button" class="btn btn-primary btnVerificar">Verificar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="mdlDescuento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Descuento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                          <label for=""></label>
+                          <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                          <small id="helpId" class="text-muted">Help text</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>

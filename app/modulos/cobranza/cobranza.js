@@ -133,7 +133,7 @@ function mostrarEstado() {
                 $("#btn-export-pdf").html(`<a target="_blank" href="${urlApp}app/report/reporte-estado-cuenta.php?ec_ruta=${ec_ruta}&ec_cuenta=${ec_cuenta}" class="btn btn-success btn-block mb-2">
             <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Descargar
         </a>`);
-                $("#btn-actualizar-saldos").html(`<button type="button" class="btn btn-primary btn-block" id="btnActualizarSaldos">Actualizar</button>`);
+                // $("#btn-actualizar-saldos").html(`<button type="button" class="btn btn-primary btn-block" id="btnActualizarSaldos">Actualizar</button>`);
                 $("#ec_cliente").val(res.ctr_cliente);
                 $("#ec_fecha_inicio").val(res.ctr_proximo_pago);
 
