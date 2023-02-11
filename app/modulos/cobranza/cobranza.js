@@ -140,6 +140,8 @@ function mostrarEstado() {
 
                 $("#ctr_elaboro").val(res.ctr_elaboro);
                 $("#ctr_id").val(res.ctr_id);
+                $("#cra_contrato").val(res.ctr_id);
+
                 $("#ec_precio").val($.number(res.ctr_total));
                 $("#ec_enganche").val($.number(res.ctr_enganche));
                 $("#ec_pago_adicional").val($.number(res.ctr_pago_adicional));
@@ -147,8 +149,10 @@ function mostrarEstado() {
                 $("#ec_saldo").val($.number(res.ctr_saldo));
                 $("#ec_saldo_base").val(res.ctr_saldo_base);
                 $("#ec_saldo_actual").val(res.ctr_saldo_actual);
+                $("#abs_descuento").attr('max', res.ctr_saldo_actual)
                 $("#ec_ultima_fecha").val(res.ctr_ultima_fecha_abono);
 
+                $(".div-descuento").removeClass('d-none');
                 var total_aux_pagado = Number(res.ctr_enganche) + Number(res.ctr_pago_adicional)
 
                 if (res.ctr_forma_pago == "SEMANALES") {
@@ -289,6 +293,8 @@ function mostrarEstado() {
                             },
                             success: function (res) {
                                 var tbody_estado_cuenta = "";
+                                var abs_id_contrato = "";
+                                var abs_id_cobrador = "";
 
                                 var saldo = Number($("#ec_saldo_actual").val());
                                 res.forEach((element, index) => {
@@ -319,6 +325,8 @@ function mostrarEstado() {
                                     if (element.abs_estado_abono == 'AUTORIZADO') {
                                         saldo = Number(saldo) + Number(element.abs_monto);
                                     }
+                                    abs_id_contrato = element.abs_id_contrato;
+                                    abs_id_cobrador = element.abs_id_cobrador;
 
 
                                 });
@@ -327,6 +335,9 @@ function mostrarEstado() {
 
 
                                 $("#tbody_estado_cuenta").html(tbody_estado_cuenta);
+                                $("#abs_id_contrato").val(abs_id_contrato);
+                                $("#abs_id_cobrador").val(abs_id_cobrador);
+
                             }
                         })
 
@@ -580,3 +591,27 @@ $(document).on("click", ".btnVerificar", function () {
         }
     });
 });
+
+$("#formAplicarDesto").on('submit', function (e) {
+    e.preventDefault();
+    var datos = new FormData(this);
+    datos.append('btnAplicarDesto', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            if (res.status) {
+                toastr.success(res.mensaje, '¡Muy bien!');
+                $("#formAplicarDesto")[0].reset();
+                mostrarEstado();
+            } else {
+                toastr.error(res.mensaje, '¡ERROR!');
+
+            }
+        }
+    });
+})

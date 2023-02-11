@@ -201,6 +201,14 @@ class CobranzaAjax
         print json_encode($respuesta, JSON_UNESCAPED_UNICODE); //envio el array final el formato json a AJAX
 
     }
+    public function ajaxAplicarDesto()
+    {
+        // $respuesta = CobranzaControlador::ctrBuscarCobro();
+        $respuesta = CobranzaControlador::ctrAplicarDescuento();
+        echo json_encode($respuesta, true);
+    }
+
+    
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -289,3 +297,8 @@ if(isset($_POST['btnMostrarHistorialTable'])){
     $btnMostrarHistorialTable = new CobranzaAjax();
     $btnMostrarHistorialTable->ajaxHistorialFicha();
 }
+if (isset($_POST['btnAplicarDesto'])) {
+    $btnAplicarDesto = new CobranzaAjax();
+    $btnAplicarDesto->ajaxAplicarDesto();
+}
+

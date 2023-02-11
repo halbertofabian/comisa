@@ -901,7 +901,7 @@ class CobranzaControlador
                     // 'pagina' => HTTP_HOST . 'autorizar-pagos/' . $_POST['usr_id']
                 );
             }
-        }else {
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'El código de cancelación no es correcto.'
@@ -1625,5 +1625,48 @@ class CobranzaControlador
             ));
         }
         return $fichas_array;
+    }
+
+    public static function ctrAplicarDescuento()
+    {
+
+        $datos_abono = array(
+            'abs_folio' => uniqid() . '-D',
+            'abs_id_cobrador' => $_POST['abs_id_cobrador'],
+            'abs_id_contrato' => $_POST['abs_id_contrato'],
+            'abs_monto' => dnum($_POST['abs_descuento']),
+            'abs_mp' => 'DESCUENTO',
+            'abs_referancia' => '-',
+            'abs_nota' => 'Descuento aplicado por oficina',
+            'abs_estado_abono' => 'AUTORIZADO',
+            'abs_fecha_cobro' => FECHA,
+        );
+        $abonar = CobranzaModelo::mdlAgregarDescuento($datos_abono);
+
+        if ($abonar) {
+            // Descontar en el contrato 
+            $descuento = CobranzaModelo::mdlAplicarDescuentoContrato(array(
+                'abs_monto' => dnum($_POST['abs_descuento']),
+                'ctr_ultima_fecha_abono' => FECHA,
+                'ctr_id' => $_POST['cra_contrato'],
+            ));
+
+            if ($descuento) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Descuento aplicado.'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Ocurrio un error inesperado, llame a soporte.'
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'El descuento no se aplico correctamente, intente de nuevo.'
+            );
+        }
     }
 }

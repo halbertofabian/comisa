@@ -32,6 +32,23 @@
                         </div>
                     </form>
                     <div class="row">
+                        <div class="col-md-5 div-descuento d-none" >
+                            <form id="formAplicarDesto" method="post">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <label for="">Descuento</label>
+                                        <input type="number" class="form-control" id="abs_descuento" name="abs_descuento"  min="1"  >
+                                        <input type="hidden" id="abs_id_contrato" name="abs_id_contrato">
+                                        <input type="hidden" id="abs_id_cobrador" name="abs_id_cobrador">
+                                        <input type="hidden" id="cra_contrato" name="cra_contrato">
+
+
+                                        <input type="submit" value="Aplicar" class="btn btn-primary float-right mt-2">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12"></div>
                         <div class="col-xl-8">
                             <div class="form-group">
                                 <label for="ec_cliente">Cliente</label>
@@ -74,9 +91,9 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
+                        <!-- <div class="col-12">
                             <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#mdlDescuento">Aplicar descuento</button>
-                        </div>
+                        </div> -->
                         <div class="col-12" id="btn-export-pdf">
 
                         </div>
@@ -232,17 +249,17 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Descuento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                          <label for=""></label>
-                          <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
-                          <small id="helpId" class="text-muted">Help text</small>
+                            <label for=""></label>
+                            <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                            <small id="helpId" class="text-muted">Help text</small>
                         </div>
                     </div>
                 </div>

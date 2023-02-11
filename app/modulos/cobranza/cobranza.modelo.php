@@ -1599,6 +1599,29 @@ class CobranzaModelo
         }
     }
 
+    public  static function mdlAplicarDescuentoContrato($abs)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ctr_saldo_actual - ?, ctr_total_pagado = ctr_total_pagado + ?, ctr_ultima_fecha_abono = ?, ctr_status_cuenta = 'VIGENTE' WHERE ctr_id  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs['abs_monto']);
+            $pps->bindValue(2, $abs['abs_monto']);
+            $pps->bindValue(3, $abs['ctr_ultima_fecha_abono']);
+            $pps->bindValue(4, $abs['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
     public  static function mdlUltimaFechaCobro($abs_id_contrato)
     {
         try {
@@ -1618,4 +1641,33 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public static function mdlAgregarDescuento($abs)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_abonos_cobranza_abs (abs_folio,abs_id_cobrador,abs_id_contrato,abs_monto,abs_mp,abs_referancia,abs_nota,abs_estado_abono,abs_fecha_cobro) VALUES (?,?,?,?,?,?,?,?,?) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs['abs_folio']);
+            $pps->bindValue(2, $abs['abs_id_cobrador']);
+            $pps->bindValue(3, $abs['abs_id_contrato']);
+            $pps->bindValue(4, $abs['abs_monto']);
+            $pps->bindValue(5, $abs['abs_mp']);
+            $pps->bindValue(6, $abs['abs_referancia']);
+            $pps->bindValue(7, $abs['abs_nota']);
+            $pps->bindValue(8, $abs['abs_estado_abono']);
+            $pps->bindValue(9, $abs['abs_fecha_cobro']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
 }
