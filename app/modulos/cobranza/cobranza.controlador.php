@@ -1511,13 +1511,13 @@ class CobranzaControlador
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'mail.softmortest.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'notificaciones@softmortest.com';                     // SMTP username
+                $mail->Username   = 'notify.comisa@softmortest.com';                     // SMTP username
                 $mail->Password   = 'v9uOdOcK)S}R';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
+                $mail->setFrom('notify.comisa@softmortest.com', "COMISA - " . $sucursal);
 
                 // foreach ($correos as $correo) {
                     $mail->addAddress($correos, '');
@@ -1598,13 +1598,13 @@ class CobranzaControlador
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'mail.softmortest.com';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'notificaciones@softmortest.com';                     // SMTP username
+                $mail->Username   = 'notify.comisa@softmortest.com';                     // SMTP username
                 $mail->Password   = 'v9uOdOcK)S}R';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
+                $mail->setFrom('notify.comisa@softmortest.com', "COMISA - " . $sucursal);
 
                 
                 // foreach ($correos as $correo) {
