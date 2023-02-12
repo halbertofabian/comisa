@@ -1514,7 +1514,7 @@ class CobranzaControlador
                 $mail->Username   = 'notificaciones@softmortest.com';                     // SMTP username
                 $mail->Password   = 'v9uOdOcK)S}R';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-                $mail->Port = 465;                                    // TCP port to connect to
+                $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
                 $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
@@ -1599,7 +1599,7 @@ class CobranzaControlador
                 $mail->Username   = 'notificaciones@softmortest.com';                     // SMTP username
                 $mail->Password   = 'v9uOdOcK)S}R';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-                $mail->Port = 465;                                    // TCP port to connect to
+                $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
                 $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
