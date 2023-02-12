@@ -1511,13 +1511,13 @@ class CobranzaControlador
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'notificaciones@comisa.softmor.com';                     // SMTP username
-                $mail->Password   = 'S4RT6#@Dxs';                               // SMTP password
+                $mail->Username   = 'notificaciones@softmortest.com';                     // SMTP username
+                $mail->Password   = 'v9uOdOcK)S}R';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('notificaciones@comisa.softmor.com', "COMISA - " . $sucursal);
+                $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
 
                 $mail->addAddress($correo,'');
 
@@ -1596,13 +1596,13 @@ class CobranzaControlador
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'notificaciones@comisa.softmor.com';                     // SMTP username
-                $mail->Password   = 'S4RT6#@Dxs';                               // SMTP password
+                $mail->Username   = 'notificaciones@softmortest.com';                     // SMTP username
+                $mail->Password   = 'v9uOdOcK)S}R';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('notificaciones@comisa.softmor.com', "COMISA - " . $sucursal);
+                $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
 
                 $mail->addAddress($correo,'');
 
