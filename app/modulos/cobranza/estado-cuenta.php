@@ -32,12 +32,12 @@
                         </div>
                     </form>
                     <div class="row">
-                        <div class="col-md-5 div-descuento d-none" >
+                        <div class="col-md-5 div-descuento d-none">
                             <form id="formAplicarDesto" method="post">
                                 <div class="card">
                                     <div class="card-body">
                                         <label for="">Descuento</label>
-                                        <input type="number" class="form-control" id="abs_descuento" name="abs_descuento"  min="1"  >
+                                        <input type="number" class="form-control" id="abs_descuento" name="abs_descuento" min="1">
                                         <input type="hidden" id="abs_id_contrato" name="abs_id_contrato">
                                         <input type="hidden" id="abs_id_cobrador" name="abs_id_cobrador">
                                         <input type="hidden" id="cra_contrato" name="cra_contrato">
@@ -228,7 +228,13 @@
                     <div class="col-12 abs_codigo">
                         <div class="form-group">
                             <label for="abs_codigo">Codigo de cancelación</label>
-                            <input type="number" class="form-control" name="abs_codigo" id="abs_codigo" placeholder="">
+                            <input type="number" class="form-control" name="abs_codigo" id="abs_codigo" aria-describedby="helpId" placeholder="">
+                            <a id="helpId" href="#" class="form-text text-muted btnReenviarCodigo">Reenviar codigo</a>
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border d-none" role="status" id="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

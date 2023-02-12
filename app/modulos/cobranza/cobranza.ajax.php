@@ -207,6 +207,12 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrAplicarDescuento();
         echo json_encode($respuesta, true);
     }
+    public function ajaxReenviarCodigo()
+    {
+        // $respuesta = CobranzaControlador::ctrBuscarCobro();
+        $respuesta = CobranzaControlador::ctrReenviarCodigoCancelacion();
+        echo json_encode($respuesta, true);
+    }
 
     
 } //Aqui termina la clase
@@ -300,5 +306,9 @@ if(isset($_POST['btnMostrarHistorialTable'])){
 if (isset($_POST['btnAplicarDesto'])) {
     $btnAplicarDesto = new CobranzaAjax();
     $btnAplicarDesto->ajaxAplicarDesto();
+}
+if (isset($_POST['btnReenviarCodigo'])) {
+    $btnReenviarCodigo = new CobranzaAjax();
+    $btnReenviarCodigo->ajaxReenviarCodigo();
 }
 

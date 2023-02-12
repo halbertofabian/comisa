@@ -582,6 +582,7 @@ class CobranzaModelo
             $pps->bindValue(2, $abs['abs_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
             return false;
@@ -1546,6 +1547,25 @@ class CobranzaModelo
             $pps->bindValue(1, $abs_motivo_cancelacion);
             $pps->bindValue(2, $abs_codigo);
             $pps->bindValue(3, $abs_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlUpdateCodigoDeCancelacion($abs_id, $abs_codigo)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_codigo = ? WHERE abs_id  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_codigo);
+            $pps->bindValue(2, $abs_id);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

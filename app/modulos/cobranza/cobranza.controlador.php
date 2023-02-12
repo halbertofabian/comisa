@@ -1498,6 +1498,7 @@ class CobranzaControlador
         // $correos = ['lf_alberto@outlook.com','alberto@softmor.com'];
 
         $correos = explode(",", SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion']);
+        $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_nombre'];
 
         $res = CobranzaModelo::mdlAgregarMotivoCancelacionAbs($abs_id, $abs_motivo_cancelacion, $abs_codigo);
         if ($res) {
@@ -1510,13 +1511,13 @@ class CobranzaControlador
                 $mail->isSMTP();                                            // Send using SMTP
                 $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'soporte@softmorpos.com';                     // SMTP username
-                $mail->Password   = 'Halbert@97';                               // SMTP password
+                $mail->Username   = 'notificaciones@comisa.softmor.com';                     // SMTP username
+                $mail->Password   = 'S4RT6#@Dxs';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('soporte@softmorpos.com', "COMISA");
+                $mail->setFrom('notificaciones@comisa.softmor.com', "COMISA - " . $sucursal);
                 foreach ($correos as $correo) {
                     $mail->addAddress($correo);
                 }
@@ -1527,6 +1528,10 @@ class CobranzaControlador
                 $mail->Subject = "SOLICITUD DE CANCELACIÓN";
                 $mail->Body  = "
                 <table>
+                    <tr>
+                        <td><strong>Sucursal:</strong><td>
+                        <td>$sucursal<td>
+                    <tr>
                     <tr>
                         <td><strong>Monto:</strong><td>
                         <td>$$abs_monto<td>
@@ -1564,6 +1569,91 @@ class CobranzaControlador
             return array(
                 'status' => false,
                 'mensaje' => 'Hubo un error al enviar la solicitud de cancelación.'
+            );
+        }
+    }
+    public static function ctrReenviarCodigoCancelacion()
+    {
+
+        $abs_id = $_POST['abs_id'];
+        $abs_codigo = rand(10000, 99999);
+
+        $abs = CobranzaModelo::mdlObtenerAbonoByID($abs_id);
+        $abs_monto = number_format($abs['abs_monto'], 2);
+        // $correos = ['lf_alberto@outlook.com','alberto@softmor.com'];
+
+        $correos = explode(",", SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion']);
+        $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_nombre'];
+
+        $res = CobranzaModelo::mdlUpdateCodigoDeCancelacion($abs_id, $abs_codigo);
+        if ($res) {
+            try {
+
+
+                $mail = new PHPMailer(true);
+                $mail->CharSet = "UTF-8";
+                $mail->SMTPDebug = 0;                      // Enable verbose debug output
+                $mail->isSMTP();                                            // Send using SMTP
+                $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = 'notificaciones@comisa.softmor.com';                     // SMTP username
+                $mail->Password   = 'S4RT6#@Dxs';                               // SMTP password
+                $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                $mail->Port = 587;                                    // TCP port to connect to
+
+                //Recipients
+                $mail->setFrom('notificaciones@comisa.softmor.com', "COMISA - " . $sucursal);
+                foreach ($correos as $correo) {
+                    $mail->addAddress($correo);
+                }
+                // Optional name
+
+                // Content
+                $mail->isHTML(true);                                  // Set email format to HTML
+                $mail->Subject = "SOLICITUD DE CANCELACIÓN";
+                $mail->Body  = "
+                <table>
+                    <tr>
+                        <td><strong>Sucursal:</strong><td>
+                        <td>$sucursal<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Monto:</strong><td>
+                        <td>$$abs_monto<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Folio:</strong><td>
+                        <td>$abs[abs_folio]<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Fecha:</strong><td>
+                        <td>" . fechaCastellano($abs['abs_fecha_cobro']) . "<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Motivo de cancelación:</strong><td>
+                        <td>$abs[abs_motivo_cancelacion]<td>
+                    <tr>
+                    <tr>
+                        <td><strong>Código:</strong><td>
+                        <td><strong>$abs_codigo</strong><td>
+                    <tr>
+                </table>
+                ";
+
+                if ($mail->send()) {
+                    return array(
+                        'status' => true,
+                        'mensaje' => 'El codigo de cancelción se reenvio correctamente.'
+                    );
+                }
+            } catch (PHPMailer $th) {
+                throw $th;
+                return false;
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al reenviar el codigo de cancelación.'
             );
         }
     }
