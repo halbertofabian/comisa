@@ -1497,7 +1497,7 @@ class CobranzaControlador
         $abs_monto = number_format($abs['abs_monto'], 2);
         // $correos = ['lf_alberto@outlook.com','alberto@softmor.com'];
 
-        $correos =  explode(',', SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion']);
+        $correos =  SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion'];
         $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_nombre'];
 
         $res = CobranzaModelo::mdlAgregarMotivoCancelacionAbs($abs_id, $abs_motivo_cancelacion, $abs_codigo);
@@ -1519,9 +1519,9 @@ class CobranzaControlador
                 //Recipients
                 $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
 
-                foreach ($correos as $correo) {
-                    $mail->addAddress($correo, '');
-                }
+                // foreach ($correos as $correo) {
+                    $mail->addAddress($correos, '');
+                // }
 
                 // Optional name
 
@@ -1584,7 +1584,7 @@ class CobranzaControlador
         $abs_monto = number_format($abs['abs_monto'], 2);
         // $correos = ['lf_alberto@outlook.com','alberto@softmor.com'];
 
-        $correos =  explode(',', SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion']);
+        $correos =   SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion'];
         $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_nombre'];
 
         $res = CobranzaModelo::mdlUpdateCodigoDeCancelacion($abs_id, $abs_codigo);
@@ -1607,9 +1607,9 @@ class CobranzaControlador
                 $mail->setFrom('notificaciones@softmortest.com', "COMISA - " . $sucursal);
 
                 
-                foreach ($correos as $correo) {
-                    $mail->addAddress($correo, '');
-                }
+                // foreach ($correos as $correo) {
+                    $mail->addAddress($correos, '');
+                // }
 
                 // Optional name
 
