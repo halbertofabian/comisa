@@ -1509,15 +1509,15 @@ class CobranzaControlador
                 $mail->CharSet = "UTF-8";
                 $mail->SMTPDebug = 0;                      // Enable verbose debug output
                 $mail->isSMTP();                                            // Send using SMTP
-                $mail->Host       = 'mail.softmortest.com';                    // Set the SMTP server to send through
+                $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'notify@softmortest.com';                     // SMTP username
+                $mail->Username   = 'comisa@softmormx.com';                     // SMTP username
                 $mail->Password   = 'oLc(CKYh(4)k';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('notify@softmortest.com', "COMISA - " . $sucursal);
+                $mail->setFrom('comisa@softmormx.com', "COMISA - " . $sucursal);
 
                $mail->addAddress($correos, '');
 
@@ -1594,15 +1594,15 @@ class CobranzaControlador
                 $mail->CharSet = "UTF-8";
                 $mail->SMTPDebug = 0;                      // Enable verbose debug output
                 $mail->isSMTP();                                            // Send using SMTP
-                $mail->Host       = 'mail.softmortest.com';                    // Set the SMTP server to send through
+                $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'notify@softmortest.com';                     // SMTP username
+                $mail->Username   = 'comisa@softmormx.com';                     // SMTP username
                 $mail->Password   = 'oLc(CKYh(4)k';                               // SMTP password
                 $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                 $mail->Port = 587;                                    // TCP port to connect to
 
                 //Recipients
-                $mail->setFrom('notify@softmortest.com', "COMISA - " . $sucursal);
+                $mail->setFrom('comisa@softmormx.com', "COMISA - " . $sucursal);
 
                 
                $mail->addAddress($correos, '');
