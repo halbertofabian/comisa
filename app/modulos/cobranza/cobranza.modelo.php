@@ -1690,4 +1690,21 @@ class CobranzaModelo
         }
     }
 
+    public static function mdlConsultarAbsCancelados()
+    {
+        try {
+            //code...
+            $sql = "SELECT abs.abs_id,abs.abs_folio,abs.abs_monto,abs.abs_mp,abs.abs_nota,abs.abs_fecha_cobro,abs.abs_motivo_cancelacion,abs.abs_codigo,usr.usr_nombre,usr.usr_ruta,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta FROM tbl_abonos_cobranza_abs abs JOIN tbl_usuarios_usr usr ON abs.abs_id_cobrador = usr.usr_id  JOIN tbl_cartelera_cra cra ON abs.abs_id_contrato = cra.cra_id JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE abs.abs_codigo != '' ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
