@@ -1707,4 +1707,21 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public static function mdlConsultarRetirosCaja()
+    {
+        try {
+            //code...
+            $sql = " SELECT * FROM `tbl_caja_open_copn` WHERE copn_codigo != '' ORDER BY copn_id DESC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

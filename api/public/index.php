@@ -516,11 +516,16 @@ $app->get('/conexion_api', function (Request $request, Response $response, array
 });
 
 $app->get('/abonos_espera_cancelacion', function (Request $request, Response $response, array $args) {
-    
-    $response = json_encode(CobranzaModelo::mdlConsultarAbsCancelados(),true);
+
+    $response = json_encode(CobranzaModelo::mdlConsultarAbsCancelados(), true);
 
     return $response;
 });
+$app->get('/retiro_caja', function (Request $request, Response $response, array $args) {
 
+    $response = json_encode(CobranzaModelo::mdlConsultarRetirosCaja(), true);
+
+    return $response;
+});
 
 $app->run();
