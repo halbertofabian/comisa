@@ -10,7 +10,6 @@
  *  Twitter: https://twitter.com/softmormx
  */
 
-
 $(document).ready(function () {
     var flujo_usr = $("#flujo_usr").val();
     // alert(flujo_usr);
@@ -34,7 +33,6 @@ $("#igs_mp").on("change", function () {
     }
 
 })
-
 
 
 $("#copn_id_caja").on("change", function () {
@@ -62,14 +60,10 @@ $("#copn_id_caja").on("change", function () {
     })
 })
 
-
-
 $("#flujo_usr").on("change", function () {
     var flujo_usr = $("#flujo_usr").val();
     buscarFlujoCaja(flujo_usr)
 })
-
-
 
 function buscarIngesosByCaja(igs_id_corte, usr_id) {
     var datos = new FormData();
@@ -158,8 +152,6 @@ function buscarIngesosByCaja(igs_id_corte, usr_id) {
     })
 
 }
-
-
 
 $(".table-igs tbody ").on("click", ".chx_marcador_ingresos", function () {
     var marcador = $(this).attr("marcador")
@@ -474,7 +466,6 @@ function buscarFlujoCajaCerrada(flujo_usr, usr_caja) {
     })
 }
 
-
 $("#formIngreso").on("submit", function (e) {
 
     e.preventDefault();
@@ -612,6 +603,3 @@ function limpiarCampos() {
     $("#igs_referencia").val("");
     $("#igs_cuenta").val("");
 }
-
-
-$("#inpt_tab")
