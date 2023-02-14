@@ -527,5 +527,10 @@ $app->get('/retiro_caja', function (Request $request, Response $response, array 
 
     return $response;
 });
+$app->get('/descuentos_por_autorizar', function (Request $request, Response $response, array $args) {
 
+    $response = json_encode(CobranzaModelo::mdlConsultarAbsDescuento(), true);
+
+    return $response;
+});
 $app->run();
