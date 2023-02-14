@@ -615,34 +615,3 @@ $("#formAplicarDesto").on('submit', function (e) {
         }
     });
 })
-
-
-$(document).on("click", ".btnReenviarCodigo", function () {
-    $("#spinner").removeClass("d-none");
-    var abs_id = $("#abs_id").val();
-    var datos = new FormData();
-    datos.append('abs_id', abs_id);
-    datos.append('btnReenviarCodigo', true);
-    $.ajax({
-        type: 'POST',
-        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-        data: datos,
-        dataType: 'json',
-        processData: false,
-        contentType: false,
-        success: function (res) {
-            if (res.status) {
-                $("#spinner").addClass("d-none");
-                toastr.success(res.mensaje, '¡Muy bien!');
-                $(".titulo").text("Verificar");
-                $(".abs_codigo").show();
-                $(".btnVerificar").show();
-                $(".btnSolicitar").hide();
-                $(".abs_motivo_cancelacion").hide();
-
-            }else{
-                toastr.error(res.mensaje, '¡ERROR!');
-            }
-        }
-    });
-});
