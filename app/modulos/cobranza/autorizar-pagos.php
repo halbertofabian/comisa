@@ -166,12 +166,6 @@
                         <div class="form-group">
                             <label for="abs_codigo">Codigo de cancelación</label>
                             <input type="number" class="form-control" name="abs_codigo" id="abs_codigo2"  aria-describedby="helpId2"  placeholder="">
-                            <a id="helpId2" href="#" class="btnReenviarCodigo2">Reenviar codigo</a>
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border d-none" role="status" id="spinner2">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -369,37 +363,6 @@
             }
         });
     });
-
-    $(document).on("click", ".btnReenviarCodigo2", function() {
-        $("#spinner2").removeClass("d-none");
-        var abs_id = $("#abs_id2").val();
-        var datos = new FormData();
-        datos.append('abs_id', abs_id);
-        datos.append('btnReenviarCodigo', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.status) {
-                    $("#spinner2").addClass("d-none");
-                    toastr.success(res.mensaje, '¡Muy bien!');
-                    $(".titulo2").text("Verificar");
-                    $(".codigo").show();
-                    $(".btnVerificarCancelacion").show();
-                    $(".btnSolicitarCancelacion").hide();
-                    $(".abs_motivo").hide();
-
-                }else{
-                    toastr.error(res.mensaje, '¡ERROR!');
-                }
-            }
-        });
-    })
-
 
 
     function buscarPagos(urs_id) {

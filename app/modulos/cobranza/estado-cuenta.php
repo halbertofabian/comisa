@@ -229,12 +229,6 @@
                         <div class="form-group">
                             <label for="abs_codigo">Codigo de cancelación</label>
                             <input type="number" class="form-control" name="abs_codigo" id="abs_codigo" aria-describedby="helpId" placeholder="">
-                            <a id="helpId" href="#" class="form-text text-muted btnReenviarCodigo">Reenviar codigo</a>
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border d-none" role="status" id="spinner">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

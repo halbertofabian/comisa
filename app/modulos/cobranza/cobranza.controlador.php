@@ -889,6 +889,7 @@ class CobranzaControlador
             ));
 
             if ($cancelar) {
+                $updateCodigo = CobranzaModelo::mdlUpdateCodigoDeCancelacion($_POST['abs_id'], "");
                 return array(
                     'status' => true,
                     'mensaje' => 'Pago cancelado',
@@ -1493,78 +1494,12 @@ class CobranzaControlador
         $abs_motivo_cancelacion = strtoupper($_POST['abs_motivo_cancelacion']);
         $abs_codigo = rand(10000, 99999);
 
-        $abs = CobranzaModelo::mdlObtenerAbonoByID($abs_id);
-        $abs_monto = number_format($abs['abs_monto'], 2);
-        // $correos = ['lf_alberto@outlook.com','alberto@softmor.com'];
-
-        $correos =  SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion'];
-        $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_nombre'];
-
         $res = CobranzaModelo::mdlAgregarMotivoCancelacionAbs($abs_id, $abs_motivo_cancelacion, $abs_codigo);
         if ($res) {
-            try {
-
-
-                $mail = new PHPMailer(true);
-                $mail->CharSet = "UTF-8";
-                $mail->SMTPDebug = 0;                      // Enable verbose debug output
-                $mail->isSMTP();                                            // Send using SMTP
-                $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'comisa@softmormx.com';                     // SMTP username
-                $mail->Password   = 'oLc(CKYh(4)k';                               // SMTP password
-                $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-                $mail->Port = 587;                                    // TCP port to connect to
-
-                //Recipients
-                $mail->setFrom('comisa@softmormx.com', "COMISA - " . $sucursal);
-
-               $mail->addAddress($correos, '');
-
-                // Optional name
-
-                // Content
-                $mail->isHTML(true);                                  // Set email format to HTML
-                $mail->Subject = "SOLICITUD DE CANCELACIÓN";
-                $mail->Body  = "
-                <table>
-                    <tr>
-                        <td><strong>Sucursal:</strong><td>
-                        <td>$sucursal<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Monto:</strong><td>
-                        <td>$$abs_monto<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Folio:</strong><td>
-                        <td>$abs[abs_folio]<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Fecha:</strong><td>
-                        <td>" . fechaCastellano($abs['abs_fecha_cobro']) . "<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Motivo de cancelación:</strong><td>
-                        <td>$abs_motivo_cancelacion<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Código:</strong><td>
-                        <td><strong>$abs_codigo</strong><td>
-                    <tr>
-                </table>
-                ";
-
-                if ($mail->send()) {
-                    return array(
-                        'status' => true,
-                        'mensaje' => 'La solicitud de cancelación se envio correctamente.'
-                    );
-                }
-            } catch (PHPMailer $th) {
-                throw $th;
-                return false;
-            }
+            return array(
+                'status' => true,
+                'mensaje' => 'La solicitud de cancelación se envio correctamente.'
+            );
         } else {
             return array(
                 'status' => false,
@@ -1572,92 +1507,7 @@ class CobranzaControlador
             );
         }
     }
-    public static function ctrReenviarCodigoCancelacion()
-    {
-
-        $abs_id = $_POST['abs_id'];
-        $abs_codigo = rand(10000, 99999);
-
-        $abs = CobranzaModelo::mdlObtenerAbonoByID($abs_id);
-        $abs_monto = number_format($abs['abs_monto'], 2);
-        // $correos = ['lf_alberto@outlook.com','alberto@softmor.com'];
-
-        $correos =   SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_correo_notificacion'];
-        $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID)['scl_nombre'];
-
-        $res = CobranzaModelo::mdlUpdateCodigoDeCancelacion($abs_id, $abs_codigo);
-        if ($res) {
-            try {
-
-
-                $mail = new PHPMailer(true);
-                $mail->CharSet = "UTF-8";
-                $mail->SMTPDebug = 0;                      // Enable verbose debug output
-                $mail->isSMTP();                                            // Send using SMTP
-                $mail->Host       = 'smtp.hostinger.mx';                    // Set the SMTP server to send through
-                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $mail->Username   = 'comisa@softmormx.com';                     // SMTP username
-                $mail->Password   = 'oLc(CKYh(4)k';                               // SMTP password
-                $mail->SMTPSecure = 'tls';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-                $mail->Port = 587;                                    // TCP port to connect to
-
-                //Recipients
-                $mail->setFrom('comisa@softmormx.com', "COMISA - " . $sucursal);
-
-                
-               $mail->addAddress($correos, '');
-
-                // Optional name
-
-                // Content
-                $mail->isHTML(true);                                  // Set email format to HTML
-                $mail->Subject = "SOLICITUD DE CANCELACIÓN";
-                $mail->Body  = "
-                <table>
-                    <tr>
-                        <td><strong>Sucursal:</strong><td>
-                        <td>$sucursal<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Monto:</strong><td>
-                        <td>$$abs_monto<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Folio:</strong><td>
-                        <td>$abs[abs_folio]<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Fecha:</strong><td>
-                        <td>" . fechaCastellano($abs['abs_fecha_cobro']) . "<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Motivo de cancelación:</strong><td>
-                        <td>$abs[abs_motivo_cancelacion]<td>
-                    <tr>
-                    <tr>
-                        <td><strong>Código:</strong><td>
-                        <td><strong>$abs_codigo</strong><td>
-                    <tr>
-                </table>
-                ";
-
-                if ($mail->send()) {
-                    return array(
-                        'status' => true,
-                        'mensaje' => 'El codigo de cancelción se reenvio correctamente.'
-                    );
-                }
-            } catch (PHPMailer $th) {
-                throw $th;
-                return false;
-            }
-        } else {
-            return array(
-                'status' => false,
-                'mensaje' => 'Hubo un error al reenviar el codigo de cancelación.'
-            );
-        }
-    }
+    
     public static function ctrVerificarCancelacionAbono()
     {
 
@@ -1684,6 +1534,7 @@ class CobranzaControlador
                     );
                     $res2 = CobranzaModelo::mdlActualizarContrato($datos2);
                     if ($res2) {
+                        $updateCodigo = CobranzaModelo::mdlUpdateCodigoDeCancelacion($abs_id, "");
                         return array(
                             'status' => true,
                             'mensaje' => 'El abono se cancelo correctamente.'
