@@ -533,4 +533,12 @@ $app->get('/descuentos_por_autorizar', function (Request $request, Response $res
 
     return $response;
 });
+
+$app->get('/autorizar_descuento/{abs_codigo}', function (Request $request, Response $response, array $args) {
+    $abs_codigo = $args['abs_codigo'];
+    return json_encode(array(
+        'status' => true,
+        'mensaje' => 'Descuento aplicado '.$abs_codigo 
+    ), true);
+});
 $app->run();
