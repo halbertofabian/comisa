@@ -1144,4 +1144,7 @@
             return (key != 13);
         });
     });
+    $("#copn_ingreso_efectivo_usuario").on("keyup", function(e) {
+        $(".div-cerar-caja").addClass('d-none')
+    })
 </script>
