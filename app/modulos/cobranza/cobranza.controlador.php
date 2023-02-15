@@ -1507,7 +1507,7 @@ class CobranzaControlador
             );
         }
     }
-    
+
     public static function ctrVerificarCancelacionAbono()
     {
 
@@ -1569,9 +1569,9 @@ class CobranzaControlador
         return $fichas_array;
     }
 
-    public static function ctrAplicarDescuento()
+    public static function ctrSolicitarDescuento()
     {
-
+        $abs_codigo = rand(10000, 99999);
         $datos_abono = array(
             'abs_folio' => uniqid() . '-D',
             'abs_id_cobrador' => $_POST['abs_id_cobrador'],
@@ -1582,32 +1582,61 @@ class CobranzaControlador
             'abs_nota' => 'Descuento aplicado por oficina',
             'abs_estado_abono' => 'DESCUENTO POR AUTORIZAR',
             'abs_fecha_cobro' => FECHA,
+            'abs_codigo' => $abs_codigo,
         );
         $abonar = CobranzaModelo::mdlAgregarDescuento($datos_abono);
 
         if ($abonar) {
-            // Descontar en el contrato 
-            $descuento = CobranzaModelo::mdlAplicarDescuentoContrato(array(
-                'abs_monto' => dnum($_POST['abs_descuento']),
-                'ctr_ultima_fecha_abono' => FECHA,
-                'ctr_id' => $_POST['cra_contrato'],
-            ));
 
+            // Descontar en el contrato 
+            return array(
+                'status' => true,
+                'mensaje' => 'Codigo solicitado correctamente.'
+            );
+            
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'El descuento no se aplico correctamente, intente de nuevo.'
+            );
+        }
+    }
+    public static function ctrAprobarescuento($abs_id, $abs_codigo)
+    {
+        $abs = CobranzaModelo::mdlObtenerAbonoByID($abs_id);
+
+        if ($abs_codigo == $abs['abs_codigo']) {
+            $descuento = CobranzaModelo::mdlAplicarDescuento($abs_id);
             if ($descuento) {
-                return array(
-                    'status' => true,
-                    'mensaje' => 'Descuento aplicado.'
-                );
+                // Descontar en el contrato 
+                $cra_contrato = CobranzaModelo::mdlObtenerContratoCobrado($abs['abs_id_contrato']);
+                $descuento = CobranzaModelo::mdlAplicarDescuentoContrato(array(
+                    'abs_monto' => dnum($abs['abs_monto']),
+                    'ctr_ultima_fecha_abono' => FECHA,
+                    'ctr_id' => $cra_contrato['ctr_id'],
+                ));
+
+                if ($descuento) {
+                    return array(
+                        'status' => true,
+                        'mensaje' => 'Descuento aplicado.'
+                    );
+                } else {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Ocurrio un error inesperado, llame a soporte.'
+                    );
+                }
             } else {
                 return array(
                     'status' => false,
-                    'mensaje' => 'Ocurrio un error inesperado, llame a soporte.'
+                    'mensaje' => 'El descuento no se aplico correctamente, intente de nuevo.'
                 );
             }
         } else {
             return array(
                 'status' => false,
-                'mensaje' => 'El descuento no se aplico correctamente, intente de nuevo.'
+                'mensaje' => 'El código para aplicar el descuento no es correcto.'
             );
         }
     }

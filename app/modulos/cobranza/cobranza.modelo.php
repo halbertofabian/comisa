@@ -1666,7 +1666,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_abonos_cobranza_abs (abs_folio,abs_id_cobrador,abs_id_contrato,abs_monto,abs_mp,abs_referancia,abs_nota,abs_estado_abono,abs_fecha_cobro) VALUES (?,?,?,?,?,?,?,?,?) ";
+            $sql = "INSERT INTO tbl_abonos_cobranza_abs (abs_folio,abs_id_cobrador,abs_id_contrato,abs_monto,abs_mp,abs_referancia,abs_nota,abs_estado_abono,abs_fecha_cobro, abs_codigo) VALUES (?,?,?,?,?,?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $abs['abs_folio']);
@@ -1678,6 +1678,7 @@ class CobranzaModelo
             $pps->bindValue(7, $abs['abs_nota']);
             $pps->bindValue(8, $abs['abs_estado_abono']);
             $pps->bindValue(9, $abs['abs_fecha_cobro']);
+            $pps->bindValue(10, $abs['abs_codigo']);
             $pps->execute();
             return $pps->rowCount() > 0;
             // return $pps->errorInfo();
@@ -1725,7 +1726,7 @@ class CobranzaModelo
         }
     }
 
-   
+
 
 
     public static function mdlConsultarAbsDescuento()
@@ -1737,6 +1738,26 @@ class CobranzaModelo
             $pps = $con->prepare($sql);
             $pps->execute();
             return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlAplicarDescuento($abs_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_estado_abono = 'AUTORIZADO', abs_codigo = '' WHERE abs_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
             return false;

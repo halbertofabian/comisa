@@ -41,9 +41,7 @@
                                         <input type="hidden" id="abs_id_contrato" name="abs_id_contrato">
                                         <input type="hidden" id="abs_id_cobrador" name="abs_id_cobrador">
                                         <input type="hidden" id="cra_contrato" name="cra_contrato">
-
-
-                                        <input type="submit" value="Aplicar" class="btn btn-primary float-right mt-2">
+                                        <input type="submit" value="Solicitar" class="btn btn-primary float-right mt-2">
                                     </div>
                                 </div>
                             </form>
@@ -244,11 +242,11 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="mdlDescuento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+<div class="modal fade" id="mdlVerificarDescuento" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Descuento</h5>
+                <h5 class="modal-title">Codigo de verificación</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -257,16 +255,16 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group">
-                            <label for=""></label>
-                            <input type="text" name="" id="" class="form-control" placeholder="" aria-describedby="helpId">
-                            <small id="helpId" class="text-muted">Help text</small>
+                            <label for="">Codigo</label>
+                            <input type="hidden" id="abs_id_descuento">
+                            <input type="number" name="" id="abs_codigo_descuento" class="form-control" placeholder="" aria-describedby="helpId">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary btnAprobarDescuento">Verificar</button>
             </div>
         </div>
     </div>

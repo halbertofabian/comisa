@@ -304,6 +304,8 @@ function mostrarEstado() {
                                     if (element.abs_estado_abono == 'AUTORIZADO') {
                                         saldo_aux = $.number(saldo, 2);
                                         boton = `<button class="btn btn-outline-danger btnCancelarAbono" abs_id="${element.abs_id}" abs_monto="${abs_monto}" data-toggle="tooltip" data-placement="top" title="Cancelar"><i class="fa fa-times"></i></button>`;
+                                    } else if (element.abs_estado_abono == 'DESCUENTO POR AUTORIZAR') {
+                                        boton = `<button class="btn btn-outline-success btnVerificarDescuento" abs_id="${element.abs_id}" abs_codigo="${element.abs_codigo}" data-toggle="tooltip" data-placement="top" title="Autorizar descuento"><i class="fa fa-check"></i></button>`;
                                     }
 
                                     tbody_estado_cuenta +=
@@ -615,3 +617,41 @@ $("#formAplicarDesto").on('submit', function (e) {
         }
     });
 })
+
+$(document).on('click', '.btnVerificarDescuento', function () {
+    var abs_id_descuento = $(this).attr("abs_id");
+    $("#abs_id_descuento").val(abs_id_descuento);
+    $("#mdlVerificarDescuento").modal("show");
+    $("#abs_codigo_descuento").focus();
+
+});
+
+$(document).on('click', '.btnAprobarDescuento', function () {
+    var abs_id_descuento = $("#abs_id_descuento").val();
+    var abs_codigo_descuento = $("#abs_codigo_descuento").val();
+    if(abs_codigo_descuento == ""){
+        $("#abs_codigo_descuento").focus();
+        return toastr.error("El código es obligatorio", '¡ERROR!');
+    }
+    var datos = new FormData()
+    datos.append('abs_id', abs_id_descuento);
+    datos.append('abs_codigo', abs_codigo_descuento);
+    datos.append('btnAprobarDescuento', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            if (res.status) {
+                toastr.success(res.mensaje, '¡Muy bien!');
+                $("#mdlVerificarDescuento").modal("hide");
+                mostrarEstado();
+            } else {
+                toastr.error(res.mensaje, '¡ERROR!');
+            }
+        }
+    });
+});

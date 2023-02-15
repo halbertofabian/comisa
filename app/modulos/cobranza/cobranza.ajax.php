@@ -204,7 +204,13 @@ class CobranzaAjax
     public function ajaxAplicarDesto()
     {
         // $respuesta = CobranzaControlador::ctrBuscarCobro();
-        $respuesta = CobranzaControlador::ctrAplicarDescuento();
+        $respuesta = CobranzaControlador::ctrSolicitarDescuento();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxAprobarDesto()
+    {
+        // $respuesta = CobranzaControlador::ctrBuscarCobro();
+        $respuesta = CobranzaControlador::ctrAprobarescuento($_POST['abs_id'], $_POST['abs_codigo']);
         echo json_encode($respuesta, true);
     }
     
@@ -299,4 +305,8 @@ if(isset($_POST['btnMostrarHistorialTable'])){
 if (isset($_POST['btnAplicarDesto'])) {
     $btnAplicarDesto = new CobranzaAjax();
     $btnAplicarDesto->ajaxAplicarDesto();
+}
+if (isset($_POST['btnAprobarDescuento'])) {
+    $btnAprobarDesto = new CobranzaAjax();
+    $btnAprobarDesto->ajaxAprobarDesto();
 }
