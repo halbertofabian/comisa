@@ -529,16 +529,37 @@ $app->get('/retiro_caja', function (Request $request, Response $response, array 
 });
 $app->get('/descuentos_por_autorizar', function (Request $request, Response $response, array $args) {
 
-    $response = json_encode(CobranzaModelo::mdlConsultarAbsDescuento(), true);
+    $descuentos = CobranzaModelo::mdlConsultarAbsDescuento();
+    $array_descuentos = array();
+    foreach ($descuentos as $key => $data) {
+        array_push($array_descuentos, array(
+            "abs_id" => $data['abs_id'],
+            "abs_folio" => $data['abs_folio'],
+            "abs_monto" => $data['abs_monto'],
+            "abs_mp" => $data['abs_mp'],
+            "abs_nota" => $data['abs_nota'],
+            "abs_fecha_cobro" => $data['abs_fecha_cobro'],
+            "abs_motivo_cancelacion" => $data['abs_motivo_cancelacion'],
+            "abs_codigo" => $data['abs_codigo'],
+            "usr_nombre" => $data['usr_nombre'],
+            "usr_ruta" => $data['usr_ruta'],
+            "ctr_cliente" => $data['ctr_cliente'],
+            "ctr_numero_cuenta" => $data['ctr_numero_cuenta'],
+            "ctr_ruta" => $data['ctr_ruta'],
+            "ctr_productos" => json_decode($data['ctr_productos'], true),
+            "ctr_saldo_actual" => $data['ctr_saldo_actual'],
+            "ctr_ultima_fecha_abono" => $data['ctr_ultima_fecha_abono'],
+        ));
+    }
 
-    return $response;
+    return json_encode($array_descuentos,true);
 });
 
 $app->get('/autorizar_descuento/{abs_codigo}', function (Request $request, Response $response, array $args) {
     $abs_codigo = $args['abs_codigo'];
     return json_encode(array(
         'status' => true,
-        'mensaje' => 'Descuento aplicado '.$abs_codigo 
+        'mensaje' => 'Descuento aplicado ' . $abs_codigo
     ), true);
 });
 $app->run();
