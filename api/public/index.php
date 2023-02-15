@@ -552,14 +552,23 @@ $app->get('/descuentos_por_autorizar', function (Request $request, Response $res
         ));
     }
 
-    return json_encode($array_descuentos,true);
+    return json_encode($array_descuentos, true);
 });
 
-$app->get('/autorizar_descuento/{abs_codigo}', function (Request $request, Response $response, array $args) {
+$app->get('/autorizar_descuento/{abs_id}/{abs_codigo}', function (Request $request, Response $response, array $args) {
+    $abs_id = $args['abs_id'];
     $abs_codigo = $args['abs_codigo'];
-    return json_encode(array(
-        'status' => true,
-        'mensaje' => 'Descuento aplicado ' . $abs_codigo
-    ), true);
+    $res = CobranzaControlador::ctrAprobarescuento($abs_id, $abs_codigo);
+    if ($res['status']) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => $res['mensaje']
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => $res['mensaje']
+        ), true);
+    }
 });
 $app->run();
