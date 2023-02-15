@@ -213,6 +213,15 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrAprobarescuento($_POST['abs_id'], $_POST['abs_codigo']);
         echo json_encode($respuesta, true);
     }
+
+    public function ajaxCodigoRetiro(){
+        $respuesta = CobranzaControlador::ctrCodigoRetiro();
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxAplicarCodigoRetiro(){
+        $respuesta = CobranzaControlador::ctrAplicarCodigoRetiro();
+        echo json_encode($respuesta, true);
+    }
     
 } //Aqui termina la clase
 
@@ -310,3 +319,13 @@ if (isset($_POST['btnAprobarDescuento'])) {
     $btnAprobarDesto = new CobranzaAjax();
     $btnAprobarDesto->ajaxAprobarDesto();
 }
+if (isset($_POST['btnCodigoRetiro'])) {
+    $btnAprobarDesto = new CobranzaAjax();
+    $btnAprobarDesto->ajaxCodigoRetiro();
+}
+if (isset($_POST['btnAplicarCodigoRetiro'])) {
+    $btnAprobarDesto = new CobranzaAjax();
+    $btnAprobarDesto->ajaxAplicarCodigoRetiro();
+}
+
+

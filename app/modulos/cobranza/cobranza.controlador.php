@@ -1593,7 +1593,6 @@ class CobranzaControlador
                 'status' => true,
                 'mensaje' => 'Codigo solicitado correctamente.'
             );
-            
         } else {
             return array(
                 'status' => false,
@@ -1637,6 +1636,51 @@ class CobranzaControlador
             return array(
                 'status' => false,
                 'mensaje' => 'El código para aplicar el descuento no es correcto.'
+            );
+        }
+    }
+    public static function ctrCodigoRetiro()
+    {
+        $datos = array(
+            'copn_id' => $_POST['copn_id'],
+            'copn_codigo' =>  rand(10000, 99999),
+            'copn_retiro' => dnum($_POST['copn_retiro'])
+        );
+
+        $isCodeGenerator =  CobranzaModelo::mdlCodigoRetiro($datos);
+
+        if ($isCodeGenerator) {
+            return array(
+                'status' => true,
+                'mensaje' => 'Código generado'
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'El código no se genero, intenta de nuevo'
+            );
+        }
+    }
+    public static function ctrAplicarCodigoRetiro()
+    {
+        $isCode = CobranzaModelo::mdlConsultarCodigoRetiro($_POST['copn_id']);
+        if ($isCode['copn_codigo'] == $_POST['copn_codigo']) {
+            $cleanCode = CobranzaModelo::mdlBorrarCodigoRetiro($_POST['copn_id']);
+            if ($cleanCode) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Código aplicado, procede a cerrar caja'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Ocurrio un error, contacta a soporte'
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Código incorrecto, intente de nuevo'
             );
         }
     }

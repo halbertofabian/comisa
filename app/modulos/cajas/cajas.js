@@ -217,5 +217,5 @@ function calcularDif() {
 
     $("#copn_diferencia_efectivo").val(Number(copn_diferencia_efectivo))
 
-    // $("#copn_saldo").val(copn_ingreso_efectivo_usuario)
+    $("#copn_saldo").val(copn_ingreso_efectivo_usuario)
 }

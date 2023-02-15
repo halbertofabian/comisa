@@ -762,7 +762,8 @@
                                     <input type="hidden" id="cja_id_caja_input" name="cja_id_caja">
                                     <input type="hidden" id="usr_caja_input" name="usr_caja">
                                     <input type="hidden" id="usr_id_input" name="usr_id">
-                                    <input type="text" id="copn_id_input" name="copn_id">
+                                    <label for="copn_id_input"># Corte</label>
+                                    <input type="text" id="copn_id_input" name="copn_id" class="form-control" readonly>
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
                                     <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
                                         <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
@@ -834,7 +835,9 @@
                                                 <input type="text" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
                                                 <button type="button" class="btn btn-outline-primary  float-right mt-1 mb-1 d-none btnSolicitarCodigo">Solicitar</button>
                                                 <input type="hidden" name="copn_codigo" id="copn_codigo" class="form-control mt-1" placeholder="Código de retiro">
-                                                <input type="text" id="isVerify" value="true">
+                                                <button type="button" id="btnVerificar" class="btn btn-primary float-right mt-1 mb-1 d-none ">Verificar</button>
+
+                                                <input type="hidden" id="isVerify" value="true">
                                             </div>
                                         </div>
                                     </div>
@@ -857,8 +860,8 @@
                             </div>
                         </div>
 
-                        <div class="col-12 div-cerar-caja">
-                            <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja para <span id="usr_responsable"></span> </button>
+                        <div class="col-12 div-cerar-caja d-none">
+                            <button class="btn btn-primary float-right " name="btnCerrarCaja">Cerrar caja para <span id="usr_responsable"></span> </button>
                         </div>
                     </div>
                 </form>
@@ -1056,8 +1059,8 @@
         }
     })
     $(".btnSolicitarCodigo").on("click", function() {
-        var retiro = Number($("#copn_saldo").val());
-        if ($("#copn_ingreso_efectivo_usuario").val() == '' || retiro > Number($("#copn_ingreso_efectivo_usuario").val())) {
+        var copn_retiro = Number($("#copn_saldo").val());
+        if ($("#copn_ingreso_efectivo_usuario").val() == '' || copn_retiro > Number($("#copn_ingreso_efectivo_usuario").val())) {
             toastr.warning('Antes de proceder con un retiro, asegúrate de ingresar el monto que deseas reportar.', '¡Observación!');
             $("#isVerify").val('true');
             $("#copn_saldo").val(0)
@@ -1066,7 +1069,70 @@
             $("#copn_ingreso_efectivo_usuario").focus();
             return;
         }
+        var copn_id = $("#copn_id_input").val();
+        var datos = new FormData();
+        datos.append("copn_id", copn_id);
+        datos.append("copn_retiro", copn_retiro);
+        datos.append("btnCodigoRetiro", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                // startLoadButton()
 
+            },
+            success: function(res) {
+                if (res.status) {
+                    $("#copn_codigo").attr("type", "text");
+                    $("#copn_saldo").attr('readonly', true);
+                    $("#copn_ingreso_efectivo_usuario").attr('readonly', true);
+                    $(".btnSolicitarCodigo").addClass('d-none')
+                    $("#btnVerificar").removeClass('d-none')
+                    $("#copn_codigo").focus();
+                    toastr.success(res.mensaje, 'Muy bien!');
+                } else {
+                    toastr.error(res.mensaje, '¡Error!');
+                }
+            }
+        });
+
+    })
+    $("#btnVerificar").on("click", function(e) {
+        var copn_id = $("#copn_id_input").val();
+        var copn_codigo = $("#copn_codigo").val();
+        var datos = new FormData();
+        datos.append("copn_id", copn_id);
+        datos.append("copn_codigo", copn_codigo);
+        datos.append("btnAplicarCodigoRetiro", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                // startLoadButton()
+
+            },
+            success: function(res) {
+                if (res.status) {
+                    $("#copn_codigo").attr("type", "hidden");
+                    $("#btnVerificar").addClass('d-none')
+                    $("#isVerify").val('true');
+                    $(".div-cerar-caja").removeClass('d-none')
+                    toastr.success(res.mensaje, 'Muy bien!');
+                } else {
+                    toastr.error(res.mensaje, '¡Error!');
+                }
+            }
+        })
     })
     $(function() {
         $("#formCerrarCaja").keypress(function(e) {

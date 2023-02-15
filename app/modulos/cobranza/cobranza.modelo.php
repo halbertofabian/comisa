@@ -1766,4 +1766,65 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public  static function mdlCodigoRetiro($datos)
+    {
+        try {
+            //code...
+            $sql =  "UPDATE tbl_caja_open_copn SET copn_codigo =  ? , copn_retiro = ? WHERE copn_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datos['copn_codigo']);
+            $pps->bindValue(2, $datos['copn_retiro']);
+            $pps->bindValue(3, $datos['copn_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlConsultarCodigoRetiro($copn_id)
+    {
+        try {
+            //code...
+            $sql =  "SELECT copn_codigo FROM tbl_caja_open_copn WHERE copn_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $copn_id);
+            $pps->execute();
+            return $pps->fetch();
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlBorrarCodigoRetiro($copn_id)
+    {
+        try {
+            //code...
+            $sql =  "UPDATE tbl_caja_open_copn SET copn_codigo =  '' WHERE copn_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $copn_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
