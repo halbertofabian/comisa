@@ -20,7 +20,7 @@
 </style>
 
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
             <form id="formListarStatus" method="post">
@@ -74,8 +74,6 @@
         var datos = new FormData()
         datos.append("ctr_ruta", $("#ctr_ruta").val());
         datos.append("btnListarStatus", true);
-
-
         $.ajax({
 
             url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
@@ -114,9 +112,6 @@
             }
         })
     }
-
-
-
 
     function mostrarStatus2(cra_status) {
 
@@ -168,6 +163,11 @@
 
     function mostrarStatus(cra_status) {
         datatable_productos = $('#datatable_cuenta').DataTable({
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
             "ajax": {
                 "url": urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
                 "method": 'POST', //usamos el metodo POST

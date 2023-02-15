@@ -21,7 +21,7 @@ $("#formCerrarCaja").on("submit", function (e) {
     var copn_ingreso_banco = Number($("#copn_ingreso_banco").val())
 
     var total_efectivo_input = Number($("#copn_ingreso_efectivo_usuario").val())
-    var total_efectivo_retiro = 0;
+    var total_efectivo_retiro = Number($("#copn_saldo").val())
 
     var copn_diferencia_efectivo = Number($("#copn_diferencia_efectivo").val())
     var usurio = $("#cja_responsable").html();

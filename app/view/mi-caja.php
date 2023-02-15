@@ -522,7 +522,7 @@
                         </div>
                         <div class="form-group col-md-4 col-12">
                             <label for="gtsg_montoApagar">Monto a pagar</label>
-                            <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN"  required>
+                            <input type="text" name="gtsg_montoApagar" id="gtsg_montoApagar" class="form-control inputN" required>
                         </div>
                         <div class="form-group col-12">
                             <label for="gtsg_kilometraje">Kilometraje</label>
@@ -762,7 +762,7 @@
                                     <input type="hidden" id="cja_id_caja_input" name="cja_id_caja">
                                     <input type="hidden" id="usr_caja_input" name="usr_caja">
                                     <input type="hidden" id="usr_id_input" name="usr_id">
-                                    <input type="hidden" id="copn_id_input" name="copn_id">
+                                    <input type="text" id="copn_id_input" name="copn_id">
                                     <input type="hidden" id="copn_ingreso_inicio_input" name="copn_ingreso_inicio">
                                     <?php if ($_SESSION['session_usr']['usr_rol'] == 'Jefe de cobranza') : ?>
                                         <input type="hidden" id="copn_tipo_caja" name="copn_tipo_caja" value="CAJA_COBRANZA_G">
@@ -788,17 +788,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <input type="hidden" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
-                            <!-- <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">RETIRO DE CAJA</h4>
-                                    <div class="form-group">
-                                        <label for="copn_saldo">Introduce la cantidad de retiro</label>
-                                    </div>
-                                </div>
-                            </div> -->
-                        </div>
+                        <div class="col-md-8"> </div>
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
@@ -835,8 +825,20 @@
                                         </div>
                                     </div>
                                 </div>
-
-
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">RETIRO DE CAJA</h4>
+                                            <div class="form-group">
+                                                <label for="copn_saldo">Introduce la cantidad de retiro</label>
+                                                <input type="text" name="copn_saldo" id="copn_saldo" class="form-control inputN" placeholder="">
+                                                <button type="button" class="btn btn-outline-primary  float-right mt-1 mb-1 d-none btnSolicitarCodigo">Solicitar</button>
+                                                <input type="hidden" name="copn_codigo" id="copn_codigo" class="form-control mt-1" placeholder="Código de retiro">
+                                                <input type="text" id="isVerify" value="true">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
 
@@ -855,7 +857,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 div-cerar-caja">
                             <button class="btn btn-primary float-right" name="btnCerrarCaja">Cerrar caja para <span id="usr_responsable"></span> </button>
                         </div>
                     </div>
@@ -1033,3 +1035,47 @@
         </div>
     </div>
 </div>
+
+<script>
+    $("#copn_saldo").on("keyup", function() {
+        var retiro = Number($(this).val());
+
+        if (retiro > 0) {
+            $("#isVerify").val('false');
+            $(".div-cerar-caja").addClass('d-none')
+            $(".btnSolicitarCodigo").removeClass('d-none')
+
+        } else {
+            $("#isVerify").val('true');
+            $(this).val(0)
+            $(".div-cerar-caja").removeClass('d-none')
+            $(".btnSolicitarCodigo").addClass('d-none')
+
+
+
+        }
+    })
+    $(".btnSolicitarCodigo").on("click", function() {
+        var retiro = Number($("#copn_saldo").val());
+        if ($("#copn_ingreso_efectivo_usuario").val() == '' || retiro > Number($("#copn_ingreso_efectivo_usuario").val())) {
+            toastr.warning('Antes de proceder con un retiro, asegúrate de ingresar el monto que deseas reportar.', '¡Observación!');
+            $("#isVerify").val('true');
+            $("#copn_saldo").val(0)
+            $(".div-cerar-caja").removeClass('d-none')
+            $(".btnSolicitarCodigo").addClass('d-none')
+            $("#copn_ingreso_efectivo_usuario").focus();
+            return;
+        }
+
+    })
+    $(function() {
+        $("#formCerrarCaja").keypress(function(e) {
+            var key;
+            if (window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        });
+    });
+</script>

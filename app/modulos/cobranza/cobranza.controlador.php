@@ -1580,7 +1580,7 @@ class CobranzaControlador
             'abs_mp' => 'DESCUENTO',
             'abs_referancia' => '-',
             'abs_nota' => 'Descuento aplicado por oficina',
-            'abs_estado_abono' => 'AUTORIZADO',
+            'abs_estado_abono' => 'DESCUENTO POR AUTORIZAR',
             'abs_fecha_cobro' => FECHA,
         );
         $abonar = CobranzaModelo::mdlAgregarDescuento($datos_abono);
