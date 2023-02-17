@@ -1639,7 +1639,6 @@ class CobranzaControlador
             );
         }
     }
-<<<<<<< HEAD
     public static function ctrCodigoRetiro()
     {
         $datos = array(
@@ -1684,8 +1683,7 @@ class CobranzaControlador
                 'mensaje' => 'Código incorrecto, intente de nuevo'
             );
         }
-=======
-
+    }
     public static function ctrGenerarNuevaFicha(){
         $ultima_ficha = CobranzaModelo::mdlMostrarUltimaFicha();
         $año_actual = date("Y");
@@ -1706,6 +1704,5 @@ class CobranzaControlador
             'fcbz_fecha_termino' => $fcbz_fecha_termino,
             'fcbz_ano' => $año_actual
         ));
->>>>>>> 9f672d8344887b6d75fa03422ee1ad16fb473e17
     }
 }
