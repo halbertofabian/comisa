@@ -571,4 +571,11 @@ $app->get('/autorizar_descuento/{abs_id}/{abs_codigo}', function (Request $reque
         ), true);
     }
 });
+
+//CREAR NUEVA FICHA
+$app->get('/crear_ficha', function (Request $request, Response $response, array $args) {
+    
+     CobranzaControlador::ctrGenerarNuevaFicha();
+    
+});
 $app->run();

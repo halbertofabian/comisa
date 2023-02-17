@@ -1639,6 +1639,7 @@ class CobranzaControlador
             );
         }
     }
+<<<<<<< HEAD
     public static function ctrCodigoRetiro()
     {
         $datos = array(
@@ -1683,5 +1684,28 @@ class CobranzaControlador
                 'mensaje' => 'Código incorrecto, intente de nuevo'
             );
         }
+=======
+
+    public static function ctrGenerarNuevaFicha(){
+        $ultima_ficha = CobranzaModelo::mdlMostrarUltimaFicha();
+        $año_actual = date("Y");
+        $año_ultima_ficha = $ultima_ficha['fcbz_ano'];
+
+        if($año_actual == $año_ultima_ficha){
+            $fcbz_numero = $ultima_ficha['fcbz_numero'] + 1;
+        }else{
+            $fcbz_numero = 1;
+        }
+
+        $fcbz_fecha_inicio = date("Y-m-d");
+        $fcbz_fecha_termino = date("Y-m-d", strtotime("+6 day", strtotime($fcbz_fecha_inicio)));
+
+       return CobranzaModelo::mdlCrearFicha(array(
+            'fcbz_numero' => $fcbz_numero,
+            'fcbz_fecha_inicio' => $fcbz_fecha_inicio,
+            'fcbz_fecha_termino' => $fcbz_fecha_termino,
+            'fcbz_ano' => $año_actual
+        ));
+>>>>>>> 9f672d8344887b6d75fa03422ee1ad16fb473e17
     }
 }
