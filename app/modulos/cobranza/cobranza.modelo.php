@@ -1827,4 +1827,54 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public  static function mdlGuardarRendimiento($rto)
+    {
+        try {
+            //code...
+            $sql =  "INSERT INTO tbl_rendimiento_rto (rto_id_usuario, rto_ruta, rto_ficha, rto_total_cuentas, rto_total_semanales,
+            rto_total_catorcenales, rto_total_quincenales, rto_total_mensuales, rto_total_cuentas_cobro)
+            VALUES(?,?,?,?,?,?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $rto['rto_id_usuario']);
+            $pps->bindValue(2, $rto['rto_ruta']);
+            $pps->bindValue(3, $rto['rto_ficha']);
+            $pps->bindValue(4, $rto['rto_total_cuentas']);
+            $pps->bindValue(5, $rto['rto_total_semanales']);
+            $pps->bindValue(6, $rto['rto_total_catorcenales']);
+            $pps->bindValue(7, $rto['rto_total_quincenales']);
+            $pps->bindValue(8, $rto['rto_total_mensuales']);
+            $pps->bindValue(9, $rto['rto_total_cuentas_cobro']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlObtenerRendimiento($rto_id_usuario, $rto_ficha)
+    {
+        try {
+            //code...
+            $sql =  "SELECT * FROM tbl_rendimiento_rto WHERE rto_id_usuario = ? AND rto_ficha = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $rto_id_usuario);
+            $pps->bindValue(2, $rto_ficha);
+            $pps->execute();
+            return $pps->fetch();
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

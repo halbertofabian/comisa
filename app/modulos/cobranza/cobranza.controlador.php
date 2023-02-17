@@ -1421,62 +1421,93 @@ class CobranzaControlador
             'ctr_id' => $datos['ctr_id'],
         ));
     }
-    public static function ctrRedndimiento($ruta, $usr_id)
+
+    public static function ctrGuardarRendimiento()
     {
-        $total_cuentas = CobranzaModelo::mdlTotalCuentasRedimiento($ruta);
+        $cobradores = UsuariosModelo::mdlObtenerCobradoresActivos();
 
-        $total_cuentas_semanales = CobranzaModelo::mdlTotalSemanalesRedimiento($ruta);
+        foreach ($cobradores as $usr) {
+            $ruta = $usr['usr_ruta'];
+            $usr_id = $usr['usr_id'];
 
-        $cuentas_catorcenales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "CATORCENALES");
-        $cuentas_quincenales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "QUINCENALES");
-        $cuentas_mensuales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "MENSUALES");
+            $total_cuentas = CobranzaModelo::mdlTotalCuentasRedimiento($ruta);
 
+            $total_cuentas_semanales = CobranzaModelo::mdlTotalSemanalesRedimiento($ruta);
+
+            $cuentas_catorcenales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "CATORCENALES");
+            $cuentas_quincenales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "QUINCENALES");
+            $cuentas_mensuales = CobranzaModelo::mdlTotalFormaPagoRedimiento($ruta, "MENSUALES");
+
+            $ficha = CobranzaModelo::mdlFichaActual();
+            $fecha_inicio = $ficha['fcbz_fecha_inicio'];
+            $fecha_fin = $ficha['fcbz_fecha_termino'];
+
+            $total_cuentas_catorcenales = array();
+            foreach ($cuentas_catorcenales as $catorcenales) {
+                if ($catorcenales['cra_fecha_cobro'] <= $fecha_fin || ($catorcenales['cra_fecha_reagenda'] <= $fecha_fin && $catorcenales['cra_fecha_reagenda'] != '0000-00-00')) {
+                    array_push($total_cuentas_catorcenales, $catorcenales);
+                }
+            }
+
+            $total_cuentas_quincenales = array();
+            foreach ($cuentas_quincenales as $quincenales) {
+                if ($quincenales['cra_fecha_cobro'] <= $fecha_fin || ($quincenales['cra_fecha_reagenda'] <= $fecha_fin && $quincenales['cra_fecha_reagenda'] != '0000-00-00')) {
+                    array_push($total_cuentas_quincenales, $quincenales);
+                }
+            }
+
+            $total_cuentas_mensuales = array();
+            foreach ($cuentas_mensuales as $mensuales) {
+                if ($mensuales['cra_fecha_cobro'] <= $fecha_fin || ($mensuales['cra_fecha_reagenda'] <= $fecha_fin && $mensuales['cra_fecha_reagenda'] != '0000-00-00')) {
+                    array_push($total_cuentas_mensuales, $mensuales);
+                }
+            }
+
+            $total_semanales = $total_cuentas_semanales['total'];
+            $total_catorcenales = sizeof($total_cuentas_catorcenales);
+            $total_quincenales = sizeof($total_cuentas_quincenales);
+            $total_mensuales = sizeof($total_cuentas_mensuales);
+
+            $total_cuentas_cobro = $total_semanales + $total_catorcenales + $total_quincenales + $total_mensuales;
+            $datos = array(
+                'rto_id_usuario' => $usr_id,
+                'rto_ruta' => $ruta,
+                'rto_ficha' => $ficha['fcbz_id'],
+                'rto_total_cuentas' => $total_cuentas['total'],
+                'rto_total_semanales' => $total_semanales,
+                'rto_total_catorcenales' => $total_catorcenales,
+                'rto_total_quincenales' => $total_quincenales,
+                'rto_total_mensuales' => $total_mensuales,
+                'rto_total_cuentas_cobro' => $total_cuentas_cobro,
+            );
+
+            CobranzaModelo::mdlGuardarRendimiento($datos);
+        }
+    }
+    public static function ctrRedndimiento($ruta, $usr_id)
+    { 
+        
         $ficha = CobranzaModelo::mdlFichaActual();
         $fecha_inicio = $ficha['fcbz_fecha_inicio'];
         $fecha_fin = $ficha['fcbz_fecha_termino'];
 
-        $total_cuentas_catorcenales = array();
-        foreach ($cuentas_catorcenales as $catorcenales) {
-            if ($catorcenales['cra_fecha_cobro'] <= $fecha_fin || ($catorcenales['cra_fecha_reagenda'] <= $fecha_fin && $catorcenales['cra_fecha_reagenda'] != '0000-00-00')) {
-                array_push($total_cuentas_catorcenales, $catorcenales);
-            }
-        }
+        $rto = CobranzaModelo::mdlObtenerRendimiento($usr_id, $ficha['fcbz_id']);
 
-        $total_cuentas_quincenales = array();
-        foreach ($cuentas_quincenales as $quincenales) {
-            if ($quincenales['cra_fecha_cobro'] <= $fecha_fin || ($quincenales['cra_fecha_reagenda'] <= $fecha_fin && $quincenales['cra_fecha_reagenda'] != '0000-00-00')) {
-                array_push($total_cuentas_quincenales, $quincenales);
-            }
-        }
-
-        $total_cuentas_mensuales = array();
-        foreach ($cuentas_mensuales as $mensuales) {
-            if ($mensuales['cra_fecha_cobro'] <= $fecha_fin || ($mensuales['cra_fecha_reagenda'] <= $fecha_fin && $mensuales['cra_fecha_reagenda'] != '0000-00-00')) {
-                array_push($total_cuentas_mensuales, $mensuales);
-            }
-        }
-
-        $total_semanales = $total_cuentas_semanales['total'];
-        $total_catorcenales = sizeof($total_cuentas_catorcenales);
-        $total_quincenales = sizeof($total_cuentas_quincenales);
-        $total_mensuales = sizeof($total_cuentas_mensuales);
-
-        $total_cuentas_cobro = $total_semanales + $total_catorcenales + $total_quincenales + $total_mensuales;
 
         $total_cuentas_cobradas = CobranzaModelo::mdlCuentasCobradasRendimiento($usr_id, $fecha_inicio, $fecha_fin)['total_cuentas'];
         $total_cuentas_acumulado = CobranzaModelo::mdlCuentasCobradasRendimiento($usr_id, $fecha_inicio, $fecha_fin)['total_cobrado'];
 
-        $porcentaje_cobrado = ($total_cuentas_cobradas / $total_cuentas_cobro) * 100;
+        $porcentaje_cobrado = ($total_cuentas_cobradas / $rto['rto_total_cuentas_cobro']) * 100;
 
         $total_ganado = $total_cuentas_acumulado * 10 / 100;
 
         $totales = array(
-            'total_cuentas' => $total_cuentas['total'],
-            'total_semanales' => $total_semanales,
-            'total_catorcenales' => $total_catorcenales,
-            'total_quincenales' => $total_quincenales,
-            'total_mensuales' => $total_mensuales,
-            'total_cuentas_cobro' => $total_cuentas_cobro,
+            'total_cuentas' => $rto['rto_total_cuentas'],
+            'total_semanales' => $rto['rto_total_semanales'],
+            'total_catorcenales' => $rto['rto_total_catorcenales'],
+            'total_quincenales' => $rto['rto_total_quincenales'],
+            'total_mensuales' => $rto['rto_total_mensuales'],
+            'total_cuentas_cobro' => $rto['rto_total_cuentas_cobro'],
             'total_cuentas_cobradas' => $total_cuentas_cobradas,
             'porcentaje_cobrado' => $porcentaje_cobrado,
             'total_cuentas_acumulado' => $total_cuentas_acumulado != null ? $total_cuentas_acumulado : 0,
@@ -1684,21 +1715,22 @@ class CobranzaControlador
             );
         }
     }
-    public static function ctrGenerarNuevaFicha(){
+    public static function ctrGenerarNuevaFicha()
+    {
         $ultima_ficha = CobranzaModelo::mdlMostrarUltimaFicha();
         $año_actual = date("Y");
         $año_ultima_ficha = $ultima_ficha['fcbz_ano'];
 
-        if($año_actual == $año_ultima_ficha){
+        if ($año_actual == $año_ultima_ficha) {
             $fcbz_numero = $ultima_ficha['fcbz_numero'] + 1;
-        }else{
+        } else {
             $fcbz_numero = 1;
         }
 
         $fcbz_fecha_inicio = date("Y-m-d");
         $fcbz_fecha_termino = date("Y-m-d", strtotime("+6 day", strtotime($fcbz_fecha_inicio)));
 
-       return CobranzaModelo::mdlCrearFicha(array(
+        return CobranzaModelo::mdlCrearFicha(array(
             'fcbz_numero' => $fcbz_numero,
             'fcbz_fecha_inicio' => $fcbz_fecha_inicio,
             'fcbz_fecha_termino' => $fcbz_fecha_termino,

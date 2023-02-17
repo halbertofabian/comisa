@@ -578,4 +578,10 @@ $app->get('/crear_ficha', function (Request $request, Response $response, array 
      CobranzaControlador::ctrGenerarNuevaFicha();
     
 });
+//CREAR RENDIMIENTO
+$app->get('/crear_redimiento', function (Request $request, Response $response, array $args) {
+    
+     CobranzaControlador::ctrGuardarRendimiento();
+    
+});
 $app->run();

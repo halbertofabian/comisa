@@ -573,4 +573,21 @@ class UsuariosModelo
             $con = null;
         }
     }
+
+    public static function mdlObtenerCobradoresActivos(){
+        try {
+            //code...
+            $sql = "SELECT usr_id, usr_ruta FROM tbl_usuarios_usr WHERE usr_rol = 'Cobrador' AND usr_ruta != ''";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        }finally{
+            $pps = null;
+            $con = null;
+        }
+    }
 }
