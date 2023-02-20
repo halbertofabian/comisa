@@ -636,13 +636,6 @@ class CobranzaControlador
             CobranzaControlador::ctrRegistrarAbonosCobranzaApp($abs_c);
         }
 
-
-        // PARA FINZALIZAR COBRANZA
-        if (isset($datos[0]['Reagendados'])) {
-            $cts_r = json_encode($datos[0]['Reagendados'], true);
-            CobranzaControlador::ctrRegistrarReagendado($cts_r);
-        }
-
         if (isset($datos[1]['Pendientes'])) {
             // $cts_r = json_encode($datos[1]['Pendientes'], true);
             $data = json_decode(json_encode($datos[1]['Pendientes'], true), true);
@@ -658,7 +651,8 @@ class CobranzaControlador
             }
         }
 
-        // if (isset($datos[4]['LZR'])) {
+        // Millan pido que se eliminaran estos status -> Programador del futuro pregunta antes de descomentar esto. 
+        // if (isset($datos[4]['LZR'])) { // LOCALIZAR
         //     $data = json_decode(json_encode($datos[4]['LZR'], true), true);
         //     foreach ($data as $key => $etq) {
 
@@ -678,7 +672,8 @@ class CobranzaControlador
         //         );
         //     }
         // }
-        // if (isset($datos[5]['CCT'])) {
+        // 
+        //if (isset($datos[5]['CCT'])) { // CHECAR CONTRATO
         //     $data = json_decode(json_encode($datos[5]['CCT'], true), true);
         //     foreach ($data as $key => $etq) {
 
@@ -857,6 +852,11 @@ class CobranzaControlador
                     $etq
                 );
             }
+        }
+        // PARA FINZALIZAR COBRANZA
+        if (isset($datos[0]['Reagendados'])) {
+            $cts_r = json_encode($datos[0]['Reagendados'], true);
+            CobranzaControlador::ctrRegistrarReagendado($cts_r);
         }
     }
 
