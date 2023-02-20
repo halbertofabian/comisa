@@ -591,9 +591,22 @@ class CobranzaControlador
     {
         $cts_reagendado = json_decode($cts_reagendado, true);
         foreach ($cts_reagendado as  $cts_r) {
+
+            // Consultar contrato 
+            $cta = CobranzaModelo::mdlConsultarFormaPago($cts_r['cra_contrato']);
+
+            // Validar si fecha reagenda, revsa el siguiente pago proximo
+            $next_date = CobranzaControlador::crtReagendaSiguienteFecha($cta);
+            $next_day = date('Y-m-d', strtotime('+1 days'));
+            if ($cts_r['cra_fecha_reagenda'] > $next_date) {
+                $next_day = $next_date;
+            } else {
+                $next_day = $cts_r['cra_fecha_reagenda'];
+            }
+
             CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
                 'cra_fecha_cobro' => $cts_r['cra_fecha_cobro'],
-                'cra_fecha_reagenda' => $cts_r['cra_fecha_reagenda'],
+                'cra_fecha_reagenda' => $next_day,
                 'cra_estado' => 'PENDIENTE',
                 'cra_id' => $cts_r['cra_id']
             ));
@@ -1485,8 +1498,8 @@ class CobranzaControlador
         }
     }
     public static function ctrRedndimiento($ruta, $usr_id)
-    { 
-        
+    {
+
         $ficha = CobranzaModelo::mdlFichaActual();
         $fecha_inicio = $ficha['fcbz_fecha_inicio'];
         $fecha_fin = $ficha['fcbz_fecha_termino'];
@@ -1736,5 +1749,62 @@ class CobranzaControlador
             'fcbz_fecha_termino' => $fcbz_fecha_termino,
             'fcbz_ano' => $año_actual
         ));
+    }
+
+    public static function crtReagendaSiguienteFecha($cta)
+    {
+        $next_day = date('Y-m-d', strtotime('+1 days'));
+        if ($cta['ctr_forma_pago'] == 'SEMANALES') {
+            $next_day =  date('Y-m-d', strtotime('next Monday'));
+            if ($cta['ctr_dia_pago'] == 'LUNES') {
+                $next_day =  date('Y-m-d', strtotime('next Monday'));
+            } else if ($cta['ctr_dia_pago'] == 'MARTES') {
+                $next_day =  date('Y-m-d', strtotime('next Tuesday'));
+            } else if ($cta['ctr_dia_pago'] == 'MIERCOLES') {
+                $next_day =  date('Y-m-d', strtotime('next Wednesday'));
+            } else if ($cta['ctr_dia_pago'] == 'JUEVES') {
+                $next_day =  date('Y-m-d', strtotime('next Thursday'));
+            } else if ($cta['ctr_dia_pago'] == 'VIERNES') {
+                $next_day =  date('Y-m-d', strtotime('next Friday'));
+            } else if ($cta['ctr_dia_pago'] == 'SABADO') {
+                $next_day =  date('Y-m-d', strtotime('next Saturday'));
+            } else if ($cta['ctr_dia_pago'] == 'DOMINGO') {
+                $next_day =  date('Y-m-d', strtotime('next Sunday'));
+            }
+        } else if ($cta['ctr_forma_pago'] == 'CATORCENALES') {
+            $next_day = date('Y-m-d', strtotime('+7 days'));
+        } else if ($cta['ctr_forma_pago'] == 'QUINCENALES') {
+            $dias = $cta['ctr_dia_pago'];
+            $dias = explode('-', $dias);
+            $dia1 = $dias[0];
+            $dia2 = $dias[1];
+            $fecha_mes = date('Y-m', strtotime('this month'));
+            $dia1 = $dia1 < 10 ? "0" . $dia1 : $dia1;
+            $dia2 = $dia2 < 10 ? "0" . $dia2 : $dia2;
+
+            $fecha_mes_1 = $fecha_mes . '-' . $dia1;
+            $fecha_mes_2 = $fecha_mes . '-' . $dia2;
+            if ($fecha_mes_1 > FECHA_ACTUAL) {
+                $next_day = $fecha_mes_1;
+            } else if ($fecha_mes_2 > FECHA_ACTUAL) {
+                $next_day = $fecha_mes_2;
+            } else {
+                $next_mes = date('Y-m', strtotime('next month'));
+                $next_day = $next_mes . '-' . $dia1;
+            }
+        } else if ($cta['ctr_forma_pago'] == 'MENSUALES') {
+            $dia = $cta['ctr_dia_pago'];
+            $fecha_mes = date('Y-m', strtotime('this month'));
+            $dia = $dia < 10 ? "0" . $dia : $dia;
+            $fecha_mes = $fecha_mes . '-' . $dia;
+
+            if ($fecha_mes > FECHA_ACTUAL) {
+                $next_day = $fecha_mes;
+            } else {
+                $next_mes = date('Y-m', strtotime('next month'));
+                $next_day = $next_mes . '-' . $dia;
+            }
+        }
+        return $next_day;
     }
 }

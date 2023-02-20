@@ -1520,7 +1520,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT COUNT(*) AS total_cuentas, SUM(abs_monto) AS total_cobrado FROM tbl_abonos_cobranza_abs WHERE abs_estado_abono = 'AUTORIZADO' AND abs_id_cobrador = ? AND DATE(abs_fecha_cobro) BETWEEN ? AND ?";
+            $sql = " SELECT COUNT(*) AS total_cuentas, SUM(abs_monto) AS total_cobrado FROM tbl_abonos_cobranza_abs WHERE abs_estado_abono = 'AUTORIZADO' AND abs_id_cobrador = ? AND DATE(abs_fecha_cobro) BETWEEN ? AND ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr_id);
@@ -1866,6 +1866,26 @@ class CobranzaModelo
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $rto_id_usuario);
             $pps->bindValue(2, $rto_ficha);
+            $pps->execute();
+            return $pps->fetch();
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlConsultarFormaPago($ctr_id)
+    {
+        try {
+            //code...
+            $sql =  "SELECT ctr_forma_pago,ctr_dia_pago FROM tbl_contrato_crt_1 WHERE ctr_id = ? ;";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
             $pps->execute();
             return $pps->fetch();
             // return $pps->errorInfo();
