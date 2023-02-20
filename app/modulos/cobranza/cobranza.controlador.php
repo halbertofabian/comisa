@@ -596,7 +596,7 @@ class CobranzaControlador
             $cta = CobranzaModelo::mdlConsultarFormaPago($cts_r['cra_contrato']);
 
             // Validar si fecha reagenda, revsa el siguiente pago proximo
-            $next_date = CobranzaControlador::crtReagendaSiguienteFecha($cta);
+            $next_date = CobranzaControlador::crtConsultaSiguienteFecha($cta);
             $next_day = date('Y-m-d', strtotime('+1 days'));
             if ($cts_r['cra_fecha_reagenda'] > $next_date) {
                 $next_day = $next_date;
@@ -1751,7 +1751,7 @@ class CobranzaControlador
         ));
     }
 
-    public static function crtReagendaSiguienteFecha($cta)
+    public static function crtConsultaSiguienteFecha($cta)
     {
         $next_day = date('Y-m-d', strtotime('+1 days'));
         if ($cta['ctr_forma_pago'] == 'SEMANALES') {
