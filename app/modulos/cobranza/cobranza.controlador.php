@@ -645,46 +645,46 @@ class CobranzaControlador
             }
         }
 
-        if (isset($datos[4]['LZR'])) {
-            $data = json_decode(json_encode($datos[4]['LZR'], true), true);
-            foreach ($data as $key => $etq) {
+        // if (isset($datos[4]['LZR'])) {
+        //     $data = json_decode(json_encode($datos[4]['LZR'], true), true);
+        //     foreach ($data as $key => $etq) {
 
-                CobranzaControlador::ctrActualizarEtiquetas(
-                    array(
-                        'cra_estado' => $etq['cra_estado'],
-                        'cra_etiqueta' => $etq['cra_etiqueta'],
-                        'cra_id' => $etq['cra_id'],
-                        'cra_gestion' => $etq['cra_gestion'],
-                    ),
-                    array(
-                        'ctr_etiqueta' => $etq['cra_etiqueta'],
-                        'ctr_id' => $etq['cra_contrato'],
-                        'ctr_gestion' => $etq['cra_gestion'],
-                    ),
-                    $etq
-                );
-            }
-        }
-        if (isset($datos[5]['CCT'])) {
-            $data = json_decode(json_encode($datos[5]['CCT'], true), true);
-            foreach ($data as $key => $etq) {
+        //         CobranzaControlador::ctrActualizarEtiquetas(
+        //             array(
+        //                 'cra_estado' => $etq['cra_estado'],
+        //                 'cra_etiqueta' => $etq['cra_etiqueta'],
+        //                 'cra_id' => $etq['cra_id'],
+        //                 'cra_gestion' => $etq['cra_gestion'],
+        //             ),
+        //             array(
+        //                 'ctr_etiqueta' => $etq['cra_etiqueta'],
+        //                 'ctr_id' => $etq['cra_contrato'],
+        //                 'ctr_gestion' => $etq['cra_gestion'],
+        //             ),
+        //             $etq
+        //         );
+        //     }
+        // }
+        // if (isset($datos[5]['CCT'])) {
+        //     $data = json_decode(json_encode($datos[5]['CCT'], true), true);
+        //     foreach ($data as $key => $etq) {
 
-                CobranzaControlador::ctrActualizarEtiquetas(
-                    array(
-                        'cra_estado' => $etq['cra_estado'],
-                        'cra_etiqueta' => $etq['cra_etiqueta'],
-                        'cra_id' => $etq['cra_id'],
-                        'cra_gestion' => $etq['cra_gestion'],
-                    ),
-                    array(
-                        'ctr_etiqueta' => $etq['cra_etiqueta'],
-                        'ctr_id' => $etq['cra_contrato'],
-                        'ctr_gestion' => $etq['cra_gestion'],
-                    ),
-                    $etq
-                );
-            }
-        }
+        //         CobranzaControlador::ctrActualizarEtiquetas(
+        //             array(
+        //                 'cra_estado' => $etq['cra_estado'],
+        //                 'cra_etiqueta' => $etq['cra_etiqueta'],
+        //                 'cra_id' => $etq['cra_id'],
+        //                 'cra_gestion' => $etq['cra_gestion'],
+        //             ),
+        //             array(
+        //                 'ctr_etiqueta' => $etq['cra_etiqueta'],
+        //                 'ctr_id' => $etq['cra_contrato'],
+        //                 'ctr_gestion' => $etq['cra_gestion'],
+        //             ),
+        //             $etq
+        //         );
+        //     }
+        // }
         if (isset($datos[6]['SRV'])) {
             $data = json_decode(json_encode($datos[6]['SRV'], true), true);
             foreach ($data as $key => $etq) {
