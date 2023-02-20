@@ -1897,4 +1897,41 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public  static function mdlConsultarFichasByAnio($fcbz_ano)
+    {
+        try {
+            //code...
+            $sql =  "SELECT * FROM tbl_ficha_fcbz WHERE fcbz_ano = ? ORDER BY fcbz_numero DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $fcbz_ano);
+            $pps->execute();
+            return $pps->fetchAll();
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlConsultarRendimientoFiltro($rto_ruta, $rto_ficha)
+    {
+        try {
+            //code...
+            $sql =  "SELECT * FROM tbl_rendimiento_rto WHERE rto_ruta LIKE '%$rto_ruta' AND rto_ficha LIKE '%$rto_ficha' ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
