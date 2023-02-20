@@ -1346,11 +1346,9 @@ class CobranzaModelo
     {
         try {
 
-            $sql = "SELECT cra.*,ctr.ctr_id,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_saldo_actual,ctr.ctr_ultima_fecha_abono,ctr.ctr_status_cuenta,ctr.ctr_cliente FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_ruta = ? AND cra.cra_etiqueta = ? AND ctr.ctr_status_cuenta = 'VIGENTE' ORDER BY cra_orden ASC";
+            $sql = "SELECT cra.*,ctr.ctr_id,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_saldo_actual,ctr.ctr_ultima_fecha_abono,ctr.ctr_status_cuenta,ctr.ctr_cliente,ctr.clts_domicilio, ctr.clts_col, ctr.clts_coordenadas FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_ruta LIKE '%$ctr_ruta' AND cra.cra_etiqueta LIKE '%$cra_etiqueta' AND ctr.ctr_status_cuenta = 'VIGENTE' ORDER BY cra_orden ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ctr_ruta);
-            $pps->bindValue(2, $cra_etiqueta);
             $pps->execute();
             return $pps->fetchAll();
         } catch (PDOException $th) {

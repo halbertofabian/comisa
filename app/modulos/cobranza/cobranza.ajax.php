@@ -156,15 +156,19 @@ class CobranzaAjax
         $respuesta = CobranzaModelo::mdlMostrarCarteleraContratos($_POST['cra_status'], $_POST['ctr_ruta']);
         $array_cuentas = array();
         foreach ($respuesta as $cta) {
+            $coordenadas = explode("|", $cta['clts_coordenadas']);
+           
             array_push($array_cuentas, array(
                 'ctr_ruta' => $cta['ctr_ruta'],
                 'ctr_numero_cuenta' => $cta['ctr_numero_cuenta'],
                 'ctr_cliente' => $cta['ctr_cliente'],
+                'clts_domicilio' => $cta['clts_domicilio'],
+                'clts_col' => $cta['clts_col'],
+                'clts_coordenadas' => $coordenadas[0],
                 'ctr_saldo_actual' => $cta['ctr_saldo_actual'],
                 'cra_fecha_cobro' => $cta['cra_fecha_cobro'],
                 'cra_fecha_reagenda' => $cta['cra_fecha_reagenda'],
                 'cra_orden' => $cta['cra_orden'],
-                'cra_buttons' => '<button class="btn btn-primary">Agregar a cobr</button>',
             ));
             # code...
         }
