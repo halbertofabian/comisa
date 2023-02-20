@@ -1,16 +1,44 @@
 <div class="row">
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="fcbz_ano">Año</label>
+                    <select class="form-control select2" name="fcbz_ano" id="fcbz_ano">
+                        <!-- <option value="">Selecionar ruta</option> -->
+                        <?php
+                        for ($i = 2023; $i <= date('Y'); $i++) :
+                            $selected = '';
+                            if (date('Y') == $i) {
+                                $selected = 'selected';
+                            }
+                        ?>
+                            <option value="<?= $i ?>" <?= $selected ?>><?= $i ?></option>
+                        <?php endfor; ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="rto_ficha">Ficha</label>
+                    <select class="form-control select2" name="rto_ficha" id="rto_ficha">
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
                 <div class="form-group">
                     <label for="">Ruta</label>
                     <select class="form-control select2" name="" id="">
-                        <option value="">Selecionar ruta</option>
-                        <?php
-                        for ($i = 1; $i <= 50; $i++) :
-                        ?>
-                            <option value="R<?= $i ?>">R<?= $i ?></option>
-                        <?php endfor; ?>
+
                     </select>
                 </div>
             </div>
@@ -130,3 +158,48 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        var fcbz_ano = $("#fcbz_ano").val();
+
+        mostratFichasAnio(fcbz_ano)
+        // alert(fcbz_ano)
+    })
+
+    function mostratFichasAnio(fcbz_ano) {
+        $('#rto_ficha option').remove();
+        var datos = new FormData();
+        datos.append("fcbz_ano", fcbz_ano);
+        datos.append("btnConsultarFichasByAnio", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                // startLoadButton()
+
+            },
+            success: function(res) {
+                // console.log(res)
+                res.forEach(element => {
+
+                    $('#rto_ficha').prepend(`<option value='${element.fcbz_id}' >Ficha ${element.fcbz_numero} - DEL ${element.fcbz_fecha_inicio} AL ${element.fcbz_fecha_termino} </option>`);
+
+                });
+                $("#rto_ficha option:selected").last().val()
+
+            }
+
+        })
+    }
+
+    $("#fcbz_ano").on("change", function() {
+        var fcbz_ano = $(this).val();
+        mostratFichasAnio(fcbz_ano)
+    })
+</script>

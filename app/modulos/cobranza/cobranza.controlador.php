@@ -599,7 +599,8 @@ class CobranzaControlador
             $next_date = CobranzaControlador::crtConsultaSiguienteFecha($cta);
             $next_day = date('Y-m-d', strtotime('+1 days'));
             if ($cts_r['cra_fecha_reagenda'] > $next_date) {
-                $next_day = $next_date;
+                // $next_day = $next_date; Calcula su próxima fecha de pago
+                $next_day =  date('Y-m-d');
             } else {
                 $next_day = $cts_r['cra_fecha_reagenda'];
             }

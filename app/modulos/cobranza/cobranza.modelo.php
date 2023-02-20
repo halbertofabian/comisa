@@ -1916,11 +1916,11 @@ class CobranzaModelo
             $con = null;
         }
     }
-    public  static function mdlConsultarRendimientoFiltro($rto_ruta, $rto_ficha)
+    public  static function mdlConsultarRendimientoFiltro($rto_ruta, $fcbz_id)
     {
         try {
             //code...
-            $sql =  "SELECT * FROM tbl_rendimiento_rto WHERE rto_ruta LIKE '%$rto_ruta' AND rto_ficha LIKE '%$rto_ficha' ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC";
+            $sql =  "SELECT * FROM tbl_rendimiento_rto WHERE rto_ruta LIKE '%$rto_ruta' AND fcbz_id = '$fcbz_id' ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();

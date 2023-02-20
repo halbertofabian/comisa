@@ -195,7 +195,8 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrVerificarCancelacionAbono();
         echo json_encode($respuesta, true);
     }
-    public function ajaxHistorialFicha(){
+    public function ajaxHistorialFicha()
+    {
         $respuesta = CobranzaControlador::ctrHistorialFichas();
         // echo json_encode($respuesta, true);
         print json_encode($respuesta, JSON_UNESCAPED_UNICODE); //envio el array final el formato json a AJAX
@@ -214,15 +215,21 @@ class CobranzaAjax
         echo json_encode($respuesta, true);
     }
 
-    public function ajaxCodigoRetiro(){
+    public function ajaxCodigoRetiro()
+    {
         $respuesta = CobranzaControlador::ctrCodigoRetiro();
         echo json_encode($respuesta, true);
     }
-    public function ajaxAplicarCodigoRetiro(){
+    public function ajaxAplicarCodigoRetiro()
+    {
         $respuesta = CobranzaControlador::ctrAplicarCodigoRetiro();
         echo json_encode($respuesta, true);
     }
-    
+    public function ajaxConsultarFichasByAnio()
+    {
+        $respuesta = CobranzaModelo::mdlConsultarFichasByAnio($_POST['fcbz_ano']);
+        echo json_encode($respuesta, true);
+    }
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -307,7 +314,7 @@ if (isset($_POST['btnVerificar'])) {
     $btnVerificarCodigo->ajaxVerificarCancelacion();
 }
 
-if(isset($_POST['btnMostrarHistorialTable'])){
+if (isset($_POST['btnMostrarHistorialTable'])) {
     $btnMostrarHistorialTable = new CobranzaAjax();
     $btnMostrarHistorialTable->ajaxHistorialFicha();
 }
@@ -329,3 +336,7 @@ if (isset($_POST['btnAplicarCodigoRetiro'])) {
 }
 
 
+if (isset($_POST['btnConsultarFichasByAnio'])) {
+    $btnConsultarFichasByAnio = new CobranzaAjax();
+    $btnConsultarFichasByAnio->ajaxConsultarFichasByAnio();
+}
