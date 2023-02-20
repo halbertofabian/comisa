@@ -1920,7 +1920,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql =  "SELECT * FROM tbl_rendimiento_rto WHERE rto_ruta LIKE '%$rto_ruta' AND rto_ficha LIKE '%$rto_ficha' ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC";
+            $sql =  "SELECT usr.usr_nombre, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha LIKE '%$rto_ficha' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
