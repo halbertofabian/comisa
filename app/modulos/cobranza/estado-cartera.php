@@ -18,45 +18,63 @@
         cursor: pointer;
     }
 </style>
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-4">
-            <form id="formListarStatus" method="post">
-                <div class="form-group">
-                    <label for="ctr_ruta">Ruta</label>
-                    <select name="ctr_ruta" id="ctr_ruta" class="form-control select2">
-                        <option value="">Selecionar ruta</option>
-                        <?php
-                        for ($i = 1; $i <= 50; $i++) :
-                        ?>
-                            <option value="R<?= $i ?>">R<?= $i ?></option>
-                        <?php endfor; ?>
-                    </select>
-                </div>
-            </form>
+            <div class="form-group">
+                <label for="ctr_ruta">Ruta</label>
+                <select name="ctr_ruta" id="ctr_ruta" class="form-control select2">
+                    <option value="">Selecionar ruta</option>
+                    <?php
+                    for ($i = 1; $i <= 50; $i++) :
+                    ?>
+                        <option value="R<?= $i ?>">R<?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="cra_etiqueta">Etiqueta</label>
+                <select name="cra_etiqueta" id="cra_etiqueta" class="form-control select2">
+                    <option value="">Selecionar etiqueta</option>
+                    <?php
+                    $etiquetas = [
+                        "LZR" => "Localizar",
+                        "SRV" => "Servicios",
+                        "RCG" => "Recoger",
+                        "SPR" => "Supervisar",
+                        "TRT" => "Traspasos",
+                        "SLS" => "Seg. en llamadas",
+                        "CVS" => "Convenios",
+                        "FLS" => "Fallecidas",
+                        "JDC" => "Juridico",
+                    ];
+
+                    foreach ($etiquetas as $key => $etq) :
+                    ?>
+                        <option value="<?= $key ?>"><?= $etq ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="row" id="lista_status" style="height: 420px; overflow-y: scroll; padding-right:2rm;">
-
-            </div>
-        </div>
-        <div class="col-md-8 table-responsive" style="height: 420px; overflow-y: scroll; padding:4px;">
+        <div class="col-md-12 table-responsive">
             <table id="datatable_cuenta" class="table table-striped table-bordered table-hover tablaStatus tablas">
                 <thead>
                     <tr class="text-center">
                         <th>#RUTA</th>
                         <th>#CUENTA</th>
                         <th>CLIENTE</th>
+                        <th>DIRECCIÓN</th>
+                        <th>COLONIA</th>
+                        <th>COORDENADAS</th>
                         <th>SALDO</th>
                         <th>FECHA COBRO</th>
                         <th>FECHA REAGENDA</th>
                         <th>ORDEN</th>
-                        <th>ACCIONES</th>
                     </tr>
                 </thead>
             </table>
@@ -66,102 +84,18 @@
 
 
 <script>
+    $(document).ready(function() {
+        mostrarStatus();
+    });
+
     $("#ctr_ruta").on("change", function() {
-        listarStatusCliente();
+        mostrarStatus();
+    })
+    $("#cra_etiqueta").on("change", function() {
+        mostrarStatus();
     })
 
-    function listarStatusCliente() {
-        var datos = new FormData()
-        datos.append("ctr_ruta", $("#ctr_ruta").val());
-        datos.append("btnListarStatus", true);
-        $.ajax({
-
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-            method: "POST",
-            data: datos,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            beforeSend: function() {},
-            success: function(res) {
-
-                var lista_status = "";
-                console.log(res)
-                res.forEach(etq => {
-                    lista_status += " " +
-                        `
-                    
-                <div class="col-md-6">
-                    <div class="card card-status btnMostrarStatus" onclick="mostrarStatus('${etq.data.etiqueta}')">
-                        <div class="card-body">
-                           <center> <img src="${etq.data.icono}" width="50px"></center>
-                            <h6 class="card-title text-center">${etq.data.status}</h6>
-                            <p class="card-text text-center">
-                                <span class="badge bg-danger text-white p-2">${etq.count}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                    
-                    `;
-                });
-
-                $("#lista_status").html(lista_status);
-
-            }
-        })
-    }
-
-    function mostrarStatus2(cra_status) {
-
-        var datos = new FormData()
-        datos.append("ctr_ruta", $("#ctr_ruta").val());
-        datos.append("cra_status", cra_status);
-        datos.append("btnMostrarCuentasStatus", true);
-        $.ajax({
-
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-            method: "POST",
-            data: datos,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            beforeSend: function() {},
-            success: function(res) {
-                console.log(res)
-
-                var tbodyStatus = "";
-
-
-                res.forEach(cra => {
-                    tbodyStatus +=
-                        `
-                    
-                    <tr class="text-center">
-                    
-                        <td>${cra.ctr_ruta}</td>
-                        <td>${cra.ctr_numero_cuenta}</td>
-                        <td>${cra.ctr_cliente}</td>
-                        <td>${cra.ctr_saldo_actual}</td>
-                        <td>${cra.cra_fecha_cobro}</td>
-                        <td>${cra.cra_fecha_reagenda}</td>
-                        <td>${cra.cra_orden}</td>
-                        <td></td>
-                    
-                    </tr>
-
-                    
-                    `;
-                });
-                $("#tbodyStatus").html(tbodyStatus);
-
-            }
-        })
-    }
-
-    function mostrarStatus(cra_status) {
+    function mostrarStatus() {
         datatable_productos = $('#datatable_cuenta').DataTable({
             dom: 'Bfrtip',
             responsive: true,
@@ -174,7 +108,7 @@
                 "data": {
                     btnMostrarCuentasStatus: true,
                     ctr_ruta: $("#ctr_ruta").val(),
-                    cra_status: cra_status
+                    cra_status: $("#cra_etiqueta").val()
 
                 }, //enviamos opcion 4 para que haga un SELECT
                 "dataSrc": ""
@@ -190,6 +124,15 @@
                     "data": "ctr_cliente"
                 },
                 {
+                    "data": "clts_domicilio"
+                },
+                {
+                    "data": "clts_col"
+                },
+                {
+                    "data": "clts_coordenadas"
+                },
+                {
                     "data": "ctr_saldo_actual"
                 },
                 {
@@ -201,9 +144,7 @@
                 {
                     "data": "cra_orden"
                 },
-                {
-                    "data": "cra_buttons"
-                }
+                
                 // {
                 //     "defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-primary btn-sm btnEditar'><i class='material-icons'>edit</i></button><button class='btn btn-danger btn-sm btnBorrar'><i class='material-icons'>delete</i></button></div></div>"
                 // }

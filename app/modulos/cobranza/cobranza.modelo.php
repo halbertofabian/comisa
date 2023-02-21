@@ -1346,11 +1346,9 @@ class CobranzaModelo
     {
         try {
 
-            $sql = "SELECT cra.*,ctr.ctr_id,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_saldo_actual,ctr.ctr_ultima_fecha_abono,ctr.ctr_status_cuenta,ctr.ctr_cliente FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_ruta = ? AND cra.cra_etiqueta = ? AND ctr.ctr_status_cuenta = 'VIGENTE' ORDER BY cra_orden ASC";
+            $sql = "SELECT cra.*,ctr.ctr_id,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_saldo_actual,ctr.ctr_ultima_fecha_abono,ctr.ctr_status_cuenta,ctr.ctr_cliente,ctr.clts_domicilio, ctr.clts_col, ctr.clts_coordenadas FROM tbl_cartelera_cra cra JOIN tbl_contrato_crt_1 ctr ON cra.cra_contrato = ctr.ctr_id WHERE ctr.ctr_ruta LIKE '%$ctr_ruta' AND cra.cra_etiqueta LIKE '%$cra_etiqueta' AND ctr.ctr_status_cuenta = 'VIGENTE' ORDER BY cra_orden ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ctr_ruta);
-            $pps->bindValue(2, $cra_etiqueta);
             $pps->execute();
             return $pps->fetchAll();
         } catch (PDOException $th) {
@@ -1920,7 +1918,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql =  "SELECT * FROM tbl_rendimiento_rto WHERE rto_ruta LIKE '%$rto_ruta' AND fcbz_id = '$fcbz_id' ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC";
+            $sql =  "SELECT usr.usr_nombre, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.fcbz_id = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
