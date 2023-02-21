@@ -318,71 +318,157 @@
         ?>
 
             <div class="container">
-                <div class="row">
-                    <div class="col-12 mb-1">
-                        <!-- <a href="" class="btn btn-success"><i class="fa fa-upload"></i> Importar</a> -->
-                        <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") : ?>
-                            <a href="<?php echo HTTP_HOST . 'usuarios/new' ?>" class="btn btn-primary float-right"> <i class="fa fa-plus"></i> Nuevo usuario</a>
-                        <?php endif; ?>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="usuariosA-tab" data-toggle="tab" href="#usuariosA" role="tab" aria-controls="usuariosA" aria-selected="true">Lista de usuarios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="usuariosI-tab" data-toggle="tab" href="#usuariosI" role="tab" aria-controls="usuariosI" aria-selected="false">Lista de usuarios dados de baja</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="usuariosA" role="tabpanel" aria-labelledby="usuariosA-tab">
+                        <div class="row">
+                            <div class="col-12 mb-1">
+                                <!-- <a href="" class="btn btn-success"><i class="fa fa-upload"></i> Importar</a> -->
+                                <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") : ?>
+                                    <a href="<?php echo HTTP_HOST . 'usuarios/new' ?>" class="btn btn-primary float-right"> <i class="fa fa-plus"></i> Nuevo usuario</a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped tablas dt-responsive tablaUsuarios">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <!-- <th>Código QR</th> -->
+                                                <th>Deuda ext.</th>
+                                                <th>Deuda int.</th>
+                                                <th>Teléfono</th>
+                                                <th>Correo electrónico</th>
+                                                <th>Rol</th>
+                                                <th>Usuario registro</th>
+                                                <th>Fecha registro</th>
+
+
+                                                <th>Acciones</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+                                            foreach ($usuarios as $key => $usr) :
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $usr['usr_nombre'] ?></td>
+
+                                                    <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
+                                                    <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
+                                                    <td><?php echo $usr['usr_telefono'] ?></td>
+                                                    <td><?php echo $usr['usr_correo'] ?></td>
+                                                    <td class="text-center">
+                                                        <?php if ($usr['usr_rol'] == "Cobrador") {
+                                                            echo $usr['usr_rol'] . "<br>" . $usr['usr_ruta'];
+                                                        } else {
+                                                            echo $usr['usr_rol'];
+                                                        } ?>
+                                                    </td>
+                                                    <td><?php echo $usr['usr_usuario_registro'] ?></td>
+                                                    <td><?php echo $usr['usr_fecha_registro'] ?></td>
+
+
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="fa fa-filter" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <!-- <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button> -->
+                                                                <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
+                                                                <div class="dropdown-divider"></div>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped tablas dt-responsive tablaUsuarios">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <!-- <th>Código QR</th> -->
-                                        <th>Deuda ext.</th>
-                                        <th>Deuda int.</th>
-                                        <th>Teléfono</th>
-                                        <th>Correo electrónico</th>
-                                        <th>Rol</th>
-                                        <th>Usuario registro</th>
-                                        <th>Fecha registro</th>
+                    <div class="tab-pane fade" id="usuariosI" role="tabpanel" aria-labelledby="usuariosI-tab">
+                        <div class="row">
+                            <div class="col-12 mb-1">
+                                <!-- <a href="" class="btn btn-success"><i class="fa fa-upload"></i> Importar</a> -->
+                                <?php if ($_SESSION['session_usr']['usr_rol'] == "Administrador") : ?>
+                                    <a href="<?php echo HTTP_HOST . 'usuarios/new' ?>" class="btn btn-primary float-right"> <i class="fa fa-plus"></i> Nuevo usuario</a>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                    <table class="table table-striped tablas dt-responsive tablaUsuarios">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <!-- <th>Código QR</th> -->
+                                                <th>Deuda ext.</th>
+                                                <th>Deuda int.</th>
+                                                <th>Teléfono</th>
+                                                <th>Correo electrónico</th>
+                                                <th>Rol</th>
+                                                <th>Usuario registro</th>
+                                                <th>Fecha registro</th>
 
 
-                                        <th>Acciones</th>
+                                                <th>Acciones</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $usuarios = UsuariosModelo::mdlMostrarUsuarios();
-                                    foreach ($usuarios as $key => $usr) :
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $usr['usr_nombre'] ?></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $usuarios = UsuariosModelo::mdlMostrarUsuarios("", "Baja de usuario");
+                                            foreach ($usuarios as $key => $usr) :
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $usr['usr_nombre'] ?></td>
 
-                                            <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
-                                            <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
-                                            <td><?php echo $usr['usr_telefono'] ?></td>
-                                            <td><?php echo $usr['usr_correo'] ?></td>
-                                            <td><?php echo $usr['usr_rol'] ?></td>
-                                            <td><?php echo $usr['usr_usuario_registro'] ?></td>
-                                            <td><?php echo $usr['usr_fecha_registro'] ?></td>
+                                                    <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
+                                                    <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
+                                                    <td><?php echo $usr['usr_telefono'] ?></td>
+                                                    <td><?php echo $usr['usr_correo'] ?></td>
+                                                    <td><?php echo $usr['usr_rol'] ?></td>
+                                                    <td><?php echo $usr['usr_usuario_registro'] ?></td>
+                                                    <td><?php echo $usr['usr_fecha_registro'] ?></td>
 
 
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="fa fa-filter" aria-hidden="true"></i>
-                                                    </button>
-                                                    <div class="dropdown-menu">
-                                                        <!-- <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button> -->
-                                                        <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
-                                                        <div class="dropdown-divider"></div>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="fa fa-filter" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <!-- <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button> -->
+                                                                <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
+                                                                <div class="dropdown-divider"></div>
 
-                                                    </div>
-                                                </div>
-                                            </td>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
         <?php endif; ?>
