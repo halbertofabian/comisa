@@ -198,6 +198,39 @@
         })
     }
 
+    function mostratRendimientoFicha(rto_ruta,fcbz_id) {
+        // $('#rto_ficha option').remove();
+        var datos = new FormData();
+        datos.append("rto_ruta", rto_ruta);
+        datos.append("fcbz_id", fcbz_id);
+        datos.append("btnConsultarFichasByAnio", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {
+                // startLoadButton()
+
+            },
+            success: function(res) {
+                // console.log(res)
+
+                // res.forEach(element => {
+
+                //     $('#rto_ficha').prepend(`<option value='${element.fcbz_id}' >Ficha ${element.fcbz_numero} - DEL ${element.fcbz_fecha_inicio} AL ${element.fcbz_fecha_termino} </option>`);
+
+                // });
+                // $("#rto_ficha option:selected").last().val()
+
+            }
+
+        })
+    }
+
     $("#fcbz_ano").on("change", function() {
         var fcbz_ano = $(this).val();
         mostratFichasAnio(fcbz_ano)
