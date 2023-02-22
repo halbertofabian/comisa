@@ -1531,6 +1531,33 @@ class CobranzaControlador
 
         return $totales;
     }
+    public static function ctrRedndimientoV2($fcbz_id)
+    {
+
+        $ficha = CobranzaModelo::mdlFichaActualById($fcbz_id);
+        $fecha_inicio = $ficha['fcbz_fecha_inicio'];
+        $fecha_fin = $ficha['fcbz_fecha_termino'];
+
+        // $rto = CobranzaModelo::mdlObtenerRendimiento($usr_id, $fcbz_id);
+
+
+        $total_cuentas_cobradas = CobranzaModelo::mdlCuentasCobradasRendimientoV2($fecha_inicio, $fecha_fin)['total_cuentas'];
+        $total_cuentas_acumulado = CobranzaModelo::mdlCuentasCobradasRendimientoV2($fecha_inicio, $fecha_fin)['total_cobrado'];
+
+        // $porcentaje_cobrado = ($total_cuentas_cobradas / $rto['rto_total_cuentas_cobro']) * 100;
+
+        $total_ganado = $total_cuentas_acumulado * 10 / 100;
+
+        $totales = array(
+            'total_cuentas_cobradas' => $total_cuentas_cobradas,
+            // 'porcentaje_cobrado' => $porcentaje_cobrado,
+            'total_cuentas_acumulado' => $total_cuentas_acumulado != null ? $total_cuentas_acumulado : 0,
+            'total_ganado' => $total_ganado,
+
+        );
+
+        return $totales;
+    }
 
     public static function ctrSolicitarCancelacionAbono()
     {

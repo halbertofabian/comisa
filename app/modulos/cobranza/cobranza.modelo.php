@@ -1514,16 +1514,53 @@ class CobranzaModelo
             $con = null;
         }
     }
+    public  static function mdlFichaActualById($fcbz_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_ficha_fcbz WHERE fcbz_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $fcbz_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public  static function mdlCuentasCobradasRendimiento($usr_id, $fecha_inicio, $fecha_fin)
     {
         try {
             //code...
-            $sql = " SELECT COUNT(*) AS total_cuentas, SUM(abs_monto) AS total_cobrado FROM tbl_abonos_cobranza_abs WHERE abs_estado_abono = 'AUTORIZADO' AND abs_id_cobrador = ? AND DATE(abs_fecha_cobro) BETWEEN ? AND ? ";
+            $sql = " SELECT COUNT(*) AS total_cuentas, SUM(abs_monto) AS total_cobrado FROM tbl_abonos_cobranza_abs WHERE abs_estado_abono = 'AUTORIZADO' AND abs_id_cobrador = ? AND abs_mp != 'DESCUENTO' AND DATE(abs_fecha_cobro) BETWEEN ? AND ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr_id);
             $pps->bindValue(2, $fecha_inicio);
             $pps->bindValue(3, $fecha_fin);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlCuentasCobradasRendimientoV2($fecha_inicio, $fecha_fin)
+    {
+        try {
+            //code...
+            $sql = " SELECT COUNT(*) AS total_cuentas, SUM(abs_monto) AS total_cobrado FROM tbl_abonos_cobranza_abs WHERE abs_estado_abono = 'AUTORIZADO' AND abs_mp != 'DESCUENTO' AND DATE(abs_fecha_cobro) BETWEEN ? AND ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $fecha_inicio);
+            $pps->bindValue(2, $fecha_fin);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
@@ -1918,7 +1955,25 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql =  "SELECT usr.usr_nombre, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.fcbz_id = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
+            $sql =  "SELECT usr.usr_nombre, usr.usr_id, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public  static function mdlConsultarRutasRto()
+    {
+        try {
+            //code...
+            $sql =  "SELECT rto_ruta FROM tbl_rendimiento_rto ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();

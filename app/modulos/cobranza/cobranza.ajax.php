@@ -234,6 +234,16 @@ class CobranzaAjax
         $respuesta = CobranzaModelo::mdlConsultarFichasByAnio($_POST['fcbz_ano']);
         echo json_encode($respuesta, true);
     }
+    public function ajaxConsultarRendimiento()
+    {
+        $respuesta = CobranzaModelo::mdlConsultarRendimientoFiltro($_POST['rto_ruta'], $_POST['fcbz_id']);
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxConsultarRendimientoV2()
+    {
+        $respuesta = CobranzaControlador::ctrRedndimientoV2($_POST['fcbz_id']);
+        echo json_encode($respuesta, true);
+    }
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -343,4 +353,12 @@ if (isset($_POST['btnAplicarCodigoRetiro'])) {
 if (isset($_POST['btnConsultarFichasByAnio'])) {
     $btnConsultarFichasByAnio = new CobranzaAjax();
     $btnConsultarFichasByAnio->ajaxConsultarFichasByAnio();
+}
+if (isset($_POST['btnConsultarRendimiento'])) {
+    $btnConsultarRendimiento = new CobranzaAjax();
+    $btnConsultarRendimiento->ajaxConsultarRendimiento();
+}
+if (isset($_POST['btnConsultarRendimientoV2'])) {
+    $btnConsultarRendimientoV2 = new CobranzaAjax();
+    $btnConsultarRendimientoV2->ajaxConsultarRendimientoV2();
 }
