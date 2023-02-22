@@ -748,8 +748,13 @@ class AppControlador
                         ],
                         [
                             'icon' => '',
-                            'label' => 'Status / Rendimiento',
+                            'label' => 'Status',
                             'href' => 'cobranza/status'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Rendimiento',
+                            'href' => 'cobranza/rendimiento'
                         ],
                         // [
                         //     'icon' => '',
@@ -1220,8 +1225,13 @@ class AppControlador
 
                         [
                             'icon' => '',
-                            'label' => 'Status / Rendimiento',
+                            'label' => 'Status',
                             'href' => 'cobranza/status'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Rendimiento',
+                            'href' => 'cobranza/rendimiento'
                         ],
                         [
                             'icon' => '',
