@@ -282,15 +282,21 @@ class ContratosModelo
     public static function mdlConsultarContratosAllV2($ctr_fecha_contrato)
     {
         try {
-            //c4ode...
-
-            $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE YEAR(ctr_fecha_contrato) = ? ORDER BY ctr.ctr_fecha_contrato DESC";
-
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ctr_fecha_contrato);
-            $pps->execute();
-            return $pps->fetchAll();
+            if ($ctr_fecha_contrato == "") {
+                $anio = date("Y");
+                $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE YEAR(ctr_fecha_contrato) = '0000' OR YEAR(ctr_fecha_contrato) < '2000' OR YEAR(ctr_fecha_contrato) > $anio ORDER BY ctr.ctr_fecha_contrato DESC";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->execute();
+                return $pps->fetchAll();
+            } else {
+                $sql = "SELECT ctr.*,usr.usr_nombre FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE YEAR(ctr_fecha_contrato) = ? ORDER BY ctr.ctr_fecha_contrato DESC";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $ctr_fecha_contrato);
+                $pps->execute();
+                return $pps->fetchAll();
+            }
         } catch (PDOException $th) {
             //throw $th;
         } finally {

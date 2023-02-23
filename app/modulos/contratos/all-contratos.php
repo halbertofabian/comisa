@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label for="ctr_anio">Año</label>
                             <select class="form-control" name="ctr_anio" id="ctr_anio">
-                                <option value="0000">Sin fecha</option>
+                                <option value="">Sin fecha</option>
 
                                 <?php
                                 $year = date("Y");
