@@ -6,9 +6,7 @@ cargarComponente('breadcrumb', '', 'Listado de clientes con mal historial');
 
 
 <div class="row">
-
     <div class="col-12">
-
         <div class="card">
             <div class="card-body">
                 <a href="<?php echo HTTP_HOST . 'importar-clientes-mal-historial' ?>" class="btn btn-success">Importar clientes</a>
@@ -17,31 +15,12 @@ cargarComponente('breadcrumb', '', 'Listado de clientes con mal historial');
             </div>
         </div>
     </div>
-
+</div>
+<div class="row">
     <div class="col-12">
-
-        <?php
-
-        $url_api = HTTP_HOST . 'api/public/clientes_control';
-
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer" => false,
-                "verify_peer_name" => false,
-            ),
-        );
-        $clientes_mal = file_get_contents($url_api, false, stream_context_create($arrContextOptions));
-
-        $clientes_mal = json_decode($clientes_mal, true);
-
-        $clientes_mal = $clientes_mal['data'];
-
-
-        ?>
-        <div class="card">
-
+        <div class="card table-responsive">
             <div class="card-body">
-                <table class="table table-striped table-bordered tablas dt-responsive">
+                <table class="table table-striped table-bordered" style="width: 100%;" id="datatable_clientes_mal">
                     <thead>
                         <tr>
                             <th>Ruta</th>
@@ -55,33 +34,10 @@ cargarComponente('breadcrumb', '', 'Listado de clientes con mal historial');
                             <th>Cuenta</th>
                             <th>Articulo</th>
                             <th>Fecha venta</th>
-                            <th></th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php foreach ($clientes_mal as $key => $cts_mal) : ?>
-                            <tr>
 
-                                <td><?= $cts_mal['clts_ruta'] ?></td>
-                                <td><?= $cts_mal['clts_nombre'] ?></td>
-                                <td><?= $cts_mal['clts_telefono'] ?></td>
-                                <td><?= $cts_mal['clts_domicilio'] . ' ' . $cts_mal['clts_col'] ?></td>
-                                <td><?= $cts_mal['clts_ubicacion'] ?></td>
-                                <td><?= '<strong class="text-danger">' . $cts_mal['clts_tipo_cliente'] . '</strong>' ?></td>
-                                <td><?= $cts_mal['clts_curp'] ?></td>
-                                <td><?= $cts_mal['clts_observaciones'] ?></td>
-                                <td><?= $cts_mal['clts_cuenta'] ?></td>
-                                <td><?= $cts_mal['clts_articulo'] ?></td>
-                                <td><?= $cts_mal['clts_fecha_venta'] ?></td>
-                                <td>
-                                    <a href="<?= HTTP_HOST . 'edit-cliente-mal-historial/' . $cts_mal['clts_id']  ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-                                </td>
-
-
-                            </tr>
-                        <?php endforeach; ?>
-
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -91,3 +47,61 @@ cargarComponente('breadcrumb', '', 'Listado de clientes con mal historial');
 
 
 </div>
+
+<script>
+    $(document).ready(function() {
+        mostrarClientesMalHistorial();
+    });
+
+    function mostrarClientesMalHistorial() {
+        datatable_clientes_mal = $('#datatable_clientes_mal').DataTable({
+            responsive: true,
+            'ajax': {
+                'url': urlApp + 'app/modulos/clientes/clientes.ajax.php',
+                'method': 'POST', //usamos el metodo POST
+                'data': {
+                    btnMostrarClientesMalHistorial: true,
+                }, //enviamos opcion 4 para que haga un SELECT
+                'dataSrc': ''
+            },
+            'bDestroy': true,
+            'columns': [{
+                    'data': 'clts_ruta'
+                },
+                {
+                    'data': 'clts_nombre'
+                },
+                {
+                    'data': 'clts_telefono'
+                },
+                {
+                    'data': 'clts_domicilio'
+                },
+                {
+                    'data': 'clts_ubicacion'
+                },
+                {
+                    'data': 'clts_tipo_cliente'
+                },
+                {
+                    'data': 'clts_curp'
+                },
+                {
+                    'data': 'clts_observaciones'
+                },
+                {
+                    'data': 'clts_cuenta'
+                },
+                {
+                    'data': 'clts_articulo'
+                },
+                {
+                    'data': 'clts_fecha_venta'
+                },
+                {
+                    'data': 'acciones'
+                },
+            ]
+        });
+    }
+</script>
