@@ -87,7 +87,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h3 id="rto_total_semanales"></h3>
-                                <p class="card-text text-center">Semanasles</p>
+                                <p class="card-text text-center">Semanales</p>
                             </div>
                         </div>
                     </div>
