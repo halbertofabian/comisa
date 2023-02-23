@@ -215,7 +215,7 @@ class ContratosAjax
     }
     public function ajaxMostrarContratosAll()
     {
-        $respuesta = ContratosModelo::mdlConsultarContratosAll();
+        $respuesta = ContratosModelo::mdlConsultarContratosAllV2($_POST['ctr_anio']);
         $array_contratos = array();
         foreach ($respuesta as $ctr) {
             array_push($array_contratos, array(

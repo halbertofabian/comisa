@@ -19,6 +19,36 @@
 </div> -->
 
 <div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xl-3 col-md-5 col-12">
+                        <div class="form-group">
+                            <label for="ctr_anio">Año</label>
+                            <select class="form-control" name="ctr_anio" id="ctr_anio">
+                                <option value="0000">Sin fecha</option>
+
+                                <?php
+                                $year = date("Y");
+                                for ($i = 2000; $i <= $year; $i++) :
+                                    if ($i == $year) {
+                                        $selected = "selected";
+                                    } else {
+                                        $selected = "";
+                                    }
+                                ?>
+                                    <option <?= $selected ?> value="<?= $i ?>"><?= $i ?></option>;
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12">
         <table class="table table-striped table-bordered tablas" id="datatable_contratos">
             <thead>
@@ -44,6 +74,10 @@
         mostrarContratos()
     });
 
+    $('#ctr_anio').on('change', function() {
+        mostrarContratos();
+    });
+
     function mostrarContratos() {
         datatable_contratos = $('#datatable_contratos').DataTable({
             // dom: 'Bfrtip',
@@ -55,6 +89,7 @@
                 'url': urlApp + 'app/modulos/contratos/contratos.ajax.php',
                 'method': 'POST', //usamos el metodo POST
                 'data': {
+                    ctr_anio: $("#ctr_anio").val(),
                     btnMostrarContratosAll: true,
                 }, //enviamos opcion 4 para que haga un SELECT
                 'dataSrc': ''

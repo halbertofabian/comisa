@@ -503,49 +503,66 @@ class ClientesControlador
     public static function ctrlRegistrarClienteMal()
     {
 
-         $_POST['clts_id'] = NULL;   
-         $_POST['clts_articulo'] = "";   
-         $_POST['clts_fecha_venta'] = $_POST['clts_fecha_venta'];   
+        $_POST['clts_id'] = NULL;
+        $_POST['clts_articulo'] = "";
+        $_POST['clts_fecha_venta'] = $_POST['clts_fecha_venta'];
         $registrarClienteMal = ClientesModelo::mdlAgregarClientesMorososByExcel($_POST);
 
-        if($registrarClienteMal){
+        if ($registrarClienteMal) {
             return array(
                 'status' => true,
                 'mensaje' => 'Se guardo correctamente el registro',
                 'pagina' => HTTP_HOST . 'clientes-mal-historial'
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => '¡Ups! Ocurrio un error, intenta de nuevo',
                 'pagina' => HTTP_HOST . ''
             );
         }
-
-        
-
-
     }
     public static function ctrlEditarClienteMal()
     {
         $registrarClienteMal = ClientesModelo::mdlActualizarClientes($_POST);
 
-        if($registrarClienteMal){
+        if ($registrarClienteMal) {
             return array(
                 'status' => true,
                 'mensaje' => 'Se actualizó correctamente el registro',
                 'pagina' => HTTP_HOST . 'clientes-mal-historial'
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => '¡Ups! Ocurrio un error, intenta de nuevo',
                 'pagina' => HTTP_HOST . ''
             );
         }
+    }
+    public static function ctrMostrarClientesMalHistorial()
+    {
 
-        
+        $respuesta = ClientesModelo::mdlMostrarClientesMalHistorial();
+        $array_clientes = array();
+        foreach ($respuesta as $cts_mal) {
+            array_push($array_clientes, array(
+                'clts_ruta' => $cts_mal['clts_ruta'],
+                'clts_nombre' => $cts_mal['clts_nombre'],
+                'clts_telefono' => $cts_mal['clts_telefono'],
+                'clts_domicilio' => $cts_mal['clts_domicilio'] . ' ' . $cts_mal['clts_col'],
+                'clts_ubicacion' => $cts_mal['clts_ubicacion'],
+                'clts_tipo_cliente' => '<strong class="text-danger">' . $cts_mal['clts_tipo_cliente'] . '</strong>',
+                'clts_curp' => $cts_mal['clts_curp'],
+                'clts_observaciones' => $cts_mal['clts_observaciones'],
+                'clts_cuenta' => $cts_mal['clts_cuenta'],
+                'clts_articulo' => $cts_mal['clts_articulo'],
+                'clts_fecha_venta' => $cts_mal['clts_fecha_venta'],
+                'acciones' => '<a href="' . HTTP_HOST . 'edit-cliente-mal-historial/' . $cts_mal['clts_id'] . '" class="btn btn-warning"><i class="fa fa-edit"></i></a>',
+            ));
+            # code...
+        }
 
-
+        return $array_clientes;
     }
 }

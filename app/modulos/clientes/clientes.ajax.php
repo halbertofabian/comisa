@@ -60,6 +60,11 @@ class ClientesAjax
         $res = ClientesControlador::ctrlEditarClienteMal();
         echo json_encode($res, true);
     }
+    public function ajaxMostrarClienteMalHistorial()
+    {
+        $res = ClientesControlador::ctrMostrarClientesMalHistorial();
+        print json_encode($res, JSON_UNESCAPED_UNICODE);
+    }
 }
 
 if (isset($_POST['btnNewClientAdd'])) {
@@ -94,4 +99,8 @@ if (isset($_POST['btnEditClienteMal'])) {
 
     $editarClienteMal = new ClientesAjax();
     $editarClienteMal->ajaxEditarClienteMal();
+}
+if (isset($_POST['btnMostrarClientesMalHistorial'])) {
+    $mostrarClientesMalHistorial = new ClientesAjax();
+    $mostrarClientesMalHistorial->ajaxMostrarClienteMalHistorial();
 }
