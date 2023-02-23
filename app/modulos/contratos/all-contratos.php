@@ -56,6 +56,7 @@
                     <th>VER</th>
                     <th>#TICKET</th>
                     <th>CODIGO</th>
+                    <th>FECHA COMPRA</th>
                     <th>NOMBRE</th>
                     <th>CURP</th>
                     <th>DOMICILIO</th>
@@ -103,6 +104,9 @@
                 },
                 {
                     'data': 'ctr_numero_cuenta'
+                },
+                {
+                    'data': 'ctr_fecha_contrato'
                 },
                 {
                     'data': 'ctr_cliente'

@@ -222,6 +222,7 @@ class ContratosAjax
                 'acciones' => '<a href="'. HTTP_HOST . 'contratos/buscar/' . $ctr['ctr_id'] .'" class="btn btn-primary">'.$ctr['ctr_id'] .'</a>',
                 'ctr_folio' => $ctr['ctr_folio'],
                 'ctr_numero_cuenta' => $ctr['ctr_numero_cuenta'] . ' ' . $ctr['ctr_ruta'],
+                'ctr_fecha_contrato' => $ctr['ctr_fecha_contrato'],
                 'ctr_cliente' =>  dstring($ctr['ctr_cliente']),
                 'clts_curp' => $ctr['clts_curp'],
                 'clts_domicilio' => dstring($ctr['clts_domicilio'] . ' ' . $ctr['clts_col']),
