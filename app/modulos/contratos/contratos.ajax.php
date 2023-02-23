@@ -213,6 +213,25 @@ class ContratosAjax
         $res = ContratosModelo::mdlConsultarOrdenPorRuta($_POST['crt_ruta']);
         echo json_encode($res, true);
     }
+    public function ajaxMostrarContratosAll()
+    {
+        $respuesta = ContratosModelo::mdlConsultarContratosAll();
+        $array_contratos = array();
+        foreach ($respuesta as $ctr) {
+            array_push($array_contratos, array(
+                'acciones' => '<a href="'. HTTP_HOST . 'contratos/buscar/' . $ctr['ctr_id'] .'" class="btn btn-primary">'.$ctr['ctr_id'] .'</a>',
+                'ctr_folio' => $ctr['ctr_folio'],
+                'ctr_numero_cuenta' => $ctr['ctr_numero_cuenta'] . ' ' . $ctr['ctr_ruta'],
+                'ctr_cliente' =>  dstring($ctr['ctr_cliente']),
+                'clts_curp' => $ctr['clts_curp'],
+                'clts_domicilio' => dstring($ctr['clts_domicilio'] . ' ' . $ctr['clts_col']),
+                'ctr_status_cuenta' => dstring($ctr['ctr_status_cuenta']),
+            ));
+            # code...
+        }
+
+        print json_encode($array_contratos, JSON_UNESCAPED_UNICODE);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -367,4 +386,8 @@ if (isset($_POST['cambiarPendienteRealizado'])) {
 if (isset($_POST['btnObtenerUltimaOrden'])) {
     $ObtenerUltimaOrden = new ContratosAjax();
     $ObtenerUltimaOrden->ajaxObtenerUltimaOrden();
+}
+if (isset($_POST['btnMostrarContratosAll'])) {
+    $mostrarcontrattosAll = new ContratosAjax();
+    $mostrarcontrattosAll->ajaxMostrarContratosAll();
 }

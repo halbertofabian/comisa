@@ -1,27 +1,4 @@
-<?php
-
-$contratos = ContratosModelo::mdlConsultarContratosAll();
-
-
-?>
-
-<div class="row d-load">
-    <div class="col-12">
-        <div class="d-flex justify-content-center">
-            <div class="spinner-grow" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <div class="spinner-grow" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
+<!-- <div class="row">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
@@ -39,11 +16,11 @@ $contratos = ContratosModelo::mdlConsultarContratosAll();
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="row">
     <div class="col-md-12">
-        <table class="table table-striped table-bordered tablas">
+        <table class="table table-striped table-bordered tablas" id="datatable_contratos">
             <thead>
                 <tr>
                     <th>VER</th>
@@ -53,27 +30,9 @@ $contratos = ContratosModelo::mdlConsultarContratosAll();
                     <th>CURP</th>
                     <th>DOMICILIO</th>
                     <th>STATUS</th>
-
-
                 </tr>
             </thead>
-            <tbody>
 
-                <?php foreach ($contratos as $key => $ctr) : ?>
-                    <tr>
-                        <td> <a href="<?= HTTP_HOST . 'contratos/buscar/' . $ctr['ctr_id'] ?>" class="btn btn-primary"><?= $ctr['ctr_id'] ?></a></td>
-                        <td><?= $ctr['ctr_folio'] ?></td>
-                        <td><?= $ctr['ctr_numero_cuenta'] . '' . $ctr['ctr_ruta'] ?></td>
-                        <td><?= dstring($ctr['ctr_cliente']) ?></td>
-                        <td><?= $ctr['clts_curp'] ?></td>
-                        <td><?= dstring($ctr['clts_domicilio'] . ' ' . $ctr['clts_col']) ?></td>
-                        <td><?= dstring($ctr['ctr_status_cuenta']) ?></td>
-
-
-                    </tr>
-                <?php endforeach; ?>
-
-            </tbody>
         </table>
     </div>
 </div>
@@ -82,6 +41,47 @@ $contratos = ContratosModelo::mdlConsultarContratosAll();
 
 <script>
     $(document).ready(function() {
-        $(".d-load").addClass('d-none')
-    })
+        mostrarContratos()
+    });
+
+    function mostrarContratos() {
+        datatable_contratos = $('#datatable_contratos').DataTable({
+            // dom: 'Bfrtip',
+            responsive: true,
+            // buttons: [
+            //     'copy', 'csv', 'excel', 'pdf', 'print'
+            // ],
+            'ajax': {
+                'url': urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                'method': 'POST', //usamos el metodo POST
+                'data': {
+                    btnMostrarContratosAll: true,
+                }, //enviamos opcion 4 para que haga un SELECT
+                'dataSrc': ''
+            },
+            'bDestroy': true,
+            'columns': [{
+                    'data': 'acciones'
+                },
+                {
+                    'data': 'ctr_folio'
+                },
+                {
+                    'data': 'ctr_numero_cuenta'
+                },
+                {
+                    'data': 'ctr_cliente'
+                },
+                {
+                    'data': 'clts_curp'
+                },
+                {
+                    'data': 'clts_domicilio'
+                },
+                {
+                    'data': 'ctr_status_cuenta'
+                },
+            ]
+        });
+    }
 </script>
