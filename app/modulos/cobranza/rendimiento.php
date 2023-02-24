@@ -39,11 +39,7 @@
                     <label for="rto_ruta">Ruta</label>
                     <select class="form-control select2" name="rto_ruta" id="rto_ruta">
                         <option value="">-Seleccionar-</option>
-                        <?php
-                        $rutas = CobranzaModelo::mdlConsultarRutasRto();
-                        foreach ($rutas as $ruta) : ?>
-                            <option value="<?= $ruta['rto_ruta'] ?>"><?= $ruta['rto_ruta'] ?></option>
-                        <?php endforeach; ?>
+                        
                     </select>
                 </div>
             </div>
@@ -200,7 +196,34 @@
                 var fcbz_id = $("#rto_ficha").val();
                 var rto_ruta = $("#rto_ruta").val();
 
-                mostratRendimientoFicha(rto_ruta, fcbz_id)
+                mostratRendimientoFicha(rto_ruta, fcbz_id);
+                mostrarRutas(fcbz_id);
+            }
+
+        })
+    }
+
+    function mostrarRutas(fcbz_id) {
+        $('#rto_ruta option').remove();
+        var datos = new FormData();
+        datos.append("fcbz_id", fcbz_id);
+        datos.append("btnConsultarRutas", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(res) {
+                $('#rto_ruta').append(`<option value='' >-Seleccionar-</option>`)
+                res.forEach(element => {
+
+                    $('#rto_ruta').append(`<option value='${element.rto_ruta}' >${element.rto_ruta} </option>`);
+
+                });
+
             }
 
         })
@@ -214,7 +237,8 @@
     $("#rto_ficha").on("change", function() {
         var rto_ruta = $("#rto_ruta").val();
         var fcbz_id = $(this).val();
-        mostratRendimientoFicha(rto_ruta, fcbz_id)
+        mostratRendimientoFicha(rto_ruta, fcbz_id);
+        mostrarRutas(fcbz_id);
     })
 
     function mostratRendimientoFicha(rto_ruta, fcbz_id) {

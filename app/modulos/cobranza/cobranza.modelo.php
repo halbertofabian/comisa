@@ -1969,13 +1969,14 @@ class CobranzaModelo
             $con = null;
         }
     }
-    public  static function mdlConsultarRutasRto()
+    public  static function mdlConsultarRutasRto($fcbz_id)
     {
         try {
             //code...
-            $sql =  "SELECT rto_ruta FROM tbl_rendimiento_rto ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC ";
+            $sql =  "SELECT rto_ruta FROM tbl_rendimiento_rto WHERE rto_ficha = ? ORDER BY SUBSTR(rto_ruta, 1, 1), CAST(SUBSTR(rto_ruta, 2, LENGTH(rto_ruta)) AS UNSIGNED) ASC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+            $pps->bindValue(1, $fcbz_id);
             $pps->execute();
             return $pps->fetchAll();
             // return $pps->errorInfo();
