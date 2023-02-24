@@ -39,7 +39,7 @@
                     <label for="rto_ruta">Ruta</label>
                     <select class="form-control select2" name="rto_ruta" id="rto_ruta">
                         <option value="">-Seleccionar-</option>
-                        
+
                     </select>
                 </div>
             </div>
@@ -217,7 +217,7 @@
             processData: false,
             dataType: "json",
             success: function(res) {
-                $('#rto_ruta').append(`<option value='' >-Seleccionar-</option>`)
+                $('#rto_ruta').append(`<option selected value='' >-Seleccionar-</option>`)
                 res.forEach(element => {
 
                     $('#rto_ruta').append(`<option value='${element.rto_ruta}' >${element.rto_ruta} </option>`);
@@ -235,10 +235,13 @@
         mostratRendimientoFicha(rto_ruta, fcbz_id)
     })
     $("#rto_ficha").on("change", function() {
-        var rto_ruta = $("#rto_ruta").val();
         var fcbz_id = $(this).val();
-        mostratRendimientoFicha(rto_ruta, fcbz_id);
         mostrarRutas(fcbz_id);
+        setTimeout(() => {
+            var rto_ruta = $("#rto_ruta").val();
+            mostratRendimientoFicha(rto_ruta, fcbz_id);
+        }, 1000);
+
     })
 
     function mostratRendimientoFicha(rto_ruta, fcbz_id) {
@@ -309,13 +312,17 @@
                     $("#rto_total_mensuales").text($.number(res[0].rto_total_mensuales));
                     $("#rto_total_cuentas_cobro").text($.number(res[0].rto_total_cuentas_cobro));
 
+                    var datos = new FormData()
+                    datos.append('fcbz_id', fcbz_id);
+                    datos.append('usr_id', res[0].usr_id);
+                    datos.append('btnConsultarRendimientoV3', true);
                     $.ajax({
-                        type: "GET",
-                        url: urlApp + 'api/public/consultar_rendimiento/' + rto_ruta + '/' + res[0].usr_id,
-                        cache: false,
-                        contentType: false,
+                        type: "POST",
+                        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                        data: datos,
+                        dataType: 'json',
                         processData: false,
-                        dataType: "json",
+                        contentType: false,
                         success: function(response) {
                             // console.log(response)
                             $("#total_cuentas_cobradas").text($.number(response.total_cuentas_cobradas));
