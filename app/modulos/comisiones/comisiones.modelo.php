@@ -106,6 +106,26 @@ class ComisionesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarInfoCobranzaComisionesV2($iduser, $fechai, $fechaf)
+    {
+
+        try {
+            //code...
+            $sql = "SELECT * FROM `tbl_abonos_cobranza_abs` WHERE abs_id_cobrador = ? AND (DATE(abs_fecha_cobro) BETWEEN ? AND ?) AND abs_mp != 'DESCUENTO' AND abs_estado_abono = 'AUTORIZADO'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $iduser);
+            $pps->bindValue(2, $fechai);
+            $pps->bindValue(3, $fechaf);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlMostrarGastos($iduser, $fechai, $fechaf)
     {

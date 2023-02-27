@@ -27,10 +27,12 @@ class ComisionesAjax
     public function ajaxMostrarInfoCobranza()
     {
         $cobros = ComisionesModelo::mdlMostrarInfoCobranzaComisiones($_POST['id_usr'], $_POST['date_inicio'], $_POST['date_fin']);
+        $abonos = ComisionesModelo::mdlMostrarInfoCobranzaComisionesV2($_POST['id_usr'], $_POST['date_inicio'], $_POST['date_fin']);
         $gastos = ComisionesModelo::mdlMostrarGastos($_POST['id_usr'], $_POST['date_inicio'], $_POST['date_fin']);
         $deuda_ext = UsuariosModelo::mdlConsultarDeudaExterna($_POST['id_usr']);
         $respuesta = array(
             'cobro' => $cobros,
+            'abonos' => $abonos,
             'debe' => $gastos,
             'deuda_ext' => $deuda_ext
         );

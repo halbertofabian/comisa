@@ -589,7 +589,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text" name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>">
+                        <input type="text" name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>" readonly>
                     </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -651,7 +651,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="ctr_saldo_actual">SALDO ACTUAL:</label>
-                        <input type="text" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>">
+                        <input type="text" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>" readonly>
                     </div>
                 </div>
 

@@ -2,6 +2,13 @@
 cargarComponente('breadcrumb', '', 'Comisiones Cobradores');
 
 ?>
+<style>
+    .my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+</style>
 <div class="container">
     <form method="post" id="formCalculoComisiones">
         <div class="row">
@@ -46,7 +53,7 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores');
             </div>
             <div class="col-md-6" style="border-left: 3px solid #ccc;">
                 <div class="row">
-                    
+
                     <div class="col-12">
                         <div class="form-group">
                             <label for="com_cobranza">COBRANZA % </label>
@@ -79,26 +86,23 @@ cargarComponente('breadcrumb', '', 'Comisiones Cobradores');
             <div class="alert alert-dark col-12" role="alert">
                 <strong>Cobranza</strong>
             </div>
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th>#</th>
+            <div class="my-custom-scrollbar">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Fecha</th>
+                            <th>Metodo de pago</th>
+                            <th>Monto</th>
+                            <th>Comisión</th>
+                            <th>Nota</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblComisiones">
 
-                        <th>Fecha</th>
-                        <th>Usuario_Registro</th>
-                        <th>Metodo de pago</th>
-                        <th>Referencia</th>
-                        <th>Monto</th>
-                        <th>Comisión</th>
-                        <th>Concepto</th>
-                        <th>Tipo</th>
-                        <th>Cobrador</th>
-                    </tr>
-                </thead>
-                <tbody id="tblComisiones">
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="igs_fecha_inicio">Cobro </label>

@@ -1663,7 +1663,7 @@ class CobranzaControlador
 
     public static function ctrHistorialFichas()
     {
-        $fichas = CobranzaModelo::mdlMostrarFichas();
+        $fichas = CobranzaModelo::mdlMostrarFichas($_POST['gds_año']);
         $fichas_array = array();
         foreach ($fichas as $key => $fch) {
             array_push($fichas_array, array(

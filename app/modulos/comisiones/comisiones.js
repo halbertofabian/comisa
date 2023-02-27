@@ -60,6 +60,7 @@ $("#btnRepComision").on("click", function () {
                 var sumadescuento = 0
                 var comision = 0;
                 var cobros = respuesta.cobro
+                var abonos = respuesta.abonos
                 var gastos = respuesta.debe
 
                 var com_cobranza = $("#com_cobranza").val()
@@ -69,37 +70,34 @@ $("#btnRepComision").on("click", function () {
                 var usr_imss = 0;
                 var usr_deuda_int = 0;
                 cobros.forEach(inf => {
-                    var com = 0;
                     usr_imss = inf.usr_imss;
                     usr_deuda_int = inf.usr_deuda_int;
 
-                    if (inf.igs_tipo == 'COBRANZA') {
-                        com = inf.igs_monto * com_cobranza / 100;
-                    } else if (inf.igs_tipo == 'COBRANZA_CREDICONTADO') {
-                        com = inf.igs_monto * com_cobranza_cc / 100;
-                    } else if (inf.igs_tipo == 'CONTADO_VENTAS') {
-                        com = inf.igs_monto * com_contado / 100;
-                    } else if (inf.igs_tipo == 'S/E_VENTAS') {
-                        com = inf.igs_monto * com_se / 100;
+                });
+                abonos.forEach(inf => {
+                    var com = 0;
+                    var abs_mp = "";
+                    if(inf.abs_mp == "BANCO"){
+                        abs_mp = inf.abs_mp + "<br>" + inf.abs_referancia;
+                    }else{
+                        abs_mp = inf.abs_mp;
                     }
+
+                    com = inf.abs_monto * com_cobranza / 100;
+
                     comision += com;
                     tblDatos +=
                         `
                         <tr>
-                        <td></td>
-                
-                        <td>${inf.igs_fecha_registro}</td>
-                        <td>${inf.igs_usuario_registro}</td>
-                        <td>${inf.igs_mp}</td>
-                        <td>${inf.igs_referencia}</td>
-                        <td>${inf.igs_monto}</td>
+                        <td>${inf.abs_id}</td>
+                        <td>${inf.abs_fecha_cobro}</td>
+                        <td>${abs_mp}</td>
+                        <td>${inf.abs_monto}</td>
                         <td>${com}</td>
-                        <td>${inf.igs_concepto}</td>
-                        <td>${inf.igs_tipo}</td>
-                        <td>${inf.usr_nombre}</td>
+                        <td>${inf.abs_nota}</td>
                         </tr>
                     `;
-                    sumacobro = sumacobro + Number(inf.igs_monto);
+                    sumacobro = sumacobro + Number(inf.abs_monto);
                 });
                 $("#tblComisiones").html(tblDatos);
                 $("#igs_cobro").val(sumacobro);
@@ -124,7 +122,7 @@ $("#btnRepComision").on("click", function () {
                 $("#igs_descuento_imss").val(usr_imss)
                 $("#igs_deuda_int").val(usr_deuda_int)
 
-                
+
                 var igs_deuda_int = $("#igs_deuda_int").val()
                 var igs_descuento_imss = $("#igs_descuento_imss").val()
 
@@ -135,7 +133,7 @@ $("#btnRepComision").on("click", function () {
                 var igs_abono_deuda = $("#igs_abono_deuda").val()
 
                 var igs_pago = igs_Apgar - igs_abono_deuda;
-               
+
                 if (igs_Apgar < 0) {
                     $("#igs_pagox").val("0.00");
 
@@ -179,7 +177,7 @@ $("#igs_abono_deuda,#igs_Apagar").on("keyup", function () {
 
     $("#igs_pagox").val(igs_pago);
 
-   
+
 
     var igs_nueva_deuda = $("#igs_nueva_deuda").val();
     var igs_deuda_ext = $("#igs_deuda_ext").val();

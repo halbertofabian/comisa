@@ -852,13 +852,14 @@ class CobranzaModelo
     }
 
 
-    public static function mdlMostrarFichas()
+    public static function mdlMostrarFichas($gds_año)
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_pagos_gds  GROUP BY  gds_id DESC ";
+            $sql = "SELECT * FROM tbl_pagos_gds WHERE gds_año = ? GROUP BY  gds_id DESC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+            $pps->bindValue(1, $gds_año);
             $pps->execute();
             return $pps->fetchAll();
         } catch (PDOException $th) {
