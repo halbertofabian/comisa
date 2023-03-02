@@ -81,8 +81,8 @@
             <form id="formAutorizarPagos" method="post">
                 <div class="form-group">
                     <label for="">Guardar como... </label>
-                    <input type="text" class="form-control" value="" name="igs_total_efectivo" id="igs_total_efectivo">
-                    <input type="text" class="form-control" value="" name="igs_total_banco" id="igs_total_banco">
+                    <input type="hidden" class="form-control" value="" name="igs_total_efectivo" id="igs_total_efectivo">
+                    <input type="hidden" class="form-control" value="" name="igs_total_banco" id="igs_total_banco">
                     <input type="text" name="usr_nombre" id="usr_nombre" class="form-control" value="<?= fechaCastellano(FECHA_ACTUAL) ?>">
                     <input type="hidden" name="usr_id" id="usr_id_save" value="">
                     <input type="hidden" id="fecha_text" value="<?= fechaCastellano(FECHA_ACTUAL) ?>">

@@ -1095,6 +1095,7 @@ class CobranzaControlador
 
         // return;
 
+
         $id_pago = CobranzaModelo::mdlInsertPagos($pago_name);
         foreach ($listarAbonos as  $abs) {
 
