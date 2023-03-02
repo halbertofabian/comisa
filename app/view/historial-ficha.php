@@ -126,6 +126,34 @@ if (isset($rutas) && $rutas['1'] != "") :
 <?php else : ?>
     <br>
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xl-3 col-md-5 col-12">
+                                <div class="form-group">
+                                    <label for="gds_año">Año</label>
+                                    <select class="form-control" name="gds_año" id="gds_año">
+                                        <?php
+                                        $year = date("Y");
+                                        for ($i = 2021; $i <= $year; $i++) :
+                                            if ($i == $year) {
+                                                $selected = "selected";
+                                            } else {
+                                                $selected = "";
+                                            }
+                                        ?>
+                                            <option <?= $selected ?> value="<?= $i ?>"><?= $i ?></option>;
+                                        <?php endfor; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table id="datatable_Historial" class="table table-striped table-bordered table-hover tablas ">
             <thead>
                 <tr>
@@ -207,12 +235,14 @@ if (isset($rutas) && $rutas['1'] != "") :
         // datos.append("btnMostrarCategoriaGastos", true);
 
         // opcion = 4;
+        var gds_año = $("#gds_año").val();
 
         datatable_Historial = $('#datatable_Historial').DataTable({
             "ajax": {
                 "url": urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
                 "method": 'POST', //usamos el metodo POST
                 "data": {
+                    gds_año: gds_año,
                     btnMostrarHistorialTable: true
                 }, //enviamos opcion 4 para que haga un SELECT
                 "dataSrc": ""
@@ -231,4 +261,8 @@ if (isset($rutas) && $rutas['1'] != "") :
             ]
         });
     }
+
+    $("#gds_año").on("change", function(){
+        mostrarHistorialTable();
+    })
 </script>
