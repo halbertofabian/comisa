@@ -156,6 +156,38 @@ class ClientesModelo
             $con = null;
         }
     }
+    public static function mdlAgregarClientesMorosos($cts)
+    {
+
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_clientes_problemas_clts (clts_ruta,clts_nombre,clts_telefono,clts_domicilio,clts_col,clts_ubicacion,clts_tipo_cliente,clts_curp,clts_observaciones,clts_cuenta,clts_articulo,clts_fecha_venta) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $cts["clts_ruta"]);
+            $pps->bindValue(2, $cts["clts_nombre"]);
+            $pps->bindValue(3, $cts["clts_telefono"]);
+            $pps->bindValue(4, $cts["clts_domicilio"]);
+            $pps->bindValue(5, $cts["clts_col"]);
+            $pps->bindValue(6, $cts["clts_ubicacion"]);
+            $pps->bindValue(7, $cts["clts_tipo_cliente"]);
+            $pps->bindValue(8, $cts["clts_curp"]);
+            $pps->bindValue(9, $cts["clts_observaciones"]);
+            $pps->bindValue(10, $cts["clts_cuenta"]);
+            $pps->bindValue(11, $cts["clts_articulo"]);
+            $pps->bindValue(12, $cts["clts_fecha_venta"]);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            throw $th->getMessage();
+            return  $th->getMessage();
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlActualizarClientes($cts)
     {
         try {

@@ -79,7 +79,7 @@
 
         </div>
 
-   
+
         <input type="hidden" value="<?= $_SESSION['session_usr']['usr_rol'] ?>" id="session_usr_rol">
 
     </div>
@@ -464,8 +464,28 @@
                             startLoadButton()
                         },
                         success: function(res) {
+                            stopLoadButton("Guardar");
+                            if (res.status) {
+                                swal({
+                                    title: '¡Bien!',
+                                    text: res.mensaje,
+                                    type: 'success',
+                                    icon: 'success'
+                                }).then(function() {
+                                    location.reload();
+                                });
+                            } else {
+                                swal({
+                                    title: 'Error',
+                                    text: res.mensaje,
+                                    icon: 'error',
+                                    buttons: [false, 'Intentar de nuevo'],
+                                    dangerMode: true,
+                                }).then((willDelete) => {
+                                    if (willDelete) {} else {}
+                                })
+                            }
 
-                            console.log(res)
 
                         }
                     })
