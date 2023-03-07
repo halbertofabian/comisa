@@ -1468,11 +1468,49 @@ class ContratosControlador
 
     public static function ctrClientesMalH()
     {
-        preArray($_POST);
+        $clts_ruta = $_POST['clts_ruta'];
+        $clts_nombre = $_POST['clts_nombre'];
+        $clts_telefono = $_POST['clts_telefono'];
+        $clts_domicilio = $_POST['clts_domicilio'];
+        $clts_col = $_POST['clts_col'];
+        $clts_ubicacion = $_POST['clts_ubicacion'];
+        $clts_tipo_cliente = $_POST['clts_tipo_cliente'];
+        $clts_curp = $_POST['clts_curp'];
+        $clts_observaciones = $_POST['clts_observaciones'];
+        $clts_cuenta = $_POST['clts_cuenta'];
+        $clts_articulo = $_POST['clts_articulo'];
+        $clts_fecha_venta = $_POST['clts_fecha_venta'];
+
 
         // Registrar en clientes con mal historial
+        $data = array(
+            "clts_ruta" => $clts_ruta,
+            "clts_nombre" => $clts_nombre,
+            "clts_telefono" => $clts_telefono,
+            "clts_domicilio" => $clts_domicilio,
+            "clts_col" => $clts_col,
+            "clts_ubicacion" => $clts_ubicacion,
+            "clts_tipo_cliente" => $clts_tipo_cliente,
+            "clts_curp" => $clts_curp,
+            "clts_observaciones" => $clts_observaciones,
+            "clts_cuenta" => $clts_cuenta,
+            "clts_articulo" => $clts_articulo,
+            "clts_fecha_venta" =>  $clts_fecha_venta
+        );
 
+        $res = ClientesModelo::mdlAgregarClientesMorosos($data);
 
+        if($res){
+            return array(
+                'status' => true,
+                'mensaje' => 'El cliente fue enviado a la lista de morosos.'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error'
+            );
+        }
 
 
 
