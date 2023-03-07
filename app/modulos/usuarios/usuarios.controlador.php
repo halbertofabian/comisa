@@ -284,11 +284,11 @@ class UsuariosControlador
                 $_POST['usr_clave'] = password_hash($_POST['usr_clave'], PASSWORD_DEFAULT);
             }
 
-            
+
             $acceso_concentradora = 0;
 
-            if(isset($_POST['usr_acceso_concentradora'])){
-                
+            if (isset($_POST['usr_acceso_concentradora'])) {
+
                 $acceso_concentradora = $_POST['usr_acceso_concentradora'];
             }
 
@@ -575,12 +575,12 @@ class UsuariosControlador
     {
         $usr_codigo_descarga = rand(10000, 99999);
         $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, $usr_codigo_descarga);
-        if($res){
+        if ($res) {
             return array(
                 'status' => true,
                 'mensaje' => 'El codigo se genero correctamente, ahora puedes pedirlo con Cobranza.'
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'Hubo un error al generar el codigo de autorización.'
@@ -590,12 +590,15 @@ class UsuariosControlador
     public static function ctrValidarCodigoDescarga($usr_id, $usr_codigo_descarga)
     {
         $usr = UsuariosModelo::mdlConsultarCodigoDescarga($usr_id);
-        if($usr['usr_codigo_descarga'] == $usr_codigo_descarga){
-            return array(
-                'status' => true,
-                'mensaje' => 'El codigo ingresado es correcto.'
-            );
-        }else{
+        if ($usr['usr_codigo_descarga'] == $usr_codigo_descarga) {
+            $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, "");
+            if ($res) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El codigo ingresado es correcto.'
+                );
+            }
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'El codigo ingresado es incorrecto.'
@@ -607,12 +610,12 @@ class UsuariosControlador
     {
         $usr_codigo_finalizar = rand(10000, 99999);
         $res = UsuariosModelo::mdlGenerarCodigoFinalizarCbza($usr_id, $usr_codigo_finalizar);
-        if($res){
+        if ($res) {
             return array(
                 'status' => true,
                 'mensaje' => 'El codigo se genero correctamente, ahora puedes pedirlo con Cobranza.'
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'Hubo un error al generar el codigo de autorización.'
@@ -622,12 +625,15 @@ class UsuariosControlador
     public static function ctrValidarFinalizarCbza($usr_id, $usr_codigo_finalizar)
     {
         $usr = UsuariosModelo::mdlConsultarCodigoFinalizar($usr_id);
-        if($usr['usr_codigo_finalizar'] == $usr_codigo_finalizar){
-            return array(
-                'status' => true,
-                'mensaje' => 'El codigo ingresado es correcto.'
-            );
-        }else{
+        if ($usr['usr_codigo_finalizar'] == $usr_codigo_finalizar) {
+            $res = UsuariosModelo::mdlGenerarCodigoFinalizarCbza($usr_id, "");
+            if ($res) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El codigo ingresado es correcto.'
+                );
+            }
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'El codigo ingresado es incorrecto.'
