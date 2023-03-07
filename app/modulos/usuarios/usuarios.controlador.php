@@ -573,8 +573,13 @@ class UsuariosControlador
 
     public static function ctrGenerarCodigoDescarga($usr_id)
     {
-        $usr_codigo_descarga = rand(10000, 99999);
-        $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, $usr_codigo_descarga);
+        $res = true;
+        $usr_codigo_descarga = UsuariosModelo::mdlConsultarCodigoDescarga($usr_id);
+        if (!$usr_codigo_descarga) {
+            $usr_codigo_descarga = rand(10000, 99999);
+            $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, $usr_codigo_descarga);
+        }
+
         if ($res) {
             return array(
                 'status' => true,
