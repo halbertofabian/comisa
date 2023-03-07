@@ -11,6 +11,7 @@ require '../src/config/db.php';
 
 
 require_once '../../app/modulos/usuarios/usuarios.modelo.php';
+require_once '../../app/modulos/usuarios/usuarios.controlador.php';
 require_once '../../app/modulos/sucursales/sucursales.modelo.php';
 
 require_once '../../app/modulos/contratos/contratos.controlador.php';
