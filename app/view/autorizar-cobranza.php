@@ -6,6 +6,8 @@
             <tr>
                 <th>NOMBRE</th>
                 <th>RUTA</th>
+                <th>CÓDIGO DESCARGA</th>
+                <th>CÓDIGO FINALIZAR</th>
                 <th>ACCIÓN</th>
             </tr>
         </thead>
@@ -17,6 +19,8 @@
                 <tr>
                     <td><?php echo $usr['usr_nombre'] ?></td>
                     <td><?php echo $usr['usr_ruta'] ?></td>
+                    <td><?php echo $usr['usr_codigo_descarga'] ?></td>
+                    <td><?php echo $usr['usr_codigo_finalizar'] ?></td>
                     <td>
                         <?php if ($usr['usr_autorizar_cobranza']) : ?>
                             <button class="btn btn-danger btnDenegarCobro" usr_autorizar_cobranza="0" usr_id="<?= $usr['usr_id'] ?>">Denegar</button>

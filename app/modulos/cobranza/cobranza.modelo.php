@@ -815,10 +815,11 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_pagos_gds (gds_nombre) VALUES(?) ";
+            $sql = "INSERT INTO tbl_pagos_gds (gds_nombre,gds_año) VALUES(?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $gds_nombre);
+            $pps->bindValue(2, date('Y'));
             $pps->execute();
             return $con->lastInsertId();
         } catch (PDOException $th) {
