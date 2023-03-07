@@ -120,8 +120,10 @@ class UsuariosAjax
     }
 
     public function ajaxConsultarCodigoFinalizacion(){
-        // $respuesta = UsuariosModelo::
-        // echo json_encode($respuesta, true);
+      
+
+        $respuesta = UsuariosModelo::mdlConsultarCodigoFinalizar($_POST['usr_id']);
+        echo json_encode($respuesta, true);
     }
 }
 if (isset($_POST['btnEliminarUsuario'])) {

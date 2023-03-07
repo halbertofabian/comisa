@@ -568,13 +568,14 @@ class UsuariosModelo
         } catch (PDOException $th) {
             //throw $th;
             return false;
-        }finally{
+        } finally {
             $pps = null;
             $con = null;
         }
     }
 
-    public static function mdlObtenerCobradoresActivos(){
+    public static function mdlObtenerCobradoresActivos()
+    {
         try {
             //code...
             $sql = "SELECT usr_id, usr_ruta FROM tbl_usuarios_usr WHERE usr_rol = 'Cobrador' AND usr_ruta != ''";
@@ -585,7 +586,7 @@ class UsuariosModelo
         } catch (PDOException $th) {
             //throw $th;
             return false;
-        }finally{
+        } finally {
             $pps = null;
             $con = null;
         }
@@ -620,5 +621,17 @@ class UsuariosModelo
             //throw $th;
         }
     }
-
+    public static function mdlConsultarCodigoFinalizar($usr_id)
+    {
+        try {
+            $sql = "SELECT usr_codigo_finalizar FROM tbl_usuarios_usr WHERE usr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        }
+    }
 }

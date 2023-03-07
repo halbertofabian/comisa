@@ -19,8 +19,8 @@
                         </div>
                     </div>
                     <div class="col-md-2">
-                        <label for="">Código Finalización</label>
-                        <input type="text" class="form-control" readonly="true" placeholder="">
+                        <label for="usr_codigo_finalizar">Código Finalización</label>
+                        <input type="text" id="usr_codigo_finalizar" class="form-control" readonly="true" placeholder="">
                     </div>
                 </div>
             </form>
@@ -190,6 +190,7 @@
     })
     $("#urs_id").on("change", function(e) {
         buscarPagos($(this).val());
+        consultarCodigoFinalizacion($(this).val())
     })
 
     $("#formBuscarPagos").on("submit", function(e) {
@@ -461,9 +462,11 @@
     }
 
     function consultarCodigoFinalizacion(usr_id) {
+
+      
         var datos = new FormData()
 
-        datos.append("urs_id", urs_id)
+        datos.append("usr_id", usr_id)
         datos.append("btnConsultarCodigoFinalizacion", true)
 
         $.ajax({
@@ -476,6 +479,8 @@
             dataType: "json",
             beforeSend: function() {},
             success: function(res) {
+
+                $("#usr_codigo_finalizar").val(res.usr_codigo_finalizar);
 
             }
         });
