@@ -18,6 +18,10 @@
                             <button type="submit" name="btnMostrarAbonos" class="btn btn-dark mt-1 float-right mb-1">Buscar</button>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <label for="">Código Finalización</label>
+                        <input type="text" class="form-control" readonly="true" placeholder="">
+                    </div>
                 </div>
             </form>
         </div>
@@ -165,7 +169,7 @@
                     <div class="col-12 codigo">
                         <div class="form-group">
                             <label for="abs_codigo">Codigo de cancelación</label>
-                            <input type="number" class="form-control" name="abs_codigo" id="abs_codigo2"  aria-describedby="helpId2"  placeholder="">
+                            <input type="number" class="form-control" name="abs_codigo" id="abs_codigo2" aria-describedby="helpId2" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -192,6 +196,7 @@
         e.preventDefault();
 
         buscarPagos($("#urs_id").val());
+        consultarCodigoFinalizacion($("#urs_id").val())
     })
 
     $("#formAutorizarPagos").on("submit", function(e) {
@@ -451,6 +456,27 @@
 
                 $("#igs_total_efectivo").val(pgs_total_efectivo)
                 $("#igs_total_banco").val(pgs_total_banco)
+            }
+        });
+    }
+
+    function consultarCodigoFinalizacion(usr_id) {
+        var datos = new FormData()
+
+        datos.append("urs_id", urs_id)
+        datos.append("btnConsultarCodigoFinalizacion", true)
+
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            beforeSend: function() {},
+            success: function(res) {
+
             }
         });
     }

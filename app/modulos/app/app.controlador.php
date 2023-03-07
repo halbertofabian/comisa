@@ -53,6 +53,7 @@ class AppControlador
             'importar-clientes-mal-historial',
             'new-mal-historial',
             'edit-cliente-mal-historial',
+            'autorizar-cobranza'
 
 
         );
@@ -176,7 +177,8 @@ class AppControlador
             'new-mal-historial',
             'edit-cliente-mal-historial',
             'cobranza',
-            'historial-ficha'
+            'historial-ficha',
+            'autorizar-cobranza'
         );
     }
 
