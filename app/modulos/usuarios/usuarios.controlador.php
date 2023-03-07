@@ -602,4 +602,36 @@ class UsuariosControlador
             );
         }
     }
+
+    public static function ctrGenerarCodigoFinalizarCbza($usr_id)
+    {
+        $usr_codigo_finalizar = rand(10000, 99999);
+        $res = UsuariosModelo::mdlGenerarCodigoFinalizarCbza($usr_id, $usr_codigo_finalizar);
+        if($res){
+            return array(
+                'status' => true,
+                'mensaje' => 'El codigo se genero correctamente, ahora puedes pedirlo con Cobranza.'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al generar el codigo de autorización.'
+            );
+        }
+    }
+    public static function ctrValidarFinalizarCbza($usr_id, $usr_codigo_finalizar)
+    {
+        $usr = UsuariosModelo::mdlConsultarCodigoFinalizar($usr_id);
+        if($usr['usr_codigo_finalizar'] == $usr_codigo_finalizar){
+            return array(
+                'status' => true,
+                'mensaje' => 'El codigo ingresado es correcto.'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'El codigo ingresado es incorrecto.'
+            );
+        }
+    }
 }

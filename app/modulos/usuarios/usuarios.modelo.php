@@ -621,6 +621,22 @@ class UsuariosModelo
             //throw $th;
         }
     }
+    public static function mdlGenerarCodigoFinalizarCbza($usr_id, $usr_codigo_descarga)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_usuarios_usr SET usr_codigo_finalizar = ? WHERE usr_id= ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_codigo_descarga);
+            $pps->bindValue(2, $usr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        }
+    }
     public static function mdlConsultarCodigoFinalizar($usr_id)
     {
         try {

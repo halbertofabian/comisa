@@ -622,4 +622,38 @@ $app->get('/validar_cobranza_descarga/{usr_id}/{usr_codigo_descarga}', function 
 
 });
 
+$app->get('/autorizar_terminar_cobranza_codigo/{usr_id}', function (Request $request, Response $response, array $args) {
+    $usr_id =  $args['usr_id'];
+    $res = UsuariosControlador::ctrGenerarCodigoFinalizarCbza($usr_id);
+    if ($res['status']) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => $res['mensaje']
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => $res['mensaje']
+        ), true);
+    }
+
+});
+$app->get('/validar_terminar_cobranza/{usr_id}/{usr_codigo_descarga}', function (Request $request, Response $response, array $args) {
+    $usr_id =  $args['usr_id'];
+    $usr_codigo_descarga =  $args['usr_codigo_descarga'];
+    $res = UsuariosControlador::ctrValidarFinalizarCbza($usr_id, $usr_codigo_descarga);
+    if ($res['status']) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => $res['mensaje']
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => $res['mensaje']
+        ), true);
+    }
+
+});
+
 $app->run();
