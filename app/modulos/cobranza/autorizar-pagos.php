@@ -467,7 +467,7 @@
         datos.append("btnConsultarCodigoFinalizacion", true)
 
         $.ajax({
-            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            url: urlApp + 'app/modulos/usuarios/usuarios.ajax.php',
             method: "POST",
             data: datos,
             cache: false,

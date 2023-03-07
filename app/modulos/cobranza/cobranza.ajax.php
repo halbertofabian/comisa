@@ -380,3 +380,4 @@ if (isset($_POST['btnConsultarRutas'])) {
     $btnConsultarRutas = new CobranzaAjax();
     $btnConsultarRutas->ajaxConsultarRutasRendimiento();
 }
+
