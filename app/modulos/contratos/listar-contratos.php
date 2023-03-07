@@ -72,7 +72,21 @@
                     <input type="date" name="ctr_fecha_fin" id="ctr_fecha_fin" class="form-control">
                 </div>
             </div>
-            <div class="col-9"></div>
+            <div class="col-6"></div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="ctr_status_c">Status</label>
+                    <select class="form-control select2" name="ctr_status_c" id="ctr_status_c">
+                        <option value="">-Seleccionar-</option>
+                        <?php
+                        $status = ContratosModelo::mdlMostrarEstadosCtr();
+                        foreach ($status as $st) :
+                        ?>
+                            <option value="<?= $st['ctr_status_cuenta'] ?>"><?= $st['ctr_status_cuenta'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
             <div class="col-3">
                 <button type="submit" class="btn btn-block  float-right" id="btnListarContratos" style="background-color:#fff;border: 1px solid #fff; color:#103760">Buscar</button>
             </div>
@@ -645,7 +659,8 @@
         var ctr_vendedor = $("#ctr_vendedor").val();
         var ctr_fecha_inicio = $("#ctr_fecha_inicio").val();
         var ctr_fecha_fin = $("#ctr_fecha_fin").val();
-        listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin);
+        var ctr_status_c = $("#ctr_status_c").val();
+        listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin, ctr_status_c);
     })
 
     $(".tblContratos tbody").on("click", "button.btnPendiente", function() {
@@ -788,7 +803,8 @@
     function listarContrato(ctr_folio = "",
         ctr_vendedor = "",
         ctr_fecha_inicio = "",
-        ctr_fecha_fin = "") {
+        ctr_fecha_fin = "",
+        ctr_status_c = "") {
 
         var session_usr_rol = $("#session_usr_rol").val();
         $("#tbodyContratos").html("");
@@ -798,6 +814,7 @@
         datos.append("ctr_vendedor", ctr_vendedor)
         datos.append("ctr_fecha_inicio", ctr_fecha_inicio)
         datos.append("ctr_fecha_fin", ctr_fecha_fin)
+        datos.append("ctr_status_c", ctr_status_c)
 
         datos.append("btnListarContratos", true);
 

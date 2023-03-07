@@ -656,4 +656,12 @@ $app->get('/validar_terminar_cobranza/{usr_id}/{usr_codigo_descarga}', function 
 
 });
 
+//API PARA TRASPASOS DE CONTRATOS
+$app->post('/comisa_datos_traspasos', function (Request $request, Response $response) {
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+    $traspaso =  ContratosControlador::ctrRegistrarTraspasoContrato($data);
+    return json_encode($traspaso, true);
+});
+
 $app->run();
