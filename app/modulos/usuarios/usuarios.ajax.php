@@ -119,10 +119,10 @@ class UsuariosAjax
         echo json_encode($respuesta, true);
     }
 
-    // public function ajaxConsultarCodigoFinalizacion(){
-    //     $respuesta = UsuariosModelo::
-    //     echo json_encode($respuesta, true);
-    // }
+    public function ajaxConsultarCodigoFinalizacion(){
+        // $respuesta = UsuariosModelo::
+        // echo json_encode($respuesta, true);
+    }
 }
 if (isset($_POST['btnEliminarUsuario'])) {
     $eliminarUsuario = new UsuariosAjax();
@@ -167,7 +167,7 @@ if (isset($_POST['btnBuscarUsuarios'])) {
     $buscarUsuario->usr_id = $_POST['usr_id'];
     $buscarUsuario->ajaxListarUsuarioByID();
 }
-// if (isset($_POST['btnConsultarCodigoFinalizacion'])) {
-//     $btnConsultarCodigoFinalizacion = new UsuariosAjax();
-//     $btnConsultarCodigoFinalizacion->ajaxConsultarCodigoFinalizacion();
-// }
+if (isset($_POST['btnConsultarCodigoFinalizacion'])) {
+    $btnConsultarCodigoFinalizacion = new UsuariosAjax();
+    $btnConsultarCodigoFinalizacion->ajaxConsultarCodigoFinalizacion();
+}
