@@ -570,4 +570,36 @@ class UsuariosControlador
         $usr_id['usr_id'] =  strlen($usr_id['usr_id']) == 3 ? "0" . $usr_id['usr_id'] : $usr_id['usr_id'];
         return $sub_fijo . $usr_id['usr_id'];
     }
+
+    public static function ctrGenerarCodigoDescarga($usr_id)
+    {
+        $usr_codigo_descarga = rand(10000, 99999);
+        $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, $usr_codigo_descarga);
+        if($res){
+            return array(
+                'status' => true,
+                'mensaje' => 'El codigo se genero correctamente, ahora puedes pedirlo con Cobranza.'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al generar el codigo de autorización.'
+            );
+        }
+    }
+    public static function ctrValidarCodigoDescarga($usr_id, $usr_codigo_descarga)
+    {
+        $usr = UsuariosModelo::mdlConsultarCodigoDescarga($usr_id);
+        if($usr['usr_codigo_descarga'] == $usr_codigo_descarga){
+            return array(
+                'status' => true,
+                'mensaje' => 'El codigo ingresado es correcto.'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'El codigo ingresado es incorrecto.'
+            );
+        }
+    }
 }
