@@ -575,7 +575,8 @@ class UsuariosControlador
     {
         $res = true;
         $usr_codigo_descarga = UsuariosModelo::mdlConsultarCodigoDescarga($usr_id);
-        if (!$usr_codigo_descarga) {
+       
+        if (!$usr_codigo_descarga['usr_codigo_descarga'] != NULL) {
             $usr_codigo_descarga = rand(10000, 99999);
             $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, $usr_codigo_descarga);
         }
