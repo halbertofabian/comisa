@@ -1105,7 +1105,7 @@ class ContratosControlador
         if ($_POST['ctr_folio'] != "") {
             // Buscar contratos por numero de folio o numero de contrato
             return ContratosModelo::mdlMostrarContratosFolio($_POST['ctr_folio']);
-        } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "" or $_POST['ctr_vendedor'] != "") {
+        } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "" or $_POST['ctr_vendedor'] != "" or $_POST['ctr_status_c'] != "") {
             // Buscar contratos por vendedor
             $_POST['ctr_fecha_inicio'] = $_POST['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $_POST['ctr_fecha_inicio'] . 'T00:00';
             $_POST['ctr_fecha_fin'] = $_POST['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $_POST['ctr_fecha_fin'] . 'T23:59';
@@ -1113,7 +1113,8 @@ class ContratosControlador
             return ContratosModelo::mdlMostrarContratosFecha(
                 $_POST['ctr_vendedor'],
                 $_POST['ctr_fecha_inicio'],
-                $_POST['ctr_fecha_fin']
+                $_POST['ctr_fecha_fin'],
+                $_POST['ctr_status_c']
             );
         } else {
             // Listar los ultimos 10 contratos
@@ -1500,25 +1501,17 @@ class ContratosControlador
 
         $res = ClientesModelo::mdlAgregarClientesMorosos($data);
 
-        if($res){
+        if ($res) {
             return array(
                 'status' => true,
                 'mensaje' => 'El cliente fue enviado a la lista de morosos.'
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'Hubo un error'
             );
         }
-
-
-
-
-
-
-
-
     }
     public static function ctrGuardarProductos()
     {
@@ -1958,5 +1951,137 @@ class ContratosControlador
             }
         }
     }
-    
+
+    public static function ctrRegistrarTraspasoContrato($ctr)
+    {
+        $contratos = array(
+            'ctr_folio' =>  "T-" . uniqid(),
+            'ctr_fecha_contrato' =>  $ctr["ctr_fecha_contrato"],
+            'ctr_id_vendedor' => VENDEDOR_P,
+            'ctr_cliente' =>  dstring($ctr["ctr_cliente"]),
+            'ctr_numero_cuenta' => 0,
+            'ctr_ruta' => "-",
+            'ctr_forma_pago' =>  dstring($ctr["ctr_forma_pago"]),
+            'ctr_dia_pago' =>  dstring($ctr['ctr_dia_pago']),
+            'ctr_proximo_pago' =>  $ctr["ctr_proximo_pago"],
+
+            // Número 
+            'ctr_plazo_credito' =>  $ctr["ctr_plazo_credito"],
+
+            // No sé de que es esto (anzures)
+            'ctr_tipo_pago' => $ctr["ctr_tipo_pago"],
+
+            'ctr_productos' => $ctr["ctr_productos"],
+            'ctr_total' =>  dnum($ctr["ctr_total"]),
+            'ctr_enganche' => dnum($ctr["ctr_enganche"]),
+            'ctr_pago_adicional' => dnum($ctr["ctr_pago_adicional"]),
+
+            // Pendiente 
+            'ctr_saldo' => $ctr["ctr_saldo"],
+
+
+            'ctr_elaboro' => $ctr['ctr_elaboro'],
+
+            'ctr_nota' => $ctr['ctr_nota'],
+            'ctr_fotos' => $ctr['ctr_fotos'],
+
+            'ctr_nombre_ref_1' =>  dstring($ctr["ctr_nombre_ref_1"]),
+            'ctr_parentesco_ref_1' =>  dstring($ctr["ctr_parentesco_ref_1"]),
+            'ctr_direccion_ref_1' =>  dstring($ctr["ctr_direccion_ref_1"]),
+            'ctr_colonia_ref_1' =>  dstring($ctr["ctr_colonia_ref_1"]),
+            'ctr_telefono_ref_1' =>  dstring($ctr["ctr_telefono_ref_1"]),
+
+            'clts_curp' =>  dstring($ctr["clts_curp"]),
+            'clts_telefono' =>  dstring($ctr["clts_telefono"]),
+            'clts_domicilio' =>  dstring($ctr["clts_domicilio"]),
+            'clts_col' =>  dstring($ctr["clts_col"]),
+            'clts_entre_calles' =>  dstring($ctr["clts_entre_calles"]),
+            'clts_trabajo' =>  dstring($ctr["clts_trabajo"]),
+            'clts_puesto' =>  dstring($ctr["clts_puesto"]),
+            'clts_direccion_tbj' =>  dstring($ctr["clts_direccion_tbj"]),
+            'clts_col_tbj' =>  dstring($ctr["clts_col_tbj"]),
+            'clts_tel_tbj' =>  dstring($ctr["clts_tel_tbj"]),
+            'clts_antiguedad_tbj' =>  dstring($ctr["clts_antiguedad_tbj"]),
+            'clts_igs_mensual_tbj' =>  dnum($ctr["clts_igs_mensual_tbj"]),
+            'clts_tipo_vivienda' =>  dstring($ctr["clts_tipo_vivienda"]),
+            'clts_vivienda_anomde' =>  dstring($ctr["clts_vivienda_anomde"]),
+            'clts_antiguedad_viviendo' =>  dstring($ctr["clts_antiguedad_viviendo"]),
+            'clts_coordenadas' =>  $ctr["clts_coordenadas"],
+
+            'clts_nom_conyuge' =>  dstring($ctr["clts_nom_conyuge"]),
+            'clts_tbj_conyuge' =>  dstring($ctr["clts_tbj_conyuge"]),
+            'clts_tbj_puesto_conyuge' =>  dstring($ctr["clts_tbj_puesto_conyuge"]),
+            'clts_tbj_dir_conyuge' =>  dstring($ctr["clts_tbj_dir_conyuge"]),
+            'clts_tbj_col_conyuge' =>  dstring($ctr["clts_tbj_col_conyuge"]),
+            'clts_tbj_tel_conyuge' =>  dstring($ctr["clts_tbj_tel_conyuge"]),
+            'clts_tbj_ant_conyuge' =>  dstring($ctr["clts_tbj_ant_conyuge"]),
+            'clts_tbj_ing_conyuge' =>  dnum($ctr["clts_tbj_ing_conyuge"]),
+            'clts_nom_fiador' =>  dstring($ctr["clts_nom_fiador"]),
+            'clts_parentesco_fiador' =>  dstring($ctr["clts_parentesco_fiador"]),
+            'clts_tel_fiador' =>  dstring($ctr["clts_tel_fiador"]),
+            'clts_dir_fiador' =>  dstring($ctr["clts_dir_fiador"]),
+            'clts_col_fiador' =>  dstring($ctr["clts_col_fiador"]),
+            'clts_tbj_fiador' =>  dstring($ctr["clts_tbj_fiador"]),
+            'clts_tbj_dir_fiador' =>  dstring($ctr["clts_tbj_dir_fiador"]),
+            'clts_tbj_tel_fiador' =>  dstring($ctr["clts_tbj_tel_fiador"]),
+            'clts_tbj_col_fiador' =>  dstring($ctr["clts_tbj_col_fiador"]),
+            'clts_tbj_ant_fiador' =>  dstring($ctr["clts_tbj_ant_fiador"]),
+
+            //fotos fiador
+            'clts_fotos_fiador' => $ctr['clts_fotos_fiador'],
+
+            'clts_nom_ref2' =>  dstring($ctr["clts_nom_ref2"]),
+            'clts_parentesco_ref2' =>  dstring($ctr["clts_parentesco_ref2"]),
+            'clts_dir_ref2' =>  dstring($ctr["clts_dir_ref2"]),
+            'clts_col_ref2' =>  dstring($ctr["clts_col_ref2"]),
+            'clts_tel_ref2' =>  dstring($ctr["clts_tel_ref2"]),
+            'clts_nom_ref3' =>  dstring($ctr["clts_nom_ref3"]),
+            'clts_parentesco_ref3' =>  dstring($ctr["clts_parentesco_ref3"]),
+            'clts_dir_ref3' =>  dstring($ctr["clts_dir_ref3"]),
+            'clts_col_ref3' =>  dstring($ctr["clts_col_ref3"]),
+            'clts_tel_ref3' =>  dstring($ctr["clts_tel_ref3"]),
+            'sobre_enganche_pendiente' =>  $ctr["sobre_enganche_pendiente"],
+
+
+            'clts_registro_venta' => $ctr['clts_registro_venta'],
+            'clts_caja' => $ctr['clts_caja'],
+            'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
+            'ctr_pago_credito' => dnum($ctr["ctr_pago_credito"]),
+            'ctr_aprovado_ventas' => $ctr['ctr_aprovado_ventas'],
+
+
+            'clts_fachada_color' => $ctr["clts_fachada_color"],
+            'clts_puerta_color' => $ctr["clts_puerta_color"],
+            'ctr_status_cuenta' => "TRASPASO",
+            'ctr_saldo_actual' => dnum($ctr["ctr_saldo"]),
+
+            //Nuevos atributos 
+            'ctr_moroso' => $ctr['ctr_moroso'],
+            'ctr_enrutar' => $ctr['ctr_enrutar'],
+            'ctr_ultima_fecha_abono' => $ctr['ctr_ultima_fecha_abono'],
+            'ctr_total_pagado' => $ctr['ctr_total_pagado'],
+            'ctr_status_pendiente' => $ctr['ctr_status_pendiente'],
+            'ctr_orden' => $ctr['ctr_orden'],
+            'ctr_saldo_base' => $ctr['ctr_saldo_base'],
+            'ctr_etiqueta' => $ctr['ctr_etiqueta'],
+            'ctr_call_center' => $ctr['ctr_call_center'],
+            'ctr_gestion' => $ctr['ctr_gestion'],
+        );
+
+        $res = ContratosModelo::mdlAgregarTraspaso($contratos);
+        // print_r($res);
+        // return;
+
+        if ($res) {
+            return  array(
+                'status' => true,
+                'mensaje' => 'El contrato se traspaso correctamente!'
+            );
+        } else {
+            return  array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al traspasar el contrato!'
+            );
+        }
+    }
 }
