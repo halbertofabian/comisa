@@ -1107,8 +1107,8 @@ class ContratosControlador
             return ContratosModelo::mdlMostrarContratosFolio($_POST['ctr_folio']);
         } elseif ($_POST['ctr_fecha_inicio'] != "" or $_POST['ctr_fecha_fin'] != "" or $_POST['ctr_vendedor'] != "" or $_POST['ctr_status_c'] != "") {
             // Buscar contratos por vendedor
-            $_POST['ctr_fecha_inicio'] = $_POST['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $_POST['ctr_fecha_inicio'] . 'T00:00';
-            $_POST['ctr_fecha_fin'] = $_POST['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $_POST['ctr_fecha_fin'] . 'T23:59';
+            // $_POST['ctr_fecha_inicio'] = $_POST['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $_POST['ctr_fecha_inicio'] . 'T00:00';
+            // $_POST['ctr_fecha_fin'] = $_POST['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $_POST['ctr_fecha_fin'] . 'T23:59';
 
             return ContratosModelo::mdlMostrarContratosFecha(
                 $_POST['ctr_vendedor'],
@@ -1131,15 +1131,16 @@ class ContratosControlador
         if ($ctr['ctr_folio'] != "") {
             // Buscar contratos por numero de folio o numero de contrato
             return ContratosModelo::mdlMostrarContratosFolioExcel($ctr['ctr_folio']);
-        } elseif ($ctr['ctr_fecha_inicio'] != "" or $ctr['ctr_fecha_fin'] != "" or $ctr['ctr_vendedor'] != "") {
+        } elseif ($ctr['ctr_fecha_inicio'] != "" or $ctr['ctr_fecha_fin'] != "" or $ctr['ctr_vendedor'] != "" or $ctr['ctr_status_cuenta'] != "") {
             // Buscar contratos por vendedor
-            $ctr['ctr_fecha_inicio'] = $ctr['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $ctr['ctr_fecha_inicio'] . 'T00:00';
-            $ctr['ctr_fecha_fin'] = $ctr['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $ctr['ctr_fecha_fin'] . 'T23:59';
+            // $ctr['ctr_fecha_inicio'] = $ctr['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $ctr['ctr_fecha_inicio'] . 'T00:00';
+            // $ctr['ctr_fecha_fin'] = $ctr['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $ctr['ctr_fecha_fin'] . 'T23:59';
 
             return ContratosModelo::mdlMostrarContratosFechaExcel(
                 $ctr['ctr_vendedor'],
                 $ctr['ctr_fecha_inicio'],
-                $ctr['ctr_fecha_fin']
+                $ctr['ctr_fecha_fin'],
+                $ctr['ctr_status_cuenta']
             );
         } else {
             // Listar los ultimos 10 contratos

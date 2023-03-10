@@ -773,24 +773,19 @@ class ContratosModelo
     public static function mdlMostrarContratosFecha($ctr_vendedor, $ctr_fecha_inicio, $ctr_fecha_fin, $ctr_status_c)
     {
         try {
-            if ($ctr_fecha_inicio != "" && $ctr_fecha_fin != "") {
-                $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre,ctr_status_cuenta, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
-            LIKE '%$ctr_vendedor%' AND ctr_status_cuenta LIKE '$ctr_status_c' AND ( ctr.ctr_fecha_contrato BETWEEN ? AND ? ) ORDER BY ctr.ctr_fecha_contrato DESC";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->bindValue(1, $ctr_fecha_inicio);
-                $pps->bindValue(2, $ctr_fecha_fin);
-                $pps->execute();
-                return $pps->fetchAll();
-            } else {
-                $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre,ctr_status_cuenta, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
-            LIKE '%$ctr_vendedor%' AND ctr_status_cuenta = ? ORDER BY ctr.ctr_fecha_contrato DESC";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->bindValue(1, $ctr_status_c);
-                $pps->execute();
-                return $pps->fetchAll();
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre,ctr_status_cuenta, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
+            LIKE '%$ctr_vendedor%'";
+            $con = Conexion::conectar();
+            if ($ctr_fecha_inicio !== "") {
+                $sql .= " AND (ctr.ctr_fecha_contrato BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
             }
+            if($ctr_status_c !== "") {
+                $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
+            }
+            $sql .= " ORDER BY ctr.ctr_fecha_contrato DESC";
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -799,15 +794,20 @@ class ContratosModelo
         }
     }
 
-    public static function mdlMostrarContratosFechaExcel($ctr_vendedor, $ctr_fecha_inicio, $ctr_fecha_fin)
+    public static function mdlMostrarContratosFechaExcel($ctr_vendedor, $ctr_fecha_inicio, $ctr_fecha_fin, $ctr_status_c)
     {
         try {
             $sql = "SELECT usr.usr_nombre,ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
-            LIKE '%$ctr_vendedor%' AND ( ctr.ctr_fecha_contrato BETWEEN ? AND ? ) ORDER BY ctr.ctr_fecha_contrato DESC";
+            LIKE '%$ctr_vendedor%'";
             $con = Conexion::conectar();
+            if ($ctr_fecha_inicio !== "") {
+                $sql .= " AND (ctr.ctr_fecha_contrato BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
+            }
+            if($ctr_status_c !== "") {
+                $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
+            }
+            $sql .= " ORDER BY ctr.ctr_fecha_contrato DESC";
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $ctr_fecha_inicio);
-            $pps->bindValue(2, $ctr_fecha_fin);
             $pps->execute();
             return $pps->fetchAll();
         } catch (PDOException $th) {
