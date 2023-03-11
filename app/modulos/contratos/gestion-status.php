@@ -119,7 +119,7 @@
                 if (res.status) {
                     swal({
                         title: '¡Bien!',
-                        text: `Se agregaron ${res.update} status a su lista blanca correctamente y se registraron ${res.errors} errores.`,
+                        text: `Se agregaron ${res.update} status a su lista blanca correctamente.`,
                         type: 'success',
                         icon: 'success'
                     }).then(function() {
@@ -144,7 +144,7 @@
                 if (res.status) {
                     swal({
                         title: '¡Bien!',
-                        text: `Se agregaron ${res.update} status a su lista negra correctamente y se registraron ${res.errors} errores.`,
+                        text: `Se agregaron ${res.update} status a su lista negra correctamente.`,
                         type: 'success',
                         icon: 'success'
                     }).then(function() {
