@@ -1569,18 +1569,18 @@ class AppControlador
         return array(
             '1' => array(
                 'scl_id' => 1,
-                'scl_nombre' => 'Tuxtepec Oaxaca',
+                'scl_nombre' => 'TUXTEPEC',
                 'scl_url' => 'https://tuxtepec-comisa.softmor.com/'
             ),
             '2' => array(
                 'scl_id' => 2,
 
-                'scl_nombre' => 'Tierra Blanca Veracruz',
+                'scl_nombre' => 'TIERRA BLANCA',
                 'scl_url' => 'https://tierrablanca-comisa.softmor.com/'
             ),
             '3' => array(
                 'scl_id' => 3,
-                'scl_nombre' => 'Cosamaloapan Veracruz',
+                'scl_nombre' => 'COSAMALOAPAN',
                 'scl_url' => 'https://cosamaloapan-comisa.softmor.com/'
             ),
             '4' => array(
