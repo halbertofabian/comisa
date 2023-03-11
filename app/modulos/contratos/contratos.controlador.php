@@ -2085,4 +2085,91 @@ class ContratosControlador
             );
         }
     }
+
+    public static function ctrRegistrarStatusListas()
+    {
+        $countInsert = 0;
+        $countUpdate = 0;
+        $status = ContratosModelo::mdlMostrarEstadosCtr();
+        foreach ($status as $st) {
+            $res1 = ContratosModelo::mdlMostrarStatusListasByStatus($st['ctr_status_cuenta']);
+            if ($res1) {
+                $countUpdate += 1;
+            } else {
+                $res2 = ContratosModelo::mdlInsertarStatusListas($st);
+                if ($res2) {
+                    $countInsert += 1;
+                }
+            }
+        }
+        return array(
+            'status' => true,
+            'mensaje' => "Carga de status con éxito",
+            'insert' =>  $countInsert,
+            'update' => $countUpdate,
+        );
+    }
+
+    public static function ctrActualizarStatusListaBlanca()
+    {
+        $listaBlanca = $_POST['listaBlanca'];
+        $countUpdate = 0;
+        $countErros = 0;
+        foreach ($listaBlanca as $gst_id) {
+            $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, "B");
+            if ($res) {
+                $countUpdate += 1;
+            } else {
+                $countErros += 1;
+            }
+        }
+        return array(
+            'status' => true,
+            'update' => $countUpdate,
+            'errors' =>  $countErros,
+        );
+    }
+    public static function ctrActualizarStatusListaNegra()
+    {
+        $listaNegra = $_POST['listaNegra'];
+        $countUpdate = 0;
+        $countErros = 0;
+        foreach ($listaNegra as $gst_id) {
+            $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, "N");
+            if ($res) {
+                $countUpdate += 1;
+            } else {
+                $countErros += 1;
+            }
+        }
+        return array(
+            'status' => true,
+            'update' => $countUpdate,
+            'errors' =>  $countErros,
+        );
+    }
+    public static function ctrAgregarStatusLista()
+    {
+        $gst_status = strtoupper(trim($_POST['gst_status']));
+        $res = ContratosModelo::mdlMostrarStatusListasByStatus($gst_status);
+        if ($res) {
+            return array(
+                'status' => false,
+                'mensaje' => 'El status que intenta agregar ya existe en su lista.',
+            );
+        } else {
+            $status = ContratosModelo::mdlAgregarStatusLista($_POST);
+            if ($status) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El status se agrego correctamente.',
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Hubo un error al agregar el status.',
+                );
+            }
+        }
+    }
 }

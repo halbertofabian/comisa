@@ -55,7 +55,14 @@ elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "registrar-contrato"
     cargarComponente('breadcrumb', '', 'Registrar contrato');
     include_once 'app/modulos/contratos/registrar-contrato.php';
 ?>
+<?php
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "gestion-status") :
+    cargarComponente('breadcrumb', '', 'Gestion de status');
 
+    include_once 'app/modulos/contratos/gestion-status.php';
+
+
+?>
 <?php
 else :
     cargarComponente('breadcrumb', '', 'Nuevo contrato');
