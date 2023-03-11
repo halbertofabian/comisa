@@ -664,4 +664,10 @@ $app->post('/comisa_datos_traspasos', function (Request $request, Response $resp
     return json_encode($traspaso, true);
 });
 
+//API PARA GUARDAR LOS STATUS DE LAS LISTAS BLANCA Y NEGRA
+$app->get('/crear_status', function (Request $request, Response $response, array $args) {
+    $res = ContratosControlador::ctrRegistrarStatusListas();
+    return json_encode($res, true);
+});
+
 $app->run();
