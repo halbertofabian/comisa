@@ -2114,38 +2114,30 @@ class ContratosControlador
     {
         $listaBlanca = $_POST['listaBlanca'];
         $countUpdate = 0;
-        $countErros = 0;
         foreach ($listaBlanca as $gst_id) {
             $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, "B");
             if ($res) {
                 $countUpdate += 1;
-            } else {
-                $countErros += 1;
             }
         }
         return array(
             'status' => true,
             'update' => $countUpdate,
-            'errors' =>  $countErros,
         );
     }
     public static function ctrActualizarStatusListaNegra()
     {
         $listaNegra = $_POST['listaNegra'];
         $countUpdate = 0;
-        $countErros = 0;
         foreach ($listaNegra as $gst_id) {
             $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, "N");
             if ($res) {
                 $countUpdate += 1;
-            } else {
-                $countErros += 1;
             }
         }
         return array(
             'status' => true,
             'update' => $countUpdate,
-            'errors' =>  $countErros,
         );
     }
     public static function ctrAgregarStatusLista()
