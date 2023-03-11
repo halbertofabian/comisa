@@ -695,6 +695,11 @@ class AppControlador
                             'label' => 'Enrutar cuentas',
                             'href' => 'contratos/enrutar-cuentas'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Gestión de status',
+                            'href' => 'contratos/gestion-status'
+                        ],
                         //Aqui más item de menu
                     ),
                 ]
@@ -922,6 +927,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Enrutar cuentas',
                             'href' => 'contratos/enrutar-cuentas'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Gestión de status',
+                            'href' => 'contratos/gestion-status'
                         ],
                         //Aqui más item de menu
                     ),
@@ -1170,6 +1180,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Enrutar cuentas',
                             'href' => 'contratos/enrutar-cuentas'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Gestión de status',
+                            'href' => 'contratos/gestion-status'
                         ],
                         //Aqui más item de menu
                     ),

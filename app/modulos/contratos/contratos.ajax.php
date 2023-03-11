@@ -233,6 +233,21 @@ class ContratosAjax
 
         print json_encode($array_contratos, JSON_UNESCAPED_UNICODE);
     }
+    public function ajaxActualizarStatusListaBlanca()
+    {
+        $res = ContratosControlador::ctrActualizarStatusListaBlanca();
+        echo json_encode($res, true);
+    }
+    public function ajaxActualizarStatusListaNegra()
+    {
+        $res = ContratosControlador::ctrActualizarStatusListaNegra();
+        echo json_encode($res, true);
+    }
+    public function ajaxAgregarStatusLista()
+    {
+        $res = ContratosControlador::ctrAgregarStatusLista();
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -391,4 +406,16 @@ if (isset($_POST['btnObtenerUltimaOrden'])) {
 if (isset($_POST['btnMostrarContratosAll'])) {
     $mostrarcontrattosAll = new ContratosAjax();
     $mostrarcontrattosAll->ajaxMostrarContratosAll();
+}
+if (isset($_POST['btnAgregarListaBlanca'])) {
+    $actualizarListaBlanca = new ContratosAjax();
+    $actualizarListaBlanca->ajaxActualizarStatusListaBlanca();
+}
+if (isset($_POST['btnAgregarListaNegra'])) {
+    $actualizarListaNegra = new ContratosAjax();
+    $actualizarListaNegra->ajaxActualizarStatusListaNegra();
+}
+if (isset($_POST['btnAddStatusLista'])) {
+    $agregarStatusLista = new ContratosAjax();
+    $agregarStatusLista->ajaxAgregarStatusLista();
 }

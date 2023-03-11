@@ -1598,4 +1598,94 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlInsertarStatusListas($gst)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_gestion_status_gst (gst_status, gst_lista) VALUES(?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $gst['ctr_status_cuenta']);
+            $pps->bindValue(2, "");
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarStatusListasByStatus($gst_status)
+    {
+        try {
+            //code...
+            $sql = "SELECT gst_status FROM tbl_gestion_status_gst WHERE gst_status = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $gst_status);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarStatusListas()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_gestion_status_gst";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarStatusListaBlanca($gst_id, $gst_lista)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_gestion_status_gst SET gst_lista = ? WHERE gst_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $gst_lista);
+            $pps->bindValue(2, $gst_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAgregarStatusLista($gst)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_gestion_status_gst (gst_status, gst_lista) VALUES(?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, strtoupper(trim($gst['gst_status'])));
+            $pps->bindValue(2, $gst['gst_lista']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
