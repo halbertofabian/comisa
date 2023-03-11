@@ -4,30 +4,12 @@
     </div>
     <div class="col-xl-6 col-md-6 col-sm-12">
         <div class="card">
-            <form id="formListaBlanca">
-                <div class="card-header bg-success text-light">
-                    LISTA BLANCA
-                </div>
-                <div class="card-body" style=" overflow-y: auto; max-height: 500px;">
-                    <?php
-                    $status = ContratosModelo::mdlMostrarStatusListas();
-                    foreach ($status as $st) :
-                        if ($st['gst_lista'] == "B") {
-                            $checked = "checked";
-                        } else {
-                            $checked = "";
-                        }
-                    ?>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" <?= $checked ?> name="listaBlanca[]" id="ListaBlanca<?= $st['gst_id'] ?>" value="<?= $st['gst_id'] ?>">
-                            <label class="custom-control-label" for="ListaBlanca<?= $st['gst_id'] ?>"><?= $st['gst_status'] ?></label>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <div class="card-footer text-muted">
-                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
-                </div>
-            </form>
+            <div class="card-header bg-success text-light">
+                LISTA BLANCA
+            </div>
+            <div class="card-body" style=" overflow-y: auto; max-height: 500px;" id="listaBlanca">
+
+            </div>
         </div>
     </div>
     <div class="col-xl-6 col-md-6 col-sm-12">
@@ -35,27 +17,9 @@
             LISTA NEGRA
         </div>
         <div class="card">
-            <form id="formListaNegra">
-                <div class="card-body" style="overflow-y: auto; max-height: 500px;">
-                    <?php
-                    $status = ContratosModelo::mdlMostrarStatusListas();
-                    foreach ($status as $st) :
-                        if ($st['gst_lista'] == "N") {
-                            $checked = "checked";
-                        } else {
-                            $checked = "";
-                        }
-                    ?>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" <?= $checked ?> name="listaNegra[]" id="ListaNegra<?= $st['gst_id'] ?>" value="<?= $st['gst_id'] ?>">
-                            <label class="custom-control-label" for="ListaNegra<?= $st['gst_id'] ?>"><?= $st['gst_status'] ?></label>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <div class="card-footer text-muted">
-                    <button type="submit" class="btn btn-primary float-right">Guardar</button>
-                </div>
-            </form>
+            <div class="card-body" style="overflow-y: auto; max-height: 500px;" id="listaNegra">
+
+            </div>
         </div>
     </div>
 </div>
@@ -104,9 +68,81 @@
 </div>
 
 <script>
-    $('#formListaBlanca').on('submit', function(e) {
-        e.preventDefault();
-        var datos = new FormData(this)
+    $(document).ready(function() {
+        mostrarListaBlanca();
+        mostrarListaNegra();
+    })
+
+    function mostrarListaBlanca() {
+        var datos = new FormData()
+        datos.append('btnMostrarLista', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res) {
+                    var checked = "";
+                    var listaBlanca = "";
+                    res.forEach(gst => {
+                        if (gst.gst_lista == "B") {
+                            checked = "checked";
+                        } else {
+                            checked = "";
+                        }
+                        listaBlanca += `<div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input listaBlanca" ${checked} name="" id="ListaBlanca${gst.gst_id}" gst_id="${gst.gst_id}" value="${gst.gst_id}">
+                            <label class="custom-control-label" for="ListaBlanca${gst.gst_id}">${gst.gst_status}</label>
+                        </div>`;
+                    });
+                    $("#listaBlanca").html(listaBlanca);
+                }
+            }
+        });
+    }
+
+    function mostrarListaNegra() {
+        var datos = new FormData()
+        datos.append('btnMostrarLista', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res) {
+                    var checked = "";
+                    var listaNegra = "";
+                    res.forEach(gst => {
+                        if (gst.gst_lista == "N") {
+                            checked = "checked";
+                        } else {
+                            checked = "";
+                        }
+                        listaNegra += `<div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input listaNegra" ${checked} name="" id="ListaNegra${gst.gst_id}" gst_id="${gst.gst_id}" value="${gst.gst_id}">
+                            <label class="custom-control-label" for="ListaNegra${gst.gst_id}">${gst.gst_status}</label>
+                        </div>`;
+                    });
+                    $("#listaNegra").html(listaNegra);
+                }
+            }
+        });
+    }
+    $(document).on('change', '.listaBlanca', function() {
+        var gst_id = $(this).attr("gst_id");
+        var gst_lista = "";
+        if($("#ListaBlanca"+gst_id).is(':checked')) {  
+            gst_lista = "B";
+        }
+        var datos = new FormData()
+        datos.append('gst_id', gst_id);
+        datos.append('gst_lista', gst_lista);
         datos.append('btnAgregarListaBlanca', true);
         $.ajax({
             type: 'POST',
@@ -119,19 +155,36 @@
                 if (res.status) {
                     swal({
                         title: '¡Bien!',
-                        text: `Se agregaron ${res.update} status a su lista blanca correctamente.`,
+                        text: res.mensaje,
                         type: 'success',
                         icon: 'success'
                     }).then(function() {
-                        location.reload();
+                        mostrarListaBlanca();
+                        mostrarListaNegra();
                     });
+                } else {
+                    swal({
+                        title: 'Error',
+                        text: res.mensaje,
+                        icon: 'error',
+                        buttons: [false, 'Intentar de nuevo'],
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {} else {}
+                    })
                 }
             }
         });
     });
-    $('#formListaNegra').on('submit', function(e) {
-        e.preventDefault();
-        var datos = new FormData(this)
+    $(document).on('change', '.listaNegra', function() {
+        var gst_id = $(this).attr("gst_id");
+        var gst_lista = "";
+        if($("#ListaNegra"+gst_id).is(':checked')) {  
+            gst_lista = "N";
+        }
+        var datos = new FormData()
+        datos.append('gst_id', gst_id);
+        datos.append('gst_lista', gst_lista);
         datos.append('btnAgregarListaNegra', true);
         $.ajax({
             type: 'POST',
@@ -144,12 +197,23 @@
                 if (res.status) {
                     swal({
                         title: '¡Bien!',
-                        text: `Se agregaron ${res.update} status a su lista negra correctamente.`,
+                        text: res.mensaje,
                         type: 'success',
                         icon: 'success'
                     }).then(function() {
-                        location.reload();
+                        mostrarListaBlanca();
+                        mostrarListaNegra();
                     });
+                } else {
+                    swal({
+                        title: 'Error',
+                        text: res.mensaje,
+                        icon: 'error',
+                        buttons: [false, 'Intentar de nuevo'],
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {} else {}
+                    })
                 }
             }
         });

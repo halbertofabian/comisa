@@ -248,6 +248,11 @@ class ContratosAjax
         $res = ContratosControlador::ctrAgregarStatusLista();
         echo json_encode($res, true);
     }
+    public function ajaxMostrarListaStatus()
+    {
+        $res = ContratosModelo::mdlMostrarStatusListas();
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -418,4 +423,8 @@ if (isset($_POST['btnAgregarListaNegra'])) {
 if (isset($_POST['btnAddStatusLista'])) {
     $agregarStatusLista = new ContratosAjax();
     $agregarStatusLista->ajaxAgregarStatusLista();
+}
+if (isset($_POST['btnMostrarLista'])) {
+    $mostrarLista = new ContratosAjax();
+    $mostrarLista->ajaxMostrarListaStatus();
 }

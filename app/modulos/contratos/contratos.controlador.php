@@ -2112,33 +2112,39 @@ class ContratosControlador
 
     public static function ctrActualizarStatusListaBlanca()
     {
-        $listaBlanca = $_POST['listaBlanca'];
-        $countUpdate = 0;
-        foreach ($listaBlanca as $gst_id) {
-            $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, "B");
-            if ($res) {
-                $countUpdate += 1;
-            }
+        $gst_id = $_POST['gst_id'];
+        $gst_lista = $_POST['gst_lista'];
+        $status = $gst_lista == "" ? "quito" : "agrego";
+        $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, $gst_lista);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El status se ' . $status . ' correctamente a su lista blanca.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al agregar el status a su lista.',
+            );
         }
-        return array(
-            'status' => true,
-            'update' => $countUpdate,
-        );
     }
     public static function ctrActualizarStatusListaNegra()
     {
-        $listaNegra = $_POST['listaNegra'];
-        $countUpdate = 0;
-        foreach ($listaNegra as $gst_id) {
-            $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, "N");
-            if ($res) {
-                $countUpdate += 1;
-            }
+        $gst_id = $_POST['gst_id'];
+        $gst_lista = $_POST['gst_lista'];
+        $status = $gst_lista == "" ? "quito" : "agrego";
+        $res = ContratosModelo::mdlActualizarStatusListaBlanca($gst_id, $gst_lista);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El status se ' . $status . ' correctamente a su lista negra.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al agregar el status a su lista.',
+            );
         }
-        return array(
-            'status' => true,
-            'update' => $countUpdate,
-        );
     }
     public static function ctrAgregarStatusLista()
     {
