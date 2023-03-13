@@ -2048,12 +2048,12 @@ class ContratosControlador
             'clts_caja' => $ctr['clts_caja'],
             'clts_folio_nuevo' => ContratosControlador::ctrObtenerFolioNuevo(),
             'ctr_pago_credito' => dnum($ctr["ctr_pago_credito"]),
-            'ctr_aprovado_ventas' => $ctr['ctr_aprovado_ventas'],
+            'ctr_aprovado_ventas' => 0,
 
 
             'clts_fachada_color' => $ctr["clts_fachada_color"],
             'clts_puerta_color' => $ctr["clts_puerta_color"],
-            'ctr_status_cuenta' => "TRASPASO",
+            'ctr_status_cuenta' => "TRASPASO DE " . $ctr['t_origen'],
             'ctr_saldo_actual' => dnum($ctr["ctr_saldo"]),
 
             //Nuevos atributos 
@@ -2168,6 +2168,23 @@ class ContratosControlador
                     'mensaje' => 'Hubo un error al agregar el status.',
                 );
             }
+        }
+    }
+    public static function ctrRealizarTraspasosCuenta()
+    {
+        $res = ContratosModelo::mdlRealizarTraspasoCuenta($_POST);
+        if($res){
+            $ctr = ContratosModelo::mdlMostrarContratosById($_POST['ctr_id']);
+            return array(
+                'status' => true,
+                'ctr' => $ctr
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al hacer el trapaso.',
+                'ctr' => ''
+            );
         }
     }
 }

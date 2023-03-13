@@ -253,6 +253,11 @@ class ContratosAjax
         $res = ContratosModelo::mdlMostrarStatusListas();
         echo json_encode($res, true);
     }
+    public function ajaxRealizarTraspasos()
+    {
+        $res = ContratosControlador::ctrRealizarTraspasosCuenta();
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -427,4 +432,9 @@ if (isset($_POST['btnAddStatusLista'])) {
 if (isset($_POST['btnMostrarLista'])) {
     $mostrarLista = new ContratosAjax();
     $mostrarLista->ajaxMostrarListaStatus();
+}
+//TRASPASOS
+if (isset($_POST['btnRealizarTraspasos'])) {
+    $realizarTraspasos = new ContratosAjax();
+    $realizarTraspasos->ajaxRealizarTraspasos();
 }

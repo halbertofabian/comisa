@@ -555,11 +555,11 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             <div class="row">
                 <div class="col-md-5"></div>
                 <div class="col-md-3 text-right">
-                    <label for="ctr_total" class="mt-2">TOTAL: <!-- <?= '<strong style="font-size:20px;" >' . $ctr['ctr_total'] . '</strong>' ?>--></label> 
+                    <label for="ctr_total" class="mt-2">TOTAL: <!-- <?= '<strong style="font-size:20px;" >' . $ctr['ctr_total'] . '</strong>' ?>--></label>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text"  name="ctr_total" id="ctr_total" class="form-control inputN" value="<?= $ctr['ctr_total'] ?>">
+                        <input type="text" name="ctr_total" id="ctr_total" class="form-control inputN" value="<?= $ctr['ctr_total'] ?>">
                     </div>
                 </div>
 
@@ -569,7 +569,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text"  name="ctr_enganche" id="ctr_enganche" class="form-control inputN" value="<?= $ctr['ctr_enganche'] ?>">
+                        <input type="text" name="ctr_enganche" id="ctr_enganche" class="form-control inputN" value="<?= $ctr['ctr_enganche'] ?>">
                     </div>
                 </div>
 
@@ -579,7 +579,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text"  name="ctr_pago_adicional" id="ctr_pago_adicional" class="form-control inputN" value="<?= $ctr['ctr_pago_adicional'] ?>">
+                        <input type="text" name="ctr_pago_adicional" id="ctr_pago_adicional" class="form-control inputN" value="<?= $ctr['ctr_pago_adicional'] ?>">
                     </div>
                 </div>
 
@@ -589,7 +589,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text"  name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>" >
+                        <input type="text" name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>">
                     </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -598,7 +598,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text"  name="sobre_enganche_pendiente" id="sobre_enganche_pendiente" class="form-control inputN" value="<?= $ctr['sobre_enganche_pendiente'] ?>">
+                        <input type="text" name="sobre_enganche_pendiente" id="sobre_enganche_pendiente" class="form-control inputN" value="<?= $ctr['sobre_enganche_pendiente'] ?>">
                     </div>
                 </div>
 
@@ -651,7 +651,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="ctr_saldo_actual">SALDO ACTUAL: <!--<?= '<strong style="font-size:20px;" >' . $ctr['ctr_saldo_actual'] . '</strong>' ?>--></label>
-                        <input type="text" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>" >
+                        <input type="text" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>">
                     </div>
                 </div>
 
@@ -932,48 +932,110 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
         })
     </script>
 </div>
-
-<div class="card">
-    <div class="card-body">
-        <div class="col-md-3 mt-3">
-            <h4>Traspaso de cuenta</h4>
-            <select name="t_traspaso" class="form-control" id="t_traspaso">
-                <option value=""></option>
-                <?php
-                $lista_suc = AppControlador::listarSucursalesTux();
-                foreach ($lista_suc as $scl) :
-                ?>
-
-                    <option value="<?= $scl['scl_id'] ?>"><?= $scl['scl_nombre'] ?></option>
-
-                <?php endforeach; ?>
-            </select>
+<?php if (HTTP_HOST != "https://xicotepec-comisa.softmor.com/") : ?>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-md-3 mt-3">
+                <h4>Traspaso de cuenta</h4>
+                <select name="t_traspaso" class="form-control" id="t_traspaso">
+                    <option value="">-Seleccionar sucursal-</option>
+                    <?php
+                    $lista_suc = AppControlador::listarSucursalesTux();
+                    foreach ($lista_suc as $scl) :
+                        if ($scl['scl_url'] != HTTP_HOST) :
+                    ?>
+                            <option value="<?= $scl['scl_url'] ?>" scl_nombre="<?= $scl['scl_nombre'] ?>"><?= $scl['scl_nombre'] ?></option>
+                    <?php
+                        endif;
+                    endforeach; ?>
+                </select>
+            </div>
         </div>
     </div>
-</div>
+<?php endif; ?>
 
 <script>
     $("#t_traspaso").on("change", function() {
+        var scl_url = $(this).val();
+        if (scl_url == "") {
+            return toastr.warning('Selecciona una sucursal destino', 'ADVERTENCIA!');
+        }
         var ctr_id = $("#ctr_id").val();
-        var ctr_traspaso = $(this).val();
-        var datos = new FormData();
-        datos.append("ctr_id", ctr_id);
-        datos.append("ctr_traspaso", ctr_traspaso);
-        datos.append("btnRealizarTraspasos", true);
-        $.ajax({
-            type: "POST",
-            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
-            data: datos,
-            cache: false,
-            dataType: "json",
-            processData: false,
-            contentType: false,
-            beforeSend: function() {
-                //startLoadButton()
-            },
-            success: function(res) {
-                
-            }
+        var ctr_numero_cuenta = $("#ctr_numero_cuenta").val();
+        var scl_nombre = $('option:selected', this).attr('scl_nombre');
+        swal({
+            title: '¿Esta seguro de realizar el traspaso de la cuenta ' + ctr_numero_cuenta + ' a la sucursal ' + scl_nombre + '?',
+            text: 'Esta accion no es reversible',
+            icon: 'warning',
+            buttons: ['No', 'Si, traspasar cuenta'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+                datos.append("ctr_id", ctr_id);
+                datos.append("ctr_traspaso", ctr_traspaso);
+                datos.append("scl_nombre", scl_nombre);
+                datos.append("btnRealizarTraspasos", true);
+                $.ajax({
+                    type: "POST",
+                    url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                    data: datos,
+                    cache: false,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        //startLoadButton()
+                    },
+                    success: function(res) {
+                        if (res.status) {
+                            var ctr = JSON.stringify(res.ctr);
+                            $.ajax({
+                                type: "POST",
+                                url: scl_url + 'api/public/comisa_datos_traspasos',
+                                data: ctr,
+                                cache: false,
+                                dataType: "json",
+                                processData: false,
+                                contentType: false,
+                                success: function(response) {
+                                    if (response.status) {
+                                        swal({
+                                            title: '¡Bien!',
+                                            text: response.mensaje,
+                                            type: 'success',
+                                            icon: 'success'
+                                        }).then(function() {
+                                            window.location.href = urlApp + "contratos/listar";
+                                        });
+                                    } else {
+                                        swal({
+                                            title: 'Error',
+                                            text: response.mensaje,
+                                            icon: 'error',
+                                            buttons: [false, 'Intentar de nuevo'],
+                                            dangerMode: true,
+                                        }).then((willDelete) => {
+                                            if (willDelete) {} else {}
+                                        })
+                                    }
+
+                                }
+                            });
+                        } else {
+                            swal({
+                                title: 'Error',
+                                text: res.mensaje,
+                                icon: 'error',
+                                buttons: [false, 'Intentar de nuevo'],
+                                dangerMode: true,
+                            }).then((willDelete) => {
+                                if (willDelete) {} else {}
+                            })
+                        }
+                    }
+                });
+            } else {}
         });
 
     })
