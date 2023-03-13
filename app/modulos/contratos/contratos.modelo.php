@@ -779,7 +779,7 @@ class ContratosModelo
             if ($ctr_fecha_inicio !== "") {
                 $sql .= " AND (ctr.ctr_fecha_contrato BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
             }
-            if($ctr_status_c !== "") {
+            if ($ctr_status_c !== "") {
                 $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
             }
             $sql .= " ORDER BY ctr.ctr_fecha_contrato DESC";
@@ -803,7 +803,7 @@ class ContratosModelo
             if ($ctr_fecha_inicio !== "") {
                 $sql .= " AND (ctr.ctr_fecha_contrato BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
             }
-            if($ctr_status_c !== "") {
+            if ($ctr_status_c !== "") {
                 $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
             }
             $sql .= " ORDER BY ctr.ctr_fecha_contrato DESC";
@@ -1573,7 +1573,8 @@ class ContratosModelo
             $pps->bindValue(89, $ctr['ctr_gestion']);
             $pps->execute();
             // return $pps->rowCount() > 0;
-            return $pps->errorInfo();
+            preArray($pps->errorInfo());
+            return;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
