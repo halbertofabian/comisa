@@ -661,8 +661,7 @@ $app->post('/comisa_datos_traspasos', function (Request $request, Response $resp
     $json = $request->getBody();
     $data = json_decode($json, true);
     $traspaso =  ContratosControlador::ctrRegistrarTraspasoContrato($data);
-    preArray($traspaso);
-    return;
+   
     return json_encode($traspaso, true);
 });
 
