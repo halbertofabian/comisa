@@ -555,50 +555,50 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             <div class="row">
                 <div class="col-md-5"></div>
                 <div class="col-md-3 text-right">
-                    <label for="ctr_total" class="mt-2">TOTAL: <?= '<strong style="font-size:20px;" >'. $ctr['ctr_total'].'</strong>' ?></label>
+                    <label for="ctr_total" class="mt-2">TOTAL: <!-- <?= '<strong style="font-size:20px;" >' . $ctr['ctr_total'] . '</strong>' ?>--></label> 
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="hidden" readonly name="ctr_total" id="ctr_total" class="form-control inputN" value="<?= $ctr['ctr_total'] ?>">
+                        <input type="text"  name="ctr_total" id="ctr_total" class="form-control inputN" value="<?= $ctr['ctr_total'] ?>">
                     </div>
                 </div>
 
                 <div class="col-md-5"></div>
                 <div class="col-md-3 text-right">
-                    <label for="ctr_enganche" class="mt-2">ENGANCHE: <?= '<strong style="font-size:20px;" >'. $ctr['ctr_enganche'].'</strong>' ?></label>
+                    <label for="ctr_enganche" class="mt-2">ENGANCHE: <!--<?= '<strong style="font-size:20px;" >' . $ctr['ctr_enganche'] . '</strong>' ?>--></label>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="hidden" readonly name="ctr_enganche" id="ctr_enganche" class="form-control inputN" value="<?= $ctr['ctr_enganche'] ?>">
+                        <input type="text"  name="ctr_enganche" id="ctr_enganche" class="form-control inputN" value="<?= $ctr['ctr_enganche'] ?>">
                     </div>
                 </div>
 
                 <div class="col-md-5"></div>
                 <div class="col-md-3 text-right">
-                    <label for="ctr_pago_adicional" class="mt-2">PAGO ADICIONAL: <?= '<strong style="font-size:20px;" >'. $ctr['ctr_pago_adicional'].'</strong>' ?></label>
+                    <label for="ctr_pago_adicional" class="mt-2">PAGO ADICIONAL: <!--<?= '<strong style="font-size:20px;" >' . $ctr['ctr_pago_adicional'] . '</strong>' ?>--></label>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="hidden" readonly name="ctr_pago_adicional" id="ctr_pago_adicional" class="form-control inputN" value="<?= $ctr['ctr_pago_adicional'] ?>">
+                        <input type="text"  name="ctr_pago_adicional" id="ctr_pago_adicional" class="form-control inputN" value="<?= $ctr['ctr_pago_adicional'] ?>">
                     </div>
                 </div>
 
                 <div class="col-md-5"></div>
                 <div class="col-md-3 text-right">
-                    <label for="ctr_saldo" class="mt-2">SALDO: <?= '<strong style="font-size:20px;" >'. $ctr['ctr_saldo'].'</strong>' ?></label>
+                    <label for="ctr_saldo" class="mt-2">SALDO:<!-- <?= '<strong style="font-size:20px;" >' . $ctr['ctr_saldo'] . '</strong>' ?>--></label>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="hidden" readonly name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>" readonly>
+                        <input type="text"  name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>" >
                     </div>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 text-right">
-                    <label for="sobre_enganche_pendiente" class="mt-2">PENDIENTE SOBRE ENGANCHE: <?= '<strong style="font-size:20px;" >'. $ctr['sobre_enganche_pendiente'].'</strong>' ?></label>
+                    <label for="sobre_enganche_pendiente" class="mt-2">PENDIENTE SOBRE ENGANCHE: <!-- <?= '<strong style="font-size:20px;" >' . $ctr['sobre_enganche_pendiente'] . '</strong>' ?>--></label>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="hidden" readonly name="sobre_enganche_pendiente" id="sobre_enganche_pendiente" class="form-control inputN" value="<?= $ctr['sobre_enganche_pendiente'] ?>">
+                        <input type="text"  name="sobre_enganche_pendiente" id="sobre_enganche_pendiente" class="form-control inputN" value="<?= $ctr['sobre_enganche_pendiente'] ?>">
                     </div>
                 </div>
 
@@ -650,8 +650,8 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="ctr_saldo_actual">SALDO ACTUAL: <?= '<strong style="font-size:20px;" >'. $ctr['ctr_saldo_actual'].'</strong>' ?></label>
-                        <input  type="hidden" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>" readonly>
+                        <label for="ctr_saldo_actual">SALDO ACTUAL: <!--<?= '<strong style="font-size:20px;" >' . $ctr['ctr_saldo_actual'] . '</strong>' ?>--></label>
+                        <input type="text" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>" >
                     </div>
                 </div>
 
@@ -664,6 +664,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 
 
 
+
             </div>
 
         </div>
@@ -672,6 +673,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 
         <div class="card-body">
             <div class="row">
+
                 <div class="col-md-9 mt-5"></div>
                 <div class="col-md-3">
                     <div class="form-group">
@@ -930,3 +932,49 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
         })
     </script>
 </div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="col-md-3 mt-3">
+            <h4>Traspaso de cuenta</h4>
+            <select name="t_traspaso" class="form-control" id="t_traspaso">
+                <option value=""></option>
+                <?php
+                $lista_suc = AppControlador::listarSucursalesTux();
+                foreach ($lista_suc as $scl) :
+                ?>
+
+                    <option value="<?= $scl['scl_id'] ?>"><?= $scl['scl_nombre'] ?></option>
+
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#t_traspaso").on("change", function() {
+        var ctr_id = $("#ctr_id").val();
+        var ctr_traspaso = $(this).val();
+        var datos = new FormData();
+        datos.append("ctr_id", ctr_id);
+        datos.append("ctr_traspaso", ctr_traspaso);
+        datos.append("btnRealizarTraspasos", true);
+        $.ajax({
+            type: "POST",
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            cache: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                //startLoadButton()
+            },
+            success: function(res) {
+                
+            }
+        });
+
+    })
+</script>

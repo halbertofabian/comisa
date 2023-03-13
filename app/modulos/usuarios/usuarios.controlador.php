@@ -573,8 +573,14 @@ class UsuariosControlador
 
     public static function ctrGenerarCodigoDescarga($usr_id)
     {
-        $usr_codigo_descarga = rand(10000, 99999);
-        $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, $usr_codigo_descarga);
+        $res = true;
+        $usr_codigo_descarga = UsuariosModelo::mdlConsultarCodigoDescarga($usr_id);
+
+        if ($usr_codigo_descarga['usr_codigo_descarga'] == NULL) {
+            $usr_codigo_descarga = rand(10000, 99999);
+            $res = UsuariosModelo::mdlGenerarCodigoDescarga($usr_id, $usr_codigo_descarga);
+        }
+
         if ($res) {
             return array(
                 'status' => true,
@@ -608,8 +614,14 @@ class UsuariosControlador
 
     public static function ctrGenerarCodigoFinalizarCbza($usr_id)
     {
-        $usr_codigo_finalizar = rand(10000, 99999);
-        $res = UsuariosModelo::mdlGenerarCodigoFinalizarCbza($usr_id, $usr_codigo_finalizar);
+        $res = true;
+        $usr_codigo_finalizar = UsuariosModelo::mdlConsultarCodigoFinalizar($usr_id);
+        
+        if ($usr_codigo_finalizar['usr_codigo_finalizar'] == NULL) {
+            $usr_codigo_finalizar = rand(10000, 99999);
+            $res = UsuariosModelo::mdlGenerarCodigoFinalizarCbza($usr_id, $usr_codigo_finalizar);
+        }
+
         if ($res) {
             return array(
                 'status' => true,
