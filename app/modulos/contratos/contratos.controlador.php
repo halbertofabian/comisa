@@ -2070,8 +2070,8 @@ class ContratosControlador
         );
 
         $res = ContratosModelo::mdlAgregarTraspaso($contratos);
-        preArray($res);
-        return;
+        // preArray($res);
+        // return;
         if ($res) {
             return  array(
                 'status' => true,
