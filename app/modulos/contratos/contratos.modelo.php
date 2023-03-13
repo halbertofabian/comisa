@@ -1688,4 +1688,26 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlRealizarTraspasoCuenta($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_status_cuenta = ?, t_origen = ?, t_destino = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, "TRASPASO A " . $ctr['scl_nombre']);
+            $pps->bindValue(2, $_SESSION['session_suc']['scl_nombre']);
+            $pps->bindValue(3, $ctr['scl_nombre']);
+            $pps->bindValue(4, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
