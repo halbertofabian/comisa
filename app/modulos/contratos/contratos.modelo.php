@@ -1572,9 +1572,9 @@ class ContratosModelo
             $pps->bindValue(88, $ctr['ctr_call_center']);
             $pps->bindValue(89, $ctr['ctr_gestion']);
             $pps->execute();
-            // return $pps->rowCount() > 0;
-            preArray($pps->errorInfo());
-            return;
+            return $pps->rowCount() > 0;
+            // preArray($pps->errorInfo());
+            // return;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
