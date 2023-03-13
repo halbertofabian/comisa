@@ -973,7 +973,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             if (willDelete) {
                 var datos = new FormData();
                 datos.append("ctr_id", ctr_id);
-                datos.append("ctr_traspaso", ctr_traspaso);
+                // datos.append("ctr_traspaso", ctr_traspaso);
                 datos.append("scl_nombre", scl_nombre);
                 datos.append("btnRealizarTraspasos", true);
                 $.ajax({
