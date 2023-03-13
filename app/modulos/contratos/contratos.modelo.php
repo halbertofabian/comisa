@@ -1572,8 +1572,8 @@ class ContratosModelo
             $pps->bindValue(88, $ctr['ctr_call_center']);
             $pps->bindValue(89, $ctr['ctr_gestion']);
             $pps->execute();
-            return $pps->rowCount() > 0;
-            // return $pps->errorInfo();
+            // return $pps->rowCount() > 0;
+            return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -1701,8 +1701,8 @@ class ContratosModelo
             $pps->bindValue(3, $ctr['scl_nombre']);
             $pps->bindValue(4, $ctr['ctr_id']);
             $pps->execute();
-            // return $pps->rowCount() > 0;
-            return $pps->errorInfo();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
         } finally {

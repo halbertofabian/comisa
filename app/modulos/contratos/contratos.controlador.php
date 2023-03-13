@@ -2070,8 +2070,8 @@ class ContratosControlador
         );
 
         $res = ContratosModelo::mdlAgregarTraspaso($contratos);
-        // print_r($res);
-        // return;
+        print_r($res);
+        return;
 
         if ($res) {
             return  array(
@@ -2173,8 +2173,6 @@ class ContratosControlador
     public static function ctrRealizarTraspasosCuenta()
     {
         $res = ContratosModelo::mdlRealizarTraspasoCuenta($_POST);
-        preArray($res);
-        return;
         if($res){
             $ctr = ContratosModelo::mdlMostrarContratosById($_POST['ctr_id']);
             return array(
