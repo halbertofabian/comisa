@@ -62,10 +62,11 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <table class="table">
+                            <table class="table table-responsive">
                                 <thead class="thead-light">
                                     <tr>
                                         <th>FOLIO</th>
+                                        <th>COBRADOR</th>
                                         <th>FECHA</th>
                                         <th>M.P</th>
                                         <th>Nota</th>

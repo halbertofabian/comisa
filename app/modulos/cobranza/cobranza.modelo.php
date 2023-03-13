@@ -1046,14 +1046,14 @@ class CobranzaModelo
         try {
             //code...
             if ($abs_estado_abono == "") {
-                $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ? ORDER BY abs_fecha_cobro DESC";
+                $sql = "SELECT abs.*, usr.usr_nombre FROM tbl_abonos_cobranza_abs abs JOIN tbl_usuarios_usr usr ON abs.abs_id_cobrador = usr.usr_id WHERE abs.abs_id_contrato = ? ORDER BY abs.abs_fecha_cobro DESC";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $cra_id);
                 $pps->execute();
                 return $pps->fetchAll();
             } else {
-                $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_id_contrato = ? AND abs_estado_abono = ? ORDER BY abs_fecha_cobro DESC";
+                $sql = "SELECT abs.*, usr.usr_nombre FROM tbl_abonos_cobranza_abs abs JOIN tbl_usuarios_usr usr ON abs.abs_id_cobrador = usr.usr_id WHERE abs.abs_id_contrato = ? AND abs.abs_estado_abono = ? ORDER BY abs.abs_fecha_cobro DESC";
                 $con = Conexion::conectar();
                 $pps = $con->prepare($sql);
                 $pps->bindValue(1, $cra_id);
