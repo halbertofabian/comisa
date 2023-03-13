@@ -2173,6 +2173,8 @@ class ContratosControlador
     public static function ctrRealizarTraspasosCuenta()
     {
         $res = ContratosModelo::mdlRealizarTraspasoCuenta($_POST);
+        preArray($res);
+        return;
         if($res){
             $ctr = ContratosModelo::mdlMostrarContratosById($_POST['ctr_id']);
             return array(
