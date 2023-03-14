@@ -1432,6 +1432,7 @@ class CobranzaControlador
                 'ctr_status_cuenta' => $pgs['ctr_status_cuenta'],
                 'ctr_saldo_actual' => $pgs['ctr_saldo_actual'],
                 'usr_nombre' => $pgs['usr_nombre'],
+                'abs_foto_deposito' => $pgs['abs_foto_deposito'],
             );
             array_push($array_pagos, $array_datos);
         }
