@@ -296,7 +296,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_abonos_cobranza_abs (abs_folio,abs_id_cobrador,abs_id_contrato,abs_monto,abs_mp,abs_referancia,abs_nota,abs_fecha_cobro) VALUES(?,?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO tbl_abonos_cobranza_abs (abs_folio,abs_id_cobrador,abs_id_contrato,abs_monto,abs_mp,abs_referancia,abs_nota,abs_fecha_cobro,abs_status_cuenta,abs_foto_deposito) VALUES(?,?,?,?,?,?,?,?,?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $abs['abs_folio']);
@@ -307,6 +307,8 @@ class CobranzaModelo
             $pps->bindValue(6, $abs['abs_referancia']);
             $pps->bindValue(7, $abs['abs_nota']);
             $pps->bindValue(8, $abs['abs_fecha_cobro']);
+            $pps->bindValue(9, $abs['abs_status_cuenta']);
+            $pps->bindValue(10, $abs['abs_foto_deposito']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {

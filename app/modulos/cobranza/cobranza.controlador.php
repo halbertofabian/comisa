@@ -553,7 +553,25 @@ class CobranzaControlador
         $abs_completos = json_decode($abs_completos, true);
 
         foreach ($abs_completos as  $abs_c) {
-            CobranzaModelo::mdlRegistrarAbono($abs_c);
+
+            $abs_foto_deposito = '';
+            if (isset($abs_c['abs_foto_deposito']) && $abs_c['abs_foto_deposito'] != '') {
+                $abs_foto_deposito =  ContratosControlador::ctrGuardarImagenesContrato($abs_c['abs_foto_deposito'], $abs_c['abs_id_contrato'], $abs_c['abs_folio']);
+            }
+
+            $datos = array(
+                'abs_folio' => $abs_c['abs_folio'],
+                'abs_id_cobrador' => $abs_c['abs_id_cobrador'],
+                'abs_id_contrato' => $abs_c['abs_id_contrato'],
+                'abs_monto' => $abs_c['abs_monto'],
+                'abs_mp' => $abs_c['abs_mp'],
+                'abs_referancia' => $abs_c['abs_referancia'],
+                'abs_nota' => $abs_c['abs_nota'],
+                'abs_fecha_cobro' => $abs_c['abs_fecha_cobro'],
+                'abs_status_cuenta' => isset($abs_c['abs_status_cuenta']) ? $abs_c['abs_status_cuenta'] : '',
+                'abs_foto_deposito' => $abs_foto_deposito
+            );
+            CobranzaModelo::mdlRegistrarAbono($datos);
         }
     }
 

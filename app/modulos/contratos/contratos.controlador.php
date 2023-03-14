@@ -952,7 +952,9 @@ class ContratosControlador
 
             $directorio = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg;
 
-            mkdir($directorio, 0755);
+            if(!file_exists($directorio)){
+                mkdir($directorio, 0755);
+            }
 
             $ruta = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
             $ruta_url = HTTP_HOST . 'media/fotosContratos/' . $fileimg . "/" . $img_name . ".jpeg";
