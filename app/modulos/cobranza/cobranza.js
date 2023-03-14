@@ -301,11 +301,16 @@ function mostrarEstado() {
 
                                     var saldo_aux = '-';
                                     var boton = "-";
+                                    var btn_foto = "";
                                     if (element.abs_estado_abono == 'AUTORIZADO') {
                                         saldo_aux = $.number(saldo, 2);
                                         boton = `<button class="btn btn-outline-danger btnCancelarAbono" abs_id="${element.abs_id}" abs_monto="${abs_monto}" data-toggle="tooltip" data-placement="top" title="Cancelar"><i class="fa fa-times"></i></button>`;
                                     } else if (element.abs_estado_abono == 'DESCUENTO POR AUTORIZAR') {
                                         boton = `<button class="btn btn-outline-success btnVerificarDescuento" abs_id="${element.abs_id}" abs_codigo="${element.abs_codigo}" data-toggle="tooltip" data-placement="top" title="Autorizar descuento"><i class="fa fa-check"></i></button>`;
+                                    }
+
+                                    if (element.abs_foto_deposito != "") {
+                                        btn_foto = `<a class="btn btn-link btnMostrarFotoDeposito" href="#" role="button" abs_foto_deposito="${element.abs_foto_deposito}"><i class="fa fa-eye"></i> Ver foto</a>`;
                                     }
 
                                     tbody_estado_cuenta +=
@@ -314,7 +319,7 @@ function mostrarEstado() {
                                                 <td>${element.abs_folio}</td>
                                                 <td>${element.usr_nombre}</td>
                                                 <td>${element.abs_fecha_cobro}</td>
-                                                <td>${element.abs_mp} <br> ${element.abs_referancia}  </td>
+                                                <td class="text-center">${element.abs_mp} <br> ${element.abs_referancia} <br> ${btn_foto}  </td>
                                                 <td>${element.abs_nota}</td>
                                                 <td>${$.number(element.abs_monto, 2)}</td>
                                                 <td>${saldo_aux}</td>
@@ -630,7 +635,7 @@ $(document).on('click', '.btnVerificarDescuento', function () {
 $(document).on('click', '.btnAprobarDescuento', function () {
     var abs_id_descuento = $("#abs_id_descuento").val();
     var abs_codigo_descuento = $("#abs_codigo_descuento").val();
-    if(abs_codigo_descuento == ""){
+    if (abs_codigo_descuento == "") {
         $("#abs_codigo_descuento").focus();
         return toastr.error("El código es obligatorio", '¡ERROR!');
     }
@@ -655,4 +660,10 @@ $(document).on('click', '.btnAprobarDescuento', function () {
             }
         }
     });
+});
+
+$(document).on('click', '.btnMostrarFotoDeposito', function () {
+    var abs_foto_deposito = $(this).attr("abs_foto_deposito");
+    $("#abs_foto_deposito").attr("src", abs_foto_deposito);
+    $("#mdlVerFotoDeposito").modal("show");
 });

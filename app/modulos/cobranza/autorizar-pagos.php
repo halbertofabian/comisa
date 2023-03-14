@@ -183,6 +183,21 @@
     </div>
 </div>
 
+
+<!-- Modal ver foto deposito -->
+<div class="modal fade" id="verFotoDeposito" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="foto_deposito" src="" width="100%" alt="foto_deposito">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         buscarPagos("");
@@ -405,6 +420,7 @@
 
                     var buttonAgregarCuenta = "";
                     var buttonCancelar = "";
+
                     if (urs_id != "") {
                         cobrador = pgs.usr_nombre;
                         buttonCancelar = `<button type="button" class="btn btn-outline-danger btnCancelarPago" abs_id="${pgs.abs_id}">CANCELAR</button>`;
@@ -416,10 +432,12 @@
                         pgs_total_efectivo += Number(pgs.abs_monto);
                     } else {
                         pgs_total_banco += Number(pgs.abs_monto);
-
                         buttonAgregarCuenta = `<button class="btn btn-sm btn-link text-danger btnModCuentaBanco" abs_id="${pgs.abs_id}" abs_cuenta="${pgs.abs_cuenta_id}" abs_referencia="${pgs.abs_referancia}" >Cuenta de banco</button>`;
 
                     }
+                    var abs_foto_deposito = pgs.abs_foto_deposito != "" ? `<a class="btn btn-link mostrarFotoDeposito" href="#" role="button" abs_foto_deposito="${pgs.abs_foto_deposito}"><i class="fa fa-eye"></i> Ver foto</a>` : "";
+
+
                     tbodyPagos +=
 
                         `
@@ -435,7 +453,8 @@
                             <td>
                             ${pgs.abs_mp} <br>
                             <strong class="text-primary"> ${pgs.abs_cuenta_text} </strong> <br>
-                            ${buttonAgregarCuenta}
+                            ${buttonAgregarCuenta} <br>
+                            ${abs_foto_deposito}
                             </td>
                             <td>${pgs.abs_referancia}</td>
                             <td>${pgs.abs_nota}</td>
@@ -463,7 +482,7 @@
 
     function consultarCodigoFinalizacion(usr_id) {
 
-      
+
         var datos = new FormData()
 
         datos.append("usr_id", usr_id)
@@ -528,4 +547,10 @@
             }
         })
     })
+
+    $(document).on('click', '.mostrarFotoDeposito', function() {
+        var abs_foto_deposito = $(this).attr("abs_foto_deposito");
+        $("#foto_deposito").attr("src", abs_foto_deposito);
+        $("#verFotoDeposito").modal("show");
+    });
 </script>
