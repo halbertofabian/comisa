@@ -1014,15 +1014,7 @@ $validar_pagos = $abs ? true : false;
                     $("#ctr_id_codigo").val(res.ctr_id);
                     $("#ctr_codigo").focus();
                 } else {
-                    swal({
-                        title: 'Error',
-                        text: res.mensaje,
-                        icon: 'error',
-                        buttons: [false, 'Intentar de nuevo'],
-                        dangerMode: true,
-                    }).then((willDelete) => {
-                        if (willDelete) {} else {}
-                    })
+                    location.reload();
                 }
             }
         });
