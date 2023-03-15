@@ -1126,14 +1126,20 @@ class CobranzaControlador
             // TOTAL PAGADO
             $nuevoPagdo = $totalPagdoTmp + dnum($abs['abs_monto']);
 
-            $status_cuenta = $nuevoSaldo <=  0 ? 'PAGADA' : 'VIGENTE';
+            $status_cuenta_pagada = 'PAGADA';
+            if ($status_cuenta_pagada != '') {
+                $status_cuenta_pagada = $abs['abs_status_cuenta'];
+            }
+
+            $status_cuenta = $nuevoSaldo <= 0 ? $status_cuenta_pagada : 'VIGENTE';
 
             CobranzaModelo::mdlActualizarSaldoV2(array(
                 'ctr_saldo_actual' => $nuevoSaldo,
                 'ctr_ultima_fecha_abono' => $abs['abs_fecha_cobro'],
                 'ctr_total_pagado' => $nuevoPagdo,
                 'ctr_id' => $abs['ctr_id'],
-                'ctr_status_cuenta' => $status_cuenta
+                'ctr_status_cuenta' => $status_cuenta,
+                'ctr_nota' => $abs['abs_nota']
             ));
             $ctr_saldo_actualizado = CobranzaModelo::mdlConsultarSaldoBaseV2($abs['ctr_id']);
 

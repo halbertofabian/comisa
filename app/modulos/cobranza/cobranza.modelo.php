@@ -669,14 +669,15 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ?, ctr_ultima_fecha_abono = ?,ctr_total_pagado = ?, ctr_status_cuenta = ? WHERE ctr_id = ?";
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_saldo_actual = ?, ctr_ultima_fecha_abono = ?,ctr_total_pagado = ?, ctr_status_cuenta = ?, ctr_nota = ? WHERE ctr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $datos['ctr_saldo_actual']);
             $pps->bindValue(2, $datos['ctr_ultima_fecha_abono']);
             $pps->bindValue(3, $datos['ctr_total_pagado']);
             $pps->bindValue(4, $datos['ctr_status_cuenta']);
-            $pps->bindValue(5, $datos['ctr_id']);
+            $pps->bindValue(5, $datos['ctr_nota']);
+            $pps->bindValue(6, $datos['ctr_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
