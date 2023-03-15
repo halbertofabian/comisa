@@ -1013,6 +1013,9 @@ class ContratosControlador
         $ctr_saldo_actual = dnum($_POST['ctr_saldo_actual']);
         $ctr_saldo_actual_2 = dnum(base64_decode($_POST['ctr_saldo_actual_2']));
 
+        $ctr_total_pagado = dnum($_POST['ctr_total_pagado']);
+        $ctr_total_pagado_2 = dnum(base64_decode($_POST['ctr_total_pagado_2']));
+
         $validar_pagos = $_POST['validar_pagos'];
 
         $aprovado_ventas = 0;
@@ -1107,7 +1110,8 @@ class ContratosControlador
             'clts_fachada_color' => dstring($_POST['clts_fachada_color']),
             'clts_puerta_color' => dstring($_POST['clts_puerta_color']),
             'ctr_status_cuenta' => dstring($_POST['ctr_status_cuenta']),
-            'ctr_saldo_actual' => dnum($_POST['ctr_saldo_actual'])
+            'ctr_saldo_actual' => dnum($_POST['ctr_saldo_actual']),
+            'ctr_total_pagado' => dnum($_POST['ctr_total_pagado'])
         );
 
 
@@ -1124,7 +1128,7 @@ class ContratosControlador
                     'mensaje' => 'Hubo un error'
                 );
             }
-        } else if ($ctr_total != $ctr_total_2 || $ctr_enganche != $ctr_enganche_2 || $ctr_pago_adicional != $ctr_pago_adicional_2 || $ctr_saldo != $ctr_saldo_2 || $sobre_enganche_pendiente != $sobre_enganche_pendiente_2 || $ctr_saldo_actual != $ctr_saldo_actual_2) {
+        } else if ($ctr_total != $ctr_total_2 || $ctr_enganche != $ctr_enganche_2 || $ctr_pago_adicional != $ctr_pago_adicional_2 || $ctr_saldo != $ctr_saldo_2 || $sobre_enganche_pendiente != $sobre_enganche_pendiente_2 || $ctr_saldo_actual != $ctr_saldo_actual_2 || $ctr_total_pagado != $ctr_total_pagado_2) {
             $saldos = array(
                 'ctr_id' => $_POST['ctr_id'],
                 'ctr_cliente' => dstring($_POST['ctr_cliente']),
@@ -1142,6 +1146,8 @@ class ContratosControlador
                 'sobre_enganche_pendiente_nuevo' => $sobre_enganche_pendiente,
                 'ctr_saldo_actual_viejo' => $ctr_saldo_actual_2,
                 'ctr_saldo_actual_nuevo' => $ctr_saldo_actual,
+                'ctr_total_pagado_viejo' => $ctr_total_pagado_2,
+                'ctr_total_pagado_nuevo' => $ctr_total_pagado,
             );
             $ctr_json_saldos = json_encode($saldos, true);
             $ctr_codigo = rand(10000, 99999);

@@ -662,6 +662,13 @@ $validar_pagos = $abs ? true : false;
                         <input type="hidden" name="ctr_saldo_actual_2" id="ctr_saldo_actual_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_saldo_actual']) ?>">
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="ctr_total_pagado">TOTAL PAGADO: <strong style="font-size:16px;color:red" >(EN ABONOS)</strong></label>
+                        <input type="text" name="ctr_total_pagado" id="ctr_total_pagado" class="form-control inputN" value="<?= $ctr['ctr_total_pagado'] ?>">
+                        <input type="hidden" name="ctr_total_pagado_2" id="ctr_total_pagado_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_total_pagado']) ?>">
+                    </div>
+                </div>
 
                 <div class="col-12">
                     <div class="form-group">
@@ -987,6 +994,12 @@ $validar_pagos = $abs ? true : false;
 <?php endif; ?>
 
 <script>
+    $(document).ready(function(){
+        var validar_pagos = $("#validar_pagos").val();
+        if(!validar_pagos){
+            $("#ctr_total_pagado").attr("readonly", true);
+        }
+    })
     $('#formUpdateCtr').on('submit', function(e) {
         e.preventDefault();
         var datos = new FormData(this)
@@ -1049,6 +1062,9 @@ $validar_pagos = $abs ? true : false;
 
                     var ctr_saldo_actual = $("#ctr_saldo_actual").val();
                     $("#ctr_saldo_actual_2").val(btoa(ctr_saldo_actual));
+
+                    var ctr_total_pagado = $("#ctr_total_pagado").val();
+                    $("#ctr_total_pagado_2").val(btoa(ctr_total_pagado));
 
                     $("#formValidarCodigoCtr")[0].reset();
                     $("#mdlValidarCodigoCtr").modal("hide");
