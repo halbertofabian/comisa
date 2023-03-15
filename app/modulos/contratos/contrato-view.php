@@ -20,7 +20,7 @@ $validar_pagos = $abs ? true : false;
             <div class="row">
                 <div class="col-md-3 text-center">
                     <div class="form-group">
-                        <input type="hidden" id="validar_pagos" value="<?= $validar_pagos ?>">
+                        <input type="hidden" id="validar_pagos" name="validar_pagos" value="<?= $validar_pagos ?>">
                         <input type="hidden" name="clts_folio_nuevo" id="clts_folio_nuevo" class="form-control text-center" value="<?= $ctr['clts_folio_nuevo'] ?>" required readonly>
                         <input type="text" name="ctr_folio" id="ctr_folio" class="form-control text-center" value="<?= $ctr['ctr_folio'] ?>" required readonly>
 
