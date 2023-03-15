@@ -1710,4 +1710,57 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlActualizarSaldosJsonCtr($ctr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_json_saldos = ?, ctr_codigo = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr['ctr_json_saldos']);
+            $pps->bindValue(2, $ctr['ctr_codigo']);
+            $pps->bindValue(3, $ctr['ctr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarCodigoById($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_json_saldos, ctr_codigo FROM tbl_contrato_crt_1 WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarSaldosJson()
+    {
+        try {
+            //code...
+            $sql = "SELECT ctr_json_saldos, ctr_codigo FROM tbl_contrato_crt_1 WHERE ctr_codigo != ''";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
