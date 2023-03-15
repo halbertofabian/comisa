@@ -573,17 +573,28 @@ $app->get('/autorizar_descuento/{abs_id}/{abs_codigo}', function (Request $reque
     }
 });
 
+$app->get('/saldos_por_autorizar', function (Request $request, Response $response, array $args) {
+    $saldos = ContratosModelo::mdlMostrarSaldosJson();
+
+    $array_saldos = array();
+    foreach ($saldos as $key => $data) {
+        array_push($array_saldos, array(
+            "ctr_json_saldos" => json_decode($data['ctr_json_saldos'], true),
+            "ctr_codigo" => $data['ctr_codigo'],
+        ));
+    }
+    return json_encode($array_saldos, true);
+});
+
 //CREAR NUEVA FICHA
 $app->get('/crear_ficha', function (Request $request, Response $response, array $args) {
-    
-     CobranzaControlador::ctrGenerarNuevaFicha();
-    
+
+    CobranzaControlador::ctrGenerarNuevaFicha();
 });
 //CREAR RENDIMIENTO
 $app->get('/crear_redimiento', function (Request $request, Response $response, array $args) {
-    
-     CobranzaControlador::ctrGuardarRendimiento();
-    
+
+    CobranzaControlador::ctrGuardarRendimiento();
 });
 
 //APIS PARA VALIDAR DESCARGA Y FINALIZAR COBRANZA
@@ -602,7 +613,6 @@ $app->get('/autorizar_cobranza_codigo/{usr_id}', function (Request $request, Res
             'mensaje' => $res['mensaje']
         ), true);
     }
-
 });
 $app->get('/validar_cobranza_descarga/{usr_id}/{usr_codigo_descarga}', function (Request $request, Response $response, array $args) {
     $usr_id =  $args['usr_id'];
@@ -619,7 +629,6 @@ $app->get('/validar_cobranza_descarga/{usr_id}/{usr_codigo_descarga}', function 
             'mensaje' => $res['mensaje']
         ), true);
     }
-
 });
 
 $app->get('/autorizar_terminar_cobranza_codigo/{usr_id}', function (Request $request, Response $response, array $args) {
@@ -636,7 +645,6 @@ $app->get('/autorizar_terminar_cobranza_codigo/{usr_id}', function (Request $req
             'mensaje' => $res['mensaje']
         ), true);
     }
-
 });
 $app->get('/validar_terminar_cobranza/{usr_id}/{usr_codigo_descarga}', function (Request $request, Response $response, array $args) {
     $usr_id =  $args['usr_id'];
@@ -653,7 +661,6 @@ $app->get('/validar_terminar_cobranza/{usr_id}/{usr_codigo_descarga}', function 
             'mensaje' => $res['mensaje']
         ), true);
     }
-
 });
 
 //API PARA TRASPASOS DE CONTRATOS
@@ -671,5 +678,3 @@ $app->get('/crear_status', function (Request $request, Response $response, array
 });
 
 $app->run();
-
-

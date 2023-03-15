@@ -3,10 +3,12 @@ cargarComponente('breadcrumb_nivel_1', '', 'Contrato', array(['ruta' => 'contrat
 
 
 $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
-
+$cra = CobranzaModelo::mdlConsultarEstadoCuenta2($ctr['ctr_id']);
+$abs = CobranzaModelo::mdlConsultarEstadoCuenta3($cra['cra_id']);
+$validar_pagos = $abs ? true : false;
 ?>
 
-<form id="" method="post">
+<form id="formUpdateCtr">
     <div class="card card-contrato">
         <div class="card-header text-center bg-primary">
             <strong style="color:aliceblue">CONTRATO DE COMPRAVENTA</strong>
@@ -18,7 +20,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
             <div class="row">
                 <div class="col-md-3 text-center">
                     <div class="form-group">
-
+                        <input type="hidden" id="validar_pagos" value="<?= $validar_pagos ?>">
                         <input type="hidden" name="clts_folio_nuevo" id="clts_folio_nuevo" class="form-control text-center" value="<?= $ctr['clts_folio_nuevo'] ?>" required readonly>
                         <input type="text" name="ctr_folio" id="ctr_folio" class="form-control text-center" value="<?= $ctr['ctr_folio'] ?>" required readonly>
 
@@ -560,6 +562,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" name="ctr_total" id="ctr_total" class="form-control inputN" value="<?= $ctr['ctr_total'] ?>">
+                        <input type="hidden" name="ctr_total_2" id="ctr_total_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_total']) ?>">
                     </div>
                 </div>
 
@@ -570,6 +573,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" name="ctr_enganche" id="ctr_enganche" class="form-control inputN" value="<?= $ctr['ctr_enganche'] ?>">
+                        <input type="hidden" name="ctr_enganche_2" id="ctr_enganche_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_enganche']) ?>">
                     </div>
                 </div>
 
@@ -580,6 +584,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" name="ctr_pago_adicional" id="ctr_pago_adicional" class="form-control inputN" value="<?= $ctr['ctr_pago_adicional'] ?>">
+                        <input type="hidden" name="ctr_pago_adicional_2" id="ctr_pago_adicional_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_pago_adicional']) ?>">
                     </div>
                 </div>
 
@@ -590,6 +595,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" name="ctr_saldo" id="ctr_saldo" class="form-control inputN" value="<?= $ctr['ctr_saldo'] ?>">
+                        <input type="hidden" name="ctr_saldo_2" id="ctr_saldo_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_saldo']) ?>">
                     </div>
                 </div>
                 <div class="col-md-5"></div>
@@ -599,6 +605,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" name="sobre_enganche_pendiente" id="sobre_enganche_pendiente" class="form-control inputN" value="<?= $ctr['sobre_enganche_pendiente'] ?>">
+                        <input type="hidden" name="sobre_enganche_pendiente_2" id="sobre_enganche_pendiente_2" class="form-control inputN" value="<?= base64_encode($ctr['sobre_enganche_pendiente']) ?>">
                     </div>
                 </div>
 
@@ -652,6 +659,7 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                     <div class="form-group">
                         <label for="ctr_saldo_actual">SALDO ACTUAL: <!--<?= '<strong style="font-size:20px;" >' . $ctr['ctr_saldo_actual'] . '</strong>' ?>--></label>
                         <input type="text" name="ctr_saldo_actual" id="ctr_saldo_actual" class="form-control inputN" value="<?= $ctr['ctr_saldo_actual'] ?>">
+                        <input type="hidden" name="ctr_saldo_actual_2" id="ctr_saldo_actual_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_saldo_actual']) ?>">
                     </div>
                 </div>
 
@@ -677,19 +685,12 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
                 <div class="col-md-9 mt-5"></div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <button class="btn btn-primary text-center float-right btn-block" name="btnGuadarDatosContrato"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
+                        <button type="submit" class="btn btn-primary text-center float-right btn-block" name="btnGuadarDatosContrato"><i class="fa fa-floppy-o" aria-hidden="true"></i> Guardar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <?php
-
-    $actualizar = new ContratosControlador();
-    $actualizar->ctrActualizarContrato();
-
-    ?>
 </form>
 
 
@@ -887,6 +888,37 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
     </div>
 
 
+    <!-- Modal codigo -->
+    <div class="modal fade" id="mdlValidarCodigoCtr" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Codigo de verificación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formValidarCodigoCtr">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="ctr_codigo">Codigo</label>
+                                    <input type="hidden" name="ctr_id" id="ctr_id_codigo">
+                                    <input type="number" class="form-control" name="ctr_codigo" id="ctr_codigo" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Validar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(".btnshowFotos").on("click", function() {
             var ctrs_id = $("#ctrs_id").val();
@@ -955,6 +987,97 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 <?php endif; ?>
 
 <script>
+    $('#formUpdateCtr').on('submit', function(e) {
+        e.preventDefault();
+        var datos = new FormData(this)
+        datos.append('btnGuadarDatosContrato', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status == true) {
+                    swal({
+                        title: '¡Bien!',
+                        text: res.mensaje,
+                        type: 'success',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else if (res.status == "codigo") {
+                    toastr.warning(res.mensaje, 'ADVERTENCIA!');
+                    $("#mdlValidarCodigoCtr").modal("show");
+                    $("#ctr_id_codigo").val(res.ctr_id);
+                    $("#ctr_codigo").focus();
+                } else {
+                    swal({
+                        title: 'Error',
+                        text: res.mensaje,
+                        icon: 'error',
+                        buttons: [false, 'Intentar de nuevo'],
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {} else {}
+                    })
+                }
+            }
+        });
+    });
+    $('#formValidarCodigoCtr').on('submit', function(e) {
+        e.preventDefault();
+        var datos = new FormData(this)
+        datos.append('btnValidarCodigoSaldos', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status) {
+                    var ctr_total = $("#ctr_total").val();
+                    $("#ctr_total_2").val(btoa(ctr_total));
+
+                    var ctr_enganche = $("#ctr_enganche").val();
+                    $("#ctr_enganche_2").val(btoa(ctr_enganche));
+
+                    var ctr_pago_adicional = $("#ctr_pago_adicional").val();
+                    $("#ctr_pago_adicional_2").val(btoa(ctr_pago_adicional));
+
+                    var ctr_saldo = $("#ctr_saldo").val();
+                    $("#ctr_saldo_2").val(btoa(ctr_saldo));
+
+                    var sobre_enganche_pendiente = $("#sobre_enganche_pendiente").val();
+                    $("#sobre_enganche_pendiente_2").val(btoa(sobre_enganche_pendiente));
+
+                    var ctr_saldo_actual = $("#ctr_saldo_actual").val();
+                    $("#ctr_saldo_actual_2").val(btoa(ctr_saldo_actual));
+
+                    $("#formValidarCodigoCtr")[0].reset();
+                    $("#mdlValidarCodigoCtr").modal("hide");
+
+                    $('#formUpdateCtr').submit();;
+
+
+                } else {
+                    swal({
+                        title: 'Error',
+                        text: res.mensaje,
+                        icon: 'error',
+                        buttons: [false, 'Intentar de nuevo'],
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {} else {}
+                    })
+                }
+            }
+        });
+    });
     $("#t_traspaso").on("change", function() {
         var scl_url = $(this).val();
         if (scl_url == "") {

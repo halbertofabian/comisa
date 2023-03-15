@@ -993,15 +993,69 @@ class ContratosControlador
 
         // preArray($contratos);
     }
-    public  function ctrActualizarContrato()
+    public static function ctrActualizarContrato()
     {
-        if (isset($_POST['btnGuadarDatosContrato'])) {
-            startLoadButton();
+        // startLoadButton();
+
+        $ctr_total = dnum($_POST['ctr_total']);
+        $ctr_total_2 = dnum(base64_decode($_POST['ctr_total_2']));
+
+        $ctr_enganche = dnum($_POST['ctr_enganche']);
+        $ctr_enganche_2 = dnum(base64_decode($_POST['ctr_enganche_2']));
+
+        $ctr_pago_adicional = dnum($_POST['ctr_pago_adicional']);
+        $ctr_pago_adicional_2 = dnum(base64_decode($_POST['ctr_pago_adicional_2']));
+
+        $ctr_saldo = dnum($_POST['ctr_saldo']);
+        $ctr_saldo_2 = dnum(base64_decode($_POST['ctr_saldo_2']));
+
+        $sobre_enganche_pendiente = dnum($_POST['sobre_enganche_pendiente']);
+        $sobre_enganche_pendiente_2 = dnum(base64_decode($_POST['sobre_enganche_pendiente_2']));
+
+        $ctr_saldo_actual = dnum($_POST['ctr_saldo_actual']);
+        $ctr_saldo_actual_2 = dnum(base64_decode($_POST['ctr_saldo_actual_2']));
+
+        if ($ctr_total != $ctr_total_2 || $ctr_enganche != $ctr_enganche_2 || $ctr_pago_adicional != $ctr_pago_adicional_2 || $ctr_saldo != $ctr_saldo_2 || $sobre_enganche_pendiente != $sobre_enganche_pendiente_2 || $ctr_saldo_actual != $ctr_saldo_actual_2) {
+            $saldos = array(
+                'ctr_id' => $_POST['ctr_id'],
+                'ctr_cliente' => dstring($_POST['ctr_cliente']),
+                'ctr_numero_cuenta' => $_POST['ctr_numero_cuenta'],
+                'ctr_ruta' => $_POST['ctr_ruta'],
+                'ctr_total_viejo' => $ctr_total_2,
+                'ctr_total_nuevo' => $ctr_total,
+                'ctr_enganche_viejo' => $ctr_enganche_2,
+                'ctr_enganche_nuevo' => $ctr_enganche,
+                'ctr_pago_adicional_viejo' => $ctr_pago_adicional_2,
+                'ctr_pago_adicional_nuevo' => $ctr_pago_adicional,
+                'ctr_saldo_viejo' => $ctr_saldo_2,
+                'ctr_saldo_nuevo' => $ctr_saldo,
+                'sobre_enganche_pendiente_viejo' => $sobre_enganche_pendiente_2,
+                'sobre_enganche_pendiente_nuevo' => $sobre_enganche_pendiente,
+                'ctr_saldo_actual_viejo' => $ctr_saldo_actual_2,
+                'ctr_saldo_actual_nuevo' => $ctr_saldo_actual,
+            );
+            $ctr_json_saldos = json_encode($saldos, true);
+            $ctr_codigo = rand(10000, 99999);
+            $data = array(
+                'ctr_id' => $_POST['ctr_id'],
+                'ctr_json_saldos' => $ctr_json_saldos,
+                'ctr_codigo' => $ctr_codigo,
+            );
+            $result = ContratosModelo::mdlActualizarSaldosJsonCtr($data);
+            if ($result) {
+                return array(
+                    'status' => 'codigo',
+                    'mensaje' => 'Se detecto que los saldos fueron modificados, para ello se solicito un codigo de verificación.',
+                    'ctr_id' => $_POST['ctr_id'],
+                );
+            }
+        } else {
 
             $aprovado_ventas = 0;
             if (isset($_POST['ctr_aprovado_ventas'])) {
                 $aprovado_ventas = 1;
             }
+
             $datos = array(
                 'ctr_id' => $_POST['ctr_id'],
                 // 'ctr_folio' => $_POST['ctr_folio'],
@@ -1093,7 +1147,15 @@ class ContratosControlador
             );
             $actualizarContrato = ContratosModelo::mdlActualizarPreContratos($datos);
             if ($actualizarContrato) {
-                AppControlador::msj('success', 'Muy bien', 'Contrato guardado', HTTP_HOST . 'contratos/buscar/' . $_POST['ctr_id']);
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Contrato guardado'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Hubo un error'
+                );
             }
         }
     }
@@ -2174,17 +2236,48 @@ class ContratosControlador
     public static function ctrRealizarTraspasosCuenta()
     {
         $res = ContratosModelo::mdlRealizarTraspasoCuenta($_POST);
-        if($res){
+        if ($res) {
             $ctr = ContratosModelo::mdlMostrarContratosById($_POST['ctr_id']);
             return array(
                 'status' => true,
                 'ctr' => $ctr
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'Hubo un error al hacer el trapaso.',
                 'ctr' => ''
+            );
+        }
+    }
+    public static function ctrValidarCodigoSaldos()
+    {
+        $ctr_id = $_POST['ctr_id'];
+        $ctr_codigo = $_POST['ctr_codigo'];
+        $ctr = ContratosModelo::mdlMostrarCodigoById($ctr_id);
+
+        if ($ctr_codigo == $ctr['ctr_codigo']) {
+            $datos = array(
+                'ctr_id' => $ctr_id,
+                'ctr_json_saldos' => $ctr['ctr_json_saldos'],
+                'ctr_codigo' => "",
+            );
+            $res = ContratosModelo::mdlActualizarSaldosJsonCtr($datos);
+            if ($res) {
+                return array(
+                    'status' => true,
+                    'mensaje' => ''
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => ''
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'El codigo de verificación es incorrecto.',
             );
         }
     }
