@@ -1871,4 +1871,19 @@ class CobranzaControlador
         }
         return $next_day;
     }
+
+    public static function ctrCancelarCodigoAbono($abs_id){
+        $res = CobranzaModelo::mdlCancelarCodigoAbono($abs_id);
+        if($res){
+            return array(
+                'status' => true,
+                'mensaje' => 'La cancelacion se ejecuto correctamente.'
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al cancelar.'
+            );
+        }
+    }
 }

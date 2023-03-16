@@ -586,6 +586,22 @@ $app->get('/saldos_por_autorizar', function (Request $request, Response $respons
     return json_encode($array_saldos, true);
 });
 
+$app->get('/cancelar_codigo_abono/{abs_id}', function (Request $request, Response $response, array $args) {
+    $abs_id = $args['abs_id'];
+    $res = CobranzaControlador::ctrCancelarCodigoAbono($abs_id);
+    if ($res['status']) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => $res['mensaje']
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => $res['mensaje']
+        ), true);
+    }
+});
+
 //CREAR NUEVA FICHA
 $app->get('/crear_ficha', function (Request $request, Response $response, array $args) {
 
