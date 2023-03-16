@@ -313,11 +313,13 @@ function mostrarEstado() {
                                         btn_foto = `<a class="btn btn-link btnMostrarFotoDeposito" href="#" role="button" abs_foto_deposito="${element.abs_foto_deposito}"><i class="fa fa-eye"></i> Ver foto</a>`;
                                     }
 
+                                    var usr_nombre = element.abs_mp == "DESCUENTO" ? "-" : element.usr_nombre
+
                                     tbody_estado_cuenta +=
                                         `
                                             <tr>
                                                 <td>${element.abs_folio}</td>
-                                                <td>${element.usr_nombre}</td>
+                                                <td>${usr_nombre}</td>
                                                 <td>${element.abs_fecha_cobro}</td>
                                                 <td class="text-center">${element.abs_mp} <br> ${element.abs_referancia} <br> ${btn_foto}  </td>
                                                 <td>${element.abs_nota}</td>
