@@ -1998,7 +1998,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_codigo = '' WHERE abs_id = ? ";
+            $sql = "UPDATE tbl_abonos_cobranza_abs SET abs_codigo = '', abs_motivo_cancelacion = '-' WHERE abs_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $abs_id);
