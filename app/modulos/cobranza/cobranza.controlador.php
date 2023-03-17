@@ -1425,17 +1425,17 @@ class CobranzaControlador
     public static function ctrGuardarDatos($datos)
     {
 
-        CobranzaModelo::mdlAgregaReferencias(array(
-            'cra_referencias' => $datos['cra_referencias'],
-            'cra_id' => $datos['cra_id'],
+        // CobranzaModelo::mdlAgregaReferencias(array(
+        //     'cra_referencias' => $datos['cra_referencias'],
+        //     'cra_id' => $datos['cra_id'],
 
-        ));
+        // ));
 
-        CobranzaModelo::mdlAgregaDatosTelGeo(array(
-            'clts_telefono' => $datos['clts_telefono'],
-            'clts_coordenadas' => $datos['clts_coordenadas'],
-            'ctr_id' => $datos['ctr_id'],
-        ));
+        // CobranzaModelo::mdlAgregaDatosTelGeo(array(
+        //     'clts_telefono' => $datos['clts_telefono'],
+        //     'clts_coordenadas' => $datos['clts_coordenadas'],
+        //     'ctr_id' => $datos['ctr_id'],
+        // ));
     }
 
     public static function ctrGuardarRendimiento()
