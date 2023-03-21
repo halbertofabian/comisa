@@ -93,7 +93,7 @@ class ProductosControlador
     }
     public static function ctrActualizarProductos()
     {
-        
+
         if (isset($_POST['btnEditarProductos'])) {
             $_POST['pds_etiquetas'] = "SOFTMOR";
             $_POST['pds_fecha_modificacion'] = FECHA;
@@ -148,7 +148,6 @@ class ProductosControlador
                 AppControlador::msj('error', 'Error', 'Ocurrio un error, inetnte de nuevo, es probable que este producto ya exista, verifique e intente de nuevo');
             }
         }
-
     }
     public function ctrMostrarProductos()
     {
@@ -246,9 +245,9 @@ class ProductosControlador
                     "pds_sucursal_id" => $_SESSION['session_suc']['scl_id'],
                     "pds_suscriptor_id" => $_SESSION['session_sus']['sus_id'],
                     'pds_ams_id' => $_POST['pds_ams_id']
-                );  
-                
-               
+                );
+
+
                 if (ProductosModelo::mdlAgregarProductos($data)) {
                     $countInsert += 1;
                 } else {
@@ -416,6 +415,39 @@ class ProductosControlador
             return array(
                 'status' => true,
                 'mensaje' => 'Las series se guardarón correctamente!',
+            );
+        }
+    }
+    public static function ctrRegistrarModelos()
+    {
+        $mpds_suc = $_POST['mpds_suc'];
+        $mpds_modelo = trim($_POST['mpds_modelo']);
+        $mpds_descripcion = mb_strtoupper(trim($_POST['mpds_descripcion']));
+
+        $descripcion = ProductosModelo::mdlMostrarModelosByDescripcion($mpds_descripcion);
+        if ($descripcion) {
+            return array(
+                'status' => false,
+                'mensaje' => 'El nombre de la mercancia ya se agrego. Intente con otro nombre.',
+            );
+        }
+
+        $datos = array(
+            'mpds_suc' => $mpds_suc,
+            'mpds_modelo' => $mpds_modelo,
+            'mpds_descripcion' => $mpds_descripcion,
+        );
+
+        $res = ProductosModelo::mdlRegistrarModelos($datos);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El modelos se registro correctamente.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'El modelos se registro correctamente.',
             );
         }
     }
