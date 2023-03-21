@@ -663,6 +663,16 @@ class AppControlador
                             'label' => 'Clientes con mal historial',
                             'href' => 'clientes-mal-historial'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-list" aria-hidden="true"></i>',
+                            'label' => 'Lista blanca',
+                            'href' => 'clientes/lista-blanca'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-list" aria-hidden="true"></i>',
+                            'label' => 'Lista negra',
+                            'href' => 'clientes/lista-negra'
+                        ],
                         //Aqui más item de menu
                     ),
                 ]
@@ -949,6 +959,16 @@ class AppControlador
                             'icon' => '<i class="fa fa-user-times" aria-hidden="true"></i>',
                             'label' => 'Clientes con mal historial',
                             'href' => 'clientes-mal-historial'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-list" aria-hidden="true"></i>',
+                            'label' => 'Lista blanca',
+                            'href' => 'clientes/lista-blanca'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-list" aria-hidden="true"></i>',
+                            'label' => 'Lista negra',
+                            'href' => 'clientes/lista-negra'
                         ],
                         //Aqui más item de menu
                     ),
@@ -1277,6 +1297,16 @@ class AppControlador
                             'icon' => '<i class="fa fa-user-times" aria-hidden="true"></i>',
                             'label' => 'Clientes con mal historial',
                             'href' => 'clientes-mal-historial'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-list" aria-hidden="true"></i>',
+                            'label' => 'Lista blanca',
+                            'href' => 'clientes/lista-blanca'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-list" aria-hidden="true"></i>',
+                            'label' => 'Lista negra',
+                            'href' => 'clientes/lista-negra'
                         ],
                         //Aqui más item de menu
                     ),

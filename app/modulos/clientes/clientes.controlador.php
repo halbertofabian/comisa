@@ -565,4 +565,60 @@ class ClientesControlador
 
         return $array_clientes;
     }
+    public static function ctrMostrarClientesListaBlanca()
+    {
+
+        $respuesta = ClientesModelo::mdlMostrarClientesListaBlanca();
+        $array_clientes = array();
+        foreach ($respuesta as $ctr) {
+            $productos = "";
+            foreach (json_decode($ctr['ctr_productos'], true) as $pr) {
+                $productos .= $pr['nombreProducto']."<br>";
+            }
+            array_push($array_clientes, array(
+                'ctr_ruta' => $ctr['ctr_ruta'],
+                'ctr_cliente' => $ctr['ctr_cliente'],
+                'clts_telefono' => $ctr['clts_telefono'],
+                'clts_domicilio' => $ctr['clts_domicilio'] . ' ' . $ctr['clts_col'],
+                'clts_coordenadas' => $ctr['clts_coordenadas'],
+                'ctr_status_cuenta' => '<strong class="text-success">' . $ctr['ctr_status_cuenta'] . '</strong>',
+                'clts_curp' => $ctr['clts_curp'],
+                'ctr_nota' => $ctr['ctr_nota'],
+                'ctr_numero_cuenta' => $ctr['ctr_numero_cuenta'],
+                'ctr_productos' => $productos,
+                'ctr_fecha_contrato' => $ctr['ctr_fecha_contrato'],
+            ));
+            # code...
+        }
+
+        return $array_clientes;
+    }
+    public static function ctrMostrarClientesListaNegra()
+    {
+
+        $respuesta = ClientesModelo::mdlMostrarClientesListaNegra();
+        $array_clientes = array();
+        foreach ($respuesta as $ctr) {
+            $productos = "";
+            foreach (json_decode($ctr['ctr_productos'], true) as $pr) {
+                $productos .= $pr['nombreProducto']."<br>";
+            }
+            array_push($array_clientes, array(
+                'ctr_ruta' => $ctr['ctr_ruta'],
+                'ctr_cliente' => $ctr['ctr_cliente'],
+                'clts_telefono' => $ctr['clts_telefono'],
+                'clts_domicilio' => $ctr['clts_domicilio'] . ' ' . $ctr['clts_col'],
+                'clts_coordenadas' => $ctr['clts_coordenadas'],
+                'ctr_status_cuenta' => '<strong class="text-danger">' . $ctr['ctr_status_cuenta'] . '</strong>',
+                'clts_curp' => $ctr['clts_curp'],
+                'ctr_nota' => $ctr['ctr_nota'],
+                'ctr_numero_cuenta' => $ctr['ctr_numero_cuenta'],
+                'ctr_productos' => $productos,
+                'ctr_fecha_contrato' => $ctr['ctr_fecha_contrato'],
+            ));
+            # code...
+        }
+
+        return $array_clientes;
+    }
 }

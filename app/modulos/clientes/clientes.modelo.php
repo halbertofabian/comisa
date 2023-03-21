@@ -472,4 +472,36 @@ class ClientesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarClientesListaBlanca()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_contrato_crt_1 ctr WHERE ctr_status_cuenta IN(SELECT gst_status FROM tbl_gestion_status_gst WHERE gst_lista = 'B') ORDER BY ctr_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarClientesListaNegra()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_contrato_crt_1 ctr WHERE ctr_status_cuenta IN(SELECT gst_status FROM tbl_gestion_status_gst WHERE gst_lista = 'N') ORDER BY ctr_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

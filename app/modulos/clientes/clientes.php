@@ -1040,6 +1040,14 @@ if (isset($rutas[1]) && $rutas[1] == 'new') :
             </div>
         </form>
     </div>
+<?php elseif (isset($rutas[1]) && $rutas[1] == 'lista-blanca') :
+    cargarComponente('breadcrumb', '', 'Lista blanca');
+    include_once 'app/modulos/clientes/lista-blanca.php';
+?>
+<?php elseif (isset($rutas[1]) && $rutas[1] == 'lista-negra') :
+    cargarComponente('breadcrumb', '', 'Lista negra');
+    include_once 'app/modulos/clientes/lista-negra.php';
+?>
 <?php else :
     cargarComponente('breadcrumb', '', 'Lista de clientes');
 ?>

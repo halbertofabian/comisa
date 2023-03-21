@@ -65,6 +65,16 @@ class ClientesAjax
         $res = ClientesControlador::ctrMostrarClientesMalHistorial();
         print json_encode($res, JSON_UNESCAPED_UNICODE);
     }
+    public function ajaxMostrarClientesListaBlanca()
+    {
+        $res = ClientesControlador::ctrMostrarClientesListaBlanca();
+        print json_encode($res, JSON_UNESCAPED_UNICODE);
+    }
+    public function ajaxMostrarClientesListaNegra()
+    {
+        $res = ClientesControlador::ctrMostrarClientesListaNegra();
+        print json_encode($res, JSON_UNESCAPED_UNICODE);
+    }
 }
 
 if (isset($_POST['btnNewClientAdd'])) {
@@ -103,4 +113,12 @@ if (isset($_POST['btnEditClienteMal'])) {
 if (isset($_POST['btnMostrarClientesMalHistorial'])) {
     $mostrarClientesMalHistorial = new ClientesAjax();
     $mostrarClientesMalHistorial->ajaxMostrarClienteMalHistorial();
+}
+if (isset($_POST['btnMostrarClientesListaBlanca'])) {
+    $mostrarClientesListaBlanca = new ClientesAjax();
+    $mostrarClientesListaBlanca->ajaxMostrarClientesListaBlanca();
+}
+if (isset($_POST['btnMostrarClientesListaNegra'])) {
+    $mostrarClientesListaNegra = new ClientesAjax();
+    $mostrarClientesListaNegra->ajaxMostrarClientesListaNegra();
 }
