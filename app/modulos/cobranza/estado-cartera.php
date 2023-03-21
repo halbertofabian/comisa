@@ -65,6 +65,7 @@
             <table id="datatable_cuenta" class="table table-striped table-bordered table-hover tablaStatus tablas">
                 <thead>
                     <tr class="text-center">
+                        <th>#CONTRATO</th>
                         <th>#RUTA</th>
                         <th>#CUENTA</th>
                         <th>CLIENTE</th>
@@ -114,7 +115,11 @@
                 "dataSrc": ""
             },
             "bDestroy": true,
-            "columns": [{
+            "columns": [
+                {
+                    "data": "cra_contrato"
+                },
+                {
                     "data": "ctr_ruta"
                 },
                 {
