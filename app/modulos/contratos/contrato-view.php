@@ -41,7 +41,7 @@ $validar_pagos = $abs ? true : false;
                     </div>
                     <p class="card-text text-center">Nº CUENTA</p>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-3 text-center mb-2">
                     <div class="form-group">
 
                         <input type="text" name="ctr_fecha_contrato" id="ctr_fecha_contrato" class="form-control text-center" value="<?= $ctr['ctr_fecha_contrato'] ?>" required>
@@ -50,6 +50,27 @@ $validar_pagos = $abs ? true : false;
                     <p class="card-text text-center">FECHA</p>
                 </div>
 
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select name="ctr_id_vendedor" id="ctr_id_vendedor" class="form-control select2" required>
+                            <option value="">--SELECCIONAR--</option>
+                            <?php
+                            $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+                            foreach ($usuarios as $key => $usr) :
+                                if ($usr['usr_id'] == $ctr['ctr_id_vendedor']) {
+                                    $selected = "selected";
+                                } else {
+                                    $selected = "";
+                                }
+                            ?>
+                                <option <?= $selected ?> value="<?= $usr['usr_id'] ?>"> <?= $usr['usr_nombre']  ?> </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <p class="card-text text-center">VENDEDOR</p>
+                </div>
             </div>
         </div>
     </div>
@@ -664,9 +685,9 @@ $validar_pagos = $abs ? true : false;
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="ctr_total_pagado">TOTAL PAGADO: <strong style="font-size:16px;color:red" >(EN ABONOS)</strong></label>
-                        <input type="text" name="ctr_total_pagado" id="ctr_total_pagado" class="form-control inputN" value="<?= $ctr['ctr_total_pagado'] ?>">
-                        <input type="hidden" name="ctr_total_pagado_2" id="ctr_total_pagado_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_total_pagado']) ?>">
+                        <label for="ctr_total_pagado">TOTAL PAGADO: <strong style="font-size:16px;color:red">(EN ABONOS)</strong></label>
+                        <input type="text" name="ctr_total_pagado" id="ctr_total_pagado" class="form-control inputN" value="<?= $ctr['ctr_total_pagado'] == null || $ctr['ctr_total_pagado'] == "null" ? 0 : $ctr['ctr_total_pagado'] ?>">
+                        <input type="hidden" name="ctr_total_pagado_2" id="ctr_total_pagado_2" class="form-control inputN" value="<?= base64_encode($ctr['ctr_total_pagado'] == null || $ctr['ctr_total_pagado'] == "null" ? 0 : $ctr['ctr_total_pagado']) ?>">
                     </div>
                 </div>
 
@@ -994,9 +1015,9 @@ $validar_pagos = $abs ? true : false;
 <?php endif; ?>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         var validar_pagos = $("#validar_pagos").val();
-        if(!validar_pagos){
+        if (!validar_pagos) {
             $("#ctr_total_pagado").attr("readonly", true);
         }
     })

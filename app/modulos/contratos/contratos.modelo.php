@@ -426,7 +426,7 @@ class ContratosModelo
     public static function mdlActualizarPreContratos($ctr)
     {
         try {
-            $sql = "UPDATE tbl_contrato_crt_1  SET ctr_cliente =?,ctr_numero_cuenta = ?, ctr_ruta = ? , ctr_forma_pago = ?,ctr_dia_pago = ? , ctr_proximo_pago = ?, ctr_plazo_credito = ?, ctr_total = ?, ctr_enganche = ?, ctr_pago_adicional = ?, ctr_saldo = ?, ctr_nota = ?, ctr_nombre_ref_1 = ?, ctr_parentesco_ref_1 = ?, ctr_direccion_ref_1 = ?,ctr_colonia_ref_1 = ?, ctr_telefono_ref_1 = ?, clts_curp = ?, clts_telefono = ?,clts_domicilio = ?, clts_col = ?, clts_entre_calles = ?, clts_trabajo = ?, clts_puesto = ?, clts_direccion_tbj = ?, clts_col_tbj = ?, clts_tel_tbj = ?,    clts_antiguedad_tbj = ?, clts_igs_mensual_tbj = ?, clts_tipo_vivienda = ?, clts_vivienda_anomde = ?, clts_antiguedad_viviendo = ?, clts_coordenadas = ?, clts_nom_conyuge = ?, clts_tbj_conyuge = ?, clts_tbj_puesto_conyuge = ?, clts_tbj_dir_conyuge = ?, clts_tbj_col_conyuge = ?, clts_tbj_tel_conyuge = ?, clts_tbj_ant_conyuge = ?, clts_tbj_ing_conyuge = ?, clts_nom_fiador = ?, clts_parentesco_fiador = ?, clts_tel_fiador  = ?, clts_dir_fiador = ?, clts_col_fiador = ?, clts_tbj_fiador = ?, clts_tbj_dir_fiador = ?, clts_tbj_tel_fiador = ?, clts_tbj_col_fiador = ?,clts_tbj_ant_fiador = ?, clts_nom_ref2 = ?, clts_parentesco_ref2 = ?, clts_dir_ref2 = ?, clts_col_ref2 = ?, clts_tel_ref2 = ?, clts_nom_ref3 = ?, clts_parentesco_ref3 = ?, clts_dir_ref3 = ?, clts_col_ref3 = ?, clts_tel_ref3 = ?, sobre_enganche_pendiente = ? , ctr_pago_credito = ?,ctr_aprovado_ventas = ? , ctr_fecha_contrato = ?, clts_fachada_color =? , clts_puerta_color = ? , ctr_status_cuenta =?, ctr_saldo_actual=?, ctr_total_pagado=? WHERE ctr_id = ? ";
+            $sql = "UPDATE tbl_contrato_crt_1 SET ctr_cliente =?,ctr_numero_cuenta = ?, ctr_ruta = ? , ctr_forma_pago = ?,ctr_dia_pago = ? , ctr_proximo_pago = ?, ctr_plazo_credito = ?, ctr_total = ?, ctr_enganche = ?, ctr_pago_adicional = ?, ctr_saldo = ?, ctr_nota = ?, ctr_nombre_ref_1 = ?, ctr_parentesco_ref_1 = ?, ctr_direccion_ref_1 = ?,ctr_colonia_ref_1 = ?, ctr_telefono_ref_1 = ?, clts_curp = ?, clts_telefono = ?,clts_domicilio = ?, clts_col = ?, clts_entre_calles = ?, clts_trabajo = ?, clts_puesto = ?, clts_direccion_tbj = ?, clts_col_tbj = ?, clts_tel_tbj = ?,    clts_antiguedad_tbj = ?, clts_igs_mensual_tbj = ?, clts_tipo_vivienda = ?, clts_vivienda_anomde = ?, clts_antiguedad_viviendo = ?, clts_coordenadas = ?, clts_nom_conyuge = ?, clts_tbj_conyuge = ?, clts_tbj_puesto_conyuge = ?, clts_tbj_dir_conyuge = ?, clts_tbj_col_conyuge = ?, clts_tbj_tel_conyuge = ?, clts_tbj_ant_conyuge = ?, clts_tbj_ing_conyuge = ?, clts_nom_fiador = ?, clts_parentesco_fiador = ?, clts_tel_fiador  = ?, clts_dir_fiador = ?, clts_col_fiador = ?, clts_tbj_fiador = ?, clts_tbj_dir_fiador = ?, clts_tbj_tel_fiador = ?, clts_tbj_col_fiador = ?,clts_tbj_ant_fiador = ?, clts_nom_ref2 = ?, clts_parentesco_ref2 = ?, clts_dir_ref2 = ?, clts_col_ref2 = ?, clts_tel_ref2 = ?, clts_nom_ref3 = ?, clts_parentesco_ref3 = ?, clts_dir_ref3 = ?, clts_col_ref3 = ?, clts_tel_ref3 = ?, sobre_enganche_pendiente = ? , ctr_pago_credito = ?,ctr_aprovado_ventas = ? , ctr_fecha_contrato = ?, clts_fachada_color =? , clts_puerta_color = ? , ctr_status_cuenta =?, ctr_saldo_actual=?, ctr_total_pagado=?, ctr_id_vendedor=? WHERE ctr_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
 
@@ -514,10 +514,12 @@ class ContratosModelo
             $pps->bindValue(68, $ctr['ctr_status_cuenta']);
             $pps->bindValue(69, $ctr['ctr_saldo_actual']);
             $pps->bindValue(70, $ctr['ctr_total_pagado']);
-            $pps->bindValue(71, $ctr['ctr_id']);
+            $pps->bindValue(71, $ctr['ctr_id_vendedor']);
+            $pps->bindValue(72, $ctr['ctr_id']);
 
             $pps->execute();
             return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
         } finally {

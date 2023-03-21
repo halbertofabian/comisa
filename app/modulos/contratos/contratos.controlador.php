@@ -1029,7 +1029,7 @@ class ContratosControlador
             'ctr_id' => $_POST['ctr_id'],
             // 'ctr_folio' => $_POST['ctr_folio'],
             'ctr_fecha_contrato' => $_POST['ctr_fecha_contrato'],
-            // 'ctr_id_vendedor' => $_POST['ctr_id_vendedor'],
+            'ctr_id_vendedor' => $_POST['ctr_id_vendedor'],
             'ctr_cliente' => dstring($_POST['ctr_cliente']),
             'ctr_numero_cuenta' => $_POST['ctr_numero_cuenta'],
             'ctr_ruta' => $_POST['ctr_ruta'],
