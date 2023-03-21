@@ -1449,17 +1449,17 @@ class CobranzaControlador
     public static function ctrGuardarDatos($datos)
     {
 
-        // CobranzaModelo::mdlAgregaReferencias(array(
-        //     'cra_referencias' => $datos['cra_referencias'],
-        //     'cra_id' => $datos['cra_id'],
+        CobranzaModelo::mdlAgregaReferencias(array(
+            'cra_referencias' => $datos['cra_referencias'],
+            'cra_id' => $datos['cra_id'],
 
-        // ));
+        ));
 
-        // CobranzaModelo::mdlAgregaDatosTelGeo(array(
-        //     'clts_telefono' => $datos['clts_telefono'],
-        //     'clts_coordenadas' => $datos['clts_coordenadas'],
-        //     'ctr_id' => $datos['ctr_id'],
-        // ));
+        CobranzaModelo::mdlAgregaDatosTelGeo(array(
+            'clts_telefono' => $datos['clts_telefono'],
+            'clts_coordenadas' => $datos['clts_coordenadas'],
+            'ctr_id' => $datos['ctr_id'],
+        ));
     }
 
     public static function ctrGuardarRendimiento()
@@ -1896,14 +1896,15 @@ class CobranzaControlador
         return $next_day;
     }
 
-    public static function ctrCancelarCodigoAbono($abs_id){
+    public static function ctrCancelarCodigoAbono($abs_id)
+    {
         $res = CobranzaModelo::mdlCancelarCodigoAbono($abs_id);
-        if($res){
+        if ($res) {
             return array(
                 'status' => true,
                 'mensaje' => 'La cancelacion se ejecuto correctamente.'
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'Hubo un error al cancelar.'
