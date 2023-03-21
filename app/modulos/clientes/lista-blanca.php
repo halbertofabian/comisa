@@ -36,7 +36,11 @@
 
     function mostrarClientesListaBlanca() {
         datatable_clientes_lista_blanca = $('#datatable_clientes_lista_blanca').DataTable({
+            dom: 'Bfrtip',
             responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
             'ajax': {
                 'url': urlApp + 'app/modulos/clientes/clientes.ajax.php',
                 'method': 'POST', //usamos el metodo POST
