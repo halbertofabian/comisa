@@ -159,7 +159,7 @@ class CobranzaAjax
             $coordenadas = explode("|", $cta['clts_coordenadas']);
            
             array_push($array_cuentas, array(
-                'cra_contrato' => $cta['cra_contrato'],
+                'cra_contrato' => $cta['cra_id'],
                 'ctr_ruta' => $cta['ctr_ruta'],
                 'ctr_numero_cuenta' => $cta['ctr_numero_cuenta'],
                 'ctr_cliente' => $cta['ctr_cliente'],
