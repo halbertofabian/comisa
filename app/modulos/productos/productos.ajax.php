@@ -49,6 +49,11 @@ class ProductosAjax
         $res = ProductosControlador::ctrAgregarSeries();
         echo json_encode($res, true);
     }
+    public function ajaxRegistrarModelos()
+    {
+        $res = ProductosControlador::ctrRegistrarModelos();
+        echo json_encode($res, true);
+    }
 }
 
 
@@ -72,4 +77,8 @@ if (isset($_GET['term'])) {
 if (isset($_POST['btnGuardarSeries'])) {
     $generarSeries = new ProductosAjax();
     $generarSeries->ajaxGuardarSeries();
+}
+if (isset($_POST['btnRegistrarModelos'])) {
+    $registrarModelos = new ProductosAjax();
+    $registrarModelos->ajaxRegistrarModelos();
 }

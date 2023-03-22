@@ -1025,6 +1025,8 @@ class ContratosControlador
             $aprovado_ventas = 1;
         }
 
+        $usr = UsuariosModelo::mdlMostrarUsuarios($_POST['ctr_id_vendedor']);
+
         $datos = array(
             'ctr_id' => $_POST['ctr_id'],
             // 'ctr_folio' => $_POST['ctr_folio'],
@@ -1113,7 +1115,8 @@ class ContratosControlador
             'clts_puerta_color' => dstring($_POST['clts_puerta_color']),
             'ctr_status_cuenta' => dstring($_POST['ctr_status_cuenta']),
             'ctr_saldo_actual' => dnum($_POST['ctr_saldo_actual']),
-            'ctr_total_pagado' => dnum($_POST['ctr_total_pagado'])
+            'ctr_total_pagado' => dnum($_POST['ctr_total_pagado']),
+            'ctr_elaboro' => $usr['usr_nombre']
         );
 
 
@@ -1217,7 +1220,7 @@ class ContratosControlador
         if ($ctr['ctr_folio'] != "") {
             // Buscar contratos por numero de folio o numero de contrato
             return ContratosModelo::mdlMostrarContratosFolioExcel($ctr['ctr_folio']);
-        } elseif ($ctr['ctr_fecha_inicio'] != "" or $ctr['ctr_fecha_fin'] != "" or $ctr['ctr_vendedor'] != "" or $ctr['ctr_status_cuenta'] != "") {
+        } elseif ($ctr['ctr_fecha_inicio'] != "" || $ctr['ctr_fecha_fin'] != "" || $ctr['ctr_vendedor'] != "" || $ctr['ctr_status_cuenta'] != "") {
             // Buscar contratos por vendedor
             // $ctr['ctr_fecha_inicio'] = $ctr['ctr_fecha_inicio'] == "" ? $year_actual['year'] . '-01-01' . 'T00:00'  : $ctr['ctr_fecha_inicio'] . 'T00:00';
             // $ctr['ctr_fecha_fin'] = $ctr['ctr_fecha_fin'] == "" ? substr(FECHA, 0, 10) . 'T23:59'  : $ctr['ctr_fecha_fin'] . 'T23:59';

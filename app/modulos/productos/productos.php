@@ -36,6 +36,14 @@ if (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "update") :
 
 
 ?>
+<?php elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "registrar-modelos") :
+    cargarComponente('breadcrumb', '', 'Registrar modelos');
+
+    include_once 'app/modulos/productos/registrar-modelos.php';
+
+
+
+?>
 
   
 

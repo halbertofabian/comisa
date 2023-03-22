@@ -361,4 +361,58 @@ class ProductosModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarModelos()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_modelos_productos_mpds ORDER BY mpds_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarModelosByDescripcion($mpds_descripcion)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_descripcion = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $mpds_descripcion);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlRegistrarModelos($mpds)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_modelos_productos_mpds(mpds_suc, mpds_modelo, mpds_descripcion) VALUES(?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $mpds['mpds_suc']);
+            $pps->bindValue(2, $mpds['mpds_modelo']);
+            $pps->bindValue(3, $mpds['mpds_descripcion']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
