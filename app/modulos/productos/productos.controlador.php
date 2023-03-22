@@ -424,13 +424,21 @@ class ProductosControlador
         $mpds_modelo = trim($_POST['mpds_modelo']);
         $mpds_descripcion = mb_strtoupper(trim($_POST['mpds_descripcion']));
 
+        $modelo = ProductosModelo::mdlMostrarModelosByModelo($mpds_modelo);
         $descripcion = ProductosModelo::mdlMostrarModelosByDescripcion($mpds_descripcion);
+        if ($modelo) {
+            return array(
+                'status' => false,
+                'mensaje' => 'El modelo ' . $mpds_modelo . ' ya existe. Intente con otro.',
+            );
+        }
         if ($descripcion) {
             return array(
                 'status' => false,
-                'mensaje' => 'El nombre de la mercancia ya se agrego. Intente con otro nombre.',
+                'mensaje' => 'El nombre ' . $mpds_descripcion . ' ya existe. Intente con otro nombre.',
             );
         }
+
 
         $datos = array(
             'mpds_suc' => $mpds_suc,

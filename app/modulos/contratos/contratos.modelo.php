@@ -777,14 +777,18 @@ class ContratosModelo
     public static function mdlMostrarContratosFecha($ctr_vendedor, $ctr_fecha_inicio, $ctr_fecha_fin, $ctr_status_c)
     {
         try {
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre,ctr_status_cuenta, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
-            LIKE '$ctr_vendedor'";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre,ctr_status_cuenta, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE";
             $con = Conexion::conectar();
+            $AND = "";
+            if($ctr_vendedor !== ""){
+                $sql .= " ctr.ctr_id_vendedor LIKE '$ctr_vendedor'";
+                $AND = "AND";
+            }
             if($ctr_fecha_inicio !== "" && $ctr_fecha_fin == ""){
-                $sql .= " AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
+                $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
             }
             if ($ctr_fecha_inicio !== "" && $ctr_fecha_fin !== "") {
-                $sql .= " AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
+                $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
             }
             if ($ctr_status_c !== "") {
                 $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
