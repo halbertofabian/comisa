@@ -808,14 +808,18 @@ class ContratosModelo
     public static function mdlMostrarContratosFechaExcel($ctr_vendedor, $ctr_fecha_inicio, $ctr_fecha_fin, $ctr_status_c)
     {
         try {
-            $sql = "SELECT usr.usr_nombre,ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE ctr.ctr_id_vendedor
-            LIKE '$ctr_vendedor'";
+            $sql = "SELECT usr.usr_nombre,ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE";
             $con = Conexion::conectar();
+            $AND = "";
+            if($ctr_vendedor !== ""){
+                $sql .= " ctr.ctr_id_vendedor LIKE '$ctr_vendedor'";
+                $AND = "AND";
+            }
             if($ctr_fecha_inicio !== "" && $ctr_fecha_fin == ""){
-                $sql .= " AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
+                $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
             }
             if ($ctr_fecha_inicio !== "" && $ctr_fecha_fin !== "") {
-                $sql .= " AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
+                $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
             }
             if ($ctr_status_c !== "") {
                 $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
