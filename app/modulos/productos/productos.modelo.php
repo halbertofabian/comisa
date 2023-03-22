@@ -396,6 +396,23 @@ class ProductosModelo
             $con = null;
         }
     }
+    public static function mdlMostrarModelosByModelo($mpds_modelo)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_modelo = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $mpds_modelo);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlRegistrarModelos($mpds)
     {
         try {
