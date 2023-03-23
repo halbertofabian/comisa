@@ -117,8 +117,9 @@ EOF;
 
     // Print text using writeHTMLCell()
     $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
+    $sumatotalp = 0;
     foreach ($dprm_detalle as $key => $dprm) {
-
+        $sumatotalp = $sumatotalp + $dprm['dprm_cantidad'];
         # code...
         $tps_body = <<<EOF
 
@@ -140,6 +141,24 @@ EOF;
         $pdf->writeHTMLCell(0, 0, '', '', $tps_body, 0, 1, 0, true, '', true);
 
     }
+
+    //--------------------------
+    $seccionTOTAL = <<<EOF
+
+    <table  style="text-align: center; background-color: #e9ecef; padding-top:10px; padding-bottom:2px;">
+        <thead>
+            <tr>
+            <td>
+            </td>
+            <td><strong> TOTAL DE ARTÍCULOS </strong> </td>
+            <td><strong>$sumatotalp</strong></td>
+            </tr>
+        </thead>
+    </table>
+    
+EOF;
+
+    $pdf->writeHTMLCell(0, 0, '', '', $seccionTOTAL, 0, 1, 0, true, '', true);
 
     $firma = <<<EOF
     

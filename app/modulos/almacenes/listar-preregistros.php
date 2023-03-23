@@ -1,4 +1,9 @@
 <div class="row">
+    <div class="col-12 mb-3">
+        <a class="btn btn-primary float-right" href="<?= HTTP_HOST ?>almacenes/preregistro-mercancia" role="button">Agregar pre-registro</a>
+    </div>
+</div>
+<div class="row">
     <div class="col-12">
         <table class="table table-striped tablas">
             <thead class="thead-light">

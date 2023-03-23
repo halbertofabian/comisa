@@ -289,7 +289,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = " SELECT * FROM tbl_preregistro_mercancia_prm WHERE prm_status = 'ESPERA' ";
+            $sql = " SELECT * FROM tbl_preregistro_mercancia_prm WHERE prm_status = 'ESPERA' ORDER BY prm_id DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
