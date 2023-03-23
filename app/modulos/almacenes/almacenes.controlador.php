@@ -16,6 +16,11 @@ class AlmacenesControlador
     {
         if (isset($_POST['btnAgrearAlmacen'])) {
             startLoadButton();
+            $_POST['ams_nombre'] = trim(strtoupper($_POST['ams_nombre']));
+            $almacen = AlmacenesModelo::mdlMostrarAlmacenesByNombre($_POST['ams_nombre']);
+            if ($almacen) {
+                return AppControlador::msj('error', '¡Error!', 'El nombre ' . $_POST['ams_nombre'] . ' ya existe, intenta de nuevo');
+            }
             $_POST['ams_fecha_registro'] = FECHA;
             // $_POST['ams_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
             $_POST['ams_usuario_registro'] = 'Alberto Fabian';
@@ -34,8 +39,20 @@ class AlmacenesControlador
     public function ctrMostrarAlmacenes()
     {
     }
-    public function ctrEliminarAlmacenes()
+    public static function ctrEliminarAlmacenes()
     {
+        $res = AlmacenesModelo::mdlEliminarAlmacenes($_POST['ams_id']);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El almacen se elimino correctamente.'
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'hubo un error al eliminar el almacen.'
+            );
+        }
     }
 
     public static function ctrMerncanciaDevuelta($tps_num_traspaso)
@@ -78,6 +95,38 @@ class AlmacenesControlador
         if (isset($_POST['btnConsultarNumeroTraspaso'])) {
 
             return AlmacenesModelo::mdlConsultarMerncanciaDevuelta($_POST['tps_prefijo'] . '' . $_POST['tps_num_traspaso']);
+        }
+    }
+
+    public static function ctrGuardarPreRegistro()
+    {
+        $prm_folio = $_POST['prm_folio'];
+        $prm_id_proveedor = $_POST['prm_id_proveedor'];
+        $prm_fecha_registro = $_POST['prm_fecha_registro'];
+        $prm_codigo = rand(10000, 99999);
+        $prm_usuario_registro = $_SESSION['session_usr']['usr_nombre'];
+        $prm_id_detalle = $_POST['dprm_id_prm'];
+
+        $datos = array(
+            'prm_folio' => $prm_folio,
+            'prm_id_proveedor' => $prm_id_proveedor,
+            'prm_fecha_registro' => $prm_fecha_registro,
+            'prm_codigo' => $prm_codigo,
+            'prm_usuario_registro' => $prm_usuario_registro,
+            'prm_id_detalle' => $prm_id_detalle,
+        );
+
+        $res = AlmacenesModelo::mdlGuardarPreRegistro($datos);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El pre-registro se guardo correctamente.'
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al guardar el pre-registro.'
+            );
         }
     }
 }

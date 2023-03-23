@@ -1439,6 +1439,16 @@ class AppControlador
 
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Pre-registro',
+                            'href' => 'almacenes/preregistro-mercancia'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar pre-registros',
+                            'href' => 'almacenes/listar-pre-registros'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Registrar modelos',
                             'href' => 'productos/registrar-modelos'
                         ],
