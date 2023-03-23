@@ -27,11 +27,11 @@ $contratos = array();
 
 
 foreach ($contratos_set as $key => $ctr) {
-    
+
     $ctls_propia = "";
     $ctls_rentada = "";
     $ctls_prestada = "";
-    
+
 
     if ($ctr['clts_tipo_vivienda'] == "PROPIA") {
         $ctls_propia = "PROPIA";
@@ -62,10 +62,38 @@ foreach ($contratos_set as $key => $ctr) {
     $fecha_pago = $ctr['ctr_proximo_pago'];
     // $fecha_pago = date_format($fecha_pago, 'd/m/y');
 
+    $clts_telefono = "";
+    $telefono = is_array(json_decode($ctr['clts_telefono'], true));
+    if ($telefono) {
+        foreach (json_decode($ctr['clts_telefono'], true) as $tel) {
+            $clts_telefono = $tel['telefono'];
+        }
+    } else {
+        if (empty($ctr['clts_telefono'])) {
+            $clts_telefono = "-";
+        } else {
+            $clts_telefono = $ctr['clts_telefono'];
+        }
+    }
+
+    $clts_coordenadas = "";
+    $coordenada = is_array(json_decode($ctr['clts_coordenadas'], true));
+    if ($coordenada) {
+        foreach (json_decode($ctr['clts_coordenadas'], true) as $coor) {
+            $clts_coordenadas = $coor['coordenada'];
+        }
+    } else {
+        if (empty($ctr['clts_coordenadas'])) {
+            $clts_coordenadas = "-";
+        } else {
+            $clts_coordenadas = $ctr['clts_coordenadas'];
+        }
+    }
+
     // Productos 
     $productos = json_decode($ctr['ctr_productos'], true);
-   $cadena_productos = "";
-   $cantidad_productos = 0;
+    $cadena_productos = "";
+    $cantidad_productos = 0;
     foreach ($productos as $key => $pds) {
         # code...
         $cadena_productos .= $pds['nombreProducto'];
@@ -74,7 +102,7 @@ foreach ($contratos_set as $key => $ctr) {
 
     // Tipo de casa de
 
-   
+
 
     $datos = array(
         'ctr_codigo' => $ctr['ctr_numero_cuenta'] . '' . $ctr['ctr_ruta'],
@@ -110,7 +138,7 @@ foreach ($contratos_set as $key => $ctr) {
         'ctr_colonia_ref_1' => $ctr['ctr_colonia_ref_1'],
         'ctr_telefono_ref_1' => $ctr['ctr_telefono_ref_1'],
         'clts_curp' => $ctr['clts_curp'],
-        'clts_telefono' => $ctr['clts_telefono'],
+        'clts_telefono' => $clts_telefono,
         'clts_domicilio' => $ctr['clts_domicilio'],
         'clts_col' => $ctr['clts_col'],
         'clts_entre_calles' => $ctr['clts_entre_calles'],
@@ -130,7 +158,7 @@ foreach ($contratos_set as $key => $ctr) {
 
         'clts_vivienda_anomde' => $ctr['clts_vivienda_anomde'],
         'clts_antiguedad_viviendo' => $ctr['clts_antiguedad_viviendo'],
-        'clts_coordenadas' => $ctr['clts_coordenadas'],
+        'clts_coordenadas' => $clts_coordenadas,
         'clts_nom_conyuge' => $ctr['clts_nom_conyuge'],
         'clts_tbj_conyuge' => $ctr['clts_tbj_conyuge'],
         'clts_tbj_puesto_conyuge' => $ctr['clts_tbj_puesto_conyuge'],
@@ -164,15 +192,14 @@ foreach ($contratos_set as $key => $ctr) {
         'clts_registro_venta' => $ctr['clts_registro_venta'],
         'clts_caja' => $ctr['clts_caja'],
         'clts_folio_nuevo' => $ctr['clts_folio_nuevo'],
-        'ctr_forma_pago' => $ctr['ctr_pago_credito'].' '.$ctr['ctr_forma_pago'],
+        'ctr_forma_pago' => $ctr['ctr_pago_credito'] . ' ' . $ctr['ctr_forma_pago'],
         'ctr_aprovado_ventas' => $ctr['ctr_aprovado_ventas'],
         'usr_nombre' => $ctr['usr_nombre'],
         'clts_puerta_color' => $ctr['clts_puerta_color'],
         'clts_fachada_color' => $ctr['clts_fachada_color']
     );
-    
+
     array_push($contratos, $datos);
-    
 }
 
 echo "CONTROL DE CONTRATOS \n";
@@ -259,8 +286,8 @@ echo "INGRESO CONYUGUE \n";
 
 
 foreach ($contratos as $key => $ctr) {
-    echo dnum($ctr['ctr_codigo']).",";
-    echo dnum($ctr['ctr_numero_cuenta']).",";
+    echo dnum($ctr['ctr_codigo']) . ",";
+    echo dnum($ctr['ctr_numero_cuenta']) . ",";
     echo dnum($ctr['ctr_ruta']) . ",";
     echo dnum($ctr['ctr_dia']) . ",";
     echo dnum($ctr['ctr_mes']) . ",";
@@ -270,8 +297,8 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['clts_domicilio']) . ",";
     echo dnum($ctr['clts_col']) . ",";
     echo dnum($ctr['clts_entre_calles']) . ",";
-    echo dnum($ctr['clts_fachada_color']). ",";
-    echo dnum($ctr['clts_puerta_color']). ",";
+    echo dnum($ctr['clts_fachada_color']) . ",";
+    echo dnum($ctr['clts_puerta_color']) . ",";
     echo dnum($ctr['clts_trabajo']) . ",";
     echo dnum($ctr['clts_puesto']) . ",";
     echo dnum($ctr['clts_direccion_tbj']) . ",";
@@ -318,7 +345,7 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['clts_col_ref2']) . ",";
     echo dnum($ctr['clts_tel_ref2']) . ",";
     echo dnum($ctr['ctr_forma_pago']) . ",";
-    echo dnum($ctr['ctr_proximo_pago']). ",";
+    echo dnum($ctr['ctr_proximo_pago']) . ",";
     echo dnum($ctr['ctr_dia_pago']) . ",";
     echo dnum($ctr['ctr_plazo_credito']) . ",";
     echo dnum($ctr['ctr_cantidad_productos']) . ",";
@@ -328,7 +355,7 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['ctr_pago_adicional']) . ",";
     echo dnum($ctr['usr_nombre']) . ",";
     echo dnum($ctr['usr_nombre']) . ",";
-    echo dnum($ctr['ctr_status_c']).",";
+    echo dnum($ctr['ctr_status_c']) . ",";
     echo dnum($ctr['ctr_saldo']) . ",";
     echo  "-,";
     echo  "-,";
@@ -337,8 +364,6 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['clts_curp']) . ",";
     echo dnum($ctr['ctr_saldo']) . ",";
     echo dnum($ctr['clts_tbj_ing_conyuge']) . "\n";
-
-   
 }
 
 echo "\n";
@@ -361,8 +386,8 @@ echo "VENDEDOR \n";
 
 foreach ($contratos as $key => $ctr) {
     echo ",";
-    echo $key.",";
-    echo $ctr['ctr_dia'].'/'.$ctr['ctr_mes'].'/'.$ctr['ctr_ano'] .",";
+    echo $key . ",";
+    echo $ctr['ctr_dia'] . '/' . $ctr['ctr_mes'] . '/' . $ctr['ctr_ano'] . ",";
     echo dnum($ctr['ctr_folio']) . ",";
     echo dnum($ctr['ctr_cliente']) . ",";
     echo dnum($ctr['ctr_productos']) . ",";
@@ -375,3 +400,13 @@ foreach ($contratos as $key => $ctr) {
     echo dnum($ctr['usr_nombre']) . "\n";
 }
 
+
+function isArray($array)
+{
+    try {
+        json_decode($array, true);
+        return true;
+    } catch (\Throwable $th) {
+        return false;
+    }
+}
