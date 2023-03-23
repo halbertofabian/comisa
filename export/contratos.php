@@ -97,7 +97,7 @@ foreach ($contratos_set as $key => $ctr) {
     foreach ($productos as $key => $pds) {
         # code...
         $cadena_productos .= $pds['nombreProducto'];
-        $cantidad_productos += $pds['cantidad'];
+        $cantidad_productos += intval($pds['cantidad']);
     }
 
     // Tipo de casa de
