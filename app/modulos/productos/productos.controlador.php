@@ -423,6 +423,13 @@ class ProductosControlador
         $mpds_suc = $_POST['mpds_suc'];
         $mpds_modelo = trim($_POST['mpds_modelo']);
         $mpds_descripcion = mb_strtoupper(trim($_POST['mpds_descripcion']));
+        $mpds_proveedor = $_POST['mpds_proveedor'];
+        $mpds_credito = dnum($_POST['mpds_credito']);
+        $mpds_enganche = dnum($_POST['mpds_enganche']);
+        $mpds_pago_semanal = dnum($_POST['mpds_pago_semanal']);
+        $mpds_contado = dnum($_POST['mpds_contado']);
+        $mpds_un_mes = dnum($_POST['mpds_un_mes']);
+        $mpds_dos_meses = dnum($_POST['mpds_dos_meses']);
 
         $modelo = ProductosModelo::mdlMostrarModelosByModelo($mpds_modelo);
         $descripcion = ProductosModelo::mdlMostrarModelosByDescripcion($mpds_descripcion);
@@ -444,9 +451,18 @@ class ProductosControlador
             'mpds_suc' => $mpds_suc,
             'mpds_modelo' => $mpds_modelo,
             'mpds_descripcion' => $mpds_descripcion,
+            'mpds_proveedor' => $mpds_proveedor,
+            'mpds_credito' => $mpds_credito,
+            'mpds_enganche' => $mpds_enganche,
+            'mpds_pago_semanal' => $mpds_pago_semanal,
+            'mpds_contado' => $mpds_contado,
+            'mpds_un_mes' => $mpds_un_mes,
+            'mpds_dos_meses' => $mpds_dos_meses,
         );
 
         $res = ProductosModelo::mdlRegistrarModelos($datos);
+        // preArray($res);
+        // return;
         if ($res) {
             return array(
                 'status' => true,
@@ -455,7 +471,23 @@ class ProductosControlador
         } else {
             return array(
                 'status' => false,
-                'mensaje' => 'El modelos se registro correctamente.',
+                'mensaje' => 'Hubo un error al registrar el modelo.',
+            );
+        }
+    }
+
+    public static function ctrEliminarModelos()
+    {
+        $res = ProductosModelo::mdlEliminarModelos($_POST['mpds_id']);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El modelo se elimino correctamente.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al eliminar el modelo.',
             );
         }
     }

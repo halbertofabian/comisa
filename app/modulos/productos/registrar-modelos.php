@@ -8,10 +8,17 @@
         <table class="table table-striped tablas">
             <thead class="thead-light">
                 <tr>
-                    <th>#</th>
                     <th>#SUCURSAL</th>
                     <th>#MODELO</th>
                     <th>PRODUCTO</th>
+                    <th>PROVEEDOR</th>
+                    <th>CREDITO</th>
+                    <th>ENGANCHE</th>
+                    <th>PAGO SEMANAL</th>
+                    <th>CONTADO</th>
+                    <th>A UN MES</th>
+                    <th>A DOS MESES</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -19,10 +26,21 @@
                 $modelos = ProductosModelo::mdlMostrarModelos();
                 foreach ($modelos as $mpds) : ?>
                     <tr>
-                        <td><?= $mpds['mpds_id'] ?></td>
                         <td><?= $mpds['mpds_suc'] ?></td>
                         <td><?= $mpds['mpds_modelo'] ?></td>
                         <td><?= $mpds['mpds_descripcion'] ?></td>
+                        <td><?= $mpds['pvs_nombre'] ?></td>
+                        <td><?= number_format($mpds['mpds_credito']) ?></td>
+                        <td><?= number_format($mpds['mpds_enganche']) ?></td>
+                        <td><?= number_format($mpds['mpds_pago_semanal']) ?></td>
+                        <td><?= number_format($mpds['mpds_contado']) ?></td>
+                        <td><?= number_format($mpds['mpds_un_mes']) ?></td>
+                        <td><?= number_format($mpds['mpds_dos_meses']) ?></td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="">
+                                <button type="button" class="btn btn-danger btnEliminarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -58,10 +76,67 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mpds_proveedor">Proveedor</label>
+                                <select class="form-control select2" name="mpds_proveedor" id="mpds_proveedor" required>
+                                    <option value="">-Seleccionar-</option>
+                                    <?php
+                                    $proovedores = ProveedoresModelo::mdlMostrarProveedores();
+                                    foreach ($proovedores as $pvs) :
+                                    ?>
+                                        <option value="<?= $pvs['pvs_id'] ?>"><?= $pvs['pvs_nombre'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="mpds_descripcion">NOMBRE DE LA MERCANCIA</label>
                                 <input type="text" class="form-control text-uppercase" name="mpds_descripcion" id="mpds_descripcion" required placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="mpds_credito">Crédito <strong class="text-primary"></strong></label>
+                                <input type="text" name="mpds_credito" id="mpds_credito" class="form-control inputN" placeholder="" value="0">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="mpds_enganche">Enganche <strong class="text-primary"></strong></label>
+                                <input type="text" name="mpds_enganche" id="mpds_enganche" class="form-control inputN" placeholder="" value="0">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="mpds_pago_semanal">Pago semanal <strong class="text-primary"></strong></label>
+                                <input type="text" name="mpds_pago_semanal" id="mpds_pago_semanal" class="form-control inputN" placeholder="" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="mpds_contado">Contado <strong class="text-primary"></strong></label>
+                                <input type="text" name="mpds_contado" id="mpds_contado" class="form-control inputN" placeholder="" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="mpds_un_mes">A un mes <strong class="text-primary"></strong></label>
+                                <input type="text" name="mpds_un_mes" id="mpds_un_mes" class="form-control inputN" placeholder="" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <div class="form-group">
+                                <label for="mpds_dos_meses">A dos meses <strong class="text-primary"></strong></label>
+                                <input type="text" name="mpds_dos_meses" id="mpds_dos_meses" class="form-control inputN" placeholder="" value="0">
                             </div>
                         </div>
                     </div>
@@ -110,5 +185,53 @@
                 }
             }
         });
+    });
+
+    $(document).on('click', '.btnEliminarModelo', function() {
+        var mpds_id = $(this).attr("mpds_id");
+        swal({
+            title: '¿Esta seguro de eliminar este modelo?',
+            text: 'Esta accion no es reversible',
+            icon: 'warning',
+            buttons: ['No', 'Si, eliminar'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData()
+                datos.append('mpds_id', mpds_id);
+                datos.append('btnEliminarModelo', true);
+                $.ajax({
+                    type: 'POST',
+                    url: urlApp + 'app/modulos/productos/productos.ajax.php',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            swal({
+                                title: '¡Bien!',
+                                text: res.mensaje,
+                                type: 'success',
+                                icon: 'success'
+                            }).then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: 'Error',
+                                text: res.mensaje,
+                                icon: 'error',
+                                buttons: [false, 'Intentar de nuevo'],
+                                dangerMode: true,
+                            }).then((willDelete) => {
+                                if (willDelete) {} else {}
+                            })
+                        }
+                    }
+                });
+            } else {}
+        });
+
     });
 </script>

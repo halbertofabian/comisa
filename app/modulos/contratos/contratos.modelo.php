@@ -786,12 +786,14 @@ class ContratosModelo
             }
             if($ctr_fecha_inicio !== "" && $ctr_fecha_fin == ""){
                 $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
+                $AND = "AND";
             }
             if ($ctr_fecha_inicio !== "" && $ctr_fecha_fin !== "") {
                 $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
+                $AND = "AND";
             }
             if ($ctr_status_c !== "") {
-                $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
+                $sql .= " $AND ctr.ctr_status_cuenta = '$ctr_status_c'";
             }
             $sql .= " ORDER BY ctr.ctr_fecha_contrato DESC";
             $pps = $con->prepare($sql);
@@ -817,12 +819,14 @@ class ContratosModelo
             }
             if($ctr_fecha_inicio !== "" && $ctr_fecha_fin == ""){
                 $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
+                $AND = "AND";
             }
             if ($ctr_fecha_inicio !== "" && $ctr_fecha_fin !== "") {
                 $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_fin')";
+                $AND = "AND";
             }
             if ($ctr_status_c !== "") {
-                $sql .= " AND ctr.ctr_status_cuenta = '$ctr_status_c'";
+                $sql .= " $AND ctr.ctr_status_cuenta = '$ctr_status_c'";
             }
             $sql .= " ORDER BY ctr.ctr_fecha_contrato DESC";
             $pps = $con->prepare($sql);

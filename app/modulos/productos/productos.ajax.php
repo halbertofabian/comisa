@@ -54,6 +54,11 @@ class ProductosAjax
         $res = ProductosControlador::ctrRegistrarModelos();
         echo json_encode($res, true);
     }
+    public function ajaxEliminarModelos()
+    {
+        $res = ProductosControlador::ctrEliminarModelos();
+        echo json_encode($res, true);
+    }
 }
 
 
@@ -81,4 +86,8 @@ if (isset($_POST['btnGuardarSeries'])) {
 if (isset($_POST['btnRegistrarModelos'])) {
     $registrarModelos = new ProductosAjax();
     $registrarModelos->ajaxRegistrarModelos();
+}
+if (isset($_POST['btnEliminarModelo'])) {
+    $eliminarModelos = new ProductosAjax();
+    $eliminarModelos->ajaxEliminarModelos();
 }
