@@ -27,6 +27,7 @@ class AlmacenesModelo
             $pps->bindValue(4, $ams['ams_usuario_registro']);
             $pps->execute();
             return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -72,7 +73,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_nombre = ? ";
+            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_nombre = ? AND ams_estado = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_nombre);
@@ -289,7 +290,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = " SELECT * FROM tbl_preregistro_mercancia_prm WHERE prm_status = 'ESPERA' ORDER BY prm_id DESC";
+            $sql = " SELECT * FROM tbl_preregistro_mercancia_prm ORDER BY prm_id DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
@@ -309,6 +310,80 @@ class AlmacenesModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $prm_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarStatusPreRegistro($prm_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_preregistro_mercancia_prm SET prm_status = 'APROBADO' WHERE prm_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $prm_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarSerieByModelo($spds_modelo)
+    {
+        try {
+            //code...
+            $sql = " SELECT * FROM tbl_series_producto_spds WHERE spds_modelo = ? ORDER BY spds_id DESC LIMIT 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_modelo);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAgregarSeries($spds)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_series_producto_spds (spds_modelo,spds_serie,spds_almacen,spds_situacion,spds_ultima_mod) VALUES(?,?,?,?,?) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds['spds_modelo']);
+            $pps->bindValue(2, $spds['spds_serie']);
+            $pps->bindValue(3, $spds['spds_almacen']);
+            $pps->bindValue(4, $spds['spds_situacion']);
+            $pps->bindValue(5, $spds['spds_ultima_mod']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarAlmacenesByTipo()
+    {
+        try {
+            //code...
+            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_tipo = 'M' AND ams_estado = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
