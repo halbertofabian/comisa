@@ -94,22 +94,34 @@
 </form>
 
 <script>
+      $(document).ready(function(){
+        disabledEnter("formGuardarPreRegistro")
+    })
+
     $('#btnAgregarProducto').on('click', function() {
         var dprm_mpds_id = $("#dprm_mpds_id").val();
         var dprm_descripcion = $('option:selected', $("#dprm_mpds_id")).attr('mpds_descripcion');
         var dprm_cantidad = $("#dprm_cantidad").val();
         var dprm_id_prm = $("#dprm_id_prm").val();
+        var encontrado = false; // Variable de control para descripciones duplicadas
         if (dprm_mpds_id == "" || dprm_cantidad <= 0) {
             return toastr.warning('Asegurate de seleccionar un producto y que la cantidad sea mayor a 0', 'ADVERTENCIA!');
-            finish();
         }
 
         $(".dprm_descripcion").each(function() {
             if ($(this).text() == dprm_descripcion) {
                 toastr.warning('El producto ' + dprm_descripcion + ' ya se agrego a su lista.', 'ADVERTENCIA!');
-                finish();
+                encontrado = true; // Descripción duplicada encontrada
+                return false;
             }
         });
+
+        
+        if (encontrado) {
+            // Si se encontró una descripción duplicada, detener la ejecución del código
+            return false;
+        }
+
 
         var datos = new FormData()
         datos.append('dprm_mpds_id', dprm_mpds_id);
@@ -227,6 +239,37 @@
         var datos = new FormData()
         datos.append('dprm_id', dprm_id);
         datos.append('dprm_cantidad', restar);
+        datos.append('btnActualizarPreRegistro', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res) {
+                    mostrarDetallePreRegistro();
+                }
+            }
+        });
+    });
+
+    $(document).on('keyup', '.cont', function() {
+        var dprm_id = $(this).attr('dprm_id');
+        var dprm_cantidad = $(this).val();
+        if(dprm_cantidad == "" || dprm_cantidad == "-"){
+            return false;
+        }
+        else if (dprm_cantidad <= 0) {
+            $("#cont" + dprm_id).val(1);
+            toastr.error('La cantidad debe ser mayor a 0', '¡ERROR!');
+            dprm_cantidad = 1;
+        }
+
+        var datos = new FormData()
+        datos.append('dprm_id', dprm_id);
+        datos.append('dprm_cantidad', dprm_cantidad);
         datos.append('btnActualizarPreRegistro', true);
         $.ajax({
             type: 'POST',

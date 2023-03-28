@@ -297,3 +297,11 @@ function calcularPorcentajeDescuentoMayoreo() {
     $("#pds_porcentaje_descuento_mayoreo").val(Math.round(total_porcentaje_descuento))
     $("#pds_porcentaje_descuento_mayoreo").number(true, 2);
 }
+
+function disabledEnter(id_form) {
+    $(`#${id_form}`).keypress(function (e) {
+        if (e.which == 13) {
+            return false;
+        }
+    });
+}
