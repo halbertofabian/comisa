@@ -17,6 +17,9 @@ include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class AlmacenesAjax
 {
@@ -58,6 +61,11 @@ class AlmacenesAjax
         $res = AlmacenesControlador::ctrGuardarPreRegistro();
         echo json_encode($res, true);
     }
+    public function ajaxAprobarPreRegistro()
+    {
+        $res = AlmacenesControlador::ctrAprobarPreRegistro();
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -88,4 +96,8 @@ if (isset($_POST['btnActualizarPreRegistro'])) {
 if (isset($_POST['btnGuardarPreRegistro'])) {
     $guardarPreRegistro = new AlmacenesAjax();
     $guardarPreRegistro->ajaxGuardarPreRegistro();
+}
+if (isset($_POST['btnAprobarPreRegistro'])) {
+    $aprobarPreRegistro = new AlmacenesAjax();
+    $aprobarPreRegistro->ajaxAprobarPreRegistro();
 }

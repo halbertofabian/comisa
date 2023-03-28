@@ -383,7 +383,7 @@ class ProductosModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_descripcion = ?";
+            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_descripcion = ? AND mpds_status = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $mpds_descripcion);
@@ -400,7 +400,7 @@ class ProductosModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_modelo = ?";
+            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_modelo = ? AND mpds_status = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $mpds_modelo);
@@ -453,6 +453,24 @@ class ProductosModelo
             $pps->execute();
             return $pps->rowCount() > 0;
             // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarModelosById($mpds_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_id = ? AND mpds_status = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $mpds_id);
+            $pps->execute();
+            return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
         } finally {

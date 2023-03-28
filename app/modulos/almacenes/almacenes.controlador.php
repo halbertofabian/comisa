@@ -129,4 +129,60 @@ class AlmacenesControlador
             );
         }
     }
+    public static function ctrAprobarPreRegistro()
+    {
+        $prm_codigo = $_POST['prm_codigo'];
+        $prm_id = $_POST['prm_id'];
+        $prm = AlmacenesModelo::mdlMostrarPreRegistrosByID($prm_id);
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+        if ($prm_codigo == $prm['prm_codigo']) {
+            $dprm = AlmacenesModelo::mdlMostrarDetallePreRegistro($prm['prm_id_detalle']);
+
+            $res = AlmacenesModelo::mdlActualizarStatusPreRegistro($prm_id);
+            if ($res) {
+                foreach ($dprm as $key => $value) {
+
+                    for ($i = 1; $i <= $value['dprm_cantidad']; $i++) {
+                        $mpds = ProductosModelo::mdlMostrarModelosById($value['dprm_mpds_id']);
+
+                        $spds = AlmacenesModelo::mdlMostrarSerieByModelo($mpds['mpds_id']);
+                        
+
+                        if ($spds) {
+                            $datos = array(
+                                'spds_modelo' => $mpds['mpds_id'],
+                                'spds_serie' => intval($spds['spds_serie']) + 1,
+                                'spds_almacen' => $ams['ams_id'],
+                                'spds_situacion' => "-",
+                                'spds_ultima_mod' => FECHA,
+                            );
+                        } else {
+                            $datos = array(
+                                'spds_modelo' => $mpds['mpds_id'],
+                                'spds_serie' => 1,
+                                'spds_almacen' => $ams['ams_id'],
+                                'spds_situacion' => "-",
+                                'spds_ultima_mod' => FECHA,
+                            );
+                        }
+                        $res = AlmacenesModelo::mdlAgregarSeries($datos);
+                    }
+                }
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El pre-registro se aprobo correctamente.'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Hubo un error al aprobar el pre-registro.'
+                );
+            }
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'El codigo no es correcto.'
+            );
+        }
+    }
 }
