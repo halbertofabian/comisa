@@ -442,6 +442,36 @@ class ProductosModelo
             $con = null;
         }
     }
+    public static function mdlActualizarModelos($mpds)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_modelos_productos_mpds SET mpds_suc=?, 
+            mpds_modelo=?, mpds_descripcion=?, mpds_proveedor=?, mpds_credito=?, 
+            mpds_enganche=?, mpds_pago_semanal=?, mpds_contado=?, mpds_un_mes=?, mpds_dos_meses=? WHERE mpds_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $mpds['mpds_suc']);
+            $pps->bindValue(2, $mpds['mpds_modelo']);
+            $pps->bindValue(3, $mpds['mpds_descripcion']);
+            $pps->bindValue(4, $mpds['mpds_proveedor']);
+            $pps->bindValue(5, $mpds['mpds_credito']);
+            $pps->bindValue(6, $mpds['mpds_enganche']);
+            $pps->bindValue(7, $mpds['mpds_pago_semanal']);
+            $pps->bindValue(8, $mpds['mpds_contado']);
+            $pps->bindValue(9, $mpds['mpds_un_mes']);
+            $pps->bindValue(10, $mpds['mpds_dos_meses']);
+            $pps->bindValue(11, $mpds['mpds_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlEliminarModelos($mpds_id)
     {
         try {

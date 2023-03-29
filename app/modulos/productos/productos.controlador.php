@@ -475,6 +475,72 @@ class ProductosControlador
             );
         }
     }
+    public static function ctrActualizarModelos()
+    {
+        $mpds_id = $_POST['mpds_id'];
+        $mpds_suc = $_POST['mpds_suc'];
+        $mpds_modelo_copy = trim($_POST['mpds_modelo_copy']);
+        $mpds_modelo = trim($_POST['mpds_modelo']);
+        $mpds_descripcion_copy = mb_strtoupper(trim($_POST['mpds_descripcion_copy']));
+        $mpds_descripcion = mb_strtoupper(trim($_POST['mpds_descripcion']));
+        $mpds_proveedor = $_POST['mpds_proveedor'];
+        $mpds_credito = dnum($_POST['mpds_credito']);
+        $mpds_enganche = dnum($_POST['mpds_enganche']);
+        $mpds_pago_semanal = dnum($_POST['mpds_pago_semanal']);
+        $mpds_contado = dnum($_POST['mpds_contado']);
+        $mpds_un_mes = dnum($_POST['mpds_un_mes']);
+        $mpds_dos_meses = dnum($_POST['mpds_dos_meses']);
+
+        if ($mpds_modelo_copy != $mpds_modelo) {
+            $modelo = ProductosModelo::mdlMostrarModelosByModelo($mpds_modelo);
+            if ($modelo) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'El modelo ' . $mpds_modelo . ' ya existe. Intente con otro.',
+                );
+            }
+        }
+        if ($mpds_descripcion_copy != $mpds_descripcion) {
+            $descripcion = ProductosModelo::mdlMostrarModelosByDescripcion($mpds_descripcion);
+            if ($descripcion) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'El nombre ' . $mpds_descripcion . ' ya existe. Intente con otro nombre.',
+                );
+            }
+        }
+
+
+
+        $datos = array(
+            'mpds_id' => $mpds_id,
+            'mpds_suc' => $mpds_suc,
+            'mpds_modelo' => $mpds_modelo,
+            'mpds_descripcion' => $mpds_descripcion,
+            'mpds_proveedor' => $mpds_proveedor,
+            'mpds_credito' => $mpds_credito,
+            'mpds_enganche' => $mpds_enganche,
+            'mpds_pago_semanal' => $mpds_pago_semanal,
+            'mpds_contado' => $mpds_contado,
+            'mpds_un_mes' => $mpds_un_mes,
+            'mpds_dos_meses' => $mpds_dos_meses,
+        );
+
+        $res = ProductosModelo::mdlActualizarModelos($datos);
+        // preArray($res);
+        // return;
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'El modelo se actualizo correctamente.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al actualizar el modelo.',
+            );
+        }
+    }
 
     public static function ctrEliminarModelos()
     {
