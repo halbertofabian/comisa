@@ -54,9 +54,19 @@ class ProductosAjax
         $res = ProductosControlador::ctrRegistrarModelos();
         echo json_encode($res, true);
     }
+    public function ajaxEditarModelos()
+    {
+        $res = ProductosControlador::ctrActualizarModelos();
+        echo json_encode($res, true);
+    }
     public function ajaxEliminarModelos()
     {
         $res = ProductosControlador::ctrEliminarModelos();
+        echo json_encode($res, true);
+    }
+    public function ajaxMostrarModeloById()
+    {
+        $res = ProductosModelo::mdlMostrarModelosById($_POST['mpds_id']);
         echo json_encode($res, true);
     }
 }
@@ -87,7 +97,15 @@ if (isset($_POST['btnRegistrarModelos'])) {
     $registrarModelos = new ProductosAjax();
     $registrarModelos->ajaxRegistrarModelos();
 }
+if (isset($_POST['btnEditarModelos'])) {
+    $editarModelos = new ProductosAjax();
+    $editarModelos->ajaxEditarModelos();
+}
 if (isset($_POST['btnEliminarModelo'])) {
     $eliminarModelos = new ProductosAjax();
     $eliminarModelos->ajaxEliminarModelos();
+}
+if (isset($_POST['btnMostrarModeloByID'])) {
+    $mostrarModelo = new ProductosAjax();
+    $mostrarModelo->ajaxMostrarModeloById();
 }

@@ -1449,6 +1449,11 @@ class AppControlador
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar mercancia',
+                            'href' => 'almacenes/listar-mercancia'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Registrar modelos',
                             'href' => 'productos/registrar-modelos'
                         ],
