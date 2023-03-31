@@ -25,7 +25,12 @@
                         <td><?= $prm['prm_fecha_registro'] ?></td>
                         <td><?= $prm['prm_usuario_registro'] ?></td>
                         <td>
-                            <a class="btn btn-primary" href="<?= HTTP_HOST ?>app/report/reporte-preregistro-mercancia.php?prm_id=<?= $prm['prm_id'] ?>" target="_blank" role="button"><i class="fa fa-file-pdf-o"></i></a>
+                            <div class="btn-group" role="group" aria-label="">
+                                <a class="btn btn-outline-primary" href="<?= HTTP_HOST ?>app/report/reporte-preregistro-mercancia.php?prm_id=<?= $prm['prm_id'] ?>" target="_blank" role="button"><i class="fa fa-file-pdf-o"></i></a>
+                                <?php if ($prm['prm_status'] == "APROBADO") : ?>
+                                    <button type="button" class="btn btn-outline-dark btnGenerarEtiquetas" prm_id="<?= $prm['prm_id'] ?>"><i class="fa fa-barcode"></i></button>
+                                <?php endif; ?>
+                            </div>
                         </td>
                         <td>
                             <?php if ($prm['prm_status'] == "ESPERA") : ?>
@@ -113,6 +118,21 @@
                     })
                 }
             }
+        });
+    });
+
+    $(document).on('click', '.btnGenerarEtiquetas', function() {
+        var prm_id = $(this).attr("prm_id");
+        swal({
+            title: '¿Esta segur@ de generar todas las etiquetas?',
+            text: 'Esta accion no es reversible',
+            icon: 'warning',
+            buttons: ['No', 'Si, generar'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                window.open(urlApp + "app/report/generar-etiquetas-mercancia-masiva.php?prm_id=" + prm_id, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,right=100,width=400,height=700");
+            } else {}
         });
     });
 </script>

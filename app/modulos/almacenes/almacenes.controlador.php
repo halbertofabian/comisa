@@ -155,6 +155,7 @@ class AlmacenesControlador
                                 'spds_almacen' => $ams['ams_id'],
                                 'spds_situacion' => "-",
                                 'spds_ultima_mod' => FECHA,
+                                'spds_prm_id' => $prm_id,
                             );
                         } else {
                             $datos = array(
@@ -163,6 +164,7 @@ class AlmacenesControlador
                                 'spds_almacen' => $ams['ams_id'],
                                 'spds_situacion' => "-",
                                 'spds_ultima_mod' => FECHA,
+                                'spds_prm_id' => $prm_id,
                             );
                         }
                         $res = AlmacenesModelo::mdlAgregarSeries($datos);
