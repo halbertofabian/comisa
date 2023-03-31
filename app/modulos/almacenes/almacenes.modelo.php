@@ -388,11 +388,28 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarSeriesByPrmId($spds_prm_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id WHERE spds.spds_prm_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_prm_id);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlAgregarSeries($spds)
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_series_producto_spds (spds_modelo,spds_serie,spds_almacen,spds_situacion,spds_ultima_mod) VALUES(?,?,?,?,?) ";
+            $sql = "INSERT INTO tbl_series_producto_spds (spds_modelo,spds_serie,spds_almacen,spds_situacion,spds_ultima_mod,spds_prm_id) VALUES(?,?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $spds['spds_modelo']);
@@ -400,6 +417,7 @@ class AlmacenesModelo
             $pps->bindValue(3, $spds['spds_almacen']);
             $pps->bindValue(4, $spds['spds_situacion']);
             $pps->bindValue(5, $spds['spds_ultima_mod']);
+            $pps->bindValue(6, $spds['spds_prm_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
             // return $pps->errorInfo();

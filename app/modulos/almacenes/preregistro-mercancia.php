@@ -288,6 +288,9 @@
 
     $('#formGuardarPreRegistro').on('submit', function(e) {
         e.preventDefault();
+        if ($('#tbody_detalle_preregistro tr').length === 0) {
+            return toastr.error('Aun no se agregan productos a su lista.', '¡ERROR!');
+        }
         var datos = new FormData(this)
         datos.append('btnGuardarPreRegistro', true);
         $.ajax({
