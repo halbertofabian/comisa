@@ -302,6 +302,22 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarPreRegistrosByCodigos()
+    {
+        try {
+            //code...
+            $sql = " SELECT prm.*, pvs.pvs_nombre FROM tbl_preregistro_mercancia_prm prm JOIN tbl_proveedores_pvs pvs ON prm.prm_id_proveedor = pvs.pvs_id WHERE prm.prm_codigo != '' ORDER BY prm.prm_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarPreRegistrosByID($prm_id)
     {
         try {
@@ -325,6 +341,23 @@ class AlmacenesModelo
         try {
             //code...
             $sql = "UPDATE tbl_preregistro_mercancia_prm SET prm_status = 'APROBADO' WHERE prm_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $prm_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarCodigoPreRegistro($prm_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_preregistro_mercancia_prm SET prm_codigo = '' WHERE prm_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $prm_id);
