@@ -26,9 +26,10 @@ foreach ($cuentas as $key => $ctr) {
 
 
     $clts_telefono = "";
-    $telefono = is_array(json_decode($ctr['clts_telefono'], true));
-    if ($telefono) {
-        foreach (json_decode($ctr['clts_telefono'], true) as $tel) {
+    $telefonoV1 = str_replace('|', '', $ctr['clts_coordenadas']);
+    $telefono = json_decode($telefonoV1, true);
+    if (is_array($telefono)) {
+        foreach ($telefono as $tel) {
             $clts_telefono = $tel['telefono'];
         }
     } else {
@@ -40,9 +41,10 @@ foreach ($cuentas as $key => $ctr) {
     }
 
     $clts_coordenadas = "";
-    $coordenada = is_array(json_decode($ctr['clts_coordenadas'], true));
-    if ($coordenada) {
-        foreach (json_decode($ctr['clts_coordenadas'], true) as $coor) {
+    $coordenadasV1 = str_replace('|', '', $ctr['clts_coordenadas']);
+    $coordenada = json_decode($coordenadasV1, true);
+    if (is_array($coordenada)) {
+        foreach ($coordenada as $coor) {
             $clts_coordenadas = $coor['coordenada'];
         }
     } else {
