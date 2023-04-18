@@ -150,7 +150,8 @@ function mostrarEstado() {
                 $("#ec_saldo_base").val(res.ctr_saldo_base);
                 $("#ec_saldo_actual").val(res.ctr_saldo_actual);
                 $("#abs_descuento").attr('max', res.ctr_saldo_actual)
-                $("#ec_ultima_fecha").val(res.ctr_ultima_fecha_abono);
+                $("#ec_ultima_fecha").val(formatDateTime(res.ctr_ultima_fecha_abono));
+                var total_pagado = res.ctr_total_pagado === null || res.ctr_total_pagado === 'null' ? 0 : res.ctr_total_pagado;
 
                 $(".div-descuento").removeClass('d-none');
                 var total_aux_pagado = Number(res.ctr_enganche) + Number(res.ctr_pago_adicional)
@@ -168,7 +169,7 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 7);
 
-                    var adeudo = Number((semanas * res.ctr_pago_credito - res.ctr_total_pagado)) + Number(res.ctr_pago_credito);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
                     if (semanas <= semanas_credito) {
@@ -194,7 +195,7 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 14);
 
-                    var adeudo = Number((semanas * res.ctr_pago_credito - res.ctr_total_pagado)) + Number(res.ctr_pago_credito);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
                     if (semanas <= semanas_credito) {
@@ -205,7 +206,7 @@ function mostrarEstado() {
                     var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Catorcenas <br> atrasadas");
-                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
+                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - (res.ctr_saldo_actual + total_aux_pagado))));
                 }
                 else if (res.ctr_forma_pago == "QUINCENALES") {
                     var ctr_saldo = Number(res.ctr_total - res.ctr_enganche - res.ctr_pago_adicional);
@@ -220,7 +221,7 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 15);
 
-                    var adeudo = Number((semanas * res.ctr_pago_credito - res.ctr_total_pagado)) + Number(res.ctr_pago_credito);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
                     if (semanas <= semanas_credito) {
@@ -231,7 +232,7 @@ function mostrarEstado() {
                     var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Quincenas <br> atrasadas");
-                    $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
+                    $("#ec_total_pagado").val($.number(total_pagado));
                 }
                 else {
                     var ctr_saldo = Number(res.ctr_total - res.ctr_enganche - res.ctr_pago_adicional);
@@ -246,7 +247,7 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 30);
 
-                    var adeudo = Number((semanas * res.ctr_pago_credito - res.ctr_total_pagado)) + Number(res.ctr_pago_credito);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - ctr_total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
                     if (semanas <= semanas_credito) {

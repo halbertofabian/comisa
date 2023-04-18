@@ -68,7 +68,9 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
     //
     $infoContrato = CobranzaModelo::mdlConsultarEstadoCuenta($_GET['ec_ruta'], $_GET['ec_cuenta']);
     $infoCra = CobranzaModelo::mdlConsultarEstadoCuenta2($infoContrato['ctr_id']);
-    $infoAbonos = CobranzaModelo::mdlConsultarEstadoCuenta3($infoCra['cra_id'],'AUTORIZADO');
+    $infoAbonos = CobranzaModelo::mdlConsultarEstadoCuenta3($infoCra['cra_id'], 'AUTORIZADO');
+
+    $total_pagado = $infoContrato['ctr_total_pagado'] === NULL || $infoContrato['ctr_total_pagado'] === 'NULL' ? 0 : $infoContrato['ctr_total_pagado'];
 
 
 
@@ -84,14 +86,13 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $fecha_hoy = date("Y-m-d");
         $fecha = date($infoContrato['ctr_proximo_pago']);
 
-        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
-        $dias = round($diasdif);
-
+        $diasdif = strtotime($fecha_hoy) - strtotime($fecha);
+        $dias = round($diasdif / (1000 * 60 * 60 * 24));
 
         //semanas del primer dia de pago hasta la fecha
         $semanas = ceil($dias / 7);
 
-        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado) + $infoContrato['ctr_pago_credito'];
 
         $adeudo_aux = $adeudo;
         if ($semanas <= $semanas_credito) {
@@ -102,22 +103,20 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_atrasadas = ceil($adeudo_aux / $infoContrato['ctr_pago_credito']);
         $ec_total_pagado = $ctr_saldo - $infoContrato['ctr_saldo_actual'];
         $label = "Semanas atrasadas";
-    }
-    else if ($infoContrato['ctr_forma_pago'] == "CATORCENALES") {
+    } else if ($infoContrato['ctr_forma_pago'] == "CATORCENALES") {
         $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
         $fecha = date($infoContrato['ctr_proximo_pago']);
 
-        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
-        $dias = round($diasdif);
-
+        $diasdif = strtotime($fecha_hoy) - strtotime($fecha);
+        $dias = round($diasdif / (1000 * 60 * 60 * 24));
 
         //semanas del primer dia de pago hasta la fecha
         $semanas = ceil($dias / 14);
 
-        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado) + $infoContrato['ctr_pago_credito'];
 
         $adeudo_aux = $adeudo;
         if ($semanas <= $semanas_credito) {
@@ -128,22 +127,20 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_atrasadas = ceil($adeudo_aux / $infoContrato['ctr_pago_credito']);
         $ec_total_pagado = $ctr_saldo - $infoContrato['ctr_saldo_actual'];
         $label = "Catorcenas atrasadas";
-    }
-    else if ($infoContrato['ctr_forma_pago'] == "QUINCENALES") {
+    } else if ($infoContrato['ctr_forma_pago'] == "QUINCENALES") {
         $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
         $fecha = date($infoContrato['ctr_proximo_pago']);
 
-        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
-        $dias = round($diasdif);
-
+        $diasdif = strtotime($fecha_hoy) - strtotime($fecha);
+        $dias = round($diasdif / (1000 * 60 * 60 * 24));
 
         //semanas del primer dia de pago hasta la fecha
         $semanas = ceil($dias / 15);
 
-        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado) + $infoContrato['ctr_pago_credito'];
 
         $adeudo_aux = $adeudo;
         if ($semanas <= $semanas_credito) {
@@ -154,22 +151,20 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_atrasadas = ceil($adeudo_aux / $infoContrato['ctr_pago_credito']);
         $ec_total_pagado = $ctr_saldo - $infoContrato['ctr_saldo_actual'];
         $label = "Quincenas atrasadas";
-    }
-    else {
+    } else {
         $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
         $fecha = date($infoContrato['ctr_proximo_pago']);
 
-        $diasdif = abs((strtotime($fecha_hoy) - strtotime($fecha)) / 86400);
-        $dias = round($diasdif);
-
+        $diasdif = strtotime($fecha_hoy) - strtotime($fecha);
+        $dias = round($diasdif / (1000 * 60 * 60 * 24));
 
         //semanas del primer dia de pago hasta la fecha
         $semanas = ceil($dias / 30);
 
-        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $infoContrato['ctr_total_pagado']) + $infoContrato['ctr_pago_credito'];
+        $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado) + $infoContrato['ctr_pago_credito'];
 
         $adeudo_aux = $adeudo;
         if ($semanas <= $semanas_credito) {
@@ -208,16 +203,16 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         </thead>
     </table>
 EOF;
-$pdf->writeHTMLCell(0, 0, '', '', $encabezado, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $encabezado, 0, 1, 0, true, '', true);
 
-$saldo = dnum($infoContrato['ctr_saldo_actual']);
-// var saldo = Number($("#ec_saldo_actual").val());
-// Print text using writeHTMLCell()
-foreach ($infoAbonos as $abonos) {
+    $saldo = dnum($infoContrato['ctr_saldo_actual']);
+    // var saldo = Number($("#ec_saldo_actual").val());
+    // Print text using writeHTMLCell()
+    foreach ($infoAbonos as $abonos) {
 
-    $aux_saldo = number_format($saldo,2);
-    # code...
-    $tps_body .= <<<EOF
+        $aux_saldo = number_format($saldo, 2);
+        # code...
+        $tps_body .= <<<EOF
 
    
 <tr style="font-size:8px">
@@ -234,14 +229,14 @@ foreach ($infoAbonos as $abonos) {
 
 EOF;
 
-$saldo = dnum($saldo) + dnum($abonos['abs_monto']);
-// saldo = Number(saldo) + Number(element.abs_monto);
+        $saldo = dnum($saldo) + dnum($abonos['abs_monto']);
+        // saldo = Number(saldo) + Number(element.abs_monto);
 
-    // $pdf->writeHTMLCell(0, 0, '', '', $tps_body, 0, 1, 0, true, '', true);
-}
+        // $pdf->writeHTMLCell(0, 0, '', '', $tps_body, 0, 1, 0, true, '', true);
+    }
 
 
-$header = <<<EOF
+    $header = <<<EOF
 
 <table style="width:100%; font-size: 12px;">
     <tr>
@@ -303,10 +298,10 @@ $header = <<<EOF
 </table>
 
 EOF;
-$pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
+    $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
 
 
-    
+
     //********* */
 
     // ---------------------------------------------------------
