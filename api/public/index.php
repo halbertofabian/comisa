@@ -20,6 +20,9 @@ require_once '../../app/modulos/contratos/contratos.modelo.php';
 require_once '../../app/modulos/cobranza/cobranza.controlador.php';
 require_once '../../app/modulos/cobranza/cobranza.modelo.php';
 
+require_once '../../app/modulos/almacenes/almacenes.controlador.php';
+require_once '../../app/modulos/almacenes/almacenes.modelo.php';
+
 
 
 
@@ -691,6 +694,27 @@ $app->post('/comisa_datos_traspasos', function (Request $request, Response $resp
 $app->get('/crear_status', function (Request $request, Response $response, array $args) {
     $res = ContratosControlador::ctrRegistrarStatusListas();
     return json_encode($res, true);
+});
+
+$app->get('/pre_registro_mercancia', function (Request $request, Response $response, array $args) {
+
+    $prm = AlmacenesModelo::mdlMostrarPreRegistrosByCodigos();
+    
+
+    $array_prm = array();
+    foreach ($prm as $key => $data) {
+        $dprm = AlmacenesModelo::mdlMostrarDetallePreRegistro($data['prm_id_detalle']);
+        array_push($array_prm, array(
+            "prm_folio" => $data['prm_folio'],
+            "pvs_nombre" => $data['pvs_nombre'],
+            "prm_fecha_registro" => $data['prm_fecha_registro'],
+            "prm_codigo" => $data['prm_codigo'],
+            "prm_status" => $data['prm_status'],
+            "prm_usuario_registro" => $data['prm_usuario_registro'],
+            "prm_productos" => $dprm,
+        ));
+    }
+    return json_encode($array_prm, true);
 });
 
 $app->run();

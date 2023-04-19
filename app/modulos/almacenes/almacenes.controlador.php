@@ -140,6 +140,7 @@ class AlmacenesControlador
 
             $res = AlmacenesModelo::mdlActualizarStatusPreRegistro($prm_id);
             if ($res) {
+                AlmacenesModelo::mdlActualizarCodigoPreRegistro($prm_id);
                 foreach ($dprm as $key => $value) {
 
                     for ($i = 1; $i <= $value['dprm_cantidad']; $i++) {

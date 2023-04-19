@@ -21,35 +21,37 @@ $contratos = array();
 $cuentas = ContratosModelo::mdlMostrarSaldosRuta($_GET['usr_ruta']);
 foreach ($cuentas as $key => $ctr) {
     // $fecha_abono = date($ctr['ctr_ultima_fecha_abono'], "Y-m-d");
-    $fecha_abono = date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
+    $fecha_abono = $ctr['ctr_ultima_fecha_abono'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
     $proximo_pago = $ctr['ctr_proximo_pago'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_proximo_pago']));
 
 
     $clts_telefono = "";
-    $telefono = is_array(json_decode($ctr['clts_telefono'], true));
-    if ($telefono) {
-        foreach (json_decode($ctr['clts_telefono'], true) as $tel) {
-            $clts_telefono = $tel['telefono'];
+    $telefonoV1 = str_replace(array('/', '-'), '', $ctr['clts_telefono']);
+    $telefono = json_decode($telefonoV1, true);
+    if (is_array($telefono)) {
+        foreach ($telefono as $tel) {
+            $clts_telefono = str_replace(array('/', '-'), '', $tel['telefono']);
         }
     } else {
         if (empty($ctr['clts_telefono'])) {
             $clts_telefono = "-";
         } else {
-            $clts_telefono = $ctr['clts_telefono'];
+            $clts_telefono = str_replace(array('/', '-', ','), '', $ctr['clts_telefono']) == "" ? "-" : str_replace(array('/', '-', ','), '', $ctr['clts_telefono']);
         }
     }
 
     $clts_coordenadas = "";
-    $coordenada = is_array(json_decode($ctr['clts_coordenadas'], true));
-    if ($coordenada) {
-        foreach (json_decode($ctr['clts_coordenadas'], true) as $coor) {
-            $clts_coordenadas = $coor['coordenada'];
+    $coordenadasV1 = str_replace(array('|', '-'), '', $ctr['clts_coordenadas']);
+    $coordenada = json_decode($coordenadasV1, true);
+    if (is_array($coordenada)) {
+        foreach ($coordenada as $coor) {
+            $clts_coordenadas = str_replace(array('|', '-', ','), '', $coor['coordenada']);
         }
     } else {
         if (empty($ctr['clts_coordenadas'])) {
             $clts_coordenadas = "-";
         } else {
-            $clts_coordenadas = $ctr['clts_coordenadas'];
+            $clts_coordenadas = str_replace(array('|', '-', ','), '', $ctr['clts_coordenadas']) == "" ? "-" : str_replace(array('|', '-', ','), '', $ctr['clts_coordenadas']);
         }
     }
 
