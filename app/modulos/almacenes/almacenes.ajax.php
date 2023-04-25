@@ -20,6 +20,9 @@ require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.controlador.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class AlmacenesAjax
 {
@@ -66,6 +69,28 @@ class AlmacenesAjax
         $res = AlmacenesControlador::ctrAprobarPreRegistro();
         echo json_encode($res, true);
     }
+    public function ajaxBuscarProductoBySerie()
+    {
+        $respuesta = AlmacenesModelo::mdlMostrarSeriesBySerie($_POST['auto_complete_producto']);
+
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxAsignarAlmacen()
+    {
+        $res = AlmacenesControlador::ctrAsignarAlmacenes();
+
+        echo json_encode($res, true);
+    }
+    public function ajaxAsignarVendedor()
+    {
+        $res = AlmacenesModelo::mdlAsignarVendedor($_POST);
+        echo json_encode($res, true);
+    }
+    public function ajaxMostrarAlmacenes()
+    {
+        $res = AlmacenesControlador::ctrMostrarAlmacenes();
+        print json_encode($res, JSON_UNESCAPED_UNICODE);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -100,4 +125,20 @@ if (isset($_POST['btnGuardarPreRegistro'])) {
 if (isset($_POST['btnAprobarPreRegistro'])) {
     $aprobarPreRegistro = new AlmacenesAjax();
     $aprobarPreRegistro->ajaxAprobarPreRegistro();
+}
+if (isset($_POST['auto_complete_producto'])) {
+    $obtenerProducto = new AlmacenesAjax();
+    $obtenerProducto->ajaxBuscarProductoBySerie();
+}
+if (isset($_POST['btnAsignarAlmacen'])) {
+    $asignarAlmacen = new AlmacenesAjax();
+    $asignarAlmacen->ajaxAsignarAlmacen();
+}
+if (isset($_POST['btnAsignarVendedor'])) {
+    $asignarVendedor = new AlmacenesAjax();
+    $asignarVendedor->ajaxAsignarVendedor();
+}
+if (isset($_POST['btnMostrarAlmacenes'])) {
+    $mostrarAlmacenes = new AlmacenesAjax();
+    $mostrarAlmacenes->ajaxMostrarAlmacenes();
 }

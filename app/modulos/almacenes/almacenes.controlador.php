@@ -36,9 +36,6 @@ class AlmacenesControlador
     public function ctrActualizarAlmacenes()
     {
     }
-    public function ctrMostrarAlmacenes()
-    {
-    }
     public static function ctrEliminarAlmacenes()
     {
         $res = AlmacenesModelo::mdlEliminarAlmacenes($_POST['ams_id']);
@@ -147,9 +144,10 @@ class AlmacenesControlador
                         $mpds = ProductosModelo::mdlMostrarModelosById($value['dprm_mpds_id']);
 
                         $spds = AlmacenesModelo::mdlMostrarSerieByModelo($mpds['mpds_id']);
-                        
+
 
                         if ($spds) {
+                            $spds_serie_completa = $mpds["mpds_suc"] . $mpds['mpds_modelo'] . (intval($spds['spds_serie']) + 1);
                             $datos = array(
                                 'spds_modelo' => $mpds['mpds_id'],
                                 'spds_serie' => intval($spds['spds_serie']) + 1,
@@ -157,8 +155,10 @@ class AlmacenesControlador
                                 'spds_situacion' => "-",
                                 'spds_ultima_mod' => FECHA,
                                 'spds_prm_id' => $prm_id,
+                                'spds_serie_completa' => $spds_serie_completa,
                             );
                         } else {
+                            $spds_serie_completa = $mpds["mpds_suc"]  . $mpds['mpds_modelo']  . "1";
                             $datos = array(
                                 'spds_modelo' => $mpds['mpds_id'],
                                 'spds_serie' => 1,
@@ -166,6 +166,7 @@ class AlmacenesControlador
                                 'spds_situacion' => "-",
                                 'spds_ultima_mod' => FECHA,
                                 'spds_prm_id' => $prm_id,
+                                'spds_serie_completa' => $spds_serie_completa,
                             );
                         }
                         $res = AlmacenesModelo::mdlAgregarSeries($datos);
@@ -181,11 +182,89 @@ class AlmacenesControlador
                     'mensaje' => 'Hubo un error al aprobar el pre-registro.'
                 );
             }
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'El codigo no es correcto.'
             );
         }
+    }
+
+    public static function ctrAsignarAlmacenes()
+    {
+        if(isset($_POST['spds_almacen'])){
+            $datos = array(
+                'spds_almacen' => $_POST['spds_almacen'],
+                'spds_situacion' => 'SALIDA',
+                'spds_id' => $_POST['spds_id'],
+            );
+
+            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+            if($res){
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Se agrego el producto correctamente a ' . $_POST['ams_nombre'],
+                );
+            }else{
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se agrego el producto correctamente',
+                );
+            }
+        }else{
+            $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+            $datos = array(
+                'spds_almacen' => $ams['ams_id'],
+                'spds_situacion' => '-',
+                'spds_id' => $_POST['spds_id'],
+            );
+
+            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+            if($res){
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Se quito el producto correctamente para ' . $_POST['ams_nombre'],
+                );
+            }else{
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo quitar el producto correctamente',
+                );
+            }
+        }
+    }
+
+    public static function ctrMostrarAlmacenes()
+    {
+        $almacenes = AlmacenesModelo::mdlMostrarAlmacenes($_SESSION['session_suc']['scl_id']);
+        $vendedores = UsuariosModelo::mdlObtenerVendedoresActivos();
+
+        $array_ams = array();
+        foreach ($almacenes as $ams) {
+            $ams_vendedores = "";
+
+            foreach ($vendedores as $usr) {
+                if ($usr['usr_id'] == $ams['ams_vendedor']) {
+                    $selected = "selected";
+                } else {
+                    $selected = "";
+                }
+                $ams_vendedores .= '<option ' . $selected . ' value="' . $usr['usr_id'] . '">' . $usr['usr_nombre'] . '</option>';
+            }
+            $data_a = array(
+                'ams_nombre' => $ams['ams_nombre'],
+                'ams_vendedor' =>'<select class="form-control select2 ams_vendedor" name="" id="ams_vendedor" ams_id="' . $ams['ams_id'] . '">
+                <option value="">-Seleccionar-</option>
+                ' . $ams_vendedores . '
+                </select>',
+                'ams_fecha_registro' => $ams['ams_fecha_registro'],
+                'ams_usuario_registro' => $ams['ams_usuario_registro'],
+                'acciones' =>  '<div class="btn-group" role="group" aria-label="">
+                    <button type="button" class="btn btn-danger btnEliminarAlmacen" ams_id="'. $ams['ams_id'] .'"><i class="fa fa-trash"></i> Eliminar</button>
+                </div>',
+            );
+            array_push($array_ams, $data_a);
+        }
+        return $array_ams;
     }
 }
