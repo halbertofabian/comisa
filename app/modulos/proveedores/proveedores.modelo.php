@@ -14,18 +14,18 @@ require_once DOCUMENT_ROOT . "app/modulos/conexion/conexion.php";
 
 class ProveedoresModelo
 {
-    public static function mdlAgregarProveedores()
+    public static function mdlAgregarProveedores($pvs)
     {
         try {
-            //code...
-            $sql = "";
+            $sql = "INSERT INTO tbl_proveedores_pvs (pvs_nombre,pvs_telefono) VALUES(?,?)";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
+            $pps->bindValue(1, $pvs['pvs_nombre']);
+            $pps->bindValue(2, $pvs['pvs_telefono']);
             $pps->execute();
-            return $pps->rowCount() > 0;
-        } catch (PDOException $th) {
-            //throw $th;
+            return $con->lastInsertId();
+        } catch (\PDOException $th) {
+            throw $th;
         } finally {
             $pps = null;
             $con = null;
@@ -58,6 +58,40 @@ class ProveedoresModelo
             $pps->execute();
             
             return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarProveedoresByNombre($pvs_nombre)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_proveedores_pvs WHERE pvs_nombre = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pvs_nombre);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarProveedoresByID($pvs_id )
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_proveedores_pvs WHERE pvs_id  = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pvs_id );
+            $pps->execute();
+            return $pps->fetch();
         } catch (PDOException $th) {
             //throw $th;
         } finally {

@@ -1,6 +1,10 @@
 <div class="row">
     <div class="col-12 mb-3">
-        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#mdlAgregarModelos">Agregar</button>
+        <div class="btn-group float-right" role="group" aria-label="">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlImportarModelos"><i class="fa fa-file-excel-o"></i> Importar</button>
+            <button type="button" class="btn btn-light" id="btnDescargarModelos"><i class="fa fa-download"></i> Descargar</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlAgregarModelos"><i class="fa fa-plus"></i> Agregar</button>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -255,6 +259,36 @@
     </div>
 </div>
 
+<!-- Modal importar modelos -->
+<div class="modal fade" id="mdlImportarModelos" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Importar modelos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formImportarModelos" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="input_file">Seleccione el archivo</label>
+                                <input type="file" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="input_file" id="input_file" placeholder="" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary btn-load">Importar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $('#formRegistrarModelos').on('submit', function(e) {
         e.preventDefault();
@@ -353,22 +387,22 @@
             processData: false,
             contentType: false,
             success: function(res) {
-                if(res){
-                   $("#mpds_id").val(res.mpds_id);
-                   $("#mpds_suc").val(res.mpds_suc);
-                   $("#mpds_modelo_copy").val(res.mpds_modelo);
-                   $("#mpds_modelo").val(res.mpds_modelo);
-                   $("#mpds_descripcion_copy").val(res.mpds_descripcion);
-                   $("#mpds_descripcion").val(res.mpds_descripcion);
-                   $("#mpds_proveedor").val(res.mpds_proveedor).trigger("change");
-                   $("#mpds_credito").val(res.mpds_credito);
-                   $("#mpds_enganche").val(res.mpds_enganche);
-                   $("#mpds_pago_semanal").val(res.mpds_pago_semanal);
-                   $("#mpds_contado").val(res.mpds_contado);
-                   $("#mpds_un_mes").val(res.mpds_un_mes);
-                   $("#mpds_dos_meses").val(res.mpds_dos_meses);
+                if (res) {
+                    $("#mpds_id").val(res.mpds_id);
+                    $("#mpds_suc").val(res.mpds_suc);
+                    $("#mpds_modelo_copy").val(res.mpds_modelo);
+                    $("#mpds_modelo").val(res.mpds_modelo);
+                    $("#mpds_descripcion_copy").val(res.mpds_descripcion);
+                    $("#mpds_descripcion").val(res.mpds_descripcion);
+                    $("#mpds_proveedor").val(res.mpds_proveedor).trigger("change");
+                    $("#mpds_credito").val(res.mpds_credito);
+                    $("#mpds_enganche").val(res.mpds_enganche);
+                    $("#mpds_pago_semanal").val(res.mpds_pago_semanal);
+                    $("#mpds_contado").val(res.mpds_contado);
+                    $("#mpds_un_mes").val(res.mpds_un_mes);
+                    $("#mpds_dos_meses").val(res.mpds_dos_meses);
 
-                   $("#mdlEditarModelos").modal("show");
+                    $("#mdlEditarModelos").modal("show");
                 }
             }
         });
@@ -409,4 +443,85 @@
             }
         });
     });
+
+    $('#btnDescargarModelos').on('click', function() {
+        window.open(urlApp + 'export/exportar-modelos.php', '_blank');
+    });
+
+    $("#formImportarModelos").on("submit", function(e) {
+        e.preventDefault()
+        var excel = $("#input_file").val()
+        if (excel == "") {
+            return swal("Error", "Seleccione un archivo excel", "error");
+        }
+        swal({
+                title: "¿Estas seguro de querer importar la lista de modelos?",
+                text: "Asegurate de tener el archivo con los requerimientos solicitados",
+                icon: "info",
+                buttons: ["Calcelar", "Si, importar lista"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var datos = new FormData()
+                    var files = $("#input_file")[0].files[0]
+                    datos.append("btnImportarModelos", true)
+                    datos.append("archivoExcel", files)
+
+                    $.ajax({
+
+                        url: urlApp + 'app/modulos/productos/productos.ajax.php',
+                        method: "POST",
+                        data: datos,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: "json",
+                        beforeSend: function() {
+                            startLoadButton()
+                        },
+                        success: function(respuesta) {
+                            stopLoadButton('Redirigiendo...')
+
+                            if (respuesta.status) {
+
+                                swal({
+                                        title: respuesta.mensaje,
+                                        text: "Se registraron " + respuesta.countInsert + " modelos \n Se encontraron " + respuesta.countRepetidos + " productos con el mismo modelo y/o con el mismo nombre.",
+                                        icon: "success",
+                                        buttons: [false, "Ver lista"],
+                                        dangerMode: true,
+                                    })
+                                    .then((willDelete) => {
+                                        if (willDelete) {
+                                            window.location.reload();
+                                        } else {
+                                            window.location.reload();
+                                        }
+                                    })
+
+                            } else {
+
+                                swal({
+                                        title: "Error",
+                                        text: respuesta.mensaje,
+                                        icon: "error",
+                                        buttons: [false, "Intentar de nuevo"],
+                                        dangerMode: true,
+                                    })
+                                    .then((willDelete) => {
+                                        if (willDelete) {
+                                            window.location.reload();
+                                        } else {
+                                            window.location.reload();
+                                        }
+                                    })
+
+                            }
+
+                        }
+                    })
+                }
+            });
+    })
 </script>
