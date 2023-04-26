@@ -517,64 +517,106 @@ $validar_pagos = $abs ? true : false;
             <strong style="color:aliceblue">6.- MERCANCIA </strong>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
-                    <div class="form-group">
-                        <label for="autocomplete_pdt">Seleccionar producto</label>
-                        <input type="hidden" id="productos_contratos" value='<?= $ctr['ctr_productos'] ?>'>
-                        <input type="hidden" id="ctrs_id" value='<?= $rutas[2] ?>'>
-                        <input type="text" class="form-control" name="autocomplete_pdt" id="autocomplete_pdt" placeholder="Escriba el nombre del producto y seleccione...">
+            <?php if (ACTUALIZACIONES == 0) : ?>
+                <div class="row">
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                        <div class="form-group">
+                            <label for="autocomplete_pdt">Seleccionar producto</label>
+                            <input type="hidden" id="productos_contratos" value='<?= $ctr['ctr_productos'] ?>'>
+                            <input type="hidden" id="ctrs_id" value='<?= $rutas[2] ?>'>
+                            <input type="text" class="form-control" name="autocomplete_pdt" id="autocomplete_pdt" placeholder="Escriba el nombre del producto y seleccione...">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-striped table-hover nowrap text-center" id="tbl_mercancia">
-                        <thead>
-                            <tr>
-                                <th>SKU</th>
-                                <th>CANTIDAD</th>
-                                <th>DESCRIPCION</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="tbodyProductos">
-                            <?php
-                            $productos = $ctr['ctr_productos'];
-                            // preArray($productos);
-                            $productos = json_decode($productos, true);
-                            foreach ($productos as $key => $pds) :
-                            ?>
-                                <tr id="<?= $pds['sku'] ?>">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped table-hover nowrap text-center" id="tbl_mercancia">
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>CANTIDAD</th>
+                                    <th>DESCRIPCION</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyProductos">
+                                <?php
+                                $productos = $ctr['ctr_productos'];
+                                // preArray($productos);
+                                $productos = json_decode($productos, true);
+                                foreach ($productos as $key => $pds) :
+                                ?>
+                                    <tr id="<?= $pds['sku'] ?>">
 
-                                    <td><?= $pds['sku'] ?></td>
-                                    <td style="display:flex; justify-content: center">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default menos" btn_menos="<?= $pds['sku'] ?>" type="button">-</button>
-                                        </span>
-                                        <input type="text" class="form-control" style="width:50px;text-align: center;" id="contador<?= $pds['sku'] ?>" cps_id="<?= $pds['sku'] ?>" value=" <?= $pds['cantidad'] ?>" min="1">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default mas" btn_mas="<?= $pds['sku'] ?>" type="button">+</button>
-                                        </span>
-                                    </td>
-                                    <td class="nombreProducto" style="width:50%; text-align:center" for="nombreProducto"><?= $pds['nombreProducto'] ?></td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger btnQuitarProducto" sku="<?= $pds['sku'] ?>"><i class="fa fa-trash"></i> Borrar</button>
+                                        <td><?= $pds['sku'] ?></td>
+                                        <td style="display:flex; justify-content: center">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default menos" btn_menos="<?= $pds['sku'] ?>" type="button">-</button>
+                                            </span>
+                                            <input type="text" class="form-control" style="width:50px;text-align: center;" id="contador<?= $pds['sku'] ?>" cps_id="<?= $pds['sku'] ?>" value=" <?= $pds['cantidad'] ?>" min="1">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default mas" btn_mas="<?= $pds['sku'] ?>" type="button">+</button>
+                                            </span>
+                                        </td>
+                                        <td class="nombreProducto" style="width:50%; text-align:center" for="nombreProducto"><?= $pds['nombreProducto'] ?></td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btnQuitarProducto" sku="<?= $pds['sku'] ?>"><i class="fa fa-trash"></i> Borrar</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" align="right">
+                                        <button type="button" class="btn btn-success btnGuardarProductos">GUARDAR PRODUCTOS</button>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="4" align="right">
-                                    <button type="button" class="btn btn-success btnGuardarProductos">GUARDAR PRODUCTOS</button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
+            <?php else : ?>
+                <div class="row">
+                    <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12">
+                        <div class="form-group">
+                            <label for="autocomplete_pdt2">Digite la serie del producto</label>
+                            <input type="hidden" id="productos_contratos" value='<?= $ctr['ctr_productos'] ?>'>
+                            <input type="hidden" id="ctrs_id" value='<?= $rutas[2] ?>'>
+                            <input type="text" class="form-control" name="autocomplete_pdt2" id="autocomplete_pdt2" placeholder="Escriba el número de serie y seleccione...">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped table-hover nowrap text-center" id="tbl_mercancia">
+                            <thead>
+                                <tr>
+                                    <th>DESCRIPCIÓN Y MODELO</th>
+                                    <th># SERIE</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyProductos">
+                                <?php
+                                $productos = $ctr['ctr_productos'];
+                                // preArray($productos);
+                                $productos = json_decode($productos, true);
+                                foreach ($productos as $key => $pds) :
+                                ?>
+                                    <tr id="<?= $pds['spds_id'] ?>">
 
-            </div>
+                                        <td class="serie"><?= $pds['nombreProducto'] ?></td>
+                                        <td><?= $pds['sku'] ?></td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="<?= $pds['spds_id'] ?>"><i class="fa fa-trash"></i> Borrar</button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="row">
                 <div class="col-md-5"></div>
                 <div class="col-md-3 text-right">

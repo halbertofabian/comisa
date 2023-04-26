@@ -19,12 +19,8 @@
                     <div class="col-xl-4 col-md-4 col-12">
                         <div class="form-group">
                             <label for="auto_complete_producto">Digite la serie del producto</label>
-                            <input type="text" class="form-control" name="" id="auto_complete_producto" aria-describedby="helpId" placeholder="">
+                            <input type="text" class="form-control" name="" id="auto_complete_producto" placeholder="Escriba el número de serie y seleccione...">
                         </div>
-                    </div>
-                    <div class="col-xl-4 col-md-4 col-12">
-                        <br>
-                        <button type="button" class="btn btn-primary">AGREGAR</button>
                     </div>
                 </div>
             </div>
@@ -62,6 +58,44 @@
 
 <script>
     var tbody_productos = "";
+
+    function mostrarProductos() {
+        var ams_id = $("#ams_id").val();
+        var datos = new FormData()
+        datos.append('ams_id', ams_id);
+        datos.append('btnMostrarProductos', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(respuesta) {
+                if (respuesta) {
+                    respuesta.forEach(res => {
+                        tbody_productos +=
+                            `
+                                <tr id="${res.spds_id}">
+                                    <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
+                                    <td class="serie">${res.spds_serie_completa}</td>
+                                    <td>
+                                        <button class="btn btn-danger btnQuitarProducto" spds_id="${res.spds_id}" ams_nombre="${res.ams_nombre}"><i class="fa fa-times"></i></button>
+                                    </td>
+                                </tr>
+                             `;
+                    });
+                    $("#tbody_productos").html(tbody_productos);
+                    var numSerie = $(".serie").length;
+                    if (numSerie > 0) {
+                        $("#btnImprimirReporte").removeClass("d-none");
+                    } else {
+                        $("#btnImprimirReporte").addClass("d-none");
+                    }
+                }
+            }
+        });
+    }
     $('#auto_complete_producto').autocomplete({
         // appendTo: "#modelAddProductos",
         source: function(request, response) {
@@ -189,5 +223,9 @@
     $('.btnImprimirReporte').on('click', function() {
         var ams_id = $("#ams_id").val();
         window.open(urlApp + "app/report/reporte-mercancia.php?ams_id=" + ams_id, "_blank");
+    });
+
+    $('#ams_id').on('change', function() {
+        mostrarProductos();
     });
 </script>
