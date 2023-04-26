@@ -38,7 +38,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>DESCRIPCIÓN Y MODELO</th>
-                                    <th>SERIE</th>
+                                    <th># SERIE</th>
                                     <th></th>
                                 </tr>
                             </thead>
