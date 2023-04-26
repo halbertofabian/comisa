@@ -14,6 +14,10 @@ include_once '../../../config.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/proveedores/proveedores.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/proveedores/proveedores.controlador.php';
+
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
@@ -69,6 +73,11 @@ class ProductosAjax
         $res = ProductosModelo::mdlMostrarModelosById($_POST['mpds_id']);
         echo json_encode($res, true);
     }
+    public function ajaxImportarModelos()
+    {
+        $respuesta = ProductosControlador::ctrImportarModelosExcel();
+        echo json_encode($respuesta, true);
+    }
 }
 
 
@@ -108,4 +117,8 @@ if (isset($_POST['btnEliminarModelo'])) {
 if (isset($_POST['btnMostrarModeloByID'])) {
     $mostrarModelo = new ProductosAjax();
     $mostrarModelo->ajaxMostrarModeloById();
+}
+if (isset($_POST['btnImportarModelos'])) {
+    $importarModelos = new ProductosAjax();
+    $importarModelos->ajaxImportarModelos();
 }

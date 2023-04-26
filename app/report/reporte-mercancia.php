@@ -71,10 +71,6 @@ if (isset($_GET['ams_id'])) {
     //
     $pds = AlmacenesModelo::mdlMostrarProductosByAlmacenID($_GET['ams_id']);
     $usr = AlmacenesModelo::mdlMostrarAlmacenesByID($_GET['ams_id']);
-    foreach ($pds as $dato) {
-        $spds_situacion = $dato['spds_situacion'];
-    }
-
 
     $scl_nombre = $_SESSION['session_suc']['scl_nombre'];
     $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
@@ -96,7 +92,7 @@ if (isset($_GET['ams_id'])) {
                 </td>
                 <td style="text-align: center;">
                 <br><br>
-                TIPO:<strong> $spds_situacion</strong> <br>
+                TIPO:<strong> SALIDA</strong> <br>
                 FECHA:<strong> $fecha_hoy</strong>
                 </td>
             </tr>

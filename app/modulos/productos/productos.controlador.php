@@ -557,4 +557,90 @@ class ProductosControlador
             );
         }
     }
+
+    public static function ctrImportarModelosExcel()
+    {
+        try {
+            //$nombreArchivo = $_SERVER['DOCUMENT_ROOT'] . '/dupont/exportxlsx/tbl_productos_dupont.xls';
+            $nombreArchivo = $_FILES['archivoExcel']['tmp_name'];
+            //var_dump($nombreArchivo);
+            // Cargar hoja de calculo
+            $leerExcel = PHPExcel_IOFactory::createReaderForFile($nombreArchivo);
+            $objPHPExcel = $leerExcel->load($nombreArchivo);
+            //var_dump($objPHPExcel);
+            $objPHPExcel->setActiveSheetIndex(0);
+            $numRows = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+            $countInsert = 0;
+            $countRepetidos = 0;
+
+            for ($i = 2; $i <= $numRows; $i++) {
+                $mpds_modelo = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
+                $mpds_descripcion = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
+                $pvs_nombre = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
+                $mpds_credito = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
+                $mpds_enganche = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
+                $mpds_pago_semanal = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
+                $mpds_contado = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
+                $mpds_un_mes = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+                $mpds_dos_meses = $objPHPExcel->getActiveSheet()->getCell('I' . $i)->getCalculatedValue();
+
+                //Buscar si existe el registro
+                $modelo = ProductosModelo::mdlMostrarModelosByModelo($mpds_modelo);
+                $descripcion = ProductosModelo::mdlMostrarModelosByDescripcion($mpds_descripcion);
+                $proveedor = ProveedoresModelo::mdlMostrarProveedoresByNombre($pvs_nombre);
+                //En caso de que producto exista
+                if ($modelo || $descripcion) {
+                    $countRepetidos += 1;
+                    continue;
+                }
+                if ($proveedor) {
+                    $mpds_proveedor = $proveedor['pvs_id'];
+                } else {
+                    $datos = array(
+                        'pvs_nombre' => strtoupper($pvs_nombre),
+                        'pvs_telefono' => '',
+                    );
+                    $pvs_id = ProveedoresModelo::mdlAgregarProveedores($datos);
+                    if ($pvs_id) {
+                        $pvs = ProveedoresModelo::mdlMostrarProveedoresByID($pvs_id);
+                        $mpds_proveedor = $pvs['pvs_id'];
+                    }
+                }
+
+                $data = array(
+                    'mpds_suc' => SUCURSAL,
+                    "mpds_modelo" => $mpds_modelo,
+                    "mpds_descripcion" => strtoupper($mpds_descripcion),
+                    "mpds_proveedor" => $mpds_proveedor,
+                    "mpds_credito" => $mpds_credito == "" ? 0 : $mpds_credito,
+                    "mpds_enganche" => $mpds_enganche == "" ? 0 : $mpds_enganche,
+                    "mpds_pago_semanal" => $mpds_pago_semanal == "" ? 0 : $mpds_pago_semanal,
+                    "mpds_contado" => $mpds_contado == "" ? 0 : $mpds_contado,
+                    "mpds_un_mes" => $mpds_un_mes == "" ? 0 : $mpds_un_mes,
+                    "mpds_dos_meses" => $mpds_dos_meses == "" ? 0 : $mpds_dos_meses,
+                );
+
+                //insertar
+                $insert = ProductosModelo::mdlRegistrarModelos($data);
+
+                if ($insert) {
+                    $countInsert += 1;
+                }
+            }
+            return array(
+                'status' => true,
+                'mensaje' => "Carga de modelos con éxito",
+                'countInsert' =>  $countInsert,
+                'countRepetidos' => $countRepetidos,
+            );
+        } catch (Exception $th) {
+            $th->getMessage();
+            return array(
+                'status' => false,
+                'mensaje' => "No se encuentra el archivo solicitado, por favor carga el archivo correcto",
+                'insert' =>  "",
+                'update' => ""
+            );
+        }
+    }
 }
