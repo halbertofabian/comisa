@@ -13,15 +13,32 @@ elseif (isset($rutas[1]) && $rutas[1] == 'listar-pre-registros') :
 elseif (isset($rutas[1]) && $rutas[1] == 'listar-mercancia') :
     cargarComponente('breadcrumb', '', 'Lista de mercancia');
     cargarview2('almacenes/listar-mercancia', $rutas);
+elseif (isset($rutas[1]) && $rutas[1] == 'registrar-almacenes') :
+    cargarComponente('breadcrumb', '', 'Registro de almacenes');
+    cargarview2('almacenes/registrar-almacenes', $rutas);
 else :
     cargarComponente('breadcrumb', '', 'Gestión de almacenes');
 ?>
     <form method="post">
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="">Nombre del almacén</label>
                     <input type="text" name="ams_nombre" id="ams_nombre" class="form-control text-uppercase" placeholder="Escribe el nombre del alamacen" required>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="form-group">
+                    <label for="">Vendedor</label>
+                    <select class="form-control select2" name="ams_vendedor" id="" required>
+                        <option value="">-Seleccionar-</option>
+                        <?php
+                        $vendedores = UsuariosModelo::mdlObtenerVendedoresActivos();
+                        foreach ($vendedores as $key => $usr) :
+                        ?>
+                            <option value="<?= $usr['usr_id'] ?>"><?= $usr['usr_nombre'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
             </div>
             <div class="col-12 col-md-4">
@@ -53,34 +70,17 @@ else :
     <div class="row">
         <div class="col-12">
 
-            <table class="table tablas">
+            <table class="table" id="datatable_almacenes">
                 <thead>
                     <tr>
                         <th>Nombre</th>
+                        <th>Vendedor</th>
                         <th>Fechas registro</th>
                         <th>Usuario registro</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
 
-                    <?php
-                    $almacenes = AlmacenesModelo::mdlMostrarAlmacenes($_SESSION['session_suc']['scl_id']);
-                    foreach ($almacenes as $key => $ams) :
-                    ?>
-                        <tr>
-                            <td><?php echo $ams['ams_nombre'] ?></td>
-                            <td><?php echo $ams['ams_fecha_registro'] ?></td>
-                            <td><?php echo $ams['ams_usuario_registro'] ?></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="">
-                                    <button type="button" class="btn btn-danger btnEliminarAlmacen" ams_id="<?= $ams['ams_id'] ?>"><i class="fa fa-trash"></i> Eliminar</button>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-
-                </tbody>
             </table>
 
         </div>
@@ -88,6 +88,46 @@ else :
 <?php endif; ?>
 
 <script>
+    $(document).ready(function() {
+        mostrarAlmacenes();
+    });
+
+    function mostrarAlmacenes() {
+        datatable_almacenes = $('#datatable_almacenes').DataTable({
+            responsive: true,
+            'ajax': {
+                'url': urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                'method': 'POST', //usamos el metodo POST
+                'data': {
+                    btnMostrarAlmacenes: true,
+                }, //enviamos opcion 4 para que haga un SELECT
+                'dataSrc': ''
+            },
+            'ordering': false,
+            'bDestroy': true,
+            'columns': [{
+                    'data': 'ams_nombre'
+                },
+                {
+                    'data': 'ams_vendedor'
+                },
+                {
+                    'data': 'ams_fecha_registro'
+                },
+                {
+                    'data': 'ams_usuario_registro'
+                },
+                {
+                    'data': 'acciones'
+                },
+            ]
+        });
+
+        datatable_almacenes.on('draw.dt', function() {
+            $('.select2').select2(); //Inicializas los select2
+        });
+
+    }
     $(document).on('click', '.btnEliminarAlmacen', function() {
         var ams_id = $(this).attr("ams_id");
         swal({
@@ -121,9 +161,9 @@ else :
                                 })
                                 .then((willDelete) => {
                                     if (willDelete) {
-                                        window.location.reload();
+                                        mostrarAlmacenes();
                                     } else {
-                                        window.location.reload();
+                                        mostrarAlmacenes();
                                     }
                                 });
                         }
@@ -132,5 +172,36 @@ else :
             } else {}
         });
 
+    });
+
+    $(document).on('change', '.ams_vendedor', function() {
+        var ams_id = $(this).attr('ams_id');
+        var ams_vendedor = $(this).val();
+        var datos = new FormData()
+        datos.append('ams_id', ams_id);
+        datos.append('ams_vendedor', ams_vendedor);
+        datos.append('btnAsignarVendedor', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res) {
+                    swal({
+                        title: '¡Bien!',
+                        text: 'EL vendedor se asigno correctamente.',
+                        type: 'success',
+                        icon: 'success'
+                    }).then(function() {
+                        mostrarAlmacenes();
+                    });
+                } else {
+                    toastr.error('Hubo un error', '¡ERROR!');
+                }
+            }
+        });
     });
 </script>

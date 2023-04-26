@@ -18,13 +18,14 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_almacenes_ams (ams_nombre,ams_id_sucursal,ams_fecha_registro,ams_usuario_registro) VALUES(?,?,?,?) ";
+            $sql = "INSERT INTO tbl_almacenes_ams (ams_nombre,ams_id_sucursal,ams_fecha_registro,ams_usuario_registro,ams_vendedor) VALUES(?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams['ams_nombre']);
             $pps->bindValue(2, $ams['ams_id_sucursal']);
             $pps->bindValue(3, $ams['ams_fecha_registro']);
             $pps->bindValue(4, $ams['ams_usuario_registro']);
+            $pps->bindValue(5, $ams['ams_vendedor']);
             $pps->execute();
             return $pps->rowCount() > 0;
             // return $pps->errorInfo();
@@ -442,7 +443,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_series_producto_spds (spds_modelo,spds_serie,spds_almacen,spds_situacion,spds_ultima_mod,spds_prm_id) VALUES(?,?,?,?,?,?) ";
+            $sql = "INSERT INTO tbl_series_producto_spds (spds_modelo,spds_serie,spds_almacen,spds_situacion,spds_ultima_mod,spds_prm_id,spds_serie_completa) VALUES(?,?,?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $spds['spds_modelo']);
@@ -451,6 +452,7 @@ class AlmacenesModelo
             $pps->bindValue(4, $spds['spds_situacion']);
             $pps->bindValue(5, $spds['spds_ultima_mod']);
             $pps->bindValue(6, $spds['spds_prm_id']);
+            $pps->bindValue(7, $spds['spds_serie_completa']);
             $pps->execute();
             return $pps->rowCount() > 0;
             // return $pps->errorInfo();
@@ -468,6 +470,111 @@ class AlmacenesModelo
             $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_tipo = 'M' AND ams_estado = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarAlmacenesByTipoVendedor()
+    {
+        try {
+            //code...
+            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_tipo = 'V' AND ams_estado = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarSeriesBySerie($spds_serie_completa)
+    {
+        try {
+            //code...
+            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre, CONCAT(mpds.mpds_descripcion,' - ',mpds.mpds_modelo, ' - ', spds.spds_serie_completa) AS label FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE spds.spds_serie_completa LIKE '%$spds_serie_completa%'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAsignarAlmacen($spds)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_series_producto_spds SET spds_almacen = ?, spds_situacion = ? WHERE spds_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds['spds_almacen']);
+            $pps->bindValue(2, $spds['spds_situacion']);
+            $pps->bindValue(3, $spds['spds_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAsignarVendedor($ams)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_almacenes_ams SET ams_vendedor = ? WHERE ams_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams['ams_vendedor']);
+            $pps->bindValue(2, $ams['ams_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarProductosByAlmacenID($ams_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre, ams.ams_vendedor FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE ams.ams_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_id);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarAlmacenesByID($ams_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT ams.*, usr.* FROM tbl_almacenes_ams ams JOIN tbl_usuarios_usr usr ON ams.ams_vendedor = usr.usr_id WHERE ams.ams_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_id);
             $pps->execute();
             return $pps->fetch();
         } catch (PDOException $th) {
