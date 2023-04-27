@@ -1325,9 +1325,9 @@ $(document).ready(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
         });
     });
-    
 
-    $(document).on("click", ".btnGuardarCtsSemanal", function() {
+
+    $(document).on("click", ".btnGuardarCtsSemanal", function () {
         $("#loader").addClass("d-none");
         var dia;
         var ctr_id = $(this).attr("ctr_id");
@@ -1647,7 +1647,7 @@ $(document).ready(function () {
                     const numeroDia = new Date(fechaComoCadena).getDay();
                     const nombreDia = dias[numeroDia];
                     if (nombreDia == "LUNES") {
-                        
+
                         listar_lunes +=
                             `
                         <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1675,7 +1675,7 @@ $(document).ready(function () {
                         </div>
                     `;
                     } else if (nombreDia == "MARTES") {
-                        
+
                         listar_martes +=
                             `
                     <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1703,7 +1703,7 @@ $(document).ready(function () {
                         </div>
                     `;
                     } else if (nombreDia == "MIERCOLES") {
-                        
+
                         listar_miercoles +=
                             `
                     <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1731,7 +1731,7 @@ $(document).ready(function () {
                         </div>
                     `;
                     } else if (nombreDia == "JUEVES") {
-                        
+
                         listar_jueves +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1759,7 +1759,7 @@ $(document).ready(function () {
                         </div>
                     `;
                     } else if (nombreDia == "VIERNES") {
-                        
+
                         listar_viernes +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1787,7 +1787,7 @@ $(document).ready(function () {
                         </div>
                     `;
                     } else if (nombreDia == "SABADO") {
-                        
+
                         listar_sabado +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -1815,7 +1815,7 @@ $(document).ready(function () {
                         </div>
                     `;
                     } else if (nombreDia == "DOMINGO") {
-                        
+
                         listar_domingo +=
                             `
                          <div class="col-xl-6 col-12 posicion" data-index="${element.cra_id}" data-position="${element.cra_orden}">
@@ -2152,5 +2152,170 @@ $(document).ready(function () {
 
     });
 
+    var tbodyProductos2 = "";
+    var data2 = [];
+
+    $("#autocomplete_pdt2").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                method: "POST",
+                dataType: "json",
+                data: {
+                    auto_complete_producto: request.term
+                },
+                success: function (data) {
+                    response(data);
+                }
+
+            });
+        },
+        minLength: 2,
+        select: function (event, ui) {
+            var ctrs_id = $("#ctrs_id").val();
+            var res = ui.item;
+            var encontrado = false;
+            $(".serie").each(function () {
+                if ($(this).text() == res.spds_serie_completa) {
+                    toastr.warning('El producto ' + res.mpds_descripcion + '-' + res.mpds_modelo + '-' + res.spds_serie_completa + ' ya se agrego a su lista.', 'ADVERTENCIA!');
+                    encontrado = true;
+                    return false;
+                }
+            });
+
+            if (encontrado) {
+                $(this).val("");
+                return false;
+            }
+
+            var datos = new FormData();
+            datos.append('spds_id', res.spds_id);
+            datos.append('ctrs_id', ctrs_id);
+            datos.append('btnAsignarAlmacenContrato', true);
+            $.ajax({
+                type: 'POST',
+                url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                data: datos,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function (respuesta) {
+                    if (respuesta.status) {
+                        tbodyProductos2 =
+                            `
+                        <tr id="${res.spds_id}">
+                            <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
+                            <td class="serie">${res.spds_serie_completa}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}"><i class="fa fa-trash"></i> Borrar</button>
+                            </td>
+                        </tr>
+                        `;
+                        var datos = {
+                            "spds_id": res.spds_id,
+                            "sku": res.spds_serie_completa,
+                            "nombreProducto": res.mpds_descripcion + '-' + res.mpds_modelo,
+                            "cantidad": 1,
+                        };
+                        var productos = $("#productos_contratos").val();
+
+                        if (productos == "") {
+                            data2.push(datos);
+                            $("#productos_contratos").val(JSON.stringify(data2));
+                        } else {
+                            var productos = $("#productos_contratos").val();
+                            data2 = JSON.parse(productos);
+                            data2.push(datos);
+                            $("#productos_contratos").val(JSON.stringify(data2));
+                        }
+
+                        $("#tbodyProductos").append(tbodyProductos2);
+
+                        $("#autocomplete_pdt2").val("");
+                        guardarModelosProductos();
+                    } else {
+                        toastr.error(respuesta.mensaje, '¡ERROR!');
+                        $('#autocomplete_pdt2').val("");
+                    }
+                }
+            });
+
+
+        }
+    });
+});
+
+$(document).on("click", ".btnQuitarProducto2", function () {
+    var spds_id = $(this).attr("spds_id");
+    var datos = new FormData()
+    datos.append('spds_id', spds_id);
+    datos.append('btnQuitarProductoContrato', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            if (res.status) {
+                var products = $("#productos_contratos").val();
+                var productos = JSON.parse(products);
+                for (var i = productos.length; i--;) {
+                    if (productos[i].spds_id === spds_id) {
+                        productos.splice(i, 1);
+                    }
+                }
+
+                $("#" + spds_id).remove();
+                // $(this).closest('tr').remove();
+                $("#productos_contratos").val(JSON.stringify(productos));
+
+
+                if (productos == "") {
+                    data = [];
+                    $("#productos_contratos").val("[]");
+                }
+
+                guardarModelosProductos();
+            } else {
+                toastr.error(res.mensaje, '¡ERROR!');
+            }
+
+        }
+    });
+
 
 });
+
+function guardarModelosProductos() {
+    var datos = new FormData()
+
+    var productos = $("#productos_contratos").val();
+    var ctrs_id = $("#ctrs_id").val();
+
+    datos.append("btnGuardarProductos", true);
+    datos.append("ctr_productos", productos);
+    datos.append("ctrs_id", ctrs_id);
+
+    $.ajax({
+        url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        beforeSend: function () {
+            // startLoadButton()
+        },
+        success: function (respuesta) {
+            if (respuesta.status) {
+                toastr.success(respuesta.mensaje, '¡Muy bien!');
+            } else {
+                toastr.error(respuesta.mensaje, '¡ERROR!');
+            }
+
+        }
+    })
+}

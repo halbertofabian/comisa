@@ -192,7 +192,7 @@ class AlmacenesControlador
 
     public static function ctrAsignarAlmacenes()
     {
-        if(isset($_POST['spds_almacen'])){
+        if (isset($_POST['spds_almacen'])) {
             $datos = array(
                 'spds_almacen' => $_POST['spds_almacen'],
                 'spds_situacion' => 'SALIDA',
@@ -200,18 +200,18 @@ class AlmacenesControlador
             );
 
             $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
-            if($res){
+            if ($res) {
                 return array(
                     'status' => true,
                     'mensaje' => 'Se agrego el producto correctamente a ' . $_POST['ams_nombre'],
                 );
-            }else{
+            } else {
                 return array(
                     'status' => false,
                     'mensaje' => 'No se agrego el producto correctamente',
                 );
             }
-        }else{
+        } else {
             $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
             $datos = array(
                 'spds_almacen' => $ams['ams_id'],
@@ -220,12 +220,12 @@ class AlmacenesControlador
             );
 
             $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
-            if($res){
+            if ($res) {
                 return array(
                     'status' => true,
                     'mensaje' => 'Se quito el producto correctamente para ' . $_POST['ams_nombre'],
                 );
-            }else{
+            } else {
                 return array(
                     'status' => false,
                     'mensaje' => 'No se pudo quitar el producto correctamente',
@@ -253,18 +253,64 @@ class AlmacenesControlador
             }
             $data_a = array(
                 'ams_nombre' => $ams['ams_nombre'],
-                'ams_vendedor' =>'<select class="form-control select2 ams_vendedor" name="" id="ams_vendedor" ams_id="' . $ams['ams_id'] . '">
+                'ams_vendedor' => '<select class="form-control select2 ams_vendedor" name="" id="ams_vendedor" ams_id="' . $ams['ams_id'] . '">
                 <option value="">-Seleccionar-</option>
                 ' . $ams_vendedores . '
                 </select>',
                 'ams_fecha_registro' => $ams['ams_fecha_registro'],
                 'ams_usuario_registro' => $ams['ams_usuario_registro'],
                 'acciones' =>  '<div class="btn-group" role="group" aria-label="">
-                    <button type="button" class="btn btn-danger btnEliminarAlmacen" ams_id="'. $ams['ams_id'] .'"><i class="fa fa-trash"></i> Eliminar</button>
+                    <button type="button" class="btn btn-danger btnEliminarAlmacen" ams_id="' . $ams['ams_id'] . '"><i class="fa fa-trash"></i> Eliminar</button>
                 </div>',
             );
             array_push($array_ams, $data_a);
         }
         return $array_ams;
+    }
+    public static function ctrAsignarAlmacenesContrato()
+    {
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoContrato();
+        $datos = array(
+            'spds_almacen' => $ams['ams_id'],
+            'spds_situacion' => $_POST['ctrs_id'],
+            'spds_id' => $_POST['spds_id'],
+        );
+
+        $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'Se agrego el producto correctamente.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'No se agrego el producto correctamente',
+            );
+        }
+    }
+
+    public static function ctrQuitarProductosContrato()
+    {
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+        $datos = array(
+            'spds_almacen' => $ams['ams_id'],
+            'spds_situacion' => '-',
+            'spds_id' => $_POST['spds_id'],
+        );
+
+        $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+        
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'Se quito el producto correctamente.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'No se pudo quitar el producto correctamente',
+            );
+        }
     }
 }

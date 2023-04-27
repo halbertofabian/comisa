@@ -91,6 +91,23 @@ class AlmacenesAjax
         $res = AlmacenesControlador::ctrMostrarAlmacenes();
         print json_encode($res, JSON_UNESCAPED_UNICODE);
     }
+    public function ajaxMostrarProductos()
+    {
+        $res = AlmacenesModelo::mdlMostrarProductosByAlmacenID($_POST['ams_id']);
+        echo json_encode($res, true);
+    }
+    public function ajaxAsignarAlmacenesContrato()
+    {
+        $res = AlmacenesControlador::ctrAsignarAlmacenesContrato();
+
+        echo json_encode($res, true);
+    }
+    public function ajaxQuitarProductoContrato()
+    {
+        $res = AlmacenesControlador::ctrQuitarProductosContrato();
+
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -141,4 +158,16 @@ if (isset($_POST['btnAsignarVendedor'])) {
 if (isset($_POST['btnMostrarAlmacenes'])) {
     $mostrarAlmacenes = new AlmacenesAjax();
     $mostrarAlmacenes->ajaxMostrarAlmacenes();
+}
+if (isset($_POST['btnMostrarProductos'])) {
+    $mostrarProductos = new AlmacenesAjax();
+    $mostrarProductos->ajaxMostrarProductos();
+}
+if (isset($_POST['btnAsignarAlmacenContrato'])) {
+    $asignarAlmacenContrato = new AlmacenesAjax();
+    $asignarAlmacenContrato->ajaxAsignarAlmacenesContrato();
+}
+if (isset($_POST['btnQuitarProductoContrato'])) {
+    $quitarProducto = new AlmacenesAjax();
+    $quitarProducto->ajaxQuitarProductoContrato();
 }
