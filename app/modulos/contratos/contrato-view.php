@@ -560,7 +560,7 @@ $validar_pagos = $abs ? true : false;
                                         </td>
                                         <td class="nombreProducto" style="width:50%; text-align:center" for="nombreProducto"><?= $pds['nombreProducto'] ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btnQuitarProducto" sku="<?= $pds['sku'] ?>"><i class="fa fa-trash"></i> Borrar</button>
+                                            <button type="button" class="btn btn-danger btnQuitarProducto" sku="<?= $pds['sku'] ?>"><i class="fa fa-times"></i> Cancelar</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -608,7 +608,7 @@ $validar_pagos = $abs ? true : false;
                                         <td class="serie"><?= $pds['nombreProducto'] ?></td>
                                         <td><?= $pds['sku'] ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="<?= $pds['spds_id'] ?>"><i class="fa fa-trash"></i> Borrar</button>
+                                            <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="<?= $pds['spds_id'] ?>"><i class="fa fa-times"></i> Cancelar</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

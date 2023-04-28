@@ -67,10 +67,16 @@ if (isset($_GET['ams_id'])) {
     $ruta = HTTP_HOST;
     $rutaImg = $ruta . 'app/assets/images/sistema/comisa/logo.jpg';
     $fecha_hoy = date('d-m-Y H:i:s');
+    $usuario = "";
 
     //
     $pds = AlmacenesModelo::mdlMostrarProductosByAlmacenID($_GET['ams_id']);
     $usr = AlmacenesModelo::mdlMostrarAlmacenesByID($_GET['ams_id']);
+    if($usr['usr_nombre']){
+        $usuario = $usr['usr_nombre'];
+    }else{
+        $usuario = AlmacenesModelo::mdlMostrarAlmacenByID($_GET['ams_id'])['ams_nombre'];
+    }
 
     $scl_nombre = $_SESSION['session_suc']['scl_nombre'];
     $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
@@ -99,7 +105,7 @@ if (isset($_GET['ams_id'])) {
             <tr>
                 <td style="background-color:#24008D; width:100%; color:#fff;text-align: center;vertical-align:text-top; font-size:12px ">
                     
-                        REPORTE DEL USUARIO: $usr[usr_nombre]
+                        REPORTE DEL USUARIO: $usuario
                   
                 </td>
             </tr>
@@ -182,7 +188,7 @@ EOF;
         <td style="text-align: center;width:33%;">
         <p style="border-top: 1px solid #000;">RECIBE</p>
         <br>
-            <strong>$usr[usr_nombre]</strong>
+            <strong>$usuario</strong>
         
         </td>
     </tr>

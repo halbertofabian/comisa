@@ -511,13 +511,29 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarAlmacenesByTipoDestino()
+    {
+        try {
+            //code...
+            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_tipo = 'X' AND ams_estado = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlMostrarSeriesBySerie($spds_serie_completa)
     {
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoContrato();
         try {
             //code...
-            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre, CONCAT(mpds.mpds_descripcion,' - ',mpds.mpds_modelo, ' - ', spds.spds_serie_completa) AS label FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE spds.spds_serie_completa LIKE '%$spds_serie_completa%' AND spds.spds_almacen != ?";
+            $sql = "SELECT spds.*, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre, CONCAT(mpds.mpds_descripcion,' - ',mpds.mpds_modelo, ' - ', spds.spds_serie_completa) AS label FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE spds.spds_serie_completa LIKE '%$spds_serie_completa%' AND spds.spds_almacen != ? AND spds.spds_situacion != 'TRASPASO' AND spds.spds_situacion != 'SALIDA'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams['ams_id']);
@@ -595,6 +611,41 @@ class AlmacenesModelo
             $pps->bindValue(1, $ams_id);
             $pps->execute();
             return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarAlmacenByID($ams_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_almacenes_ams ams WHERE ams_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlQuitarTraspasoMercancia($spds_serie_completa)
+    {
+        try {
+            //code...
+            $sql = "DELETE FROM tbl_series_producto_spds WHERE spds_serie_completa = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_serie_completa);
+            $pps->execute();
+            return $pps->rowCount() > 0;
         } catch (PDOException $th) {
             //throw $th;
         } finally {
