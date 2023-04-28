@@ -195,7 +195,7 @@ class AlmacenesControlador
         if (isset($_POST['spds_almacen'])) {
             $datos = array(
                 'spds_almacen' => $_POST['spds_almacen'],
-                'spds_situacion' => 'SALIDA',
+                'spds_situacion' => $_POST['spds_situacion'],
                 'spds_id' => $_POST['spds_id'],
             );
 
@@ -310,6 +310,53 @@ class AlmacenesControlador
             return array(
                 'status' => false,
                 'mensaje' => 'No se pudo quitar el producto correctamente',
+            );
+        }
+    }
+    public static function ctrMostrarAlmacenesByTipo()
+    {
+        if($_POST['tipo'] == "CV"){
+            $almacenes = AlmacenesModelo::mdlMostrarAlmacenesByTipoVendedor();
+        }else{
+            $almacenes = AppControlador::listarAlmacenesTux();
+        }
+        return $almacenes;
+    }
+    public static function ctrTraspasoDeMercanciaSucursal($spds)
+    {
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+        $serie = AlmacenesModelo::mdlMostrarSerieByModelo($spds['spds_modelo']);
+        if ($spds) {
+            $datos = array(
+                'spds_modelo' => $spds['spds_modelo'],
+                'spds_serie' => intval($serie['spds_serie']) + 1,
+                'spds_almacen' => $ams['ams_id'],
+                'spds_situacion' => "-",
+                'spds_ultima_mod' => $spds['spds_ultima_mod'],
+                'spds_prm_id' => $spds['spds_prm_id'],
+                'spds_serie_completa' => $spds['spds_serie_completa'],
+            );
+        } else {
+            $datos = array(
+                'spds_modelo' => $spds['spds_modelo'],
+                'spds_serie' => 1,
+                'spds_almacen' => $ams['ams_id'],
+                'spds_situacion' => "-",
+                'spds_ultima_mod' => $spds['spds_ultima_mod'],
+                'spds_prm_id' => $spds['spds_prm_id'],
+                'spds_serie_completa' => $spds['spds_serie_completa'],
+            );
+        }
+        $res = AlmacenesModelo::mdlAgregarSeries($datos);
+        if($res){
+            return array(
+                'status' => true,
+                'mensaje' => 'El traspaso se hizo correctamente.',
+            );
+        }else{
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al hacer el traspaso.',
             );
         }
     }

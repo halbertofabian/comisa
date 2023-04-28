@@ -699,7 +699,7 @@ $app->get('/crear_status', function (Request $request, Response $response, array
 $app->get('/pre_registro_mercancia', function (Request $request, Response $response, array $args) {
 
     $prm = AlmacenesModelo::mdlMostrarPreRegistrosByCodigos();
-    
+
 
     $array_prm = array();
     foreach ($prm as $key => $data) {
@@ -715,6 +715,31 @@ $app->get('/pre_registro_mercancia', function (Request $request, Response $respo
         ));
     }
     return json_encode($array_prm, true);
+});
+
+//API TRASPASO DE MERCANCIA A OTRA SUCURSAL
+$app->post('/traspaso_mercancia', function (Request $request, Response $response) {
+    $json = $request->getBody();
+    $data = json_decode($json, true);
+
+    $traspaso =  AlmacenesControlador::ctrTraspasoDeMercanciaSucursal($data);
+    return json_encode($traspaso, true);
+});
+
+$app->get('/quitar_traspaso_mercancia/{spds_serie_completa}', function (Request $request, Response $response, array $args) {
+    $spds_serie_completa =  $args['spds_serie_completa'];
+    $res = AlmacenesModelo::mdlQuitarTraspasoMercancia($spds_serie_completa);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Se quito el producto correctamente',
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Hubo un error',
+        ), true);
+    }
 });
 
 $app->run();

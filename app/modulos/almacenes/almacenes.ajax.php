@@ -108,6 +108,12 @@ class AlmacenesAjax
 
         echo json_encode($res, true);
     }
+    public function ajaxMostrarAlmacenesByTipo()
+    {
+        $res = AlmacenesControlador::ctrMostrarAlmacenesByTipo();
+
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -170,4 +176,8 @@ if (isset($_POST['btnAsignarAlmacenContrato'])) {
 if (isset($_POST['btnQuitarProductoContrato'])) {
     $quitarProducto = new AlmacenesAjax();
     $quitarProducto->ajaxQuitarProductoContrato();
+}
+if (isset($_POST['btnMostrarAlmacenesByTipo'])) {
+    $mostrarAlmacenesTipo = new AlmacenesAjax();
+    $mostrarAlmacenesTipo->ajaxMostrarAlmacenesByTipo();
 }
