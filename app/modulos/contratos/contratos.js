@@ -2203,11 +2203,11 @@ $(document).ready(function () {
                     if (respuesta.status) {
                         tbodyProductos2 =
                             `
-                        <tr id="${res.spds_id}">
+                        <tr id="${res.spds_serie_completa}">
                             <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
                             <td class="serie">${res.spds_serie_completa}</td>
                             <td>
-                                <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}"><i class="fa fa-trash"></i> Borrar</button>
+                                <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}" sku="${res.spds_serie_completa}"><i class="fa fa-times"></i> Cancelar</button>
                             </td>
                         </tr>
                         `;
@@ -2246,9 +2246,12 @@ $(document).ready(function () {
 });
 
 $(document).on("click", ".btnQuitarProducto2", function () {
+    var sku = $(this).attr("sku");
     var spds_id = $(this).attr("spds_id");
-    var datos = new FormData()
-    datos.append('spds_id', spds_id);
+    var datos = new FormData();
+    if (spds_id != undefined) {
+        datos.append('spds_id', spds_id);
+    }
     datos.append('btnQuitarProductoContrato', true);
     $.ajax({
         type: 'POST',
@@ -2262,12 +2265,12 @@ $(document).on("click", ".btnQuitarProducto2", function () {
                 var products = $("#productos_contratos").val();
                 var productos = JSON.parse(products);
                 for (var i = productos.length; i--;) {
-                    if (productos[i].spds_id === spds_id) {
+                    if (productos[i].sku === sku) {
                         productos.splice(i, 1);
                     }
                 }
 
-                $("#" + spds_id).remove();
+                $("#" + sku).remove();
                 // $(this).closest('tr').remove();
                 $("#productos_contratos").val(JSON.stringify(productos));
 
