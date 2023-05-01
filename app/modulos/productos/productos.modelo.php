@@ -371,7 +371,7 @@ class ProductosModelo
             $pps = $con->prepare($sql);
             $pps->execute();
 
-            return $pps->fetchAll();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {

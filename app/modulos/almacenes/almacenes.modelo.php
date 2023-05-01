@@ -593,7 +593,7 @@ class AlmacenesModelo
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_id);
             $pps->execute();
-            return $pps->fetchAll();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -653,4 +653,23 @@ class AlmacenesModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarAlmacenesByVendedor($ams_vendedor)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_almacenes_ams ams WHERE ams_vendedor = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_vendedor);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
 }

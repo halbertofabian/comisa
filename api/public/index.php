@@ -23,6 +23,9 @@ require_once '../../app/modulos/cobranza/cobranza.modelo.php';
 require_once '../../app/modulos/almacenes/almacenes.controlador.php';
 require_once '../../app/modulos/almacenes/almacenes.modelo.php';
 
+require_once '../../app/modulos/productos/productos.controlador.php';
+require_once '../../app/modulos/productos/productos.modelo.php';
+
 
 
 
@@ -740,6 +743,22 @@ $app->get('/quitar_traspaso_mercancia/{spds_serie_completa}', function (Request 
             'mensaje' => 'Hubo un error',
         ), true);
     }
+});
+
+//APIS PARA LA APP DE VENTAS 2023
+
+//OBTENER TODOS LOS PRODUCTOS
+$app->get('/consultar_modelos_mercancia', function (Request $request, Response $response, array $args) {
+    $res = ProductosModelo::mdlMostrarModelos();
+    return json_encode($res, true);
+});
+
+//OBTENER TODOS LOS PRODUCTOS POR VENDEDOR
+$app->get('/consultar_mercancia/usr/{usr_id}', function (Request $request, Response $response, array $args) {
+    $usr_id =  $args['usr_id'];
+    $ams = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($usr_id);
+    $pds = AlmacenesModelo::mdlMostrarProductosByAlmacenID($ams['ams_id']);
+    return json_encode($pds, true);
 });
 
 $app->run();
