@@ -293,25 +293,33 @@ class AlmacenesControlador
     public static function ctrQuitarProductosContrato()
     {
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
-        $datos = array(
-            'spds_almacen' => $ams['ams_id'],
-            'spds_situacion' => '-',
-            'spds_id' => $_POST['spds_id'],
-        );
-
-        $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
-        
-        if ($res) {
+        if(isset($_POST['spds_id'])){
+            $datos = array(
+                'spds_almacen' => $ams['ams_id'],
+                'spds_situacion' => '-',
+                'spds_id' => $_POST['spds_id'],
+            );
+    
+            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+            
+            if ($res) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Se quito el producto correctamente.',
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo quitar el producto correctamente',
+                );
+            }
+        }else{
             return array(
                 'status' => true,
                 'mensaje' => 'Se quito el producto correctamente.',
             );
-        } else {
-            return array(
-                'status' => false,
-                'mensaje' => 'No se pudo quitar el producto correctamente',
-            );
         }
+       
     }
     public static function ctrMostrarAlmacenesByTipo()
     {
