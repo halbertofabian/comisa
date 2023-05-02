@@ -980,6 +980,15 @@ class ContratosControlador
             // Guardar en base de datos contratos
 
             $subir = ContratosModelo::mdlSubirPreContratos($cts);
+            $ctr = ContratosModelo::mdlMostrarContratosById($subir);
+            $datos = array();
+            foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
+                $datos = array(
+                    'ctr_id' => $ctr['ctr_id'],
+                    'spds_id' => $value['spds_id'],
+                );
+                $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
+            }
 
             if ($subir) {
                 $contSubir++;

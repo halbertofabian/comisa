@@ -368,4 +368,26 @@ class AlmacenesControlador
             );
         }
     }
+    public static function ctrAsignarAlmacenesContratoApiApp($ctr)
+    {
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoContrato();
+        $datos = array(
+            'spds_almacen' => $ams['ams_id'],
+            'spds_situacion' => $ctr['ctr_id'],
+            'spds_id' => $ctr['spds_id'],
+        );
+
+        $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'Se agrego el producto correctamente.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'No se agrego el producto correctamente',
+            );
+        }
+    }
 }
