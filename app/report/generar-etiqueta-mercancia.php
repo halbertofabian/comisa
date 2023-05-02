@@ -15,7 +15,7 @@ class imprimirFactura
     {
         $spds = AlmacenesModelo::mdlMostrarSeriesById($this->spds_id);
 
-        $pageLayout = array(62, 80); //  or array($height, $width) 
+        $pageLayout = array(80,80); //  or array($height, $width) 
 
         $pdf = new TCPDF('P', 'mm', $pageLayout, true, 'UTF-8', false);
 
@@ -66,7 +66,7 @@ class imprimirFactura
 
         $pdf->writeHTMLCell(0, 0, '', '', '<div style="text-align:center; font-size:10px">' . $spds['mpds_descripcion'] . ' - ' . $spds['mpds_modelo'] .  ' - ' . $spds['spds_serie'] . '</div>', 0, 1, 0, true, '', true);
         $pdf->write1DBarcode($spds["mpds_suc"] . "" . $spds['mpds_modelo'] . "" . $spds['spds_serie'], 'C128', '', '', '', 6 * 2, 6 * 2, $style, 'N');
-
+        $pdf->writeHTMLCell(0, 0, '', '', '<br>', 0, 1, 0, true, '', true);
 
         // Add a page
         // This method has several options, check the source code documentation for more information.

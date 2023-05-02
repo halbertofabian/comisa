@@ -15,7 +15,7 @@ class imprimirFactura
     {
         $etiquetas = AlmacenesModelo::mdlMostrarSeriesByPrmId($this->prm_id);
 
-        $pageLayout = array(62, 80); //  or array($height, $width) 
+        $pageLayout = array(210, 80); //  or array($height, $width) 
 
         $pdf = new TCPDF('P', 'mm', $pageLayout, true, 'UTF-8', false);
 

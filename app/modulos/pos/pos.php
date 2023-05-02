@@ -138,7 +138,7 @@
                     </div>
                     <div class="col-12">
 
-                        <button class="btn btn-block mt-1 btn-danger btn-lg">CANCELAR</button>
+                        <!-- <button class="btn btn-block mt-1 btn-danger btn-lg">CANCELAR</button> -->
 
                     </div>
 

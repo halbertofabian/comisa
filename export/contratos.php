@@ -32,7 +32,6 @@ foreach ($contratos_set as $key => $ctr) {
     $ctls_rentada = "";
     $ctls_prestada = "";
 
-
     if ($ctr['clts_tipo_vivienda'] == "PROPIA") {
         $ctls_propia = "PROPIA";
         $ctls_rentada = "-";
@@ -196,7 +195,9 @@ foreach ($contratos_set as $key => $ctr) {
         'ctr_aprovado_ventas' => $ctr['ctr_aprovado_ventas'],
         'usr_nombre' => $ctr['usr_nombre'],
         'clts_puerta_color' => $ctr['clts_puerta_color'],
-        'clts_fachada_color' => $ctr['clts_fachada_color']
+        'clts_fachada_color' => $ctr['clts_fachada_color'],
+        'ctr_ultima_fecha_abono' => $ctr['ctr_ultima_fecha_abono']
+
     );
 
     array_push($contratos, $datos);
@@ -280,7 +281,8 @@ echo "OBSERVACIONES,";
 echo "COORDENADAS,";
 echo "CURP,";
 echo "SALDO ACTUAL,";
-echo "INGRESO CONYUGUE \n";
+echo "INGRESO CONYUGUE,";
+echo " \n";
 
 
 
