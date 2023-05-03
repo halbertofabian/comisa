@@ -807,7 +807,12 @@ $app->get('/asignar_mercancia/{ams_nombre}/{spds_serie_completa}', function (Req
 $app->get('/mostrar_productos/{ams_nombre}', function (Request $request, Response $response, array $args) {
     $ams_nombre =  $args['ams_nombre'];
     $res = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($ams_nombre);
-    return json_encode($res, true);
+    if($res){
+        return json_encode(array(
+            'status' => true,
+            'productos' => $res
+        ), true);
+    }
 });
 $app->get('/mostrar_almacenes_vendedor', function (Request $request, Response $response, array $args) {
     $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoVendedor();
