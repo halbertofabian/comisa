@@ -716,7 +716,7 @@ class AlmacenesModelo
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_nombre);
             $pps->execute();
-            return $pps->fetchAll(PDO::FETCH_ASSOC);
+            return $pps->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {
