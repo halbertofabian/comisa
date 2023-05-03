@@ -601,6 +601,23 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarProductosByAlmacenNombre($ams_nombre)
+    {
+        try {
+            //code...
+            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.*, ams.ams_nombre, ams.ams_vendedor FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE ams.ams_nombre = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_nombre);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarAlmacenesByID($ams_id)
     {
         try {
@@ -664,6 +681,42 @@ class AlmacenesModelo
             $pps->bindValue(1, $ams_vendedor);
             $pps->execute();
             return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarSeriesBySerieCompleta($spds_serie_completa)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_serie_completa = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_serie_completa);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarAlmacenByNombre($ams_nombre)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_almacenes_ams WHERE ams_nombre = ? AND ams_estado = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams_nombre);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {

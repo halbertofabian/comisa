@@ -777,4 +777,45 @@ $app->post('/login_encargado_mercancia', function (Request $request, Response $r
 
 });
 
+$app->get('/asignar_mercancia/{ams_nombre}/{spds_serie_completa}', function (Request $request, Response $response, array $args) {
+    $ams_nombre =  $args['ams_nombre'];
+    $spds_serie_completa =  $args['spds_serie_completa'];
+    $ams = AlmacenesModelo::mdlMostrarAlmacenByNombre($ams_nombre);
+    $spds = AlmacenesModelo::mdlMostrarSeriesBySerieCompleta($spds_serie_completa);
+    if ($spds) {
+        $datos = array(
+            'spds_almacen' => $ams['ams_id'],
+            'spds_situacion' => 'SALIDA',
+            'spds_id' => $spds['spds_id'],
+        );
+        $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+        if ($res) {
+            $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($ams_nombre);
+            return json_encode(array(
+                'status' => true,
+                'mensaje' => 'Se quito el producto correctamente',
+                'productos' => $productos,
+            ), true);
+        }
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'El numero de serie no se encuentra en su inventario',
+        ), true);
+    }
+});
+$app->get('/mostrar_productos/{ams_nombre}', function (Request $request, Response $response, array $args) {
+    $ams_nombre =  $args['ams_nombre'];
+    $res = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($ams_nombre);
+    return json_encode($res, true);
+});
+$app->get('/mostrar_almacenes_vendedor', function (Request $request, Response $response, array $args) {
+    $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoVendedor();
+    $ams_vendedores = array();
+    foreach ($ams as $dato) {
+        $ams_vendedores[] = $dato['ams_nombre'];
+    }
+    return json_encode($ams_vendedores, true);
+});
+
 $app->run();
