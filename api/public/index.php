@@ -761,4 +761,20 @@ $app->get('/consultar_mercancia/usr/{usr_id}', function (Request $request, Respo
     return json_encode($pds, true);
 });
 
+//LOGIN PARA EL ENCARGADO DE ASIGNAR MERCANCIA A LOS VENDEDORES
+
+$app->post('/login_encargado_mercancia', function (Request $request, Response $response) {
+    $json = $request->getBody();
+
+    $usr = json_decode($json, true);
+
+    $login_msj =  CobranzaControlador::ctrLoginEncargadoMercancia($usr);
+
+
+    return json_encode($login_msj, true);
+
+    # code...
+
+});
+
 $app->run();

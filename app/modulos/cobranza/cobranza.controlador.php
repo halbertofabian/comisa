@@ -1911,4 +1911,37 @@ class CobranzaControlador
             );
         }
     }
+
+    public static function  ctrLoginEncargadoMercancia($usr)
+    {
+
+        $usrLogin = UsuariosModelo::mdlLoginCobranza($usr);
+
+        if (!$usrLogin  || !password_verify($usr['usr_clave'], $usrLogin['usr_clave'])) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Usuario o contraseña incorrectos, intente de nuevo'
+            );
+        } else {
+
+            $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID);
+            if ($usrLogin['usr_rol'] == 'Baja de usuario' || $usrLogin['usr_rol'] !== 'Jefe administrativo' || $usrLogin['usr_rol'] !== 'Jefe de ventas' || $usrLogin['usr_rol'] !== 'Jefe de cobranza') {
+                return array(
+                    'status' => false,
+                    'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', no tienes acceso a la aplicación !',
+                    'usr' => $usrLogin,
+                    'scl' => $sucursal,
+                    'scl_url_access' => HTTP_HOST
+                );
+            } else {
+                return array(
+                    'status' => true,
+                    'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', bienvenido a la app de comisa mercancia!',
+                    'usr' => $usrLogin,
+                    'scl' => $sucursal,
+                    'scl_url_access' => HTTP_HOST
+                );
+            }
+        }
+    }
 }
