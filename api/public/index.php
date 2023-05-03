@@ -817,5 +817,12 @@ $app->get('/mostrar_almacenes_vendedor', function (Request $request, Response $r
     }
     return json_encode($ams_vendedores, true);
 });
+$app->get('/quitar_producto/{spds_id}', function (Request $request, Response $response, array $args) {
+    $datos = array(
+        'spds_id' => $args['spds_id'],
+    );
+    $res = AlmacenesControlador::ctrQuitarProductosContrato($datos);
+    return json_encode($res, true);
+});
 
 $app->run();
