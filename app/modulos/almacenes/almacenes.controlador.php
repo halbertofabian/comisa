@@ -290,14 +290,14 @@ class AlmacenesControlador
         }
     }
 
-    public static function ctrQuitarProductosContrato()
+    public static function ctrQuitarProductosContrato($pds)
     {
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
-        if(isset($_POST['spds_id'])){
+        if(isset($pds['spds_id'])){
             $datos = array(
                 'spds_almacen' => $ams['ams_id'],
                 'spds_situacion' => '-',
-                'spds_id' => $_POST['spds_id'],
+                'spds_id' => $pds['spds_id'],
             );
     
             $res = AlmacenesModelo::mdlAsignarAlmacen($datos);

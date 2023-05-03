@@ -104,7 +104,7 @@ class AlmacenesAjax
     }
     public function ajaxQuitarProductoContrato()
     {
-        $res = AlmacenesControlador::ctrQuitarProductosContrato();
+        $res = AlmacenesControlador::ctrQuitarProductosContrato($_POST);
 
         echo json_encode($res, true);
     }
