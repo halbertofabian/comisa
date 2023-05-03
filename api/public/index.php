@@ -793,7 +793,7 @@ $app->get('/asignar_mercancia/{ams_nombre}/{spds_serie_completa}', function (Req
             $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($ams_nombre);
             return json_encode(array(
                 'status' => true,
-                'mensaje' => 'Se quito el producto correctamente',
+                'mensaje' => 'Se agrego el producto correctamente',
                 'productos' => $productos,
             ), true);
         }
