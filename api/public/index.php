@@ -817,12 +817,18 @@ $app->get('/mostrar_almacenes_vendedor', function (Request $request, Response $r
     }
     return json_encode($ams_vendedores, true);
 });
-$app->get('/quitar_producto/{spds_id}', function (Request $request, Response $response, array $args) {
+$app->get('/quitar_producto/{spds_id}/{ams_nombre}', function (Request $request, Response $response, array $args) {
+    $spds_id =  $args['spds_id'];
+    $ams_nombre =  $args['ams_nombre'];
     $datos = array(
-        'spds_id' => $args['spds_id'],
+        'spds_id' => $spds_id,
     );
     $res = AlmacenesControlador::ctrQuitarProductosContrato($datos);
-    return json_encode($res, true);
+    $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($ams_nombre);
+    return json_encode(array(
+        'res' => $res,
+        'productos' => $productos,
+    ), true);
 });
 
 $app->run();
