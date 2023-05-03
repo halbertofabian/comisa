@@ -1925,15 +1925,7 @@ class CobranzaControlador
         } else {
 
             $sucursal = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID);
-            if ($usrLogin['usr_rol'] == 'Baja de usuario' || $usrLogin['usr_rol'] != 'Jefe administrativo' || $usrLogin['usr_rol'] != 'Jefe de ventas' || $usrLogin['usr_rol'] != 'Jefe de cobranza') {
-                return array(
-                    'status' => false,
-                    'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', no tienes acceso a la aplicación !',
-                    'usr' => $usrLogin,
-                    'scl' => $sucursal,
-                    'scl_url_access' => HTTP_HOST
-                );
-            } else {
+            if ($usrLogin['usr_rol'] == 'Jefe administrativo' || $usrLogin['usr_rol'] == 'Jefe de ventas' || $usrLogin['usr_rol'] == 'Jefe de cobranza') {
                 return array(
                     'status' => true,
                     'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', bienvenido a la app de comisa mercancia!',
@@ -1941,6 +1933,15 @@ class CobranzaControlador
                     'scl' => $sucursal,
                     'scl_url_access' => HTTP_HOST
                 );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', no tienes acceso a la aplicación !',
+                    'usr' => $usrLogin,
+                    'scl' => $sucursal,
+                    'scl_url_access' => HTTP_HOST
+                );
+                
             }
         }
     }
