@@ -827,10 +827,12 @@ $app->post('/quitar_producto', function (Request $request, Response $response) {
         'productos' => $productos,
     ), true);
 });
-$app->get('/generar_reporte_mercancia/{ams_nombre}', function (Request $request, Response $response, array $args) {
-    $ams_nombre =  $args['ams_nombre'];
-    $ams = AlmacenesModelo::mdlMostrarAlmacenByNombre($ams_nombre);
-    $url_reporte = HTTP_HOST . 'app/report/reporte-mercancia.php?ams_id=' . $ams['ams_id'];
+$app->post('/generar_reporte_mercancia',function (Request $request, Response $response) {
+    $json = $request->getBody();
+    $datos = json_decode($json, true);
+    $_SESSION['session_app'] = $datos['usr_nombre'];
+    $ams = AlmacenesModelo::mdlMostrarAlmacenByNombre($datos['ams_nombre']);
+    $url_reporte = HTTP_HOST . 'app/report/reporte-mercancia-app.php?ams_id=' . $ams['ams_id'];
     return json_encode(array(
         'url_reporte' => $url_reporte,
     ), true);
