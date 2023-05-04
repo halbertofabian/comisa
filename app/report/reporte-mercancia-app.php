@@ -80,7 +80,7 @@ if (isset($_GET['ams_id'])) {
 
     $scl = SucursalesModelo::mdlMostrarSucursales(SUCURSAL_ID);
 
-    $usr_usuario = $_SESSION['session_app'];
+    $usr_usuario = base64_decode($_GET['usr_nombre']);
     //preArray($listp);
 
     // Set some content to print
