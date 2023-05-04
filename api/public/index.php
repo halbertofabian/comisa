@@ -784,13 +784,13 @@ $app->post('/asignar_mercancia', function (Request $request, Response $response)
     $ams = AlmacenesModelo::mdlMostrarAlmacenByNombre($datos['ams_nombre']);
     $spds = AlmacenesModelo::mdlMostrarSeriesBySerieCompleta($datos['spds_serie_completa']);
     if ($spds) {
-        $datos = array(
+        $data = array(
             'spds_almacen' => $ams['ams_id'],
             'spds_situacion' => 'SALIDA',
             'spds_id' => $spds['spds_id'],
             'usr_nombre' => $datos['usr_nombre'],
         );
-        $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+        $res = AlmacenesModelo::mdlAsignarAlmacen($data);
         if ($res) {
             $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($datos['ams_nombre']);
             return json_encode(array(
