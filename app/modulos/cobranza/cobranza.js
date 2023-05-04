@@ -247,7 +247,7 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 30);
 
-                    var adeudo = Number((semanas * res.ctr_pago_credito - ctr_total_pagado)) + Number(res.ctr_pago_credito);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
                     if (semanas <= semanas_credito) {
