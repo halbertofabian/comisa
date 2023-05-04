@@ -833,8 +833,10 @@ $app->get('/quitar_producto/{spds_id}/{ams_nombre}', function (Request $request,
 $app->get('/generar_reporte_mercancia/{ams_nombre}', function (Request $request, Response $response, array $args) {
     $ams_nombre =  $args['ams_nombre'];
     $ams = AlmacenesModelo::mdlMostrarAlmacenByNombre($ams_nombre);
-    header('Location:' . HTTP_HOST . 'app/report/reporte-mercancia.php?ams_id=' . $ams['ams_id']);
-    exit;
+    $url_reporte = HTTP_HOST . 'app/report/reporte-mercancia.php?ams_id=' . $ams['ams_id'];
+    return json_encode(array(
+        'url_reporte' => $url_reporte,
+    ), true);
 });
 
 $app->run();
