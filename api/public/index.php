@@ -777,20 +777,22 @@ $app->post('/login_encargado_mercancia', function (Request $request, Response $r
 
 });
 
-$app->get('/asignar_mercancia/{ams_nombre}/{spds_serie_completa}', function (Request $request, Response $response, array $args) {
-    $ams_nombre =  $args['ams_nombre'];
-    $spds_serie_completa =  $args['spds_serie_completa'];
-    $ams = AlmacenesModelo::mdlMostrarAlmacenByNombre($ams_nombre);
-    $spds = AlmacenesModelo::mdlMostrarSeriesBySerieCompleta($spds_serie_completa);
+$app->post('/asignar_mercancia', function (Request $request, Response $response) {
+    $json = $request->getBody();
+    $datos = json_decode($json, true);
+
+    $ams = AlmacenesModelo::mdlMostrarAlmacenByNombre($datos['ams_nombre']);
+    $spds = AlmacenesModelo::mdlMostrarSeriesBySerieCompleta($datos['spds_serie_completa']);
     if ($spds) {
         $datos = array(
             'spds_almacen' => $ams['ams_id'],
             'spds_situacion' => 'SALIDA',
             'spds_id' => $spds['spds_id'],
+            'usr_nombre' => $datos['usr_nombre'],
         );
         $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
         if ($res) {
-            $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($ams_nombre);
+            $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($datos['ams_nombre']);
             return json_encode(array(
                 'status' => true,
                 'mensaje' => 'Se agrego el producto correctamente',
