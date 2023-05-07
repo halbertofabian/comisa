@@ -787,11 +787,19 @@ $app->post('/asignar_mercancia', function (Request $request, Response $response)
         $data = array(
             'spds_almacen' => $ams['ams_id'],
             'spds_situacion' => 'SALIDA',
+            'spds_ultima_mod' => FECHA,
             'spds_id' => $spds['spds_id'],
-            'usr_nombre' => $datos['usr_nombre'],
         );
         $res = AlmacenesModelo::mdlAsignarAlmacen($data);
         if ($res) {
+            $array_bcra = array(
+                'bcra_movimiento' => 'Carga',
+                'bcra_fecha' => FECHA,
+                'bcra_usuario' => $datos['usr_nombre'],
+                'bcra_nota' => 'SE REALIZÓ UN CARGAMENTO AL ALMACÉN '. $datos['ams_nombre'],
+                'bcra_spds_id' => $spds['spds_id'],
+            );
+            $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
             $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($datos['ams_nombre']);
             return json_encode(array(
                 'status' => true,

@@ -2248,10 +2248,26 @@ $(document).ready(function () {
 $(document).on("click", ".btnQuitarProducto2", function () {
     var sku = $(this).attr("sku");
     var spds_id = $(this).attr("spds_id");
-    var datos = new FormData();
     if (spds_id != undefined) {
+        $("#bcra_spds_id").val(spds_id);
+    }
+
+    $("#bcra_sku").val(sku);
+    $("#mdlMotivoCancelacion").modal('show');
+
+});
+$(document).on("click", "#btnQuitarProducto2", function () {
+    var sku = $("#bcra_sku").val();
+    var spds_id = $("#bcra_spds_id").val();
+    var bcra_nota = $("#bcra_nota").val();
+    if(bcra_nota == ""){
+        return toastr.warning('El motivo es obligatorio', 'ADVERTENCIA!');
+    }
+    var datos = new FormData();
+    if (spds_id != "") {
         datos.append('spds_id', spds_id);
     }
+    datos.append('bcra_nota', bcra_nota);
     datos.append('btnQuitarProductoContrato', true);
     $.ajax({
         type: 'POST',
@@ -2315,6 +2331,8 @@ function guardarModelosProductos() {
         success: function (respuesta) {
             if (respuesta.status) {
                 toastr.success(respuesta.mensaje, '¡Muy bien!');
+                $("#mdlMotivoCancelacion").modal("hide");
+                $("#bcra_nota").val("");
             } else {
                 toastr.error(respuesta.mensaje, '¡ERROR!');
             }

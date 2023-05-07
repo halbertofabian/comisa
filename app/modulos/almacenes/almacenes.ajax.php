@@ -81,6 +81,12 @@ class AlmacenesAjax
 
         echo json_encode($res, true);
     }
+    public function ajaxAsignarAlmacenTraspaso()
+    {
+        $res = AlmacenesControlador::ctrAsignarAlmacenesTraspaso();
+
+        echo json_encode($res, true);
+    }
     public function ajaxAsignarVendedor()
     {
         $res = AlmacenesModelo::mdlAsignarVendedor($_POST);
@@ -156,6 +162,10 @@ if (isset($_POST['auto_complete_producto'])) {
 if (isset($_POST['btnAsignarAlmacen'])) {
     $asignarAlmacen = new AlmacenesAjax();
     $asignarAlmacen->ajaxAsignarAlmacen();
+}
+if (isset($_POST['btnAsignarAlmacenTraspaso'])) {
+    $asignarAlmacen = new AlmacenesAjax();
+    $asignarAlmacen->ajaxAsignarAlmacenTraspaso();
 }
 if (isset($_POST['btnAsignarVendedor'])) {
     $asignarVendedor = new AlmacenesAjax();

@@ -63,6 +63,39 @@
     </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="mdlMotivoCancelacion" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Motivo de cancelación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <input type="hidden" id="bcra_tipo">
+                            <input type="hidden" id="bcra_spds_id">
+                            <input type="hidden" id="bcra_ams_nombre">
+                            <input type="hidden" id="bcra_spds_serie_completa">
+                            <label for="bcra_nota">Motivo de cancelacion</label>
+                            <textarea class="form-control text-uppercase" name="bcra_nota" id="bcra_nota" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnQuitarProducto">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         mostrarAlmacenesByTipo();
@@ -240,7 +273,7 @@
                     datos.append('ams_nombre', ams_nombre);
                     datos.append('spds_almacen', ams_id);
                     datos.append('spds_situacion', 'TRASPASO');
-                    datos.append('btnAsignarAlmacen', true);
+                    datos.append('btnAsignarAlmacenTraspaso', true);
 
                     $.ajax({
                         type: 'POST',
@@ -273,9 +306,30 @@
         var spds_id = $(this).attr('spds_id');
         var ams_nombre = $(this).attr('ams_nombre');
         var spds_serie_completa = $(this).attr('spds_serie_completa');
+
+        $("#bcra_tipo").val(tipo);
+        $("#bcra_spds_id").val(spds_id);
+        $("#bcra_ams_nombre").val(ams_nombre);
+        $("#bcra_spds_serie_completa").val(spds_serie_completa);
+
+        $("#mdlMotivoCancelacion").modal("show");
+
+    });
+    $(document).on('click', '#btnQuitarProducto', function() {
+        var tipo = $("#bcra_tipo").val();
+        var spds_id = $("#bcra_spds_id").val();
+        var ams_nombre = $("#bcra_ams_nombre").val();
+        var spds_serie_completa = $("#bcra_spds_serie_completa").val();
+        var bcra_nota = $("#bcra_nota").val();
+
+        if(bcra_nota == ""){
+            return toastr.warning('El motivo es oblogatorio', 'ADVERTENCIA!');
+        }
+
         var datos = new FormData()
         datos.append('spds_id', spds_id);
         datos.append('ams_nombre', ams_nombre);
+        datos.append('bcra_nota', bcra_nota);
         datos.append('btnAsignarAlmacen', true);
         $.ajax({
             type: 'POST',
@@ -287,6 +341,8 @@
             success: function(res) {
                 if (res.status) {
                     if (tipo == "CV") {
+                        $("#mdlMotivoCancelacion").modal("hide");
+                        $("#bcra_nota").val("");
                         toastr.success(res.mensaje, '¡Muy bien!');
                         $("#" + spds_id).remove();
                         var numSerie = $(".serie").length;

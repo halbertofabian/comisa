@@ -170,6 +170,14 @@ class AlmacenesControlador
                             );
                         }
                         $res = AlmacenesModelo::mdlAgregarSeries($datos);
+                        $array_bcra = array(
+                            'bcra_movimiento' => 'Entrada',
+                            'bcra_fecha' => FECHA,
+                            'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                            'bcra_nota' => '',
+                            'bcra_spds_id' => $res,
+                        );
+                        $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
                     }
                 }
                 return array(
@@ -196,11 +204,20 @@ class AlmacenesControlador
             $datos = array(
                 'spds_almacen' => $_POST['spds_almacen'],
                 'spds_situacion' => $_POST['spds_situacion'],
+                'spds_ultima_mod' => FECHA,
                 'spds_id' => $_POST['spds_id'],
             );
 
             $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
             if ($res) {
+                $array_bcra = array(
+                    'bcra_movimiento' => 'Carga',
+                    'bcra_fecha' => FECHA,
+                    'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                    'bcra_nota' => 'SE REALIZÓ UN CARGAMENTO AL ALMACÉN ' . $_POST['ams_nombre'],
+                    'bcra_spds_id' => $_POST['spds_id'],
+                );
+                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
                 return array(
                     'status' => true,
                     'mensaje' => 'Se agrego el producto correctamente a ' . $_POST['ams_nombre'],
@@ -216,11 +233,81 @@ class AlmacenesControlador
             $datos = array(
                 'spds_almacen' => $ams['ams_id'],
                 'spds_situacion' => '-',
+                'spds_ultima_mod' => FECHA,
                 'spds_id' => $_POST['spds_id'],
             );
 
             $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
             if ($res) {
+                $array_bcra = array(
+                    'bcra_movimiento' => 'Entrada',
+                    'bcra_fecha' => FECHA,
+                    'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                    'bcra_nota' => strtoupper($_POST['bcra_nota']),
+                    'bcra_spds_id' => $_POST['spds_id'],
+                );
+                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Se quito el producto correctamente para ' . $_POST['ams_nombre'],
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo quitar el producto correctamente',
+                );
+            }
+        }
+    }
+    public static function ctrAsignarAlmacenesTraspaso()
+    {
+        if (isset($_POST['spds_almacen'])) {
+            $datos = array(
+                'spds_almacen' => $_POST['spds_almacen'],
+                'spds_situacion' => $_POST['spds_situacion'],
+                'spds_ultima_mod' => FECHA,
+                'spds_id' => $_POST['spds_id'],
+            );
+
+            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+            if ($res) {
+                $array_bcra = array(
+                    'bcra_movimiento' => 'Traspaso',
+                    'bcra_fecha' => FECHA,
+                    'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                    'bcra_nota' => 'SE TRASPASÓ A LA SUCURSAL ' . $_POST['ams_nombre'],
+                    'bcra_spds_id' => $_POST['spds_id'],
+                );
+                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Se agrego el producto correctamente a ' . $_POST['ams_nombre'],
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se agrego el producto correctamente',
+                );
+            }
+        } else {
+            $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+            $datos = array(
+                'spds_almacen' => $ams['ams_id'],
+                'spds_situacion' => '-',
+                'spds_ultima_mod' => FECHA,
+                'spds_id' => $_POST['spds_id'],
+            );
+
+            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+            if ($res) {
+                $array_bcra = array(
+                    'bcra_movimiento' => 'Entrada',
+                    'bcra_fecha' => FECHA,
+                    'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                    'bcra_nota' => strtoupper($_POST['bcra_nota']),
+                    'bcra_spds_id' => $_POST['spds_id'],
+                );
+                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
                 return array(
                     'status' => true,
                     'mensaje' => 'Se quito el producto correctamente para ' . $_POST['ams_nombre'],
@@ -273,11 +360,20 @@ class AlmacenesControlador
         $datos = array(
             'spds_almacen' => $ams['ams_id'],
             'spds_situacion' => $_POST['ctrs_id'],
+            'spds_ultima_mod' => FECHA,
             'spds_id' => $_POST['spds_id'],
         );
 
         $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
         if ($res) {
+            $array_bcra = array(
+                'bcra_movimiento' => 'Venta',
+                'bcra_fecha' => FECHA,
+                'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                'bcra_nota' => 'SE AGREGÓ MANUAL AL NÚMERO DE CONTRATO ' . $_POST['ctrs_id'],
+                'bcra_spds_id' => $_POST['spds_id'],
+            );
+            $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
             return array(
                 'status' => true,
                 'mensaje' => 'Se agrego el producto correctamente.',
@@ -293,16 +389,25 @@ class AlmacenesControlador
     public static function ctrQuitarProductosContrato($pds)
     {
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
-        if(isset($pds['spds_id'])){
+        if (isset($pds['spds_id'])) {
             $datos = array(
                 'spds_almacen' => $ams['ams_id'],
                 'spds_situacion' => '-',
+                'spds_ultima_mod' => FECHA,
                 'spds_id' => $pds['spds_id'],
             );
-    
+
             $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
-            
+
             if ($res) {
+                $array_bcra = array(
+                    'bcra_movimiento' => 'Cancelación',
+                    'bcra_fecha' => FECHA,
+                    'bcra_usuario' => isset($pds['usr_nombre']) ? $pds['usr_nombre'] : $_SESSION['session_usr']['usr_nombre'],
+                    'bcra_nota' => strtoupper($pds['bcra_nota']),
+                    'bcra_spds_id' => $pds['spds_id'],
+                );
+                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
                 return array(
                     'status' => true,
                     'mensaje' => 'Se quito el producto correctamente.',
@@ -313,19 +418,18 @@ class AlmacenesControlador
                     'mensaje' => 'No se pudo quitar el producto correctamente',
                 );
             }
-        }else{
+        } else {
             return array(
                 'status' => true,
                 'mensaje' => 'Se quito el producto correctamente.',
             );
         }
-       
     }
     public static function ctrMostrarAlmacenesByTipo()
     {
-        if($_POST['tipo'] == "CV"){
+        if ($_POST['tipo'] == "CV") {
             $almacenes = AlmacenesModelo::mdlMostrarAlmacenesByTipoVendedor();
-        }else{
+        } else {
             $almacenes = AppControlador::listarAlmacenesTux();
         }
         return $almacenes;
@@ -341,7 +445,7 @@ class AlmacenesControlador
                 'spds_almacen' => $ams['ams_id'],
                 'spds_situacion' => "-",
                 'spds_ultima_mod' => $spds['spds_ultima_mod'],
-                'spds_prm_id' => $spds['spds_prm_id'],
+                'spds_prm_id' => 0,
                 'spds_serie_completa' => $spds['spds_serie_completa'],
             );
         } else {
@@ -351,17 +455,17 @@ class AlmacenesControlador
                 'spds_almacen' => $ams['ams_id'],
                 'spds_situacion' => "-",
                 'spds_ultima_mod' => $spds['spds_ultima_mod'],
-                'spds_prm_id' => $spds['spds_prm_id'],
+                'spds_prm_id' => 0,
                 'spds_serie_completa' => $spds['spds_serie_completa'],
             );
         }
         $res = AlmacenesModelo::mdlAgregarSeries($datos);
-        if($res){
+        if ($res) {
             return array(
                 'status' => true,
                 'mensaje' => 'El traspaso se hizo correctamente.',
             );
-        }else{
+        } else {
             return array(
                 'status' => false,
                 'mensaje' => 'Hubo un error al hacer el traspaso.',
@@ -374,11 +478,20 @@ class AlmacenesControlador
         $datos = array(
             'spds_almacen' => $ams['ams_id'],
             'spds_situacion' => $ctr['ctr_id'],
+            'spds_ultima_mod' => FECHA,
             'spds_id' => $ctr['spds_id'],
         );
 
         $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
         if ($res) {
+            $array_bcra = array(
+                'bcra_movimiento' => 'Venta',
+                'bcra_fecha' => FECHA,
+                'bcra_usuario' => $ctr['nombre_vendedor'],
+                'bcra_nota' => 'EL NÚMERO DE CONTRATO ES ' . $ctr['ctr_id'],
+                'bcra_spds_id' => $ctr['spds_id'],
+            );
+            $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
             return array(
                 'status' => true,
                 'mensaje' => 'Se agrego el producto correctamente.',

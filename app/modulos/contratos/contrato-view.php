@@ -989,6 +989,36 @@ $validar_pagos = $abs ? true : false;
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="mdlMotivoCancelacion" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Motivo de cancelación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="hidden" id="bcra_sku">
+                                <input type="hidden" id="bcra_spds_id">
+                                <label for="bcra_nota">Motivo de cancelacion</label>
+                                <textarea class="form-control text-uppercase" name="bcra_nota" id="bcra_nota" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btnQuitarProducto2">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(".btnshowFotos").on("click", function() {
             var ctrs_id = $("#ctrs_id").val();

@@ -986,6 +986,7 @@ class ContratosControlador
                 $datos = array(
                     'ctr_id' => $ctr['ctr_id'],
                     'spds_id' => $value['spds_id'],
+                    'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
                 );
                 $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
             }

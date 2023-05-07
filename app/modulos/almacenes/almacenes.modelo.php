@@ -454,7 +454,7 @@ class AlmacenesModelo
             $pps->bindValue(6, $spds['spds_prm_id']);
             $pps->bindValue(7, $spds['spds_serie_completa']);
             $pps->execute();
-            return $pps->rowCount() > 0;
+            return $con->lastInsertId();
             // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
@@ -550,12 +550,13 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_series_producto_spds SET spds_almacen = ?, spds_situacion = ? WHERE spds_id = ?";
+            $sql = "UPDATE tbl_series_producto_spds SET spds_almacen = ?, spds_situacion = ?, spds_ultima_mod = ? WHERE spds_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $spds['spds_almacen']);
             $pps->bindValue(2, $spds['spds_situacion']);
-            $pps->bindValue(3, $spds['spds_id']);
+            $pps->bindValue(3, $spds['spds_ultima_mod']);
+            $pps->bindValue(4, $spds['spds_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -717,6 +718,29 @@ class AlmacenesModelo
             $pps->bindValue(1, $ams_nombre);
             $pps->execute();
             return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlRegistrarBitacora($bcra)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_bitacora_mercancia_bcra (bcra_movimiento,bcra_fecha,bcra_usuario,bcra_nota,bcra_spds_id) VALUES(?,?,?,?,?) ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $bcra['bcra_movimiento']);
+            $pps->bindValue(2, $bcra['bcra_fecha']);
+            $pps->bindValue(3, $bcra['bcra_usuario']);
+            $pps->bindValue(4, $bcra['bcra_nota']);
+            $pps->bindValue(5, $bcra['bcra_spds_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
