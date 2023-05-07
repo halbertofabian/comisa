@@ -77,7 +77,7 @@ class AlmacenesAjax
     }
     public function ajaxAsignarAlmacen()
     {
-        $res = AlmacenesControlador::ctrAsignarAlmacenes();
+        $res = AlmacenesControlador::ctrAsignarAlmacenes($_POST);
 
         echo json_encode($res, true);
     }

@@ -830,7 +830,7 @@ $app->get('/mostrar_almacenes_vendedor', function (Request $request, Response $r
 $app->post('/quitar_producto', function (Request $request, Response $response) {
     $json = $request->getBody();
     $datos = json_decode($json, true);
-    $res = AlmacenesControlador::ctrQuitarProductosContrato($datos);
+    $res = AlmacenesControlador::ctrAsignarAlmacenes($datos);
     $productos = AlmacenesModelo::mdlMostrarProductosByAlmacenNombre($datos['ams_nombre']);
     return json_encode(array(
         'res' => $res,

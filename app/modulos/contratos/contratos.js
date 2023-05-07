@@ -2248,10 +2248,8 @@ $(document).ready(function () {
 $(document).on("click", ".btnQuitarProducto2", function () {
     var sku = $(this).attr("sku");
     var spds_id = $(this).attr("spds_id");
-    if (spds_id != undefined) {
-        $("#bcra_spds_id").val(spds_id);
-    }
-
+    
+    $("#bcra_spds_id").val(spds_id);
     $("#bcra_sku").val(sku);
     $("#mdlMotivoCancelacion").modal('show');
 
@@ -2260,7 +2258,7 @@ $(document).on("click", "#btnQuitarProducto2", function () {
     var sku = $("#bcra_sku").val();
     var spds_id = $("#bcra_spds_id").val();
     var bcra_nota = $("#bcra_nota").val();
-    if(bcra_nota == ""){
+    if (bcra_nota == "") {
         return toastr.warning('El motivo es obligatorio', 'ADVERTENCIA!');
     }
     var datos = new FormData();

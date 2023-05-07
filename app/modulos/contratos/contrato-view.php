@@ -608,7 +608,7 @@ $validar_pagos = $abs ? true : false;
                                         <td class="serie"><?= $pds['nombreProducto'] ?></td>
                                         <td><?= $pds['sku'] ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $pds['sku'] ?>"><i class="fa fa-times"></i> Cancelar</button>
+                                            <button type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-times"></i> Cancelar</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
