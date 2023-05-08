@@ -434,8 +434,11 @@ class AlmacenesControlador
         }
         return $almacenes;
     }
-    public static function ctrTraspasoDeMercanciaSucursal($spds)
+    public static function ctrTraspasoDeMercanciaSucursal($data)
     {
+        $spds = json_decode($data[0]['producto'], true);
+        $ams_nombre = $data[0]['ams_nombre'];
+
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         $serie = AlmacenesModelo::mdlMostrarSerieByModelo($spds['spds_modelo']);
         if ($spds) {
@@ -461,6 +464,14 @@ class AlmacenesControlador
         }
         $res = AlmacenesModelo::mdlAgregarSeries($datos);
         if ($res) {
+            $array_bcra = array(
+                'bcra_movimiento' => 'Traspaso',
+                'bcra_fecha' => FECHA,
+                'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                'bcra_nota' => 'SE TRASPASÓ DE LA SUCURSAL ' . $ams_nombre,
+                'bcra_spds_id' => $res,
+            );
+            $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
             return array(
                 'status' => true,
                 'mensaje' => 'El traspaso se hizo correctamente.',

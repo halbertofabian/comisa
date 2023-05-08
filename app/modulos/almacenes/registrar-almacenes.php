@@ -139,6 +139,7 @@
     var tbody_productos = "";
 
     function mostrarProductos() {
+        var tipo = $("#tipo").val();
         var ams_id = $("#ams_id").val();
         var scl_url = $('option:selected', $("#ams_id")).attr('scl_url');
         $("#scl_url").val(scl_url);
@@ -155,15 +156,20 @@
             success: function(respuesta) {
                 if (respuesta) {
                     var traspaso = false;
+
                     tbody_productos = "";
                     respuesta.forEach(res => {
+                        var button = "";
+                        if (tipo == "CV") {
+                            button = `<button class="btn btn-danger btnQuitarProducto" spds_id="${res.spds_id}" ams_nombre="${res.ams_nombre}" spds_serie_completa="${res.spds_serie_completa}"><i class="fa fa-times"></i></button>`;
+                        }
                         tbody_productos +=
                             `
                                 <tr id="${res.spds_id}">
                                     <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
                                     <td class="serie">${res.spds_serie_completa}</td>
                                     <td>
-                                        <button class="btn btn-danger btnQuitarProducto" spds_id="${res.spds_id}" ams_nombre="${res.ams_nombre}" spds_serie_completa="${res.spds_serie_completa}"><i class="fa fa-times"></i></button>
+                                        ${button}
                                     </td>
                                 </tr>
                              `;
@@ -268,6 +274,7 @@
                         }
                     });
                 } else {
+                    var ams_sucursal_origen = '<?= $_SESSION['session_suc']['scl_nombre'] ?>';
                     var datos = new FormData()
                     datos.append('spds_id', res.spds_id);
                     datos.append('ams_nombre', ams_nombre);
@@ -284,7 +291,7 @@
                         contentType: false,
                         success: function(respuesta) {
                             if (respuesta.status) {
-                                traspasarMercancia(res, ams_nombre);
+                                traspasarMercancia(res, ams_nombre, ams_sucursal_origen);
                             } else {
                                 toastr.error(respuesta.mensaje, '¡ERROR!');
                                 $('#auto_complete_producto').val("");
@@ -322,7 +329,7 @@
         var spds_serie_completa = $("#bcra_spds_serie_completa").val();
         var bcra_nota = $("#bcra_nota").val();
 
-        if(bcra_nota == ""){
+        if (bcra_nota == "") {
             return toastr.warning('El motivo es oblogatorio', 'ADVERTENCIA!');
         }
 
@@ -373,12 +380,18 @@
         mostrarProductos();
     });
 
-    function traspasarMercancia(producto, ams_nombre) {
+    function traspasarMercancia(producto, ams_nombre, ams_sucursal_origen) {
+        var datos_array = [];
         var scl_url = $("#scl_url").val();
+        var datos = {
+            'producto': JSON.stringify(producto),
+            'ams_nombre': ams_sucursal_origen
+        };
+        datos_array.push(datos);
         $.ajax({
             type: 'POST',
             url: scl_url + 'api/public/traspaso_mercancia',
-            data: JSON.stringify(producto),
+            data: JSON.stringify(datos_array),
             dataType: 'json',
             processData: false,
             contentType: false,
@@ -391,10 +404,12 @@
                                     <td>${producto.mpds_descripcion}-${producto.mpds_modelo}</td>
                                     <td class="serie">${producto.spds_serie_completa}</td>
                                     <td>
-                                        <button class="btn btn-danger btnQuitarProducto" spds_id="${producto.spds_id}" ams_nombre="${ams_nombre}" spds_serie_completa="${producto.spds_serie_completa}"><i class="fa fa-times"></i></button>
+                                        
                                     </td>
                                 </tr>
                              `;
+
+                    // <button class="btn btn-danger btnQuitarProducto" spds_id="${producto.spds_id}" ams_nombre="${ams_nombre}" spds_serie_completa="${producto.spds_serie_completa}"><i class="fa fa-times"></i></button>
 
                     $("#tbody_productos").append(tbody_productos);
 

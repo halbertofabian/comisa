@@ -724,7 +724,7 @@ $app->get('/pre_registro_mercancia', function (Request $request, Response $respo
 $app->post('/traspaso_mercancia', function (Request $request, Response $response) {
     $json = $request->getBody();
     $data = json_decode($json, true);
-
+    
     $traspaso =  AlmacenesControlador::ctrTraspasoDeMercanciaSucursal($data);
     return json_encode($traspaso, true);
 });
