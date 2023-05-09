@@ -460,14 +460,22 @@ class ProductosControlador
             'mpds_dos_meses' => $mpds_dos_meses,
         );
 
-        $res = ProductosModelo::mdlRegistrarModelos($datos);
-        // preArray($res);
-        // return;
-        if ($res) {
-            return array(
-                'status' => true,
-                'mensaje' => 'El modelos se registro correctamente.',
+        $mpds_id = ProductosModelo::mdlRegistrarModelos($datos);
+        $fcbz = CobranzaModelo::mdlFichaActual();
+        if ($mpds_id) {
+            $datos_itr = array(
+                'itr_ii' => 0,
+                'itr_id_modelo' => $mpds_id,
+                'itr_if' => 0,
+                'itr_ficha' => $fcbz['fcbz_numero'],
             );
+            $itr = AlmacenesModelo::mdlRegistrarInventario($datos_itr);
+            if($itr){
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El modelos se registro correctamente.',
+                );
+            }
         } else {
             return array(
                 'status' => false,

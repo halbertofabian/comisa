@@ -139,7 +139,13 @@ class AlmacenesControlador
             if ($res) {
                 AlmacenesModelo::mdlActualizarCodigoPreRegistro($prm_id);
                 foreach ($dprm as $key => $value) {
-
+                    $pvs = ProductosModelo::mdlMostrarModelosById($value['dprm_mpds_id']);
+                    $datos_itr = array(
+                        'itr_id_modelo' => $pvs['mpds_id'],
+                        'pvs_clave' => $pvs['pvs_clave'],
+                        'cantidad' => $value['dprm_cantidad'],
+                    );
+                    $itr = AlmacenesModelo::mdlActualizarInventarioProveedor($datos_itr);
                     for ($i = 1; $i <= $value['dprm_cantidad']; $i++) {
                         $mpds = ProductosModelo::mdlMostrarModelosById($value['dprm_mpds_id']);
 
@@ -279,6 +285,7 @@ class AlmacenesControlador
                     'bcra_spds_id' => $_POST['spds_id'],
                 );
                 $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                $itr = AlmacenesControlador::ctrActualizarInventario("itr_traslado_2", $_POST['spds_id']);
                 return array(
                     'status' => true,
                     'mensaje' => 'Se agrego el producto correctamente a ' . $_POST['ams_nombre'],
@@ -374,6 +381,7 @@ class AlmacenesControlador
                 'bcra_spds_id' => $_POST['spds_id'],
             );
             $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+            $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $_POST['spds_id']);
             return array(
                 'status' => true,
                 'mensaje' => 'Se agrego el producto correctamente.',
@@ -408,6 +416,7 @@ class AlmacenesControlador
                     'bcra_spds_id' => $pds['spds_id'],
                 );
                 $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                $itr = AlmacenesControlador::ctrActualizarInventario("itr_devoluciones", $_POST['spds_id']);
                 return array(
                     'status' => true,
                     'mensaje' => 'Se quito el producto correctamente.',
@@ -441,10 +450,10 @@ class AlmacenesControlador
 
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         $serie = AlmacenesModelo::mdlMostrarSerieByModelo($spds['spds_modelo']);
-        if ($spds) {
+        if ($serie) {
             $datos = array(
                 'spds_modelo' => $spds['spds_modelo'],
-                'spds_serie' => intval($serie['spds_serie']) + 1,
+                'spds_serie' => (intval($serie['spds_serie']) + 1),
                 'spds_almacen' => $ams['ams_id'],
                 'spds_situacion' => "-",
                 'spds_ultima_mod' => $spds['spds_ultima_mod'],
@@ -472,6 +481,7 @@ class AlmacenesControlador
                 'bcra_spds_id' => $res,
             );
             $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+            $itr = AlmacenesControlador::ctrActualizarInventario("itr_traslado_1", $res);
             return array(
                 'status' => true,
                 'mensaje' => 'El traspaso se hizo correctamente.',
@@ -513,5 +523,11 @@ class AlmacenesControlador
                 'mensaje' => 'No se agrego el producto correctamente',
             );
         }
+    }
+
+    public static function ctrActualizarInventario($campo, $spds_id)
+    {
+        $spds = AlmacenesModelo::mdlMostrarSeriesById($spds_id);
+        $itr = AlmacenesModelo::mdlActualizarInventario($campo, $spds['spds_modelo']);
     }
 }

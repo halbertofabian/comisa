@@ -155,7 +155,7 @@ class AlmacenesModelo
         }
     }
 
-    public static function mdlSumarCantidadesSku($pds_sku,$pds_stok)
+    public static function mdlSumarCantidadesSku($pds_sku, $pds_stok)
     {
         try {
             //code...
@@ -409,7 +409,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id WHERE spds.spds_id = ?";
+            $sql = "SELECT spds.spds_id, spds.spds_modelo, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id WHERE spds.spds_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $spds_id);
@@ -749,4 +749,64 @@ class AlmacenesModelo
         }
     }
 
+    //REGISTRAR INVENTARIO
+    public static function mdlRegistrarInventario($itr)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_inventario_itr (itr_ii,itr_id_modelo,itr_if,itr_ficha) VALUES(?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr['itr_ii']);
+            $pps->bindValue(2, $itr['itr_id_modelo']);
+            $pps->bindValue(3, $itr['itr_if']);
+            $pps->bindValue(4, $itr['itr_ficha']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarInventarioProveedor($itr)
+    {
+        try {
+            //code...
+            $pvs_clave = $itr['pvs_clave'];
+            $cantidad = $itr['cantidad'];
+            $sql = "UPDATE tbl_inventario_itr SET $pvs_clave = $pvs_clave + $cantidad WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr['itr_id_modelo']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarInventario($campo, $itr_id_modelo)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET $campo = $campo + 1 WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id_modelo);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

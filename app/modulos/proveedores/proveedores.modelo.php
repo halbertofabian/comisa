@@ -52,12 +52,12 @@ class ProveedoresModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_proveedores_pvs";
+            $sql = "SELECT * FROM tbl_proveedores_pvs WHERE pvs_status = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
             
-            return $pps->fetchAll();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -74,7 +74,7 @@ class ProveedoresModelo
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $pvs_nombre);
             $pps->execute();
-            return $pps->fetch();
+            return $pps->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -86,12 +86,12 @@ class ProveedoresModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_proveedores_pvs WHERE pvs_id  = ?";
+            $sql = "SELECT * FROM tbl_proveedores_pvs WHERE pvs_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $pvs_id );
             $pps->execute();
-            return $pps->fetch();
+            return $pps->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {

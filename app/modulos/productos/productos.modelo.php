@@ -433,7 +433,7 @@ class ProductosModelo
             $pps->bindValue(9, $mpds['mpds_un_mes']);
             $pps->bindValue(10, $mpds['mpds_dos_meses']);
             $pps->execute();
-            return $pps->rowCount() > 0;
+            return $con->lastInsertId();
             // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
@@ -495,12 +495,12 @@ class ProductosModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_modelos_productos_mpds WHERE mpds_id = ? AND mpds_status = 1";
+            $sql = "SELECT mpds.*, pvs.* FROM tbl_modelos_productos_mpds mpds JOIN tbl_proveedores_pvs pvs ON mpds.mpds_proveedor = pvs.pvs_id WHERE mpds.mpds_id = ? AND mpds.mpds_status = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $mpds_id);
             $pps->execute();
-            return $pps->fetch();
+            return $pps->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {

@@ -989,6 +989,7 @@ class ContratosControlador
                     'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
                 );
                 $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
+                $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
             }
 
             if ($subir) {

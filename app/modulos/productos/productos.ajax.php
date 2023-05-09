@@ -18,6 +18,12 @@ require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/proveedores/proveedores.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/proveedores/proveedores.controlador.php';
 
+require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.controlador.php';
+
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
