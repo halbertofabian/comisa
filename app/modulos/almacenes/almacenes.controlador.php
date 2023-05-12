@@ -528,6 +528,45 @@ class AlmacenesControlador
     public static function ctrActualizarInventario($campo, $spds_id)
     {
         $spds = AlmacenesModelo::mdlMostrarSeriesById($spds_id);
-        $itr = AlmacenesModelo::mdlActualizarInventario($campo, $spds['spds_modelo']);
+        $itr_id = AlmacenesModelo::mdlActualizarInventario($campo, $spds['spds_modelo']);
+        $itr = AlmacenesModelo::mdlMostrarInventarioByModelo($spds['spds_modelo']);
+        $pvs = ProductosModelo::mdlMostrarModelosById($itr['itr_id_modelo']);
+        $campo = AlmacenesModelo::mdlMostrarInventarioByProveedor($pvs['pvs_clave'], $itr['itr_id_modelo']);
+        if ($campo['clave'] > 0) {
+            $itr_if_usr = $campo['clave'] - $itr['itr_ventas'] + $itr['itr_traslado_2'] + $itr['itr_devoluciones'] + $itr['itr_traslado_1'];
+        } else {
+            $itr_if_usr = $itr['itr_ii'] - $itr['itr_ventas'] + $itr['itr_traslado_2'] + $itr['itr_devoluciones'] + $itr['itr_traslado_1'];
+        }
+        $res = AlmacenesModelo::mdlActualizarInventarioFinal($itr_if_usr, $itr['itr_id']);
+    }
+
+    public static function ctrCerrarInventario()
+    {
+        $fcbz = CobranzaModelo::mdlFichaActual();
+        $itr = AlmacenesModelo::mdlFichaActualInventario();
+        if ($itr['itr_ficha'] == $fcbz['fcbz_numero']) {
+            return array(
+                'status' => false,
+                'mensaje' => 'No se puede cerrar el invetario hasta terminar la ficha #' . $fcbz['fcbz_numero'],
+            );
+        } else {
+            $inventario = AlmacenesModelo::mdlMostrarInventario();
+            foreach ($inventario as $key => $itr) {
+                # code...
+                $datos_itr = array(
+                    'itr_ii' => $itr['itr_if_usr'],
+                    'itr_id_modelo' => $itr['itr_id_modelo'],
+                    'itr_if' => 0,
+                    'itr_ficha' => $fcbz['fcbz_numero'],
+                );
+                $itr_res = AlmacenesModelo::mdlRegistrarInventario($datos_itr);
+                $itr_estado = AlmacenesModelo::mdlActualizarEstadoInventario($itr['itr_id']);
+            }
+
+            return array(
+                'status' => true,
+                'mensaje' => 'El inventario se cerro correctamente.'
+            );
+        }
     }
 }

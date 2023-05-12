@@ -21,6 +21,9 @@ require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.controlador.php';
 
+require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.controlador.php';
+
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
@@ -120,6 +123,16 @@ class AlmacenesAjax
 
         echo json_encode($res, true);
     }
+    public function ajaxAgregarInventarioFinal()
+    {
+        $res = AlmacenesModelo::mdlActualizarInventarioFinalUSR($_POST);
+        echo json_encode($res, true);
+    }
+    public function ajaxCerrarInventario()
+    {
+        $res = AlmacenesControlador::ctrCerrarInventario();
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -190,4 +203,12 @@ if (isset($_POST['btnQuitarProductoContrato'])) {
 if (isset($_POST['btnMostrarAlmacenesByTipo'])) {
     $mostrarAlmacenesTipo = new AlmacenesAjax();
     $mostrarAlmacenesTipo->ajaxMostrarAlmacenesByTipo();
+}
+if (isset($_POST['btnAgregarInventario'])) {
+    $agregarInventarioFinal = new AlmacenesAjax();
+    $agregarInventarioFinal->ajaxAgregarInventarioFinal();
+}
+if (isset($_POST['btnCerrarInventario'])) {
+    $cerarInventario = new AlmacenesAjax();
+    $cerarInventario->ajaxCerrarInventario();
 }

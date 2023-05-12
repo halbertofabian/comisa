@@ -16,6 +16,9 @@ elseif (isset($rutas[1]) && $rutas[1] == 'listar-mercancia') :
 elseif (isset($rutas[1]) && $rutas[1] == 'registrar-almacenes') :
     cargarComponente('breadcrumb', '', 'Registro de almacenes');
     cargarview2('almacenes/registrar-almacenes', $rutas);
+elseif (isset($rutas[1]) && $rutas[1] == 'listar-inventario') :
+    cargarComponente('breadcrumb', '', 'Lista de inventario');
+    cargarview2('almacenes/listar-inventario', $rutas);
 else :
     cargarComponente('breadcrumb', '', 'Gestión de almacenes');
 ?>

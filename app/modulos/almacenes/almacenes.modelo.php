@@ -809,4 +809,132 @@ class AlmacenesModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarInventarioByModelo($itr_id_modelo)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_inventario_itr WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id_modelo);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarInventarioByProveedor($campo, $itr_id_modelo)
+    {
+        try {
+            //code...
+            $sql = "SELECT $campo AS clave FROM tbl_inventario_itr WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id_modelo);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarInventarioFinal($itr_if_usr, $itr_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET itr_if = ? WHERE itr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_if_usr);
+            $pps->bindValue(2, $itr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarInventario()
+    {
+        try {
+            //code...
+            $sql = "SELECT itr.*, mpds.* FROM tbl_inventario_itr itr JOIN tbl_modelos_productos_mpds mpds ON itr.itr_id_modelo = mpds.mpds_id WHERE itr.itr_estado = 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarInventarioFinalUSR($itr)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET itr_if_usr = ? WHERE itr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr['itr_if_usr']);
+            $pps->bindValue(2, $itr['itr_id']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlFichaActualInventario()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_inventario_itr WHERE itr_estado = 'PENDIENTE' ORDER BY itr_id DESC LIMIT 1;";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlActualizarEstadoInventario($itr_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET itr_estado = 'CERRADO' WHERE itr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

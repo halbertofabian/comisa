@@ -1492,6 +1492,11 @@ class AppControlador
                             'label' => 'Registrar nuevo almacen',
                             'href' => 'almacenes'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Lista de inventario',
+                            'href' => 'almacenes/listar-inventario'
+                        ],
                         // [
                         //     'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                         //     'label' => 'Nuevo producto',
