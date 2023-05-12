@@ -48,7 +48,7 @@
         var itr_if_usr = $("#itr_if_usr" + itr_id).val();
 
         if (itr_if_usr == "" || itr_if_usr < 0) {
-            return toastr.warning('El inventario no puede ser menor a 0', 'ADVERTENCIA!');
+            return toastr.warning('El inventario no puede estar vacio o ser menor a 0', 'ADVERTENCIA!');
         }
         var datos = new FormData()
         datos.append('itr_id', itr_id);
@@ -84,7 +84,7 @@
             var mpds_descripcion = $(this).attr('mpds_descripcion');
             if (value === '') {
                 isValid = false;
-                toastr.warning('El inventario para ' + mpds_descripcion + ' esta vacio.', 'ADVERTENCIA!');
+                toastr.warning('El inventario final para ' + mpds_descripcion + ' esta vacio.', 'ADVERTENCIA!');
                 return false;
             }
         });
