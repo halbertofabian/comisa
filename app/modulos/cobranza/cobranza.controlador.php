@@ -54,6 +54,9 @@ class CobranzaControlador
                 return array(
                     'status' => false,
                     'mensaje' => '¡El usuario ' . $usrLogin['usr_nombre'] . ' ya se encuentra vinculado a otro dispositivo!',
+                    'usr' => $usrLogin,
+                    'scl' => $sucursal,
+                    'scl_url_access' => HTTP_HOST
                 );
             } else {
                 $dispositivo = UsuariosModelo::mdlActualizarDispositivo($usrLogin['usr_id']);
