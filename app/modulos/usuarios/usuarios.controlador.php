@@ -611,6 +611,24 @@ class UsuariosControlador
             );
         }
     }
+    public static function ctrValidarCodigoSeguimiento($usr_id, $usr_codigo_seguimiento)
+    {
+        $usr = UsuariosModelo::mdlConsultarCodigoDescarga($usr_id);
+        if ($usr['usr_codigo_seguimiento'] == $usr_codigo_seguimiento) {
+            $res = UsuariosModelo::mdlGenerarCodigoSeguimiento($usr_id, "");
+            if ($res) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El codigo ingresado es correcto.'
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'El codigo ingresado es incorrecto.'
+            );
+        }
+    }
 
     public static function ctrGenerarCodigoFinalizarCbza($usr_id)
     {

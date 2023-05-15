@@ -50,7 +50,13 @@ class CobranzaControlador
                     'scl' => $sucursal,
                     'scl_url_access' => HTTP_HOST
                 );
+            } elseif($usrLogin['usr_dispositivo'] == 1){
+                return array(
+                    'status' => false,
+                    'mensaje' => '¡El usuario ' . $usrLogin['usr_nombre'] . ' ya se encuentra vinculado a otro dispositivo!',
+                );
             } else {
+                $dispositivo = UsuariosModelo::mdlActualizarDispositivo($usrLogin['usr_id']);
                 return array(
                     'status' => true,
                     'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', bienvenido a la app de comisa cobranza!',

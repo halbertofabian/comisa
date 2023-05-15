@@ -542,7 +542,7 @@ class UsuariosModelo
     public static function mdlLoginCobranza($usr)
     {
         try {
-            $sql = "SELECT usr_id,usr_matricula,usr_ruta,usr_nombre,usr_app,usr_apm,usr_telefono,usr_correo,usr_clave,usr_rol,usr_firma,usr_caja FROM tbl_usuarios_usr WHERE usr_id = ? OR usr_matricula = ? OR usr_telefono = ? OR  usr_correo = ? ";
+            $sql = "SELECT usr_id,usr_matricula,usr_ruta,usr_nombre,usr_app,usr_apm,usr_telefono,usr_correo,usr_clave,usr_rol,usr_firma,usr_caja, usr_dispositivo FROM tbl_usuarios_usr WHERE usr_id = ? OR usr_matricula = ? OR usr_telefono = ? OR  usr_correo = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $usr['usr_id']);
@@ -608,6 +608,22 @@ class UsuariosModelo
             return false;
         }
     }
+    public static function mdlGenerarCodigoSeguimiento($usr_id, $usr_codigo_seguimiento)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_usuarios_usr SET usr_codigo_seguimiento = ? WHERE usr_id= ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_codigo_seguimiento);
+            $pps->bindValue(2, $usr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        }
+    }
     public static function mdlConsultarCodigoDescarga($usr_id)
     {
         try {
@@ -665,6 +681,22 @@ class UsuariosModelo
         } finally {
             $pps = null;
             $con = null;
+        }
+    }
+
+    public static function mdlActualizarDispositivo($usr_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_usuarios_usr SET usr_dispositivo = 1 WHERE usr_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
         }
     }
 }

@@ -652,6 +652,23 @@ $app->get('/validar_cobranza_descarga/{usr_id}/{usr_codigo_descarga}', function 
         ), true);
     }
 });
+$app->get('/validar_codigo_seguimiento/{usr_id}/{usr_codigo_seguimiento}', function (Request $request, Response $response, array $args) {
+    $usr_id =  $args['usr_id'];
+    $usr_codigo_seguimiento =  $args['usr_codigo_seguimiento'];
+    $res = UsuariosControlador::ctrValidarCodigoSeguimiento($usr_id, $usr_codigo_seguimiento);
+    if ($res['status']) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => $res['mensaje'],
+            'fecha' => FECHA_ACTUAL
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => $res['mensaje']
+        ), true);
+    }
+});
 
 $app->get('/autorizar_terminar_cobranza_codigo/{usr_id}', function (Request $request, Response $response, array $args) {
     $usr_id =  $args['usr_id'];
@@ -724,7 +741,7 @@ $app->get('/pre_registro_mercancia', function (Request $request, Response $respo
 $app->post('/traspaso_mercancia', function (Request $request, Response $response) {
     $json = $request->getBody();
     $data = json_decode($json, true);
-    
+
     $traspaso =  AlmacenesControlador::ctrTraspasoDeMercanciaSucursal($data);
     return json_encode($traspaso, true);
 });
@@ -796,7 +813,7 @@ $app->post('/asignar_mercancia', function (Request $request, Response $response)
                 'bcra_movimiento' => 'Carga',
                 'bcra_fecha' => FECHA,
                 'bcra_usuario' => $datos['usr_nombre'],
-                'bcra_nota' => 'SE REALIZÓ UN CARGAMENTO AL ALMACÉN '. $datos['ams_nombre'],
+                'bcra_nota' => 'SE REALIZÓ UN CARGAMENTO AL ALMACÉN ' . $datos['ams_nombre'],
                 'bcra_spds_id' => $spds['spds_id'],
             );
             $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
@@ -846,6 +863,18 @@ $app->post('/generar_reporte_mercancia', function (Request $request, Response $r
     return json_encode(array(
         'url_reporte' => $url_reporte,
     ), true);
+});
+
+
+
+//API PARA GENERAR LOS CODIGOS DE SEGUIMIENTO
+
+$app->get('/generar_codigos_seguimiento', function (Request $request, Response $response, array $args) {
+    $usuarios = UsuariosModelo::mdlMostrarUsuarios("", 'Cobrador');
+    foreach ($usuarios as $key => $usr) {
+        $usr_codigo_seguimiento = rand(10000, 99999);
+        $res = UsuariosModelo::mdlGenerarCodigoSeguimiento($usr['usr_id'], $usr_codigo_seguimiento);
+    }
 });
 
 $app->run();
