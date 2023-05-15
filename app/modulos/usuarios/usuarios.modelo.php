@@ -637,6 +637,19 @@ class UsuariosModelo
             //throw $th;
         }
     }
+    public static function mdlConsultarCodigoSeguimiento($usr_id)
+    {
+        try {
+            $sql = "SELECT usr_codigo_seguimiento FROM tbl_usuarios_usr WHERE usr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $usr_id);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        }
+    }
     public static function mdlGenerarCodigoFinalizarCbza($usr_id, $usr_codigo_descarga)
     {
         try {
