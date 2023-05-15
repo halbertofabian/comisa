@@ -613,7 +613,7 @@ class UsuariosControlador
     }
     public static function ctrValidarCodigoSeguimiento($usr_id, $usr_codigo_seguimiento)
     {
-        $usr = UsuariosModelo::mdlConsultarCodigoDescarga($usr_id);
+        $usr = UsuariosModelo::mdlConsultarCodigoSeguimiento($usr_id);
         if ($usr['usr_codigo_seguimiento'] == $usr_codigo_seguimiento) {
             $res = UsuariosModelo::mdlGenerarCodigoSeguimiento($usr_id, "");
             if ($res) {
