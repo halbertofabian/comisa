@@ -6,6 +6,13 @@ $ctr = ContratosModelo::mdlMostrarContratosById($rutas[2]);
 $cra = CobranzaModelo::mdlConsultarEstadoCuenta2($ctr['ctr_id']);
 $abs = CobranzaModelo::mdlConsultarEstadoCuenta3($cra['cra_id']);
 $validar_pagos = $abs ? true : false;
+
+$telefonos = "";
+if (is_array(json_decode($ctr['clts_telefono'], true))) {
+    $telefonos = json_decode($ctr['clts_telefono'], true);
+} else {
+    $telefonos = $ctr['clts_telefono'];
+}
 ?>
 
 <form id="formUpdateCtr">
@@ -94,10 +101,31 @@ $validar_pagos = $abs ? true : false;
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="clts_telefono">TELEFONO:</label>
-                        <input type="text" name="clts_telefono" id="clts_telefono" class="form-control  phone_mx" value="<?= $ctr['clts_telefono'] ?>">
-                    </div>
+                    <?php if (is_array($telefonos)) : ?>
+                        <div class="form-group">
+                            <label for="">TELEFONO:</label>
+                            <input type="hidden" name="clts_telefono" id="clts_telefono" value='<?= $ctr['clts_telefono'] ?>'>
+                            <select class="form-control" name="" id="ctr_telefonos">
+                                <?php
+                                foreach ($telefonos as $key => $tel) :
+                                ?>
+                                    <option value="<?= $tel['telefono'] ?>"><?= $tel['nombre'] . '-' . $tel['telefono'] ?> </option>
+                                <?php endforeach; ?>
+                                <option value="A">AGREGAR</option>
+                            </select>
+                            <div class="input-group mt-1 ctr_telefono_nuevo d-none">
+                                <input type="text" class="form-control" placeholder="Escriba el telefono" id="ctr_telefono_nuevo">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" id="btnAgregarTelefono" type="button">Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <div class="form-group">
+                            <label for="clts_telefono">TELEFONO:</label>
+                            <input type="text" name="clts_telefono" id="clts_telefono" class="form-control" value="<?= $telefonos ?>">
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
@@ -1263,4 +1291,48 @@ $validar_pagos = $abs ? true : false;
         });
 
     })
+
+    $('#ctr_telefonos').on('change', function() {
+        var telefono = $(this).val();
+        if (telefono == "A") {
+            $('.ctr_telefono_nuevo').removeClass('d-none');
+            $('#ctr_telefono_nuevo').focus();
+        } else {
+            $('.ctr_telefono_nuevo').addClass('d-none');
+        }
+    });
+    $('#btnAgregarTelefono').on('click', function() {
+        var telefono = $('#ctr_telefono_nuevo').val();
+        if (telefono == "") {
+            return toastr.warning('El telefono es obligatorio', 'ADVERTENCIA!');
+        } else {
+            var clts_telefono = $("#clts_telefono").val();
+            var array_telefonos = JSON.parse(clts_telefono);
+
+            var longitudAntes = array_telefonos.length;
+
+            var datos = {
+                'nombre': '',
+                'telefono': telefono
+            };
+            array_telefonos.push(datos);
+
+            var longitudDespues = array_telefonos.length;
+
+            if (longitudDespues > longitudAntes) {
+                $("#clts_telefono").val(JSON.stringify(array_telefonos));
+                swal({
+                    title: '¡Bien!',
+                    text: 'El telefono se agrego correctamente, para guardarlo en el sistema por favor de en el boton de guardar',
+                    type: 'success',
+                    icon: 'success'
+                }).then(function() {
+                    $('#ctr_telefono_nuevo').val('');
+                    $('.ctr_telefono_nuevo').addClass('d-none');
+                });
+            } else {
+                console.log("Error al agregar el teléfono");
+            }
+        }
+    });
 </script>
