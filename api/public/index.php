@@ -26,6 +26,10 @@ require_once '../../app/modulos/almacenes/almacenes.modelo.php';
 require_once '../../app/modulos/productos/productos.controlador.php';
 require_once '../../app/modulos/productos/productos.modelo.php';
 
+require_once '../../app/modulos/configuracion/configuracion.controlador.php';
+require_once '../../app/modulos/configuracion/configuracion.modelo.php';
+
+
 
 
 
