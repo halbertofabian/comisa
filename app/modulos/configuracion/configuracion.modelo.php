@@ -102,4 +102,21 @@ class ConfiguracionModelo
             $con = null;
         }
     }
+    public static function mdlMostrarUltimaActualizacionApp($app_nombre)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_aplicaciones_app WHERE app_nombre = ? ORDER BY app_id DESC LIMIT 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $app_nombre);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

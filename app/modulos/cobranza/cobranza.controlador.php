@@ -31,6 +31,20 @@ class CobranzaControlador
 
     public static function  ctrLoginCobrador($usr)
     {
+        if (isset($usr['version_app'])) {
+            $app = ConfiguracionModelo::mdlMostrarUltimaActualizacionApp('COMISA COBRANZA');
+            if($app['app_version'] != $usr['version_app']){
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
+            );
+        }
 
         $usrLogin = UsuariosModelo::mdlLoginCobranza($usr);
 
@@ -50,7 +64,7 @@ class CobranzaControlador
                     'scl' => $sucursal,
                     'scl_url_access' => HTTP_HOST
                 );
-            } elseif($usrLogin['usr_dispositivo'] == 1){
+            } elseif ($usrLogin['usr_dispositivo'] == 1) {
                 return array(
                     'status' => false,
                     'mensaje' => '¡El usuario ' . $usrLogin['usr_nombre'] . ' ya se encuentra vinculado a otro dispositivo!',
@@ -1950,7 +1964,6 @@ class CobranzaControlador
                     'scl' => $sucursal,
                     'scl_url_access' => HTTP_HOST
                 );
-                
             }
         }
     }
