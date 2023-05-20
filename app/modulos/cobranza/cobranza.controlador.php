@@ -31,20 +31,20 @@ class CobranzaControlador
 
     public static function  ctrLoginCobrador($usr)
     {
-        if (isset($usr['version_app'])) {
-            $app = ConfiguracionModelo::mdlMostrarUltimaActualizacionApp('COMISA COBRANZA');
-            if($app['app_version'] != $usr['version_app']){
-                return array(
-                    'status' => false,
-                    'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
-                );
-            }
-        } else {
-            return array(
-                'status' => false,
-                'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
-            );
-        }
+        // if (isset($usr['version_app'])) {
+        //     $app = ConfiguracionModelo::mdlMostrarUltimaActualizacionApp('COMISA COBRANZA');
+        //     if($app['app_version'] != $usr['version_app']){
+        //         return array(
+        //             'status' => false,
+        //             'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
+        //         );
+        //     }
+        // } else {
+        //     return array(
+        //         'status' => false,
+        //         'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
+        //     );
+        // }
 
         $usrLogin = UsuariosModelo::mdlLoginCobranza($usr);
 
