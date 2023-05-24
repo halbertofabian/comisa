@@ -47,7 +47,9 @@ class CobranzaControlador
         // }
 
         $usrLog = UsuariosModelo::mdlLoginCobranza($usr);
-        $dispositivo = UsuariosModelo::mdlActualizarDispositivo($usrLog['usr_id'], $usr['deviceId']);
+        if ($usrLog['usr_dispositivo'] == "" || $usrLog['usr_dispositivo'] == NULL) {
+            $dispositivo = UsuariosModelo::mdlActualizarDispositivo($usrLog['usr_id'], $usr['deviceId']);
+        }
         $usrLogin = UsuariosModelo::mdlLoginCobranza($usr);
 
         if (!$usrLogin  || !password_verify($usr['usr_clave'], $usrLogin['usr_clave'])) {
