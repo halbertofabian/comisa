@@ -46,6 +46,8 @@ class CobranzaControlador
         //     );
         // }
 
+        $usrLog = UsuariosModelo::mdlLoginCobranza($usr);
+        $dispositivo = UsuariosModelo::mdlActualizarDispositivo($usrLog['usr_id'], $usr['deviceId']);
         $usrLogin = UsuariosModelo::mdlLoginCobranza($usr);
 
         if (!$usrLogin  || !password_verify($usr['usr_clave'], $usrLogin['usr_clave'])) {
@@ -64,7 +66,7 @@ class CobranzaControlador
                     'scl' => $sucursal,
                     'scl_url_access' => HTTP_HOST
                 );
-            } elseif ($usrLogin['usr_dispositivo'] == 1) {
+            } elseif ($usrLogin['usr_dispositivo'] !== $usr['deviceId']) {
                 return array(
                     'status' => false,
                     'mensaje' => '¡El usuario ' . $usrLogin['usr_nombre'] . ' ya se encuentra vinculado a otro dispositivo!',
@@ -73,7 +75,6 @@ class CobranzaControlador
                     'scl_url_access' => HTTP_HOST
                 );
             } else {
-                $dispositivo = UsuariosModelo::mdlActualizarDispositivo($usrLogin['usr_id']);
                 return array(
                     'status' => true,
                     'mensaje' => '¡' . $usrLogin['usr_nombre'] . ', bienvenido a la app de comisa cobranza!',

@@ -697,14 +697,15 @@ class UsuariosModelo
         }
     }
 
-    public static function mdlActualizarDispositivo($usr_id)
+    public static function mdlActualizarDispositivo($usr_id, $deviceId)
     {
         try {
             //code...
-            $sql = "UPDATE tbl_usuarios_usr SET usr_dispositivo = 1 WHERE usr_id = ? ";
+            $sql = "UPDATE tbl_usuarios_usr SET usr_dispositivo = ? WHERE usr_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $usr_id);
+            $pps->bindValue(1, $deviceId);
+            $pps->bindValue(2, $usr_id);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
