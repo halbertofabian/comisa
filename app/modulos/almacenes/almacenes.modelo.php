@@ -845,14 +845,14 @@ class AlmacenesModelo
         }
     }
 
-    public static function mdlActualizarInventarioFinal($itr_if_usr, $itr_id)
+    public static function mdlActualizarInventarioFinal($itr_if, $itr_id)
     {
         try {
             //code...
             $sql = "UPDATE tbl_inventario_itr SET itr_if = ? WHERE itr_id = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-            $pps->bindValue(1, $itr_if_usr);
+            $pps->bindValue(1, $itr_if);
             $pps->bindValue(2, $itr_id);
             $pps->execute();
             return $pps->rowCount() > 0;
