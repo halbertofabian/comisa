@@ -4,7 +4,7 @@
             <input type="hidden" id="sucursal" value="<?= SUCURSAL ?>">
             <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlImportarModelos"><i class="fa fa-file-excel-o"></i> Importar</button> -->
             <button type="button" class="btn btn-light" id="btnDescargarModelos"><i class="fa fa-download"></i> Descargar</button>
-            <?php if (SUCURSAL == '01') : ?>
+            <?php if (SUCURSAL == '01' || SUCURSAL == '04') : ?>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlAgregarModelos"><i class="fa fa-plus"></i> Agregar</button>
             <?php endif; ?>
         </div>
