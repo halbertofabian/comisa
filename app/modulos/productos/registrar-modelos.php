@@ -45,8 +45,10 @@
                         <td><?= number_format($mpds['mpds_dos_meses']) ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="">
-                                <button type="button" class="btn btn-warning btnEditarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-edit"></i></button>
-                                <!-- <button type="button" class="btn btn-danger btnEliminarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-trash"></i></button> -->
+                                <?php if (SUCURSAL == '01' || SUCURSAL == '04') : ?>
+                                    <button type="button" class="btn btn-warning btnEditarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-edit"></i></button>
+                                    <!-- <button type="button" class="btn btn-danger btnEliminarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-trash"></i></button> -->
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
