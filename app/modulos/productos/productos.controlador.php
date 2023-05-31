@@ -483,21 +483,21 @@ class ProductosControlador
             );
         }
     }
-    public static function ctrActualizarModelos()
+    public static function ctrActualizarModelos($res_mpds)
     {
-        $mpds_id = $_POST['mpds_id'];
-        $mpds_suc = $_POST['mpds_suc'];
-        $mpds_modelo_copy = trim($_POST['mpds_modelo_copy']);
-        $mpds_modelo = trim($_POST['mpds_modelo']);
-        $mpds_descripcion_copy = mb_strtoupper(trim($_POST['mpds_descripcion_copy']));
-        $mpds_descripcion = mb_strtoupper(trim($_POST['mpds_descripcion']));
-        $mpds_proveedor = $_POST['mpds_proveedor'];
-        $mpds_credito = dnum($_POST['mpds_credito']);
-        $mpds_enganche = dnum($_POST['mpds_enganche']);
-        $mpds_pago_semanal = dnum($_POST['mpds_pago_semanal']);
-        $mpds_contado = dnum($_POST['mpds_contado']);
-        $mpds_un_mes = dnum($_POST['mpds_un_mes']);
-        $mpds_dos_meses = dnum($_POST['mpds_dos_meses']);
+        $mpds_id = $res_mpds['mpds_id'];
+        $mpds_suc = SUCURSAL;
+        $mpds_modelo_copy = trim($res_mpds['mpds_modelo_copy']);
+        $mpds_modelo = trim($res_mpds['mpds_modelo']);
+        $mpds_descripcion_copy = mb_strtoupper(trim($res_mpds['mpds_descripcion_copy']));
+        $mpds_descripcion = mb_strtoupper(trim($res_mpds['mpds_descripcion']));
+        $mpds_proveedor = $res_mpds['mpds_proveedor'];
+        $mpds_credito = dnum($res_mpds['mpds_credito']);
+        $mpds_enganche = dnum($res_mpds['mpds_enganche']);
+        $mpds_pago_semanal = dnum($res_mpds['mpds_pago_semanal']);
+        $mpds_contado = dnum($res_mpds['mpds_contado']);
+        $mpds_un_mes = dnum($res_mpds['mpds_un_mes']);
+        $mpds_dos_meses = dnum($res_mpds['mpds_dos_meses']);
 
         if ($mpds_modelo_copy != $mpds_modelo) {
             $modelo = ProductosModelo::mdlMostrarModelosByModelo($mpds_modelo);

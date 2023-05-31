@@ -46,7 +46,7 @@
                         <td>
                             <div class="btn-group" role="group" aria-label="">
                                 <button type="button" class="btn btn-warning btnEditarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-edit"></i></button>
-                                <button type="button" class="btn btn-danger btnEliminarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-trash"></i></button>
+                                <!-- <button type="button" class="btn btn-danger btnEliminarModelo" mpds_id="<?= $mpds['mpds_id'] ?>"><i class="fa fa-trash"></i></button> -->
                             </div>
                         </td>
                     </tr>
@@ -455,36 +455,72 @@
         e.preventDefault();
         var datos = new FormData(this)
         datos.append('btnEditarModelos', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/productos/productos.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.status) {
-                    swal({
-                        title: '¡Bien!',
-                        text: res.mensaje,
-                        type: 'success',
-                        icon: 'success'
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else {
-                    swal({
-                        title: 'Error',
-                        text: res.mensaje,
-                        icon: 'error',
-                        buttons: [false, 'Intentar de nuevo'],
-                        dangerMode: true,
-                    }).then((willDelete) => {
-                        if (willDelete) {} else {}
-                    })
-                }
+        if ($("#sucursal").val() == '01') {
+            for (var i = 0; i < URLS_MATRIZ.length; i++) {
+                var url_api = URLS_MATRIZ[i];
+                $.ajax({
+                    type: 'POST',
+                    url: url_api + 'api/public/comisa_editar_inventario',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            swal({
+                                title: '¡Bien!',
+                                text: res.mensaje,
+                                type: 'success',
+                                icon: 'success'
+                            }).then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: 'Error',
+                                text: res.mensaje,
+                                icon: 'error',
+                                buttons: [false, 'Intentar de nuevo'],
+                                dangerMode: true,
+                            }).then((willDelete) => {
+                                if (willDelete) {} else {}
+                            })
+                        }
+                    }
+                });
             }
-        });
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: URL_XICOTEPEC + 'api/public/comisa_editar_inventario',
+                data: datos,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    if (res.status) {
+                        swal({
+                            title: '¡Bien!',
+                            text: res.mensaje,
+                            type: 'success',
+                            icon: 'success'
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else {
+                        swal({
+                            title: 'Error',
+                            text: res.mensaje,
+                            icon: 'error',
+                            buttons: [false, 'Intentar de nuevo'],
+                            dangerMode: true,
+                        }).then((willDelete) => {
+                            if (willDelete) {} else {}
+                        })
+                    }
+                }
+            });
+        }
     });
 
     $('#btnDescargarModelos').on('click', function() {

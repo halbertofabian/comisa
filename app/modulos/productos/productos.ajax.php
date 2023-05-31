@@ -66,7 +66,7 @@ class ProductosAjax
     }
     public function ajaxEditarModelos()
     {
-        $res = ProductosControlador::ctrActualizarModelos();
+        $res = ProductosControlador::ctrActualizarModelos($_POST);
         echo json_encode($res, true);
     }
     public function ajaxEliminarModelos()

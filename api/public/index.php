@@ -888,5 +888,12 @@ $app->post('/comisa_registro_inventario', function (Request $request, Response $
     $res =  ProductosControlador::ctrRegistrarModelos($data);
     return json_encode($res, true);
 });
+//API PARA REGISTRAR MODELOS E INVENTARIO
+$app->post('/comisa_editar_inventario', function (Request $request, Response $response) {
+    $data = $request->getParsedBody();
+    // $data = json_decode($json, true);
+    $res =  ProductosControlador::ctrActualizarModelos($data);
+    return json_encode($res, true);
+});
 
 $app->run();
