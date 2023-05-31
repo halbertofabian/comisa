@@ -881,4 +881,12 @@ $app->get('/generar_codigos_seguimiento', function (Request $request, Response $
     }
 });
 
+//API PARA REGISTRAR MODELOS E INVENTARIO
+$app->post('/comisa_registro_inventario', function (Request $request, Response $response) {
+    $data = $request->getParsedBody();
+    // $data = json_decode($json, true);
+    $res =  ProductosControlador::ctrRegistrarModelos($data);
+    return json_encode($res, true);
+});
+
 $app->run();

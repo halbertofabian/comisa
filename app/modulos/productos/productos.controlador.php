@@ -418,18 +418,18 @@ class ProductosControlador
             );
         }
     }
-    public static function ctrRegistrarModelos()
+    public static function ctrRegistrarModelos($res_mpds)
     {
-        $mpds_suc = $_POST['mpds_suc'];
-        $mpds_modelo = trim($_POST['mpds_modelo']);
-        $mpds_descripcion = mb_strtoupper(trim($_POST['mpds_descripcion']));
-        $mpds_proveedor = $_POST['mpds_proveedor'];
-        $mpds_credito = dnum($_POST['mpds_credito']);
-        $mpds_enganche = dnum($_POST['mpds_enganche']);
-        $mpds_pago_semanal = dnum($_POST['mpds_pago_semanal']);
-        $mpds_contado = dnum($_POST['mpds_contado']);
-        $mpds_un_mes = dnum($_POST['mpds_un_mes']);
-        $mpds_dos_meses = dnum($_POST['mpds_dos_meses']);
+        $mpds_suc = SUCURSAL;
+        $mpds_modelo = trim($res_mpds['mpds_modelo']);
+        $mpds_descripcion = mb_strtoupper(trim($res_mpds['mpds_descripcion']));
+        $mpds_proveedor = $res_mpds['mpds_proveedor'];
+        $mpds_credito = dnum($res_mpds['mpds_credito']);
+        $mpds_enganche = dnum($res_mpds['mpds_enganche']);
+        $mpds_pago_semanal = dnum($res_mpds['mpds_pago_semanal']);
+        $mpds_contado = dnum($res_mpds['mpds_contado']);
+        $mpds_un_mes = dnum($res_mpds['mpds_un_mes']);
+        $mpds_dos_meses = dnum($res_mpds['mpds_dos_meses']);
 
         $modelo = ProductosModelo::mdlMostrarModelosByModelo($mpds_modelo);
         $descripcion = ProductosModelo::mdlMostrarModelosByDescripcion($mpds_descripcion);

@@ -1,9 +1,12 @@
 <div class="row">
     <div class="col-12 mb-3">
         <div class="btn-group float-right" role="group" aria-label="">
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlImportarModelos"><i class="fa fa-file-excel-o"></i> Importar</button>
+            <input type="hidden" id="sucursal" value="<?= SUCURSAL ?>">
+            <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#mdlImportarModelos"><i class="fa fa-file-excel-o"></i> Importar</button> -->
             <button type="button" class="btn btn-light" id="btnDescargarModelos"><i class="fa fa-download"></i> Descargar</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlAgregarModelos"><i class="fa fa-plus"></i> Agregar</button>
+            <?php if (SUCURSAL == '01') : ?>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mdlAgregarModelos"><i class="fa fa-plus"></i> Agregar</button>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -70,7 +73,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="mpds_suc">SUCURSAL</label>
-                                <input type="text" class="form-control" name="mpds_suc" value="<?= SUCURSAL ?>" readonly placeholder="">
+                                <input type="text" class="form-control" name="mpds_suc" id="mpds_suc" value="<?= SUCURSAL ?>" readonly placeholder="">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
@@ -290,40 +293,80 @@
 </div>
 
 <script>
+    var URLS_MATRIZ = ['https://tuxtepec-comisa.softmor.com/', 'https://tierrablanca-comisa.softmor.com/', 'https://cosamaloapan-comisa.softmor.com/'];
+    var URL_XICOTEPEC = 'https://xicotepec-comisa.softmor.com/';
     $('#formRegistrarModelos').on('submit', function(e) {
         e.preventDefault();
         var datos = new FormData(this)
         datos.append('btnRegistrarModelos', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/productos/productos.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.status) {
-                    swal({
-                        title: '¡Bien!',
-                        text: res.mensaje,
-                        type: 'success',
-                        icon: 'success'
-                    }).then(function() {
-                        location.reload();
-                    });
-                } else {
-                    swal({
-                        title: 'Error',
-                        text: res.mensaje,
-                        icon: 'error',
-                        buttons: [false, 'Intentar de nuevo'],
-                        dangerMode: true,
-                    }).then((willDelete) => {
-                        if (willDelete) {} else {}
-                    })
-                }
+        if ($("#sucursal").val() == '01') {
+            for (var i = 0; i < URLS_MATRIZ.length; i++) {
+                var url_api = URLS_MATRIZ[i];
+                $.ajax({
+                    type: 'POST',
+                    url: url_api + 'api/public/comisa_registro_inventario',
+                    data: datos,
+                    cache: false,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            swal({
+                                title: '¡Bien!',
+                                text: res.mensaje,
+                                type: 'success',
+                                icon: 'success'
+                            }).then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            swal({
+                                title: 'Error',
+                                text: res.mensaje,
+                                icon: 'error',
+                                buttons: [false, 'Intentar de nuevo'],
+                                dangerMode: true,
+                            }).then((willDelete) => {
+                                if (willDelete) {} else {}
+                            })
+                        }
+                    }
+                });
             }
-        });
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: URL_XICOTEPEC + 'api/public/comisa_registro_inventario',
+                data: datos,
+                cache: false,
+                dataType: 'json',
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    if (res.status) {
+                        swal({
+                            title: '¡Bien!',
+                            text: res.mensaje,
+                            type: 'success',
+                            icon: 'success'
+                        }).then(function() {
+                            location.reload();
+                        });
+                    } else {
+                        swal({
+                            title: 'Error',
+                            text: res.mensaje,
+                            icon: 'error',
+                            buttons: [false, 'Intentar de nuevo'],
+                            dangerMode: true,
+                        }).then((willDelete) => {
+                            if (willDelete) {} else {}
+                        })
+                    }
+                }
+            });
+        }
     });
 
     $(document).on('click', '.btnEliminarModelo', function() {

@@ -61,7 +61,7 @@ class ProductosAjax
     }
     public function ajaxRegistrarModelos()
     {
-        $res = ProductosControlador::ctrRegistrarModelos();
+        $res = ProductosControlador::ctrRegistrarModelos($_POST);
         echo json_encode($res, true);
     }
     public function ajaxEditarModelos()
