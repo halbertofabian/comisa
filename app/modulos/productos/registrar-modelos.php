@@ -73,7 +73,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="mpds_suc">SUCURSAL</label>
-                                <input type="text" class="form-control" name="mpds_suc" id="mpds_suc" value="<?= SUCURSAL ?>" readonly placeholder="">
+                                <input type="text" class="form-control" name="mpds_suc" value="<?= SUCURSAL ?>" readonly placeholder="">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
