@@ -896,4 +896,10 @@ $app->post('/comisa_editar_inventario', function (Request $request, Response $re
     return json_encode($res, true);
 });
 
+//API CODIGOS DE INVENTARIO (SERIES)
+$app->get('/autorizar_codigos_inventario', function (Request $request, Response $response, array $args) {
+    $response = json_encode(AlmacenesModelo::mdlMostrarCodigosSeries(), true);
+    return $response;
+});
+
 $app->run();

@@ -575,7 +575,7 @@ class AlmacenesControlador
         );
     }
 
-    public static function ctrEliminarSerie()
+    public static function ctrGenerarCodigoSerie()
     {
         $spds_id = $_POST['spds_id'];
         $spds_modelo = $_POST['spds_modelo'];
@@ -586,16 +586,58 @@ class AlmacenesControlador
                 'mensaje' => 'Asegurate que esta serie que intenta eliminar es la ultima del modelo.'
             );
         } else {
-            $res = AlmacenesModelo::mdlEliminarSerie($spds_id);
-            if ($res) {
+            if ($spds['spds_codigo'] == "" || $spds['spds_codigo'] == NULL) {
+                $spds_codigo = rand(10000, 99999);
+                $res = AlmacenesModelo::mdlGenerarCodigoSerie($spds_codigo, $spds_id);
+                if ($res) {
+                    return array(
+                        'status' => true,
+                        'mensaje' => 'El codigo se genero correctamente.'
+                    );
+                } else {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Hubo un error al eliminar la serie.'
+                    );
+                }
+            } else {
                 return array(
                     'status' => true,
-                    'mensaje' => 'La serie se elimino correctamente.'
+                    'mensaje' => 'El codigo se genero correctamente.'
                 );
+            }
+        }
+    }
+
+    public static function ctrEliminarSerie()
+    {
+        $spds_id = $_POST['spds_id'];
+        $spds_modelo = $_POST['spds_modelo'];
+        $spds_codigo = $_POST['spds_codigo'];
+        $spds = AlmacenesModelo::mdlObtenerUltimaSerie($spds_modelo);
+        if ($spds['spds_id'] != $spds_id) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Asegurate que esta serie que intenta eliminar es la ultima del modelo.'
+            );
+        } else {
+            if ($spds_codigo == $spds['spds_codigo']) {
+                $res = AlmacenesModelo::mdlEliminarSerie($spds_id);
+                if ($res) {
+                    return array(
+                        'status' => true,
+                        'mensaje' => 'La serie se elimino correctamente.'
+                    );
+                } else {
+                    return array(
+                        'status' => false,
+                        'mensaje' => 'Hubo un error al eliminar la serie.'
+                    );
+                }
             } else {
                 return array(
                     'status' => false,
-                    'mensaje' => 'Hubo un error al eliminar la serie.'
+                    'mensaje' => 'El codigo ingresado es incorrecto.'
                 );
             }
         }

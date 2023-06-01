@@ -957,6 +957,25 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlGenerarCodigoSerie($spds_codigo, $spds_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_series_producto_spds SET spds_codigo = ? WHERE spds_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_codigo);
+            $pps->bindValue(2, $spds_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlEliminarSerie($spds_id)
     {
         try {
@@ -970,6 +989,25 @@ class AlmacenesModelo
             // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarCodigosSeries(){
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+        try {
+            //code...
+            $sql = "SELECT spds.*, mpds.mpds_modelo, mpds.mpds_descripcion FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id WHERE spds.spds_almacen = ? AND spds.spds_codigo != '' AND spds.spds_situacion = '-' ORDER BY spds.spds_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ams['ams_id']);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
         } finally {
             $pps = null;
             $con = null;
