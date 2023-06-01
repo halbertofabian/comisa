@@ -295,7 +295,7 @@
 </div>
 
 <script>
-    var URLS_MATRIZ = ['https://tuxtepec-comisa.softmor.com/', 'https://tierrablanca-comisa.softmor.com/', 'https://cosamaloapan-comisa.softmor.com/'];
+    var URLS_MATRIZ = ['https://tuxtepec-comisa.softmor.com/', 'https://tierrablanca-comisa.softmor.com/', 'https://cosamaloapan-comisa.softmor.com/', 'https://pruebas-comisa.softmor.com/'];
     var URL_XICOTEPEC = 'https://xicotepec-comisa.softmor.com/';
     $('#formRegistrarModelos').on('submit', function(e) {
         e.preventDefault();
