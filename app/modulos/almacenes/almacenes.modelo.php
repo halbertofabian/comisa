@@ -36,14 +36,16 @@ class AlmacenesModelo
             $con = null;
         }
     }
-    public static function mdlActualizarAlmacenes()
+    public static function mdlActualizarAlmacenes($ams)
     {
         try {
             //code...
-            $sql = "";
+            $sql = "UPDATE tbl_almacenes_ams SET ams_nombre = ?, ams_vendedor = ? WHERE ams_id = ? ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
-
+            $pps->bindValue(1, $ams['ams_nombre']);
+            $pps->bindValue(2, $ams['ams_vendedor']);
+            $pps->bindValue(3, $ams['ams_id']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -57,7 +59,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_id_sucursal = ? AND ams_estado = 1";
+            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_tipo = 'V' AND ams_id_sucursal = ? AND ams_estado = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $scl_id);
@@ -645,7 +647,7 @@ class AlmacenesModelo
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_id);
             $pps->execute();
-            return $pps->fetch();
+            return $pps->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {

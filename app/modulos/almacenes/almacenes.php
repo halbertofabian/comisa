@@ -27,13 +27,14 @@ else :
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="">Nombre del almacén</label>
+                    <input type="hidden" id="ams_id" name="ams_id">
                     <input type="text" name="ams_nombre" id="ams_nombre" class="form-control text-uppercase" placeholder="Escribe el nombre del alamacen" required>
                 </div>
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="">Vendedor</label>
-                    <select class="form-control select2" name="ams_vendedor" id="" required>
+                    <select class="form-control select2" name="ams_vendedor" id="ams_vendedor">
                         <option value="">-Seleccionar-</option>
                         <?php
                         $vendedores = UsuariosModelo::mdlObtenerVendedoresActivos();
@@ -173,6 +174,28 @@ else :
                     }
                 });
             } else {}
+        });
+
+    });
+    $(document).on('click', '.btnEditarAlmacen', function() {
+        var ams_id = $(this).attr("ams_id");
+        var datos = new FormData()
+        datos.append('ams_id', ams_id);
+        datos.append('btnObtenerAlmacenByID', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if(res){
+                    $("#ams_id").val(res.ams_id);
+                    $("#ams_nombre").val(res.ams_nombre);
+                    $("#ams_vendedor").val(res.ams_vendedor).trigger('change');
+                }
+            }
         });
 
     });

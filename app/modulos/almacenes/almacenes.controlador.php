@@ -23,13 +23,22 @@ class AlmacenesControlador
             }
             $_POST['ams_fecha_registro'] = FECHA;
             // $_POST['ams_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
-            $_POST['ams_usuario_registro'] = 'Alberto Fabian';
-            $crearAlamacen = AlmacenesModelo::mdlAgregarAlmacenes($_POST);
-            if ($crearAlamacen) {
-                AppControlador::msj('success', '¡Muy bien!', 'Almacén creado con éxito', HTTP_HOST . 'almacenes');
+            $_POST['ams_usuario_registro'] = $_SESSION['session_usr']['usr_nombre'];
+            $_POST['ams_vendedor'] = empty($_POST['ams_vendedor']) ? 0 : $_POST['ams_vendedor'];
+            if (isset($_POST['ams_id']) && $_POST['ams_id'] != "") {
+                $updateAlmacen = AlmacenesModelo::mdlActualizarAlmacenes($_POST);
+                if ($updateAlmacen) {
+                    AppControlador::msj('success', '¡Muy bien!', 'Almacén se actualizó con éxito', HTTP_HOST . 'almacenes');
+                } else {
+                    AppControlador::msj('error', '¡Error!', 'Parece que hubo un problema, intenta de nuevo');
+                }
             } else {
-
-                AppControlador::msj('error', '¡Error!', 'Parece que hubo un problema, intenta de nuevo');
+                $crearAlamacen = AlmacenesModelo::mdlAgregarAlmacenes($_POST);
+                if ($crearAlamacen) {
+                    AppControlador::msj('success', '¡Muy bien!', 'Almacén creado con éxito', HTTP_HOST . 'almacenes');
+                } else {
+                    AppControlador::msj('error', '¡Error!', 'Parece que hubo un problema, intenta de nuevo');
+                }
             }
         }
     }
@@ -354,7 +363,8 @@ class AlmacenesControlador
                 'ams_fecha_registro' => $ams['ams_fecha_registro'],
                 'ams_usuario_registro' => $ams['ams_usuario_registro'],
                 'acciones' =>  '<div class="btn-group" role="group" aria-label="">
-                    <button type="button" class="btn btn-danger btnEliminarAlmacen" ams_id="' . $ams['ams_id'] . '"><i class="fa fa-trash"></i> Eliminar</button>
+                    <button type="button" class="btn btn-warning btnEditarAlmacen" ams_id="' . $ams['ams_id'] . '"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger btnEliminarAlmacen" ams_id="' . $ams['ams_id'] . '"><i class="fa fa-trash"></i></button>
                 </div>',
             );
             array_push($array_ams, $data_a);
