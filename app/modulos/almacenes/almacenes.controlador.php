@@ -574,4 +574,30 @@ class AlmacenesControlador
             'mensaje' => 'El inventario finalizo correctamente.'
         );
     }
+
+    public static function ctrEliminarSerie()
+    {
+        $spds_id = $_POST['spds_id'];
+        $spds_modelo = $_POST['spds_modelo'];
+        $spds = AlmacenesModelo::mdlObtenerUltimaSerie($spds_modelo);
+        if ($spds['spds_id'] != $spds_id) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Asegurate que esta serie que intenta eliminar es la ultima del modelo.'
+            );
+        } else {
+            $res = AlmacenesModelo::mdlEliminarSerie($spds_id);
+            if ($res) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'La serie se elimino correctamente.'
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Hubo un error al eliminar la serie.'
+                );
+            }
+        }
+    }
 }

@@ -143,6 +143,11 @@ class AlmacenesAjax
         $res = AlmacenesModelo::mdlMostrarInventario();
         echo json_encode($res, true);
     }
+    public function ajaxEliminarSerie()
+    {
+        $res = AlmacenesControlador::ctrEliminarSerie();
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -229,4 +234,8 @@ if (isset($_POST['btnEmpezarInventario'])) {
 if (isset($_POST['btnMostrarInventario'])) {
     $mostrarInventario = new AlmacenesAjax();
     $mostrarInventario->ajaxMostrarInventario();
+}
+if (isset($_POST['btnEliminarSerie'])) {
+    $eliminarSerie = new AlmacenesAjax();
+    $eliminarSerie->ajaxEliminarSerie();
 }

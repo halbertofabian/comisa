@@ -393,7 +393,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id ORDER BY mpds.mpds_modelo ASC";
+            $sql = "SELECT spds.spds_id, spds.spds_modelo, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id ORDER BY mpds.mpds_modelo ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
@@ -927,6 +927,44 @@ class AlmacenesModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $itr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlObtenerUltimaSerie($spds_modelo){
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_modelo = ? AND spds_almacen = ? AND spds_situacion = '-' ORDER BY spds_serie DESC LIMIT 1;";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_modelo);
+            $pps->bindValue(2, $ams['ams_id']);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlEliminarSerie($spds_id)
+    {
+        try {
+            //code...
+            $sql = "DELETE FROM tbl_series_producto_spds WHERE spds_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_id);
             $pps->execute();
             return $pps->rowCount() > 0;
             // return $pps->errorInfo();
