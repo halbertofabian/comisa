@@ -538,6 +538,27 @@ $app->get('/retiro_caja', function (Request $request, Response $response, array 
 
     return $response;
 });
+
+$app->get('/quitar_retiro_caja/{copn_id}', function (Request $request, Response $response, array $args) {
+    $copn_id = $args['copn_id'];
+    $res = CobranzaModelo::mdlQuitarRetiroCaja($copn_id);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Acción realizada'
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Intente de nuevo'
+        ), true);
+    }
+
+    return $response;
+});
+
+
+
 $app->get('/descuentos_por_autorizar', function (Request $request, Response $response, array $args) {
 
     $descuentos = CobranzaModelo::mdlConsultarAbsDescuento();
@@ -582,6 +603,23 @@ $app->get('/autorizar_descuento/{abs_id}/{abs_codigo}', function (Request $reque
         ), true);
     }
 });
+$app->get('/quitar_descuento/{abs_id}', function (Request $request, Response $response, array $args) {
+    $abs_id = $args['abs_id'];
+    $res = CobranzaModelo::mdlQuitarAbsDescuento($abs_id);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Acción realizada'
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Intente de nuevo'
+        ), true);
+    }
+
+    return $response;
+});
 
 $app->get('/saldos_por_autorizar', function (Request $request, Response $response, array $args) {
     $saldos = ContratosModelo::mdlMostrarSaldosJson();
@@ -591,9 +629,30 @@ $app->get('/saldos_por_autorizar', function (Request $request, Response $respons
         array_push($array_saldos, array(
             "ctr_json_saldos" => json_decode($data['ctr_json_saldos'], true),
             "ctr_codigo" => $data['ctr_codigo'],
+            "ctr_id" => $data['ctr_id'],
+
+            
         ));
     }
     return json_encode($array_saldos, true);
+});
+
+$app->get('/quitar_saldo/{ctr_id}', function (Request $request, Response $response, array $args) {
+    $ctr_id = $args['ctr_id'];
+    $res = ContratosModelo::mdlQuitarSaldo($ctr_id);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Acción realizada'
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Intente de nuevo'
+        ), true);
+    }
+
+    return $response;
 });
 
 $app->get('/cancelar_codigo_abono/{abs_id}', function (Request $request, Response $response, array $args) {

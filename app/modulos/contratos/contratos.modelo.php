@@ -780,11 +780,11 @@ class ContratosModelo
             $sql = "SELECT ctr.ctr_id,ctr.ctr_folio,ctr.ctr_fecha_contrato,ctr.ctr_id_vendedor,usr.usr_nombre,ctr_status_cuenta, ctr.clts_domicilio, ctr.clts_col, ctr.clts_entre_calles, ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_elaboro,ctr.clts_curp,ctr.clts_telefono,ctr.clts_registro_venta,ctr.clts_caja,ctr.clts_folio_nuevo,ctr.ctr_aprovado_ventas FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE";
             $con = Conexion::conectar();
             $AND = "";
-            if($ctr_vendedor !== ""){
+            if ($ctr_vendedor !== "") {
                 $sql .= " ctr.ctr_id_vendedor LIKE '$ctr_vendedor'";
                 $AND = "AND";
             }
-            if($ctr_fecha_inicio !== "" && $ctr_fecha_fin == ""){
+            if ($ctr_fecha_inicio !== "" && $ctr_fecha_fin == "") {
                 $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
                 $AND = "AND";
             }
@@ -813,11 +813,11 @@ class ContratosModelo
             $sql = "SELECT usr.usr_nombre,ctr.* FROM tbl_contrato_crt_1 ctr JOIN tbl_usuarios_usr usr ON ctr.ctr_id_vendedor = usr.usr_id WHERE";
             $con = Conexion::conectar();
             $AND = "";
-            if($ctr_vendedor !== ""){
+            if ($ctr_vendedor !== "") {
                 $sql .= " ctr.ctr_id_vendedor LIKE '$ctr_vendedor'";
                 $AND = "AND";
             }
-            if($ctr_fecha_inicio !== "" && $ctr_fecha_fin == ""){
+            if ($ctr_fecha_inicio !== "" && $ctr_fecha_fin == "") {
                 $sql .= " $AND (DATE(ctr.ctr_fecha_contrato) BETWEEN '$ctr_fecha_inicio' AND '$ctr_fecha_inicio')";
                 $AND = "AND";
             }
@@ -1752,6 +1752,24 @@ class ContratosModelo
         }
     }
 
+    public static function mdlQuitarSaldo($ctr_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET  ctr_codigo = '' WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
     public static function mdlMostrarCodigoById($ctr_id)
     {
         try {
@@ -1773,7 +1791,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr_json_saldos, ctr_codigo FROM tbl_contrato_crt_1 WHERE ctr_codigo != ''";
+            $sql = "SELECT ctr_id, ctr_json_saldos, ctr_codigo FROM tbl_contrato_crt_1 WHERE ctr_codigo != ''";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
