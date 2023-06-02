@@ -31,20 +31,20 @@ class CobranzaControlador
 
     public static function  ctrLoginCobrador($usr)
     {
-        // if (isset($usr['version_app'])) {
-        //     $app = ConfiguracionModelo::mdlMostrarUltimaActualizacionApp('COMISA COBRANZA');
-        //     if($app['app_version'] != $usr['version_app']){
-        //         return array(
-        //             'status' => false,
-        //             'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
-        //         );
-        //     }
-        // } else {
-        //     return array(
-        //         'status' => false,
-        //         'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
-        //     );
-        // }
+        if (isset($usr['version_app'])) {
+            $app = ConfiguracionModelo::mdlMostrarUltimaActualizacionApp('COMISA COBRANZA');
+            if ($app['app_version'] != $usr['version_app']) {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
+                );
+            }
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Detectamos que tiene una version anterior de la app. Por favor actualice a la nueva versión.'
+            );
+        }
 
         $usrLog = UsuariosModelo::mdlLoginCobranza($usr);
         if ($usrLog['usr_dispositivo'] == "" || $usrLog['usr_dispositivo'] == NULL) {
@@ -68,15 +68,14 @@ class CobranzaControlador
                     'scl' => $sucursal,
                     'scl_url_access' => HTTP_HOST
                 );
-            // } 
-            // elseif ($usrLogin['usr_dispositivo'] !== $usr['deviceId']) {
-            //     return array(
-            //         'status' => false,
-            //         'mensaje' => '¡El usuario ' . $usrLogin['usr_nombre'] . ' ya se encuentra vinculado a otro dispositivo!',
-            //         'usr' => $usrLogin,
-            //         'scl' => $sucursal,
-            //         'scl_url_access' => HTTP_HOST
-            //     );
+            } elseif ($usrLogin['usr_dispositivo'] !== $usr['deviceId']) {
+                return array(
+                    'status' => false,
+                    'mensaje' => '¡El usuario ' . $usrLogin['usr_nombre'] . ' ya se encuentra vinculado a otro dispositivo!',
+                    'usr' => $usrLogin,
+                    'scl' => $sucursal,
+                    'scl_url_access' => HTTP_HOST
+                );
             } else {
                 return array(
                     'status' => true,
