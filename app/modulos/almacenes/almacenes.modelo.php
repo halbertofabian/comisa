@@ -548,10 +548,10 @@ class AlmacenesModelo
 
     public static function mdlMostrarSeriesBySerie($spds_serie_completa)
     {
-        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoContrato();
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         try {
             //code...
-            $sql = "SELECT spds.*, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre, CONCAT(mpds.mpds_descripcion,' - ',mpds.mpds_modelo, ' - ', spds.spds_serie_completa) AS label FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE spds.spds_serie_completa LIKE '%$spds_serie_completa%' AND spds.spds_almacen != ? AND spds.spds_situacion != 'TRASPASO'";
+            $sql = "SELECT spds.*, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre, CONCAT(mpds.mpds_descripcion,' - ',mpds.mpds_modelo, ' - ', spds.spds_serie_completa) AS label FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE spds.spds_serie_completa LIKE '%$spds_serie_completa%' AND spds.spds_almacen = ? AND spds.spds_situacion != 'TRASPASO'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams['ams_id']);
