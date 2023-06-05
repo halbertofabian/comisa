@@ -7,12 +7,20 @@ $cra = CobranzaModelo::mdlConsultarEstadoCuenta2($ctr['ctr_id']);
 $abs = CobranzaModelo::mdlConsultarEstadoCuenta3($cra['cra_id']);
 $validar_pagos = $abs ? true : false;
 
+
 $telefonos = "";
-if (is_array(json_decode($ctr['clts_telefono'], true))) {
-    $telefonos = json_decode($ctr['clts_telefono'], true);
+$telefonosSeparados = AppControlador::separarNumeros($ctr['clts_telefono']);
+$array_telefonos = [];
+if (!empty($telefonosSeparados)) {
+    $telefonos = explode(',', $telefonosSeparados);
+    foreach ($telefonos as $key => $value) {
+        array_push($array_telefonos, json_encode(array('nombre' => '', 'telefono' => $value)));
+    }
 } else {
-    $telefonos = $ctr['clts_telefono'];
+    $telefonos = '[]'; // Si no hay números separados, el arreglo estará vacío
 }
+// $datosJson contendrá el arreglo de números en formato JSON
+
 ?>
 
 <form id="formUpdateCtr">
@@ -104,12 +112,12 @@ if (is_array(json_decode($ctr['clts_telefono'], true))) {
                     <?php if (is_array($telefonos)) : ?>
                         <div class="form-group">
                             <label for="">TELEFONO:</label>
-                            <input type="hidden" name="clts_telefono" id="clts_telefono" value='<?= $ctr['clts_telefono'] ?>'>
+                            <input type="hidden" name="clts_telefono" id="clts_telefono" value='<?= json_encode($array_telefonos) ?>'>
                             <select class="form-control" name="" id="ctr_telefonos">
                                 <?php
-                                foreach ($telefonos as $key => $tel) :
+                                foreach ($telefonos as $key => $telefono) :
                                 ?>
-                                    <option value="<?= $tel['telefono'] ?>"><?= $tel['nombre'] . '-' . $tel['telefono'] ?> </option>
+                                    <option value="<?= $telefono ?>"><?= $telefono ?> </option>
                                 <?php endforeach; ?>
                                 <option value="A">AGREGAR</option>
                             </select>

@@ -1712,4 +1712,16 @@ class AppControlador
         }
         return $datos;
     }
+
+    public static function separarNumeros($input) {
+        // Eliminar caracteres especiales como paréntesis y espacios
+        $input = preg_replace('/[^0-9]/', '', $input);
+    
+        $grupos = str_split($input, 10); // Dividir el input en grupos de 10 dígitos
+    
+        $numerosSeparados = implode(', ', $grupos); // Convierte el array de grupos en una cadena separada por comas
+    
+        return $numerosSeparados;
+    }
+    
 }
