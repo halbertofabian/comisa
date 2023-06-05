@@ -16,6 +16,7 @@ echo "\xEF\xBB\xBF";
 
 include_once '../config.php';
 
+require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 $contratos = array();
 $cuentas = ContratosModelo::mdlMostrarSaldosRuta($_GET['usr_ruta']);
@@ -25,19 +26,11 @@ foreach ($cuentas as $key => $ctr) {
     $proximo_pago = $ctr['ctr_proximo_pago'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_proximo_pago']));
 
 
-    $clts_telefono = "";
-    $telefonoV1 = str_replace(array('/', '-'), '', $ctr['clts_telefono']);
-    $telefono = json_decode($telefonoV1, true);
-    if (is_array($telefono)) {
-        foreach ($telefono as $tel) {
-            $clts_telefono = str_replace(array('/', '-'), '', $tel['telefono']);
-        }
-    } else {
-        if (empty($ctr['clts_telefono'])) {
-            $clts_telefono = "-";
-        } else {
-            $clts_telefono = str_replace(array('/', '-', ','), '', $ctr['clts_telefono']) == "" ? "-" : str_replace(array('/', '-', ','), '', $ctr['clts_telefono']);
-        }
+    $telefonos = "";
+    $telefonosSeparados = AppControlador::separarNumeros($ctr['clts_telefono']);
+
+    if (!empty($telefonosSeparados)) {
+        $telefonos = str_replace(',', ' ', $telefonosSeparados);
     }
 
     $clts_coordenadas = "";
@@ -62,7 +55,7 @@ foreach ($cuentas as $key => $ctr) {
         'clts_domicilio' => str_replace(',', ' ', $ctr['clts_domicilio']),
         'clts_col' => str_replace(',', ' ', $ctr['clts_col']),
         'clts_coordenadas' => $clts_coordenadas,
-        'clts_telefono' => $clts_telefono,
+        'clts_telefono' => $telefonos,
         'ctr_total' => $ctr['ctr_total'],
         'ctr_enganche' => $ctr['ctr_enganche'],
         'ctr_pago_adicional' => $ctr['ctr_pago_adicional'],
