@@ -9,6 +9,7 @@ if (isset($_GET['ctr_id'])) {
 
 
 
+    require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
     require_once DOCUMENT_ROOT . 'app/modulos/sucursales/sucursales.modelo.php';
     require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 
@@ -89,9 +90,14 @@ if (isset($_GET['ctr_id'])) {
     } elseif ($ctr['ctr_forma_pago'] == "MENSUALES") {
         $plazo_crdito_cad = "MESES";
     }
-$scl_rfc = $_SESSION['session_suc']['scl_rfc'];
-$scl_direccion = $_SESSION['session_suc']['scl_direccion'];
-$scl_horario = $_SESSION['session_suc']['scl_horario'];
+    $scl_rfc = $_SESSION['session_suc']['scl_rfc'];
+    $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
+    $scl_horario = $_SESSION['session_suc']['scl_horario'];
+
+
+    $telefonos = "";
+    $telefonos = AppControlador::separarNumeros($ctr['clts_telefono']);
+
     $encabezado = <<<EOF
 
 <table>
@@ -173,7 +179,7 @@ EOF;
                <strong>NOMBRE:</strong>  <span style="color:#000"> $ctr[ctr_cliente] </span>
             </td>
             <td>
-            <strong>TELEFONO:</strong>  <span style="color:#000"> $ctr[clts_telefono] </span>
+            <strong>TELEFONO:</strong>  <span style="color:#000"> $telefonos </span>
             </td>
         </tr> 
 
