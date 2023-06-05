@@ -1131,6 +1131,11 @@ class AppControlador
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar inventario',
+                            'href' => 'almacenes/total-mercancia'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Asignar productos',
                             'href' => 'almacenes/registrar-almacenes'
                         ],
@@ -1476,6 +1481,11 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Listar mercancia',
                             'href' => 'almacenes/listar-mercancia'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Listar inventario',
+                            'href' => 'almacenes/total-mercancia'
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',

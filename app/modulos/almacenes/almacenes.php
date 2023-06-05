@@ -5,7 +5,7 @@ if (isset($rutas[1]) && $rutas[1] == 'entradas') :
     cargarComponente('breadcrumb', '', 'Entrada a almacen ');
     cargarview2('almacenes/entradas', $rutas);
 elseif (isset($rutas[1]) && $rutas[1] == 'preregistro-mercancia') :
-    cargarComponente('breadcrumb', '', 'Pre-regitro de mercancia');
+    cargarComponente('breadcrumb', '', 'Pre-registro de mercancia');
     cargarview2('almacenes/preregistro-mercancia', $rutas);
 elseif (isset($rutas[1]) && $rutas[1] == 'listar-pre-registros') :
     cargarComponente('breadcrumb', '', 'Lista de pre-registros');
@@ -13,6 +13,9 @@ elseif (isset($rutas[1]) && $rutas[1] == 'listar-pre-registros') :
 elseif (isset($rutas[1]) && $rutas[1] == 'listar-mercancia') :
     cargarComponente('breadcrumb', '', 'Lista de mercancia');
     cargarview2('almacenes/listar-mercancia', $rutas);
+elseif (isset($rutas[1]) && $rutas[1] == 'total-mercancia') :
+    cargarComponente('breadcrumb', '', 'Lista de inventario');
+    cargarview2('almacenes/listar-all-mercancia', $rutas);
 elseif (isset($rutas[1]) && $rutas[1] == 'registrar-almacenes') :
     cargarComponente('breadcrumb', '', 'Registro de almacenes');
     cargarview2('almacenes/registrar-almacenes', $rutas);
