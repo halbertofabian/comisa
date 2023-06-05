@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-12">
-        <table class="table table-striped tablas">
+        <table class="table table-striped" id="listarMercancia">
             <thead class="thead-light">
                 <tr>
                     <th>MODELO</th>
                     <th>PRODUCTO</th>
-                    <th>SERIE</th>
+                    <th>TOTAL</th>
                     <th>ALMACEN</th>
                     <th>FECHA</th>
                     <th></th>
@@ -13,13 +13,13 @@
             </thead>
             <tbody>
                 <?php
-                $series = AlmacenesModelo::mdlMostrarSeries();
+                $series = AlmacenesModelo::mdlMostrarSeries2();
                 foreach ($series as $key => $spds) :
                 ?>
                     <tr>
                         <td><?= $spds['mpds_modelo'] ?></td>
                         <td><?= $spds['mpds_descripcion'] ?></td>
-                        <td><?= $spds['spds_serie'] ?></td>
+                        <td><?= $spds['total_m'] ?></td>
                         <td><?= $spds['ams_nombre'] ?></td>
                         <td><?= $spds['spds_ultima_mod'] ?></td>
                         <td>
@@ -70,6 +70,45 @@
 
 
 <script>
+    $(document).ready(function() {
+        $("#listarMercancia").DataTable({
+            dom: 'Bfrtip',
+            responsive: true,
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+
+            "ordering": false,
+
+            "language": {
+
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+
+            }
+
+        });
+    })
     $(document).on('click', '.btnGenerarEtiqueta', function() {
         var spds_id = $(this).attr("spds_id");
         window.open(urlApp + "app/report/generar-etiqueta-mercancia.php?spds_id=" + spds_id, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,right=100,width=400,height=700");

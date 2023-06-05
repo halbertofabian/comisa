@@ -407,6 +407,22 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarSeries2()
+    {
+        try {
+            //code...
+            $sql = "SELECT spds.spds_id, spds.spds_modelo, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.mpds_suc, mpds.mpds_modelo, COUNT(mpds.mpds_modelo) AS total_m, mpds.mpds_descripcion, ams.ams_nombre FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id WHERE ams.ams_tipo IN('M','V') GROUP BY mpds.mpds_modelo";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarSeriesById($spds_id)
     {
         try {
