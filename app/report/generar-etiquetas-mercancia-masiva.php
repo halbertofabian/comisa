@@ -15,7 +15,7 @@ class imprimirFactura
     {
         $etiquetas = AlmacenesModelo::mdlMostrarSeriesByPrmId($this->prm_id);
 
-        $pageLayout = array(210, 80); //  or array($height, $width) 
+        $pageLayout = array(62, 100); //  or array($height, $width) 
 
         $pdf = new TCPDF('P', 'mm', $pageLayout, true, 'UTF-8', false);
 
@@ -61,10 +61,10 @@ class imprimirFactura
             'fontsize' => 6,
             'stretchtext' => 6
         );
-        $pdf->AddPage();
+
 
         foreach ($etiquetas as $key => $spds) {
-
+            $pdf->AddPage();
             $pdf->writeHTMLCell(0, 0, '', '', '<br><br>', 0, 1, 0, true, '', true);
             $pdf->writeHTMLCell(0, 0, '', '', '<div style="text-align:center; font-size:10px">' . $spds['mpds_descripcion'] . ' - ' . $spds['mpds_modelo'] . ' - ' . $spds['spds_serie'] . '</div>', 0, 1, 0, true, '', true);
             $pdf->write1DBarcode($spds['spds_serie_completa'], 'C128', '', '', '', 6 * 2, 6 * 2, $style, 'N');
