@@ -17,7 +17,7 @@ if (!empty($telefonosSeparados)) {
         array_push($array_telefonos, json_encode(array('nombre' => '', 'telefono' => $value)));
     }
 } else {
-    $telefonos = '[]'; // Si no hay números separados, el arreglo estará vacío
+    $telefonos = ''; // Si no hay números separados, el arreglo estará vacío
 }
 // $datosJson contendrá el arreglo de números en formato JSON
 
