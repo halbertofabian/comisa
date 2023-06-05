@@ -71,7 +71,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Validar</button>
+                    <button type="submit" class="btn btn-primary btn-load">Validar</button>
                 </div>
             </form>
         </div>
@@ -96,7 +96,11 @@
             dataType: 'json',
             processData: false,
             contentType: false,
+            beforeSend: function() {
+                startLoadButton();
+            },
             success: function(res) {
+                stopLoadButton('Validar')
                 if (res.status) {
                     swal({
                         title: '¡Bien!',
