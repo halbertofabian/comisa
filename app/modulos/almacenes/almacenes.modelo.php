@@ -960,7 +960,7 @@ class AlmacenesModelo
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         try {
             //code...
-            $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_modelo = ? AND spds_almacen = ? AND spds_situacion = '-' ORDER BY spds_serie DESC LIMIT 1;";
+            $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_modelo = ? AND spds_almacen = ? AND spds_situacion = '-' ORDER BY spds_id DESC LIMIT 1;";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $spds_modelo);
