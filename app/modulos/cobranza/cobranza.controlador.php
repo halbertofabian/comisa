@@ -898,6 +898,8 @@ class CobranzaControlador
                 );
             }
         }
+
+        
         // PARA FINZALIZAR COBRANZA
         if (isset($datos[0]['Reagendados'])) {
             $cts_r = json_encode($datos[0]['Reagendados'], true);
