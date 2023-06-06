@@ -24,9 +24,9 @@
                         <!-- <td><?= $spds['spds_ultima_mod'] ?></td> -->
                         <!-- <td>
                             <div class="btn-group" role="group" aria-label="">
-                                <button type="button" class="btn btn-dark btnGenerarEtiqueta" spds_id="<?= $spds['spds_id'] ?>"><i class="fa fa-barcode"></i></button>
+                                <button type="button" class="btn btn-dark btnGenerarEtiqueta" spds_id="<?= $spds['spds_id'] ?>"><i class="fa fa-barcode"></i></button> -->
                                 <!-- <button type="button" class="btn btn-danger btnEliminarSerie" spds_id="<?= $spds['spds_id'] ?>" spds_serie_completa="<?= $spds['spds_serie_completa'] ?>" mpds_descripcion="<?= $spds['mpds_descripcion'] ?>" spds_modelo="<?= $spds['spds_modelo'] ?>"><i class=" fa fa-trash-o"></i></button> -->
-                            </div>
+                            <!-- </div>
                         </td> -->
                     </tr>
                 <?php endforeach; ?>
