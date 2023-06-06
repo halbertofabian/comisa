@@ -457,6 +457,7 @@ class AlmacenesControlador
     {
         $spds = json_decode($data[0]['producto'], true);
         $ams_nombre = $data[0]['ams_nombre'];
+        $ams_id = $data[0]['ams_id'];
 
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         $serie = AlmacenesModelo::mdlMostrarSerieByModelo($spds['spds_modelo']);
@@ -464,7 +465,7 @@ class AlmacenesControlador
             $datos = array(
                 'spds_modelo' => $spds['spds_modelo'],
                 'spds_serie' => (intval($serie['spds_serie']) + 1),
-                'spds_almacen' => $ams['ams_id'],
+                'spds_almacen' => $ams_id,
                 'spds_situacion' => "-",
                 'spds_ultima_mod' => $spds['spds_ultima_mod'],
                 'spds_prm_id' => 0,
@@ -474,7 +475,7 @@ class AlmacenesControlador
             $datos = array(
                 'spds_modelo' => $spds['spds_modelo'],
                 'spds_serie' => 1,
-                'spds_almacen' => $ams['ams_id'],
+                'spds_almacen' => $ams_id,
                 'spds_situacion' => "-",
                 'spds_ultima_mod' => $spds['spds_ultima_mod'],
                 'spds_prm_id' => 0,

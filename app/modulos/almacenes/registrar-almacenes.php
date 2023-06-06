@@ -23,6 +23,14 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-xl-4 col-md-4 col-12 ams_vendedor d-none">
+                        <div class="form-group">
+                            <label for="">Vendedor</label>
+                            <select class="form-control select2" name="" id="ams_vendedor">
+                                <option value="">-Seleccionar-</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="col-xl-4 col-md-4 col-12">
                         <div class="form-group">
                             <label for="auto_complete_producto">Digite la serie del producto</label>
@@ -125,11 +133,13 @@
                     res.forEach(ams => {
                         almacenes += `<option value="${ams.ams_id}" ams_nombre="${ams.ams_nombre}">${ams.ams_nombre}</option>`;
                     });
+                    $(".ams_vendedor").addClass('d-none');
                 } else {
                     almacenes += `<option value="">Selecciona un almacén</option>`; // Agregar opción vacía
                     res.forEach(ams => {
                         almacenes += `<option value="${ams.ams_id}" ams_nombre="${ams.ams_nombre}" scl_url="${ams.scl_url}">${ams.ams_nombre}</option>`;
                     });
+                    $(".ams_vendedor").removeClass('d-none');
                 }
                 $("#ams_id").html(almacenes);
             }
@@ -274,31 +284,38 @@
                         }
                     });
                 } else {
-                    var ams_sucursal_origen = '<?= $_SESSION['session_suc']['scl_nombre'] ?>';
-                    var datos = new FormData()
-                    datos.append('spds_id', res.spds_id);
-                    datos.append('ams_nombre', ams_nombre);
-                    datos.append('spds_almacen', ams_id);
-                    datos.append('spds_situacion', 'TRASPASO');
-                    datos.append('btnAsignarAlmacenTraspaso', true);
+                    var ams_vendedor = $("#ams_vendedor").val();
+                    if (ams_vendedor == "") {
+                        $('#auto_complete_producto').val("");
+                        toastr.warning('Por favor selecciona al vendedor', 'ADVERTENCIA!');
+                        return false;
+                    } else {
+                        var ams_sucursal_origen = '<?= $_SESSION['session_suc']['scl_nombre'] ?>';
+                        var datos = new FormData()
+                        datos.append('spds_id', res.spds_id);
+                        datos.append('ams_nombre', ams_nombre);
+                        datos.append('spds_almacen', ams_id);
+                        datos.append('spds_situacion', 'TRASPASO');
+                        datos.append('btnAsignarAlmacenTraspaso', true);
 
-                    $.ajax({
-                        type: 'POST',
-                        url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
-                        data: datos,
-                        dataType: 'json',
-                        processData: false,
-                        contentType: false,
-                        success: function(respuesta) {
-                            if (respuesta.status) {
-                                traspasarMercancia(res, ams_nombre, ams_sucursal_origen);
-                            } else {
-                                toastr.error(respuesta.mensaje, '¡ERROR!');
-                                $('#auto_complete_producto').val("");
+                        $.ajax({
+                            type: 'POST',
+                            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                            data: datos,
+                            dataType: 'json',
+                            processData: false,
+                            contentType: false,
+                            success: function(respuesta) {
+                                if (respuesta.status) {
+                                    traspasarMercancia(res, ams_nombre, ams_sucursal_origen);
+                                } else {
+                                    toastr.error(respuesta.mensaje, '¡ERROR!');
+                                    $('#auto_complete_producto').val("");
+                                }
+
                             }
-
-                        }
-                    });
+                        });
+                    }
 
                 }
 
@@ -377,15 +394,24 @@
     });
 
     $('#ams_id').on('change', function() {
-        mostrarProductos();
+        var tipo = $("#tipo").val();
+        if (tipo == 'TM') {
+            $(".ams_vendedor").removeClass('d-none');
+            mostrarVendedoresSucursal();
+        } else {
+            $(".ams_vendedor").addClass('d-none');
+            mostrarProductos();
+        }
     });
 
     function traspasarMercancia(producto, ams_nombre, ams_sucursal_origen) {
         var datos_array = [];
         var scl_url = $("#scl_url").val();
+        var ams_id = $("#ams_vendedor").val();
         var datos = {
             'producto': JSON.stringify(producto),
-            'ams_nombre': ams_sucursal_origen
+            'ams_nombre': ams_sucursal_origen,
+            'ams_id': ams_id
         };
         datos_array.push(datos);
         $.ajax({
@@ -450,6 +476,28 @@
                     toastr.error(res.mensaje, '¡ERROR!');
                 }
             }
+        });
+    }
+
+    function mostrarVendedoresSucursal() {
+        var scl_url = $("#scl_url").val();
+        $.ajax({
+            type: 'GET',
+            url: scl_url + 'api/public/mostrar_almacenes',
+            // url: urlApp + 'api/public/mostrar_almacenes',
+            // data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                var vendedores = "";
+                vendedores += `<option value="">Selecciona vendedor</option>`; // Agregar opción vacía
+                res.forEach(ams => {
+                    vendedores += `<option value="${ams.ams_id}">${ams.ams_nombre}</option>`;
+                });
+                $("#ams_vendedor").html(vendedores);
+            }
+
         });
     }
 </script>

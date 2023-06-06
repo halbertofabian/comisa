@@ -961,4 +961,10 @@ $app->get('/autorizar_codigos_inventario', function (Request $request, Response 
     return $response;
 });
 
+//API MOSTRAR VENDEDORES
+$app->get('/mostrar_almacenes', function (Request $request, Response $response, array $args) {
+    $response = json_encode(AlmacenesModelo::mdlMostrarAlmacenesTipoVM(), true);
+    return $response;
+});
+
 $app->run();
