@@ -461,12 +461,13 @@ class AlmacenesControlador
 
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         $serie = AlmacenesModelo::mdlMostrarSerieByModelo($spds['spds_modelo']);
+        // $mpds = ProductosModelo::mdlMostrarModelosById($spds['spds_modelo']);
         if ($serie) {
             $datos = array(
                 'spds_modelo' => $spds['spds_modelo'],
                 'spds_serie' => (intval($serie['spds_serie']) + 1),
                 'spds_almacen' => $ams_id,
-                'spds_situacion' => "-",
+                'spds_situacion' => $ams['ams_id'] == $ams_id ? "-" : 'SALIDA',
                 'spds_ultima_mod' => $spds['spds_ultima_mod'],
                 'spds_prm_id' => 0,
                 'spds_serie_completa' => $spds['spds_serie_completa'],
@@ -476,7 +477,7 @@ class AlmacenesControlador
                 'spds_modelo' => $spds['spds_modelo'],
                 'spds_serie' => 1,
                 'spds_almacen' => $ams_id,
-                'spds_situacion' => "-",
+                'spds_situacion' => $ams['ams_id'] == $ams_id ? "-" : 'SALIDA',
                 'spds_ultima_mod' => $spds['spds_ultima_mod'],
                 'spds_prm_id' => 0,
                 'spds_serie_completa' => $spds['spds_serie_completa'],

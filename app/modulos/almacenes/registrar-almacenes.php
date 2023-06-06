@@ -23,7 +23,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-md-4 col-12 ams_vendedor d-none">
+                    <div class="col-xl-4 col-md-4 col-12 ams_almacen d-none">
                         <div class="form-group">
                             <label for="">Vendedor</label>
                             <select class="form-control select2" name="" id="ams_vendedor">
@@ -133,13 +133,13 @@
                     res.forEach(ams => {
                         almacenes += `<option value="${ams.ams_id}" ams_nombre="${ams.ams_nombre}">${ams.ams_nombre}</option>`;
                     });
-                    $(".ams_vendedor").addClass('d-none');
+                    $(".ams_almacen").addClass('d-none');
                 } else {
                     almacenes += `<option value="">Selecciona un almacén</option>`; // Agregar opción vacía
                     res.forEach(ams => {
                         almacenes += `<option value="${ams.ams_id}" ams_nombre="${ams.ams_nombre}" scl_url="${ams.scl_url}">${ams.ams_nombre}</option>`;
                     });
-                    $(".ams_vendedor").removeClass('d-none');
+                    $(".ams_almacen").removeClass('d-none');
                 }
                 $("#ams_id").html(almacenes);
             }
@@ -396,10 +396,12 @@
     $('#ams_id').on('change', function() {
         var tipo = $("#tipo").val();
         if (tipo == 'TM') {
-            $(".ams_vendedor").removeClass('d-none');
+            var scl_url = $('option:selected', $("#ams_id")).attr('scl_url');
+            $("#scl_url").val(scl_url);
+            $(".ams_almacen").removeClass('d-none');
             mostrarVendedoresSucursal();
         } else {
-            $(".ams_vendedor").addClass('d-none');
+            $(".ams_almacen").addClass('d-none');
             mostrarProductos();
         }
     });
@@ -481,6 +483,7 @@
 
     function mostrarVendedoresSucursal() {
         var scl_url = $("#scl_url").val();
+        alert(scl_url)
         $.ajax({
             type: 'GET',
             url: scl_url + 'api/public/mostrar_almacenes',
