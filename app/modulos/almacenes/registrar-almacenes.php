@@ -483,7 +483,6 @@
 
     function mostrarVendedoresSucursal() {
         var scl_url = $("#scl_url").val();
-        alert(scl_url)
         $.ajax({
             type: 'GET',
             url: scl_url + 'api/public/mostrar_almacenes',
