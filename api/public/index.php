@@ -963,8 +963,13 @@ $app->get('/autorizar_codigos_inventario', function (Request $request, Response 
 
 //API MOSTRAR VENDEDORES
 $app->get('/mostrar_almacenes', function (Request $request, Response $response, array $args) {
-    $response = json_encode(AlmacenesModelo::mdlMostrarAlmacenesTipoVM(), true);
+    $response = json_encode(AlmacenesModelo::mdlMostrarAlmacenesByTipoVendedor(), true);
     return $response;
+});
+$app->get('/mostrar_productos_vendedor/{ams_id}', function (Request $request, Response $response, array $args) {
+    $ams_id =  $args['ams_id'];
+    $res = AlmacenesModelo::mdlMostrarProductosByAlmacenID($ams_id);
+    return json_encode($res, true);
 });
 
 $app->run();

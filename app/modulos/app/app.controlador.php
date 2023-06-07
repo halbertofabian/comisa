@@ -1707,8 +1707,8 @@ class AppControlador
                 $dato = array(
                     'ams_id' => $ams['ams_id'],
                     'ams_nombre' => $ams['ams_nombre'],
-                    'scl_url' => 'https://tierrablanca-comisa.softmor.com/'
-                    // 'scl_url' => 'https://pruebas-comisa.softmor.com/'
+                    // 'scl_url' => 'https://tierrablanca-comisa.softmor.com/'
+                    'scl_url' => 'https://pruebas-comisa.softmor.com/'
                 );
             }
             if($ams['ams_nombre'] == 'COMISA COSAMALOAPAN'){

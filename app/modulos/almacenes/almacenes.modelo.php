@@ -1031,20 +1031,4 @@ class AlmacenesModelo
             $con = null;
         }
     }
-    public static function mdlMostrarAlmacenesTipoVM(){
-        try {
-            //code...
-            $sql = "SELECT * FROM tbl_almacenes_ams WHERE ams_tipo IN('M','V') AND ams_estado = 1";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->execute();
-            return $pps->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $th) {
-            //throw $th;
-            return false;
-        } finally {
-            $pps = null;
-            $con = null;
-        }
-    }
 }

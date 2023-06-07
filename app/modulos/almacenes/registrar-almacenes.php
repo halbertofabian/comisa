@@ -389,8 +389,15 @@
     });
 
     $('#btnImprimirReporte').on('click', function() {
-        var ams_id = $("#ams_id").val();
-        window.open(urlApp + "app/report/reporte-mercancia.php?ams_id=" + ams_id, "_blank");
+        var tipo = $("#tipo").val();
+        if (tipo == 'TM') {
+            var scl_url = $("#scl_url").val();
+            var ams_vendedor = $("#ams_vendedor").val();
+            window.open(scl_url + "app/report/reporte-mercancia.php?ams_id=" + ams_vendedor, "_blank");
+        } else {
+            var ams_id = $("#ams_id").val();
+            window.open(urlApp + "app/report/reporte-mercancia.php?ams_id=" + ams_id, "_blank");
+        }
     });
 
     $('#ams_id').on('change', function() {
@@ -404,6 +411,9 @@
             $(".ams_almacen").addClass('d-none');
             mostrarProductos();
         }
+    });
+    $('#ams_vendedor').on('change', function() {
+        mostrarProductosSucursal();
     });
 
     function traspasarMercancia(producto, ams_nombre, ams_sucursal_origen) {
@@ -500,6 +510,44 @@
                 $("#ams_vendedor").html(vendedores);
             }
 
+        });
+    }
+
+
+    function mostrarProductosSucursal() {
+        var ams_id = $("#ams_vendedor").val();
+        var scl_url = $("#scl_url").val();
+        var datos = new FormData()
+        $.ajax({
+            type: 'GET',
+            url: scl_url + 'api/public/mostrar_productos_vendedor/' + ams_id,
+            // data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(respuesta) {
+                if (respuesta) {
+                    tbody_productos = "";
+                    respuesta.forEach(res => {
+                        tbody_productos +=
+                            `
+                                <tr id="${res.spds_id}">
+                                    <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
+                                    <td class="serie">${res.spds_serie_completa}</td>
+                                    <td>
+                                    </td>
+                                </tr>
+                             `;
+                    });
+                    $("#tbody_productos").html(tbody_productos);
+                    var numSerie = $(".serie").length;
+                    if (numSerie > 0) {
+                        $("#btnImprimirReporte").removeClass("d-none");
+                    } else {
+                        $("#btnImprimirReporte").addClass("d-none");
+                    }
+                }
+            }
         });
     }
 </script>
