@@ -1136,7 +1136,7 @@ class AppControlador
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Asignar productos',
+                            'label' => 'Carga de mercancia',
                             'href' => 'almacenes/registrar-almacenes'
                         ],
                         [
@@ -1489,7 +1489,7 @@ class AppControlador
                         ],
                         [
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
-                            'label' => 'Asignar productos',
+                            'label' => 'Carga de mercancia',
                             'href' => 'almacenes/registrar-almacenes'
                         ],
                         [

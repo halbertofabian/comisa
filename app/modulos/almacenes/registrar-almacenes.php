@@ -8,7 +8,7 @@
                             <label for="">Seleccionar tipo</label>
                             <select class="form-control" name="" id="tipo">
                                 <option selected value="CV">Cargar a vendedor</option>
-                                <option value="TM">Traspaso de mercancia</option>
+                                <option value="TM">Traslado de mercancia</option>
                             </select>
                         </div>
                     </div>
