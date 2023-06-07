@@ -53,6 +53,7 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th>DESCRIPCIÓN Y MODELO</th>
+                                    <th></th>
                                     <th># SERIE</th>
                                     <th></th>
                                 </tr>
@@ -127,6 +128,14 @@
             processData: false,
             contentType: false,
             success: function(res) {
+                $("#ams_vendedor").html("");
+                $("#tbody_productos").html("");
+                var numSerie = $(".serie").length;
+                if (numSerie > 0) {
+                    $("#btnImprimirReporte").removeClass("d-none");
+                } else {
+                    $("#btnImprimirReporte").addClass("d-none");
+                }
                 var almacenes = "";
                 if (tipo == "CV") {
                     almacenes += `<option value="">Selecciona un almacén</option>`; // Agregar opción vacía
@@ -165,33 +174,60 @@
             contentType: false,
             success: function(respuesta) {
                 if (respuesta) {
-                    var traspaso = false;
+                    var options = "";
+                    var datos_almacenes = new FormData()
+                    datos_almacenes.append('btnMostrarAlmacenesVM', true);
+                    $.ajax({
+                        type: 'POST',
+                        url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                        data: datos_almacenes,
+                        dataType: 'json',
+                        processData: false,
+                        contentType: false,
+                        success: function(almacenes) {
+                            almacenes.forEach(ams => {
+                                var selected = "";
+                                if (ams.ams_id == ams_id) {
+                                    selected = "selected";
+                                }
+                                options += `<option value="${ams.ams_id}" ${selected} ams_nombre="${ams.ams_nombre}">${ams.ams_nombre}</option>`;
+                            });
 
-                    tbody_productos = "";
-                    respuesta.forEach(res => {
-                        var button = "";
-                        if (tipo == "CV") {
-                            button = `<button class="btn btn-danger btnQuitarProducto" spds_id="${res.spds_id}" ams_nombre="${res.ams_nombre}" spds_serie_completa="${res.spds_serie_completa}"><i class="fa fa-times"></i></button>`;
-                        }
-                        tbody_productos +=
-                            `
+                            tbody_productos = "";
+                            respuesta.forEach(res => {
+                                var button = "";
+                                if (tipo == "CV") {
+                                    button = `<button class="btn btn-danger btnQuitarProducto" spds_id="${res.spds_id}" ams_nombre="${res.ams_nombre}" spds_serie_completa="${res.spds_serie_completa}"><i class="fa fa-times"></i></button>`;
+                                }
+                                tbody_productos +=
+                                    `
                                 <tr id="${res.spds_id}">
-                                    <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
-                                    <td class="serie">${res.spds_serie_completa}</td>
-                                    <td>
+                                    <td class="col-4">${res.mpds_descripcion}-${res.mpds_modelo}</td>
+                                    <td class="col-4">
+                                        <select class="form-control select2 btnCambiarAlmacen" name="" id="" spds_id="${res.spds_id}">
+                                            ${options}
+                                        </select>
+                                    </td>
+                                    <td class="serie col-4">${res.spds_serie_completa}</td>
+                                    <td class="col-4">
                                         ${button}
                                     </td>
                                 </tr>
                              `;
+                            });
+                            $("#tbody_productos").html(tbody_productos);
+                            $(".select2").select2();
+
+                            var numSerie = $(".serie").length;
+                            if (numSerie > 0) {
+                                $("#btnImprimirReporte").removeClass("d-none");
+                            } else {
+                                $("#btnImprimirReporte").addClass("d-none");
+                            }
+                        }
                     });
-                    $("#tbody_productos").html(tbody_productos);
-                    var numSerie = $(".serie").length;
-                    if (numSerie > 0) {
-                        $("#btnImprimirReporte").removeClass("d-none");
-                    } else {
-                        $("#btnImprimirReporte").addClass("d-none");
-                    }
                 }
+
             }
         });
     }
@@ -255,26 +291,8 @@
                         success: function(respuesta) {
                             if (respuesta.status) {
                                 toastr.success(respuesta.mensaje, '¡Muy bien!');
-                                tbody_productos =
-                                    `
-                                <tr id="${res.spds_id}">
-                                    <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
-                                    <td class="serie">${res.spds_serie_completa}</td>
-                                    <td>
-                                        <button class="btn btn-danger btnQuitarProducto" spds_id="${res.spds_id}" ams_nombre="${ams_nombre}" spds_serie_completa="${res.spds_serie_completa}"><i class="fa fa-times"></i></button>
-                                    </td>
-                                </tr>
-                             `;
-
-                                $("#tbody_productos").append(tbody_productos);
-
+                                mostrarProductos();
                                 $('#auto_complete_producto').val("");
-                                var numSerie = $(".serie").length;
-                                if (numSerie > 0) {
-                                    $("#btnImprimirReporte").removeClass("d-none");
-                                } else {
-                                    $("#btnImprimirReporte").addClass("d-none");
-                                }
                                 return false;
                             } else {
                                 toastr.error(respuesta.mensaje, '¡ERROR!');
@@ -368,6 +386,7 @@
                         $("#mdlMotivoCancelacion").modal("hide");
                         $("#bcra_nota").val("");
                         toastr.success(res.mensaje, '¡Muy bien!');
+                        mostrarProductos();
                         $("#" + spds_id).remove();
                         var numSerie = $(".serie").length;
                         if (numSerie > 0) {
@@ -380,7 +399,7 @@
                     }
                 } else {
                     toastr.error(res.mensaje, '¡ERROR!');
-                    quitarTraspasoMercancia
+                    mostrarProductos();
                 }
 
             }
@@ -406,9 +425,26 @@
             var scl_url = $('option:selected', $("#ams_id")).attr('scl_url');
             $("#scl_url").val(scl_url);
             $(".ams_almacen").removeClass('d-none');
+            $("#ams_vendedor").html("");
+
             mostrarVendedoresSucursal();
+
+            $("#tbody_productos").html("");
+            var numSerie = $(".serie").length;
+            if (numSerie > 0) {
+                $("#btnImprimirReporte").removeClass("d-none");
+            } else {
+                $("#btnImprimirReporte").addClass("d-none");
+            }
         } else {
             $(".ams_almacen").addClass('d-none');
+            $("#tbody_productos").html("");
+            var numSerie = $(".serie").length;
+            if (numSerie > 0) {
+                $("#btnImprimirReporte").removeClass("d-none");
+            } else {
+                $("#btnImprimirReporte").addClass("d-none");
+            }
             mostrarProductos();
         }
     });
@@ -436,29 +472,10 @@
             success: function(res) {
                 if (res.status) {
                     toastr.success(res.mensaje, '¡Muy bien!');
-                    tbody_productos =
-                        `
-                                <tr id="${producto.spds_id}">
-                                    <td>${producto.mpds_descripcion}-${producto.mpds_modelo}</td>
-                                    <td class="serie">${producto.spds_serie_completa}</td>
-                                    <td>
-                                        
-                                    </td>
-                                </tr>
-                             `;
-
-                    // <button class="btn btn-danger btnQuitarProducto" spds_id="${producto.spds_id}" ams_nombre="${ams_nombre}" spds_serie_completa="${producto.spds_serie_completa}"><i class="fa fa-times"></i></button>
-
-                    $("#tbody_productos").append(tbody_productos);
+                    mostrarProductosSucursal();
 
                     $('#auto_complete_producto').val("");
 
-                    var numSerie = $(".serie").length;
-                    if (numSerie > 0) {
-                        $("#btnImprimirReporte").removeClass("d-none");
-                    } else {
-                        $("#btnImprimirReporte").addClass("d-none");
-                    }
                 } else {
                     toastr.error(res.mensaje, '¡ERROR!');
                 }
@@ -504,9 +521,11 @@
             success: function(res) {
                 var vendedores = "";
                 vendedores += `<option value="">Selecciona vendedor</option>`; // Agregar opción vacía
-                res.forEach(ams => {
-                    vendedores += `<option value="${ams.ams_id}">${ams.ams_nombre}</option>`;
-                });
+                if (res) {
+                    res.forEach(ams => {
+                        vendedores += `<option value="${ams.ams_id}">${ams.ams_nombre}</option>`;
+                    });
+                }
                 $("#ams_vendedor").html(vendedores);
             }
 
@@ -527,12 +546,15 @@
             contentType: false,
             success: function(respuesta) {
                 if (respuesta) {
+
                     tbody_productos = "";
                     respuesta.forEach(res => {
                         tbody_productos +=
                             `
                                 <tr id="${res.spds_id}">
                                     <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
+                                    <td>
+                                    </td>
                                     <td class="serie">${res.spds_serie_completa}</td>
                                     <td>
                                     </td>
@@ -540,14 +562,62 @@
                              `;
                     });
                     $("#tbody_productos").html(tbody_productos);
+                    $(".select2").select2();
                     var numSerie = $(".serie").length;
                     if (numSerie > 0) {
                         $("#btnImprimirReporte").removeClass("d-none");
                     } else {
                         $("#btnImprimirReporte").addClass("d-none");
                     }
+
                 }
             }
         });
     }
+
+
+    $(document).on('change', '.btnCambiarAlmacen', function() {
+        var spds_almacen = $(this).val();
+        var spds_id = $(this).attr('spds_id');
+        var ams_nom = $('option:selected', $(this)).attr('ams_nombre');
+        var ams_nombre = $('option:selected', $("#ams_id")).attr('ams_nombre');
+        swal({
+            title: '¿Esta seguro de cambiar el producto a ' + ams_nom + '?',
+            text: 'Esta accion no es reversible',
+            icon: 'warning',
+            buttons: ['No', 'Si, cambiar'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData()
+                datos.append('spds_id', spds_id);
+                if (ams_nom != 'BODEGA') {
+                    datos.append('spds_almacen', spds_almacen);
+                    datos.append('spds_situacion', 'SALIDA');
+                }
+                datos.append('ams_nombre', ams_nombre);
+                datos.append('bcra_nota', '');
+                datos.append('btnAsignarAlmacen', true);
+                $.ajax({
+                    type: 'POST',
+                    url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            toastr.success(res.mensaje, '¡Muy bien!');
+                            mostrarProductos();
+                        } else {
+                            toastr.error(res.mensaje, '¡ERROR!');
+                            mostrarProductos();
+                        }
+                    }
+                });
+            } else {
+                mostrarProductos();
+            }
+        });
+    });
 </script>

@@ -440,6 +440,23 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarSeriesById2($spds_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_id);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarSeriesByPrmId($spds_prm_id)
     {
         try {
@@ -1021,6 +1038,22 @@ class AlmacenesModelo
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams['ams_id']);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarAlmacenesTipoVM(){
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_almacenes_ams WHERE ams_tipo IN('M','V') AND ams_estado = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
             $pps->execute();
             return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {

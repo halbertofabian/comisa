@@ -158,6 +158,11 @@ class AlmacenesAjax
         $res = AlmacenesModelo::mdlMostrarAlmacenByID($_POST['ams_id']);
         echo json_encode($res, true);
     }
+    public function ajaxMostrarAlmacenesVM()
+    {
+        $res = AlmacenesModelo::mdlMostrarAlmacenesTipoVM();
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -256,4 +261,8 @@ if (isset($_POST['btnEliminarSerie'])) {
 if (isset($_POST['btnObtenerAlmacenByID'])) {
     $obtenerAlmacen = new AlmacenesAjax();
     $obtenerAlmacen->ajaxObtenerAlmacenByID();
+}
+if (isset($_POST['btnMostrarAlmacenesVM'])) {
+    $mostrarAlmacenesVM = new AlmacenesAjax();
+    $mostrarAlmacenesVM->ajaxMostrarAlmacenesVM();
 }
