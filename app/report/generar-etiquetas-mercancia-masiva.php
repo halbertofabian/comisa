@@ -15,11 +15,11 @@ class imprimirFactura
     {
         $etiquetas = AlmacenesModelo::mdlMostrarSeriesByPrmId($this->prm_id);
 
-        // $pageLayout = array(62,100); //  or array($height, $width) 
-        $pageLayout = array(29, 90); //  or array($height, $width) 
+        $pageLayout = array(62,100); //  or array($height, $width) 
+        // $pageLayout = array(29, 90); //  or array($height, $width) 
 
-        // $pdf = new TCPDF('P', 'mm', $pageLayout, true, 'UTF-8', false);
-        $pdf = new TCPDF('L', 'mm', $pageLayout, true, 'UTF-8', false);
+        $pdf = new TCPDF('P', 'mm', $pageLayout, true, 'UTF-8', false);
+        // $pdf = new TCPDF('L', 'mm', $pageLayout, true, 'UTF-8', false);
 
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
