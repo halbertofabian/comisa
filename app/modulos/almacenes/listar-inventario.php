@@ -1,6 +1,11 @@
 <div class="row btnEmpezarInventario">
     <div class="col-12 mb-3">
-        <button type="button" class="btn btn-success float-right" id="btnEmpezarInventario"><i class="fa fa-list"></i> Empezar inventario</button>
+        <?php
+        $diaSemana = date('N');
+        if ($diaSemana == 5) :
+        ?>
+            <button type="button" class="btn btn-success float-right" id="btnEmpezarInventario"><i class="fa fa-list"></i> Empezar inventario</button>
+        <?php endif; ?>
     </div>
 </div>
 <div class="row">
@@ -74,7 +79,7 @@
                     $('.btnEmpezarInventario').addClass('d-none')
                     $('.btnCerrarInventario').removeClass('d-none')
                     $('.itr_if_usr').attr('readonly', false);
-                }else{
+                } else {
                     $('.btnEmpezarInventario').removeClass('d-none')
                     $('.btnCerrarInventario').addClass('d-none')
                     $('.itr_if_usr').attr('readonly', true);
@@ -166,38 +171,54 @@
     });
 
     $('#btnEmpezarInventario').on('click', function() {
-        var datos = new FormData()
-        datos.append('btnEmpezarInventario', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.status) {
-                    swal({
-                        title: '¡Bien!',
-                        text: res.mensaje,
-                        type: 'success',
-                        icon: 'success'
-                    }).then(function() {
-                        window.localStorage.setItem('mostrar_inventario', true)
-                        mostrarTodoElInventario();
-                    });
-                } else {
-                    swal({
-                        title: 'Error',
-                        text: res.mensaje,
-                        icon: 'error',
-                        buttons: [false, 'Intentar de nuevo'],
-                        dangerMode: true,
-                    }).then((willDelete) => {
-                        if (willDelete) {} else {}
-                    })
-                }
-            }
+        swal({
+            title: '¿Esta seguro de empezar el inventario?',
+            text: 'Esta accion no es reversible',
+            icon: 'warning',
+            buttons: ['No', 'Si, empezar'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData()
+                datos.append('btnEmpezarInventario', true);
+                $.ajax({
+                    type: 'POST',
+                    url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            swal({
+                                title: '¡Bien!',
+                                text: res.mensaje,
+                                type: 'success',
+                                icon: 'success'
+                            }).then(function() {
+                                window.localStorage.setItem('mostrar_inventario', true)
+                                mostrarTodoElInventario();
+                                reporteInventario();
+                            });
+                        } else {
+                            swal({
+                                title: 'Error',
+                                text: res.mensaje,
+                                icon: 'error',
+                                buttons: [false, 'Intentar de nuevo'],
+                                dangerMode: true,
+                            }).then((willDelete) => {
+                                if (willDelete) {} else {}
+                            })
+                        }
+                    }
+                });
+            } else {}
         });
+
     });
+
+    function reporteInventario() {
+        window.open(urlApp + "app/report/reporte-inventario.php?reporte=true", "_blank");
+    }
 </script>

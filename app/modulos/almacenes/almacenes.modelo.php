@@ -903,7 +903,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "SELECT itr.*, mpds.* FROM tbl_inventario_itr itr JOIN tbl_modelos_productos_mpds mpds ON itr.itr_id_modelo = mpds.mpds_id WHERE itr.itr_estado = 'PENDIENTE'";
+            $sql = "SELECT itr.*, mpds.* FROM tbl_inventario_itr itr JOIN tbl_modelos_productos_mpds mpds ON itr.itr_id_modelo = mpds.mpds_id WHERE itr.itr_estado = 'PENDIENTE' ORDER BY mpds.mpds_modelo ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
