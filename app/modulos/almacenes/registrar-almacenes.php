@@ -18,6 +18,7 @@
                         <div class="form-group">
                             <label for="">Almacenes</label>
                             <input type="hidden" name="" id="scl_url">
+                            <input type="hidden" id="usr_nombre" value="<?= $_SESSION['session_usr']['usr_nombre'] ?>">
                             <select class="form-control select2" name="" id="ams_id">
                                 <option value="">-Seleccionar-</option>
                             </select>
@@ -412,7 +413,8 @@
         if (tipo == 'TM') {
             var scl_url = $("#scl_url").val();
             var ams_vendedor = $("#ams_vendedor").val();
-            window.open(scl_url + "app/report/reporte-mercancia.php?ams_id=" + ams_vendedor, "_blank");
+            var usr_nombre = $("#usr_nombre").val();
+            window.open(scl_url + "app/report/reporte-mercancia.php?ams_id=" + ams_vendedor + "&usr_nombre=" + btoa(usr_nombre), "_blank");
         } else {
             var ams_id = $("#ams_id").val();
             window.open(urlApp + "app/report/reporte-mercancia.php?ams_id=" + ams_id, "_blank");
