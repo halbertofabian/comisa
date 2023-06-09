@@ -74,6 +74,7 @@ if (isset($_GET['reporte'])) {
     //
     $itr = AlmacenesModelo::mdlFichaActualInventario();
     $list_pvs = ProveedoresModelo::mdlMostrarProveedores();
+    $colspan = count($list_pvs);
     $proveedores = "";
     $colores = array('#E5C0A1', '#E5DEA1', '#A1E5B0', '#A1DEE5','#A2A1E5'.'#F16E83');
     $array_colores = array();
@@ -125,7 +126,7 @@ if (isset($_GET['reporte'])) {
     <thead>
         <tr style="background-color: #9AD1F7;">
             <th colspan="3"></th>
-            <th colspan="3">COMPRAS</th>
+            <th colspan="$colspan">COMPRAS</th>
             <th></th>
             <th colspan="2">TRASLADOS</th>
             <th></th>
