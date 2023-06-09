@@ -83,8 +83,8 @@ if (isset($_GET['ams_id'])) {
     $usr_usuario = isset($_GET['usr_nombre']) ? urldecode($_GET['usr_nombre']) : $_SESSION['session_usr']['usr_nombre'];
     $sucursales = isset($_GET['sucursales']) ? json_decode(urldecode($_GET['sucursales']), true) : "";
     if (!empty($sucursales)) {
-        $datos_sucursales = "SUCURSAL ORIGEN: <strong>{$sucursales[0]}</strong><br>
-        SUCURSAL DESTINO: <strong>{$sucursales[1]}</strong>";
+        $datos_sucursales = "SUCURSAL ORIGEN: <br> <strong>{$sucursales[0]}</strong><br>
+        SUCURSAL DESTINO: <br> <strong>{$sucursales[1]}</strong>";
     } else {
         $datos_sucursales = ""; // Otra opción es establecer un valor predeterminado si no se proporciona el parámetro
     }
