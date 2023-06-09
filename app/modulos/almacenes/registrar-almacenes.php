@@ -18,6 +18,7 @@
                         <div class="form-group">
                             <label for="">Almacenes</label>
                             <input type="hidden" name="" id="scl_url">
+                            <input type="hidden" id="scl_nombre" value="<?= $_SESSION['session_suc']['scl_nombre'] ?>">
                             <input type="hidden" id="usr_nombre" value="<?= $_SESSION['session_usr']['usr_nombre'] ?>">
                             <select class="form-control select2" name="" id="ams_id">
                                 <option value="">-Seleccionar-</option>
@@ -414,7 +415,12 @@
             var scl_url = $("#scl_url").val();
             var ams_vendedor = $("#ams_vendedor").val();
             var usr_nombre = $("#usr_nombre").val();
-            window.open(scl_url + "app/report/reporte-mercancia.php?ams_id=" + ams_vendedor + "&usr_nombre=" + encodeURIComponent(usr_nombre), "_blank");
+            var scl_nombre_origen = $("#scl_nombre").val();
+            var scl_nombre_destino = $('option:selected', $("#ams_id")).attr('ams_nombre');
+            var array_sucursales = [scl_nombre_origen, scl_nombre_destino];
+            var encoded_array = encodeURIComponent(JSON.stringify(array_sucursales));
+
+            window.open(scl_url + "app/report/reporte-mercancia.php?ams_id=" + ams_vendedor + "&usr_nombre=" + encodeURIComponent(usr_nombre) + "&sucursales=" + encoded_array, "_blank");
         } else {
             var ams_id = $("#ams_id").val();
             window.open(urlApp + "app/report/reporte-mercancia.php?ams_id=" + ams_id, "_blank");
