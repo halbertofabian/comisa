@@ -72,15 +72,20 @@ if (isset($_GET['ams_id'])) {
     //
     $pds = AlmacenesModelo::mdlMostrarProductosByAlmacenID($_GET['ams_id']);
     $usr = AlmacenesModelo::mdlMostrarAlmacenesByID($_GET['ams_id']);
-    if($usr['usr_nombre']){
+    if ($usr['usr_nombre']) {
         $usuario = $usr['usr_nombre'];
-    }else{
+    } else {
         $usuario = AlmacenesModelo::mdlMostrarAlmacenByID($_GET['ams_id'])['ams_nombre'];
     }
 
     $scl_nombre = $_SESSION['session_suc']['scl_nombre'];
     $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
     $usr_usuario = isset($_GET['usr_nombre']) ? urldecode($_GET['usr_nombre']) : $_SESSION['session_usr']['usr_nombre'];
+    $sucursales = isset($_GET['sucursales']) ? urldecode(json_decode($_GET['sucursales'])) : "";
+    if ($sucursales != "") {
+        $datos_sucursales = "SUCURSAL ORIGEN:<strong> $sucursales[0]</strong><br>
+        SUCURSAL DESTINO:<strong> $sucursales[1]</strong>";
+    }
     //preArray($listp);
 
     // Set some content to print
@@ -99,7 +104,8 @@ if (isset($_GET['ams_id'])) {
                 <td style="text-align: center;">
                 <br><br>
                 TIPO:<strong> SALIDA</strong> <br>
-                FECHA:<strong> $fecha_hoy</strong>
+                FECHA:<strong> $fecha_hoy</strong><br>
+                $datos_sucursales
                 </td>
             </tr>
             <tr>
