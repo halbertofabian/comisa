@@ -59,7 +59,7 @@ if (isset($_GET['reporte'])) {
     $pdf->setPrintFooter(false);
     // Add a page
     // This method has several options, check the source code documentation for more information.
-    $pdf->AddPage('L');
+    $pdf->AddPage('P');
 
     // set text shadow effect
     // $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
