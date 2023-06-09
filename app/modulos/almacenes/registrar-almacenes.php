@@ -414,7 +414,7 @@
             var scl_url = $("#scl_url").val();
             var ams_vendedor = $("#ams_vendedor").val();
             var usr_nombre = $("#usr_nombre").val();
-            window.open(scl_url + "app/report/reporte-mercancia.php?ams_id=" + ams_vendedor + "&usr_nombre=" + btoa(usr_nombre), "_blank");
+            window.open(scl_url + "app/report/reporte-mercancia.php?ams_id=" + ams_vendedor + "&usr_nombre=" + encodeURIComponent(usr_nombre), "_blank");
         } else {
             var ams_id = $("#ams_id").val();
             window.open(urlApp + "app/report/reporte-mercancia.php?ams_id=" + ams_id, "_blank");
