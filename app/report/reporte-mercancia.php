@@ -80,7 +80,7 @@ if (isset($_GET['ams_id'])) {
 
     $scl_nombre = $_SESSION['session_suc']['scl_nombre'];
     $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
-    $usr_usuario = $_SESSION['session_usr']['usr_nombre'];
+    $usr_usuario = isset($_GET['usr_nombre']) ? base64_decode($_GET['usr_nombre']) : $_SESSION['session_usr']['usr_nombre'];
     //preArray($listp);
 
     // Set some content to print
