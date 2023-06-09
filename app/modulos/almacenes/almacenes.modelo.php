@@ -879,6 +879,40 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarInventarioByProveedor2($campo, $itr_id_modelo)
+    {
+        try {
+            //code...
+            $sql = "SELECT $campo AS clave FROM tbl_inventario_itr WHERE itr_id_modelo = ? AND itr_estado != 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id_modelo);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarInventarioSumCampo($campo, $itr_ficha)
+    {
+        try {
+            //code...
+            $sql = "SELECT SUM($campo) AS total FROM tbl_inventario_itr WHERE itr_ficha = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_ficha);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlActualizarInventarioFinal($itr_if, $itr_id)
     {
@@ -906,6 +940,23 @@ class AlmacenesModelo
             $sql = "SELECT itr.*, mpds.* FROM tbl_inventario_itr itr JOIN tbl_modelos_productos_mpds mpds ON itr.itr_id_modelo = mpds.mpds_id WHERE itr.itr_estado = 'PENDIENTE' ORDER BY mpds.mpds_modelo ASC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarInventarioByFicha($itr_ficha)
+    {
+        try {
+            //code...
+            $sql = "SELECT itr.*, mpds.* FROM tbl_inventario_itr itr JOIN tbl_modelos_productos_mpds mpds ON itr.itr_id_modelo = mpds.mpds_id WHERE itr.itr_estado != 'PENDIENTE' AND itr.itr_ficha = ? ORDER BY mpds.mpds_modelo ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_ficha);
             $pps->execute();
             return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {

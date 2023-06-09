@@ -1,5 +1,34 @@
-<div class="row btnEmpezarInventario">
-    <div class="col-12 mb-3">
+<div class="row">
+    <div class="col-md-2 col-12">
+        <div class="form-group">
+            <label for="fcbz_ano">Año</label>
+            <select class="form-control select2" name="fcbz_ano" id="fcbz_ano">
+                <!-- <option value="">Selecionar ruta</option> -->
+                <?php
+                for ($i = 2000; $i <= date('Y'); $i++) :
+                    $selected = '';
+                    if (date('Y') == $i) {
+                        $selected = 'selected';
+                    }
+                ?>
+                    <option value="<?= $i ?>" <?= $selected ?>><?= $i ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3 col-12">
+        <div class="form-group">
+            <label for="rto_ficha">Ficha</label>
+            <select class="form-control select2" name="rto_ficha" id="rto_ficha">
+
+            </select>
+        </div>
+    </div>
+    <div class="col-md-2 col-12">
+        <br>
+        <button type="button" class="btn btn-primary btnGenerarReporFicha"><i class="fa fa-file-pdf-o"></i> Reporte</button>
+    </div>
+    <div class="col-md-5 col-12 mb-3 btnEmpezarInventario">
         <?php
         $diaSemana = date('N');
         if ($diaSemana == 5) :
@@ -33,7 +62,42 @@
 <script>
     $(document).ready(function() {
         mostrarTodoElInventario();
+        var fcbz_ano = $("#fcbz_ano").val();
+        mostratFichasAnio(fcbz_ano);
     });
+
+    function mostratFichasAnio(fcbz_ano) {
+        $('#rto_ficha option').remove();
+        var datos = new FormData();
+        datos.append("fcbz_ano", fcbz_ano);
+        datos.append("btnConsultarFichasByAnio", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(res) {
+                res.forEach(element => {
+                    $('#rto_ficha').prepend(`<option value='${element.fcbz_numero}' >Ficha ${element.fcbz_numero} - DEL ${element.fcbz_fecha_inicio} AL ${element.fcbz_fecha_termino} </option>`);
+                });
+                $("#rto_ficha option:selected").last().val();
+                // var opciones = $("#rto_ficha option");
+                // var opcionSeleccionada = $("#rto_ficha option:selected");
+                // var indiceSeleccionado = opciones.index(opcionSeleccionada);
+
+                // if (indiceSeleccionado > 0) {
+                //     var opcionAnterior = opciones.eq(indiceSeleccionado - 1).val();
+                //     $('#rto_ficha').val(opcionAnterior).trigger('change');
+                // } else {
+                //     console.log("No hay opción anterior");
+                // }
+            }
+
+        })
+    }
 
     function mostrarTodoElInventario() {
         var datos = new FormData()
@@ -60,7 +124,7 @@
                         <td>${itr.mpds_descripcion + '-' + itr.mpds_modelo}</td>
                         <td>
                             <div class="input-group">
-                                <input type="number" class="form-control itr_if_usr" id="itr_if_usr${itr.itr_id}" value="${itr.itr_if_usr}" mpds_descripcion="${itr.mpds_descripcion}" placeholder="Ingrese el inventario final" readonly>
+                                <input type="number" class="form-control itr_if_usr" id="itr_if_usr${itr.itr_id}" value="${itr.itr_if}" mpds_descripcion="${itr.mpds_descripcion}" placeholder="Ingrese el inventario final" readonly>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary btnAgregarInventario" type="button" itr_id="${itr.itr_id}">AGREGAR</button>
                                 </div>
@@ -221,4 +285,14 @@
     function reporteInventario() {
         window.open(urlApp + "app/report/reporte-inventario.php?reporte=true", "_blank");
     }
+
+    $("#fcbz_ano").on("change", function() {
+        var fcbz_ano = $(this).val();
+        mostratFichasAnio(fcbz_ano)
+    })
+
+    $(document).on('click', '.btnGenerarReporFicha', function() {
+        var rto_ficha = $("#rto_ficha").val();
+        window.open(urlApp + "app/report/reporte-inventario-ficha.php?reporte=true&rto_ficha=" + rto_ficha, "_blank");
+    });
 </script>

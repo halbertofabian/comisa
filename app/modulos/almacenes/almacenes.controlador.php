@@ -586,7 +586,7 @@ class AlmacenesControlador
         foreach ($inventario as $key => $itr) {
             $pvs = ProductosModelo::mdlMostrarModelosById($itr['itr_id_modelo']);
             $campo = AlmacenesModelo::mdlMostrarInventarioByProveedor($pvs['pvs_clave'], $itr['itr_id_modelo']);
-            $itr_if = $itr['itr_ii'] + $campo['clave'] + $itr['itr_devoluciones'] + $itr['itr_traslado_1'] - $itr['itr_ventas'] - $itr['itr_traslado_2'];
+            $itr_if = $itr['itr_ii'] + $campo['clave'] + $itr['itr_devoluciones'] + $itr['itr_traslado_1'] - $itr['itr_ventas'] - $itr['itr_traslado_2'] - $itr['itr_borrado'];
             $res = AlmacenesModelo::mdlActualizarInventarioFinal($itr_if, $itr['itr_id']);
         }
         return array(
@@ -642,6 +642,7 @@ class AlmacenesControlador
             );
         } else {
             if ($spds_codigo == $spds['spds_codigo']) {
+                AlmacenesControlador::ctrActualizarInventario('itr_borrado', $spds_id);
                 $res = AlmacenesModelo::mdlEliminarSerie($spds_id);
                 if ($res) {
                     return array(

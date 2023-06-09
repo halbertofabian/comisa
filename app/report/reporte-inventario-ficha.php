@@ -88,7 +88,7 @@ if (isset($_GET['reporte'])) {
             $pvs['pvs_clave'] => [$color])
         );
 
-        $sum_proveedor = AlmacenesModelo::mdlMostrarInventarioSumCampo($pvs['pvs_clave'], $itr['itr_ficha']);
+        $sum_proveedor = AlmacenesModelo::mdlMostrarInventarioSumCampo($pvs['pvs_clave'], $_GET['rto_ficha']);
         $total_proveedores_td .= '<td><strong>'.$sum_proveedor['total'].'</strong></td>';
     }
 
@@ -114,7 +114,7 @@ if (isset($_GET['reporte'])) {
                 <td style="text-align: center;">
                 <br><br>
                 FECHA:<strong> $fecha_hoy</strong><br><br>
-                FICHA:<strong> $itr[itr_ficha]</strong> 
+                FICHA:<strong> $_GET[rto_ficha]</strong> 
 
                 </td>
             </tr>
@@ -158,7 +158,7 @@ EOF;
     $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
 
 
-    $inventario = AlmacenesModelo::mdlMostrarInventario();
+    $inventario = AlmacenesModelo::mdlMostrarInventarioByFicha($_GET['rto_ficha']);
     $campos = "";
     $total_inicial = 0;
     $total_ventas = 0;
@@ -181,10 +181,12 @@ EOF;
         $pvs = ProductosModelo::mdlMostrarModelosById($itr['itr_id_modelo']);
         $campos = ""; // Inicializar la variable para almacenar los campos en cada iteración
 
+        // Generar los campos correspondientes a cada proveedor
         foreach ($list_pvs as $key => $pvs) {
-            $campo = AlmacenesModelo::mdlMostrarInventarioByProveedor($pvs['pvs_clave'], $itr['itr_id_modelo']);
+            $campo = AlmacenesModelo::mdlMostrarInventarioByProveedor2($pvs['pvs_clave'], $itr['itr_id_modelo']);
             $campos .= '<td style="background-color: '.$array_colores[$key][$pvs['pvs_clave']][0].'">'.$campo['clave'].'</td>';
         }
+
         # code...
         $tps_body = <<<EOF
 
@@ -237,7 +239,6 @@ EOF;
     
     
             $pdf->writeHTMLCell(0, 0, '', '', $totales, 0, 1, 0, true, '', true);
-
 
     //--------------------------
 
