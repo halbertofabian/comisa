@@ -27,7 +27,7 @@
                         </div>
                         <div class="col-md-3 col-12">
                             <div class="form-group">
-                              <label for="prm_tipo">Tipo</label>
+                              <label for="prm_tipo">TIPO</label>
                               <select class="form-control" name="prm_tipo" id="prm_tipo" required>
                                 <option selected value="COMPRA">COMPRA</option>
                                 <option value="DEVOLUCION">DEVOLUCIÓN</option>
