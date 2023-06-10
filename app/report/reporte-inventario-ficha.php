@@ -175,9 +175,9 @@ EOF;
     $total_final_usr = 0;
     foreach ($inventario as $key => $itr) {
 
-        if ($itr['itr_if'] == 0 && $itr['itr_if_usr'] == 0) {
-            continue;
-        }
+        // if ($itr['itr_if'] == 0 && $itr['itr_if_usr'] == 0) {
+        //     continue;
+        // }
         $total_inicial += $itr['itr_ii'];
         $total_ventas += $itr['itr_ventas'];
         $total_devoluciones += $itr['itr_devoluciones'];
