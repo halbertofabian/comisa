@@ -126,7 +126,7 @@
                             <div class="input-group">
                                 <input type="number" class="form-control itr_if_usr" id="itr_if_usr${itr.itr_id}" value="${itr.itr_if}" mpds_descripcion="${itr.mpds_descripcion}" placeholder="Ingrese el inventario final" readonly>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary btnAgregarInventario" type="button" itr_id="${itr.itr_id}">AGREGAR</button>
+                                    <button class="btn btn-outline-secondary btnAgregarInventario" disabled type="button" itr_id="${itr.itr_id}">AGREGAR</button>
                                 </div>
                             </div>
                         </td>
@@ -143,10 +143,12 @@
                     $('.btnEmpezarInventario').addClass('d-none')
                     $('.btnCerrarInventario').removeClass('d-none')
                     $('.itr_if_usr').attr('readonly', false);
+                    $('.btnAgregarInventario').attr('disabled', false);
                 } else {
                     $('.btnEmpezarInventario').removeClass('d-none')
                     $('.btnCerrarInventario').addClass('d-none')
                     $('.itr_if_usr').attr('readonly', true);
+                    $('.btnAgregarInventario').attr('disabled', true);
                 }
             }
         });
