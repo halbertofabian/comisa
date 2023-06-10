@@ -163,6 +163,18 @@ class AlmacenesAjax
         $res = AlmacenesModelo::mdlMostrarAlmacenesTipoVM();
         echo json_encode($res, true);
     }
+    public function ajaxCambiarProductoContrato()
+    {
+        $res = AlmacenesControlador::ctrCambiarProductosContrato($_POST);
+
+        echo json_encode($res, true);
+    }
+    public function ajaxBuscarProductoAutocomplete()
+    {
+        $respuesta = AlmacenesModelo::mdlMostrarSeriesByAutocomplete($_POST['auto_complete_producto2']);
+
+        echo json_encode($respuesta, true);
+    }
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -265,4 +277,12 @@ if (isset($_POST['btnObtenerAlmacenByID'])) {
 if (isset($_POST['btnMostrarAlmacenesVM'])) {
     $mostrarAlmacenesVM = new AlmacenesAjax();
     $mostrarAlmacenesVM->ajaxMostrarAlmacenesVM();
+}
+if (isset($_POST['btnCambiarProductoContrato'])) {
+    $cambiarProducto = new AlmacenesAjax();
+    $cambiarProducto->ajaxCambiarProductoContrato();
+}
+if (isset($_POST['auto_complete_producto2'])) {
+    $obtenerProducto2 = new AlmacenesAjax();
+    $obtenerProducto2->ajaxBuscarProductoAutocomplete();
 }

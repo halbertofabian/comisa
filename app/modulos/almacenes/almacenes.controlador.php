@@ -381,6 +381,14 @@ class AlmacenesControlador
     }
     public static function ctrAsignarAlmacenesContrato()
     {
+        $ctr_fecha_contrato = $_POST['ctr_fecha_contrato'];
+        $fcbz = CobranzaModelo::mdlFichaActual();
+        $validar = AppControlador::validarFechaEnRango($fcbz['fcbz_fecha_inicio'], $fcbz['fcbz_fecha_termino'], $ctr_fecha_contrato);
+        if ($validar) {
+            $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $_POST['spds_id']);
+        } else {
+            $itr = AlmacenesControlador::ctrActualizarInventario("itr_traslado_2", $_POST['spds_id']);
+        }
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoContrato();
         $datos = array(
             'spds_almacen' => $ams['ams_id'],
@@ -399,7 +407,6 @@ class AlmacenesControlador
                 'bcra_spds_id' => $_POST['spds_id'],
             );
             $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
-            $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $_POST['spds_id']);
             return array(
                 'status' => true,
                 'mensaje' => 'Se agrego el producto correctamente.',
@@ -434,7 +441,7 @@ class AlmacenesControlador
                     'bcra_spds_id' => $pds['spds_id'],
                 );
                 $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
-                $itr = AlmacenesControlador::ctrActualizarInventario("itr_devoluciones", $_POST['spds_id']);
+                $itr = AlmacenesControlador::ctrActualizarInventario("itr_devoluciones", $pds['spds_id']);
                 return array(
                     'status' => true,
                     'mensaje' => 'Se quito el producto correctamente.',
@@ -550,6 +557,11 @@ class AlmacenesControlador
         $spds = AlmacenesModelo::mdlMostrarSeriesById($spds_id);
         $itr_id = AlmacenesModelo::mdlActualizarInventario($campo, $spds['spds_modelo']);
     }
+    public static function ctrActualizarInventario2($campo, $spds_id)
+    {
+        $spds = AlmacenesModelo::mdlMostrarSeriesById($spds_id);
+        $itr_id = AlmacenesModelo::mdlActualizarInventario2($campo, $spds['spds_modelo']);
+    }
 
     public static function ctrCerrarInventario()
     {
@@ -661,6 +673,54 @@ class AlmacenesControlador
                     'mensaje' => 'El codigo ingresado es incorrecto.'
                 );
             }
+        }
+    }
+
+    public static function ctrCambiarProductosContrato($pds)
+    {
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+        if (isset($pds['spds_id'])) {
+            $ctr_fecha_contrato = $pds['ctr_fecha_contrato'];
+            $fcbz = CobranzaModelo::mdlFichaActual();
+            $validar = AppControlador::validarFechaEnRango($fcbz['fcbz_fecha_inicio'], $fcbz['fcbz_fecha_termino'], $ctr_fecha_contrato);
+            if ($validar) {
+                $itr = AlmacenesControlador::ctrActualizarInventario2("itr_ventas", $pds['spds_id']);
+            } else {
+                $itr = AlmacenesControlador::ctrActualizarInventario("itr_traslado_1", $pds['spds_id']);
+            }
+            $datos = array(
+                'spds_almacen' => $pds['ams_id'],
+                'spds_situacion' => $ams['ams_id'] == $pds['ams_id'] ? '-' : 'SALIDA',
+                'spds_ultima_mod' => FECHA,
+                'spds_id' => $pds['spds_id'],
+            );
+
+            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+
+            if ($res) {
+                $array_bcra = array(
+                    'bcra_movimiento' => 'Cambio de articulo',
+                    'bcra_fecha' => FECHA,
+                    'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                    'bcra_nota' => 'CAMBIO DE ARTICULO DEL CONTRATO ' . $pds['ctr_id'] . ' POR MOTIVO DE ' . strtoupper($pds['motivo_cambio']),
+                    'bcra_spds_id' => $pds['spds_id'],
+                );
+                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                return array(
+                    'status' => true,
+                    'mensaje' => 'El cambio del producto se hizo correctamente.',
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo cambiar el producto correctamente',
+                );
+            }
+        } else {
+            return array(
+                'status' => true,
+                'mensaje' => 'Se cambio el producto correctamente.',
+            );
         }
     }
 }

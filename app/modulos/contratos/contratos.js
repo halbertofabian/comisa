@@ -2162,7 +2162,7 @@ $(document).ready(function () {
                 method: "POST",
                 dataType: "json",
                 data: {
-                    auto_complete_producto: request.term
+                    auto_complete_producto2: request.term
                 },
                 success: function (data) {
                     response(data);
@@ -2173,6 +2173,7 @@ $(document).ready(function () {
         minLength: 2,
         select: function (event, ui) {
             var ctrs_id = $("#ctrs_id").val();
+            var ctr_fecha_contrato = $("#ctr_fecha_contrato").val();
             var res = ui.item;
             var encontrado = false;
             $(".serie").each(function () {
@@ -2191,6 +2192,7 @@ $(document).ready(function () {
             var datos = new FormData();
             datos.append('spds_id', res.spds_id);
             datos.append('ctrs_id', ctrs_id);
+            datos.append('ctr_fecha_contrato', ctr_fecha_contrato);
             datos.append('btnAsignarAlmacenContrato', true);
             $.ajax({
                 type: 'POST',
@@ -2207,7 +2209,10 @@ $(document).ready(function () {
                             <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
                             <td class="serie">${res.spds_serie_completa}</td>
                             <td>
-                                <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}" sku="${res.spds_serie_completa}"><i class="fa fa-times"></i> Cancelar</button>
+                                <div class="btn-group" role="group" aria-label="">
+                                    <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}" sku="${res.spds_serie_completa}"><i class="fa fa-times"></i> Cancelar</button>
+                                    <button type="button" class="btn btn-primary btnCambiarProducto2" sku="${res.spds_serie_completa}" spds_id="${res.spds_id}"><i class="fa fa-exchange"></i> Cambio</button>
+                                </div>
                             </td>
                         </tr>
                         `;
@@ -2330,6 +2335,7 @@ function guardarModelosProductos() {
             if (respuesta.status) {
                 toastr.success(respuesta.mensaje, '¡Muy bien!');
                 $("#mdlMotivoCancelacion").modal("hide");
+                $("#mdlCambioDeMercancia").modal("hide");
                 $("#bcra_nota").val("");
             } else {
                 toastr.error(respuesta.mensaje, '¡ERROR!');
@@ -2338,3 +2344,75 @@ function guardarModelosProductos() {
         }
     })
 }
+
+
+$(document).on("click", ".btnCambiarProducto2", function () {
+    var sku = $(this).attr("sku");
+    var spds_id = $(this).attr("spds_id");
+    
+    $("#spds_id_cambio").val(spds_id);
+    $("#sku_cambio").val(sku);
+    $("#ams_id_cambio").val("").trigger('change');
+    $("#motivo_cambio").val("");
+    $("#mdlCambioDeMercancia").modal('show');
+
+});
+$(document).on("click", "#btnCambiarProducto2", function () {
+    var ctr_id = $("#ctr_id").val();
+    var ams_id = $("#ams_id_cambio").val();
+    var motivo_cambio = $("#motivo_cambio").val();
+    var sku = $("#sku_cambio").val();
+    var spds_id = $("#spds_id_cambio").val();
+    var ctr_fecha_contrato = $("#ctr_fecha_contrato").val();
+
+    if(ams_id == ""){
+        return toastr.warning("Debe de seleccionar el almacen", 'ADVERTENCIA!');
+    }
+    if(motivo_cambio == ""){
+        return toastr.warning("El motivo es obligatorio", 'ADVERTENCIA!');
+    }
+    
+    var datos = new FormData();
+    if (spds_id != "") {
+        datos.append('spds_id', spds_id);
+    }
+    datos.append('ctr_id', ctr_id);
+    datos.append('ams_id', ams_id);
+    datos.append('motivo_cambio', motivo_cambio);
+    datos.append('ctr_fecha_contrato', ctr_fecha_contrato);
+    datos.append('btnCambiarProductoContrato', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            if (res.status) {
+                var products = $("#productos_contratos").val();
+                var productos = JSON.parse(products);
+                for (var i = productos.length; i--;) {
+                    if (productos[i].sku === sku) {
+                        productos.splice(i, 1);
+                    }
+                }
+
+                $("#" + sku).remove();
+                // $(this).closest('tr').remove();
+                $("#productos_contratos").val(JSON.stringify(productos));
+
+
+                if (productos == "") {
+                    data = [];
+                    $("#productos_contratos").val("[]");
+                }
+
+                guardarModelosProductos();
+            } else {
+                toastr.error(res.mensaje, '¡ERROR!');
+            }
+
+        }
+    });
+});

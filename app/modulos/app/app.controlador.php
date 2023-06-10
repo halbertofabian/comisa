@@ -1695,15 +1695,15 @@ class AppControlador
     {
         $almacenes = AlmacenesModelo::mdlMostrarAlmacenesByTipoDestino();
         $datos = array();
-        foreach($almacenes as $ams){
-            if($ams['ams_nombre'] == 'COMISA TUXTEPEC OAXACA'){
+        foreach ($almacenes as $ams) {
+            if ($ams['ams_nombre'] == 'COMISA TUXTEPEC OAXACA') {
                 $dato = array(
                     'ams_id' => $ams['ams_id'],
                     'ams_nombre' => $ams['ams_nombre'],
                     'scl_url' => 'https://tuxtepec-comisa.softmor.com/'
                 );
             }
-            if($ams['ams_nombre'] == 'COMISA TIERRA BLANCA'){
+            if ($ams['ams_nombre'] == 'COMISA TIERRA BLANCA') {
                 $dato = array(
                     'ams_id' => $ams['ams_id'],
                     'ams_nombre' => $ams['ams_nombre'],
@@ -1711,28 +1711,41 @@ class AppControlador
                     // 'scl_url' => 'https://pruebas-comisa.softmor.com/'
                 );
             }
-            if($ams['ams_nombre'] == 'COMISA COSAMALOAPAN'){
+            if ($ams['ams_nombre'] == 'COMISA COSAMALOAPAN') {
                 $dato = array(
                     'ams_id' => $ams['ams_id'],
                     'ams_nombre' => $ams['ams_nombre'],
                     'scl_url' => 'https://cosamaloapan-comisa.softmor.com/'
                 );
             }
-            
+
             array_push($datos, $dato);
         }
         return $datos;
     }
 
-    public static function separarNumeros($input) {
+    public static function separarNumeros($input)
+    {
         // Eliminar caracteres especiales como paréntesis y espacios
         $input = preg_replace('/[^0-9]/', '', $input);
-    
+
         $grupos = str_split($input, 10); // Dividir el input en grupos de 10 dígitos
-    
+
         $numerosSeparados = implode(', ', $grupos); // Convierte el array de grupos en una cadena separada por comas
-    
+
         return $numerosSeparados;
     }
-    
+
+    public static function validarFechaEnRango($fechaInicio, $fechaFin, $fechaValidar)
+    {
+        $fechaInicio = strtotime(date('Y-m-d', strtotime($fechaInicio)));
+        $fechaFin = strtotime(date('Y-m-d', strtotime($fechaFin)));
+        $fechaValidar = strtotime(date('Y-m-d', strtotime($fechaValidar)));
+
+        if ($fechaValidar >= $fechaInicio && $fechaValidar <= $fechaFin) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

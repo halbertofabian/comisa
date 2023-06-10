@@ -644,7 +644,10 @@ if (!empty($telefonosSeparados)) {
                                         <td class="serie"><?= $pds['nombreProducto'] ?></td>
                                         <td><?= $pds['sku'] ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-times"></i> Cancelar</button>
+                                            <div class="btn-group" role="group" aria-label="">
+                                                <button type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-times"></i> Cancelar</button>
+                                                <button type="button" class="btn btn-primary btnCambiarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-exchange"></i> Cambio</button>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -1050,6 +1053,53 @@ if (!empty($telefonosSeparados)) {
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="btnQuitarProducto2">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="mdlCambioDeMercancia" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cambio de mercancia</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                            <input type="hidden" id="sku_cambio">
+                                <input type="hidden" id="spds_id_cambio">
+                                <label for="ams_id_cambio">Almacen</label>
+                                <select class="form-control select2" name="" id="ams_id_cambio">
+                                    <option value="">-Seleccionar-</option>
+                                    <?php
+                                    $almacenes = AlmacenesModelo::mdlMostrarAlmacenesTipoVM();
+                                    foreach ($almacenes as $key => $ams) :
+                                    ?>
+                                        <option value="<?= $ams['ams_id'] ?>"><?= $ams['ams_nombre'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                              <label for="motivo_cambio">Motivo de cambio</label>
+                              <textarea class="form-control text-uppercase" name="" id="motivo_cambio" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btnCambiarProducto2">Cambiar</button>
                 </div>
             </div>
         </div>
