@@ -121,8 +121,8 @@
                     tbody_inventario +=
                         `
                     <tr>
-                        <td>${itr.mpds_descripcion + '-' + itr.mpds_modelo}</td>
-                        <td>
+                        <td class="col-6">${itr.mpds_descripcion + '-' + itr.mpds_modelo}</td>
+                        <td class="col-4">
                             <div class="input-group">
                                 <input type="number" class="form-control itr_if_usr" id="itr_if_usr${itr.itr_id}" value="${itr.itr_if}" mpds_descripcion="${itr.mpds_descripcion}" placeholder="Ingrese el inventario final" readonly>
                                 <div class="input-group-append">
@@ -130,7 +130,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        <td class="col-2">
                             ${estado}
                         </td>
                     </tr>
