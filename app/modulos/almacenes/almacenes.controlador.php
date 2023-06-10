@@ -112,6 +112,7 @@ class AlmacenesControlador
         $prm_codigo = rand(10000, 99999);
         $prm_usuario_registro = $_SESSION['session_usr']['usr_nombre'];
         $prm_id_detalle = $_POST['dprm_id_prm'];
+        $prm_tipo = $_POST['prm_tipo'];
 
         $datos = array(
             'prm_folio' => $prm_folio,
@@ -120,6 +121,7 @@ class AlmacenesControlador
             'prm_codigo' => $prm_codigo,
             'prm_usuario_registro' => $prm_usuario_registro,
             'prm_id_detalle' => $prm_id_detalle,
+            'prm_tipo' => $prm_tipo,
         );
 
         $res = AlmacenesModelo::mdlGuardarPreRegistro($datos);
@@ -154,7 +156,11 @@ class AlmacenesControlador
                         'pvs_clave' => $pvs['pvs_clave'],
                         'cantidad' => $value['dprm_cantidad'],
                     );
-                    $itr = AlmacenesModelo::mdlActualizarInventarioProveedor($datos_itr);
+                    if($prm['prm_tipo'] == 'COMPRA' || $prm['prm_tipo'] == ""){
+                        $itr = AlmacenesModelo::mdlActualizarInventarioProveedor($datos_itr);
+                    }else{
+                        $itr = AlmacenesModelo::mdlActualizarInventario3('itr_devoluciones', $value['dprm_cantidad'], $pvs['mpds_id']);
+                    }
                     for ($i = 1; $i <= $value['dprm_cantidad']; $i++) {
                         $mpds = ProductosModelo::mdlMostrarModelosById($value['dprm_mpds_id']);
 

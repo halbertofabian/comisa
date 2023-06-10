@@ -4,14 +4,14 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-3 col-12">
                             <div class="form-group">
                                 <label for="prm_folio">FOLIO</label>
                                 <input type="hidden" id="dprm_id_prm" value="<?= uniqid(); ?>" name="dprm_id_prm">
                                 <input type="text" class="form-control" name="prm_folio" id="prm_folio" placeholder="" required>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-3 col-12">
                             <div class="form-group">
                                 <label for="prm_id_proveedor">PROVEEDOR</label>
                                 <select class="form-control select2" name="prm_id_proveedor" id="prm_id_proveedor" required>
@@ -25,7 +25,16 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-4 col-12">
+                        <div class="col-md-3 col-12">
+                            <div class="form-group">
+                              <label for="prm_tipo">Tipo</label>
+                              <select class="form-control" name="prm_tipo" id="prm_tipo" required>
+                                <option selected value="COMPRA">COMPRA</option>
+                                <option value="DEVOLUCION">DEVOLUCIÓN</option>
+                              </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-12">
                             <div class="form-group">
                                 <label for="prm_fecha_registro">FECHA</label>
                                 <input type="date" class="form-control" name="prm_fecha_registro" id="prm_fecha_registro" value="<?= date("Y-m-d") ?>" placeholder="">

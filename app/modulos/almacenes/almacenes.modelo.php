@@ -270,7 +270,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "INSERT INTO tbl_preregistro_mercancia_prm (prm_folio,prm_id_proveedor,prm_fecha_registro,prm_codigo,prm_usuario_registro,prm_id_detalle) VALUES(?,?,?,?,?,?) ";
+            $sql = "INSERT INTO tbl_preregistro_mercancia_prm (prm_folio,prm_id_proveedor,prm_fecha_registro,prm_codigo,prm_usuario_registro,prm_id_detalle,prm_tipo) VALUES(?,?,?,?,?,?,?) ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $prm['prm_folio']);
@@ -279,6 +279,7 @@ class AlmacenesModelo
             $pps->bindValue(4, $prm['prm_codigo']);
             $pps->bindValue(5, $prm['prm_usuario_registro']);
             $pps->bindValue(6, $prm['prm_id_detalle']);
+            $pps->bindValue(7, $prm['prm_tipo']);
             $pps->execute();
             return $pps->rowCount() > 0;
         } catch (PDOException $th) {
@@ -867,6 +868,24 @@ class AlmacenesModelo
         try {
             //code...
             $sql = "UPDATE tbl_inventario_itr SET $campo = $campo - 1 WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id_modelo);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+            // return $pps->errorInfo();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarInventario3($campo, $cantidad, $itr_id_modelo)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET $campo = $campo + $cantidad WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $itr_id_modelo);
