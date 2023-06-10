@@ -144,7 +144,7 @@ if (isset($_GET['reporte'])) {
             <th>DEVOLUCIONES</th>
             <th>(+)</th>
             <th>(-)</th>
-            <th>BORRADO</th>
+            <th>BAJA</th>
             <th>I. FINAL</th>
             <th>I. USUARIO</th>
         </tr> 
@@ -159,6 +159,7 @@ EOF;
 
 
     $inventario = AlmacenesModelo::mdlMostrarInventarioByFicha($_GET['rto_ficha']);
+    $count_inventario = count($inventario);
     $campos = "";
     $total_inicial = 0;
     $total_ventas = 0;
@@ -237,8 +238,9 @@ EOF;
     
     EOF;
     
-    
+    if($count_inventario > 0){
             $pdf->writeHTMLCell(0, 0, '', '', $totales, 0, 1, 0, true, '', true);
+    }
 
     //--------------------------
 

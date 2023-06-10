@@ -144,7 +144,7 @@ if (isset($_GET['reporte'])) {
             <th>DEVOLUCIONES</th>
             <th>(+)</th>
             <th>(-)</th>
-            <th>BORRADO</th>
+            <th>BAJA</th>
             <th>I. FINAL</th>
             <th>I. USUARIO</th>
         </tr> 
