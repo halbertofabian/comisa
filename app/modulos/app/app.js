@@ -333,11 +333,13 @@ $(".modal").attr('data-backdrop', false);
 
 
 
-$(document).on('click', '[data-dismiss="modal"]', function() {
+$(document).on('click', '.open-modal-btn', function() {
+    var modalId = $(this).data('modal-id');
+    $('#' + modalId).modal('show');
+  });
+  
+  $(document).on('click', '[data-dismiss="modal"]', function() {
     var modal = $(this).closest('.modal');
-    modal.removeClass('show');
-    $('body').removeClass('modal-open');
-    $('.modal-backdrop').remove();
     modal.modal('hide');
   });
   
