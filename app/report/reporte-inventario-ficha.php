@@ -76,20 +76,23 @@ if (isset($_GET['reporte'])) {
     $list_pvs = ProveedoresModelo::mdlMostrarProveedores();
     $colspan = count($list_pvs);
     $proveedores = "";
-    $colores = array('#E5C0A1', '#E5DEA1', '#A1E5B0', '#A1DEE5','#A2A1E5'.'#F16E83');
+    $colores = array('#E5C0A1', '#E5DEA1', '#A1E5B0', '#A1DEE5', '#A2A1E5' . '#F16E83');
     $array_colores = array();
     $sum_proveedor = 0;
     $total_proveedores_td = "";
     foreach ($list_pvs as $key => $pvs) {
         $color = sprintf('#%02x%02x%02x', mt_rand(128, 255), mt_rand(128, 255), mt_rand(128, 255));
         $proveedores .= "<th>$pvs[pvs_nombre]</th>";
-        $aleatoreo = rand(0,5);
-        array_push($array_colores,array(
-            $pvs['pvs_clave'] => [$color])
+        $aleatoreo = rand(0, 5);
+        array_push(
+            $array_colores,
+            array(
+                $pvs['pvs_clave'] => [$color]
+            )
         );
 
         $sum_proveedor = AlmacenesModelo::mdlMostrarInventarioSumCampo($pvs['pvs_clave'], $_GET['rto_ficha']);
-        $total_proveedores_td .= '<td><strong>'.$sum_proveedor['total'].'</strong></td>';
+        $total_proveedores_td .= '<td><strong>' . $sum_proveedor['total'] . '</strong></td>';
     }
 
 
@@ -164,13 +167,17 @@ EOF;
     $total_inicial = 0;
     $total_ventas = 0;
     $total_devoluciones = 0;
-    
+
     $total_traslado_1 = 0;
     $total_traslado_2 = 0;
     $total_borrado = 0;
     $total_final = 0;
     $total_final_usr = 0;
     foreach ($inventario as $key => $itr) {
+
+        // if ($itr['itr_ii'] == 0 && $itr['itr_if'] == 0 && $itr['itr_if_usr'] == 0) {
+        //     continue;
+        // }
         $total_inicial += $itr['itr_ii'];
         $total_ventas += $itr['itr_ventas'];
         $total_devoluciones += $itr['itr_devoluciones'];
@@ -185,7 +192,7 @@ EOF;
         // Generar los campos correspondientes a cada proveedor
         foreach ($list_pvs as $key => $pvs) {
             $campo = AlmacenesModelo::mdlMostrarInventarioByProveedor2($pvs['pvs_clave'], $itr['itr_id_modelo']);
-            $campos .= '<td style="background-color: '.$array_colores[$key][$pvs['pvs_clave']][0].'">'.$campo['clave'].'</td>';
+            $campos .= '<td style="background-color: ' . $array_colores[$key][$pvs['pvs_clave']][0] . '">' . $campo['clave'] . '</td>';
         }
 
         # code...
@@ -237,9 +244,9 @@ EOF;
         
     
     EOF;
-    
-    if($count_inventario > 0){
-            $pdf->writeHTMLCell(0, 0, '', '', $totales, 0, 1, 0, true, '', true);
+
+    if ($count_inventario > 0) {
+        $pdf->writeHTMLCell(0, 0, '', '', $totales, 0, 1, 0, true, '', true);
     }
 
     //--------------------------

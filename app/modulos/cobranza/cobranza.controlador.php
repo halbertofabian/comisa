@@ -636,18 +636,20 @@ class CobranzaControlador
         $cts_reagendado = json_decode($cts_reagendado, true);
         foreach ($cts_reagendado as  $cts_r) {
 
-            // Consultar contrato 
-            $cta = CobranzaModelo::mdlConsultarFormaPago($cts_r['cra_contrato']);
+            // // Consultar contrato  Lo comente porque se volvera a reagendar como antes
+            // $cta = CobranzaModelo::mdlConsultarFormaPago($cts_r['cra_contrato']);
 
-            // Validar si fecha reagenda, revsa el siguiente pago proximo
-            $next_date = CobranzaControlador::crtConsultaSiguienteFecha($cta);
-            $next_day = date('Y-m-d', strtotime('+1 days'));
-            if ($cts_r['cra_fecha_reagenda'] > $next_date) {
-                // $next_day = $next_date; Calcula su próxima fecha de pago
-                $next_day =  date('Y-m-d');
-            } else {
-                $next_day = $cts_r['cra_fecha_reagenda'];
-            }
+            // // Validar si fecha reagenda, revsa el siguiente pago proximo
+            // $next_date = CobranzaControlador::crtConsultaSiguienteFecha($cta);
+            // $next_day = date('Y-m-d', strtotime('+1 days'));
+            // if ($cts_r['cra_fecha_reagenda'] > $next_date) {
+            //     // $next_day = $next_date; Calcula su próxima fecha de pago
+            //     $next_day =  date('Y-m-d');
+            // } else {
+            //     $next_day = $cts_r['cra_fecha_reagenda'];
+            // }
+
+            $next_day = $cts_r['cra_fecha_reagenda'];
 
             CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
                 'cra_fecha_cobro' => $cts_r['cra_fecha_cobro'],
