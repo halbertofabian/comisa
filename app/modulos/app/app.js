@@ -308,28 +308,33 @@ function disabledEnter(id_form) {
 
 function formatDateTime(dateTime) {
     if (dateTime == "0000-00-00 00:00:00") {
-      return dateTime;
+        return dateTime;
     } else {
-      var date = new Date(dateTime);
-      var day = date.getDate();
-      var month = date.getMonth() + 1;
-      var year = date.getFullYear();
-      var hours = date.getHours();
-      var minutes = date.getMinutes();
-      var seconds = date.getSeconds();
-      var ampm = hours >= 12 ? 'PM' : 'AM';
-      var formattedDay = day < 10 ? '0' + day : day;
-      var formattedMonth = month < 10 ? '0' + month : month;
-      var formattedYear = year.toString();
-      var formattedHours = hours > 12 ? hours - 12 : hours;
-      var formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
-      var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
-      var formattedTime = formattedHours + ':' + formattedMinutes + ':' + formattedSeconds + ' ' + ampm;
-      return formattedDay + '-' + formattedMonth + '-' + formattedYear + ' ' + formattedTime;
+        var date = new Date(dateTime);
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        var formattedDay = day < 10 ? '0' + day : day;
+        var formattedMonth = month < 10 ? '0' + month : month;
+        var formattedYear = year.toString();
+        var formattedHours = hours > 12 ? hours - 12 : hours;
+        var formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+        var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+        var formattedTime = formattedHours + ':' + formattedMinutes + ':' + formattedSeconds + ' ' + ampm;
+        return formattedDay + '-' + formattedMonth + '-' + formattedYear + ' ' + formattedTime;
     }
-  }
+}
 
-  $(".modal").attr('data-backdrop', false);
-  $(document).ready(function() {
-    
-  });
+$(".modal").attr('data-backdrop', false);
+$(document).on('click', '[data-dismiss="modal"]', function () {
+    // $(this).closest('.modal').removeClass('show');
+    // $('body').removeClass('modal-open');
+    // $('.modal-backdrop').remove();
+
+    $(".modal").modal('hide');
+
+});
