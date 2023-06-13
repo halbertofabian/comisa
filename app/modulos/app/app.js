@@ -330,10 +330,15 @@ function formatDateTime(dateTime) {
 }
 
 $(".modal").attr('data-backdrop', false);
+
+
+
 $(document).on('click', '[data-dismiss="modal"]', function () {
     $(this).closest('.modal').removeClass('show');
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
+
+    $(".modal").addClass('show');
 
     // $(".modal").modal('hide');
 
