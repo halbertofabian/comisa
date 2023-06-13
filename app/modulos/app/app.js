@@ -328,4 +328,10 @@ function formatDateTime(dateTime) {
       return formattedDay + '-' + formattedMonth + '-' + formattedYear + ' ' + formattedTime;
     }
   }
-  
+
+
+  $('[data-dismiss="modal"]').on('click', function() {
+    $('.modal').modal('hide');
+  });
+
+  $(".modal").attr('data-backdrop', false);
