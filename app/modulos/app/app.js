@@ -338,7 +338,10 @@ $(document).on('click', '[data-dismiss="modal"]', function () {
     $('body').removeClass('modal-open');
     $('.modal-backdrop').remove();
 
-    $(".modal").addClass('show');
+    setTimeout(() => {
+        $(".modal").addClass('show');
+    }, 2000);
+
 
     // $(".modal").modal('hide');
 
