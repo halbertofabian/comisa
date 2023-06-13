@@ -513,7 +513,7 @@
 
     })
 
-    $(".tblContratos tbody").on("click", "button.btnAsignarRuta", function() {
+    $(document).on("click", ".btnAsignarRuta", function() {
 
 
 
@@ -663,7 +663,7 @@
         listarContrato(ctr_folio, ctr_vendedor, ctr_fecha_inicio, ctr_fecha_fin, ctr_status_c);
     })
 
-    $(".tblContratos tbody").on("click", "button.btnPendiente", function() {
+    $(document).on("click", ".btnPendiente", function() {
 
         var datos = new FormData();
 
