@@ -331,15 +331,11 @@ function formatDateTime(dateTime) {
 
 $(".modal").attr('data-backdrop', false);
 
+$(document).on('click', '[data-dismiss="modal"]', function () {
+    $(this).closest('.modal').removeClass('show');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
 
-
-$(document).on('click', '.open-modal-btn', function() {
-    var modalId = $(this).data('modal-id');
-    $('#' + modalId).modal('show');
-  });
-  
-  $(document).on('click', '[data-dismiss="modal"]', function() {
-    var modal = $(this).closest('.modal');
-    modal.modal('hide');
-  });
-  
+    $(document.body).removeClass('modal-open');
+    $('.modal').removeClass('show');
+});
