@@ -329,11 +329,9 @@ function formatDateTime(dateTime) {
     }
   }
 
-
+  $(".modal").attr('data-backdrop', false);
   $(document).ready(function() {
     $('[data-dismiss="modal"]').on('click', function() {
       $('.modal').modal('hide');
     });
   });
-
-  $(".modal").attr('data-backdrop', false);

@@ -369,6 +369,9 @@
 <script>
     $(document).ready(function() {
         listarContrato();
+        $('[data-dismiss="modal"]').on('click', function() {
+            $('.modal').modal('hide');
+        });
     })
 
     $("#ctr_ruta").on("change", function() {
