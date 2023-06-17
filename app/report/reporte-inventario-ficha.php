@@ -175,9 +175,11 @@ EOF;
     $total_final_usr = 0;
     foreach ($inventario as $key => $itr) {
 
-        // if ($itr['itr_ii'] == 0 && $itr['itr_if'] == 0 && $itr['itr_if_usr'] == 0) {
-        //     continue;
-        // }
+        $suma_validacion =  $itr['itr_ii'] + $itr['itr_ventas'] + $itr['itr_devoluciones'] + $itr['itr_traslado_1'] + $itr['itr_traslado_2'] + $itr['itr_borrado'] + $itr['itr_if'] + $itr['itr_if_usr'];
+        if ($suma_validacion == 0) {
+            continue;
+        }
+
         $total_inicial += $itr['itr_ii'];
         $total_ventas += $itr['itr_ventas'];
         $total_devoluciones += $itr['itr_devoluciones'];
@@ -186,6 +188,9 @@ EOF;
         $total_borrado += $itr['itr_borrado'];
         $total_final += $itr['itr_if'];
         $total_final_usr += $itr['itr_if_usr'];
+
+
+
         $pvs = ProductosModelo::mdlMostrarModelosById($itr['itr_id_modelo']);
         $campos = ""; // Inicializar la variable para almacenar los campos en cada iteración
 
