@@ -191,7 +191,7 @@ EOF;
 
         // Generar los campos correspondientes a cada proveedor
         foreach ($list_pvs as $key => $pvs) {
-            $campo = AlmacenesModelo::mdlMostrarInventarioByProveedor2($pvs['pvs_clave'], $itr['itr_id_modelo']);
+            $campo = AlmacenesModelo::mdlMostrarInventarioByProveedor2($pvs['pvs_clave'], $itr['itr_id_modelo'], $_GET['rto_ficha']);
             $campos .= '<td style="background-color: ' . $array_colores[$key][$pvs['pvs_clave']][0] . '">' . $campo['clave'] . '</td>';
         }
 

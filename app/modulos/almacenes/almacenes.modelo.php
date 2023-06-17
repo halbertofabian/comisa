@@ -934,14 +934,15 @@ class AlmacenesModelo
             $con = null;
         }
     }
-    public static function mdlMostrarInventarioByProveedor2($campo, $itr_id_modelo)
+    public static function mdlMostrarInventarioByProveedor2($campo, $itr_id_modelo, $itr_ficha)
     {
         try {
             //code...
-            $sql = "SELECT $campo AS clave FROM tbl_inventario_itr WHERE itr_id_modelo = ? AND itr_estado != 'PENDIENTE'";
+            $sql = "SELECT $campo AS clave FROM tbl_inventario_itr WHERE itr_id_modelo = ? AND itr_ficha = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $itr_id_modelo);
+            $pps->bindValue(2, $itr_ficha);
             $pps->execute();
             return $pps->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
