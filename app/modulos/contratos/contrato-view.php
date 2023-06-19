@@ -753,7 +753,7 @@ if (!empty($telefonosSeparados)) {
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="ctr_status_cuenta">SATATUS DE CUENTA:</label>
+                        <label for="ctr_status_cuenta">STATUS DE CUENTA:</label>
                         <input type="text" name="ctr_status_cuenta" id="ctr_status_cuenta" class="form-control" value="<?= $ctr['ctr_status_cuenta'] ?>">
                     </div>
                 </div>

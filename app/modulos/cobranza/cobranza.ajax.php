@@ -237,7 +237,7 @@ class CobranzaAjax
     }
     public function ajaxConsultarRendimiento()
     {
-        $respuesta = CobranzaModelo::mdlConsultarRendimientoFiltro($_POST['rto_ruta'], $_POST['fcbz_id'],$_POST['usr_id']);
+        $respuesta = CobranzaModelo::mdlConsultarRendimientoFiltro($_POST['rto_ruta'], $_POST['fcbz_id']);
         echo json_encode($respuesta, true);
     }
     public function ajaxConsultarRendimientoV2()
