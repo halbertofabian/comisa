@@ -1011,7 +1011,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono,ctr.ctr_total_pagado,ctr_elaboro  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono,ctr.ctr_total_pagado,ctr_elaboro, cra.* FROM tbl_contrato_crt_1 ctr JOIN tbl_cartelera_cra cra ON ctr.ctr_id = cra.cra_contrato WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ec_ruta);
