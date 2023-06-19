@@ -83,15 +83,14 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $ctr_saldo = $infoContrato['ctr_total'] - $infoContrato['ctr_enganche'] - $infoContrato['ctr_pago_adicional'];
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
-        $fecha_hoy = new DateTime(); // Obtiene la fecha y hora actual
-        $fecha = new DateTime($infoContrato['cra_fecha_cobro']); // Convierte la fecha de próximo pago en un objeto DateTime
+        $fecha_hoy = date("Y-m-d");
+        $fecha_proximo_pago = $infoContrato['cra_fecha_cobro'];
 
-        $diasdif = $fecha_hoy->getTimestamp() - $fecha->getTimestamp(); // Calcula la diferencia en segundos entre las fechas
-        $dias = round($diasdif / (60 * 60 * 24)); // Calcula la diferencia en días y redondea al entero más cercano
+        $diasdif = strtotime($fecha_hoy) - strtotime($fecha_proximo_pago);
+        $dias = round($diasdif / (60 * 60 * 24));
 
-        // Semanas desde el primer día de pago hasta la fecha
+        //semanas del primer dia de pago hasta la fecha
         $semanas = ceil($dias / 7);
-
 
         // $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado) + $infoContrato['ctr_pago_credito'];
         $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado);
