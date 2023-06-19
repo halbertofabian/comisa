@@ -169,17 +169,15 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 7);
 
-                    // var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
-                    var adeudo = Number(semanas * res.ctr_pago_credito - total_pagado);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
-                    if (adeudo_aux > 0) {
+                    if (semanas <= semanas_credito) {
                         $("#ec_adeudo_corriente").val($.number(adeudo_aux));
                     } else {
                         $("#ec_adeudo_corriente").val(0);
                     }
-                    // var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
-                    var semanas_atrasadas = semanas;
+                    var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Semanas <br> atrasadas");
                     $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
@@ -197,17 +195,15 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 14);
 
-                    // var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
-                    var adeudo = Number(semanas * res.ctr_pago_credito - total_pagado);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
-                    if (adeudo_aux > 0) {
+                    if (semanas <= semanas_credito) {
                         $("#ec_adeudo_corriente").val($.number(adeudo_aux));
                     } else {
                         $("#ec_adeudo_corriente").val(0);
                     }
-                    // var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
-                    var semanas_atrasadas = semanas;
+                    var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Catorcenas <br> atrasadas");
                     $("#ec_total_pagado").val($.number(Number(ctr_saldo - (res.ctr_saldo_actual + total_aux_pagado))));
@@ -225,17 +221,15 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 15);
 
-                    // var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
-                    var adeudo = Number(semanas * res.ctr_pago_credito - total_pagado);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
-                    if (adeudo_aux > 0) {
+                    if (semanas <= semanas_credito) {
                         $("#ec_adeudo_corriente").val($.number(adeudo_aux));
                     } else {
                         $("#ec_adeudo_corriente").val(0);
                     }
-                    // var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
-                    var semanas_atrasadas = semanas;
+                    var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Quincenas <br> atrasadas");
                     $("#ec_total_pagado").val($.number(total_pagado));
@@ -253,17 +247,15 @@ function mostrarEstado() {
                     //semanas del primer dia de pago hasta la fecha
                     var semanas = Math.ceil(dias / 30);
 
-                    // var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
-                    var adeudo = Number(semanas * res.ctr_pago_credito - total_pagado);
+                    var adeudo = Number((semanas * res.ctr_pago_credito - total_pagado)) + Number(res.ctr_pago_credito);
 
                     var adeudo_aux = adeudo;
-                    if (adeudo_aux > 0) {
+                    if (semanas <= semanas_credito) {
                         $("#ec_adeudo_corriente").val($.number(adeudo_aux));
                     } else {
                         $("#ec_adeudo_corriente").val(0);
                     }
-                    // var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
-                    var semanas_atrasadas = semanas;
+                    var semanas_atrasadas = Number(Math.ceil(adeudo_aux / res.ctr_pago_credito));
                     $("#ec_atraso").val(semanas_atrasadas);
                     $("#label").html("Meses <br> atrasados");
                     $("#ec_total_pagado").val($.number(Number(ctr_saldo - res.ctr_saldo_actual + total_aux_pagado)));
