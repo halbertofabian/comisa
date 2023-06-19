@@ -330,18 +330,21 @@
                     });
 
                 } else {
+                    var count = 0;
                     $('#usr_id_r').append(`<option selected value='' >-Seleccionar-</option>`)
                     res.forEach(element => {
-                        $('#usr_id_r').append(`<option value='${element.usr_id}' usr_nombre="${element.usr_nombre}">${element.usr_nombre} </option>`);
+                        $('#usr_id_r').append(`<option value='${element.usr_id}' key="${count}" usr_nombre="${element.usr_nombre}">${element.usr_nombre} </option>`);
+                        count++;
                     });
                     var usr_nombre = $('option:selected', $("#usr_id_r")).attr('usr_nombre');
+                    var key = $('option:selected', $("#usr_id_r")).attr('key');
                     $("#usr_nombre").text("Nombre del cobrador: " + usr_nombre);
-                    $("#rto_total_cuentas").text($.number(res[0].rto_total_cuentas));
-                    $("#rto_total_semanales").text($.number(res[0].rto_total_semanales));
-                    $("#rto_total_catorcenales").text($.number(res[0].rto_total_catorcenales));
-                    $("#rto_total_quincenales").text($.number(res[0].rto_total_quincenales));
-                    $("#rto_total_mensuales").text($.number(res[0].rto_total_mensuales));
-                    $("#rto_total_cuentas_cobro").text($.number(res[0].rto_total_cuentas_cobro));
+                    $("#rto_total_cuentas").text($.number(res[key].rto_total_cuentas));
+                    $("#rto_total_semanales").text($.number(res[key].rto_total_semanales));
+                    $("#rto_total_catorcenales").text($.number(res[key].rto_total_catorcenales));
+                    $("#rto_total_quincenales").text($.number(res[key].rto_total_quincenales));
+                    $("#rto_total_mensuales").text($.number(res[key].rto_total_mensuales));
+                    $("#rto_total_cuentas_cobro").text($.number(res[key].rto_total_cuentas_cobro));
 
                     var datos = new FormData()
                     datos.append('fcbz_id', fcbz_id);
