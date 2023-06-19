@@ -84,7 +84,7 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
-        $fecha_proximo_pago = date($infoContrato['cra_fecha_cobro']);
+        $fecha_proximo_pago = date($infoContrato['ctr_proximo_pago']);
 
         $diasdif = strtotime($fecha_hoy) - strtotime($fecha_proximo_pago);
         $dias = round($diasdif / (60 * 60 * 24));
@@ -108,7 +108,7 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
-        $fecha_proximo_pago = date($infoContrato['cra_fecha_cobro']);
+        $fecha_proximo_pago = date($infoContrato['ctr_proximo_pago']);
 
         $diasdif = strtotime($fecha_hoy) - strtotime($fecha_proximo_pago);
         $dias = round($diasdif / (60 * 60 * 24));
@@ -132,7 +132,7 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
-        $fecha_proximo_pago = date($infoContrato['cra_fecha_cobro']);
+        $fecha_proximo_pago = date($infoContrato['ctr_proximo_pago']);
 
         $diasdif = strtotime($fecha_hoy) - strtotime($fecha_proximo_pago);
         $dias = round($diasdif / (60 * 60 * 24));
@@ -156,7 +156,7 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
-        $fecha_proximo_pago = date($infoContrato['cra_fecha_cobro']);
+        $fecha_proximo_pago = date($infoContrato['ctr_proximo_pago']);
 
         $diasdif = strtotime($fecha_hoy) - strtotime($fecha_proximo_pago);
         $dias = round($diasdif / (60 * 60 * 24));

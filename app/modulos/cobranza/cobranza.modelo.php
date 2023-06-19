@@ -1011,7 +1011,7 @@ class CobranzaModelo
     {
         try {
             //code...
-            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono,ctr.ctr_total_pagado,ctr_elaboro, cra.* FROM tbl_contrato_crt_1 ctr JOIN tbl_cartelera_cra cra ON ctr.ctr_id = cra.cra_contrato WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
+            $sql = "SELECT ctr.ctr_id,ctr.ctr_cliente,ctr.ctr_numero_cuenta,ctr.ctr_ruta,ctr.ctr_forma_pago,ctr.ctr_dia_pago,ctr.ctr_proximo_pago,ctr.ctr_plazo_credito,ctr.ctr_productos,ctr.ctr_pago_credito,ctr.ctr_total,ctr.ctr_enganche,ctr.ctr_pago_adicional,ctr.ctr_saldo,ctr.ctr_saldo_actual,ctr.ctr_saldo_base,ctr.ctr_ultima_fecha_abono,ctr.ctr_total_pagado,ctr_elaboro  FROM tbl_contrato_crt_1 ctr WHERE ctr.ctr_ruta = ? AND ctr.ctr_numero_cuenta = ?";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ec_ruta);
@@ -1996,25 +1996,15 @@ class CobranzaModelo
             $con = null;
         }
     }
-    public  static function mdlConsultarRendimientoFiltro($rto_ruta, $fcbz_id, $usr_id = "")
+    public  static function mdlConsultarRendimientoFiltro($rto_ruta, $fcbz_id)
     {
         try {
-            if ($usr_id == "") {
-                $sql =  "SELECT usr.usr_nombre, usr.usr_id, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->execute();
-                return $pps->fetchAll(PDO::FETCH_ASSOC);
-            } else {
-                $sql =  "SELECT usr.usr_nombre, usr.usr_id, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE usr.usr_id = ? AND rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
-                $con = Conexion::conectar();
-                $pps = $con->prepare($sql);
-                $pps->bindValue(1, $usr_id);
-                $pps->execute();
-                return $pps->fetch(PDO::FETCH_ASSOC);
-            }
             //code...
-
+            $sql =  "SELECT usr.usr_nombre, usr.usr_id, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
             // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;

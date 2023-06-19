@@ -161,7 +161,7 @@ function mostrarEstado() {
                     var semanas_credito = Number(Math.ceil(ctr_saldo / res.ctr_pago_credito));
 
                     var fecha_hoy = new Date();
-                    var fecha = new Date(res.cra_fecha_cobro);
+                    var fecha = new Date(res.ctr_proximo_pago);
 
                     var diasdif = fecha_hoy.getTime() - fecha.getTime();
                     var dias = Math.round(diasdif / (1000 * 60 * 60 * 24));
@@ -187,7 +187,7 @@ function mostrarEstado() {
                     var semanas_credito = Number(Math.ceil(ctr_saldo / res.ctr_pago_credito));
 
                     var fecha_hoy = new Date();
-                    var fecha = new Date(res.cra_fecha_cobro);
+                    var fecha = new Date(res.ctr_proximo_pago);
 
                     var diasdif = fecha_hoy.getTime() - fecha.getTime();
                     var dias = Math.round(diasdif / (1000 * 60 * 60 * 24));
@@ -213,7 +213,7 @@ function mostrarEstado() {
                     var semanas_credito = Number(Math.ceil(ctr_saldo / res.ctr_pago_credito));
 
                     var fecha_hoy = new Date();
-                    var fecha = new Date(res.cra_fecha_cobro);
+                    var fecha = new Date(res.ctr_proximo_pago);
 
                     var diasdif = fecha_hoy.getTime() - fecha.getTime();
                     var dias = Math.round(diasdif / (1000 * 60 * 60 * 24));
@@ -239,7 +239,7 @@ function mostrarEstado() {
                     var semanas_credito = Number(Math.ceil(ctr_saldo / res.ctr_pago_credito));
 
                     var fecha_hoy = new Date();
-                    var fecha = new Date(res.cra_fecha_cobro);
+                    var fecha = new Date(res.ctr_proximo_pago);
 
                     var diasdif = fecha_hoy.getTime() - fecha.getTime();
                     var dias = Math.round(diasdif / (1000 * 60 * 60 * 24));
