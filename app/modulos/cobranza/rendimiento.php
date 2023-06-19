@@ -249,7 +249,8 @@
     })
 
     $("#usr_id_r").on("change", function() {
-        var rto_ruta = $(this).val();
+        var usr_id_r = $(this).val();
+        var rto_ruta = $("#rto_ruta").val();
         var fcbz_id = $("#rto_ficha").val();
 
         mostratRendimientoFicha(rto_ruta, fcbz_id)
@@ -280,11 +281,8 @@
             processData: false,
             dataType: "json",
             success: function(res) {
-
-
-
-
                 if (rto_ruta == "") {
+                    $('#usr_id_r').append(`<option selected value=''>-Todos-</option>`)
                     $("#usr_nombre").text("Todos");
                     var rto_total_cuentas = 0;
                     var rto_total_semanales = 0;
@@ -330,21 +328,18 @@
                     });
 
                 } else {
-                    var count = 0;
                     $('#usr_id_r').append(`<option selected value='' >-Seleccionar-</option>`)
                     res.forEach(element => {
-                        $('#usr_id_r').append(`<option value='${element.usr_id}' key="${count}" usr_nombre="${element.usr_nombre}">${element.usr_nombre} </option>`);
-                        count++;
+                        $('#usr_id_r').append(`<option value='${element.usr_id}' usr_nombre="${element.usr_nombre}">${element.usr_nombre} </option>`);
                     });
                     var usr_nombre = $('option:selected', $("#usr_id_r")).attr('usr_nombre');
-                    var key = $('option:selected', $("#usr_id_r")).attr('key');
                     $("#usr_nombre").text("Nombre del cobrador: " + usr_nombre);
-                    $("#rto_total_cuentas").text($.number(res[key].rto_total_cuentas));
-                    $("#rto_total_semanales").text($.number(res[key].rto_total_semanales));
-                    $("#rto_total_catorcenales").text($.number(res[key].rto_total_catorcenales));
-                    $("#rto_total_quincenales").text($.number(res[key].rto_total_quincenales));
-                    $("#rto_total_mensuales").text($.number(res[key].rto_total_mensuales));
-                    $("#rto_total_cuentas_cobro").text($.number(res[key].rto_total_cuentas_cobro));
+                    $("#rto_total_cuentas").text($.number(res.rto_total_cuentas));
+                    $("#rto_total_semanales").text($.number(res.rto_total_semanales));
+                    $("#rto_total_catorcenales").text($.number(res.rto_total_catorcenales));
+                    $("#rto_total_quincenales").text($.number(res.rto_total_quincenales));
+                    $("#rto_total_mensuales").text($.number(res.rto_total_mensuales));
+                    $("#rto_total_cuentas_cobro").text($.number(res.rto_total_cuentas_cobro));
 
                     var datos = new FormData()
                     datos.append('fcbz_id', fcbz_id);
