@@ -201,7 +201,7 @@ function mostrarEstado() {
                     var adeudo = Number(semanas * res.ctr_pago_credito - total_pagado);
 
                     var adeudo_aux = adeudo;
-                    if (semanas <= semanas_credito) {
+                    if (adeudo_aux > 0) {
                         $("#ec_adeudo_corriente").val($.number(adeudo_aux));
                     } else {
                         $("#ec_adeudo_corriente").val(0);
@@ -229,7 +229,7 @@ function mostrarEstado() {
                     var adeudo = Number(semanas * res.ctr_pago_credito - total_pagado);
 
                     var adeudo_aux = adeudo;
-                    if (semanas <= semanas_credito) {
+                    if (adeudo_aux > 0) {
                         $("#ec_adeudo_corriente").val($.number(adeudo_aux));
                     } else {
                         $("#ec_adeudo_corriente").val(0);
@@ -257,7 +257,7 @@ function mostrarEstado() {
                     var adeudo = Number(semanas * res.ctr_pago_credito - total_pagado);
 
                     var adeudo_aux = adeudo;
-                    if (semanas <= semanas_credito) {
+                    if (adeudo_aux > 0) {
                         $("#ec_adeudo_corriente").val($.number(adeudo_aux));
                     } else {
                         $("#ec_adeudo_corriente").val(0);
