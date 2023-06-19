@@ -51,11 +51,9 @@
         <div class="card">
             <div class="card-body">
                 <label for="usr_id_r">Usuario</label>
-                <select class="form-control" name="usr_id_r" id="usr_id_r">
-                </select>
+                <select name="usr_id_r" id="usr_id_r" class="form-control"></select>
             </div>
         </div>
-
     </div>
     <div class="col-12"></div>
     <div class="col-md-6">
@@ -244,17 +242,9 @@
     $("#rto_ruta").on("change", function() {
         var rto_ruta = $(this).val();
         var fcbz_id = $("#rto_ficha").val();
-
+        $('#usr_id_r option').remove();
         mostratRendimientoFicha(rto_ruta, fcbz_id)
     })
-
-    $("#usr_id_r").on("change", function() {
-        var rto_ruta = $(this).val();
-        var fcbz_id = $("#rto_ficha").val();
-
-        mostratRendimientoFicha(rto_ruta, fcbz_id)
-    })
-
     $("#rto_ficha").on("change", function() {
         var fcbz_id = $(this).val();
         mostrarRutas(fcbz_id);
@@ -266,10 +256,10 @@
     })
 
     function mostratRendimientoFicha(rto_ruta, fcbz_id) {
-        $('#usr_id_r option').remove();
         var datos = new FormData();
         datos.append("rto_ruta", rto_ruta);
         datos.append("fcbz_id", fcbz_id);
+        datos.append("usr_id", "");
         datos.append("btnConsultarRendimiento", true);
         $.ajax({
             url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
@@ -280,10 +270,12 @@
             processData: false,
             dataType: "json",
             success: function(res) {
+                $('#usr_id_r').append(`<option selected value='' >-Seleccionar-</option>`)
+                res.forEach(element => {
 
+                    $('#usr_id_r').append(`<option value='${element.usr_id}' >${element.usr_nombre} </option>`);
 
-
-
+                });
                 if (rto_ruta == "") {
                     $("#usr_nombre").text("Todos");
                     var rto_total_cuentas = 0;
@@ -330,43 +322,7 @@
                     });
 
                 } else {
-                    var count = 0;
-                    $('#usr_id_r').append(`<option selected value='' >-Seleccionar-</option>`)
-                    res.forEach(element => {
-                        $('#usr_id_r').append(`<option value='${element.usr_id}' key="${count}" usr_nombre="${element.usr_nombre}">${element.usr_nombre} </option>`);
-                        count++;
-                    });
-                    var usr_nombre = $('option:selected', $("#usr_id_r")).attr('usr_nombre');
-                    var key = $('option:selected', $("#usr_id_r")).attr('key');
-                    $("#usr_nombre").text("Nombre del cobrador: " + usr_nombre);
-                    $("#rto_total_cuentas").text($.number(res[key].rto_total_cuentas));
-                    $("#rto_total_semanales").text($.number(res[key].rto_total_semanales));
-                    $("#rto_total_catorcenales").text($.number(res[key].rto_total_catorcenales));
-                    $("#rto_total_quincenales").text($.number(res[key].rto_total_quincenales));
-                    $("#rto_total_mensuales").text($.number(res[key].rto_total_mensuales));
-                    $("#rto_total_cuentas_cobro").text($.number(res[key].rto_total_cuentas_cobro));
 
-                    var datos = new FormData()
-                    datos.append('fcbz_id', fcbz_id);
-                    datos.append('usr_id', $("#usr_id_r").val()); //  res[0].usr_id
-                    datos.append('btnConsultarRendimientoV3', true);
-                    $.ajax({
-                        type: "POST",
-                        url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
-                        data: datos,
-                        dataType: 'json',
-                        processData: false,
-                        contentType: false,
-                        success: function(response) {
-                            // console.log(response)
-                            $("#total_cuentas_cobradas").text($.number(response.total_cuentas_cobradas));
-                            $("#total_cuentas_acumulado").text("$" + $.number(response.total_cuentas_acumulado, 2));
-                            $("#total_ganado").text("$" + $.number(response.total_ganado, 2));
-
-                            $("#porcentaje_cobrado").text(Math.trunc(response.porcentaje_cobrado) + "%");
-                            $("#progressbar").attr("style", "width:" + Math.trunc(response.porcentaje_cobrado) + "%");
-                        }
-                    });
                 }
             }
 
@@ -377,4 +333,60 @@
         var fcbz_ano = $(this).val();
         mostratFichasAnio(fcbz_ano)
     })
+
+    $("#usr_id_r").on("change", function() {
+        var rto_ruta = $("#rto_ruta").val();
+        var fcbz_id = $("#rto_ficha").val();
+        var usr_id = $(this).val();
+        mostrarRendimientoUsuario(rto_ruta, fcbz_id, usr_id);
+
+
+    })
+
+    function mostrarRendimientoUsuario(rto_ruta, fcbz_id, usr_id) {
+
+        var datos = new FormData();
+        datos.append("rto_ruta", rto_ruta);
+        datos.append("fcbz_id", fcbz_id);
+        datos.append("usr_id", usr_id);
+        datos.append("btnConsultarRendimiento", true);
+        $.ajax({
+            url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(res) {
+                $("#usr_nombre").text("Nombre del cobrador: " + res.usr_nombre);
+                $("#rto_total_cuentas").text($.number(res.rto_total_cuentas));
+                $("#rto_total_semanales").text($.number(res.rto_total_semanales));
+                $("#rto_total_catorcenales").text($.number(res.rto_total_catorcenales));
+                $("#rto_total_quincenales").text($.number(res.rto_total_quincenales));
+                $("#rto_total_mensuales").text($.number(res.rto_total_mensuales));
+                $("#rto_total_cuentas_cobro").text($.number(res.rto_total_cuentas_cobro));
+                var datos = new FormData()
+                datos.append('fcbz_id', fcbz_id);
+                datos.append('usr_id', res.usr_id);
+                datos.append('btnConsultarRendimientoV3', true);
+                $.ajax({
+                    type: "POST",
+                    url: urlApp + 'app/modulos/cobranza/cobranza.ajax.php',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // console.log(response)
+                        $("#total_cuentas_cobradas").text($.number(response.total_cuentas_cobradas));
+                        $("#total_cuentas_acumulado").text("$" + $.number(response.total_cuentas_acumulado, 2));
+                        $("#total_ganado").text("$" + $.number(response.total_ganado, 2));
+                        $("#porcentaje_cobrado").text(Math.trunc(response.porcentaje_cobrado) + "%");
+                        $("#progressbar").attr("style", "width:" + Math.trunc(response.porcentaje_cobrado) + "%");
+                    }
+                });
+            }
+        });
+    }
 </script>
