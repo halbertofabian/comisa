@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-6">
         <div class="card">
             <div class="card-body">
                 <div class="form-group">
@@ -20,6 +20,7 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6"></div>
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
@@ -44,6 +45,17 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <label for="usr_id_r">Usuario</label>
+                <select class="form-control" name="usr_id_r" id="usr_id_r">
+                </select>
+            </div>
+        </div>
+
     </div>
     <div class="col-12"></div>
     <div class="col-md-6">
@@ -232,8 +244,17 @@
     $("#rto_ruta").on("change", function() {
         var rto_ruta = $(this).val();
         var fcbz_id = $("#rto_ficha").val();
+
         mostratRendimientoFicha(rto_ruta, fcbz_id)
     })
+
+    $("#usr_id_r").on("change", function() {
+        var rto_ruta = $(this).val();
+        var fcbz_id = $("#rto_ficha").val();
+
+        mostratRendimientoFicha(rto_ruta, fcbz_id)
+    })
+
     $("#rto_ficha").on("change", function() {
         var fcbz_id = $(this).val();
         mostrarRutas(fcbz_id);
@@ -245,6 +266,7 @@
     })
 
     function mostratRendimientoFicha(rto_ruta, fcbz_id) {
+        $('#usr_id_r option').remove();
         var datos = new FormData();
         datos.append("rto_ruta", rto_ruta);
         datos.append("fcbz_id", fcbz_id);
@@ -258,6 +280,10 @@
             processData: false,
             dataType: "json",
             success: function(res) {
+
+
+
+
                 if (rto_ruta == "") {
                     $("#usr_nombre").text("Todos");
                     var rto_total_cuentas = 0;
@@ -304,6 +330,11 @@
                     });
 
                 } else {
+                    res.forEach(element => {
+
+                        $('#usr_id_r').append(`<option value='${element.usr_id}' >${element.usr_nombre} </option>`);
+
+                    });
                     $("#usr_nombre").text("Nombre del cobrador: " + res[0].usr_nombre);
                     $("#rto_total_cuentas").text($.number(res[0].rto_total_cuentas));
                     $("#rto_total_semanales").text($.number(res[0].rto_total_semanales));
@@ -314,7 +345,7 @@
 
                     var datos = new FormData()
                     datos.append('fcbz_id', fcbz_id);
-                    datos.append('usr_id', res[0].usr_id);
+                    datos.append('usr_id', $("#usr_id_r").val()); //  res[0].usr_id
                     datos.append('btnConsultarRendimientoV3', true);
                     $.ajax({
                         type: "POST",
