@@ -330,12 +330,12 @@
                     });
 
                 } else {
+                    $('#usr_id_r').append(`<option selected value='' >-Seleccionar-</option>`)
                     res.forEach(element => {
-
-                        $('#usr_id_r').append(`<option value='${element.usr_id}' >${element.usr_nombre} </option>`);
-
+                        $('#usr_id_r').append(`<option value='${element.usr_id}' usr_nombre="${element.usr_nombre}">${element.usr_nombre} </option>`);
                     });
-                    $("#usr_nombre").text("Nombre del cobrador: " + res[0].usr_nombre);
+                    var usr_nombre = $('option:selected', $("#usr_id_r")).attr('usr_nombre');
+                    $("#usr_nombre").text("Nombre del cobrador: " + usr_nombre);
                     $("#rto_total_cuentas").text($.number(res[0].rto_total_cuentas));
                     $("#rto_total_semanales").text($.number(res[0].rto_total_semanales));
                     $("#rto_total_catorcenales").text($.number(res[0].rto_total_catorcenales));
