@@ -933,7 +933,7 @@ $app->post('/generar_reporte_mercancia', function (Request $request, Response $r
 //API PARA GENERAR LOS CODIGOS DE SEGUIMIENTO
 
 $app->get('/generar_codigos_seguimiento', function (Request $request, Response $response, array $args) {
-    $usuarios = UsuariosModelo::mdlMostrarUsuarios("", 'Cobrador');
+    $usuarios = UsuariosModelo::mdlMostrarUsuarios();
     foreach ($usuarios as $key => $usr) {
         $usr_codigo_seguimiento = rand(10000, 99999);
         $res = UsuariosModelo::mdlGenerarCodigoSeguimiento($usr['usr_id'], $usr_codigo_seguimiento);
