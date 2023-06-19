@@ -84,13 +84,13 @@ if (isset($_GET['ec_ruta']) && isset($_GET['ec_cuenta'])) {
         $semanas_credito = ceil($ctr_saldo / $infoContrato['ctr_pago_credito']);
 
         $fecha_hoy = date("Y-m-d");
-        $fecha_proximo_pago = $infoContrato['cra_fecha_cobro'];
+        $fecha_proximo_pago = date($infoContrato['cra_fecha_cobro']);
 
         $diasdif = strtotime($fecha_hoy) - strtotime($fecha_proximo_pago);
         $dias = round($diasdif / (60 * 60 * 24));
 
         //semanas del primer dia de pago hasta la fecha
-        $semanas = ceil($dias / 7);
+        $semanas = ($dias < 7) ? 0 : ceil($dias / 7);
 
         // $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado) + $infoContrato['ctr_pago_credito'];
         $adeudo = ($semanas * $infoContrato['ctr_pago_credito'] - $total_pagado);
