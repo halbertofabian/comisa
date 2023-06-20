@@ -147,6 +147,7 @@
             contentType: false,
             success: function(res) {
                 if (res) {
+                    toastr.success(dprm_descripcion + ' se agrego correctamente.', 'Muy bien!');
                     $("#dprm_cantidad").val("1")
                     $("#dprm_cantidad").focus();
                     mostrarDetallePreRegistro();
