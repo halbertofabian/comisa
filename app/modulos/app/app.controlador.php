@@ -697,6 +697,11 @@ class AppControlador
                         ],
                         [
                             'icon' => '',
+                            'label' => 'Observaciones',
+                            'href' => 'contratos/observaciones'
+                        ],
+                        [
+                            'icon' => '',
                             'label' => 'Listar todos los contratos',
                             'href' => 'contratos/todos'
                         ],
@@ -927,6 +932,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Gestión de contratos',
                             'href' => 'contratos/listar'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Observaciones',
+                            'href' => 'contratos/observaciones'
                         ],
                         [
                             'icon' => '',
@@ -1225,6 +1235,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Gestión de contratos',
                             'href' => 'contratos/listar'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Observaciones',
+                            'href' => 'contratos/observaciones'
                         ],
                         [
                             'icon' => '',
@@ -1596,6 +1611,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Listar contratos',
                             'href' => 'contratos/listar'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Observaciones',
+                            'href' => 'contratos/observaciones'
                         ],
                     )
                 ]
