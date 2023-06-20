@@ -1996,15 +1996,25 @@ class CobranzaModelo
             $con = null;
         }
     }
-    public  static function mdlConsultarRendimientoFiltro($rto_ruta, $fcbz_id)
+    public  static function mdlConsultarRendimientoFiltro($rto_ruta, $fcbz_id, $usr_id_r)
     {
         try {
             //code...
-            $sql =  "SELECT usr.usr_nombre, usr.usr_id, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
-            $con = Conexion::conectar();
-            $pps = $con->prepare($sql);
-            $pps->execute();
-            return $pps->fetchAll(PDO::FETCH_ASSOC);
+            if ($usr_id_r == '') {
+                $sql =  "SELECT usr.usr_nombre, usr.usr_id, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->execute();
+                return $pps->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                $sql =  "SELECT usr.usr_nombre, usr.usr_id, rto.* FROM tbl_rendimiento_rto rto JOIN tbl_usuarios_usr usr ON rto.rto_id_usuario = usr.usr_id WHERE usr.usr_id  = ?, rto.rto_ruta LIKE '%$rto_ruta' AND rto.rto_ficha = '$fcbz_id' ORDER BY SUBSTR(rto.rto_ruta, 1, 1), CAST(SUBSTR(rto.rto_ruta, 2, LENGTH(rto.rto_ruta)) AS UNSIGNED) ASC ";
+                $con = Conexion::conectar();
+                $pps = $con->prepare($sql);
+                $pps->bindValue(1, $usr_id_r);
+                $pps->execute();
+                return $pps->fetch(PDO::FETCH_ASSOC);
+            }
+
             // return $pps->errorInfo();
         } catch (PDOException $th) {
             //throw $th;
