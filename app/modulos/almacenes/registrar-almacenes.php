@@ -66,6 +66,7 @@
                         </table>
                     </div>
                     <div class="col-12">
+                        <button type="button" class="btn btn-light float-left d-none" id="btnGenerarTraslado"><i class="fa fa-truck"></i> Realizar traslado externo</button>
                         <button type="button" class="btn btn-primary float-right d-none" id="btnImprimirReporte"><i class="fa fa-file-pdf-o"></i> Imprimir</button>
                     </div>
                 </div>
@@ -135,8 +136,10 @@
                 var numSerie = $(".serie").length;
                 if (numSerie > 0) {
                     $("#btnImprimirReporte").removeClass("d-none");
+                    $("#btnGenerarTraslado").removeClass("d-none");
                 } else {
                     $("#btnImprimirReporte").addClass("d-none");
+                    $("#btnGenerarTraslado").addClass("d-none");
                 }
                 var almacenes = "";
                 if (tipo == "CV") {
@@ -223,8 +226,10 @@
                             var numSerie = $(".serie").length;
                             if (numSerie > 0) {
                                 $("#btnImprimirReporte").removeClass("d-none");
+                                $("#btnGenerarTraslado").removeClass("d-none");
                             } else {
                                 $("#btnImprimirReporte").addClass("d-none");
+                                $("#btnGenerarTraslado").addClass("d-none");
                             }
                         }
                     });
@@ -393,8 +398,10 @@
                         var numSerie = $(".serie").length;
                         if (numSerie > 0) {
                             $("#btnImprimirReporte").removeClass("d-none");
+                            $("#btnGenerarTraslado").removeClass("d-none");
                         } else {
                             $("#btnImprimirReporte").addClass("d-none");
+                            $("#btnGenerarTraslado").addClass("d-none");
                         }
                     } else {
                         quitarTraspasoMercancia(spds_id, spds_serie_completa, ams_nombre);
@@ -441,8 +448,10 @@
             var numSerie = $(".serie").length;
             if (numSerie > 0) {
                 $("#btnImprimirReporte").removeClass("d-none");
+                $("#btnGenerarTraslado").removeClass("d-none");
             } else {
                 $("#btnImprimirReporte").addClass("d-none");
+                $("#btnGenerarTraslado").addClass("d-none");
             }
         } else {
             $(".ams_almacen").addClass('d-none');
@@ -450,8 +459,10 @@
             var numSerie = $(".serie").length;
             if (numSerie > 0) {
                 $("#btnImprimirReporte").removeClass("d-none");
+                $("#btnGenerarTraslado").removeClass("d-none");
             } else {
                 $("#btnImprimirReporte").addClass("d-none");
+                $("#btnGenerarTraslado").addClass("d-none");
             }
             mostrarProductos();
         }
@@ -506,8 +517,10 @@
                     var numSerie = $(".serie").length;
                     if (numSerie > 0) {
                         $("#btnImprimirReporte").removeClass("d-none");
+                        $("#btnGenerarTraslado").removeClass("d-none");
                     } else {
                         $("#btnImprimirReporte").addClass("d-none");
+                        $("#btnGenerarTraslado").addClass("d-none");
                     }
                 } else {
                     toastr.error(res.mensaje, '¡ERROR!');
@@ -574,8 +587,10 @@
                     var numSerie = $(".serie").length;
                     if (numSerie > 0) {
                         $("#btnImprimirReporte").removeClass("d-none");
+                        $("#btnGenerarTraslado").removeClass("d-none");
                     } else {
                         $("#btnImprimirReporte").addClass("d-none");
+                        $("#btnGenerarTraslado").addClass("d-none");
                     }
 
                 }
@@ -626,6 +641,45 @@
             } else {
                 mostrarProductos();
             }
+        });
+    });
+
+    $('#btnGenerarTraslado').on('click', function() {
+        var ams_id = $("#ams_id").val();
+        swal({
+            title: '¿Esta seguro de hacer el traslado externo?',
+            text: 'Si no estas seguro de que es esto por favor pregunta antes de realizar cualquier traslado externo. No olvides generar e imprimir tu reporte antes de realizar tu traslado',
+            icon: 'warning',
+            buttons: ['No', 'Si, realizar'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData()
+                datos.append('ams_id', ams_id);
+                datos.append('btnGenerarTraslado', true);
+                $.ajax({
+                    type: 'POST',
+                    url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            swal({
+                                title: '¡Bien!',
+                                text: res.mensaje,
+                                type: 'success',
+                                icon: 'success'
+                            }).then(function() {
+                                mostrarProductos();
+                            });
+                        } else {
+                            mostrarProductos();
+                        }
+                    }
+                });
+            } else {}
         });
     });
 </script>

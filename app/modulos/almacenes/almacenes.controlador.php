@@ -156,9 +156,9 @@ class AlmacenesControlador
                         'pvs_clave' => $pvs['pvs_clave'],
                         'cantidad' => $value['dprm_cantidad'],
                     );
-                    if($prm['prm_tipo'] == 'COMPRA' || $prm['prm_tipo'] == ""){
+                    if ($prm['prm_tipo'] == 'COMPRA' || $prm['prm_tipo'] == "") {
                         $itr = AlmacenesModelo::mdlActualizarInventarioProveedor($datos_itr);
-                    }else{
+                    } else {
                         $itr = AlmacenesModelo::mdlActualizarInventario3('itr_devoluciones', $value['dprm_cantidad'], $pvs['mpds_id']);
                     }
                     for ($i = 1; $i <= $value['dprm_cantidad']; $i++) {
@@ -728,5 +728,37 @@ class AlmacenesControlador
                 'mensaje' => 'Se cambio el producto correctamente.',
             );
         }
+    }
+
+    public static function ctrGenerarTrasladoExterno()
+    {
+        $ams_id = $_POST['ams_id'];
+        $mercancia = AlmacenesModelo::mdlMostrarProductosByAlmacenID($ams_id);
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoTrasladoExterno();
+        foreach ($mercancia as $key => $spds) {
+            $datos = array(
+                'spds_almacen' => $ams['ams_id'],
+                'spds_situacion' => 'TRASPASO',
+                'spds_ultima_mod' => FECHA,
+                'spds_id' => $spds['spds_id'],
+            );
+
+            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+            if ($res) {
+                $array_bcra = array(
+                    'bcra_movimiento' => 'Traslado externo',
+                    'bcra_fecha' => FECHA,
+                    'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                    'bcra_nota' => 'SE REALIZO EL TRASLADO EXTERNO',
+                    'bcra_spds_id' => $spds['spds_id'],
+                );
+                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                $itr = AlmacenesControlador::ctrActualizarInventario("itr_traslado_2", $spds['spds_id']);
+            }
+        }
+        return array(
+            'status' => true,
+            'mensaje' => 'Se realizo el traslado externo correctamente.',
+        );
     }
 }
