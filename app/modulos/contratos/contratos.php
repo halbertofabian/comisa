@@ -17,6 +17,12 @@ elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "buscar") :
 
 ?>
 <?php
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "observaciones") :
+    include_once 'app/modulos/contratos/observaciones.php';
+
+
+?>
+<?php
 elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "editar") :
     include_once 'app/modulos/contratos/editar-contratos.php';
 

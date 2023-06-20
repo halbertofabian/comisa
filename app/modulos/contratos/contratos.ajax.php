@@ -219,7 +219,7 @@ class ContratosAjax
         $array_contratos = array();
         foreach ($respuesta as $ctr) {
             array_push($array_contratos, array(
-                'acciones' => '<a href="'. HTTP_HOST . 'contratos/buscar/' . $ctr['ctr_id'] .'" class="btn btn-primary">'.$ctr['ctr_id'] .'</a>',
+                'acciones' => '<a href="' . HTTP_HOST . 'contratos/buscar/' . $ctr['ctr_id'] . '" class="btn btn-primary">' . $ctr['ctr_id'] . '</a>',
                 'ctr_folio' => $ctr['ctr_folio'],
                 'ctr_numero_cuenta' => $ctr['ctr_numero_cuenta'] . ' ' . $ctr['ctr_ruta'],
                 'ctr_fecha_contrato' => $ctr['ctr_fecha_contrato'],
@@ -266,6 +266,15 @@ class ContratosAjax
     public function ajaxAgregarObservaciones()
     {
         $res = ContratosControlador::ctrAgregarObservaciones();
+        echo json_encode($res, true);
+    }
+    public function ajaxCompletarObservaciones()
+    {
+        $res = ContratosModelo::mdlCompletarObservacion(array(
+            'obs_id' => $_POST['obs_id'],
+            'obs_usuario' => $_SESSION['session_usr']['usr_nombre'],
+            'obs_fecha' => FECHA,
+        ));
         echo json_encode($res, true);
     }
 }
@@ -456,4 +465,8 @@ if (isset($_POST['btnValidarCodigoSaldos'])) {
 if (isset($_POST['btnAgregarObservaciones'])) {
     $agregarObservaciones = new ContratosAjax();
     $agregarObservaciones->ajaxAgregarObservaciones();
+}
+if (isset($_POST['btnCompletar'])) {
+    $btnCompletar = new ContratosAjax();
+    $btnCompletar->ajaxCompletarObservaciones();
 }

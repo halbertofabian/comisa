@@ -1906,4 +1906,41 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlMostrarTodasObaservacionesPendiente()
+    {
+        try {
+            //code...
+            $sql = "SELECT obs.*,ctr.ctr_folio,ctr.ctr_cliente,ctr.ctr_ruta,ctr.ctr_numero_cuenta FROM tbl_observaciones_obs obs JOIN tbl_contrato_crt_1 ctr ON obs.obs_ctr_id = ctr.ctr_id WHERE obs.obs_status = 'PENDIENTE'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlCompletarObservacion($obs)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_observaciones_obs SET obs_status = 'COMPLETADA', obs_usuario = ?, obs_fecha = ?   WHERE obs_id  = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $obs['obs_usuario']);
+            $pps->bindValue(2, $obs['obs_fecha']);
+            $pps->bindValue(3, $obs['obs_id']);
+            $pps->execute();
+            return $pps->rowCount();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    //
 }
