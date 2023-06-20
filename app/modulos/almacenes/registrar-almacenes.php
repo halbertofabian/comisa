@@ -66,7 +66,7 @@
                         </table>
                     </div>
                     <div class="col-12">
-                        <button type="button" class="btn btn-light float-left d-none" id="btnGenerarTraslado"><i class="fa fa-truck"></i> Realizar traslado externo</button>
+                        <!-- <button type="button" class="btn btn-light float-left d-none" id="btnGenerarTraslado"><i class="fa fa-truck"></i> Realizar traslado externo</button> -->
                         <button type="button" class="btn btn-primary float-right d-none" id="btnImprimirReporte"><i class="fa fa-file-pdf-o"></i> Imprimir</button>
                     </div>
                 </div>
