@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card mt-3">
                 <div class="card-body table-responsive">
-                    <table class="table tablas">
+                    <table class="table tablas text-center">
                         <thead>
                             <tr>
                                 <th colspan="8">Listar de observaciones</th>

@@ -901,7 +901,7 @@ class CobranzaControlador
             }
         }
 
-        
+
         // PARA FINZALIZAR COBRANZA
         if (isset($datos[0]['Reagendados'])) {
             $cts_r = json_encode($datos[0]['Reagendados'], true);
@@ -1180,6 +1180,24 @@ class CobranzaControlador
                 'abs_save' =>  $id_pago,
                 'abs_id' => $abs['abs_id']
             ));
+
+
+            if ($abs['abs_nota'] != "") {
+                $obs_usuario = $usr['usr_nombre'] . '<br> - APP';
+                $obs_fecha = $abs['abs_fecha_cobro'];
+                $obs_status = 'PENDIENTE';
+                $obs_ctr_id = $abs['ctr_id'];
+                $obs_observaciones = strtoupper($abs['abs_nota']);
+                $datos = array(
+                    'obs_usuario' => $obs_usuario,
+                    'obs_fecha' => $obs_fecha,
+                    'obs_status' => $obs_status,
+                    'obs_ctr_id' => $obs_ctr_id,
+                    'obs_observaciones' => $obs_observaciones,
+                );
+
+                ContratosModelo::mdlAgregarObservaciones($datos);
+            }
             # code...
         }
         // Registrar ingresos automaticos 
@@ -1196,6 +1214,8 @@ class CobranzaControlador
                 IngresosControlador::ctrAgregarIngresoAbonoBanco($dbco);
             }
         }
+
+
 
 
         return array(
