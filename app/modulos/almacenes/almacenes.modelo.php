@@ -547,6 +547,22 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarAlmacenesByTipoTrasladoExterno()
+    {
+        try {
+            //code...
+            $sql = " SELECT * FROM tbl_almacenes_ams WHERE ams_tipo = 'T' AND ams_estado = 1";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetch();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
     public static function mdlMostrarAlmacenesByTipoDestino()
     {
         try {
