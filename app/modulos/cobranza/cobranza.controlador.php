@@ -1169,7 +1169,7 @@ class CobranzaControlador
                 'ctr_total_pagado' => $nuevoPagdo,
                 'ctr_id' => $abs['ctr_id'],
                 'ctr_status_cuenta' => $status_cuenta,
-                'ctr_nota' => $abs['abs_nota']
+                'ctr_nota' => ''
             ));
             $ctr_saldo_actualizado = CobranzaModelo::mdlConsultarSaldoBaseV2($abs['ctr_id']);
 
@@ -1182,7 +1182,7 @@ class CobranzaControlador
             ));
 
 
-            if ($abs['abs_nota'] != "") {
+            if ($abs['abs_nota'] != "" ) {
                 $obs_usuario = $usr['usr_nombre'] . '<br> - APP';
                 $obs_fecha = $abs['abs_fecha_cobro'];
                 $obs_status = 'PENDIENTE';
