@@ -263,6 +263,11 @@ class ContratosAjax
         $res = ContratosControlador::ctrValidarCodigoSaldos();
         echo json_encode($res, true);
     }
+    public function ajaxAgregarObservaciones()
+    {
+        $res = ContratosControlador::ctrAgregarObservaciones();
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -447,4 +452,8 @@ if (isset($_POST['btnRealizarTraspasos'])) {
 if (isset($_POST['btnValidarCodigoSaldos'])) {
     $validarCodigoSaldos = new ContratosAjax();
     $validarCodigoSaldos->ajaxValidarCodigoSaldos();
+}
+if (isset($_POST['btnAgregarObservaciones'])) {
+    $agregarObservaciones = new ContratosAjax();
+    $agregarObservaciones->ajaxAgregarObservaciones();
 }

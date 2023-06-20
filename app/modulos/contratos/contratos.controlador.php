@@ -952,7 +952,7 @@ class ContratosControlador
 
             $directorio = DOCUMENT_ROOT . 'media/fotosContratos/' . $fileimg;
 
-            if(!file_exists($directorio)){
+            if (!file_exists($directorio)) {
                 mkdir($directorio, 0755);
             }
 
@@ -2314,6 +2314,36 @@ class ContratosControlador
             return array(
                 'status' => false,
                 'mensaje' => 'El codigo de verificación es incorrecto.',
+            );
+        }
+    }
+
+    public static function ctrAgregarObservaciones()
+    {
+        $obs_usuario = $_SESSION['session_usr']['usr_nombre'];
+        $obs_fecha = FECHA;
+        $obs_status = $_POST['obs_status'];
+        $obs_ctr_id = $_POST['obs_ctr_id'];
+        $obs_observaciones = strtoupper($_POST['obs_observaciones']);
+
+        $datos = array(
+            'obs_usuario' => $obs_usuario,
+            'obs_fecha' => $obs_fecha,
+            'obs_status' => $obs_status,
+            'obs_ctr_id' => $obs_ctr_id,
+            'obs_observaciones' => $obs_observaciones,
+        );
+
+        $res = ContratosModelo::mdlAgregarObservaciones($datos);
+        if ($res) {
+            return array(
+                'status' => true,
+                'mensaje' => 'La observación se guardo correctamente.',
+            );
+        } else {
+            return array(
+                'status' => false,
+                'mensaje' => 'Hubo un error al guardar la observación.',
             );
         }
     }

@@ -21,6 +21,17 @@ if (!empty($telefonosSeparados)) {
 }
 // $datosJson contendrá el arreglo de números en formato JSON
 
+$obs = ContratosModelo::mdlMostrarObaservaciones($ctr['ctr_id']);
+$observaciones = $ctr['ctr_nota'] != "" ?  $ctr['ctr_nota'] : "";
+foreach ($obs as $key => $val) {
+    $observaciones .= PHP_EOL . $val['obs_observaciones']; // Agrega PHP_EOL al final de cada observación
+}
+
+$observaciones = str_replace('<br>', "\n", $observaciones);
+
+
+
+
 ?>
 
 <form id="formUpdateCtr">
@@ -775,13 +786,10 @@ if (!empty($telefonosSeparados)) {
                 <div class="col-12">
                     <div class="form-group">
                         <label for="ctr_nota">Observaciones</label>
-                        <textarea name="ctr_nota" id="ctr_nota" class="form-control" cols="30" rows="5"><?= $ctr['ctr_nota'] ?></textarea>
+                        <textarea name="ctr_nota" id="ctr_nota" class="form-control" cols="30" rows="5" readonly><?= $observaciones ?></textarea>
                     </div>
+                    <button type="button" class="btn btn-primary float-right btn-sm" data-toggle="modal" data-target="#mdlAgregarObservaciones"><i class="fa fa-plus"></i> Agregar observación</button>
                 </div>
-
-
-
-
             </div>
 
         </div>
@@ -873,6 +881,49 @@ if (!empty($telefonosSeparados)) {
         <div class="row">
             <div class="col-xl-12">
                 <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#agregarFotosFiador"><i class="fa fa-plus"></i> Agregar fotos</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="mdlAgregarObservaciones" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar observaciones</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="formAgregarObservaciones">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="obs_status">Estado</label>
+                                    <input type="hidden" name="obs_ctr_id" value="<?= $ctr['ctr_id'] ?>">
+                                    <select class="form-control" name="obs_status" id="" required>
+                                        <option value="">-Seleccionar-</option>
+                                        <option value="PENDIENTE">PENDIENTE</option>
+                                        <option value="COMPLETADA">COMPLETADA</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="obs_observaciones">Observaciones</label>
+                                    <textarea class="form-control text-uppercase" name="obs_observaciones" id="" rows="3" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -1073,7 +1124,7 @@ if (!empty($telefonosSeparados)) {
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                            <input type="hidden" id="sku_cambio">
+                                <input type="hidden" id="sku_cambio">
                                 <input type="hidden" id="spds_id_cambio">
                                 <label for="ams_id_cambio">Almacen</label>
                                 <select class="form-control select2" name="" id="ams_id_cambio">
@@ -1091,8 +1142,8 @@ if (!empty($telefonosSeparados)) {
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                              <label for="motivo_cambio">Motivo de cambio</label>
-                              <textarea class="form-control text-uppercase" name="" id="motivo_cambio" rows="3"></textarea>
+                                <label for="motivo_cambio">Motivo de cambio</label>
+                                <textarea class="form-control text-uppercase" name="" id="motivo_cambio" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
@@ -1392,5 +1443,41 @@ if (!empty($telefonosSeparados)) {
                 console.log("Error al agregar el teléfono");
             }
         }
+    });
+
+    $('#formAgregarObservaciones').on('submit', function(e) {
+        e.preventDefault();
+        var datos = new FormData(this)
+        datos.append('btnAgregarObservaciones', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status) {
+                    swal({
+                        title: '¡Bien!',
+                        text: res.mensaje,
+                        type: 'success',
+                        icon: 'success'
+                    }).then(function() {
+                        location.reload();
+                    });
+                } else {
+                    swal({
+                        title: 'Error',
+                        text: res.mensaje,
+                        icon: 'error',
+                        buttons: [false, 'Intentar de nuevo'],
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {} else {}
+                    })
+                }
+            }
+        });
     });
 </script>

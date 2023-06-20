@@ -1803,4 +1803,44 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlAgregarObservaciones($obs)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_observaciones_obs (obs_usuario, obs_fecha, obs_status, obs_ctr_id, obs_observaciones) VALUES (?,?,?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $obs['obs_usuario']);
+            $pps->bindValue(2, $obs['obs_fecha']);
+            $pps->bindValue(3, $obs['obs_status']);
+            $pps->bindValue(4, $obs['obs_ctr_id']);
+            $pps->bindValue(5, $obs['obs_observaciones']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarObaservaciones($obs_ctr_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_observaciones_obs WHERE obs_ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $obs_ctr_id);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
