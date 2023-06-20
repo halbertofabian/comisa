@@ -1910,7 +1910,7 @@ class ContratosModelo
     {
         try {
             //code...
-            $sql = "SELECT obs.*,ctr.ctr_folio,ctr.ctr_cliente,ctr.ctr_ruta,ctr.ctr_numero_cuenta FROM tbl_observaciones_obs obs JOIN tbl_contrato_crt_1 ctr ON obs.obs_ctr_id = ctr.ctr_id WHERE obs.obs_status = 'PENDIENTE'";
+            $sql = "SELECT obs.*,ctr.ctr_folio,ctr.ctr_cliente,ctr.ctr_ruta,ctr.ctr_numero_cuenta FROM tbl_observaciones_obs obs JOIN tbl_contrato_crt_1 ctr ON obs.obs_ctr_id = ctr.ctr_id WHERE obs.obs_status = 'PENDIENTE' ORDER BY obs.obs_id DESC";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->execute();
