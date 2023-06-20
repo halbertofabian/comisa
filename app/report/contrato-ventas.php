@@ -562,6 +562,14 @@ EOF;
 
     $pdf->writeHTMLCell(0, 0, '', '', '<BR>', 0, 1, 0, true, '', true);
 
+    $obs = ContratosModelo::mdlMostrarObaservaciones($ctr['ctr_id']);
+    $observaciones = $ctr['ctr_nota'] != "" ?  $ctr['ctr_nota'].'<br>' : "";
+    foreach ($obs as $key => $val) {
+        $observaciones .= PHP_EOL . $val['obs_observaciones'] .'<br>'; // Agrega PHP_EOL al final de cada observación
+    }
+
+    // $observaciones = str_replace('<br>', "\n", $observaciones);
+
     $pagos_credito = <<<EOF
 <table style="">
     <thead>
@@ -576,7 +584,7 @@ EOF;
         </tr> 
 
         <tr>
-            <td style="width:50%;color:#002973;font-size:6.5px">$ctr[ctr_nota]</td>
+            <td style="width:50%;color:#002973;font-size:6.5px">$observaciones</td>
             <td style="width:25%;text-align: right;vertical-align: middle;color:#002973;">
                 <strong>ENGANCHE </strong>.
             </td>
