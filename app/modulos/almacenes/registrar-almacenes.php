@@ -126,7 +126,7 @@
                             <div class="form-group">
                                 <label for="usr_contraseña">Contraseña</label>
                                 <input type="hidden" name="ams_id" id="ams_id_traslado">
-                                <input type="password" class="form-control" name="usr_contraseña" id="usr_contraseña" placeholder="Introduce la contraseña" requied>
+                                <input type="password" class="form-control" name="usr_contraseña" id="usr_contraseña" placeholder="Introduce la contraseña" required>
                             </div>
                         </div>
                     </div>
