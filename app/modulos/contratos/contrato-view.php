@@ -645,6 +645,12 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                             </thead>
                             <tbody id="tbodyProductos">
                                 <?php
+                                $folio = $ctr['ctr_folio'];
+                                if (substr($folio, 0, 2) === "T-") {
+                                    $disabled = "disabled";
+                                  } else {
+                                    $disabled = "";
+                                  }
                                 $productos = $ctr['ctr_productos'];
                                 // preArray($productos);
                                 $productos = json_decode($productos, true);
@@ -656,8 +662,8 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                                         <td><?= $pds['sku'] ?></td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="">
-                                                <button type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-times"></i> Cancelar</button>
-                                                <button type="button" class="btn btn-primary btnCambiarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-exchange"></i> Cambio</button>
+                                                <button <?= $disabled ?> type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-times"></i> Cancelar</button>
+                                                <button <?= $disabled ?> type="button" class="btn btn-primary btnCambiarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-exchange"></i> Cambio</button>
                                             </div>
                                         </td>
                                     </tr>

@@ -2203,6 +2203,12 @@ $(document).ready(function () {
                 contentType: false,
                 success: function (respuesta) {
                     if (respuesta.status) {
+                        var folio = $("#ctr_folio").val();
+                        var disabled = "";
+                        // Verifica si el folio comienza con "T-"
+                        if (folio.indexOf("T-") === 0) {
+                            disabled = "disabled";
+                        }
                         tbodyProductos2 =
                             `
                         <tr id="${res.spds_serie_completa}">
@@ -2210,8 +2216,8 @@ $(document).ready(function () {
                             <td class="serie">${res.spds_serie_completa}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="">
-                                    <button type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}" sku="${res.spds_serie_completa}"><i class="fa fa-times"></i> Cancelar</button>
-                                    <button type="button" class="btn btn-primary btnCambiarProducto2" sku="${res.spds_serie_completa}" spds_id="${res.spds_id}"><i class="fa fa-exchange"></i> Cambio</button>
+                                    <button ${disabled} type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}" sku="${res.spds_serie_completa}"><i class="fa fa-times"></i> Cancelar</button>
+                                    <button ${disabled} type="button" class="btn btn-primary btnCambiarProducto2" sku="${res.spds_serie_completa}" spds_id="${res.spds_id}"><i class="fa fa-exchange"></i> Cambio</button>
                                 </div>
                             </td>
                         </tr>
@@ -2253,7 +2259,7 @@ $(document).ready(function () {
 $(document).on("click", ".btnQuitarProducto2", function () {
     var sku = $(this).attr("sku");
     var spds_id = $(this).attr("spds_id");
-    
+
     $("#bcra_spds_id").val(spds_id);
     $("#bcra_sku").val(sku);
     $("#mdlMotivoCancelacion").modal('show');
@@ -2349,7 +2355,7 @@ function guardarModelosProductos() {
 $(document).on("click", ".btnCambiarProducto2", function () {
     var sku = $(this).attr("sku");
     var spds_id = $(this).attr("spds_id");
-    
+
     $("#spds_id_cambio").val(spds_id);
     $("#sku_cambio").val(sku);
     $("#ams_id_cambio").val("").trigger('change');
@@ -2365,13 +2371,13 @@ $(document).on("click", "#btnCambiarProducto2", function () {
     var spds_id = $("#spds_id_cambio").val();
     var ctr_fecha_contrato = $("#ctr_fecha_contrato").val();
 
-    if(ams_id == ""){
+    if (ams_id == "") {
         return toastr.warning("Debe de seleccionar el almacen", 'ADVERTENCIA!');
     }
-    if(motivo_cambio == ""){
+    if (motivo_cambio == "") {
         return toastr.warning("El motivo es obligatorio", 'ADVERTENCIA!');
     }
-    
+
     var datos = new FormData();
     if (spds_id != "") {
         datos.append('spds_id', spds_id);
