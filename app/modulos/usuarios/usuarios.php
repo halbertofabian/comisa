@@ -359,41 +359,43 @@
                                             <?php
                                             $usuarios = UsuariosModelo::mdlMostrarUsuarios();
                                             foreach ($usuarios as $key => $usr) :
+                                                if ($usr['usr_rol'] !== 'Master') {
                                             ?>
-                                                <tr>
-                                                    <td><?php echo $usr['usr_nombre'] ?></td>
+                                                    <tr>
+                                                        <td><?php echo $usr['usr_nombre'] ?></td>
 
-                                                    <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
-                                                    <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
-                                                    <td><?php echo $usr['usr_telefono'] ?></td>
-                                                    <td><?php echo $usr['usr_correo'] ?></td>
-                                                    <td class="text-center">
-                                                        <?php if ($usr['usr_rol'] == "Cobrador") {
-                                                            echo $usr['usr_rol'] . "<br>" . $usr['usr_ruta'];
-                                                        } else {
-                                                            echo $usr['usr_rol'];
-                                                        } ?>
-                                                    </td>
-                                                    <td><?php echo $usr['usr_usuario_registro'] ?></td>
-                                                    <td><?php echo $usr['usr_fecha_registro'] ?></td>
+                                                        <td> <strong> <?php echo number_format($usr['usr_deuda_ext'], 2) ?> </strong> </td>
+                                                        <td> <strong> <?php echo number_format($usr['usr_deuda_int'], 2) ?> </strong> </td>
+                                                        <td><?php echo $usr['usr_telefono'] ?></td>
+                                                        <td><?php echo $usr['usr_correo'] ?></td>
+                                                        <td class="text-center">
+                                                            <?php if ($usr['usr_rol'] == "Cobrador") {
+                                                                echo $usr['usr_rol'] . "<br>" . $usr['usr_ruta'];
+                                                            } else {
+                                                                echo $usr['usr_rol'];
+                                                            } ?>
+                                                        </td>
+                                                        <td><?php echo $usr['usr_usuario_registro'] ?></td>
+                                                        <td><?php echo $usr['usr_fecha_registro'] ?></td>
 
 
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fa fa-filter" aria-hidden="true"></i>
-                                                            </button>
-                                                            <div class="dropdown-menu">
-                                                                <!-- <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button> -->
-                                                                <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
-                                                                <div class="dropdown-divider"></div>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    <i class="fa fa-filter" aria-hidden="true"></i>
+                                                                </button>
+                                                                <div class="dropdown-menu">
+                                                                    <!-- <button class="dropdown-item text-dark btnEliminarUsuario" usr_id="<?php echo $usr['usr_id'] ?>"><i class="fa fa-trash"></i> Eliminar </button> -->
+                                                                    <a class="dropdown-item text-dark" href="<?php echo HTTP_HOST . 'usuarios/update/' . $usr['usr_id'] ?>"> <i class="fa fa-edit" aria-hidden="true"></i> Editar</a>
+                                                                    <div class="dropdown-divider"></div>
 
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
+                                                        </td>
 
-                                                </tr>
-                                            <?php endforeach; ?>
+                                                    </tr>
+                                            <?php }
+                                            endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
