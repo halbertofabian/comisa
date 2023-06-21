@@ -713,4 +713,22 @@ class UsuariosModelo
             return false;
         }
     }
+
+    public static function mdlObtenerUsuarioMaster()
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_usuarios_usr WHERE usr_rol = 'Master'";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

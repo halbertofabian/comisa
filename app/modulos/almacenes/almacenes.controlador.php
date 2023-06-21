@@ -732,33 +732,41 @@ class AlmacenesControlador
 
     public static function ctrGenerarTrasladoExterno()
     {
-        $ams_id = $_POST['ams_id'];
-        $mercancia = AlmacenesModelo::mdlMostrarProductosByAlmacenID($ams_id);
-        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoTrasladoExterno();
-        foreach ($mercancia as $key => $spds) {
-            $datos = array(
-                'spds_almacen' => $ams['ams_id'],
-                'spds_situacion' => 'TRASPASO',
-                'spds_ultima_mod' => FECHA,
-                'spds_id' => $spds['spds_id'],
+        $usr = UsuariosModelo::mdlObtenerUsuarioMaster();
+        if (!password_verify($_POST['usr_contraseña'], $usr['usr_clave'])) {
+            return array(
+                'status' => false,
+                'mensaje' => 'Contraseña incorrecta, intenta de nuevo.'
             );
-
-            $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
-            if ($res) {
-                $array_bcra = array(
-                    'bcra_movimiento' => 'Traslado externo',
-                    'bcra_fecha' => FECHA,
-                    'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
-                    'bcra_nota' => 'SE REALIZO EL TRASLADO EXTERNO',
-                    'bcra_spds_id' => $spds['spds_id'],
+        } else {
+            $ams_id = $_POST['ams_id'];
+            $mercancia = AlmacenesModelo::mdlMostrarProductosByAlmacenID($ams_id);
+            $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoTrasladoExterno();
+            foreach ($mercancia as $key => $spds) {
+                $datos = array(
+                    'spds_almacen' => $ams['ams_id'],
+                    'spds_situacion' => 'TRASPASO',
+                    'spds_ultima_mod' => FECHA,
+                    'spds_id' => $spds['spds_id'],
                 );
-                $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
-                $itr = AlmacenesControlador::ctrActualizarInventario("itr_traslado_2", $spds['spds_id']);
+
+                $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+                if ($res) {
+                    $array_bcra = array(
+                        'bcra_movimiento' => 'Traslado externo',
+                        'bcra_fecha' => FECHA,
+                        'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                        'bcra_nota' => 'SE REALIZO EL TRASLADO EXTERNO',
+                        'bcra_spds_id' => $spds['spds_id'],
+                    );
+                    $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                    $itr = AlmacenesControlador::ctrActualizarInventario("itr_traslado_2", $spds['spds_id']);
+                }
             }
+            return array(
+                'status' => true,
+                'mensaje' => 'Se realizo el traslado externo correctamente.',
+            );
         }
-        return array(
-            'status' => true,
-            'mensaje' => 'Se realizo el traslado externo correctamente.',
-        );
     }
 }

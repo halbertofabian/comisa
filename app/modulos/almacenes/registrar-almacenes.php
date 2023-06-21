@@ -66,7 +66,7 @@
                         </table>
                     </div>
                     <div class="col-12">
-                        <!-- <button type="button" class="btn btn-light float-left d-none" id="btnGenerarTraslado"><i class="fa fa-truck"></i> Realizar traslado externo</button> -->
+                        <button type="button" class="btn btn-light float-left d-none" id="btnGenerarTraslado"><i class="fa fa-truck"></i> Realizar traslado externo</button>
                         <button type="button" class="btn btn-primary float-right d-none" id="btnImprimirReporte"><i class="fa fa-file-pdf-o"></i> Imprimir</button>
                     </div>
                 </div>
@@ -104,6 +104,38 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnQuitarProducto">Aceptar</button>
             </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="mdlValidarTrasladoExterno" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validar contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formValidarTraslado">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="usr_contraseña">Contraseña</label>
+                                <input type="hidden" name="ams_id" id="ams_id_traslado">
+                                <input type="password" class="form-control" name="usr_contraseña" id="usr_contraseña" placeholder="Introduce la contraseña" requied>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Validar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -654,32 +686,48 @@
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                var datos = new FormData()
-                datos.append('ams_id', ams_id);
-                datos.append('btnGenerarTraslado', true);
-                $.ajax({
-                    type: 'POST',
-                    url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
-                    data: datos,
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    success: function(res) {
-                        if (res.status) {
-                            swal({
-                                title: '¡Bien!',
-                                text: res.mensaje,
-                                type: 'success',
-                                icon: 'success'
-                            }).then(function() {
-                                mostrarProductos();
-                            });
-                        } else {
-                            mostrarProductos();
-                        }
-                    }
-                });
+                $("#ams_id_traslado").val(ams_id);
+                $("#usr_contraseña").val("");
+                $("#mdlValidarTrasladoExterno").modal('show');
             } else {}
+        });
+    });
+
+    $('#formValidarTraslado').on('submit', function(e) {
+        e.preventDefault();
+        var datos = new FormData(this)
+        datos.append('btnGenerarTraslado', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.status) {
+                    swal({
+                        title: '¡Bien!',
+                        text: res.mensaje,
+                        type: 'success',
+                        icon: 'success'
+                    }).then(function() {
+                        mostrarProductos();
+                        $("#mdlValidarTrasladoExterno").modal('hide');
+                    });
+                } else {
+                    mostrarProductos();
+                    swal({
+                        title: 'Error',
+                        text: res.mensaje,
+                        icon: 'error',
+                        buttons: [false, 'Intentar de nuevo'],
+                        dangerMode: true,
+                    }).then((willDelete) => {
+                        if (willDelete) {} else {}
+                    })
+                }
+            }
         });
     });
 </script>
