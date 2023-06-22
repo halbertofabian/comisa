@@ -433,7 +433,7 @@ class AlmacenesModelo
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $spds_id);
             $pps->execute();
-            return $pps->fetch();
+            return $pps->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
         } finally {

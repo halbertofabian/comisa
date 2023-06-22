@@ -26,6 +26,9 @@ require_once DOCUMENT_ROOT . 'app/modulos/cobranza/cobranza.controlador.php';
 
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.controlador.php';
+
+require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.controlador.php';
 require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 class AlmacenesAjax
 {

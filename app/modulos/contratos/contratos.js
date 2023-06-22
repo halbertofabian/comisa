@@ -2216,7 +2216,7 @@ $(document).ready(function () {
                             <td class="serie">${res.spds_serie_completa}</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="">
-                                    <button ${disabled} type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}" sku="${res.spds_serie_completa}"><i class="fa fa-times"></i> Cancelar</button>
+                                    <button ${disabled} type="button" class="btn btn-danger btnQuitarProducto2" spds_id="${res.spds_id}" sku="${res.spds_serie_completa}" nombreProducto="${res.mpds_descripcion}"><i class="fa fa-times"></i> Cancelar</button>
                                     <button ${disabled} type="button" class="btn btn-primary btnCambiarProducto2" sku="${res.spds_serie_completa}" spds_id="${res.spds_id}"><i class="fa fa-exchange"></i> Cambio</button>
                                 </div>
                             </td>
@@ -2258,17 +2258,22 @@ $(document).ready(function () {
 
 $(document).on("click", ".btnQuitarProducto2", function () {
     var sku = $(this).attr("sku");
+    var bcra_nombreProducto = $(this).attr("nombreProducto");
     var spds_id = $(this).attr("spds_id");
 
     $("#bcra_spds_id").val(spds_id);
     $("#bcra_sku").val(sku);
+    $("#bcra_nombreProducto").val(bcra_nombreProducto);
     $("#mdlMotivoCancelacion").modal('show');
 
 });
 $(document).on("click", "#btnQuitarProducto2", function () {
+    var ctr_id = $("#ctr_id").val();
     var sku = $("#bcra_sku").val();
+    var nombreProducto = $("#bcra_nombreProducto").val();
     var spds_id = $("#bcra_spds_id").val();
     var bcra_nota = $("#bcra_nota").val();
+    var products = $("#productos_contratos").val();
     if (bcra_nota == "") {
         return toastr.warning('El motivo es obligatorio', 'ADVERTENCIA!');
     }
@@ -2276,7 +2281,11 @@ $(document).on("click", "#btnQuitarProducto2", function () {
     if (spds_id != "") {
         datos.append('spds_id', spds_id);
     }
+    datos.append('sku', sku);
+    datos.append('nombreProducto', nombreProducto);
+    datos.append('ctr_id', ctr_id);
     datos.append('bcra_nota', bcra_nota);
+    datos.append('products', products);
     datos.append('btnQuitarProductoContrato', true);
     $.ajax({
         type: 'POST',
@@ -2289,13 +2298,27 @@ $(document).on("click", "#btnQuitarProducto2", function () {
             if (res.status) {
                 var products = $("#productos_contratos").val();
                 var productos = JSON.parse(products);
-                for (var i = productos.length; i--;) {
-                    if (productos[i].sku === sku) {
-                        productos.splice(i, 1);
+                for (var i = productos.length - 1; i >= 0; i--) {
+                    if (typeof sku !== "undefined" && sku !== null && sku !== "") {
+                        if (productos[i].sku === sku) {
+                            productos.splice(i, 1);
+                        }
+                    } else {
+                        if (productos[i].nombreProducto === nombreProducto) {
+                            productos.splice(i, 1);
+                        }
                     }
                 }
 
-                $("#" + sku).remove();
+                
+
+                if (sku !== "") {
+                    $("#" + sku).remove();
+                } else {
+                    var escapedId = $.escapeSelector(nombreProducto);
+                    $("#" + escapedId).remove();
+                }
+
                 // $(this).closest('tr').remove();
                 $("#productos_contratos").val(JSON.stringify(productos));
 
@@ -2339,10 +2362,15 @@ function guardarModelosProductos() {
         },
         success: function (respuesta) {
             if (respuesta.status) {
-                toastr.success(respuesta.mensaje, '¡Muy bien!');
-                $("#mdlMotivoCancelacion").modal("hide");
-                $("#mdlCambioDeMercancia").modal("hide");
-                $("#bcra_nota").val("");
+                // toastr.success(respuesta.mensaje, '¡Muy bien!');
+                // $("#mdlMotivoCancelacion").modal("hide");
+                // $("#mdlCambioDeMercancia").modal("hide");
+                // $("#bcra_nota").val("");
+                swal({
+                    title: '¡Bien!', text: respuesta.mensaje, type: 'success', icon: 'success'
+                }).then(function () {
+                    location.reload();
+                });
             } else {
                 toastr.error(respuesta.mensaje, '¡ERROR!');
             }

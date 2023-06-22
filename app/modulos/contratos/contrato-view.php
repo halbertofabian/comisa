@@ -655,15 +655,16 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                                 // preArray($productos);
                                 $productos = json_decode($productos, true);
                                 foreach ($productos as $key => $pds) :
+                                    $sku = isset($pds['sku']) ? $pds['sku'] : "";
                                 ?>
-                                    <tr id="<?= $pds['sku'] ?>">
+                                    <tr id="<?= $sku !== "" ? $sku : $pds['nombreProducto'] ?>">
 
                                         <td class="serie"><?= $pds['nombreProducto'] ?></td>
-                                        <td><?= $pds['sku'] ?></td>
+                                        <td><?= $sku ?></td>
                                         <td>
                                             <div class="btn-group" role="group" aria-label="">
-                                                <button <?= $disabled ?> type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-times"></i> Cancelar</button>
-                                                <button <?= $disabled ?> type="button" class="btn btn-primary btnCambiarProducto2" sku="<?= $pds['sku'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-exchange"></i> Cambio</button>
+                                                <button <?= $disabled ?> type="button" class="btn btn-danger btnQuitarProducto2" sku="<?= $sku ?>" nombreProducto="<?= $pds['nombreProducto'] ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-times"></i> Cancelar</button>
+                                                <button <?= $disabled ?> type="button" class="btn btn-primary btnCambiarProducto2" sku="<?= $sku ?>" spds_id="<?= isset($pds['spds_id']) ? $pds['spds_id'] : '' ?>"><i class="fa fa-exchange"></i> Cambio</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -1100,6 +1101,7 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                         <div class="col-12">
                             <div class="form-group">
                                 <input type="hidden" id="bcra_sku">
+                                <input type="hidden" id="bcra_nombreProducto">
                                 <input type="hidden" id="bcra_spds_id">
                                 <label for="bcra_nota">Motivo de cancelacion</label>
                                 <textarea class="form-control text-uppercase" name="bcra_nota" id="bcra_nota" rows="3"></textarea>

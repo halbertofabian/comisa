@@ -427,6 +427,7 @@ class AlmacenesControlador
 
     public static function ctrQuitarProductosContrato($pds)
     {
+        $ctr = ContratosModelo::mdlMostrarContratosById($pds['ctr_id']);
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         if (isset($pds['spds_id'])) {
             $datos = array(
@@ -448,6 +449,24 @@ class AlmacenesControlador
                 );
                 $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
                 $itr = AlmacenesControlador::ctrActualizarInventario("itr_devoluciones", $pds['spds_id']);
+
+                $producto = AlmacenesModelo::mdlMostrarSeriesById($pds['spds_id']);
+
+                $obs_usuario = $_SESSION['session_usr']['usr_nombre'];
+                $obs_fecha = FECHA;
+                $obs_status = 'COMPLETADA';
+                $obs_ctr_id = $ctr['ctr_id'];
+                $obs_observaciones = 'SE CANCELO EL PRODUCTO ' . $producto['mpds_descripcion'] . ' CON #SERIE ' . $producto['spds_serie_completa'];
+
+                $datos_obs = array(
+                    'obs_usuario' => $obs_usuario,
+                    'obs_fecha' => $obs_fecha,
+                    'obs_status' => $obs_status,
+                    'obs_ctr_id' => $obs_ctr_id,
+                    'obs_observaciones' => $obs_observaciones,
+                );
+
+                $res_obs = ContratosModelo::mdlAgregarObservaciones($datos_obs);
                 return array(
                     'status' => true,
                     'mensaje' => 'Se quito el producto correctamente.',
@@ -459,10 +478,39 @@ class AlmacenesControlador
                 );
             }
         } else {
-            return array(
-                'status' => true,
-                'mensaje' => 'Se quito el producto correctamente.',
+            $nombre_producto = "";
+            $productos = json_decode($pds['products'], true);
+            for ($i = count($productos) - 1; $i >= 0; $i--) {
+                if ($productos[$i]['nombreProducto'] === $pds['nombreProducto']) {
+                    $nombre_producto = $productos[$i]['nombreProducto'];
+                }
+            }
+
+            $obs_usuario = $_SESSION['session_usr']['usr_nombre'];
+            $obs_fecha = FECHA;
+            $obs_status = 'COMPLETADA';
+            $obs_ctr_id = $ctr['ctr_id'];
+            $obs_observaciones = 'SE CANCELO EL PRODUCTO ' . $nombre_producto .  ' SIN SERIE';
+
+            $datos_obs = array(
+                'obs_usuario' => $obs_usuario,
+                'obs_fecha' => $obs_fecha,
+                'obs_status' => $obs_status,
+                'obs_ctr_id' => $obs_ctr_id,
+                'obs_observaciones' => $obs_observaciones,
             );
+            $res_obs = ContratosModelo::mdlAgregarObservaciones($datos_obs);
+            if ($res_obs) {
+                return array(
+                    'status' => true,
+                    'mensaje' => 'Se quito el producto correctamente.',
+                );
+            } else {
+                return array(
+                    'status' => false,
+                    'mensaje' => 'No se pudo quitar el producto correctamente',
+                );
+            }
         }
     }
     public static function ctrMostrarAlmacenesByTipo()
