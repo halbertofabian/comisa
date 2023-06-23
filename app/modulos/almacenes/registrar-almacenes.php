@@ -34,10 +34,12 @@
                         </div>
                     </div>
                     <div class="col-xl-4 col-md-4 col-12">
-                        <div class="form-group">
-                            <label for="auto_complete_producto">Digite la serie del producto</label>
-                            <input type="text" class="form-control" name="" id="auto_complete_producto" placeholder="Escriba el número de serie y seleccione...">
-                        </div>
+                        <form id="formSerieCompleta" method="post">
+                            <div class="form-group">
+                                <label for="auto_complete_producto">Digite la serie del producto</label>
+                                <input type="text" class="form-control" name="" id="auto_complete_producto" placeholder="Escriba el número de serie y seleccione...">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -141,6 +143,125 @@
 </div>
 
 <script>
+    $("#formSerieCompleta").on('submit', function(e) {
+        e.preventDefault();
+        var serie_completa = $('#auto_complete_producto').val();
+
+        var datos = new FormData()
+        datos.append('auto_complete_serie', serie_completa)
+        datos.append('btnSerieCompleta', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+
+                if (!res) {
+                    toastr.error('No existe la serie, intenta de nuevo', '¡ERROR!');
+                    $('#auto_complete_producto').val("");
+
+                } else {
+
+                    var tipo = $("#tipo").val();
+                    var ams_id = $("#ams_id").val();
+                    var ams_nombre = $('option:selected', $("#ams_id")).attr('ams_nombre');
+                    // var res = ui.item;
+                    var encontrado = false; // Variable de control para descripciones duplicadas
+
+                    if (ams_id == "") {
+                        toastr.warning('No se a seleccionado ningun almacen', 'ADVERTENCIA!');
+                        $(this).val("");
+                        return false;
+                    }
+
+                    $(".serie").each(function() {
+                        if ($(this).text() == res.spds_serie_completa) {
+                            toastr.warning('El producto ' + res.mpds_descripcion + '-' + res.mpds_modelo + '-' + res.spds_serie_completa + ' ya se agrego a su lista.', 'ADVERTENCIA!');
+                            encontrado = true; // Descripción duplicada encontrada
+                            return false;
+                        }
+                    });
+
+
+                    if (encontrado) {
+                        $(this).val("");
+                        return false;
+                    } else {
+                        if (tipo == "CV") {
+                            var datos = new FormData()
+                            datos.append('spds_id', res.spds_id);
+                            datos.append('ams_nombre', ams_nombre);
+                            datos.append('spds_almacen', ams_id);
+                            datos.append('spds_situacion', 'SALIDA');
+                            datos.append('btnAsignarAlmacen', true);
+                            $.ajax({
+                                type: 'POST',
+                                url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                                data: datos,
+                                dataType: 'json',
+                                processData: false,
+                                contentType: false,
+                                success: function(respuesta) {
+                                    if (respuesta.status) {
+                                        toastr.success(respuesta.mensaje, '¡Muy bien!');
+                                        mostrarProductos();
+                                        $('#auto_complete_producto').val("");
+                                        return false;
+                                    } else {
+                                        toastr.error(respuesta.mensaje, '¡ERROR!');
+                                        $('#auto_complete_producto').val("");
+                                    }
+
+                                }
+                            });
+                        } else {
+                            var ams_vendedor = $("#ams_vendedor").val();
+                            if (ams_vendedor == "") {
+                                $('#auto_complete_producto').val("");
+                                toastr.warning('Por favor selecciona al vendedor', 'ADVERTENCIA!');
+                                return false;
+                            } else {
+                                var ams_sucursal_origen = '<?= $_SESSION['session_suc']['scl_nombre'] ?>';
+                                var datos = new FormData()
+                                datos.append('spds_id', res.spds_id);
+                                datos.append('ams_nombre', ams_nombre);
+                                datos.append('spds_almacen', ams_id);
+                                datos.append('spds_situacion', 'TRASPASO');
+                                datos.append('btnAsignarAlmacenTraspaso', true);
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                                    data: datos,
+                                    dataType: 'json',
+                                    processData: false,
+                                    contentType: false,
+                                    success: function(respuesta) {
+                                        if (respuesta.status) {
+                                            traspasarMercancia(res, ams_nombre, ams_sucursal_origen);
+                                        } else {
+                                            toastr.error(respuesta.mensaje, '¡ERROR!');
+                                            $('#auto_complete_producto').val("");
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }
+
+
+                    }
+
+                }
+            }
+        });
+
+    })
+
     $(document).ready(function() {
         mostrarAlmacenesByTipo();
 

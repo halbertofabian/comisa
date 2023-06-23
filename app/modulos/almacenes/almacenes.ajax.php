@@ -183,6 +183,14 @@ class AlmacenesAjax
         $res = AlmacenesControlador::ctrGenerarTrasladoExterno();
         echo json_encode($res, true);
     }
+
+    public function AjaxSerieCompleta()
+    {
+        $res = AlmacenesModelo::mdlMostrarSeriesBySerieCompleta($_POST['auto_complete_serie']);
+        echo json_encode($res, true);
+    }
+
+    
 }
 
 if (isset($_POST['btnSincronizarInventario'])) {
@@ -297,4 +305,8 @@ if (isset($_POST['auto_complete_producto2'])) {
 if (isset($_POST['btnGenerarTraslado'])) {
     $generarTrasladoExterno = new AlmacenesAjax();
     $generarTrasladoExterno->ajaxGenerarTrasladoExterno();
+}
+if (isset($_POST['btnSerieCompleta'])) {
+    $btnSerieCompleta = new AlmacenesAjax();
+    $btnSerieCompleta->AjaxSerieCompleta();
 }

@@ -659,7 +659,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.*, ams.ams_nombre, ams.ams_vendedor FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE ams.ams_id = ?";
+            $sql = "SELECT spds.spds_id, spds.spds_serie,spds.spds_situacion, spds.spds_ultima_mod, spds.spds_serie_completa, mpds.*, ams.ams_nombre, ams.ams_vendedor FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE ams.ams_id = ? ORDER BY spds_ultima_mod DESC ";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_id);
