@@ -104,6 +104,26 @@ class SueldosModelo
             $con = null;
         }
     }
+    public static function mdlmostrarInfoAbonos($inf)
+    {
+        try {
+            //code...
+            $sql = "SELECT absemp.*, usr.usr_deuda_ext,usr.usr_deuda_int FROM tbl_abonos_empleados_absemp absemp
+            JOIN tbl_usuarios_usr usr ON usr.usr_id = absemp.absemp_id_usuario 
+            WHERE absemp.absemp_id_usuario=? AND absemp.absemp_tipo_prestamo=?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $inf['pms_usuario']);
+            $pps->bindValue(2, $inf['pms_tipo']);
+            $pps->execute();
+            return $pps->fetchAll();
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlRegistrarAbono($infAbono)
     {

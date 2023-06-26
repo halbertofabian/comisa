@@ -109,7 +109,7 @@ class SueldosControlador
         }
     }
 
-    public function ctrAbonardeuda()
+    public static function ctrAbonardeuda()
     {
         if (isset($_POST)) {
             $_POST['absemp_fecha'] = FECHA;

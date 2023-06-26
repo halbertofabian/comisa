@@ -42,6 +42,7 @@ class SueldosAjax
         $data =  ([
 
             'infoPrestamo' => SueldosModelo::mdlmostrarInfoDeuda($_POST),
+            'infoAbonos' => SueldosModelo::mdlmostrarInfoAbonos($_POST),
             'infoDeuda' => SueldosModelo::mdlMostrarSueldos($_POST['pms_usuario'])
         ]);
 

@@ -170,10 +170,12 @@ $("#btnMostrarDeuda").on("click", function () {
             // console.log(respuesta)
             stopLoadButton()
             var tblinfPrestamos = ""
+            var tblinfAbonos = ""
             deudaint = ""
             deudaext = ""
 
             infoPrestamo = respuesta.infoPrestamo;
+            infoAbonos = respuesta.infoAbonos;
 
             deudaint = respuesta.infoDeuda.usr_deuda_int
             deudaext = respuesta.infoDeuda.usr_deuda_ext
@@ -192,6 +194,23 @@ $("#btnMostrarDeuda").on("click", function () {
                     `;
             })
             $("#tblDatosprestamo").html(tblinfPrestamos)
+
+
+
+            infoAbonos.forEach(info => {
+
+
+                tblinfAbonos +=
+                    `
+                        <tr>
+                        <td>${info.absemp_id}</td>
+                        <td>${info.absemp_abono}</td>
+                        <td>${info.absemp_fecha}</td>
+                        <td>${info.absemp_usuario_registro}</td>   
+                        </tr>
+                    `;
+            })
+            $("#tblDatosAbonos").html(tblinfAbonos)
 
             if (pms_tipo == "Interno") { $("#totaldeuda").val(deudaint); }
             if (pms_tipo == "Externo") { $("#totaldeuda").val(deudaext); }
