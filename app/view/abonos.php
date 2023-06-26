@@ -43,13 +43,20 @@ cargarComponente('breadcrumb', '', 'Abonos');
 
         </div>
         <div class="row">
-            <div class="col-12">
-            <div class="alert alert-dark" role="alert">
-                <strong>Tabla de prestamos</strong>
+            <!-- Tabla de prestamos -->
+            <div class="col-md-6 col-12">
+                <div class="alert alert-dark" role="alert">
+                    <strong>Tabla de prestamos</strong>
+                </div>
             </div>
+            <!-- Tabla de abonos -->
+            <div class="col-md-6 col-12">
+                <div class="alert alert-dark" role="alert">
+                    <strong>Tabla de abonos</strong>
+                </div>
             </div>
-            <div class="col-12">
-                <table class="table">
+            <div class="col-md-6 col-12">
+                <table class="table tablas">
                     <thead class="thead-light">
                         <tr>
                             <th>#</th>
@@ -63,9 +70,22 @@ cargarComponente('breadcrumb', '', 'Abonos');
                     </tbody>
                 </table>
             </div>
+            <!-- Tabla de abonos -->
+            <div class="col-md-6 col-12">
+                <table class="table tablas">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Cantidad</th>
+                            <th>Fecha de abono</th>
+                            <th>Usuario Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblDatosAbonos">
 
-
-
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="row">
