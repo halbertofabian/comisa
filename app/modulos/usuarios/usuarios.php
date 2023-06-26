@@ -127,7 +127,7 @@
                         <div class="col-md-3 col-12">
                             <div class="form-group">
                                 <label for="usr_deuda_ext">Deuda externa</label>
-                                <input type="text" name="usr_deuda_ext" id="usr_deuda_ext" class="form-control inputN" value="<?php echo $usr['usr_deuda_ext']  ?>">
+                                <input type="text" name="usr_deuda_ext" id="usr_deuda_ext" class="form-control inputN" value="<?php echo $usr['usr_deuda_ext']  ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-3 col-12">
