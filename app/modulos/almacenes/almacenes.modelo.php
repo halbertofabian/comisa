@@ -1187,4 +1187,38 @@ class AlmacenesModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarSeriesByAutocompleteBitacora($spds)
+    {
+        try {
+            //code...
+            $sql = "SELECT spds.*, mpds.mpds_suc, mpds.mpds_modelo, mpds.mpds_descripcion, ams.ams_nombre, CONCAT(mpds.mpds_descripcion,' - ',mpds.mpds_modelo, ' - ', spds.spds_serie_completa) AS label FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id JOIN tbl_almacenes_ams ams ON spds.spds_almacen = ams.ams_id  WHERE (spds.spds_serie_completa LIKE '%$spds%' OR mpds.mpds_descripcion LIKE '%$spds%')";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarBitacora($bcra_spds_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT bcra.*, spds.*, mpds.* FROM tbl_bitacora_mercancia_bcra bcra JOIN tbl_series_producto_spds spds ON bcra.bcra_spds_id = spds.spds_id JOIN tbl_modelos_productos_mpds mpds ON spds.spds_modelo = mpds.mpds_id WHERE bcra.bcra_spds_id = ? ORDER BY bcra.bcra_fecha ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $bcra_spds_id);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

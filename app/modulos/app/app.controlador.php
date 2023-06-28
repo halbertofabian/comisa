@@ -1164,6 +1164,11 @@ class AppControlador
                             'label' => 'Lista de inventario',
                             'href' => 'almacenes/listar-inventario'
                         ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Lista de bitacora',
+                            'href' => 'almacenes/listar-bitacora'
+                        ],
                         // [
                         //     'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                         //     'label' => 'Nuevo producto',
@@ -1526,6 +1531,11 @@ class AppControlador
                             'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
                             'label' => 'Lista de inventario',
                             'href' => 'almacenes/listar-inventario'
+                        ],
+                        [
+                            'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',
+                            'label' => 'Lista de bitacora',
+                            'href' => 'almacenes/listar-bitacora'
                         ],
                         // [
                         //     'icon' => '<i class="fa fa-circle-o" aria-hidden="true"></i>',

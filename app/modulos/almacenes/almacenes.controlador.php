@@ -817,4 +817,22 @@ class AlmacenesControlador
             );
         }
     }
+
+    public static function ctrMostrarBitacora()
+    {
+        $bitacoras = AlmacenesModelo::mdlMostrarBitacora($_POST['spds_id']);
+        $array_bcra = array();
+        foreach ($bitacoras as $bcra) {
+            $data_a = array(
+                'mpds_descripcion' => $bcra['mpds_descripcion'] . "-" . $bcra['mpds_modelo'],
+                'spds_serie_completa' => $bcra['spds_serie_completa'],
+                'bcra_movimiento' => $bcra['bcra_movimiento'],
+                'bcra_fecha' => $bcra['bcra_fecha'],
+                'bcra_usuario' => $bcra['bcra_usuario'],
+                'bcra_nota' => $bcra['bcra_nota'],
+            );
+            array_push($array_bcra, $data_a);
+        }
+        return $array_bcra;
+    }
 }

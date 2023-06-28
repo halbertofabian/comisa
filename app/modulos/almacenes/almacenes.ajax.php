@@ -190,6 +190,18 @@ class AlmacenesAjax
         echo json_encode($res, true);
     }
 
+    public function ajaxBuscarProductoAutocompleteBitacora()
+    {
+        $respuesta = AlmacenesModelo::mdlMostrarSeriesByAutocompleteBitacora($_POST['auto_complete_bitacora']);
+
+        echo json_encode($respuesta, true);
+    }
+    public function ajaxMostrarBitacora()
+    {
+        $res = AlmacenesControlador::ctrMostrarBitacora();
+        print json_encode($res, JSON_UNESCAPED_UNICODE);
+    }
+
     
 }
 
@@ -309,4 +321,12 @@ if (isset($_POST['btnGenerarTraslado'])) {
 if (isset($_POST['btnSerieCompleta'])) {
     $btnSerieCompleta = new AlmacenesAjax();
     $btnSerieCompleta->AjaxSerieCompleta();
+}
+if (isset($_POST['auto_complete_bitacora'])) {
+    $obtenerProductoBitacora = new AlmacenesAjax();
+    $obtenerProductoBitacora->ajaxBuscarProductoAutocompleteBitacora();
+}
+if (isset($_POST['btnMostrarBitacora'])) {
+    $mostrarBitacora = new AlmacenesAjax();
+    $mostrarBitacora->ajaxMostrarBitacora();
 }
