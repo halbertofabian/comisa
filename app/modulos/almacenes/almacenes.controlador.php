@@ -835,4 +835,61 @@ class AlmacenesControlador
         }
         return $array_bcra;
     }
+
+
+    // Funciones para reparar el inventario
+    public static function ctrActualizarInventario4()
+    {
+
+        // SACAR LISTA DE MODELOS 
+
+        $listaProductos = AlmacenesModelo::mdlMostrarSeriesModelos();
+
+        foreach ($listaProductos as  $spds) {
+            # code...
+            $issetModelo = AlmacenesModelo::mdlMostrarInventarioByModeloFicha($spds['mpds_id'], 25);
+
+            if (!$issetModelo) {
+
+                // INSERTAR
+                $actualizar = AlmacenesModelo::mdlSumarInventarioInsert($spds['pvs_clave'], array(
+                    'itr_id_modelo' => $spds['mpds_id'],
+                    'itr_value' => 1,
+                    'itr_ficha' => 25,
+                ));
+            } else {
+                // ACTUALIZAR
+                $actualizar = AlmacenesModelo::mdlSumarInventarioUpdate($spds['pvs_clave'], $spds['mpds_id'], 25);
+            }
+        }
+    }
+    public static function ctrActualizarCantidades(){
+
+        $inventario = AlmacenesModelo::mdlMostrarInventarioByModeloFichaAll(25); 
+
+        foreach ($inventario as $ivs) {
+            # code...
+            $suma =  $ivs['A'] + $ivs['B'] + $ivs['C'] + $ivs['D']  + $ivs['itr_devoluciones'] + $ivs['itr_traslado_1'];
+            $resta = $ivs['itr_ventas'] + $ivs['itr_traslado_2'] + $ivs['itr_borrado'];
+
+            $total = $suma - $resta;
+
+             AlmacenesModelo::mdlSumarFinalInventarioUpdate($ivs['itr_id_modelo'],25,$total);
+
+
+        }
+    }
+
+    public static function ctrActualizarCantidadesII(){
+
+        $inventario = AlmacenesModelo::mdlMostrarInventarioByModeloFichaAll(25); 
+
+        foreach ($inventario as $ivs) {
+            # code...
+            
+             AlmacenesModelo::mdlSumarInicialInventarioUpdate($ivs['itr_id_modelo'],26,$ivs['itr_if']);
+
+
+        }
+    }
 }

@@ -1096,7 +1096,8 @@ class AlmacenesModelo
         }
     }
 
-    public static function mdlObtenerUltimaSerie($spds_modelo){
+    public static function mdlObtenerUltimaSerie($spds_modelo)
+    {
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         try {
             //code...
@@ -1153,7 +1154,8 @@ class AlmacenesModelo
         }
     }
 
-    public static function mdlMostrarCodigosSeries(){
+    public static function mdlMostrarCodigosSeries()
+    {
         $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
         try {
             //code...
@@ -1171,7 +1173,8 @@ class AlmacenesModelo
             $con = null;
         }
     }
-    public static function mdlMostrarAlmacenesTipoVM(){
+    public static function mdlMostrarAlmacenesTipoVM()
+    {
         try {
             //code...
             $sql = "SELECT * FROM tbl_almacenes_ams WHERE ams_tipo IN('M','V') AND ams_estado = 1";
@@ -1216,6 +1219,141 @@ class AlmacenesModelo
             return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+
+    // Reparar inventario
+    public static function mdlSumarInventarioInsert($column, $datos)
+    {
+        try {
+            //code...
+            $sql = "INSERT INTO tbl_inventario_itr (itr_id_modelo,{$column},itr_ficha) VALUES(?,?,?)";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $datos['itr_id_modelo']);
+            $pps->bindValue(2, $datos['itr_value']);
+            $pps->bindValue(3, $datos['itr_ficha']);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlSumarInventarioUpdate($column, $itr_id_modelo, $itr_ficha)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET {$column} = {$column} + 1  WHERE itr_id_modelo = ? AND itr_ficha = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id_modelo);
+            $pps->bindValue(2, $itr_ficha);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            return $th->getMessage();
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarInventarioByModeloFicha($itr_id_modelo, $itr_ficha)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_inventario_itr WHERE itr_id_modelo = ? AND itr_ficha = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_id_modelo);
+            $pps->bindValue(2, $itr_ficha);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarInventarioByModeloFichaAll($itr_ficha)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_inventario_itr WHERE itr_ficha = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_ficha);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            return $th->getMessage();
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlMostrarSeriesModelos()
+    {
+        //
+        try {
+            //code...
+            $sql = "SELECT mds.mpds_id,pvs.pvs_clave FROM tbl_series_producto_spds spds JOIN tbl_modelos_productos_mpds  mds ON mds.mpds_id = spds.spds_modelo JOIN tbl_proveedores_pvs pvs  ON pvs.pvs_id = mds.mpds_proveedor ORDER BY mds.mpds_id ASC ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlSumarFinalInventarioUpdate($itr_id_modelo, $itr_ficha, $itr_if)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET itr_if = ?  WHERE itr_id_modelo = ? AND itr_ficha = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_if);
+            $pps->bindValue(2, $itr_id_modelo);
+            $pps->bindValue(3, $itr_ficha);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            return $th->getMessage();
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public static function mdlSumarInicialInventarioUpdate($itr_id_modelo, $itr_ficha, $itr_ii)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_inventario_itr SET itr_ii = ?  WHERE itr_id_modelo = ? AND itr_ficha = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_ii);
+            $pps->bindValue(2, $itr_id_modelo);
+            $pps->bindValue(3, $itr_ficha);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            return $th->getMessage();
         } finally {
             $pps = null;
             $con = null;
