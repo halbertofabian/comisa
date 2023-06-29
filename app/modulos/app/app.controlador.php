@@ -955,7 +955,7 @@ class AppControlador
                         ],
                         [
                             'icon' => '',
-                            'label' => 'Gestión de cuentas',
+                            'label' => 'Autorizar cuentas nuevas',
                             'href' => 'contratos/gestion-cuentas'
                         ],
                         //Aqui más item de menu
