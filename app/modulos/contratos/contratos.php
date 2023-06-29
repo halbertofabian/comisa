@@ -70,6 +70,14 @@ elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "gestion-status") :
 
 ?>
 <?php
+elseif (isset($rutas[1]) && $rutas[1] != "" && $rutas[1] == "gestion-cuentas") :
+    cargarComponente('breadcrumb', '', 'Gestion de cuentas');
+
+    include_once 'app/modulos/contratos/gestion-cobranza.php';
+
+
+?>
+<?php
 else :
     cargarComponente('breadcrumb', '', 'Nuevo contrato');
 ?>

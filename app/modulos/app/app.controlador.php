@@ -953,6 +953,11 @@ class AppControlador
                             'label' => 'Gestión de status',
                             'href' => 'contratos/gestion-status'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Gestión de cuentas',
+                            'href' => 'contratos/gestion-cuentas'
+                        ],
                         //Aqui más item de menu
                     ),
                 ]
