@@ -1038,6 +1038,23 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlMostrarInventarioByFichaTR($itr_ficha)
+    {
+        try {
+            //code...
+            $sql = "SELECT itr.*, mpds.* FROM tbl_inventario_itr itr JOIN tbl_modelos_productos_mpds mpds ON itr.itr_id_modelo = mpds.mpds_id WHERE   itr.itr_ficha = ? ORDER BY mpds.mpds_modelo ASC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $itr_ficha);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 
     public static function mdlActualizarInventarioFinalUSR($itr)
     {

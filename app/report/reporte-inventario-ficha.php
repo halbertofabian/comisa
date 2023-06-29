@@ -161,7 +161,15 @@ EOF;
     $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
 
 
-    $inventario = AlmacenesModelo::mdlMostrarInventarioByFicha($_GET['rto_ficha']);
+    if (isset($_GET['tr'])) {
+        $inventario = AlmacenesModelo::mdlMostrarInventarioByFichaTR($_GET['rto_ficha']);
+    } else {
+        $inventario = AlmacenesModelo::mdlMostrarInventarioByFicha($_GET['rto_ficha']);
+    }
+
+
+
+
     $count_inventario = count($inventario);
     $campos = "";
     $total_inicial = 0;
@@ -180,13 +188,22 @@ EOF;
             continue;
         }
 
+        if (isset($_GET['tr'])) {
+            $suma = $itr['itr_ii'] + $itr['A'] + $itr['B'] + $itr['C'] + $itr['D']  + $itr['itr_devoluciones'] + $itr['itr_traslado_1'];
+            $resta = $itr['itr_ventas'] + $itr['itr_traslado_2'] + $itr['itr_borrado'];
+
+            $total_final += ($suma - $resta);
+            $itr['itr_if'] = $suma - $resta;
+        } else {
+            $total_final += $itr['itr_if'];
+        }
+
         $total_inicial += $itr['itr_ii'];
         $total_ventas += $itr['itr_ventas'];
         $total_devoluciones += $itr['itr_devoluciones'];
         $total_traslado_1 += $itr['itr_traslado_1'];
         $total_traslado_2 += $itr['itr_traslado_2'];
         $total_borrado += $itr['itr_borrado'];
-        $total_final += $itr['itr_if'];
         $total_final_usr += $itr['itr_if_usr'];
 
 
