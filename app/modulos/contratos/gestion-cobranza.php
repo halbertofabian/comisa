@@ -4,7 +4,7 @@
             <tr>
                 <th>NOMBRE</th>
                 <th>RUTA</th>
-                <th>CÓDIGO DESCARGA</th>
+                <th>CÓDIGO</th>
             </tr>
         </thead>
         <tbody>
