@@ -124,7 +124,7 @@
                         <td class="col-6">${itr.mpds_descripcion + '-' + itr.mpds_modelo}</td>
                         <td class="col-4">
                             <div class="input-group">
-                                <input type="number" class="form-control itr_if_usr" id="itr_if_usr${itr.itr_id}" mpds_descripcion="${itr.mpds_descripcion}" placeholder="Ingrese el inventario final" readonly>
+                                <input type="number" class="form-control itr_if_usr" id="itr_if_usr${itr.itr_id}" value="${itr.itr_if_usr}" mpds_descripcion="${itr.mpds_descripcion}" placeholder="Ingrese el inventario final" readonly>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary btnAgregarInventario" disabled type="button" itr_id="${itr.itr_id}">AGREGAR</button>
                                 </div>
