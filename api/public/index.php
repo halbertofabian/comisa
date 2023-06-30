@@ -631,7 +631,7 @@ $app->get('/saldos_por_autorizar', function (Request $request, Response $respons
             "ctr_codigo" => $data['ctr_codigo'],
             "ctr_id" => $data['ctr_id'],
 
-            
+
         ));
     }
     return json_encode($array_saldos, true);
@@ -938,6 +938,10 @@ $app->get('/generar_codigos_seguimiento', function (Request $request, Response $
         $usr_codigo_seguimiento = rand(10000, 99999);
         $res = UsuariosModelo::mdlGenerarCodigoSeguimiento($usr['usr_id'], $usr_codigo_seguimiento);
     }
+    return json_encode(array(
+        'status' => true,
+        'mensaje' => 'Los codigos de seguimiento se generaron correctamente',
+    ), true);
 });
 
 //API PARA REGISTRAR MODELOS E INVENTARIO
