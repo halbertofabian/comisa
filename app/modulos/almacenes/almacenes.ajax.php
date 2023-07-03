@@ -186,7 +186,7 @@ class AlmacenesAjax
 
     public function AjaxSerieCompleta()
     {
-        $res = AlmacenesModelo::mdlMostrarSeriesBySerieCompleta($_POST['auto_complete_serie']);
+        $res = AlmacenesModelo::mdlMostrarSeriesBySerieCompleta2($_POST['auto_complete_serie']);
         echo json_encode($res, true);
     }
 

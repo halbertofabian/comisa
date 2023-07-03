@@ -73,6 +73,7 @@ if (isset($_GET['reporte'])) {
 
     //
     $itr = AlmacenesModelo::mdlFichaActualInventario();
+    $itr_ficha = $itr['itr_ficha'] - 1;
     $list_pvs = ProveedoresModelo::mdlMostrarProveedores();
     $colspan = count($list_pvs);
     $proveedores = "";
@@ -91,7 +92,7 @@ if (isset($_GET['reporte'])) {
             )
         );
 
-        $sum_proveedor = AlmacenesModelo::mdlMostrarInventarioSumCampo($pvs['pvs_clave'], $itr['itr_ficha']);
+        $sum_proveedor = AlmacenesModelo::mdlMostrarInventarioSumCampo($pvs['pvs_clave'], $itr_ficha);
         $total_proveedores_td .= '<td><strong>' . $sum_proveedor['total'] . '</strong></td>';
     }
 
@@ -117,7 +118,7 @@ if (isset($_GET['reporte'])) {
                 <td style="text-align: center;">
                 <br><br>
                 FECHA:<strong> $fecha_hoy</strong><br><br>
-                FICHA:<strong> $itr[itr_ficha]</strong> 
+                FICHA:<strong> $itr_ficha</strong> 
 
                 </td>
             </tr>
@@ -161,7 +162,7 @@ EOF;
     $pdf->writeHTMLCell(0, 0, '', '', $header, 0, 1, 0, true, '', true);
 
 
-    $inventario = AlmacenesModelo::mdlMostrarInventario();
+    $inventario = AlmacenesModelo::mdlMostrarInventarioByFicha($itr_ficha);
     $campos = "";
     $total_inicial = 0;
     $total_ventas = 0;

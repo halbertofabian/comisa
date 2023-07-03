@@ -762,6 +762,25 @@ class AlmacenesModelo
 
     public static function mdlMostrarSeriesBySerieCompleta($spds_serie_completa)
     {
+        $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipo();
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_serie_completa = ? AND spds_almacen = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_serie_completa);
+            $pps->bindValue(2, $ams['ams_id']);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarSeriesBySerieCompleta2($spds_serie_completa)
+    {
         try {
             //code...
             $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_serie_completa = ?";

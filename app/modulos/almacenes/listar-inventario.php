@@ -55,7 +55,7 @@
 </div>
 <div class="row btnCerrarInventario d-none">
     <div class="col-12 mt-3">
-        <button type="button" class="btn btn-danger float-right" id="btnCerrarInventario"><i class="fa fa-window-close"></i> Cerrar inventario</button>
+        <button type="button" class="btn btn-danger float-right btn-load" id="btnCerrarInventario"><i class="fa fa-window-close"></i> Cerrar inventario</button>
     </div>
 </div>
 
@@ -210,7 +210,11 @@
             dataType: 'json',
             processData: false,
             contentType: false,
+            beforeSend: function() {
+                startLoadButton();
+            },
             success: function(res) {
+                stopLoadButton('<i class="fa fa-window-close"></i> Cerrar inventario')
                 if (res.status) {
                     swal({
                         title: '¡Bien!',
@@ -220,6 +224,7 @@
                     }).then(function() {
                         window.localStorage.removeItem('mostrar_inventario');
                         mostrarTodoElInventario();
+                        reporteInventario();
                     });
                 } else {
                     swal({
@@ -264,7 +269,7 @@
                             }).then(function() {
                                 window.localStorage.setItem('mostrar_inventario', true)
                                 mostrarTodoElInventario();
-                                reporteInventario();
+                                // reporteInventario();
                             });
                         } else {
                             swal({
