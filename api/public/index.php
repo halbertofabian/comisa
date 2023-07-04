@@ -995,18 +995,41 @@ $app->get('/generar_codigo_seguimiento/{usr}', function (Request $request, Respo
     $usr =  $args['usr'];
     $partes = explode("-", $usr);
     // Obtener el valor de usr_id
+    $usr_ruta = $partes[0];
     $usr_id = $partes[1];
     $usr_codigo_seguimiento = rand(10000, 99999);
     $res = UsuariosModelo::mdlGenerarCodigoSeguimiento($usr_id, $usr_codigo_seguimiento);
     if ($res) {
         return json_encode(array(
             'status' => true,
-            'mensaje' => 'El codigo de seguimiento se genero correctamente.',
+            'mensaje' => 'El codigo de seguimiento para la ruta '. $usr_ruta. ' se genero correctamente.',
         ), true);
     } else {
         return json_encode(array(
             'status' => false,
             'mensaje' => 'Hubo un error al generar el codigo.',
+        ), true);
+    }
+});
+
+//API PARA DESVINCULAR DISPOSITIVO
+
+$app->get('/desvincular_dispositivo/{usr}', function (Request $request, Response $response, array $args) {
+    $usr =  $args['usr'];
+    $partes = explode("-", $usr);
+    // Obtener el valor de usr_id
+    $usr_ruta = $partes[0];
+    $usr_id = $partes[1];
+    $res = UsuariosModelo::mdlActualizarDispositivo($usr_id, NULL);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'El dispositivo de la ruta ' . $usr_ruta . ' se desvinculo correctamente.',
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Hubo un error al desvincular el dispositivo.',
         ), true);
     }
 });
