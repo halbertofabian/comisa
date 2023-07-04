@@ -976,4 +976,39 @@ $app->get('/mostrar_productos_vendedor/{ams_id}', function (Request $request, Re
     return json_encode($res, true);
 });
 
+//API PARA MOSTRAR LOS TRABAJADORES
+$app->get('/mostrar_trabajadores', function (Request $request, Response $response, array $args) {
+    $usuarios = UsuariosModelo::mdlMostrarUsuarios();
+    $trabajadores = array();
+    foreach ($usuarios as $key => $usr) {
+        $trabajadores[] = $usr['usr_ruta'] . "-" . $usr['usr_id'] . "-" . $usr['usr_nombre'];
+    }
+    $datos = array(
+        'trabajadores' => $trabajadores,
+    );
+    echo json_encode($datos, true);
+});
+
+//API PARA GENERAR CODIGO DE SEGUIMIENTO POR USUARIO
+
+$app->get('/generar_codigo_seguimiento/{usr}', function (Request $request, Response $response, array $args) {
+    $usr =  $args['usr'];
+    $partes = explode("-", $usr);
+    // Obtener el valor de usr_id
+    $usr_id = $partes[1];
+    $usr_codigo_seguimiento = rand(10000, 99999);
+    $res = UsuariosModelo::mdlGenerarCodigoSeguimiento($usr_id, $usr_codigo_seguimiento);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'El codigo de seguimiento se genero correctamente.',
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Hubo un error al generar el codigo.',
+        ), true);
+    }
+});
+
 $app->run();
