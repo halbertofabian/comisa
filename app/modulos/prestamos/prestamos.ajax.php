@@ -35,10 +35,19 @@ class PrestamosAjax
         $res = PrestamosControlador::ctrAgregarPrestamos();
         echo json_encode($res, true);
     }
+    public function ajaxValidarPrestamo()
+    {
+        $res = PrestamosControlador::ctrValidarPrestamo();
+        echo json_encode($res, true);
+    }
 }
 
 if (isset($_POST['btnGuardarPrestamos'])) {
 
     $guardar = new PrestamosAjax();
     $guardar->ajaxRegistrarPrestamo();
+}
+if (isset($_POST['btnValidarPrestamo'])) {
+    $validarPrestamo = new PrestamosAjax();
+    $validarPrestamo->ajaxValidarPrestamo();
 }

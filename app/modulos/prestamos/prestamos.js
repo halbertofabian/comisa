@@ -54,7 +54,7 @@ $("#btnGuardarPrestamo").on("click", function () {
                 datos.append("pms_cantidad", pms_cantidad)
                 datos.append("pms_semanas_pago", pms_semanas_pago)
                 datos.append("pms_tipo", pms_tipo)
-                
+
                 datos.append("btnGuardarPrestamos", true)
 
                 $.ajax({
@@ -79,6 +79,7 @@ $("#btnGuardarPrestamo").on("click", function () {
                             // $("#pms_usuario").val("")
                             // $("#pms_cantidad").val("")
                             toastr.success(res.mensaje, "¡Muy bien!");
+                            $("#pms_id").val(res.pms_id);
                             $(".pms_codigo").removeClass('d-none');
                             $("#pms_codigo").focus();
                             $("#btnValidarPrestamo").removeClass('d-none');
@@ -101,7 +102,44 @@ $("#btnGuardarPrestamo").on("click", function () {
             }
         })
 
-
-
-
 })
+
+$('#btnValidarPrestamo').on('click', function () {
+    var pms_id = $("#pms_id").val();
+    var pms_codigo = $("#pms_codigo").val();
+    if (pms_codigo == "") {
+        return toastr.warning("El codigo es obligatorio", 'ADVERTENCIA!');
+    }
+    var datos = new FormData()
+    datos.append('pms_id', pms_id);
+    datos.append('pms_codigo', pms_codigo);
+    datos.append('btnValidarPrestamo', true);
+    $.ajax({
+        type: 'POST',
+        url: urlApp + 'app/modulos/prestamos/prestamos.ajax.php',
+        data: datos,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            if (res.status) {
+                swal({
+                    title: '¡Bien!', text: res.mensaje, type: 'success', icon: 'success'
+                }).then(function () {
+                    location.reload();
+                });
+            } else {
+                swal({
+                    title: 'Error',
+                    text: res.mensaje,
+                    icon: 'error',
+                    buttons: [false, 'Intentar de nuevo'],
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                    } else { }
+                })
+            }
+        }
+    });
+});

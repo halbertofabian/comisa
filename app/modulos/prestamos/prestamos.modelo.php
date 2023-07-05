@@ -29,7 +29,8 @@ class PrestamosModelo
             $pps->bindValue(7, $pms['pms_tipo']);
             $pps->bindValue(8, $pms['pms_codigo']);
             $pps->execute();
-            return $pps->rowCount() > 0;
+            // return $pps->rowCount() > 0;
+            return $con->lastInsertId();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
@@ -84,6 +85,40 @@ class PrestamosModelo
         } catch (PDOException $th) {
             //throw $th;
             return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlMostrarPrestamosById($pms_id)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_prestamos_pms WHERE pms_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pms_id);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlAprobarEstadoPrestamo($pms_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_prestamos_pms SET pms_estado_prestamo = 'APROBADO' WHERE pms_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $pms_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
         } finally {
             $pps = null;
             $con = null;

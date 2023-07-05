@@ -90,7 +90,7 @@ class SueldosModelo
             //code...
             $sql = "SELECT pms.*, usr.usr_deuda_ext,usr.usr_deuda_int FROM tbl_prestamos_pms pms
             JOIN tbl_usuarios_usr usr ON usr.usr_id=pms.pms_usuario 
-            WHERE pms.pms_usuario=? AND pms.pms_tipo=?";
+            WHERE pms.pms_usuario=? AND pms.pms_tipo=? AND pms.pms_estado_prestamo = 'APROBADO'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $inf['pms_usuario']);

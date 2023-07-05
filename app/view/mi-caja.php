@@ -485,6 +485,7 @@
                 </div>
                 <div class="form-group pms_codigo d-none">
                     <label for="pms_codigo">Codigo de aprobación</label>
+                    <input type="hidden" id="pms_id">
                     <input type="number" name="pms_codigo" id="pms_codigo" class="form-control" placeholder="Introduzca el codigo de aprobación" autofocus>
                 </div>
                 <div class="form-group">
