@@ -29,6 +29,9 @@ require_once '../../app/modulos/productos/productos.modelo.php';
 require_once '../../app/modulos/configuracion/configuracion.controlador.php';
 require_once '../../app/modulos/configuracion/configuracion.modelo.php';
 
+require_once '../../app/modulos/prestamos/prestamos.controlador.php';
+require_once '../../app/modulos/prestamos/prestamos.modelo.php';
+
 
 
 
@@ -780,14 +783,12 @@ $app->get('/crear_status', function (Request $request, Response $response, array
 });
 
 $app->get('/pre_registro_mercancia', function (Request $request, Response $response, array $args) {
-
     $prm = AlmacenesModelo::mdlMostrarPreRegistrosByCodigos();
-
-
     $array_prm = array();
     foreach ($prm as $key => $data) {
         $dprm = AlmacenesModelo::mdlMostrarDetallePreRegistro($data['prm_id_detalle']);
         array_push($array_prm, array(
+            "prm_id" => $data['prm_id'],
             "prm_folio" => $data['prm_folio'],
             "pvs_nombre" => $data['pvs_nombre'],
             "prm_fecha_registro" => $data['prm_fecha_registro'],
@@ -798,6 +799,21 @@ $app->get('/pre_registro_mercancia', function (Request $request, Response $respo
         ));
     }
     return json_encode($array_prm, true);
+});
+$app->get('/quitar_preregistro/{prm_id}', function (Request $request, Response $response, array $args) {
+    $prm_id = $args['prm_id'];
+    $res = AlmacenesModelo::mdlQuitarPreRegistro($prm_id);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Acción realizada'
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Intente de nuevo'
+        ), true);
+    }
 });
 
 //API TRASPASO DE MERCANCIA A OTRA SUCURSAL
@@ -964,6 +980,21 @@ $app->get('/autorizar_codigos_inventario', function (Request $request, Response 
     $response = json_encode(AlmacenesModelo::mdlMostrarCodigosSeries(), true);
     return $response;
 });
+$app->get('/quitar_codigos_inventario/{spds_id}', function (Request $request, Response $response, array $args) {
+    $spds_id = $args['spds_id'];
+    $res = AlmacenesModelo::mdlQuitarCodigosInventario($spds_id);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Acción realizada'
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Intente de nuevo'
+        ), true);
+    }
+});
 
 //API MOSTRAR VENDEDORES
 $app->get('/mostrar_almacenes', function (Request $request, Response $response, array $args) {
@@ -1030,6 +1061,27 @@ $app->get('/desvincular_dispositivo/{usr}', function (Request $request, Response
         return json_encode(array(
             'status' => false,
             'mensaje' => 'Hubo un error al desvincular el dispositivo.',
+        ), true);
+    }
+});
+
+//Mostrar prestamos
+$app->get('/prestamos_por_autorizar', function (Request $request, Response $response, array $args) {
+    $response = json_encode(PrestamosModelo::mdlMostrarPrestamos(), true);
+    return $response;
+});
+$app->get('/quitar_prestamo/{pms_id}', function (Request $request, Response $response, array $args) {
+    $pms_id = $args['pms_id'];
+    $res = PrestamosModelo::mdlQuitarPrestamo($pms_id);
+    if ($res) {
+        return json_encode(array(
+            'status' => true,
+            'mensaje' => 'Acción realizada'
+        ), true);
+    } else {
+        return json_encode(array(
+            'status' => false,
+            'mensaje' => 'Intente de nuevo'
         ), true);
     }
 });

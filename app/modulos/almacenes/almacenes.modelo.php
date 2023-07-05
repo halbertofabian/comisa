@@ -1395,4 +1395,40 @@ class AlmacenesModelo
             $con = null;
         }
     }
+    public static function mdlQuitarPreRegistro($prm_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_preregistro_mercancia_prm SET prm_codigo = '' WHERE prm_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $prm_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlQuitarCodigosInventario($spds_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_series_producto_spds SET spds_codigo = '' WHERE spds_id = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

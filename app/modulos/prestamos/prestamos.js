@@ -13,12 +13,8 @@
 $("#btnGuardarPrestamo").on("click", function () {
     var pms_usuario = $("#pms_usuario").val()
     var pms_cantidad = Number($("#pms_cantidad").val())
+    var pms_semanas_pago = Number($("#pms_semanas_pago").val())
     var pms_tipo = $("input[type=radio][name=pms_tipo]:checked").val();
-
-
-   
-
-
 
     var errormsj = "";
 
@@ -31,6 +27,9 @@ $("#btnGuardarPrestamo").on("click", function () {
     }
     if (pms_cantidad <= 0) {
         errormsj += "Necesita ingresar una cantidad mayor a 0 \n";
+    }
+    if (pms_semanas_pago == "") {
+        errormsj += "Necesita ingresar en cuantas semanas se va a pagar el prestamo \n";
     }
 
     if (errormsj != "") {
@@ -53,6 +52,7 @@ $("#btnGuardarPrestamo").on("click", function () {
 
                 datos.append("pms_usuario", pms_usuario)
                 datos.append("pms_cantidad", pms_cantidad)
+                datos.append("pms_semanas_pago", pms_semanas_pago)
                 datos.append("pms_tipo", pms_tipo)
                 
                 datos.append("btnGuardarPrestamos", true)
@@ -66,24 +66,31 @@ $("#btnGuardarPrestamo").on("click", function () {
                     contentType: false,
                     processData: false,
                     dataType: "json",
-                    beforeSend: function () {
+                    // beforeSend: function () {
 
-                        startLoadButton()
+                    //     startLoadButton()
 
 
-                    },
+                    // },
                     success: function (res) {
 
                         if (res.status) {
-                            stopLoadButton("Guardar")
-                            $("#pms_usuario").val("")
-                            $("#pms_cantidad").val("")
-                            toastr.success(res.mensaje, "¡Muy bien!")
+                            // stopLoadButton("Guardar")
+                            // $("#pms_usuario").val("")
+                            // $("#pms_cantidad").val("")
+                            toastr.success(res.mensaje, "¡Muy bien!");
+                            $(".pms_codigo").removeClass('d-none');
+                            $("#pms_codigo").focus();
+                            $("#btnValidarPrestamo").removeClass('d-none');
+                            $("#btnGuardarPrestamo").addClass('d-none');
 
-                            var flujo_usr = $("#flujo_usr").val();
-                            buscarFlujoCaja(flujo_usr)
+                            // var flujo_usr = $("#flujo_usr").val();
+                            // buscarFlujoCaja(flujo_usr)
                         } else {
-                            stopLoadButton("Intentar de nuevo")
+                            $(".pms_codigo").addClass('d-none');
+                            $("#btnValidarPrestamo").addClass('d-none');
+                            $("#btnGuardarPrestamo").removeClass('d-none');
+                            // stopLoadButton("Intentar de nuevo")
                             toastr.error(res.mensaje, "¡Error!")
 
                         }
