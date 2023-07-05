@@ -473,12 +473,23 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="pms_cantidad">Cantidad</label>
-                    <input type="text" name="pms_cantidad" id="pms_cantidad" class="form-control inputN">
+                <div class="row">
+                    <div class="form-group col-md-6 col-12">
+                        <label for="pms_cantidad">Cantidad</label>
+                        <input type="text" name="pms_cantidad" id="pms_cantidad" class="form-control inputN">
+                    </div>
+                    <div class="form-group col-md-6 col-12">
+                        <label for="pms_semanas_pago">Semamas de pago</label>
+                        <input type="number" name="pms_semanas_pago" id="pms_semanas_pago" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group pms_codigo d-none">
+                    <label for="pms_codigo">Codigo de aprobación</label>
+                    <input type="number" name="pms_codigo" id="pms_codigo" class="form-control" placeholder="Introduzca el codigo de aprobación" autofocus>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-load" id="btnGuardarPrestamo">Guardar</button>
+                    <button class="btn btn-primary btn-load" id="btnGuardarPrestamo">Solicitar</button>
+                    <button class="btn btn-primary btn-load d-none" id="btnValidarPrestamo">Validar</button>
                 </div>
 
             </div>
