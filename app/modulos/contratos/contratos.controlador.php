@@ -2347,4 +2347,86 @@ class ContratosControlador
             );
         }
     }
+    public static function ctrEliminarFotosCliente()
+    {
+        $ctrs_id = $_POST['ctrs_id'];
+        $img_tipo = $_POST['img_tipo'];
+
+        $fotos = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+        $fotos_cliente = json_decode($fotos['ctr_fotos'], true);
+
+        $img_cliente_ruta = $img_tipo == 'img_cliente' ? "" : $fotos_cliente['img_cliente'];
+        $img_cred_fro_ruta = $img_tipo == 'img_cred_fro' ? "" : $fotos_cliente['img_cred_fro'];
+        $img_cred_tra_ruta = $img_tipo == 'img_cred_tra' ? "" : $fotos_cliente['img_cred_tra'];
+        $img_pagare_ruta = $img_tipo == 'img_pagare' ? "" : $fotos_cliente['img_pagare'];
+        $img_fachada_ruta = $img_tipo == 'img_fachada' ? "" : $fotos_cliente['img_fachada'];
+        $img_comprobante_ruta = $img_tipo == 'img_comprobante' ? "" : $fotos_cliente['img_comprobante'];
+
+
+
+        $data = array(
+            "img_cliente" => $img_cliente_ruta,
+            "img_cred_fro" => $img_cred_fro_ruta,
+            "img_cred_tra" => $img_cred_tra_ruta,
+            "img_pagare" => $img_pagare_ruta,
+            "img_fachada" => $img_fachada_ruta,
+            "img_comprobante" => $img_comprobante_ruta
+        );
+        $arrayFotos = json_encode($data, true);
+        $res = ContratosModelo::mdlActualizarFotosCliente($ctrs_id, $arrayFotos);
+        $nombreArchivo = basename($fotos_cliente[$img_tipo]);
+        $directorio = DOCUMENT_ROOT  . "media/fotosContratos/" . $ctrs_id . "/" . $nombreArchivo;
+
+        unlink($directorio);
+        if ($res) {
+            return array(
+                "status" => true,
+                "mensaje" => "Las foto se elimino correctamente"
+            );
+        } else {
+            return array(
+                "status" => false,
+                "mensaje" => "Hubo un error al eliminar la foto"
+            );
+        }
+    }
+    public static function ctrEliminarFotosFiador()
+    {
+        $ctrs_id = $_POST['ctrs_id'];
+        $img_tipo = $_POST['img_tipo'];
+
+        $fotos = ContratosModelo::mdlMostrarFotosCliente($ctrs_id);
+        $fotos_fiador = json_decode($fotos['clts_fotos_fiador'], true);
+
+        $img_cred_fro_ruta = $img_tipo == 'img_cred_fro' ? "" : $fotos_fiador['img_cred_fro'];
+        $img_cred_tra_ruta = $img_tipo == 'img_cred_tra' ? "" : $fotos_fiador['img_cred_tra'];
+        $img_pagare_ruta = $img_tipo == 'img_pagare' ? "" : $fotos_fiador['img_pagare'];
+        $img_comprobante_ruta = $img_tipo == 'img_comprobante' ? "" : $fotos_fiador['img_comprobante'];
+
+
+
+        $data = array(
+            "img_cred_fro" => $img_cred_fro_ruta,
+            "img_cred_tra" => $img_cred_tra_ruta,
+            "img_comprobante" => $img_comprobante_ruta,
+            "img_pagare" => $img_pagare_ruta,
+        );
+        $arrayFotos = json_encode($data, true);
+        $res = ContratosModelo::mdlActualizarFotosFiador($ctrs_id, $arrayFotos);
+        $nombreArchivo = basename($fotos_fiador[$img_tipo]);
+        $directorio = DOCUMENT_ROOT  . "media/fotosContratos/" . $ctrs_id . "/" . $nombreArchivo;
+
+        unlink($directorio);
+        if ($res) {
+            return array(
+                "status" => true,
+                "mensaje" => "Las foto se elimino correctamente"
+            );
+        } else {
+            return array(
+                "status" => false,
+                "mensaje" => "Hubo un error al eliminar la foto"
+            );
+        }
+    }
 }

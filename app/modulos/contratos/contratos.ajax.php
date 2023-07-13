@@ -277,6 +277,16 @@ class ContratosAjax
         ));
         echo json_encode($res, true);
     }
+    public function ajaxEliminarFotosClientes()
+    {
+        $res = ContratosControlador::ctrEliminarFotosCliente();
+        echo json_encode($res, true);
+    }
+    public function ajaxEliminarFotosFiador()
+    {
+        $res = ContratosControlador::ctrEliminarFotosFiador();
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -469,4 +479,12 @@ if (isset($_POST['btnAgregarObservaciones'])) {
 if (isset($_POST['btnCompletar'])) {
     $btnCompletar = new ContratosAjax();
     $btnCompletar->ajaxCompletarObservaciones();
+}
+if (isset($_POST['btnEliminarFotoCliente'])) {
+    $btnEliminarFotoCliente = new ContratosAjax();
+    $btnEliminarFotoCliente->ajaxEliminarFotosClientes();
+}
+if (isset($_POST['btnEliminarFotoFiador'])) {
+    $btnEliminarFotoFiador = new ContratosAjax();
+    $btnEliminarFotoFiador->ajaxEliminarFotosFiador();
 }
