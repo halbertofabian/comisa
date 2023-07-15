@@ -648,9 +648,9 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                                 $folio = $ctr['ctr_folio'];
                                 if (substr($folio, 0, 2) === "T-") {
                                     $disabled = "disabled";
-                                  } else {
+                                } else {
                                     $disabled = "";
-                                  }
+                                }
                                 $productos = $ctr['ctr_productos'];
                                 // preArray($productos);
                                 $productos = json_decode($productos, true);
@@ -828,33 +828,58 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
         <div class="row">
             <div class="col-md-6">
                 <label for="">Cliente con el producto</label>
-                <img class="img-fluid img-responsive" id="img_clt_cliente" style="width:100%" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoCliente" id="img_clt_cliente" style="width:100%" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoCliente d-none float-right" img_tipo="img_cliente"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="">Comprobante de domicilio</label>
-
-                <img class="img-fluid img-responsive" id="img_clt_comprobante" style="width:100%" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoCliente" id="img_clt_comprobante" style="width:100%" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoCliente d-none float-right" img_tipo="img_comprobante"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-6">
                 <label for="">Credencial frontal</label>
-
-                <img class="img-fluid img-responsive" id="img_clt_cred_fro" style="width:100%" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoCliente" id="img_clt_cred_fro" style="width:100%" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoCliente d-none float-right" img_tipo="img_cred_fro"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="">Credencial trasera</label>
-
-                <img class="img-fluid img-responsive" id="img_clt_cred_tra" style="width:100%" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoCliente" id="img_clt_cred_tra" style="width:100%" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoCliente d-none float-right" img_tipo="img_cred_tra"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="">Pagaré</label>
-
-                <img class="img-fluid img-responsive" id="img_clt_pagare" style="width:100%" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoCliente" id="img_clt_pagare" style="width:100%" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoCliente d-none float-right" img_tipo="img_pagare"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="">Fachada</label>
-
-                <img class="img-fluid img-responsive" id="img_clt_fachada" style="width:100%" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoCliente" id="img_clt_fachada" style="width:100%" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoCliente d-none float-right" img_tipo="img_fachada"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -866,23 +891,39 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
         <div class="row">
             <div class="col-md-6">
                 <label for="">Credencial frontal</label>
-
-                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_cred_fro" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoFiador" style="width:100%" id="img_fdr_cred_fro" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoFiador d-none float-right" img_tipo="img_cred_fro"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="">Credencial trasera</label>
-
-                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_cred_tra" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoFiador" style="width:100%" id="img_fdr_cred_tra" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoFiador d-none float-right" img_tipo="img_cred_tra"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="">Comprobante de domicilio</label>
-
-                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_comprobante" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoFiador" style="width:100%" id="img_fdr_comprobante" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoFiador d-none float-right" img_tipo="img_comprobante"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="">Pagaré</label>
-
-                <img class="img-fluid img-responsive" style="width:100%" id="img_fdr_pagare" src="" alt="">
+                <div class="card">
+                    <img class="img-fluid img-responsive fotoFiador" style="width:100%" id="img_fdr_pagare" src="" alt="">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btnEliminarFotoFiador d-none float-right" img_tipo="img_pagare"><i class="fa fa-trash"></i> Eliminar</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -1189,8 +1230,13 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                     $(".card-fotos").removeClass("d-none")
                     $(".btnshowFotos").addClass("d-none")
 
+                    var fotos_clt;
 
-                    var fotos_clt = JSON.parse(res.ctr_fotos)
+                    try {
+                        fotos_clt = JSON.parse(res.ctr_fotos);
+                    } catch (error) {
+                        fotos_clt = []; // Valor predeterminado en caso de error
+                    }
                     $("#img_clt_cliente").attr("src", fotos_clt.img_cliente)
                     $("#img_clt_comprobante").attr("src", fotos_clt.img_comprobante)
                     $("#img_clt_cred_fro").attr("src", fotos_clt.img_cred_fro)
@@ -1198,12 +1244,41 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                     $("#img_clt_pagare").attr("src", fotos_clt.img_pagare)
                     $("#img_clt_fachada").attr("src", fotos_clt.img_fachada)
 
-                    var fotos_fdr = JSON.parse(res.clts_fotos_fiador)
+
+                    $("img.fotoCliente").each(function() {
+                        var src = $(this).attr('src'); // Utiliza attr() en lugar de prop()
+                        var btnEliminarFotoCliente = $(this).closest('.card').find('.btnEliminarFotoCliente');
+
+                        if (src !== '' && src !== undefined) {
+                            btnEliminarFotoCliente.removeClass('d-none'); // Mostrar el botón correspondiente
+                        } else {
+                            btnEliminarFotoCliente.addClass('d-none'); // Ocultar el botón correspondiente
+                        }
+                    });
+
+
+                    var fotos_fdr;
+                    try {
+                        fotos_fdr = JSON.parse(res.clts_fotos_fiador);
+                    } catch (error) {
+                        fotos_fdr = []; // Valor predeterminado en caso de error
+                    }
 
                     $("#img_fdr_comprobante").attr("src", fotos_fdr.img_comprobante)
                     $("#img_fdr_cred_fro").attr("src", fotos_fdr.img_cred_fro)
                     $("#img_fdr_cred_tra").attr("src", fotos_fdr.img_cred_tra)
                     $("#img_fdr_pagare").attr("src", fotos_fdr.img_pagare)
+
+                    $("img.fotoFiador").each(function() {
+                        var src = $(this).attr('src'); // Utiliza attr() en lugar de prop()
+                        var btnEliminarFotoFiador = $(this).closest('.card').find('.btnEliminarFotoFiador');
+
+                        if (src !== '' && src !== undefined) {
+                            btnEliminarFotoFiador.removeClass('d-none'); // Mostrar el botón correspondiente
+                        } else {
+                            btnEliminarFotoFiador.addClass('d-none'); // Ocultar el botón correspondiente
+                        }
+                    });
                 }
             })
         })
@@ -1237,6 +1312,7 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
         if (!validar_pagos) {
             $("#ctr_total_pagado").attr("readonly", true);
         }
+
     })
     $('#formUpdateCtr').on('submit', function(e) {
         e.preventDefault();
@@ -1486,6 +1562,83 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                     })
                 }
             }
+        });
+    });
+
+    $(document).on('click', '.btnEliminarFotoCliente', function() {
+        var ctrs_id = $("#ctrs_id").val();
+        var img_tipo = $(this).attr('img_tipo');
+        swal({
+            title: '¿Esta seguro de eliminar la foto?',
+            text: 'Esta accion no es reversible',
+            icon: 'warning',
+            buttons: ['No', 'Si, eliminar'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+                datos.append('ctrs_id', ctrs_id);
+                datos.append('img_tipo', img_tipo);
+                datos.append('btnEliminarFotoCliente', true);
+                $.ajax({
+                    type: 'POST',
+                    url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            toastr.success(res.mensaje, "Muy bien");
+                            $("#agregarFotosCliente").modal("hide");
+                            $(".btnshowFotos").trigger("click");
+                            $("#formFotosCliente")[0].reset();
+                        } else {
+                            toastr.error(res.mensaje, 'Error');
+                            $("#agregarFotosCliente").modal("hide");
+                            $(".btnshowFotos").trigger("click");
+                        }
+                    }
+                });
+            } else {}
+        });
+    });
+    $(document).on('click', '.btnEliminarFotoFiador', function() {
+        var ctrs_id = $("#ctrs_id").val();
+        var img_tipo = $(this).attr('img_tipo');
+        swal({
+            title: '¿Esta seguro de eliminar la foto?',
+            text: 'Esta accion no es reversible',
+            icon: 'warning',
+            buttons: ['No', 'Si, eliminar'],
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                var datos = new FormData();
+                datos.append('ctrs_id', ctrs_id);
+                datos.append('img_tipo', img_tipo);
+                datos.append('btnEliminarFotoFiador', true);
+                $.ajax({
+                    type: 'POST',
+                    url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                    data: datos,
+                    dataType: 'json',
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        if (res.status) {
+                            toastr.success(res.mensaje, "Muy bien");
+                            $("#agregarFotosCliente").modal("hide");
+                            $(".btnshowFotos").trigger("click");
+                            $("#formFotosCliente")[0].reset();
+                        } else {
+                            toastr.error(res.mensaje, 'Error');
+                            $("#agregarFotosCliente").modal("hide");
+                            $(".btnshowFotos").trigger("click");
+                        }
+                    }
+                });
+            } else {}
         });
     });
 </script>

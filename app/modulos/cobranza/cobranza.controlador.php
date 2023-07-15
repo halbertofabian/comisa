@@ -554,6 +554,7 @@ class CobranzaControlador
             CobranzaModelo::mdlActualizarSiguienteEnrrute(array(
                 'cra_fecha_cobro' => $next_day,
                 'cra_fecha_reagenda' => "0000-00-00",
+                'cra_abono' => $cta['cra_abono'],
                 'cra_estado' => 'PENDIENTE',
                 'cra_id' => $cta['cra_id']
             ));
