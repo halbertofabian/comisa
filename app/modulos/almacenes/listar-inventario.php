@@ -30,11 +30,11 @@
     </div>
     <div class="col-md-5 col-12 mb-3 btnEmpezarInventario">
         <?php
-        $diaSemana = date('N');
-        if ($diaSemana == 5) :
+        // $diaSemana = date('N');
+        // if ($diaSemana == 5) :
         ?>
             <button type="button" class="btn btn-success float-right" id="btnEmpezarInventario"><i class="fa fa-list"></i> Empezar inventario</button>
-        <?php endif; ?>
+        <?php //endif; ?>
     </div>
 </div>
 <div class="row">
