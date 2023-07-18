@@ -977,23 +977,32 @@ class ContratosControlador
 
         foreach ($contratos as $key => $cts) {
 
-            // Guardar en base de datos contratos
-
-            $subir = ContratosModelo::mdlSubirPreContratos($cts);
-            $ctr = ContratosModelo::mdlMostrarContratosById($subir);
-            $datos = array();
-            foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
-                $datos = array(
-                    'ctr_id' => $ctr['ctr_id'],
-                    'spds_id' => $value['spds_id'],
-                    'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
+            $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
+            if ($ctr_folio) {
+                return  array(
+                    'status' => false,
+                    'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema.'
                 );
-                $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
-                $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
-            }
+            } else {
 
-            if ($subir) {
-                $contSubir++;
+                // Guardar en base de datos contratos
+
+                $subir = ContratosModelo::mdlSubirPreContratos($cts);
+                $ctr = ContratosModelo::mdlMostrarContratosById($subir);
+                $datos = array();
+                foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
+                    $datos = array(
+                        'ctr_id' => $ctr['ctr_id'],
+                        'spds_id' => $value['spds_id'],
+                        'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
+                    );
+                    $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
+                    $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
+                }
+
+                if ($subir) {
+                    $contSubir++;
+                }
             }
         }
 

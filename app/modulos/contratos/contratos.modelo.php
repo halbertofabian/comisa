@@ -1942,5 +1942,21 @@ class ContratosModelo
         }
     }
 
-    //
+    public static function mdlMostrarContratosByFolio($ctr_folio)
+    {
+        try {
+            //c4ode...
+            $sql = "SELECT * FROM tbl_contrato_crt_1 WHERE ctr_folio = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $ctr_folio);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
