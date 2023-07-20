@@ -974,9 +974,10 @@ class ContratosControlador
     {
         $contratos = ContratosControlador::ctrSetearDatos($data);
         $contSubir = 0;
+        $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idVendedor']);
+        $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
 
         foreach ($contratos as $key => $cts) {
-
             $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
             if ($ctr_folio) {
                 return  array(
@@ -984,6 +985,19 @@ class ContratosControlador
                     'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema.'
                 );
             } else {
+
+                foreach (json_decode($cts['ctr_productos'], true) as $key => $pds) {
+                    $spds = AlmacenesModelo::mdlMostrarSeriesById2($pds['spds_id']);
+                    if ($almacen['spds_almacen'] !== $spds['spds_almacen']) {
+                        return  array(
+                            'status' => false,
+                            'mensaje' => 'El producto con numero de serie ' . $spds['spds_serie_completa'] . ' ya no pertenece a tu lista.'
+                        );
+                        break;
+                    } else {
+                        continue;
+                    }
+                }
 
                 // Guardar en base de datos contratos
 

@@ -1431,4 +1431,22 @@ class AlmacenesModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarSeriesByAlmacen($spds_almacen)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_series_producto_spds WHERE spds_almacen = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $spds_almacen);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }
