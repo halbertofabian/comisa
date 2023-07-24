@@ -1904,44 +1904,52 @@ $(document).ready(function () {
     var array = [];
 
     $("#buscar_productos").autocomplete({
-        source: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+        source: function (request, response) {
+            $.ajax({
+                url: urlApp + 'app/modulos/almacenes/almacenes.ajax.php',
+                method: "POST",
+                dataType: "json",
+                data: {
+                    auto_complete_agregar_producto: request.term
+                },
+                success: function (data) {
+                    response(data);
+                }
+
+            });
+        },
+        minLength: 2,
         select: function (event, ui) {
-            var nombreProducto = ui.item.label;
-            if (checkId(nombreProducto)) {
-                toastr.error("El producto <b>" + nombreProducto + "</b> ya fue agregado a la lista!", "¡ERROR!");
+            var res = ui.item;
+            var encontrado = false;
+            $(".serie").each(function () {
+                if ($(this).text() == res.spds_serie_completa) {
+                    toastr.warning('El producto ' + res.mpds_descripcion + '-' + res.mpds_modelo + '-' + res.spds_serie_completa + ' ya se agrego a su lista.', 'ADVERTENCIA!');
+                    encontrado = true;
+                    return false;
+                }
+            });
+
+            if (encontrado) {
                 $(this).val("");
                 return false;
-            }
-            var cadena = ui.item.pds_sku;
-            var sku = cadena.split("/")[0];
-            if (sku == undefined) {
-                sku = "";
             }
 
             tbodyProductosContrato =
                 `
-                <tr id="${ui.item.pds_id_producto}">
-                    <td>${sku}</td>
-                    <td for="nombreProducto">${nombreProducto}</td>
-                    <td style="display:flex; justify-content: center">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default btn_min" min="${ui.item.pds_id_producto}" type="button">-</button>
-                        </span>
-                        <input type="text" class="form-control" disabled style="width:50px;text-align: center;" id="contadorContrato${ui.item.pds_id_producto}" cps_id="${ui.item.pds_id_producto}" value="1" min="1">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default btn_max" max="${ui.item.pds_id_producto}" type="button">+</button>
-                        </span>
-                    </td>
+                <tr id="${res.spds_serie_completa}">
+                    <td>${res.mpds_descripcion}-${res.mpds_modelo}</td>
+                    <td class="serie">${res.spds_serie_completa}</td>
                     <td>
-                        <button type="button" class="btn btn-danger eliminarProductoContrato" pds_id_producto="${ui.item.pds_id_producto}"><i class="fa fa-trash"></i> Borrar</button>
+                        <button type="button" class="btn btn-danger eliminarProductoContrato" spds_id="${res.spds_id}"><i class="fa fa-trash"></i> Borrar</button>
                     </td>
                 </tr>
                 `;
 
             var datos = {
-                "pds_id_producto": ui.item.pds_id_producto,
-                "sku": sku,
-                "nombreProducto": ui.item.label,
+                "spds_id": res.spds_id,
+                "sku": res.spds_serie_completa,
+                "nombreProducto": res.mpds_descripcion + '-' + res.mpds_modelo,
                 "cantidad": 1,
             };
 
@@ -1961,6 +1969,7 @@ $(document).ready(function () {
         }
 
     });
+    
     function checkId(nombreProducto) {
         let ids = document.querySelectorAll('#tbodyProductosContrato td[for="nombreProducto"]');
         return [].filter.call(ids, td => td.textContent === nombreProducto).length === 1;
@@ -1997,13 +2006,12 @@ $(document).ready(function () {
         $("#productos_contrato").val(JSON.stringify(productos));
     });
 
-    $("#tbodyProductosContrato").on("click", ".eliminarProductoContrato", function (e) {
-        e.preventDefault()
-        var pds_id_producto = $(this).attr("pds_id_producto");
+    $("#tbodyProductosContrato").on("click", ".eliminarProductoContrato", function () {
+        var spds_id = $(this).attr("spds_id");
         var products = $("#productos_contrato").val();
         var productos = JSON.parse(products);
         for (var i = productos.length; i--;) {
-            if (productos[i].pds_id_producto === pds_id_producto) {
+            if (productos[i].spds_id === spds_id) {
                 productos.splice(i, 1);
             }
         }
@@ -2310,7 +2318,7 @@ $(document).on("click", "#btnQuitarProducto2", function () {
                     }
                 }
 
-                
+
 
                 if (sku !== "") {
                     $("#" + sku).remove();

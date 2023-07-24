@@ -598,6 +598,29 @@ class ContratosControlador
             $subir = ContratosModelo::mdlSubirPreContratos($contratos);
 
             if ($subir) {
+                $productos_contrato = json_decode($_POST['productos_contrato'], true);
+                foreach ($productos_contrato as $key => $pds) {
+                    $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $pds['spds_id']);
+                    $ams = AlmacenesModelo::mdlMostrarAlmacenesByTipoContrato();
+                    $datos = array(
+                        'spds_almacen' => $ams['ams_id'],
+                        'spds_situacion' => $subir,
+                        'spds_ultima_mod' => FECHA,
+                        'spds_id' => $pds['spds_id'],
+                    );
+
+                    $res = AlmacenesModelo::mdlAsignarAlmacen($datos);
+                    if ($res) {
+                        $array_bcra = array(
+                            'bcra_movimiento' => 'Venta',
+                            'bcra_fecha' => FECHA,
+                            'bcra_usuario' => $_SESSION['session_usr']['usr_nombre'],
+                            'bcra_nota' => 'SE AGREGÓ MANUAL AL NÚMERO DE CONTRATO ' . $subir,
+                            'bcra_spds_id' => $pds['spds_id'],
+                        );
+                        $bcra = AlmacenesModelo::mdlRegistrarBitacora($array_bcra);
+                    } 
+                }
                 return  array(
                     'status' => true,
                     'mensaje' => 'El contrato se agrego correctamente!'

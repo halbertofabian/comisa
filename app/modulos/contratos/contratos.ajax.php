@@ -23,6 +23,9 @@ require_once DOCUMENT_ROOT . 'app/modulos/ingresos/ingresos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/usuarios/usuarios.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/productos/productos.modelo.php';
 
+require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.modelo.php';
+require_once DOCUMENT_ROOT . 'app/modulos/almacenes/almacenes.controlador.php';
+
 require_once DOCUMENT_ROOT . 'app/lib/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
 

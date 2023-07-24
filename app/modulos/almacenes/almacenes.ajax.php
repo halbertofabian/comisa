@@ -201,6 +201,11 @@ class AlmacenesAjax
         $res = AlmacenesControlador::ctrMostrarBitacora();
         print json_encode($res, JSON_UNESCAPED_UNICODE);
     }
+    public function ajaxAgregarProductosContrato()
+    {
+        $respuesta = AlmacenesModelo::mdlMostrarSeriesBySerie($_POST['auto_complete_agregar_producto']);
+        echo json_encode($respuesta, true);
+    }
 
     
 }
@@ -329,4 +334,8 @@ if (isset($_POST['auto_complete_bitacora'])) {
 if (isset($_POST['btnMostrarBitacora'])) {
     $mostrarBitacora = new AlmacenesAjax();
     $mostrarBitacora->ajaxMostrarBitacora();
+}
+if (isset($_POST['auto_complete_agregar_producto'])) {
+    $agregarProductosContrato = new AlmacenesAjax();
+    $agregarProductosContrato->ajaxAgregarProductosContrato();
 }

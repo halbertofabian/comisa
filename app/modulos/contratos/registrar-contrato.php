@@ -35,9 +35,8 @@
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-light">
                                         <tr>
-                                            <th># SKU</th>
-                                            <th>NOMBRE</th>
-                                            <th class="text-center">CANTIDAD</th>
+                                            <th>DESCRIPCIÓN Y MODELO</th>
+                                            <th># SERIE</th>
                                             <th></th>
                                         </tr>
                                     </thead>
