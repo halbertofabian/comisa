@@ -290,6 +290,11 @@ class ContratosAjax
         $res = ContratosControlador::ctrEliminarFotosFiador();
         echo json_encode($res, true);
     }
+    public function ajaxMostrarObservacionesPendientes()
+    {
+        $res = ContratosModelo::mdlMostrarTodasObaservacionesPendiente($_POST['ctr_ruta']);
+        echo json_encode($res, true);
+    }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {
     $consultarCliente = new ContratosAjax();
@@ -490,4 +495,8 @@ if (isset($_POST['btnEliminarFotoCliente'])) {
 if (isset($_POST['btnEliminarFotoFiador'])) {
     $btnEliminarFotoFiador = new ContratosAjax();
     $btnEliminarFotoFiador->ajaxEliminarFotosFiador();
+}
+if (isset($_POST['btnMostrarObservacionesPendientes'])) {
+    $btnMostrarObservaciones = new ContratosAjax();
+    $btnMostrarObservaciones->ajaxMostrarObservacionesPendientes();
 }

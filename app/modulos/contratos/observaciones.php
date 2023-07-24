@@ -3,8 +3,23 @@
         <div class="col-12">
             <div class="card mt-3">
                 <div class="card-body table-responsive">
+                    <div class="row">
+                        <div class="col-md-2 col-12">
+                            <div class="form-group">
+                                <label for="">Ruta</label>
+                                <select name="ctr_ruta" id="ctr_ruta" class="form-control select2">
+                                    <option value="">Selecionar ruta</option>
+                                    <?php
+                                    for ($i = 1; $i <= 50; $i++) :
+                                    ?>
+                                        <option value="R<?= $i ?>">R<?= $i ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table tablas text-center">
-                        <thead>
+                        <thead class="thead-light">
                             <tr>
                                 <th colspan="8">Listar de observaciones</th>
                             </tr>
@@ -19,28 +34,8 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php
-                            $observaciones = ContratosModelo::mdlMostrarTodasObaservacionesPendiente();
-                            foreach ($observaciones as $key => $obs) :
-                            ?>
-                                <tr>
-
-                                    <td> <a target="_blank" href="<?= HTTP_HOST . 'contratos/buscar/' . $obs['obs_ctr_id'] ?>"><?= $obs['ctr_folio'] ?> </a></td>
-                                    <td><?= $obs['ctr_ruta'] ?></td>
-                                    <td><?= $obs['ctr_numero_cuenta'] ?></td>
-                                    <td><?= $obs['ctr_cliente'] ?></td>
-                                    <td><?= $obs['obs_observaciones'] ?></td>
-                                    <td><?= $obs['obs_usuario'] ?></td>
-                                    <td><?= fechaCastellano($obs['obs_fecha']) ?></td>
-                                    <td>
-
-                                        <button class="btn btn-success btnCompletar" obs_id="<?= $obs['obs_id']  ?>">Completar</button>
-
-                                    </td>
-
-                                </tr>
-                            <?php endforeach; ?>
+                        <tbody id="tbody_observaciones">
+                            
                         </tbody>
                     </table>
                 </div>
@@ -52,7 +47,53 @@
 
 
 <script>
-    $(".btnCompletar").on("click", function() {
+    $(document).ready(function() {
+        mostrarObservaciones();
+    });
+
+    function mostrarObservaciones() {
+        var ctr_ruta = $("#ctr_ruta").val();
+        var datos = new FormData()
+        datos.append('ctr_ruta', ctr_ruta);
+        datos.append('btnMostrarObservacionesPendientes', true);
+        $.ajax({
+            type: 'POST',
+            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
+            data: datos,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                var tbody_observaciones = "";
+
+                res.forEach(obs => {
+                    tbody_observaciones += `
+                    <tr>
+                        <td> <a target="_blank" href="${urlApp + 'contratos/buscar/' + obs.obs_ctr_id}">${obs.ctr_folio}</a></td>
+                        <td>${obs.ctr_ruta}</td>
+                        <td>${obs.ctr_numero_cuenta}</td>
+                        <td>${obs.ctr_cliente}</td>
+                        <td>${obs.obs_observaciones}</td>
+                        <td>${obs.obs_usuario}</td>
+                        <td>${obs.obs_fecha}</td>
+                        <td>
+                            <button class="btn btn-success btnCompletar" obs_id="${obs.obs_id}">Completar</button>
+                        </td>
+
+                    </tr>
+                    `;
+                });
+
+                $("#tbody_observaciones").html(tbody_observaciones);
+            }
+        });
+    }
+
+    $('#ctr_ruta').on('change', function() {
+        mostrarObservaciones();
+    });
+
+    $(document).on("click", ".btnCompletar", function() {
 
         let obs_id = $(this).attr("obs_id");
 
