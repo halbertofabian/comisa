@@ -1019,6 +1019,15 @@ $app->get('/mostrar_trabajadores', function (Request $request, Response $respons
     );
     echo json_encode($datos, true);
 });
+$app->get('/mostrar_codigos_trabajador/{usr}', function (Request $request, Response $response, array $args) {
+    $usr =  $args['usr'];
+    $partes = explode("-", $usr);
+    // Obtener el valor de usr_id
+    $usr_ruta = $partes[0];
+    $usr_id = $partes[1];
+    $res = UsuariosModelo::mdlMostrarUsuarios($usr_id);
+    return json_encode($res, true);
+});
 
 //API PARA GENERAR CODIGO DE SEGUIMIENTO POR USUARIO
 
