@@ -61,34 +61,6 @@ foreach ($contratos_set as $key => $ctr) {
     $fecha_pago = $ctr['ctr_proximo_pago'];
     // $fecha_pago = date_format($fecha_pago, 'd/m/y');
 
-    $clts_telefono = "";
-    $telefono = is_array(json_decode($ctr['clts_telefono'], true));
-    if ($telefono) {
-        foreach (json_decode($ctr['clts_telefono'], true) as $tel) {
-            $clts_telefono = $tel['telefono'];
-        }
-    } else {
-        if (empty($ctr['clts_telefono'])) {
-            $clts_telefono = "-";
-        } else {
-            $clts_telefono = $ctr['clts_telefono'];
-        }
-    }
-
-    $clts_coordenadas = "";
-    $coordenada = is_array(json_decode($ctr['clts_coordenadas'], true));
-    if ($coordenada) {
-        foreach (json_decode($ctr['clts_coordenadas'], true) as $coor) {
-            $clts_coordenadas = $coor['coordenada'];
-        }
-    } else {
-        if (empty($ctr['clts_coordenadas'])) {
-            $clts_coordenadas = "-";
-        } else {
-            $clts_coordenadas = $ctr['clts_coordenadas'];
-        }
-    }
-
     // Productos 
     $productos = json_decode($ctr['ctr_productos'], true);
     $cadena_productos = "";
@@ -137,7 +109,7 @@ foreach ($contratos_set as $key => $ctr) {
         'ctr_colonia_ref_1' => $ctr['ctr_colonia_ref_1'],
         'ctr_telefono_ref_1' => $ctr['ctr_telefono_ref_1'],
         'clts_curp' => $ctr['clts_curp'],
-        'clts_telefono' => $clts_telefono,
+        'clts_telefono' => $ctr['clts_telefono'],
         'clts_domicilio' => $ctr['clts_domicilio'],
         'clts_col' => $ctr['clts_col'],
         'clts_entre_calles' => $ctr['clts_entre_calles'],
@@ -157,7 +129,7 @@ foreach ($contratos_set as $key => $ctr) {
 
         'clts_vivienda_anomde' => $ctr['clts_vivienda_anomde'],
         'clts_antiguedad_viviendo' => $ctr['clts_antiguedad_viviendo'],
-        'clts_coordenadas' => $clts_coordenadas,
+        'clts_coordenadas' => $ctr['clts_coordenadas'],
         'clts_nom_conyuge' => $ctr['clts_nom_conyuge'],
         'clts_tbj_conyuge' => $ctr['clts_tbj_conyuge'],
         'clts_tbj_puesto_conyuge' => $ctr['clts_tbj_puesto_conyuge'],

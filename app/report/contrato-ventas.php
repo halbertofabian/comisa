@@ -94,10 +94,6 @@ if (isset($_GET['ctr_id'])) {
     $scl_direccion = $_SESSION['session_suc']['scl_direccion'];
     $scl_horario = $_SESSION['session_suc']['scl_horario'];
 
-
-    $telefonos = "";
-    $telefonos = AppControlador::separarNumeros($ctr['clts_telefono']);
-
     $encabezado = <<<EOF
 
 <table>
@@ -179,7 +175,7 @@ EOF;
                <strong>NOMBRE:</strong>  <span style="color:#000"> $ctr[ctr_cliente] </span>
             </td>
             <td>
-            <strong>TELEFONO:</strong>  <span style="color:#000"> $telefonos </span>
+            <strong>TELEFONO:</strong>  <span style="color:#000"> $ctr[clts_telefono] </span>
             </td>
         </tr> 
 
