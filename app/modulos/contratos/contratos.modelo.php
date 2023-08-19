@@ -1963,4 +1963,57 @@ class ContratosModelo
             $con = null;
         }
     }
+    public static function mdlMostrarTodosLosContratos()
+    {
+        try {
+            //c4ode...
+
+            $sql = "SELECT * FROM tbl_contrato_crt_1 ORDER BY ctr_id DESC";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarTelefono($clts_telefono, $ctr_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET clts_telefono = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $clts_telefono);
+            $pps->bindValue(2, $ctr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+    public static function mdlActualizarCoordenada($clts_coordenadas, $ctr_id)
+    {
+        try {
+            //code...
+            $sql = "UPDATE tbl_contrato_crt_1 SET clts_coordenadas = ? WHERE ctr_id = ?";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $clts_coordenadas);
+            $pps->bindValue(2, $ctr_id);
+            $pps->execute();
+            return $pps->rowCount() > 0;
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

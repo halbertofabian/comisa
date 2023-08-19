@@ -25,37 +25,14 @@ foreach ($cuentas as $key => $ctr) {
     $fecha_abono = $ctr['ctr_ultima_fecha_abono'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
     $proximo_pago = $ctr['ctr_proximo_pago'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_proximo_pago']));
 
-
-    $telefonos = "";
-    $telefonosSeparados = AppControlador::separarNumeros($ctr['clts_telefono']);
-
-    if (!empty($telefonosSeparados)) {
-        $telefonos = str_replace(',', ' ', $telefonosSeparados);
-    }
-
-    $clts_coordenadas = "";
-    $coordenadasV1 = str_replace(array('|', '-'), '', $ctr['clts_coordenadas']);
-    $coordenada = json_decode($coordenadasV1, true);
-    if (is_array($coordenada)) {
-        foreach ($coordenada as $coor) {
-            $clts_coordenadas = str_replace(array('|', '-', ','), '', $coor['coordenada']);
-        }
-    } else {
-        if (empty($ctr['clts_coordenadas'])) {
-            $clts_coordenadas = "-";
-        } else {
-            $clts_coordenadas = str_replace(array('|', '-', ','), '', $ctr['clts_coordenadas']) == "" ? "-" : str_replace(array('|', '-', ','), '', $ctr['clts_coordenadas']);
-        }
-    }
-
     $datos = array(
         'ctr_ruta' => $ctr['ctr_ruta'],
         'ctr_numero_cuenta' => $ctr['ctr_numero_cuenta'],
         'ctr_cliente' => $ctr['ctr_cliente'],
         'clts_domicilio' => str_replace(',', ' ', $ctr['clts_domicilio']),
         'clts_col' => str_replace(',', ' ', $ctr['clts_col']),
-        'clts_coordenadas' => $clts_coordenadas,
-        'clts_telefono' => $telefonos,
+        'clts_coordenadas' => $ctr['clts_coordenadas'],
+        'clts_telefono' => $ctr['clts_telefono'],
         'ctr_total' => $ctr['ctr_total'],
         'ctr_enganche' => $ctr['ctr_enganche'],
         'ctr_pago_adicional' => $ctr['ctr_pago_adicional'],
