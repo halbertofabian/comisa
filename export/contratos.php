@@ -153,8 +153,6 @@ foreach ($contratos_set as $key => $ctr) {
         'clts_propia' => $ctls_propia,
         'clts_rentada' => $ctls_rentada,
         'clts_prestada' => $ctls_prestada,
-
-
         'clts_vivienda_anomde' => $ctr['clts_vivienda_anomde'],
         'clts_antiguedad_viviendo' => $ctr['clts_antiguedad_viviendo'],
         'clts_coordenadas' => $clts_coordenadas,
