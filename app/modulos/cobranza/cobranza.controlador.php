@@ -1506,11 +1506,11 @@ class CobranzaControlador
 
         ));
 
-        CobranzaModelo::mdlAgregaDatosTelGeo(array(
-            'clts_telefono' => $datos['clts_telefono'],
-            'clts_coordenadas' => $datos['clts_coordenadas'],
-            'ctr_id' => $datos['ctr_id'],
-        ));
+        // CobranzaModelo::mdlAgregaDatosTelGeo(array(
+        //     'clts_telefono' => $datos['clts_telefono'],
+        //     'clts_coordenadas' => $datos['clts_coordenadas'],
+        //     'ctr_id' => $datos['ctr_id'],
+        // ));
     }
 
     public static function ctrGuardarRendimiento()
