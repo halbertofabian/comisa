@@ -1814,6 +1814,8 @@ class AppControlador
         // Si el input es un arreglo JSON
         if (is_array($input)) {
             $ultimaCoordenada = end($input)['coordenada'];
+            $ultimaCoordenada = str_replace(',', '', $ultimaCoordenada);
+
             return $ultimaCoordenada;
         }
 
@@ -1822,6 +1824,9 @@ class AppControlador
             // Buscar la última ocurrencia de "coordenada"
             preg_match_all('/"coordenada":"([^"]*)"/', $input, $matches);
             $ultimaCoordenada = end($matches[1]);
+            // Eliminar las comas del valor de coordenada
+            $ultimaCoordenada = str_replace(',', '', $ultimaCoordenada);
+
             return $ultimaCoordenada;
         }
 
