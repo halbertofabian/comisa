@@ -80,6 +80,33 @@ if (isset($_GET['ctr_id'])) {
 
     $ctr['ctr_proximo_pago'] = fechaCastellano(substr($ctr['ctr_proximo_pago'], 0, 10));
 
+    if (is_array(json_decode($ctr['clts_telefono'], true))) {
+        $valorLimpio = str_replace(['["', '"]', '\"'], ['[', ']', '"'], $ctr['clts_telefono']);
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($valorLimpio, true));
+        // echo "Último teléfono en JSON: $ultimoTelefono<br>";
+    } elseif (strpos($ctr['clts_telefono'], '/') !== false) {
+        // Verificar si tiene diagonales
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+        // echo "Último teléfono en diagonal: $ultimoTelefono<br>";
+    } else {
+        // Si no es ni JSON ni diagonal, es un número simple
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+        // echo "Último teléfono simple: $ultimoTelefono<br>";
+    }
+
+    if (is_array(json_decode($ctr['clts_coordenadas'], true))) {
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada(json_decode($ctr['clts_coordenadas'], true));
+        // echo "Último teléfono en JSON: $ultimaCoordenada<br>";
+    } elseif (strpos($ctr['clts_coordenadas'], '|') !== false) {
+        // Verificar si tiene diagonales
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+        // echo "Último teléfono en diagonal: $ultimaCoordenada<br>";
+    } else {
+        // Si no es ni JSON ni diagonal, es un número simple
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+        // echo "Último teléfono simple: $ultimaCoordenada<br>";
+    }
+
     $plazo_crdito_cad = "";
     if ($ctr['ctr_forma_pago'] == "SEMANALES") {
         $plazo_crdito_cad = "SEMANAS";
@@ -175,7 +202,7 @@ EOF;
                <strong>NOMBRE:</strong>  <span style="color:#000"> $ctr[ctr_cliente] </span>
             </td>
             <td>
-            <strong>TELEFONO:</strong>  <span style="color:#000"> $ctr[clts_telefono] </span>
+            <strong>TELEFONO:</strong>  <span style="color:#000"> $ultimoTelefono </span>
             </td>
         </tr> 
 
@@ -231,7 +258,7 @@ EOF;
             <strong>A NOMBRE DE: </strong>  <span style="color:#000"> $ctr[clts_vivienda_anomde] </span>
             </td>
             <td>
-            <strong>CORDENADAS:</strong>  <span style="color:#000"> $ctr[clts_coordenadas] </span>
+            <strong>CORDENADAS:</strong>  <span style="color:#000"> $ultimaCoordenada </span>
             </td>
             <td>
             <strong>CURP:</strong>  <span style="color:#000"> $ctr[clts_curp] </span>

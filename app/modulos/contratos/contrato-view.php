@@ -17,6 +17,35 @@ foreach ($obs as $key => $val) {
 
 $observaciones = str_replace('<br>', "\n", $observaciones);
 
+//OBTENER TELEFONOS Y COORDENADAS
+
+if (is_array(json_decode($ctr['clts_telefono'], true))) {
+    $valorLimpio = str_replace(['["', '"]', '\"'], ['[', ']', '"'], $ctr['clts_telefono']);
+    $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($valorLimpio, true));
+    // echo "Último teléfono en JSON: $ultimoTelefono<br>";
+} elseif (strpos($ctr['clts_telefono'], '/') !== false) {
+    // Verificar si tiene diagonales
+    $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+    // echo "Último teléfono en diagonal: $ultimoTelefono<br>";
+} else {
+    // Si no es ni JSON ni diagonal, es un número simple
+    $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+    // echo "Último teléfono simple: $ultimoTelefono<br>";
+}
+
+if (is_array(json_decode($ctr['clts_coordenadas'], true))) {
+    $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada(json_decode($ctr['clts_coordenadas'], true));
+    // echo "Último teléfono en JSON: $ultimaCoordenada<br>";
+} elseif (strpos($ctr['clts_coordenadas'], '|') !== false) {
+    // Verificar si tiene diagonales
+    $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+    // echo "Último teléfono en diagonal: $ultimaCoordenada<br>";
+} else {
+    // Si no es ni JSON ni diagonal, es un número simple
+    $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+    // echo "Último teléfono simple: $ultimaCoordenada<br>";
+}
+
 
 
 
@@ -110,7 +139,7 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="clts_telefono">TELEFONO:</label>
-                        <input type="text" name="clts_telefono" id="clts_telefono" class="form-control" value="<?= $ctr['clts_telefono'] ?>">
+                        <input type="text" name="clts_telefono" id="clts_telefono" class="form-control" value="<?= $ultimoTelefono ?>">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -197,7 +226,7 @@ $observaciones = str_replace('<br>', "\n", $observaciones);
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="clts_coordenadas">CORDENADAS:</label>
-                        <input type="text" name="clts_coordenadas" id="clts_coordenadas" class="form-control" value="<?= $ctr['clts_coordenadas'] ?>">
+                        <input type="text" name="clts_coordenadas" id="clts_coordenadas" class="form-control" value="<?= $ultimaCoordenada ?>">
                     </div>
                 </div>
                 <div class="col-md-3">
