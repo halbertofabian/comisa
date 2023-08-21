@@ -1915,7 +1915,7 @@ class ContratosModelo
             if ($ctr_ruta !== '') {
                 $sql .= " AND ctr.ctr_ruta = '$ctr_ruta' ";
             }
-            $sql.= " ORDER BY obs.obs_id DESC";
+            $sql .= " ORDER BY obs.obs_id DESC";
             $pps = $con->prepare($sql);
             $pps->execute();
             return $pps->fetchAll(PDO::FETCH_ASSOC);
@@ -1980,6 +1980,26 @@ class ContratosModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarContratosPorPagina($pagina, $porPagina)
+    {
+        try {
+            // Calcula el índice de inicio para la paginación
+            $inicio = ($pagina - 1) * $porPagina;
+
+            $sql = "SELECT * FROM tbl_contrato_crt_1 ORDER BY ctr_id DESC LIMIT $inicio, $porPagina";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            // Manejo de errores
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
     public static function mdlActualizarTelefono($clts_telefono, $ctr_id)
     {
         try {
