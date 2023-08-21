@@ -1103,7 +1103,7 @@ $app->get('/quitar_prestamo/{pms_id}', function (Request $request, Response $res
 //API PARA ACTUALIZAR LOS ULTIMO TELEFONOS DE LOS CONTRATOS
 $app->get('/actualizar_telefonos_comisa', function (Request $request, Response $response, array $args) {
     set_time_limit(300);
-    $porPagina = 1000;
+    $porPagina = 100;
     $totalContratos = count(ContratosModelo::mdlMostrarTodosLosContratos());
     $totalPaginas = ceil($totalContratos / $porPagina);
     for ($pagina = 1; $pagina <= $totalPaginas; $pagina++) {
