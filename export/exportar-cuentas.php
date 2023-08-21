@@ -26,7 +26,8 @@ foreach ($cuentas as $key => $ctr) {
     $proximo_pago = $ctr['ctr_proximo_pago'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_proximo_pago']));
 
     if (is_array(json_decode($ctr['clts_telefono'], true))) {
-        $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($ctr['clts_telefono'], true));
+        $valorLimpio = str_replace(['["', '"]', '\"'], ['[', ']', '"'], $ctr['clts_telefono']);
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($valorLimpio, true));
         // echo "Último teléfono en JSON: $ultimoTelefono<br>";
     } elseif (strpos($ctr['clts_telefono'], '/') !== false) {
         // Verificar si tiene diagonales
