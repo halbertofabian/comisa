@@ -8,7 +8,7 @@
                         <option value="">Seleccione una ruta</option>
                         <?php
 
-                        for ($i = 1; $i <= 20; $i++) : ?>
+                        for ($i = 1; $i <= 50; $i++) : ?>
                             <option value="R<?= $i ?>">R<?= $i ?></option>
                         <?php endfor; ?>
                     </select>
