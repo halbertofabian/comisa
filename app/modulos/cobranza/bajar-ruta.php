@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label for="usr_ruta">Ruta</label>
                     <select name="usr_ruta" id="usr_ruta" class="form-control select2">
-                        <option value="">Seleccione una ruta</option>
+                        <option value=""> Seleccione una ruta </option>
                         <?php
 
                         for ($i = 1; $i <= 50; $i++) : ?>
