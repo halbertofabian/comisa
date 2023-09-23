@@ -25,14 +25,41 @@ foreach ($cuentas as $key => $ctr) {
     $fecha_abono = $ctr['ctr_ultima_fecha_abono'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_ultima_fecha_abono']));
     $proximo_pago = $ctr['ctr_proximo_pago'] == "0000-00-00" ? "00-00-0000" : date('Y-m-d', strtotime($ctr['ctr_proximo_pago']));
 
+    if (is_array(json_decode($ctr['clts_telefono'], true))) {
+        $valorLimpio = str_replace(['["', '"]', '\"'], ['[', ']', '"'], $ctr['clts_telefono']);
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($valorLimpio, true));
+        // echo "Último teléfono en JSON: $ultimoTelefono<br>";
+    } elseif (strpos($ctr['clts_telefono'], '/') !== false) {
+        // Verificar si tiene diagonales
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+        // echo "Último teléfono en diagonal: $ultimoTelefono<br>";
+    } else {
+        // Si no es ni JSON ni diagonal, es un número simple
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+        // echo "Último teléfono simple: $ultimoTelefono<br>";
+    }
+
+    if (is_array(json_decode($ctr['clts_coordenadas'], true))) {
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada(json_decode($ctr['clts_coordenadas'], true));
+        // echo "Último teléfono en JSON: $ultimaCoordenada<br>";
+    } elseif (strpos($ctr['clts_coordenadas'], '|') !== false) {
+        // Verificar si tiene diagonales
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+        // echo "Último teléfono en diagonal: $ultimaCoordenada<br>";
+    } else {
+        // Si no es ni JSON ni diagonal, es un número simple
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+        // echo "Último teléfono simple: $ultimaCoordenada<br>";
+    }
+
     $datos = array(
         'ctr_ruta' => $ctr['ctr_ruta'],
         'ctr_numero_cuenta' => $ctr['ctr_numero_cuenta'],
         'ctr_cliente' => $ctr['ctr_cliente'],
         'clts_domicilio' => str_replace(',', ' ', $ctr['clts_domicilio']),
         'clts_col' => str_replace(',', ' ', $ctr['clts_col']),
-        'clts_coordenadas' => $ctr['clts_coordenadas'],
-        'clts_telefono' => $ctr['clts_telefono'],
+        'clts_coordenadas' => $ultimaCoordenada,
+        'clts_telefono' => $ultimoTelefono,
         'ctr_total' => $ctr['ctr_total'],
         'ctr_enganche' => $ctr['ctr_enganche'],
         'ctr_pago_adicional' => $ctr['ctr_pago_adicional'],

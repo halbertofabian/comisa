@@ -1789,40 +1789,60 @@ class AppControlador
         }
     }
 
-    public static function obtenerUltimoTelefono($input) {
+    public static function obtenerUltimoTelefono($input)
+    {
         // Si el input es un arreglo JSON
         if (is_array($input)) {
             $ultimoTelefono = end($input)['telefono'];
             return $ultimoTelefono;
         }
-        
+
         // Si el input tiene diagonales
         if (strpos($input, '/') !== false) {
             $numeros = preg_split('/[\/]+/', $input, -1, PREG_SPLIT_NO_EMPTY);
             $ultimoTelefono = end($numeros);
             return $ultimoTelefono;
         }
-        
+
         // Si el input es un solo número
         return trim($input);
     }
 
-    
-    public static function obtenerUltimoCoordenada($input) {
+
+    public static function obtenerUltimoCoordenada($input)
+    {
         // Si el input es un arreglo JSON
         if (is_array($input)) {
             $ultimaCoordenada = end($input)['coordenada'];
+            $ultimaCoordenada = str_replace(',', '', $ultimaCoordenada);
             return $ultimaCoordenada;
         }
-        
+
         // Si el input contiene el carácter |
         if (strpos($input, '|') !== false) {
-            $coordenada = preg_split('/[\|]+/', $input, -1, PREG_SPLIT_NO_EMPTY);
-            $ultimaCoordenada = end($coordenada);
+            // Buscar la última ocurrencia de "coordenada"
+            preg_match_all('/"coordenada":"([^"]*)"/', $input, $matches);
+            $ultimaCoordenada = end($matches[1]);
+            // Eliminar las comas del valor de coordenada
+            $ultimaCoordenada = str_replace(',', '', $ultimaCoordenada);
+
             return $ultimaCoordenada;
         }
-        
+
+        if (strpos($input, '\\') !== false) {
+            // Buscar la última ocurrencia de "\coordenada\":" en el input
+            preg_match_all('/\\\\\\"coordenada\\\\\\":\\\\"([^"]*)\\\\"/', $input, $matches);
+            $ultimaCoordenada = end($matches[1]);
+
+            // Eliminar las barras de escape y las comas del valor de coordenada
+            $ultimaCoordenada = str_replace(['\\\\', ','], '', $ultimaCoordenada);
+
+            return $ultimaCoordenada;
+        }
+
         // Si el input es un solo número
+        $input = str_replace(',', '', $input);
+
         return trim($input);
     }
 }

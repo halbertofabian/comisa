@@ -1102,29 +1102,26 @@ $app->get('/quitar_prestamo/{pms_id}', function (Request $request, Response $res
 
 //API PARA ACTUALIZAR LOS ULTIMO TELEFONOS DE LOS CONTRATOS
 $app->get('/actualizar_telefonos_comisa', function (Request $request, Response $response, array $args) {
-    $porPagina = 1000;
-    $totalContratos = count(ContratosModelo::mdlMostrarTodosLosContratos());
-    $totalPaginas = ceil($totalContratos / $porPagina);
-    for ($pagina = 1; $pagina <= $totalPaginas; $pagina++) {
-        $contratos = ContratosModelo::mdlMostrarContratosPorPagina($pagina, $porPagina);
-        $contadorActualizaciones = 0;
-        foreach ($contratos as $key => $ctr) {
-            // Verificar si es un arreglo JSON
-            if (is_array(json_decode($ctr['clts_telefono'], true))) {
-                $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($ctr['clts_telefono'], true));
-                // echo "Último teléfono en JSON: $ultimoTelefono<br>";
-            } elseif (strpos($ctr['clts_telefono'], '/') !== false) {
-                // Verificar si tiene diagonales
-                $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
-                // echo "Último teléfono en diagonal: $ultimoTelefono<br>";
-            } else {
-                // Si no es ni JSON ni diagonal, es un número simple
-                $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
-                // echo "Último teléfono simple: $ultimoTelefono<br>";
-            }
-            $res = ContratosModelo::mdlActualizarTelefono($ultimoTelefono, $ctr['ctr_id']);
-            $contadorActualizaciones++;
+    $contratos = ContratosModelo::mdlMostrarTodosLosContratos();
+    $contadorActualizaciones = 0;
+    set_time_limit(300);
+    foreach ($contratos as $key => $ctr) {
+        // Verificar si es un arreglo JSON
+        if (is_array(json_decode($ctr['clts_telefono'], true))) {
+            $valorLimpio = str_replace(['["', '"]', '\"'], ['[', ']', '"'], $ctr['clts_telefono']);
+            $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($valorLimpio, true));
+            // echo "Último teléfono en JSON: $ultimoTelefono<br>";
+        } elseif (strpos($ctr['clts_telefono'], '/') !== false) {
+            // Verificar si tiene diagonales
+            $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+            // echo "Último teléfono en diagonal: $ultimoTelefono<br>";
+        } else {
+            // Si no es ni JSON ni diagonal, es un número simple
+            $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+            // echo "Último teléfono simple: $ultimoTelefono<br>";
         }
+        $res = ContratosModelo::mdlActualizarTelefono($ultimoTelefono, $ctr['ctr_id']);
+        $contadorActualizaciones++;
     }
     echo "Se actualizaron $contadorActualizaciones contratos.";
 });

@@ -17,6 +17,7 @@ echo "\xEF\xBB\xBF";
 include_once '../config.php';
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.modelo.php';
 require_once DOCUMENT_ROOT . 'app/modulos/contratos/contratos.controlador.php';
+require_once DOCUMENT_ROOT . 'app/modulos/app/app.controlador.php';
 
 
 $contratos_set = ContratosControlador::ctrListarContratoExcel($_GET);
@@ -73,6 +74,35 @@ foreach ($contratos_set as $key => $ctr) {
 
     // Tipo de casa de
 
+    //OBTENER TELEFONOS Y COORDENADAS
+
+    if (is_array(json_decode($ctr['clts_telefono'], true))) {
+        $valorLimpio = str_replace(['["', '"]', '\"'], ['[', ']', '"'], $ctr['clts_telefono']);
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono(json_decode($valorLimpio, true));
+        // echo "Último teléfono en JSON: $ultimoTelefono<br>";
+    } elseif (strpos($ctr['clts_telefono'], '/') !== false) {
+        // Verificar si tiene diagonales
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+        // echo "Último teléfono en diagonal: $ultimoTelefono<br>";
+    } else {
+        // Si no es ni JSON ni diagonal, es un número simple
+        $ultimoTelefono = AppControlador::obtenerUltimoTelefono($ctr['clts_telefono']);
+        // echo "Último teléfono simple: $ultimoTelefono<br>";
+    }
+
+    if (is_array(json_decode($ctr['clts_coordenadas'], true))) {
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada(json_decode($ctr['clts_coordenadas'], true));
+        // echo "Último teléfono en JSON: $ultimaCoordenada<br>";
+    } elseif (strpos($ctr['clts_coordenadas'], '|') !== false) {
+        // Verificar si tiene diagonales
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+        // echo "Último teléfono en diagonal: $ultimaCoordenada<br>";
+    } else {
+        // Si no es ni JSON ni diagonal, es un número simple
+        $ultimaCoordenada = AppControlador::obtenerUltimoCoordenada($ctr['clts_coordenadas']);
+        // echo "Último teléfono simple: $ultimaCoordenada<br>";
+    }
+
 
 
     $datos = array(
@@ -109,7 +139,7 @@ foreach ($contratos_set as $key => $ctr) {
         'ctr_colonia_ref_1' => $ctr['ctr_colonia_ref_1'],
         'ctr_telefono_ref_1' => $ctr['ctr_telefono_ref_1'],
         'clts_curp' => $ctr['clts_curp'],
-        'clts_telefono' => $ctr['clts_telefono'],
+        'clts_telefono' => $ultimoTelefono,
         'clts_domicilio' => $ctr['clts_domicilio'],
         'clts_col' => $ctr['clts_col'],
         'clts_entre_calles' => $ctr['clts_entre_calles'],
@@ -127,7 +157,7 @@ foreach ($contratos_set as $key => $ctr) {
         'clts_prestada' => $ctls_prestada,
         'clts_vivienda_anomde' => $ctr['clts_vivienda_anomde'],
         'clts_antiguedad_viviendo' => $ctr['clts_antiguedad_viviendo'],
-        'clts_coordenadas' => $ctr['clts_coordenadas'],
+        'clts_coordenadas' => $ultimaCoordenada,
         'clts_nom_conyuge' => $ctr['clts_nom_conyuge'],
         'clts_tbj_conyuge' => $ctr['clts_tbj_conyuge'],
         'clts_tbj_puesto_conyuge' => $ctr['clts_tbj_puesto_conyuge'],
