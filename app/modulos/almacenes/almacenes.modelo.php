@@ -746,7 +746,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "SELECT * FROM tbl_almacenes_ams ams WHERE ams_vendedor = ?";
+            $sql = "SELECT * FROM tbl_almacenes_ams ams WHERE ams_vendedor = ? AND ams_estado = 1";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $ams_vendedor);
