@@ -175,7 +175,7 @@ $app->post('/login', function (Request $request, Response $response) {
     echo "Aqui toy";
 });
 
-$app->post('/-', function (Request $request, Response $response) {
+$app->post('/ok', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $datosVendedor = json_decode($json, true);
