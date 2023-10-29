@@ -1007,6 +1007,7 @@ class ContratosControlador
                     'status' => false,
                     'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema.'
                 );
+                break;
             } else {
 
                 foreach (json_decode($cts['ctr_productos'], true) as $key => $pds) {
