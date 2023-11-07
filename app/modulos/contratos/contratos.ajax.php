@@ -292,8 +292,8 @@ class ContratosAjax
     }
     public function ajaxMostrarObservacionesPendientes()
     {
-        $res = ContratosModelo::mdlMostrarTodasObaservacionesPendiente($_POST['ctr_ruta']);
-        echo json_encode($res, true);
+        $res = ContratosControlador::ctrMostrarTodasObaservacionesPendientes($_POST['ctr_ruta']);
+        print json_encode($res, JSON_UNESCAPED_UNICODE);
     }
 }
 if (isset($_POST['btnMostrarInfCltId'])) {

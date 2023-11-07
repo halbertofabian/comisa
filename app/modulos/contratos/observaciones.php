@@ -18,7 +18,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="table tablas text-center">
+                    <table class="table text-center" id="datatable_observaciones">
                         <thead class="thead-light">
                             <tr>
                                 <th colspan="8">Listar de observaciones</th>
@@ -34,9 +34,7 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody_observaciones">
-                            
-                        </tbody>
+                        
                     </table>
                 </div>
             </div>
@@ -53,39 +51,44 @@
 
     function mostrarObservaciones() {
         var ctr_ruta = $("#ctr_ruta").val();
-        var datos = new FormData()
-        datos.append('ctr_ruta', ctr_ruta);
-        datos.append('btnMostrarObservacionesPendientes', true);
-        $.ajax({
-            type: 'POST',
-            url: urlApp + 'app/modulos/contratos/contratos.ajax.php',
-            data: datos,
-            dataType: 'json',
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                var tbody_observaciones = "";
-
-                res.forEach(obs => {
-                    tbody_observaciones += `
-                    <tr>
-                        <td> <a target="_blank" href="${urlApp + 'contratos/buscar/' + obs.obs_ctr_id}">${obs.ctr_folio}</a></td>
-                        <td>${obs.ctr_ruta}</td>
-                        <td>${obs.ctr_numero_cuenta}</td>
-                        <td>${obs.ctr_cliente}</td>
-                        <td>${obs.obs_observaciones}</td>
-                        <td>${obs.obs_usuario}</td>
-                        <td>${obs.obs_fecha}</td>
-                        <td>
-                            <button class="btn btn-success btnCompletar" obs_id="${obs.obs_id}">Completar</button>
-                        </td>
-
-                    </tr>
-                    `;
-                });
-
-                $("#tbody_observaciones").html(tbody_observaciones);
-            }
+        datatable_observaciones = $('#datatable_observaciones').DataTable({
+            responsive: true,
+            'ajax': {
+                'url': urlApp + 'app/modulos/contratos/contratos.ajax.php',
+                'method': 'POST', //usamos el metodo POST
+                'data': {
+                    btnMostrarObservacionesPendientes: true,
+                    ctr_ruta: ctr_ruta,
+                }, //enviamos opcion 4 para que haga un SELECT
+                'dataSrc': ''
+            },
+            'bDestroy': true,
+            'order': false,
+            'columns': [{
+                    'data': 'ctr_folio'
+                },
+                {
+                    'data': 'ctr_ruta'
+                },
+                {
+                    'data': 'ctr_numero_cuenta'
+                },
+                {
+                    'data': 'ctr_cliente'
+                },
+                {
+                    'data': 'obs_observaciones'
+                },
+                {
+                    'data': 'obs_usuario'
+                },
+                {
+                    'data': 'obs_fecha'
+                },
+                {
+                    'data': 'btnCompletar'
+                },
+            ]
         });
     }
 

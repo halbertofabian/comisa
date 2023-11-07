@@ -1906,7 +1906,7 @@ class ContratosModelo
             $con = null;
         }
     }
-    public static function mdlMostrarTodasObaservacionesPendiente($ctr_ruta)
+    public static function mdlMostrarTodasObaservacionesPendientes($ctr_ruta)
     {
         try {
             //code...

@@ -96,6 +96,9 @@
                         <div class="col-12" id="btn-export-pdf">
 
                         </div>
+                        <div class="col-12" id="btn-export-interno-pdf">
+
+                        </div>
                     </div>
                     <div class="row">
 

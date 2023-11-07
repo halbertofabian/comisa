@@ -2543,4 +2543,25 @@ class ContratosControlador
             );
         }
     }
+    public static function ctrMostrarTodasObaservacionesPendientes()
+    {
+        $dt_observaciones = array();
+        $observaciones = ContratosModelo::mdlMostrarTodasObaservacionesPendientes($_POST['ctr_ruta']);
+        foreach ($observaciones as $key => $obs) {
+            $dt_aux = array(
+                'ctr_folio' => '<a target="_blank" href="' . HTTP_HOST . 'contratos/buscar/' . $obs['obs_ctr_id'] . '">' . $obs['ctr_folio'] . '</a>',
+                'ctr_ruta' => $obs['ctr_ruta'],
+                'ctr_numero_cuenta' => $obs['ctr_numero_cuenta'],
+                'ctr_cliente' => $obs['ctr_cliente'],
+                'obs_observaciones' => $obs['obs_observaciones'],
+                'obs_usuario' => $obs['obs_usuario'],
+                'obs_fecha' => $obs['obs_fecha'],
+                'btnCompletar' => '<button class="btn btn-success btnCompletar" obs_id="' . $obs['obs_id'] . '">Completar</button>',
+            );
+
+            array_push($dt_observaciones, $dt_aux);
+        }
+
+        return $dt_observaciones;
+    }
 }
