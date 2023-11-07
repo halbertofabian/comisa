@@ -2064,4 +2064,31 @@ class CobranzaModelo
             $con = null;
         }
     }
+
+    public static function mdlMostrarAllDepositos($fecha_inicio, $fecha_fin, $usr_id, $igs_cuenta)
+    {
+        try {
+            //code...
+            $sql = "SELECT igs.*,usr.usr_nombre, cbco.cbco_nombre FROM tbl_ingresos_igs igs JOIN tbl_usuarios_usr usr ON usr.usr_id = igs.igs_usuario_responsable JOIN tbl_cuentas_banco_cbco cbco ON cbco.cbco_id = igs.igs_cuenta WHERE igs.igs_mp != 'EFECTIVO' ";
+            $con = Conexion::conectar();
+            if ($fecha_inicio !== '') {
+                $sql .= " AND (DATE(igs.igs_fecha_registro) BETWEEN '$fecha_inicio' AND '$fecha_fin') ";
+            }
+            if ($usr_id !== '') {
+                $sql .= " AND igs.igs_usuario_responsable = $usr_id ";
+            }
+            if ($igs_cuenta !== '') {
+                $sql .= " AND igs.igs_cuenta = $igs_cuenta ";
+            }
+            $sql .= " ORDER BY igs.igs_id DESC";
+            $pps = $con->prepare($sql);
+            $pps->execute();
+            return $pps->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
 }

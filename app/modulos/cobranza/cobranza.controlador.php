@@ -1995,4 +1995,33 @@ class CobranzaControlador
             }
         }
     }
+
+    public static function ctrMostrarAllDepositos()
+    {
+        if ($_POST['srv_año'] == 'R') {
+            $fecha_inicio = $_POST['fecha_inicio'];
+            $fecha_fin = $_POST['fecha_fin'];
+        } else {
+            $fecha_inicio = explode('/', $_POST['srv_año'])[0];
+            $fecha_fin = explode('/', $_POST['srv_año'])[1];
+        }
+
+        $usr_id = $_POST['usr_id'];
+        $igs_cuenta = $_POST['igs_cuenta'];
+
+        $depositos = CobranzaModelo::mdlMostrarAllDepositos($fecha_inicio, $fecha_fin, $usr_id, $igs_cuenta);
+        $aux_array = array();
+        foreach ($depositos as $key => $igs) {
+            array_push($aux_array, array(
+                'igs_id' => $igs['igs_id'],
+                'igs_concepto' => $igs['igs_concepto'],
+                'usr_nombre' => $igs['usr_nombre'],
+                'cbco_nombre' => $igs['cbco_nombre'],
+                'igs_monto' => $igs['igs_monto'],
+                'igs_referencia' => $igs['igs_referencia'],
+                'igs_fecha_registro' => $igs['igs_fecha_registro'],
+            ));
+        }
+        return $aux_array;
+    }
 }

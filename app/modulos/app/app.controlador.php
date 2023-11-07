@@ -778,6 +778,11 @@ class AppControlador
                             'label' => 'Rendimiento',
                             'href' => 'cobranza/rendimiento'
                         ],
+                        [
+                            'icon' => '',
+                            'label' => 'Depositos',
+                            'href' => 'cobranza/depositos'
+                        ],
                         // [
                         //     'icon' => '',
                         //     'label' => 'Ingresos',
@@ -1339,6 +1344,11 @@ class AppControlador
                             'icon' => '',
                             'label' => 'Gastos',
                             'href' => 'cobranza/gastos'
+                        ],
+                        [
+                            'icon' => '',
+                            'label' => 'Depositos',
+                            'href' => 'cobranza/depositos'
                         ],
 
                         //Aqui más item de menu

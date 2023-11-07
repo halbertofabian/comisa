@@ -255,6 +255,12 @@ class CobranzaAjax
         $respuesta = CobranzaControlador::ctrRedndimientoV3($_POST['fcbz_id'], $_POST['usr_id']);
         echo json_encode($respuesta, true);
     }
+    public function ajaxMostrarAllDepositos()
+    {
+        $respuesta = CobranzaControlador::ctrMostrarAllDepositos();
+        print json_encode($respuesta, JSON_UNESCAPED_UNICODE); //envio el array final el formato json a AJAX
+
+    }
 } //Aqui termina la clase
 
 if (isset($_POST['btnImportarSaldos'])) {
@@ -380,5 +386,9 @@ if (isset($_POST['btnConsultarRendimientoV3'])) {
 if (isset($_POST['btnConsultarRutas'])) {
     $btnConsultarRutas = new CobranzaAjax();
     $btnConsultarRutas->ajaxConsultarRutasRendimiento();
+}
+if (isset($_POST['btnMostrarAllDepositos'])) {
+    $mostrarAllDepositos = new CobranzaAjax();
+    $mostrarAllDepositos->ajaxMostrarAllDepositos();
 }
 
