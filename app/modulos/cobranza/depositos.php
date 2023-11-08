@@ -47,7 +47,7 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <table class="table table-bordered" id="datatable_depositos">
+        <table class="table table-bordered text-center" id="datatable_depositos">
             <thead>
                 <tr>
                     <th>#</th>
@@ -62,6 +62,21 @@
         </table>
     </div>
 </div>
+
+<!-- Modal ver foto deposito -->
+<div class="modal fade" id="verFotoDeposito" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="foto_deposito" src="" width="100%" alt="foto_deposito">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     $(document).ready(function() {
@@ -91,10 +106,10 @@
             'bDestroy': true,
             'order': false,
             'columns': [{
-                    'data': 'igs_id'
+                    'data': 'abs_id'
                 },
                 {
-                    'data': 'igs_concepto'
+                    'data': 'abs_folio'
                 },
                 {
                     'data': 'usr_nombre'
@@ -103,13 +118,13 @@
                     'data': 'cbco_nombre'
                 },
                 {
-                    'data': 'igs_monto'
+                    'data': 'abs_monto'
                 },
                 {
-                    'data': 'igs_referencia'
+                    'data': 'abs_referancia'
                 },
                 {
-                    'data': 'igs_fecha_registro'
+                    'data': 'abs_fecha_cobro'
                 },
             ]
         });
@@ -138,5 +153,12 @@
     });
     $('#igs_cuenta').on('change', function() {
         mostrarAllDepositos();
+    });
+
+    $(document).on('click', '.btnMostrarComprobanteDeposito', function() {
+        var abs_foto_deposito = $(this).attr('abs_foto_deposito');
+        $("#foto_deposito").attr('src', abs_foto_deposito);
+        $("#verFotoDeposito").modal('show');
+
     });
 </script>

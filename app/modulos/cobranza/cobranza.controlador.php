@@ -1183,7 +1183,7 @@ class CobranzaControlador
             ));
 
 
-            if ($abs['abs_nota'] != "" ) {
+            if ($abs['abs_nota'] != "") {
                 $obs_usuario = $usr['usr_nombre'] . '<br> - APP';
                 $obs_fecha = $abs['abs_fecha_cobro'];
                 $obs_status = 'PENDIENTE';
@@ -2011,15 +2011,21 @@ class CobranzaControlador
 
         $depositos = CobranzaModelo::mdlMostrarAllDepositos($fecha_inicio, $fecha_fin, $usr_id, $igs_cuenta);
         $aux_array = array();
-        foreach ($depositos as $key => $igs) {
+        $btn_comprobante = "";
+        foreach ($depositos as $key => $abs) {
+            if ($abs['abs_foto_deposito'] !== "") {
+                $btn_comprobante = '<button type="button" class="btn btn-outline-primary btnMostrarComprobanteDeposito" abs_foto_deposito="' . $abs['abs_foto_deposito'] . '"><i class="fa fa-eye"></i></button>';
+            } else {
+                $btn_comprobante = "";
+            }
             array_push($aux_array, array(
-                'igs_id' => $igs['igs_id'],
-                'igs_concepto' => $igs['igs_concepto'],
-                'usr_nombre' => $igs['usr_nombre'],
-                'cbco_nombre' => $igs['cbco_nombre'],
-                'igs_monto' => $igs['igs_monto'],
-                'igs_referencia' => $igs['igs_referencia'],
-                'igs_fecha_registro' => $igs['igs_fecha_registro'],
+                'abs_id' => $abs['abs_id'],
+                'abs_folio' => $abs['abs_folio'],
+                'usr_nombre' => $abs['usr_nombre'],
+                'cbco_nombre' => $abs['cbco_nombre'],
+                'abs_monto' => $abs['abs_monto'],
+                'abs_referancia' => $abs['abs_referancia'] . '<br>' . $btn_comprobante,
+                'abs_fecha_cobro' => $abs['abs_fecha_cobro'],
             ));
         }
         return $aux_array;

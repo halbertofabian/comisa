@@ -2065,27 +2065,46 @@ class CobranzaModelo
         }
     }
 
-    public static function mdlMostrarAllDepositos($fecha_inicio, $fecha_fin, $usr_id, $igs_cuenta)
+    public static function mdlMostrarAllDepositos($fecha_inicio, $fecha_fin, $usr_id, $abs_cuenta)
     {
         try {
             //code...
-            $sql = "SELECT igs.*,usr.usr_nombre, cbco.cbco_nombre FROM tbl_ingresos_igs igs JOIN tbl_usuarios_usr usr ON usr.usr_id = igs.igs_usuario_responsable JOIN tbl_cuentas_banco_cbco cbco ON cbco.cbco_id = igs.igs_cuenta WHERE igs.igs_mp != 'EFECTIVO' ";
+            $sql = "SELECT abs.*,usr.usr_nombre, cbco.cbco_nombre FROM tbl_abonos_cobranza_abs abs JOIN tbl_usuarios_usr usr ON usr.usr_id = abs.abs_id_cobrador JOIN tbl_cuentas_banco_cbco cbco ON cbco.cbco_id = abs.abs_cuenta WHERE abs.abs_mp != 'EFECTIVO' AND abs.abs_estado_abono = 'AUTORIZADO' ";
             $con = Conexion::conectar();
             if ($fecha_inicio !== '') {
-                $sql .= " AND (DATE(igs.igs_fecha_registro) BETWEEN '$fecha_inicio' AND '$fecha_fin') ";
+                $sql .= " AND (DATE(abs.abs_fecha_cobro) BETWEEN '$fecha_inicio' AND '$fecha_fin') ";
             }
             if ($usr_id !== '') {
-                $sql .= " AND igs.igs_usuario_responsable = $usr_id ";
+                $sql .= " AND abs.abs_id_cobrador = $usr_id ";
             }
-            if ($igs_cuenta !== '') {
-                $sql .= " AND igs.igs_cuenta = $igs_cuenta ";
+            if ($abs_cuenta !== '') {
+                $sql .= " AND abs.abs_cuenta = $abs_cuenta ";
             }
-            $sql .= " ORDER BY igs.igs_id DESC";
+            $sql .= " ORDER BY abs.abs_id DESC";
             $pps = $con->prepare($sql);
             $pps->execute();
             return $pps->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $th) {
             //throw $th;
+        } finally {
+            $pps = null;
+            $con = null;
+        }
+    }
+
+    public  static function mdlMostrarAbonosByReferencia($abs_referancia)
+    {
+        try {
+            //code...
+            $sql = "SELECT * FROM tbl_abonos_cobranza_abs WHERE abs_referancia = ? ";
+            $con = Conexion::conectar();
+            $pps = $con->prepare($sql);
+            $pps->bindValue(1, $abs_referancia);
+            $pps->execute();
+            return $pps->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $th) {
+            //throw $th;
+            return false;
         } finally {
             $pps = null;
             $con = null;
