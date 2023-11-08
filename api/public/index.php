@@ -175,7 +175,7 @@ $app->post('/login', function (Request $request, Response $response) {
     echo "Aqui toy";
 });
 
-$app->post('/ok', function (Request $request, Response $response) {
+$app->post('/comisa-datos', function (Request $request, Response $response) {
     $json = $request->getBody();
 
     $datosVendedor = json_decode($json, true);
@@ -186,36 +186,6 @@ $app->post('/ok', function (Request $request, Response $response) {
     $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
 
     return json_encode($subirctr, true);
-
-    # code...
-
-});
-//subir_contratos_new_2
-$app->post('/comisa-datos', function (Request $request, Response $response) {
-
-    $json = $request->getBody();
-    $datosVendedor = json_decode($json, true);
-    try {
-
-        $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
-        $con = ConexionAPI::conectarAPI();
-        $pps = $con->prepare($sql);
-        $pps->bindValue(1, $json);
-        $pps->bindValue(2, FECHA);
-
-        $pps->execute();
-    } catch (PDOException $th) {
-        //throw $th;
-    } finally {
-        $pps = null;
-        $con = null;
-    }
-    $datos = array('mensaje' => 'Los datos se agregaron correctamente');
-
-    return json_encode($datos);
-    // $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
-
-    // return json_encode($subirctr, true);
 
     # code...
 
@@ -389,7 +359,35 @@ $app->get('/actualizar_saldos/{usr_id}', function (Request $request, Response $r
 
 
 
+$app->post('/subir_contratos_new_2', function (Request $request, Response $response) {
 
+    $json = $request->getBody();
+    $datosVendedor = json_decode($json, true);
+    try {
+
+        $sql = "INSERT INTO tbl_contratos_2 (cts_todo,fecha) VALUES(?,?)";
+        $con = ConexionAPI::conectarAPI();
+        $pps = $con->prepare($sql);
+        $pps->bindValue(1, $json);
+        $pps->bindValue(2, FECHA);
+
+        $pps->execute();
+    } catch (PDOException $th) {
+        //throw $th;
+    } finally {
+        $pps = null;
+        $con = null;
+    }
+    $datos = array('mensaje' => 'Los datos se agregaron correctamente');
+
+    return json_encode($datos);
+    // $subirctr = ContratosControlador::ctrSubirPreContrato($datosVendedor);
+
+    // return json_encode($subirctr, true);
+
+    # code...
+
+});
 
 
 $app->post('/subir_contratos_new', function (Request $request, Response $response) {
