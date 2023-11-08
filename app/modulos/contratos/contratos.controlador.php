@@ -993,69 +993,9 @@ class ContratosControlador
 
         return $ruta_url;
     }
-    // public static function ctrSubirPreContrato($data)
-    // {
-    //     $contratos = ContratosControlador::ctrSetearDatos($data);
-    //     $contSubir = 0;
-    //     $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idVendedor']);
-    //     $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
-
-    //     foreach ($contratos as $key => $cts) {
-    //         $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
-    //         if ($ctr_folio) {
-    //             return  array(
-    //                 'status' => false,
-    //                 'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema.'
-    //             );
-    //         } else {
-
-    //             foreach (json_decode($cts['ctr_productos'], true) as $key => $pds) {
-    //                 $spds = AlmacenesModelo::mdlMostrarSeriesById2($pds['spds_id']);
-    //                 if ($almacen['spds_almacen'] !== $spds['spds_almacen']) {
-    //                     return  array(
-    //                         'status' => false,
-    //                         'mensaje' => 'El producto con numero de serie ' . $spds['spds_serie_completa'] . ' ya no pertenece a tu lista.'
-    //                     );
-    //                     break;
-    //                 } else {
-    //                     continue;
-    //                 }
-    //             }
-
-    //             // Guardar en base de datos contratos
-
-    //             $subir = ContratosModelo::mdlSubirPreContratos($cts);
-    //             $ctr = ContratosModelo::mdlMostrarContratosById($subir);
-    //             $datos = array();
-    //             foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
-    //                 $datos = array(
-    //                     'ctr_id' => $ctr['ctr_id'],
-    //                     'spds_id' => $value['spds_id'],
-    //                     'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
-    //                 );
-    //                 $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
-    //                 $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
-    //             }
-
-    //             if ($subir) {
-    //                 $contSubir++;
-    //             }
-    //         }
-    //     }
-
-    //     return  array(
-    //         'status' => true,
-    //         'mensaje' => $contSubir . ' contratos se subieron'
-    //     );
-
-    //     // preArray($contratos);
-    // }
-
     public static function ctrSubirPreContrato($data)
     {
         $contratos = ContratosControlador::ctrSetearDatos($data);
-        preArray($contratos);
-        return;
         $contSubir = 0;
         $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idVendedor']);
         $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
@@ -1065,9 +1005,8 @@ class ContratosControlador
             if ($ctr_folio) {
                 return  array(
                     'status' => false,
-                    'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema. Advertencia#1'
+                    'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema.'
                 );
-                break; // Agregue este break
             } else {
 
                 foreach (json_decode($cts['ctr_productos'], true) as $key => $pds) {
@@ -1084,29 +1023,22 @@ class ContratosControlador
                 }
 
                 // Guardar en base de datos contratos
-                $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
-                if (!$ctr_folio) { // Agregue por segunda ocación la validadacion 
-                    $subir = ContratosModelo::mdlSubirPreContratos($cts);
-                    $ctr = ContratosModelo::mdlMostrarContratosById($subir);
-                    $datos = array();
-                    foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
-                        $datos = array(
-                            'ctr_id' => $ctr['ctr_id'],
-                            'spds_id' => $value['spds_id'],
-                            'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
-                        );
-                        AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
-                        AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
-                    }
 
-                    if ($subir) {
-                        $contSubir++;
-                    }
-                } else {
-                    return  array(
-                        'status' => false,
-                        'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema. Advertencia#2'
+                $subir = ContratosModelo::mdlSubirPreContratos($cts);
+                $ctr = ContratosModelo::mdlMostrarContratosById($subir);
+                $datos = array();
+                foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
+                    $datos = array(
+                        'ctr_id' => $ctr['ctr_id'],
+                        'spds_id' => $value['spds_id'],
+                        'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
                     );
+                    $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
+                    $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
+                }
+
+                if ($subir) {
+                    $contSubir++;
                 }
             }
         }
@@ -1118,6 +1050,74 @@ class ContratosControlador
 
         // preArray($contratos);
     }
+
+    // public static function ctrSubirPreContrato($data)
+    // {
+    //     $contratos = ContratosControlador::ctrSetearDatos($data);
+    //     preArray($contratos);
+    //     return;
+    //     $contSubir = 0;
+    //     $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idVendedor']);
+    //     $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
+
+    //     foreach ($contratos as $key => $cts) {
+    //         $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
+    //         if ($ctr_folio) {
+    //             return  array(
+    //                 'status' => false,
+    //                 'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema. Advertencia#1'
+    //             );
+    //             break; // Agregue este break
+    //         } else {
+
+    //             foreach (json_decode($cts['ctr_productos'], true) as $key => $pds) {
+    //                 $spds = AlmacenesModelo::mdlMostrarSeriesById2($pds['spds_id']);
+    //                 if ($almacen['spds_almacen'] !== $spds['spds_almacen']) {
+    //                     return  array(
+    //                         'status' => false,
+    //                         'mensaje' => 'El producto con numero de serie ' . $spds['spds_serie_completa'] . ' ya no pertenece a tu lista.'
+    //                     );
+    //                     break;
+    //                 } else {
+    //                     continue;
+    //                 }
+    //             }
+
+    //             // Guardar en base de datos contratos
+    //             $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
+    //             if (!$ctr_folio) { // Agregue por segunda ocación la validadacion 
+    //                 $subir = ContratosModelo::mdlSubirPreContratos($cts);
+    //                 $ctr = ContratosModelo::mdlMostrarContratosById($subir);
+    //                 $datos = array();
+    //                 foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
+    //                     $datos = array(
+    //                         'ctr_id' => $ctr['ctr_id'],
+    //                         'spds_id' => $value['spds_id'],
+    //                         'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
+    //                     );
+    //                     AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
+    //                     AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
+    //                 }
+
+    //                 if ($subir) {
+    //                     $contSubir++;
+    //                 }
+    //             } else {
+    //                 return  array(
+    //                     'status' => false,
+    //                     'mensaje' => 'El contrato con folio ' . $ctr_folio['ctr_folio'] . ' ya se subio al sistema. Advertencia#2'
+    //                 );
+    //             }
+    //         }
+    //     }
+
+    //     return  array(
+    //         'status' => true,
+    //         'mensaje' => $contSubir . ' contratos se subieron'
+    //     );
+
+    //     // preArray($contratos);
+    // }
     public static function ctrActualizarContrato()
     {
         // startLoadButton();
