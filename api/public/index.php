@@ -34,6 +34,9 @@ require_once '../../app/modulos/configuracion/configuracion.modelo.php';
 require_once '../../app/modulos/prestamos/prestamos.controlador.php';
 require_once '../../app/modulos/prestamos/prestamos.modelo.php';
 
+require_once '../../app/modulos/clientes/clientes.controlador.php';
+require_once '../../app/modulos/clientes/clientes.modelo.php';
+
 
 
 
@@ -87,7 +90,7 @@ $app->get('/prueba', function (Request $request, Response $response) {
 });
 
 $app->get('/clientes_control', function (Request $request, Response $response) {
-
+    $lista_negra = ClientesControlador::ctrMostrarClientesListaNegra();
     try {
         //code...
         $sql = "SELECT clts_id,clts_ruta,clts_nombre,clts_telefono,clts_domicilio,clts_col,clts_ubicacion,clts_tipo_cliente,clts_curp,clts_observaciones,clts_cuenta,clts_articulo,clts_fecha_venta FROM tbl_clientes_problemas_clts ORDER BY clts_id DESC";
@@ -98,13 +101,15 @@ $app->get('/clientes_control', function (Request $request, Response $response) {
             echo json_encode(array(
                 'status' => true,
                 'mensaje' => 'Listado de productos',
-                'data' => $rs->fetchAll(PDO::FETCH_ASSOC)
+                'data' => $rs->fetchAll(PDO::FETCH_ASSOC),
+                'lista_negra' => $lista_negra
             ), true);
         } else {
             echo json_encode(array(
                 'status' => false,
                 'mensaje' => 'No hay resultados',
-                'data' => ''
+                'data' => '',
+                'lista_negra' => $lista_negra
             ), true);
         }
     } catch (PDOException $e) {
@@ -112,7 +117,8 @@ $app->get('/clientes_control', function (Request $request, Response $response) {
         echo json_encode(array(
             'status' => false,
             'mensaje' => $e->getMessage() . '',
-            'data' => ''
+            'data' => '',
+            'lista_negra' => $lista_negra
         ));
     }
 });
