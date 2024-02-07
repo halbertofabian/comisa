@@ -1025,8 +1025,6 @@ class ContratosControlador
                 // Guardar en base de datos contratos
 
                 $subir = ContratosModelo::mdlSubirPreContratos($cts);
-                preArray($subir);
-                return;
                 $ctr = ContratosModelo::mdlMostrarContratosById($subir);
                 $datos = array();
                 foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
