@@ -884,7 +884,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_inventario_itr SET $campo = $campo + 1 WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $sql = "UPDATE tbl_inventario_itr SET {$campo} = {$campo}  + 1 WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $itr_id_modelo);
@@ -902,7 +902,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_inventario_itr SET $campo = $campo - 1 WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $sql = "UPDATE tbl_inventario_itr SET {$campo} = {$campo}  - 1 WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $itr_id_modelo);
@@ -920,7 +920,7 @@ class AlmacenesModelo
     {
         try {
             //code...
-            $sql = "UPDATE tbl_inventario_itr SET $campo = $campo + $cantidad WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
+            $sql = "UPDATE tbl_inventario_itr SET {$campo} = {$campo}  + $cantidad WHERE itr_id_modelo = ? AND itr_estado = 'PENDIENTE'";
             $con = Conexion::conectar();
             $pps = $con->prepare($sql);
             $pps->bindValue(1, $itr_id_modelo);
