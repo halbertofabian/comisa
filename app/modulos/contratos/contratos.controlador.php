@@ -1026,7 +1026,6 @@ class ContratosControlador
 
                 $subir = ContratosModelo::mdlSubirPreContratos($cts);
                 $ctr = ContratosModelo::mdlMostrarContratosById($subir);
-                return $ctr['ctr_productos'];
                 $datos = array();
                 foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
                     $datos = array(
@@ -1035,7 +1034,7 @@ class ContratosControlador
                         'nombre_vendedor' => isset($data[0]['nombreVendedor']) ? $data[0]['nombreVendedor'] : "",
                     );
                     $ams = AlmacenesControlador::ctrAsignarAlmacenesContratoApiApp($datos);
-                    $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
+                    // $itr = AlmacenesControlador::ctrActualizarInventario("itr_ventas", $value['spds_id']);
                 }
 
                 if ($subir) {
