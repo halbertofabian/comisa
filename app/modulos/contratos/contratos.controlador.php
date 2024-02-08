@@ -1026,6 +1026,7 @@ class ContratosControlador
 
                 $subir = ContratosModelo::mdlSubirPreContratos($cts);
                 $ctr = ContratosModelo::mdlMostrarContratosById($subir);
+                return $ctr['ctr_productos'];
                 $datos = array();
                 foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
                     $datos = array(
