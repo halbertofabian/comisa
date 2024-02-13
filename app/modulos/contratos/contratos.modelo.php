@@ -415,7 +415,8 @@ class ContratosModelo
             $pps->bindValue(79, $ctr['ctr_saldo_actual']);
             $pps->bindValue(80, $ctr['ctr_moroso']);
             $pps->execute();
-            return $con->lastInsertId();
+            return $pps->errorInfo();
+            // return $con->lastInsertId();
         } catch (PDOException $th) {
             //throw $th;
         } finally {
