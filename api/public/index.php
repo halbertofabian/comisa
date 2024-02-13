@@ -197,6 +197,13 @@ $app->post('/comisa-datos', function (Request $request, Response $response) {
 
 });
 
+$app->post('/comisa/guardar/contrato', function (Request $request, Response $response) {
+    $json = $request->getBody();
+    $datos = json_decode($json, true);
+    $subirctr = ContratosControlador::ctrGuardarPreContrato($datos);
+    return json_encode($subirctr, true);
+});
+
 
 
 $app->get('/sicronizar_datos_2', function (Request $request, Response $response) {
