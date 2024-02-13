@@ -937,11 +937,7 @@ class ContratosControlador
     public static function ctrLimpiarDatos($cts)
     {
 
-
         $countArray = sizeof($cts);
-
-        $contratos_validos = array();
-
         $ultimoDato = end($cts);
 
         if (isset($cts[0]['caja_abierta'])) {
@@ -956,7 +952,7 @@ class ContratosControlador
         if (isset($cts[0]['caja_abierta'])) {
 
 
-            $contratos_aux = array(
+            $contratos_set = array(
 
                 'ctr_id' => NULL,
                 'ctr_folio' =>  $cts[1]["ctr_folio"],
@@ -1077,8 +1073,6 @@ class ContratosControlador
 
             );
 
-
-            array_push($contratos_validos, $contratos_aux);
         }
         // else {
         //     for ($i = 1; $i < $countArray; $i++) {
@@ -1228,7 +1222,7 @@ class ContratosControlador
         //         array_push($contratos_validos, $contratos_aux);
         //     }
         // }
-        return $contratos_validos;
+        return $contratos_set;
     }
 
     public static function ctrGuardarImagenesContrato($ctr_img, $ctr_folio, $img_name)
