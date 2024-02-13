@@ -1343,7 +1343,6 @@ class ContratosControlador
     public static function ctrGuardarPreContrato($data)
     {
         $cts = ContratosControlador::ctrLimpiarDatos($data);
-        preArray($cts);
         $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idusr']);
         $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
 
@@ -1371,8 +1370,6 @@ class ContratosControlador
             // Guardar en base de datos contratos
 
             $subir = ContratosModelo::mdlSubirPreContratos($cts);
-            preArray($subir);
-            return;
             $ctr = ContratosModelo::mdlMostrarContratosById($subir);
             $datos = array();
             foreach (json_decode($ctr['ctr_productos'], true) as $key => $value) {
