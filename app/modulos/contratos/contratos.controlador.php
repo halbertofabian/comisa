@@ -654,7 +654,7 @@ class ContratosControlador
 
 
         if (isset($data[0]['caja_abierta'])) {
-            preArray($data[0]);
+            preArray($data[1]);
             return;
 
             foreach ($data[1] as $key => $cts) {
