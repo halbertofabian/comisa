@@ -1000,6 +1000,9 @@ class ContratosControlador
         $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idVendedor']);
         $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
 
+        preArray($contratos);
+        return;
+
         foreach ($contratos as $key => $cts) {
             $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
             if ($ctr_folio) {
