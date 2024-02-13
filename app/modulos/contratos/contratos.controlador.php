@@ -657,7 +657,6 @@ class ContratosControlador
 
             foreach ($data[1] as $key => $cts) {
                 preArray($cts);
-                return;
 
                 // $fotoCliente =
 
