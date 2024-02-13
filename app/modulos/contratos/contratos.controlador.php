@@ -1349,6 +1349,8 @@ class ContratosControlador
     public static function ctrGuardarPreContrato($data)
     {
         $cts = ContratosControlador::ctrLimpiarDatos($data);
+        preArray($cts);
+        return;
         $contSubir = 0;
         $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idusr']);
         $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
@@ -1390,14 +1392,19 @@ class ContratosControlador
             }
 
             if ($subir) {
-                $contSubir++;
+                return  array(
+                    'status' => true,
+                    'mensaje' => 'El contrato ' . $cts['ctr_folio'] . ' se subio correctamente.'
+                );
+            } else {
+                return  array(
+                    'status' => false,
+                    'mensaje' => 'El contrato ' . $cts['ctr_folio'] . ' no se guardo correctamente.'
+                );
             }
         }
 
-        return  array(
-            'status' => true,
-            'mensaje' => $contSubir . ' contratos se subieron'
-        );
+
 
         // preArray($contratos);
     }
