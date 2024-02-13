@@ -654,8 +654,7 @@ class ContratosControlador
 
 
         if (isset($data[0]['caja_abierta'])) {
-            preArray($data[1]);
-            return;
+            
 
             foreach ($data[1] as $key => $cts) {
                 // $fotoCliente =
@@ -663,7 +662,7 @@ class ContratosControlador
                     $contratos_aux = array(
 
                         'ctr_id' => NULL,
-                        'ctr_folio' =>  $cts["ctr_folio"],
+                        'ctr_folio' =>  dstring($cts["ctr_folio"]),
                         'ctr_fecha_contrato' =>  $cts["fecha_contrato"],
                         'ctr_id_vendedor' => $data[0]['idVendedor'],
                         'ctr_cliente' =>  dstring($cts["clts_nombre"]),
@@ -927,12 +926,13 @@ class ContratosControlador
                     'ctr_moroso' => ""
 
                 );
-
+               
 
                 array_push($contratos_validos, $contratos_aux);
             }
         }
-
+        preArray($contratos_validos);
+        return;
         return $contratos_validos;
     }
 
