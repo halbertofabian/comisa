@@ -656,8 +656,6 @@ class ContratosControlador
         if (isset($data[0]['caja_abierta'])) {
 
             foreach ($data[1] as $key => $cts) {
-                preArray($cts);
-
                 // $fotoCliente =
 
                     $contratos_aux = array(
@@ -933,7 +931,8 @@ class ContratosControlador
             }
         }
 
-
+        preArray($contratos_validos);
+        return;
 
         return $contratos_validos;
     }
