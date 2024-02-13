@@ -655,9 +655,6 @@ class ContratosControlador
 
         if (isset($data[0]['caja_abierta'])) {
 
-            preArray($data[1]);
-            return;
-
             foreach ($data[1] as $key => $cts) {
 
                 // $fotoCliente =
@@ -1002,6 +999,9 @@ class ContratosControlador
         $contSubir = 0;
         $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idVendedor']);
         $almacen = AlmacenesModelo::mdlMostrarSeriesByAlmacen($ams_vendedor['ams_id']);
+
+        preArray($contratos);
+        return;
 
         foreach ($contratos as $key => $cts) {
             $ctr_folio = ContratosModelo::mdlMostrarContratosByFolio($cts['ctr_folio']);
