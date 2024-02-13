@@ -655,6 +655,9 @@ class ContratosControlador
 
         if (isset($data[0]['caja_abierta'])) {
 
+            preArray($data[1]);
+            return;
+
             foreach ($data[1] as $key => $cts) {
 
                 // $fotoCliente =
@@ -995,8 +998,6 @@ class ContratosControlador
     }
     public static function ctrSubirPreContrato($data)
     {
-        preArray($data);
-        return;
         $contratos = ContratosControlador::ctrSetearDatos($data);
         $contSubir = 0;
         $ams_vendedor = AlmacenesModelo::mdlMostrarAlmacenesByVendedor($data[0]['idVendedor']);
