@@ -931,8 +931,6 @@ class ContratosControlador
                 array_push($contratos_validos, $contratos_aux);
             }
         }
-        preArray($contratos_validos);
-        return;
         return $contratos_validos;
     }
 
