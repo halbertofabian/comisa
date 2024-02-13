@@ -657,7 +657,7 @@ class ContratosControlador
 
             foreach ($data[1] as $key => $cts) {
 
-                $fotoCliente =
+                // $fotoCliente =
 
                     $contratos_aux = array(
 
