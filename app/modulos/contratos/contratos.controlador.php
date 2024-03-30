@@ -985,12 +985,12 @@ class ContratosControlador
                 'ctr_nota' => "",
                 'ctr_fotos' => json_encode(array(
                     // Fotos  cliente
-                    'img_cliente' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]['fotoCliente'], $cts[1]["ctr_folio"], 'img_cliente'),
-                    'img_cred_fro' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["fotoCredencialFrontal"], $cts[1]["ctr_folio"], 'img_cred_fro'),
-                    'img_cred_tra' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["fotoCredencialTrasera"], $cts[1]["ctr_folio"], 'img_cred_tra'),
-                    'img_pagare' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["fotoPagare"], $cts[1]["ctr_folio"], 'img_pagare'),
-                    'img_fachada' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["fotoFachada"], $cts[1]["ctr_folio"], 'img_fachada'),
-                    'img_comprobante' => ContratosControlador::ctrGuardarImagenesContrato($cts[1]["comprobanteDomicilio"], $cts[1]["ctr_folio"], 'img_comprobante'),
+                    'img_cliente' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]['fotoCliente'], $cts[1]["ctr_folio"], 'img_cliente'),
+                    'img_cred_fro' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["fotoCredencialFrontal"], $cts[1]["ctr_folio"], 'img_cred_fro'),
+                    'img_cred_tra' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["fotoCredencialTrasera"], $cts[1]["ctr_folio"], 'img_cred_tra'),
+                    'img_pagare' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["fotoPagare"], $cts[1]["ctr_folio"], 'img_pagare'),
+                    'img_fachada' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["fotoFachada"], $cts[1]["ctr_folio"], 'img_fachada'),
+                    'img_comprobante' => ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["comprobanteDomicilio"], $cts[1]["ctr_folio"], 'img_comprobante'),
                 ), true),
 
                 'ctr_nombre_ref_1' =>  dstring($cts[1]["clts_nom_ref1"]),
@@ -1037,10 +1037,10 @@ class ContratosControlador
 
                 //fotos fiador
                 'clts_fotos_fiador' => json_encode(array(
-                    'img_cred_fro' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["clts_fc_elector_fiador"], $cts[1]["ctr_folio"], 'img_cred_fro_fiador'),
-                    'img_cred_tra' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["clts_tc_elector_fiador"], $cts[1]["ctr_folio"], 'img_cred_tra_fiador'),
-                    'img_comprobante' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["clts_comprobante_fiador"], $cts[1]["ctr_folio"], 'img_comprobante_fiador'),
-                    'img_pagare' =>  ContratosControlador::ctrGuardarImagenesContrato($cts[1]["clts_pagare_fiador"], $cts[1]["ctr_folio"], 'img_pagare_fiador'),
+                    'img_cred_fro' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["clts_fc_elector_fiador"], $cts[1]["ctr_folio"], 'img_cred_fro_fiador'),
+                    'img_cred_tra' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["clts_tc_elector_fiador"], $cts[1]["ctr_folio"], 'img_cred_tra_fiador'),
+                    'img_comprobante' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["clts_comprobante_fiador"], $cts[1]["ctr_folio"], 'img_comprobante_fiador'),
+                    'img_pagare' =>  ContratosControlador::ctrGuardarImagenesContratoV2($cts[1]["clts_pagare_fiador"], $cts[1]["ctr_folio"], 'img_pagare_fiador'),
                 ), true),
 
                 'clts_nom_ref2' =>  dstring($cts[1]["clts_nom_ref2"]),
@@ -1072,7 +1072,6 @@ class ContratosControlador
                 'ctr_moroso' => 0
 
             );
-
         }
         // else {
         //     for ($i = 1; $i < $countArray; $i++) {
@@ -1281,6 +1280,47 @@ class ContratosControlador
 
         return $ruta_url;
     }
+
+    public static function ctrGuardarImagenesContratoV2($ctr_img, $ctr_folio, $img_name)
+    {
+        $ruta_url = HTTP_HOST . 'media/image_no.png';
+
+        // Validar que la imagen en base64 sea válida
+        if ($ctr_img != "" && strpos($ctr_img, 'data:image') === 0) {
+            // Obtener el tipo de imagen y la extensión
+            $tipo = explode('/', mime_content_type($ctr_img))[1];
+            $extension = ($tipo == 'jpeg') ? 'jpg' : $tipo;
+
+            // Decodificar la imagen base64
+            $data = base64_decode(explode(',', $ctr_img)[1]);
+
+            // Crear el directorio donde se guardarán las imágenes
+            $directorio = DOCUMENT_ROOT . 'media/fotosContratos/' . $ctr_folio;
+            if (!file_exists($directorio)) {
+                mkdir($directorio, 0777, true);
+            }
+
+            // Guardar la imagen en el servidor con un nombre único
+            $nombreImagen = $img_name . "." . $extension;
+            $ruta = $directorio . "/" . $nombreImagen;
+            file_put_contents($ruta, $data);
+
+            // Redimensionar la imagen si es necesario
+            list($ancho, $alto) = getimagesize($ruta);
+            $nuevoAncho = 1200;
+            $nuevoAlto = 1000;
+            $origen = imagecreatefromstring($data);
+            $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+            imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+            imagejpeg($destino, $ruta);
+
+            // Devolver la ruta de la imagen guardada
+            $ruta_url = HTTP_HOST . 'media/fotosContratos/' . $ctr_folio . "/" . $nombreImagen;
+        }
+
+        return $ruta_url;
+    }
+
 
     public static function ctrSubirPreContrato($data)
     {
