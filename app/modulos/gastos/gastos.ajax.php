@@ -56,6 +56,16 @@ class GastosAjax
         $busqueda = isset($_POST['search']['value']) ? trim($_POST['search']['value']) : '';
         $draw = isset($_POST['draw']) ? (int) $_POST['draw'] : 0;
 
+        if (!isset($_SESSION['session_usr']['usr_nombre'], $_SESSION['session_suc']['scl_id'])) {
+            echo json_encode(array(
+                'draw' => $draw,
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => array()
+            ));
+            return;
+        }
+
         $resultado = GastosModelo::mdlConsultarGastosPaginados(
             $_SESSION['session_usr']['usr_nombre'],
             $inicio,
