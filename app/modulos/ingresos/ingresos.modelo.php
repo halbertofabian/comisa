@@ -71,6 +71,87 @@ class IngresosModelo
             $con = null;
         }
     }
+
+    public static function mdlConsultarIngresosPaginados($usuario, $inicio, $cantidad, $busqueda = "", $fechaInicio = "", $fechaFin = "")
+    {
+        try {
+            $inicio = max(0, (int) $inicio);
+            $cantidad = max(10, min(100, (int) $cantidad));
+            $tieneFechas = preg_match('/^\d{4}-\d{2}-\d{2}$/', $fechaInicio)
+                && preg_match('/^\d{4}-\d{2}-\d{2}$/', $fechaFin);
+
+            $condiciones = array();
+            $parametrosBase = array();
+
+            if ($tieneFechas) {
+                $condiciones[] = "igs.igs_fecha_registro >= ? AND igs.igs_fecha_registro < DATE_ADD(?, INTERVAL 1 DAY)";
+                $parametrosBase[] = $fechaInicio;
+                $parametrosBase[] = $fechaFin;
+            } else {
+                $condiciones[] = "igs.igs_id_sucursal = ?";
+                $condiciones[] = "igs.igs_usuario_registro = ?";
+                $parametrosBase[] = $_SESSION['session_suc']['scl_id'];
+                $parametrosBase[] = $usuario;
+            }
+
+            $whereBase = implode(' AND ', $condiciones);
+            $con = Conexion::conectar();
+
+            $sqlTotal = "SELECT COUNT(*) FROM tbl_ingresos_igs igs WHERE " . $whereBase;
+            $ppsTotal = $con->prepare($sqlTotal);
+            $ppsTotal->execute($parametrosBase);
+            $total = (int) $ppsTotal->fetchColumn();
+
+            $filtro = "";
+            $parametros = $parametrosBase;
+            if ($busqueda !== "") {
+                $filtro = " AND (CAST(igs.igs_id AS CHAR) LIKE ?
+                              OR igs.igs_concepto LIKE ?
+                              OR CAST(igs.igs_monto AS CHAR) LIKE ?
+                              OR igs.igs_mp LIKE ?
+                              OR igs.igs_fecha_registro LIKE ?
+                              OR igs.igs_usuario_registro LIKE ?
+                              OR igs.igs_referencia LIKE ?)";
+                $termino = '%' . $busqueda . '%';
+                for ($i = 0; $i < 7; $i++) {
+                    $parametros[] = $termino;
+                }
+            }
+
+            if ($busqueda === "") {
+                $filtrados = $total;
+            } else {
+                $sqlFiltrados = "SELECT COUNT(*) FROM tbl_ingresos_igs igs WHERE " . $whereBase . $filtro;
+                $ppsFiltrados = $con->prepare($sqlFiltrados);
+                $ppsFiltrados->execute($parametros);
+                $filtrados = (int) $ppsFiltrados->fetchColumn();
+            }
+
+            $sql = "SELECT igs.igs_id, igs.igs_concepto, igs.igs_monto, igs.igs_mp,
+                           igs.igs_fecha_registro, igs.igs_usuario_registro, igs.igs_referencia,
+                           IF(copn.copn_fecha_cierre IS NULL, 1, 0) AS caja_abierta
+                    FROM tbl_ingresos_igs igs
+                    LEFT JOIN tbl_caja_open_copn copn ON copn.copn_id = igs.igs_id_corte
+                    WHERE " . $whereBase . $filtro . "
+                    ORDER BY igs.igs_id DESC
+                    LIMIT " . $inicio . ", " . $cantidad;
+            $pps = $con->prepare($sql);
+            $pps->execute($parametros);
+
+            return array(
+                'total' => $total,
+                'filtrados' => $filtrados,
+                'datos' => $pps->fetchAll(PDO::FETCH_ASSOC)
+            );
+        } catch (PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $ppsTotal = null;
+            $ppsFiltrados = null;
+            $con = null;
+        }
+    }
     public static function mdlEliminarIngresos($igs_id)
     {
         try {

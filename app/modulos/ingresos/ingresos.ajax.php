@@ -40,6 +40,43 @@ class IngresosAjax
         $res = IngresosControlador::ctrAgregarIngresos();
         echo json_encode($res, true);
     }
+
+    public function ajaxListarIngresosPaginados()
+    {
+        $draw = isset($_POST['draw']) ? (int) $_POST['draw'] : 0;
+
+        if (!isset($_SESSION['session_usr']['usr_nombre'], $_SESSION['session_suc']['scl_id'])) {
+            echo json_encode(array(
+                'draw' => $draw,
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => array()
+            ));
+            return;
+        }
+
+        $inicio = isset($_POST['start']) ? (int) $_POST['start'] : 0;
+        $cantidad = isset($_POST['length']) ? (int) $_POST['length'] : 10;
+        $busqueda = isset($_POST['search']['value']) ? trim($_POST['search']['value']) : '';
+        $fechaInicio = isset($_POST['fecha_inicio']) ? trim($_POST['fecha_inicio']) : '';
+        $fechaFin = isset($_POST['fecha_fin']) ? trim($_POST['fecha_fin']) : '';
+
+        $resultado = IngresosModelo::mdlConsultarIngresosPaginados(
+            $_SESSION['session_usr']['usr_nombre'],
+            $inicio,
+            $cantidad,
+            $busqueda,
+            $fechaInicio,
+            $fechaFin
+        );
+
+        echo json_encode(array(
+            'draw' => $draw,
+            'recordsTotal' => $resultado['total'],
+            'recordsFiltered' => $resultado['filtrados'],
+            'data' => $resultado['datos']
+        ));
+    }
     public function ajaxConsultarIngresosByCaja()
 
     {
@@ -72,6 +109,11 @@ class IngresosAjax
 if (isset($_POST['btnEliminarIngreso'])) {
     $eliminarIngreso = new IngresosAjax();
     $eliminarIngreso->ajaxEliminarIngreso();
+}
+
+if (isset($_POST['listarIngresosPaginados'])) {
+    $listarIngresos = new IngresosAjax();
+    $listarIngresos->ajaxListarIngresosPaginados();
 }
 
 if (isset($_POST['btnConsultarIngresosByCaja'])) {

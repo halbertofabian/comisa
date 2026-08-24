@@ -10,6 +10,104 @@
  *  Twitter: https://twitter.com/softmormx
  */
 
+if ($("#tabla-listar-ingresos").length) {
+    var tablaIngresosElemento = $("#tabla-listar-ingresos");
+    var puedeEditarIngresos = tablaIngresosElemento.data("puede-editar") == 1;
+    var renderTextoIngresos = $.fn.dataTable.render.text();
+
+    tablaIngresosElemento.DataTable({
+        processing: true,
+        serverSide: true,
+        ordering: false,
+        pageLength: 10,
+        ajax: {
+            url: urlApp + 'app/modulos/ingresos/ingresos.ajax.php',
+            type: 'POST',
+            data: function (datos) {
+                datos.listarIngresosPaginados = true;
+                datos.fecha_inicio = tablaIngresosElemento.attr("data-fecha-inicio");
+                datos.fecha_fin = tablaIngresosElemento.attr("data-fecha-fin");
+            }
+        },
+        columns: [
+            {
+                data: 'igs_id',
+                render: function (data, type) {
+                    var id = Number(data);
+                    if (type === 'display' && puedeEditarIngresos) {
+                        return '<button class="btn btn-primary btnEliminarIngreso" igs_id="' + id + '">' +
+                            '<i class="fa fa-trash-o" aria-hidden="true"></i></button> ' + id;
+                    }
+                    return id;
+                }
+            },
+            { data: 'igs_concepto', render: renderTextoIngresos },
+            {
+                data: 'igs_monto',
+                render: $.fn.dataTable.render.number(',', '.', 2),
+                createdCell: function (td, cellData, rowData) {
+                    if (puedeEditarIngresos) {
+                        $(td).addClass('edita').attr('id', 'monto/' + Number(rowData.igs_id));
+                    }
+                }
+            },
+            { data: 'igs_mp', render: renderTextoIngresos },
+            {
+                data: 'igs_fecha_registro',
+                render: renderTextoIngresos,
+                createdCell: function (td, cellData, rowData) {
+                    if (puedeEditarIngresos) {
+                        $(td).addClass('edita').attr('id', 'fecha/' + Number(rowData.igs_id));
+                    }
+                }
+            },
+            { data: 'igs_usuario_registro', render: renderTextoIngresos },
+            {
+                data: 'igs_referencia',
+                render: renderTextoIngresos,
+                createdCell: function (td, cellData, rowData) {
+                    if (puedeEditarIngresos) {
+                        $(td).addClass('edita').attr('id', 'ref/' + Number(rowData.igs_id));
+                    }
+                }
+            },
+            {
+                data: null,
+                searchable: false,
+                render: function (data, type, row) {
+                    if (type !== 'display' || Number(row.caja_abierta) !== 1) {
+                        return '';
+                    }
+
+                    return '<div class="btn-group">' +
+                        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                        '<i class="fa fa-filter" aria-hidden="true"></i></button>' +
+                        '<div class="dropdown-menu">' +
+                        '<button class="dropdown-item text-dark btnEliminarIngreso" igs_id="' + Number(row.igs_id) + '">' +
+                        '<i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso</button>' +
+                        '</div></div>';
+                }
+            }
+        ],
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sSearch: "Buscar:",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: "Siguiente",
+                sPrevious: "Anterior"
+            }
+        }
+    });
+}
+
 
 
 $(".tablaIngresos tbody").on("click", "button.btnEliminarIngreso", function () {
@@ -159,7 +257,7 @@ $("#btnMostrarIngresosUsr").on("click", function () {
 
 })
 
-$("td.edita").dblclick(function () {
+$(".tablaIngresos tbody").on("dblclick", "td.edita", function () {
 
     var OriginalContent = $(this).text();
     var idcompuesto = $(this).attr("id");
@@ -268,4 +366,3 @@ $("button.delete").on("click", function () {
         });
 
 })
-

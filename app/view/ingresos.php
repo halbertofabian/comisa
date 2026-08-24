@@ -44,8 +44,19 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-12" style="overflow:scroll; height: 750px;">
-                <table class="table  table-striped  tablaIngresos">
+            <div class="col-12">
+                <?php
+                $fechaInicio = isset($rutas[1]) ? $rutas[1] : '';
+                $fechaFin = isset($rutas[2]) ? $rutas[2] : '';
+                $puedeEditar = $_SESSION['session_usr']['usr_rol'] == "Administrador"
+                    || $_SESSION['session_usr']['usr_rol'] == "Jefe administrativo";
+                ?>
+                <table id="tabla-listar-ingresos"
+                    class="table table-striped tablaIngresos dt-responsive"
+                    data-fecha-inicio="<?= htmlspecialchars($fechaInicio, ENT_QUOTES, 'UTF-8') ?>"
+                    data-fecha-fin="<?= htmlspecialchars($fechaFin, ENT_QUOTES, 'UTF-8') ?>"
+                    data-puede-editar="<?= $puedeEditar ? '1' : '0' ?>"
+                    style="width:100%">
                     <thead class="">
                         <tr>
                             <th># Número</th>
@@ -58,77 +69,7 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php
-                        //var_dump($rutas);
-                      
-                        if (isset($rutas[1]) && $rutas[2]) {
-                            $ingresos = IngresosModelo::mdlConsultarIngresos2Fecha($rutas[1], $rutas[2]);
-                        } else {
-                            $ingresos = IngresosModelo::mdlMostrarIngresos($_SESSION['session_usr']['usr_nombre']);
-                        }
-                        if ($_SESSION['session_usr']['usr_rol'] == "Administrador" || $_SESSION['session_usr']['usr_rol'] == "Jefe administrativo") :
-                          
-                            foreach ($ingresos as $key => $igs) :
-                        ?>
-                                <tr>
-                                    <td><button class="btn btn-primary delete " value="<?= $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> </button> <?= $igs['igs_id'] ?></td>
-                                    <td><?= $igs['igs_concepto'] ?></td>
-                                    <td class="edita" id="monto/<?= $igs['igs_id'] ?>"><?= number_format($igs['igs_monto'], 2) ?></td>
-                                    <td><?= $igs['igs_mp'] ?></td>
-                                    <td class="edita" id="fecha/<?= $igs['igs_id'] ?>"> <?= $igs['igs_fecha_registro'] ?> </td>
-                                    <td><?= $igs['igs_usuario_registro'] ?></td>
-                                    <td class="edita" id="ref/<?= $igs['igs_id'] ?>"> <?= $igs['igs_referencia']  ?></td>
-                                    <td>
-                                        <?php
-                                        $cajaAbierta = IngresosModelo::mdlConsultarCajaAbierta($igs['igs_id_corte']);
-                                        if ($cajaAbierta['copn_fecha_cierre'] == NULL) :
-                                        ?>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa fa-filter" aria-hidden="true"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?= $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach;
-                        else :
-                            foreach ($ingresos as $key => $igs) :
-                            ?>
-                                <tr>
-                                    <td><?= $igs['igs_id'] ?></td>
-                                    <td><?= $igs['igs_concepto'] ?></td>
-                                    <td <?= $igs['igs_id'] ?>><?= number_format($igs['igs_monto'], 2) ?></td>
-                                    <td><?= $igs['igs_mp'] ?></td>
-                                    <td><?= $igs['igs_fecha_registro'] ?> </td>
-                                    <td><?= $igs['igs_usuario_registro'] ?></td>
-                                    <td><?= $igs['igs_referencia']  ?></td>
-                                    <td>
-                                        <?php
-                                        $cajaAbierta = IngresosModelo::mdlConsultarCajaAbierta($igs['igs_id_corte']);
-                                        if ($cajaAbierta['copn_fecha_cierre'] == NULL) :
-                                        ?>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fa fa-filter" aria-hidden="true"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <button class="dropdown-item text-dark btnEliminarIngreso" igs_id="<?php echo $igs['igs_id'] ?>"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar ingreso </button>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-
-                        <?php
-                            endforeach;
-
-                        endif; ?>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
