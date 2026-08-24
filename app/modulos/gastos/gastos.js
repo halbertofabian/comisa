@@ -1,5 +1,65 @@
 listarCategorias();
 
+if ($("#tabla-listar-gastos").length) {
+    var renderTexto = $.fn.dataTable.render.text();
+
+    $("#tabla-listar-gastos").DataTable({
+        processing: true,
+        serverSide: true,
+        ordering: false,
+        pageLength: 10,
+        ajax: {
+            url: urlApp + 'app/modulos/gastos/gastos.ajax.php',
+            type: 'POST',
+            data: function (datos) {
+                datos.listarGastosPaginados = true;
+            }
+        },
+        columns: [
+            { data: 'tgts_id' },
+            { data: 'gts_nombre', render: renderTexto },
+            { data: 'tgts_concepto', render: renderTexto },
+            { data: 'tgts_fecha_gasto', render: renderTexto },
+            { data: 'tgts_cantidad', render: renderTexto },
+            { data: 'tgts_mp', render: renderTexto },
+            { data: 'tgts_usuario_registro', render: renderTexto },
+            {
+                data: null,
+                searchable: false,
+                render: function (data, type, row) {
+                    if (type !== 'display' || Number(row.caja_abierta) !== 1) {
+                        return '';
+                    }
+
+                    return '<div class="btn-group">' +
+                        '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                        '<i class="fa fa-filter" aria-hidden="true"></i></button>' +
+                        '<div class="dropdown-menu">' +
+                        '<button class="dropdown-item text-dark btnEliminarGasto" tgts_id="' + Number(row.tgts_id) + '">' +
+                        '<i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar gasto</button>' +
+                        '</div></div>';
+                }
+            }
+        ],
+        language: {
+            sProcessing: "Procesando...",
+            sLengthMenu: "Mostrar _MENU_ registros",
+            sZeroRecords: "No se encontraron resultados",
+            sEmptyTable: "Ningún dato disponible en esta tabla",
+            sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+            sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0",
+            sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+            sSearch: "Buscar:",
+            oPaginate: {
+                sFirst: "Primero",
+                sLast: "Último",
+                sNext: "Siguiente",
+                sPrevious: "Anterior"
+            }
+        }
+    });
+}
+
 $("#formAddCategoria").on("submit", function (e) {
 
     e.preventDefault()

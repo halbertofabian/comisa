@@ -125,6 +125,75 @@ class GastosModelo
         }
     }
 
+    public static function mdlConsultarGastosPaginados($usuario, $inicio, $cantidad, $busqueda = "")
+    {
+        try {
+            $inicio = max(0, (int) $inicio);
+            $cantidad = max(10, min(100, (int) $cantidad));
+            $sucursal = $_SESSION['session_suc']['scl_id'];
+
+            $con = Conexion::conectar();
+
+            $sqlTotal = "SELECT COUNT(*)
+                         FROM tbl_gastos_tgts tgts
+                         JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria
+                         WHERE tgts.tgts_id_sucursal = ? AND tgts.tgts_usuario_registro = ?";
+            $ppsTotal = $con->prepare($sqlTotal);
+            $ppsTotal->execute(array($sucursal, $usuario));
+            $total = (int) $ppsTotal->fetchColumn();
+
+            $filtro = "";
+            $parametros = array($sucursal, $usuario);
+            if ($busqueda !== "") {
+                $filtro = " AND (CAST(tgts.tgts_id AS CHAR) LIKE ?
+                              OR gts.gts_nombre LIKE ?
+                              OR tgts.tgts_concepto LIKE ?
+                              OR tgts.tgts_fecha_gasto LIKE ?
+                              OR tgts.tgts_mp LIKE ?)";
+                $termino = '%' . $busqueda . '%';
+                for ($i = 0; $i < 5; $i++) {
+                    $parametros[] = $termino;
+                }
+            }
+
+            $sqlFiltrados = "SELECT COUNT(*)
+                             FROM tbl_gastos_tgts tgts
+                             JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria
+                             WHERE tgts.tgts_id_sucursal = ?
+                               AND tgts.tgts_usuario_registro = ?" . $filtro;
+            $ppsFiltrados = $con->prepare($sqlFiltrados);
+            $ppsFiltrados->execute($parametros);
+            $filtrados = (int) $ppsFiltrados->fetchColumn();
+
+            $sql = "SELECT tgts.tgts_id, gts.gts_nombre, tgts.tgts_concepto,
+                           tgts.tgts_fecha_gasto, tgts.tgts_cantidad, tgts.tgts_mp,
+                           tgts.tgts_usuario_registro,
+                           IF(copn.copn_fecha_cierre IS NULL, 1, 0) AS caja_abierta
+                    FROM tbl_gastos_tgts tgts
+                    JOIN tbl_categoria_gastos_gts gts ON gts.gts_id = tgts.tgts_categoria
+                    LEFT JOIN tbl_caja_open_copn copn ON copn.copn_id = tgts.tgts_id_corte
+                    WHERE tgts.tgts_id_sucursal = ?
+                      AND tgts.tgts_usuario_registro = ?" . $filtro . "
+                    ORDER BY tgts.tgts_id DESC
+                    LIMIT " . $inicio . ", " . $cantidad;
+            $pps = $con->prepare($sql);
+            $pps->execute($parametros);
+
+            return array(
+                'total' => $total,
+                'filtrados' => $filtrados,
+                'datos' => $pps->fetchAll(PDO::FETCH_ASSOC)
+            );
+        } catch (PDOException $th) {
+            throw $th;
+        } finally {
+            $pps = null;
+            $ppsTotal = null;
+            $ppsFiltrados = null;
+            $con = null;
+        }
+    }
+
     public static function mdlConsultarGastosPorFecha($tgts)
     {
         try {

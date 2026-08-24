@@ -49,6 +49,28 @@ class GastosAjax
         echo json_encode($res, true);
     }
 
+    public function ajaxListarGastosPaginados()
+    {
+        $inicio = isset($_POST['start']) ? (int) $_POST['start'] : 0;
+        $cantidad = isset($_POST['length']) ? (int) $_POST['length'] : 10;
+        $busqueda = isset($_POST['search']['value']) ? trim($_POST['search']['value']) : '';
+        $draw = isset($_POST['draw']) ? (int) $_POST['draw'] : 0;
+
+        $resultado = GastosModelo::mdlConsultarGastosPaginados(
+            $_SESSION['session_usr']['usr_nombre'],
+            $inicio,
+            $cantidad,
+            $busqueda
+        );
+
+        echo json_encode(array(
+            'draw' => $draw,
+            'recordsTotal' => $resultado['total'],
+            'recordsFiltered' => $resultado['filtrados'],
+            'data' => $resultado['datos']
+        ));
+    }
+
     public function ajaxEliminarGasto()
     {
         $eliminarGasto = GastosControlador::ctrEliminarGasto($this->tgts_id);
@@ -126,6 +148,11 @@ if (isset($_POST['btnListarCategorias'])) {
 if (isset($_POST['listarGastos'])) {
     $listarGastos = new GastosAjax();
     $listarGastos->ajaxListarGastos();
+}
+
+if (isset($_POST['listarGastosPaginados'])) {
+    $listarGastos = new GastosAjax();
+    $listarGastos->ajaxListarGastosPaginados();
 }
 
 if (isset($_POST['btnEliminarGasto'])) {
