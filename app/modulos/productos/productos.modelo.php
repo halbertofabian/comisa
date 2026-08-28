@@ -466,7 +466,8 @@ class ProductosModelo
             return $pps->rowCount() > 0;
             // return $pps->errorInfo();
         } catch (PDOException $th) {
-            //throw $th;
+            // return $th;
+            return false;
         } finally {
             $pps = null;
             $con = null;

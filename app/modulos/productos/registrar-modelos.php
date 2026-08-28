@@ -301,45 +301,45 @@
         e.preventDefault();
         var datos = new FormData(this)
         datos.append('btnRegistrarModelos', true);
-        if ($("#sucursal").val() == '01') {
-            for (var i = 0; i < URLS_MATRIZ.length; i++) {
-                var url_api = URLS_MATRIZ[i];
-                $.ajax({
-                    type: 'POST',
-                    url: url_api + 'api/public/comisa_registro_inventario',
-                    data: datos,
-                    cache: false,
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    success: function(res) {
-                        if (res.status) {
-                            swal({
-                                title: '¡Bien!',
-                                text: res.mensaje,
-                                type: 'success',
-                                icon: 'success'
-                            }).then(function() {
-                                location.reload();
-                            });
-                        } else {
-                            swal({
-                                title: 'Error',
-                                text: res.mensaje,
-                                icon: 'error',
-                                buttons: [false, 'Intentar de nuevo'],
-                                dangerMode: true,
-                            }).then((willDelete) => {
-                                if (willDelete) {} else {}
-                            })
-                        }
-                    }
-                });
-            }
-        } else {
+        // if ($("#sucursal").val() == '01') {
+        //     for (var i = 0; i < URLS_MATRIZ.length; i++) {
+        //         var url_api = URLS_MATRIZ[i];
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: url_api + 'api/public/comisa_registro_inventario',
+        //             data: datos,
+        //             cache: false,
+        //             dataType: 'json',
+        //             processData: false,
+        //             contentType: false,
+        //             success: function(res) {
+        //                 if (res.status) {
+        //                     swal({
+        //                         title: '¡Bien!',
+        //                         text: res.mensaje,
+        //                         type: 'success',
+        //                         icon: 'success'
+        //                     }).then(function() {
+        //                         location.reload();
+        //                     });
+        //                 } else {
+        //                     swal({
+        //                         title: 'Error',
+        //                         text: res.mensaje,
+        //                         icon: 'error',
+        //                         buttons: [false, 'Intentar de nuevo'],
+        //                         dangerMode: true,
+        //                     }).then((willDelete) => {
+        //                         if (willDelete) {} else {}
+        //                     })
+        //                 }
+        //             }
+        //         });
+        //     }
+        // } else {
             $.ajax({
                 type: 'POST',
-                url: URL_XICOTEPEC + 'api/public/comisa_registro_inventario',
+                url: urlApp + 'api/public/comisa_registro_inventario',
                 data: datos,
                 cache: false,
                 dataType: 'json',
@@ -368,7 +368,7 @@
                     }
                 }
             });
-        }
+        // }
     });
 
     $(document).on('click', '.btnEliminarModelo', function() {
@@ -457,44 +457,44 @@
         e.preventDefault();
         var datos = new FormData(this)
         datos.append('btnEditarModelos', true);
-        if ($("#sucursal").val() == '01') {
-            for (var i = 0; i < URLS_MATRIZ.length; i++) {
-                var url_api = URLS_MATRIZ[i];
-                $.ajax({
-                    type: 'POST',
-                    url: url_api + 'api/public/comisa_editar_inventario',
-                    data: datos,
-                    dataType: 'json',
-                    processData: false,
-                    contentType: false,
-                    success: function(res) {
-                        if (res.status) {
-                            swal({
-                                title: '¡Bien!',
-                                text: res.mensaje,
-                                type: 'success',
-                                icon: 'success'
-                            }).then(function() {
-                                location.reload();
-                            });
-                        } else {
-                            swal({
-                                title: 'Error',
-                                text: res.mensaje,
-                                icon: 'error',
-                                buttons: [false, 'Intentar de nuevo'],
-                                dangerMode: true,
-                            }).then((willDelete) => {
-                                if (willDelete) {} else {}
-                            })
-                        }
-                    }
-                });
-            }
-        } else {
+        // if ($("#sucursal").val() == '01') {
+        //     for (var i = 0; i < URLS_MATRIZ.length; i++) {
+        //         var url_api = URLS_MATRIZ[i];
+        //         $.ajax({
+        //             type: 'POST',
+        //             url: url_api + 'api/public/comisa_editar_inventario',
+        //             data: datos,
+        //             dataType: 'json',
+        //             processData: false,
+        //             contentType: false,
+        //             success: function(res) {
+        //                 if (res.status) {
+        //                     swal({
+        //                         title: '¡Bien!',
+        //                         text: res.mensaje,
+        //                         type: 'success',
+        //                         icon: 'success'
+        //                     }).then(function() {
+        //                         location.reload();
+        //                     });
+        //                 } else {
+        //                     swal({
+        //                         title: 'Error',
+        //                         text: res.mensaje,
+        //                         icon: 'error',
+        //                         buttons: [false, 'Intentar de nuevo'],
+        //                         dangerMode: true,
+        //                     }).then((willDelete) => {
+        //                         if (willDelete) {} else {}
+        //                     })
+        //                 }
+        //             }
+        //         });
+        //     }
+        // } else {
             $.ajax({
                 type: 'POST',
-                url: URL_XICOTEPEC + 'api/public/comisa_editar_inventario',
+                url: urlApp + 'api/public/comisa_editar_inventario',
                 data: datos,
                 dataType: 'json',
                 processData: false,
@@ -522,7 +522,7 @@
                     }
                 }
             });
-        }
+        // }
     });
 
     $('#btnDescargarModelos').on('click', function() {
